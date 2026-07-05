@@ -1,0 +1,8 @@
+# Build/test artifacts
+coverage.out
+bin/
+
+# Editor/OS
+.DS_Store
+.idea/
+.vscode/
