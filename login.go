@@ -8,7 +8,9 @@ import (
 )
 
 func (c *Client) Login(ctx context.Context, username, password string) (*clientv1.LoginResponse, error) {
-	res, err := c.Auth.Login(ctx, &clientv1.LoginRequest{Username: username, Password: password, Client: c.clientInfo()})
+	callCtx, cancel := c.CallContext(ctx)
+	defer cancel()
+	res, err := c.Auth.Login(callCtx, &clientv1.LoginRequest{Username: username, Password: password, Client: c.clientInfo()})
 	if err != nil {
 		return nil, err
 	}
@@ -17,11 +19,13 @@ func (c *Client) Login(ctx context.Context, username, password string) (*clientv
 }
 
 func (c *Client) Refresh(ctx context.Context, refreshToken string) (*clientv1.RefreshResponse, error) {
+	callCtx, cancel := c.AuthCallContext(ctx)
+	defer cancel()
 	req := &clientv1.RefreshRequest{Client: c.clientInfo()}
 	if refreshToken != "" {
 		req.RefreshToken = &refreshToken
 	}
-	res, err := c.Auth.Refresh(ctx, req)
+	res, err := c.Auth.Refresh(callCtx, req)
 	if err != nil {
 		return nil, err
 	}
@@ -57,7 +61,9 @@ func (c *Client) clientInfo() *clientv1.ClientInfo {
 }
 
 func (c *AdminClient) LoginOperator(ctx context.Context, username, password string) (*adminv1.LoginOperatorResponse, error) {
-	res, err := c.Auth.LoginOperator(ctx, &adminv1.LoginOperatorRequest{Username: username, Password: password, Client: c.operatorClientInfo()})
+	callCtx, cancel := c.CallContext(ctx)
+	defer cancel()
+	res, err := c.Auth.LoginOperator(callCtx, &adminv1.LoginOperatorRequest{Username: username, Password: password, Client: c.operatorClientInfo()})
 	if err != nil {
 		return nil, err
 	}

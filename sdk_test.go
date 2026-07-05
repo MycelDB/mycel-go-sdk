@@ -3,6 +3,7 @@ package mycel
 import (
 	"context"
 	"testing"
+	"time"
 
 	"google.golang.org/grpc/metadata"
 )
@@ -12,12 +13,13 @@ func TestConfigFromEnv(t *testing.T) {
 	t.Setenv("MYCEL_USERNAME", "user")
 	t.Setenv("MYCEL_PASSWORD", "pass")
 	t.Setenv("MYCEL_ACCESS_TOKEN", "token")
+	t.Setenv("MYCEL_CALL_TIMEOUT", "5s")
 	t.Setenv("MYCELD_TLS", "true")
 	t.Setenv("MYCELD_TLS_INSECURE_SKIP_VERIFY", "yes")
 	t.Setenv("MYCEL_CLIENT_NAME", "bench")
 
 	cfg := ConfigFromEnv()
-	if cfg.Addr != "127.0.0.1:9999" || cfg.Username != "user" || cfg.Password != "pass" || cfg.AccessToken != "token" {
+	if cfg.Addr != "127.0.0.1:9999" || cfg.Username != "user" || cfg.Password != "pass" || cfg.AccessToken != "token" || cfg.CallTimeout.String() != "5s" {
 		t.Fatalf("unexpected config: %+v", cfg)
 	}
 	if !cfg.TLS || !cfg.TLSInsecureSkipVerify || cfg.ClientName != "bench" {
@@ -56,5 +58,18 @@ func TestClientAuthContext(t *testing.T) {
 	md, ok := metadata.FromOutgoingContext(ctx)
 	if !ok || len(md.Get(authorizationHeader)) != 1 || md.Get(authorizationHeader)[0] != "Bearer client-token" {
 		t.Fatalf("unexpected auth metadata: %+v", md)
+	}
+}
+
+func TestAuthCallContextAddsTokenAndDeadline(t *testing.T) {
+	c := &Client{tokens: newTokenSource("tok"), cfg: Config{CallTimeout: time.Second}}
+	ctx, cancel := c.AuthCallContext(context.Background())
+	defer cancel()
+	if _, ok := ctx.Deadline(); !ok {
+		t.Fatal("expected deadline")
+	}
+	md, ok := metadata.FromOutgoingContext(ctx)
+	if !ok || len(md.Get(authorizationHeader)) != 1 || md.Get(authorizationHeader)[0] != "Bearer tok" {
+		t.Fatalf("unexpected metadata: %+v", md)
 	}
 }

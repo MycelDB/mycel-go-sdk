@@ -16,6 +16,9 @@ The SDK depends on `github.com/myceldb/mycel-api` for protobuf/gRPC stubs and pr
 - operator/admin login helper
 - bearer-token metadata injection
 - raw generated Admin and Client service clients
+- call timeout helpers
+- session/transaction helpers
+- thin graph/query convenience methods
 
 ## Usage
 
@@ -52,6 +55,7 @@ admin, err := mycel.DialAdmin(ctx, mycel.Config{
 - `MYCEL_USERNAME`
 - `MYCEL_PASSWORD`
 - `MYCEL_ACCESS_TOKEN`
+- `MYCEL_CALL_TIMEOUT`
 - `MYCELD_TLS`
 - `MYCELD_TLS_CA_FILE`
 - `MYCELD_TLS_SERVER_NAME`

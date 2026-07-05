@@ -3,6 +3,7 @@ package mycel
 import (
 	"os"
 	"strings"
+	"time"
 )
 
 const DefaultAddr = "127.0.0.1:9091"
@@ -13,6 +14,7 @@ type Config struct {
 	Username    string
 	Password    string
 	AccessToken string
+	CallTimeout time.Duration
 
 	TLS                   bool
 	TLSCAFile             string
@@ -40,6 +42,7 @@ func ConfigFromEnv() Config {
 		Username:              os.Getenv("MYCEL_USERNAME"),
 		Password:              os.Getenv("MYCEL_PASSWORD"),
 		AccessToken:           os.Getenv("MYCEL_ACCESS_TOKEN"),
+		CallTimeout:           parseDuration(os.Getenv("MYCEL_CALL_TIMEOUT")),
 		TLS:                   parseBool(os.Getenv("MYCELD_TLS")),
 		TLSCAFile:             os.Getenv("MYCELD_TLS_CA_FILE"),
 		TLSServerName:         os.Getenv("MYCELD_TLS_SERVER_NAME"),
@@ -69,4 +72,15 @@ func parseBool(value string) bool {
 	default:
 		return false
 	}
+}
+
+func parseDuration(value string) time.Duration {
+	if strings.TrimSpace(value) == "" {
+		return 0
+	}
+	d, err := time.ParseDuration(strings.TrimSpace(value))
+	if err != nil {
+		return 0
+	}
+	return d
 }
