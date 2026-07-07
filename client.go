@@ -42,6 +42,7 @@ type AdminClient struct {
 	SemanticMaintenance adminv1.AdminSemanticMaintenanceServiceClient
 	SemanticMigration   adminv1.AdminSemanticMigrationServiceClient
 	Inference           adminv1.AdminInferenceServiceClient
+	Backup              adminv1.AdminBackupServiceClient
 
 	tokens *tokenSource
 	cfg    Config
@@ -92,6 +93,7 @@ func DialAdmin(ctx context.Context, cfg Config, opts ...grpc.DialOption) (*Admin
 	c.SemanticMaintenance = adminv1.NewAdminSemanticMaintenanceServiceClient(conn)
 	c.SemanticMigration = adminv1.NewAdminSemanticMigrationServiceClient(conn)
 	c.Inference = adminv1.NewAdminInferenceServiceClient(conn)
+	c.Backup = adminv1.NewAdminBackupServiceClient(conn)
 	if cfg.Username != "" || cfg.Password != "" {
 		if _, err := c.LoginOperator(ctx, cfg.Username, cfg.Password); err != nil {
 			_ = conn.Close()

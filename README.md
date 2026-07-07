@@ -19,6 +19,7 @@ The SDK depends on `github.com/myceldb/mycel-api` for protobuf/gRPC stubs and pr
 - call timeout helpers
 - session/transaction helpers
 - thin graph/query convenience methods
+- Admin backup policy/status/list/trigger/delete helpers
 
 ## Usage
 
@@ -45,6 +46,17 @@ admin, err := mycel.DialAdmin(ctx, mycel.Config{
     Username: "operator",
     Password: "secret",
 })
+```
+
+Admin backup helpers wrap `mycel.admin.v1.AdminBackupService`:
+
+```go
+policy, err := admin.GetBackupPolicy(ctx)
+status, err := admin.GetBackupStatus(ctx)
+trigger, err := admin.TriggerBackup(ctx, "before upgrade")
+_ = policy
+_ = status
+_ = trigger
 ```
 
 ## Environment config
