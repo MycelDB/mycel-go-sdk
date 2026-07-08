@@ -4,8 +4,8 @@ import (
 	"context"
 	"fmt"
 
-	adminv1 "github.com/myceldb/mycel-api/gen/go/mycel/admin/v1"
-	clientv1 "github.com/myceldb/mycel-api/gen/go/mycel/client/v1"
+	adminv1 "github.com/myceldb/mycel-go-sdk/gen/go/mycel/admin/v1"
+	clientv1 "github.com/myceldb/mycel-go-sdk/gen/go/mycel/client/v1"
 	"google.golang.org/grpc"
 )
 

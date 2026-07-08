@@ -3,7 +3,7 @@ package mycel
 import (
 	"context"
 
-	clientv1 "github.com/myceldb/mycel-api/gen/go/mycel/client/v1"
+	clientv1 "github.com/myceldb/mycel-go-sdk/gen/go/mycel/client/v1"
 )
 
 func (c *Client) WhoAmI(ctx context.Context) (*PrincipalInfo, error) {

@@ -1,0 +1,28 @@
+name: CI
+
+on:
+  push:
+    branches: [develop]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout SDK
+        uses: actions/checkout@v4
+        with:
+          path: mycel-go-sdk
+      - name: Checkout API protos
+        uses: actions/checkout@v4
+        with:
+          repository: MycelDB/mycel-api
+          ref: develop
+          path: mycel-api
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: mycel-go-sdk/go.mod
+          cache-dependency-path: mycel-go-sdk/go.sum
+      - name: Test
+        working-directory: mycel-go-sdk
+        run: make test

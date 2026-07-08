@@ -3,7 +3,7 @@ package mycel
 import (
 	"context"
 
-	adminv1 "github.com/myceldb/mycel-api/gen/go/mycel/admin/v1"
+	adminv1 "github.com/myceldb/mycel-go-sdk/gen/go/mycel/admin/v1"
 )
 
 func (c *AdminClient) GetBackupPolicy(ctx context.Context) (*adminv1.BackupPolicy, error) {

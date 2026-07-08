@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"strings"
 
-	adminv1 "github.com/myceldb/mycel-api/gen/go/mycel/admin/v1"
+	adminv1 "github.com/myceldb/mycel-go-sdk/gen/go/mycel/admin/v1"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 	"google.golang.org/protobuf/proto"

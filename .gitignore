@@ -1,6 +1,8 @@
 # Build/test artifacts
 coverage.out
 bin/
+gen/
+.cache/
 
 # Editor/OS
 .DS_Store

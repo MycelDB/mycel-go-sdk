@@ -8,34 +8,80 @@ Module path:
 github.com/myceldb/mycel-go-sdk
 ```
 
-The SDK depends on `github.com/myceldb/mycel-api` for protobuf/gRPC stubs and provides:
+The SDK generates Go protobuf/gRPC stubs from the language-independent `mycel-api` protobuf contracts and provides:
 
 - daemon dial helpers
 - plaintext/TLS/mTLS transport config
 - user login and refresh helpers
 - operator/admin login helper
 - bearer-token metadata injection
-- raw generated Admin and Client service clients
+- generated Admin and Client service clients under `gen/go/` after generation
 - call timeout helpers
 - session/transaction helpers
 - thin graph/query convenience methods
 - Admin backup policy/status/list/trigger/delete helpers
 
+Generated code is not committed. Run generation before testing or building from a fresh checkout.
+
+## Generate protobuf stubs
+
+By default generation reads protobufs from a sibling checkout:
+
+```text
+../mycel-api/api/proto
+```
+
+Run:
+
+```sh
+make generate
+```
+
+Or set a custom API checkout path:
+
+```sh
+MYCEL_API_ROOT=/path/to/mycel-api make generate
+```
+
+Generated files are written to `gen/go/` and ignored by git.
+
+## Test
+
+```sh
+make test
+```
+
+`make test` runs generation first, then `go test ./...`.
+
 ## Usage
 
 ```go
-ctx := context.Background()
-client, err := mycel.Dial(ctx, mycel.Config{
-    Addr:     "127.0.0.1:9091",
-    Username: "alice",
-    Password: "secret",
-})
-if err != nil {
-    // handle error
-}
-defer client.Close()
+package main
 
-spaces, err := client.Space.ListSpaces(client.AuthContext(ctx), &clientv1.ListSpacesRequest{})
+import (
+    "context"
+
+    mycel "github.com/myceldb/mycel-go-sdk"
+    clientv1 "github.com/myceldb/mycel-go-sdk/gen/go/mycel/client/v1"
+)
+
+func main() {
+    ctx := context.Background()
+    client, err := mycel.Dial(ctx, mycel.Config{
+        Addr:     "127.0.0.1:9091",
+        Username: "alice",
+        Password: "secret",
+    })
+    if err != nil {
+        panic(err)
+    }
+    defer client.Close()
+
+    _, err = client.Space.ListSpaces(client.AuthContext(ctx), &clientv1.ListSpacesRequest{})
+    if err != nil {
+        panic(err)
+    }
+}
 ```
 
 Admin APIs use `DialAdmin`:
@@ -78,13 +124,3 @@ _ = trigger
 - `MYCEL_CLIENT_VERSION`
 - `MYCEL_CLIENT_PLATFORM`
 - `MYCEL_CLIENT_DEVICE_LABEL`
-
-## Local development
-
-This repository currently uses a local replace for sibling development:
-
-```go
-replace github.com/myceldb/mycel-api => ../mycel-api
-```
-
-Remove that replace when consuming a public module/tag directly.
