@@ -11,10 +11,13 @@ const DefaultAddr = "127.0.0.1:9091"
 type Config struct {
 	Addr string
 
-	Username    string
-	Password    string
-	AccessToken string
-	CallTimeout time.Duration
+	Username              string
+	Password              string
+	AccessToken           string
+	AccessTokenExpireTime time.Time
+	RefreshToken          string
+	RefreshBefore         time.Duration
+	CallTimeout           time.Duration
 
 	TLS                   bool
 	TLSCAFile             string
@@ -42,6 +45,9 @@ func ConfigFromEnv() Config {
 		Username:              os.Getenv("MYCEL_USERNAME"),
 		Password:              os.Getenv("MYCEL_PASSWORD"),
 		AccessToken:           os.Getenv("MYCEL_ACCESS_TOKEN"),
+		AccessTokenExpireTime: parseTime(os.Getenv("MYCEL_ACCESS_TOKEN_EXPIRE_TIME")),
+		RefreshToken:          os.Getenv("MYCEL_REFRESH_TOKEN"),
+		RefreshBefore:         parseDuration(os.Getenv("MYCEL_REFRESH_BEFORE")),
 		CallTimeout:           parseDuration(os.Getenv("MYCEL_CALL_TIMEOUT")),
 		TLS:                   parseBool(os.Getenv("MYCELD_TLS")),
 		TLSCAFile:             os.Getenv("MYCELD_TLS_CA_FILE"),
@@ -83,4 +89,15 @@ func parseDuration(value string) time.Duration {
 		return 0
 	}
 	return d
+}
+
+func parseTime(value string) time.Time {
+	if strings.TrimSpace(value) == "" {
+		return time.Time{}
+	}
+	parsed, err := time.Parse(time.RFC3339, strings.TrimSpace(value))
+	if err != nil {
+		return time.Time{}
+	}
+	return parsed.UTC()
 }

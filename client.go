@@ -49,12 +49,13 @@ type AdminClient struct {
 }
 
 func Dial(ctx context.Context, cfg Config, opts ...grpc.DialOption) (*Client, error) {
-	tokens := newTokenSource(cfg.AccessToken)
+	tokens := newTokenSourceFromConfig(cfg)
 	conn, err := dial(ctx, cfg, tokens, opts...)
 	if err != nil {
 		return nil, err
 	}
 	c := &Client{Conn: conn, tokens: tokens, cfg: cfg}
+	tokens.SetRefresher(c.refreshWithStoredToken)
 	c.Auth = clientv1.NewAuthServiceClient(conn)
 	c.Space = clientv1.NewSpaceServiceClient(conn)
 	c.Domain = clientv1.NewDomainServiceClient(conn)
@@ -78,12 +79,13 @@ func Dial(ctx context.Context, cfg Config, opts ...grpc.DialOption) (*Client, er
 }
 
 func DialAdmin(ctx context.Context, cfg Config, opts ...grpc.DialOption) (*AdminClient, error) {
-	tokens := newTokenSource(cfg.AccessToken)
+	tokens := newTokenSourceFromConfig(cfg)
 	conn, err := dial(ctx, cfg, tokens, opts...)
 	if err != nil {
 		return nil, err
 	}
 	c := &AdminClient{Conn: conn, tokens: tokens, cfg: cfg}
+	tokens.SetRefresher(c.refreshWithStoredToken)
 	c.Auth = adminv1.NewAdminAuthServiceClient(conn)
 	c.Operators = adminv1.NewAdminOperatorServiceClient(conn)
 	c.Users = adminv1.NewAdminUserServiceClient(conn)

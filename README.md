@@ -12,8 +12,9 @@ The SDK generates Go protobuf/gRPC stubs from the language-independent `mycel-ap
 
 - daemon dial helpers
 - plaintext/TLS/mTLS transport config
-- user login and refresh helpers
-- operator/admin login helper
+- user login, refresh, and logout helpers
+- operator/admin login, refresh, and logout helpers
+- automatic access-token refresh with one retry on expired-token `Unauthenticated`
 - bearer-token metadata injection
 - generated Admin and Client service clients under `gen/go/` after generation
 - call timeout helpers
@@ -94,6 +95,8 @@ admin, err := mycel.DialAdmin(ctx, mycel.Config{
 })
 ```
 
+`Dial` and `DialAdmin` store access-token expiry and refresh tokens returned by login. Before protected RPCs, the SDK refreshes near-expiry tokens automatically. If a protected unary RPC or stream setup fails with `Unauthenticated` because the access token is expired, the SDK refreshes once and retries once. You can also call `Refresh`, `RefreshOperator`, `Logout`, or `LogoutOperator` directly.
+
 Admin backup helpers wrap `mycel.admin.v1.AdminBackupService`:
 
 ```go
@@ -113,6 +116,9 @@ _ = trigger
 - `MYCEL_USERNAME`
 - `MYCEL_PASSWORD`
 - `MYCEL_ACCESS_TOKEN`
+- `MYCEL_ACCESS_TOKEN_EXPIRE_TIME` (RFC3339)
+- `MYCEL_REFRESH_TOKEN`
+- `MYCEL_REFRESH_BEFORE` (duration, default `30s`)
 - `MYCEL_CALL_TIMEOUT`
 - `MYCELD_TLS`
 - `MYCELD_TLS_CA_FILE`
