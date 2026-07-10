@@ -225,6 +225,13 @@ func (c *AdminClient) operatorClientInfo() *adminv1.OperatorClientInfo {
 	return &adminv1.OperatorClientInfo{Name: firstNonEmpty(c.cfg.ClientName, "mycel-go-sdk"), Version: c.cfg.ClientVersion, Platform: firstNonEmpty(c.cfg.Platform, "go"), DeviceLabel: c.cfg.DeviceLabel}
 }
 
+func (c *AdminClient) adminClientInfo() *adminv1.AdminClientInfo {
+	if c == nil {
+		return &adminv1.AdminClientInfo{Name: "mycel-go-sdk", Platform: "go"}
+	}
+	return &adminv1.AdminClientInfo{Name: firstNonEmpty(c.cfg.ClientName, "mycel-go-sdk"), Version: c.cfg.ClientVersion, Platform: firstNonEmpty(c.cfg.Platform, "go"), DeviceLabel: c.cfg.DeviceLabel}
+}
+
 func timestampAsTime(ts *timestamppb.Timestamp) time.Time {
 	if ts == nil {
 		return time.Time{}
