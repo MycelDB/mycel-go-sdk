@@ -7,6 +7,29 @@ import (
 	"google.golang.org/protobuf/types/known/fieldmaskpb"
 )
 
+// DomainPolicy controls discovery, search, semantic, and write behavior for a domain.
+type DomainPolicy struct {
+	DiscoveryMode clientv1.DomainDiscoveryMode
+	SearchMode    clientv1.DomainSearchMode
+	SemanticMode  clientv1.DomainSemanticMode
+	ReadOnly      bool
+}
+
+// NormalDomainPolicy returns the default writable, discoverable, searchable domain policy.
+func NormalDomainPolicy() DomainPolicy {
+	return DomainPolicy{DiscoveryMode: clientv1.DomainDiscoveryMode_DOMAIN_DISCOVERY_MODE_NORMAL, SearchMode: clientv1.DomainSearchMode_DOMAIN_SEARCH_MODE_NORMAL, SemanticMode: clientv1.DomainSemanticMode_DOMAIN_SEMANTIC_MODE_NORMAL}
+}
+
+// PrivateDomainPolicy returns the policy for directly addressed private data such as steward profiles.
+func PrivateDomainPolicy() DomainPolicy {
+	return DomainPolicy{DiscoveryMode: clientv1.DomainDiscoveryMode_DOMAIN_DISCOVERY_MODE_EXPLICIT_ONLY, SearchMode: clientv1.DomainSearchMode_DOMAIN_SEARCH_MODE_DISABLED, SemanticMode: clientv1.DomainSemanticMode_DOMAIN_SEMANTIC_MODE_DISABLED}
+}
+
+// ManualDomainPolicy returns the policy for read-only manual/help domains that are searchable only when explicitly targeted.
+func ManualDomainPolicy() DomainPolicy {
+	return DomainPolicy{DiscoveryMode: clientv1.DomainDiscoveryMode_DOMAIN_DISCOVERY_MODE_EXPLICIT_ONLY, SearchMode: clientv1.DomainSearchMode_DOMAIN_SEARCH_MODE_EXPLICIT_ONLY, SemanticMode: clientv1.DomainSemanticMode_DOMAIN_SEMANTIC_MODE_EXPLICIT_ONLY, ReadOnly: true}
+}
+
 // ListDomains returns client-visible domains in a space.
 func (c *Client) ListDomains(ctx context.Context, spaceID string, pageSize int32, pageToken string, includeSystem bool) (*clientv1.ListDomainsResponse, error) {
 	callCtx, cancel := c.AuthCallContext(ctx)
@@ -31,8 +54,8 @@ func (c *Client) GetDomain(ctx context.Context, spaceID, domainID, key string) (
 	return res.GetDomain(), nil
 }
 
-// CreateDomain creates a new non-system domain in a space.
-func (c *Client) CreateDomain(ctx context.Context, spaceID, key, name, description string, discoveryMode clientv1.DomainDiscoveryMode) (*clientv1.Domain, error) {
+// CreateDomain creates a new non-system domain in a space using the supplied policy.
+func (c *Client) CreateDomain(ctx context.Context, spaceID, key, name, description string, policy DomainPolicy) (*clientv1.Domain, error) {
 	callCtx, cancel := c.AuthCallContext(ctx)
 	defer cancel()
 	res, err := c.Domain.CreateDomain(callCtx, &clientv1.CreateDomainRequest{
@@ -40,7 +63,10 @@ func (c *Client) CreateDomain(ctx context.Context, spaceID, key, name, descripti
 		Key:           key,
 		Name:          name,
 		Description:   description,
-		DiscoveryMode: discoveryMode,
+		DiscoveryMode: policy.DiscoveryMode,
+		SearchMode:    policy.SearchMode,
+		SemanticMode:  policy.SemanticMode,
+		ReadOnly:      policy.ReadOnly,
 	})
 	if err != nil {
 		return nil, err
@@ -48,8 +74,8 @@ func (c *Client) CreateDomain(ctx context.Context, spaceID, key, name, descripti
 	return res.GetDomain(), nil
 }
 
-// UpdateDomainDiscoveryMode updates only the discovery mode for a domain.
-func (c *Client) UpdateDomainDiscoveryMode(ctx context.Context, spaceID, domainID string, mode clientv1.DomainDiscoveryMode) (*clientv1.Domain, error) {
+// UpdateDomainPolicy updates the discovery/search/semantic/read-only policy for a domain.
+func (c *Client) UpdateDomainPolicy(ctx context.Context, spaceID, domainID string, policy DomainPolicy) (*clientv1.Domain, error) {
 	callCtx, cancel := c.AuthCallContext(ctx)
 	defer cancel()
 	res, err := c.Domain.UpdateDomain(callCtx, &clientv1.UpdateDomainRequest{
@@ -58,9 +84,12 @@ func (c *Client) UpdateDomainDiscoveryMode(ctx context.Context, spaceID, domainI
 		Domain: &clientv1.Domain{
 			SpaceId:       spaceID,
 			DomainId:      domainID,
-			DiscoveryMode: mode,
+			DiscoveryMode: policy.DiscoveryMode,
+			SearchMode:    policy.SearchMode,
+			SemanticMode:  policy.SemanticMode,
+			ReadOnly:      policy.ReadOnly,
 		},
-		UpdateMask: &fieldmaskpb.FieldMask{Paths: []string{"discovery_mode"}},
+		UpdateMask: &fieldmaskpb.FieldMask{Paths: []string{"discovery_mode", "search_mode", "semantic_mode", "read_only"}},
 	})
 	if err != nil {
 		return nil, err
