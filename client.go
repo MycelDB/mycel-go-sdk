@@ -4,8 +4,8 @@ import (
 	"context"
 	"fmt"
 
-	adminv1 "github.com/myceldb/mycel-api/gen/go/mycel/admin/v1"
-	clientv1 "github.com/myceldb/mycel-api/gen/go/mycel/client/v1"
+	adminv1 "github.com/myceldb/mycel-go-sdk/gen/go/mycel/admin/v1"
+	clientv1 "github.com/myceldb/mycel-go-sdk/gen/go/mycel/client/v1"
 	"google.golang.org/grpc"
 )
 
@@ -42,18 +42,20 @@ type AdminClient struct {
 	SemanticMaintenance adminv1.AdminSemanticMaintenanceServiceClient
 	SemanticMigration   adminv1.AdminSemanticMigrationServiceClient
 	Inference           adminv1.AdminInferenceServiceClient
+	Backup              adminv1.AdminBackupServiceClient
 
 	tokens *tokenSource
 	cfg    Config
 }
 
 func Dial(ctx context.Context, cfg Config, opts ...grpc.DialOption) (*Client, error) {
-	tokens := newTokenSource(cfg.AccessToken)
+	tokens := newTokenSourceFromConfig(cfg)
 	conn, err := dial(ctx, cfg, tokens, opts...)
 	if err != nil {
 		return nil, err
 	}
 	c := &Client{Conn: conn, tokens: tokens, cfg: cfg}
+	tokens.SetRefresher(c.refreshWithStoredToken)
 	c.Auth = clientv1.NewAuthServiceClient(conn)
 	c.Space = clientv1.NewSpaceServiceClient(conn)
 	c.Domain = clientv1.NewDomainServiceClient(conn)
@@ -77,12 +79,13 @@ func Dial(ctx context.Context, cfg Config, opts ...grpc.DialOption) (*Client, er
 }
 
 func DialAdmin(ctx context.Context, cfg Config, opts ...grpc.DialOption) (*AdminClient, error) {
-	tokens := newTokenSource(cfg.AccessToken)
+	tokens := newTokenSourceFromConfig(cfg)
 	conn, err := dial(ctx, cfg, tokens, opts...)
 	if err != nil {
 		return nil, err
 	}
 	c := &AdminClient{Conn: conn, tokens: tokens, cfg: cfg}
+	tokens.SetRefresher(c.refreshWithStoredToken)
 	c.Auth = adminv1.NewAdminAuthServiceClient(conn)
 	c.Operators = adminv1.NewAdminOperatorServiceClient(conn)
 	c.Users = adminv1.NewAdminUserServiceClient(conn)
@@ -92,6 +95,7 @@ func DialAdmin(ctx context.Context, cfg Config, opts ...grpc.DialOption) (*Admin
 	c.SemanticMaintenance = adminv1.NewAdminSemanticMaintenanceServiceClient(conn)
 	c.SemanticMigration = adminv1.NewAdminSemanticMigrationServiceClient(conn)
 	c.Inference = adminv1.NewAdminInferenceServiceClient(conn)
+	c.Backup = adminv1.NewAdminBackupServiceClient(conn)
 	if cfg.Username != "" || cfg.Password != "" {
 		if _, err := c.LoginOperator(ctx, cfg.Username, cfg.Password); err != nil {
 			_ = conn.Close()

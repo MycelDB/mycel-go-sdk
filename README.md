@@ -8,33 +8,81 @@ Module path:
 github.com/myceldb/mycel-go-sdk
 ```
 
-The SDK depends on `github.com/myceldb/mycel-api` for protobuf/gRPC stubs and provides:
+The SDK generates Go protobuf/gRPC stubs from the language-independent `mycel-api` protobuf contracts and provides:
 
 - daemon dial helpers
 - plaintext/TLS/mTLS transport config
-- user login and refresh helpers
-- operator/admin login helper
+- user login, refresh, and logout helpers
+- operator/admin login, refresh, and logout helpers
+- automatic access-token refresh with one retry on expired-token `Unauthenticated`
 - bearer-token metadata injection
-- raw generated Admin and Client service clients
+- generated Admin and Client service clients under `gen/go/` after generation
 - call timeout helpers
 - session/transaction helpers
 - thin graph/query convenience methods
+- Admin backup policy/status/list/trigger/delete helpers
+
+Generated code is not committed. Run generation before testing or building from a fresh checkout.
+
+## Generate protobuf stubs
+
+By default generation reads protobufs from a sibling checkout:
+
+```text
+../mycel-api/api/proto
+```
+
+Run:
+
+```sh
+make generate
+```
+
+Or set a custom API checkout path:
+
+```sh
+MYCEL_API_ROOT=/path/to/mycel-api make generate
+```
+
+Generated files are written to `gen/go/` and ignored by git.
+
+## Test
+
+```sh
+make test
+```
+
+`make test` runs generation first, then `go test ./...`.
 
 ## Usage
 
 ```go
-ctx := context.Background()
-client, err := mycel.Dial(ctx, mycel.Config{
-    Addr:     "127.0.0.1:9091",
-    Username: "alice",
-    Password: "secret",
-})
-if err != nil {
-    // handle error
-}
-defer client.Close()
+package main
 
-spaces, err := client.Space.ListSpaces(client.AuthContext(ctx), &clientv1.ListSpacesRequest{})
+import (
+    "context"
+
+    mycel "github.com/myceldb/mycel-go-sdk"
+    clientv1 "github.com/myceldb/mycel-go-sdk/gen/go/mycel/client/v1"
+)
+
+func main() {
+    ctx := context.Background()
+    client, err := mycel.Dial(ctx, mycel.Config{
+        Addr:     "127.0.0.1:9091",
+        Username: "alice",
+        Password: "secret",
+    })
+    if err != nil {
+        panic(err)
+    }
+    defer client.Close()
+
+    _, err = client.Space.ListSpaces(client.AuthContext(ctx), &clientv1.ListSpacesRequest{})
+    if err != nil {
+        panic(err)
+    }
+}
 ```
 
 Admin APIs use `DialAdmin`:
@@ -47,6 +95,19 @@ admin, err := mycel.DialAdmin(ctx, mycel.Config{
 })
 ```
 
+`Dial` and `DialAdmin` store access-token expiry and refresh tokens returned by login. Before protected RPCs, the SDK refreshes near-expiry tokens automatically. If a protected unary RPC or stream setup fails with `Unauthenticated` because the access token is expired, the SDK refreshes once and retries once. You can also call `Refresh`, `RefreshOperator`, `Logout`, or `LogoutOperator` directly.
+
+Admin backup helpers wrap `mycel.admin.v1.AdminBackupService`:
+
+```go
+policy, err := admin.GetBackupPolicy(ctx)
+status, err := admin.GetBackupStatus(ctx)
+trigger, err := admin.TriggerBackup(ctx, "before upgrade")
+_ = policy
+_ = status
+_ = trigger
+```
+
 ## Environment config
 
 `ConfigFromEnv` reads:
@@ -55,6 +116,9 @@ admin, err := mycel.DialAdmin(ctx, mycel.Config{
 - `MYCEL_USERNAME`
 - `MYCEL_PASSWORD`
 - `MYCEL_ACCESS_TOKEN`
+- `MYCEL_ACCESS_TOKEN_EXPIRE_TIME` (RFC3339)
+- `MYCEL_REFRESH_TOKEN`
+- `MYCEL_REFRESH_BEFORE` (duration, default `30s`)
 - `MYCEL_CALL_TIMEOUT`
 - `MYCELD_TLS`
 - `MYCELD_TLS_CA_FILE`
@@ -66,13 +130,3 @@ admin, err := mycel.DialAdmin(ctx, mycel.Config{
 - `MYCEL_CLIENT_VERSION`
 - `MYCEL_CLIENT_PLATFORM`
 - `MYCEL_CLIENT_DEVICE_LABEL`
-
-## Local development
-
-This repository currently uses a local replace for sibling development:
-
-```go
-replace github.com/myceldb/mycel-api => ../mycel-api
-```
-
-Remove that replace when consuming a public module/tag directly.
