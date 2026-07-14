@@ -22,9 +22,11 @@ The SDK generates Go protobuf/gRPC stubs from the language-independent `mycel-ap
 - thin graph/query convenience methods
 - Admin backup policy/status/list/trigger/delete helpers
 
-Generated code is not committed. Run generation before testing or building from a fresh checkout.
+Generated code is committed under `gen/go/` so tagged Go module releases are self-contained.
 
 ## Generate protobuf stubs
+
+The committed stubs are generated from the `mycel-api` `v0.2.0` contracts. CI checks regeneration against that tag.
 
 By default generation reads protobufs from a sibling checkout:
 
@@ -32,7 +34,7 @@ By default generation reads protobufs from a sibling checkout:
 ../mycel-api/api/proto
 ```
 
-Run:
+For release-aligned regeneration, check out `mycel-api` at `v0.2.0`, then run:
 
 ```sh
 make generate
@@ -44,7 +46,7 @@ Or set a custom API checkout path:
 MYCEL_API_ROOT=/path/to/mycel-api make generate
 ```
 
-Generated files are written to `gen/go/` and ignored by git.
+Generated files are written to `gen/go/` and should be committed when API contracts change.
 
 ## Test
 
