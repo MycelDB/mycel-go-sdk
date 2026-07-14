@@ -1,7 +1,7 @@
 # Build/test artifacts
 coverage.out
 bin/
-gen/
+# Generated protobuf bindings are committed so tagged Go module releases are self-contained.
 .cache/
 
 # Editor/OS
