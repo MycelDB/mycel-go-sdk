@@ -7,12 +7,14 @@ import (
 )
 
 func (c *Client) WhoAmI(ctx context.Context) (*PrincipalInfo, error) {
-	callCtx, cancel := c.AuthCallContext(ctx)
-	defer cancel()
-	res, err := c.Auth.WhoAmI(callCtx, &clientv1.WhoAmIRequest{})
-	if err != nil {
-		return nil, err
-	}
-	principal := res.GetPrincipal()
-	return &PrincipalInfo{UserID: principal.GetUserId(), Username: principal.GetUsername()}, nil
+	return DoReadValue(ctx, c, "who am i", func() (*PrincipalInfo, error) {
+		callCtx, cancel := c.AuthCallContext(ctx)
+		defer cancel()
+		res, err := c.Auth.WhoAmI(callCtx, &clientv1.WhoAmIRequest{})
+		if err != nil {
+			return nil, err
+		}
+		principal := res.GetPrincipal()
+		return &PrincipalInfo{UserID: principal.GetUserId(), Username: principal.GetUsername()}, nil
+	})
 }

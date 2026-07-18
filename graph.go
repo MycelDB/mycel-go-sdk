@@ -12,7 +12,7 @@ func (c *Client) CreateNode(ctx context.Context, txID string, node *clientv1.Nod
 	defer cancel()
 	res, err := c.Graph.CreateNode(callCtx, &clientv1.CreateNodeRequest{TransactionId: txID, Node: node})
 	if err != nil {
-		return nil, err
+		return nil, c.FollowPrimaryForUnsafe(ctx, "create node", err)
 	}
 	return res.GetNode(), nil
 }
@@ -51,19 +51,23 @@ func (c *Client) CreateEdge(ctx context.Context, txID string, edge *clientv1.Edg
 }
 
 func (c *Client) GetNode(ctx context.Context, txID, nodeID string) (*clientv1.Node, error) {
-	callCtx, cancel := c.AuthCallContext(ctx)
-	defer cancel()
-	res, err := c.Graph.GetNode(callCtx, &clientv1.GetNodeRequest{TransactionId: txID, NodeId: nodeID})
-	if err != nil {
-		return nil, err
-	}
-	return res.GetNode(), nil
+	return DoReadValue(ctx, c, "get node", func() (*clientv1.Node, error) {
+		callCtx, cancel := c.AuthCallContext(ctx)
+		defer cancel()
+		res, err := c.Graph.GetNode(callCtx, &clientv1.GetNodeRequest{TransactionId: txID, NodeId: nodeID})
+		if err != nil {
+			return nil, err
+		}
+		return res.GetNode(), nil
+	})
 }
 
 func (c *Client) ListNodes(ctx context.Context, txID string, pageSize int32, pageToken string) (*clientv1.ListNodesResponse, error) {
-	callCtx, cancel := c.AuthCallContext(ctx)
-	defer cancel()
-	return c.Graph.ListNodes(callCtx, &clientv1.ListNodesRequest{TransactionId: txID, PageSize: pageSize, PageToken: pageToken})
+	return DoReadValue(ctx, c, "list nodes", func() (*clientv1.ListNodesResponse, error) {
+		callCtx, cancel := c.AuthCallContext(ctx)
+		defer cancel()
+		return c.Graph.ListNodes(callCtx, &clientv1.ListNodesRequest{TransactionId: txID, PageSize: pageSize, PageToken: pageToken})
+	})
 }
 
 func (c *Client) ListChildren(ctx context.Context, txID, parentID string) (*clientv1.ListChildrenResponse, error) {
@@ -79,7 +83,9 @@ func (c *Client) GetParent(ctx context.Context, txID, childID string) (*clientv1
 }
 
 func (c *Client) ExecuteQuery(ctx context.Context, txID string, query *clientv1.GraphQuery, pageSize int32) (*clientv1.ExecuteQueryResponse, error) {
-	callCtx, cancel := c.AuthCallContext(ctx)
-	defer cancel()
-	return c.Query.ExecuteQuery(callCtx, &clientv1.ExecuteQueryRequest{TransactionId: txID, Query: query, PageSize: pageSize})
+	return DoReadValue(ctx, c, "execute query", func() (*clientv1.ExecuteQueryResponse, error) {
+		callCtx, cancel := c.AuthCallContext(ctx)
+		defer cancel()
+		return c.Query.ExecuteQuery(callCtx, &clientv1.ExecuteQueryRequest{TransactionId: txID, Query: query, PageSize: pageSize})
+	})
 }

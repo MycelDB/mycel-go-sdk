@@ -11,23 +11,27 @@ func (c *Client) ResolveDomainID(ctx context.Context, spaceID, domainKey string)
 	if domainKey == "" {
 		domainKey = "default"
 	}
-	callCtx, cancel := c.AuthCallContext(ctx)
-	defer cancel()
-	res, err := c.Domain.GetDomain(callCtx, &clientv1.GetDomainRequest{SpaceId: spaceID, Key: domainKey})
-	if err != nil {
-		return "", fmt.Errorf("resolve domain %q in space %s: %w", domainKey, spaceID, err)
-	}
-	return res.GetDomain().GetDomainId(), nil
+	return DoReadValue(ctx, c, "resolve domain", func() (string, error) {
+		callCtx, cancel := c.AuthCallContext(ctx)
+		defer cancel()
+		res, err := c.Domain.GetDomain(callCtx, &clientv1.GetDomainRequest{SpaceId: spaceID, Key: domainKey})
+		if err != nil {
+			return "", fmt.Errorf("resolve domain %q in space %s: %w", domainKey, spaceID, err)
+		}
+		return res.GetDomain().GetDomainId(), nil
+	})
 }
 
 func (c *Client) OpenSession(ctx context.Context, spaceID, domainID string) (string, error) {
-	callCtx, cancel := c.AuthCallContext(ctx)
-	defer cancel()
-	res, err := c.Session.OpenSession(callCtx, &clientv1.OpenSessionRequest{SpaceId: spaceID, DomainId: domainID})
-	if err != nil {
-		return "", err
-	}
-	return res.GetSession().GetSessionId(), nil
+	return DoReadValue(ctx, c, "open session", func() (string, error) {
+		callCtx, cancel := c.AuthCallContext(ctx)
+		defer cancel()
+		res, err := c.Session.OpenSession(callCtx, &clientv1.OpenSessionRequest{SpaceId: spaceID, DomainId: domainID})
+		if err != nil {
+			return "", err
+		}
+		return res.GetSession().GetSessionId(), nil
+	})
 }
 
 func (c *Client) CloseSession(ctx context.Context, sessionID string) error {
@@ -42,6 +46,9 @@ func (c *Client) BeginTransaction(ctx context.Context, sessionID string, mode cl
 	defer cancel()
 	res, err := c.Transaction.BeginTransaction(callCtx, &clientv1.BeginTransactionRequest{SessionId: sessionID, Mode: mode})
 	if err != nil {
+		if mode == clientv1.TransactionMode_TRANSACTION_MODE_READ_WRITE {
+			return "", c.FollowPrimaryForUnsafe(ctx, "begin read-write transaction; reopen session on new primary", err)
+		}
 		return "", err
 	}
 	return res.GetTransaction().GetTransactionId(), nil
@@ -59,7 +66,10 @@ func (c *Client) CommitTransaction(ctx context.Context, txID string) error {
 	callCtx, cancel := c.AuthCallContext(ctx)
 	defer cancel()
 	_, err := c.Transaction.CommitTransaction(callCtx, &clientv1.CommitTransactionRequest{TransactionId: txID})
-	return err
+	if err != nil {
+		return c.FollowPrimaryForUnsafe(ctx, "commit transaction", err)
+	}
+	return nil
 }
 
 func (c *Client) CloseTransaction(ctx context.Context, txID string) error {
