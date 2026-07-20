@@ -18,7 +18,6 @@ type Config struct {
 	RefreshToken          string
 	RefreshBefore         time.Duration
 	CallTimeout           time.Duration
-	PrimaryFollow         PrimaryFollowPolicy
 
 	TLS                   bool
 	TLSCAFile             string
@@ -31,24 +30,6 @@ type Config struct {
 	ClientVersion string
 	Platform      string
 	DeviceLabel   string
-}
-
-type PrimaryFollowPolicy struct {
-	Enabled      bool
-	RetryReads   bool
-	RetryUnsafe  bool
-	MaxRedirects int
-}
-
-func DefaultPrimaryFollowPolicy() PrimaryFollowPolicy {
-	return PrimaryFollowPolicy{Enabled: true, RetryReads: true, MaxRedirects: 1}
-}
-
-func (p PrimaryFollowPolicy) effective() PrimaryFollowPolicy {
-	if p.MaxRedirects <= 0 {
-		p.MaxRedirects = 1
-	}
-	return p
 }
 
 func (c Config) addr() string {
@@ -68,7 +49,6 @@ func ConfigFromEnv() Config {
 		RefreshToken:          os.Getenv("MYCEL_REFRESH_TOKEN"),
 		RefreshBefore:         parseDuration(os.Getenv("MYCEL_REFRESH_BEFORE")),
 		CallTimeout:           parseDuration(os.Getenv("MYCEL_CALL_TIMEOUT")),
-		PrimaryFollow:         DefaultPrimaryFollowPolicy(),
 		TLS:                   parseBool(os.Getenv("MYCELD_TLS")),
 		TLSCAFile:             os.Getenv("MYCELD_TLS_CA_FILE"),
 		TLSServerName:         os.Getenv("MYCELD_TLS_SERVER_NAME"),

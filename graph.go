@@ -12,7 +12,7 @@ func (c *Client) CreateNode(ctx context.Context, txID string, node *clientv1.Nod
 	defer cancel()
 	res, err := c.Graph.CreateNode(callCtx, &clientv1.CreateNodeRequest{TransactionId: txID, Node: node})
 	if err != nil {
-		return nil, c.FollowPrimaryForUnsafe(ctx, "create node", err)
+		return nil, err
 	}
 	return res.GetNode(), nil
 }

@@ -47,7 +47,7 @@ func (c *Client) BeginTransaction(ctx context.Context, sessionID string, mode cl
 	res, err := c.Transaction.BeginTransaction(callCtx, &clientv1.BeginTransactionRequest{SessionId: sessionID, Mode: mode})
 	if err != nil {
 		if mode == clientv1.TransactionMode_TRANSACTION_MODE_READ_WRITE {
-			return "", c.FollowPrimaryForUnsafe(ctx, "begin read-write transaction; reopen session on new primary", err)
+			return "", err
 		}
 		return "", err
 	}
@@ -66,10 +66,7 @@ func (c *Client) CommitTransaction(ctx context.Context, txID string) error {
 	callCtx, cancel := c.AuthCallContext(ctx)
 	defer cancel()
 	_, err := c.Transaction.CommitTransaction(callCtx, &clientv1.CommitTransactionRequest{TransactionId: txID})
-	if err != nil {
-		return c.FollowPrimaryForUnsafe(ctx, "commit transaction", err)
-	}
-	return nil
+	return err
 }
 
 func (c *Client) CloseTransaction(ctx context.Context, txID string) error {
