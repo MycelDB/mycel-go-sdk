@@ -21,6 +21,156 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
+// ClusterEngine describes the clustering engine implementation.
+type ClusterEngine int32
+
+const (
+	ClusterEngine_CLUSTER_ENGINE_UNSPECIFIED ClusterEngine = 0
+	ClusterEngine_CLUSTER_ENGINE_RAFT        ClusterEngine = 1
+)
+
+// Enum value maps for ClusterEngine.
+var (
+	ClusterEngine_name = map[int32]string{
+		0: "CLUSTER_ENGINE_UNSPECIFIED",
+		1: "CLUSTER_ENGINE_RAFT",
+	}
+	ClusterEngine_value = map[string]int32{
+		"CLUSTER_ENGINE_UNSPECIFIED": 0,
+		"CLUSTER_ENGINE_RAFT":        1,
+	}
+)
+
+func (x ClusterEngine) Enum() *ClusterEngine {
+	p := new(ClusterEngine)
+	*p = x
+	return p
+}
+
+func (x ClusterEngine) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (ClusterEngine) Descriptor() protoreflect.EnumDescriptor {
+	return file_mycel_admin_v1_cluster_proto_enumTypes[0].Descriptor()
+}
+
+func (ClusterEngine) Type() protoreflect.EnumType {
+	return &file_mycel_admin_v1_cluster_proto_enumTypes[0]
+}
+
+func (x ClusterEngine) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use ClusterEngine.Descriptor instead.
+func (ClusterEngine) EnumDescriptor() ([]byte, []int) {
+	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{0}
+}
+
+// RaftGroupKind describes a Raft group's routing role.
+type RaftGroupKind int32
+
+const (
+	RaftGroupKind_RAFT_GROUP_KIND_UNSPECIFIED RaftGroupKind = 0
+	RaftGroupKind_RAFT_GROUP_KIND_SYSTEM      RaftGroupKind = 1
+	RaftGroupKind_RAFT_GROUP_KIND_PARTITION   RaftGroupKind = 2
+)
+
+// Enum value maps for RaftGroupKind.
+var (
+	RaftGroupKind_name = map[int32]string{
+		0: "RAFT_GROUP_KIND_UNSPECIFIED",
+		1: "RAFT_GROUP_KIND_SYSTEM",
+		2: "RAFT_GROUP_KIND_PARTITION",
+	}
+	RaftGroupKind_value = map[string]int32{
+		"RAFT_GROUP_KIND_UNSPECIFIED": 0,
+		"RAFT_GROUP_KIND_SYSTEM":      1,
+		"RAFT_GROUP_KIND_PARTITION":   2,
+	}
+)
+
+func (x RaftGroupKind) Enum() *RaftGroupKind {
+	p := new(RaftGroupKind)
+	*p = x
+	return p
+}
+
+func (x RaftGroupKind) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (RaftGroupKind) Descriptor() protoreflect.EnumDescriptor {
+	return file_mycel_admin_v1_cluster_proto_enumTypes[1].Descriptor()
+}
+
+func (RaftGroupKind) Type() protoreflect.EnumType {
+	return &file_mycel_admin_v1_cluster_proto_enumTypes[1]
+}
+
+func (x RaftGroupKind) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use RaftGroupKind.Descriptor instead.
+func (RaftGroupKind) EnumDescriptor() ([]byte, []int) {
+	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{1}
+}
+
+// RaftGroupHealth describes MVP local health for a Raft group.
+type RaftGroupHealth int32
+
+const (
+	RaftGroupHealth_RAFT_GROUP_HEALTH_UNSPECIFIED RaftGroupHealth = 0
+	RaftGroupHealth_RAFT_GROUP_HEALTH_UNKNOWN     RaftGroupHealth = 1
+	RaftGroupHealth_RAFT_GROUP_HEALTH_HEALTHY     RaftGroupHealth = 2
+	RaftGroupHealth_RAFT_GROUP_HEALTH_NO_LEADER   RaftGroupHealth = 3
+)
+
+// Enum value maps for RaftGroupHealth.
+var (
+	RaftGroupHealth_name = map[int32]string{
+		0: "RAFT_GROUP_HEALTH_UNSPECIFIED",
+		1: "RAFT_GROUP_HEALTH_UNKNOWN",
+		2: "RAFT_GROUP_HEALTH_HEALTHY",
+		3: "RAFT_GROUP_HEALTH_NO_LEADER",
+	}
+	RaftGroupHealth_value = map[string]int32{
+		"RAFT_GROUP_HEALTH_UNSPECIFIED": 0,
+		"RAFT_GROUP_HEALTH_UNKNOWN":     1,
+		"RAFT_GROUP_HEALTH_HEALTHY":     2,
+		"RAFT_GROUP_HEALTH_NO_LEADER":   3,
+	}
+)
+
+func (x RaftGroupHealth) Enum() *RaftGroupHealth {
+	p := new(RaftGroupHealth)
+	*p = x
+	return p
+}
+
+func (x RaftGroupHealth) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (RaftGroupHealth) Descriptor() protoreflect.EnumDescriptor {
+	return file_mycel_admin_v1_cluster_proto_enumTypes[2].Descriptor()
+}
+
+func (RaftGroupHealth) Type() protoreflect.EnumType {
+	return &file_mycel_admin_v1_cluster_proto_enumTypes[2]
+}
+
+func (x RaftGroupHealth) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use RaftGroupHealth.Descriptor instead.
+func (RaftGroupHealth) EnumDescriptor() ([]byte, []int) {
+	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{2}
+}
+
 // ClusterMode describes the local daemon clustering mode.
 type ClusterMode int32
 
@@ -55,11 +205,11 @@ func (x ClusterMode) String() string {
 }
 
 func (ClusterMode) Descriptor() protoreflect.EnumDescriptor {
-	return file_mycel_admin_v1_cluster_proto_enumTypes[0].Descriptor()
+	return file_mycel_admin_v1_cluster_proto_enumTypes[3].Descriptor()
 }
 
 func (ClusterMode) Type() protoreflect.EnumType {
-	return &file_mycel_admin_v1_cluster_proto_enumTypes[0]
+	return &file_mycel_admin_v1_cluster_proto_enumTypes[3]
 }
 
 func (x ClusterMode) Number() protoreflect.EnumNumber {
@@ -68,7 +218,7 @@ func (x ClusterMode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use ClusterMode.Descriptor instead.
 func (ClusterMode) EnumDescriptor() ([]byte, []int) {
-	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{0}
+	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{3}
 }
 
 // ClusterNodeState describes the local node lifecycle state exposed to operators.
@@ -123,11 +273,11 @@ func (x ClusterNodeState) String() string {
 }
 
 func (ClusterNodeState) Descriptor() protoreflect.EnumDescriptor {
-	return file_mycel_admin_v1_cluster_proto_enumTypes[1].Descriptor()
+	return file_mycel_admin_v1_cluster_proto_enumTypes[4].Descriptor()
 }
 
 func (ClusterNodeState) Type() protoreflect.EnumType {
-	return &file_mycel_admin_v1_cluster_proto_enumTypes[1]
+	return &file_mycel_admin_v1_cluster_proto_enumTypes[4]
 }
 
 func (x ClusterNodeState) Number() protoreflect.EnumNumber {
@@ -136,7 +286,7 @@ func (x ClusterNodeState) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use ClusterNodeState.Descriptor instead.
 func (ClusterNodeState) EnumDescriptor() ([]byte, []int) {
-	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{1}
+	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{4}
 }
 
 // ClusterPeerState is the local view of a peer's cluster participation.
@@ -188,11 +338,11 @@ func (x ClusterPeerState) String() string {
 }
 
 func (ClusterPeerState) Descriptor() protoreflect.EnumDescriptor {
-	return file_mycel_admin_v1_cluster_proto_enumTypes[2].Descriptor()
+	return file_mycel_admin_v1_cluster_proto_enumTypes[5].Descriptor()
 }
 
 func (ClusterPeerState) Type() protoreflect.EnumType {
-	return &file_mycel_admin_v1_cluster_proto_enumTypes[2]
+	return &file_mycel_admin_v1_cluster_proto_enumTypes[5]
 }
 
 func (x ClusterPeerState) Number() protoreflect.EnumNumber {
@@ -201,7 +351,7 @@ func (x ClusterPeerState) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use ClusterPeerState.Descriptor instead.
 func (ClusterPeerState) EnumDescriptor() ([]byte, []int) {
-	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{2}
+	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{5}
 }
 
 // ClusterPeerSource describes how a topology peer entry was learned.
@@ -244,11 +394,11 @@ func (x ClusterPeerSource) String() string {
 }
 
 func (ClusterPeerSource) Descriptor() protoreflect.EnumDescriptor {
-	return file_mycel_admin_v1_cluster_proto_enumTypes[3].Descriptor()
+	return file_mycel_admin_v1_cluster_proto_enumTypes[6].Descriptor()
 }
 
 func (ClusterPeerSource) Type() protoreflect.EnumType {
-	return &file_mycel_admin_v1_cluster_proto_enumTypes[3]
+	return &file_mycel_admin_v1_cluster_proto_enumTypes[6]
 }
 
 func (x ClusterPeerSource) Number() protoreflect.EnumNumber {
@@ -257,7 +407,7 @@ func (x ClusterPeerSource) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use ClusterPeerSource.Descriptor instead.
 func (ClusterPeerSource) EnumDescriptor() ([]byte, []int) {
-	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{3}
+	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{6}
 }
 
 // ClusterMemberState is the authoritative admission state of a member.
@@ -300,11 +450,11 @@ func (x ClusterMemberState) String() string {
 }
 
 func (ClusterMemberState) Descriptor() protoreflect.EnumDescriptor {
-	return file_mycel_admin_v1_cluster_proto_enumTypes[4].Descriptor()
+	return file_mycel_admin_v1_cluster_proto_enumTypes[7].Descriptor()
 }
 
 func (ClusterMemberState) Type() protoreflect.EnumType {
-	return &file_mycel_admin_v1_cluster_proto_enumTypes[4]
+	return &file_mycel_admin_v1_cluster_proto_enumTypes[7]
 }
 
 func (x ClusterMemberState) Number() protoreflect.EnumNumber {
@@ -313,121 +463,7 @@ func (x ClusterMemberState) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use ClusterMemberState.Descriptor instead.
 func (ClusterMemberState) EnumDescriptor() ([]byte, []int) {
-	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{4}
-}
-
-// ClusterNodeRole is the local node's derived cluster authority role.
-type ClusterNodeRole int32
-
-const (
-	ClusterNodeRole_CLUSTER_NODE_ROLE_UNSPECIFIED ClusterNodeRole = 0
-	ClusterNodeRole_CLUSTER_NODE_ROLE_NONE        ClusterNodeRole = 1
-	ClusterNodeRole_CLUSTER_NODE_ROLE_PRIMARY     ClusterNodeRole = 2
-	ClusterNodeRole_CLUSTER_NODE_ROLE_FOLLOWER    ClusterNodeRole = 3
-	ClusterNodeRole_CLUSTER_NODE_ROLE_CANDIDATE   ClusterNodeRole = 4
-	ClusterNodeRole_CLUSTER_NODE_ROLE_OBSERVER    ClusterNodeRole = 5
-	ClusterNodeRole_CLUSTER_NODE_ROLE_LEARNER     ClusterNodeRole = 6
-)
-
-// Enum value maps for ClusterNodeRole.
-var (
-	ClusterNodeRole_name = map[int32]string{
-		0: "CLUSTER_NODE_ROLE_UNSPECIFIED",
-		1: "CLUSTER_NODE_ROLE_NONE",
-		2: "CLUSTER_NODE_ROLE_PRIMARY",
-		3: "CLUSTER_NODE_ROLE_FOLLOWER",
-		4: "CLUSTER_NODE_ROLE_CANDIDATE",
-		5: "CLUSTER_NODE_ROLE_OBSERVER",
-		6: "CLUSTER_NODE_ROLE_LEARNER",
-	}
-	ClusterNodeRole_value = map[string]int32{
-		"CLUSTER_NODE_ROLE_UNSPECIFIED": 0,
-		"CLUSTER_NODE_ROLE_NONE":        1,
-		"CLUSTER_NODE_ROLE_PRIMARY":     2,
-		"CLUSTER_NODE_ROLE_FOLLOWER":    3,
-		"CLUSTER_NODE_ROLE_CANDIDATE":   4,
-		"CLUSTER_NODE_ROLE_OBSERVER":    5,
-		"CLUSTER_NODE_ROLE_LEARNER":     6,
-	}
-)
-
-func (x ClusterNodeRole) Enum() *ClusterNodeRole {
-	p := new(ClusterNodeRole)
-	*p = x
-	return p
-}
-
-func (x ClusterNodeRole) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (ClusterNodeRole) Descriptor() protoreflect.EnumDescriptor {
-	return file_mycel_admin_v1_cluster_proto_enumTypes[5].Descriptor()
-}
-
-func (ClusterNodeRole) Type() protoreflect.EnumType {
-	return &file_mycel_admin_v1_cluster_proto_enumTypes[5]
-}
-
-func (x ClusterNodeRole) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use ClusterNodeRole.Descriptor instead.
-func (ClusterNodeRole) EnumDescriptor() ([]byte, []int) {
-	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{5}
-}
-
-type ClusterReplicationRole int32
-
-const (
-	ClusterReplicationRole_CLUSTER_REPLICATION_ROLE_UNSPECIFIED    ClusterReplicationRole = 0
-	ClusterReplicationRole_CLUSTER_REPLICATION_ROLE_NOT_APPLICABLE ClusterReplicationRole = 1
-	ClusterReplicationRole_CLUSTER_REPLICATION_ROLE_PRIMARY        ClusterReplicationRole = 2
-	ClusterReplicationRole_CLUSTER_REPLICATION_ROLE_FOLLOWER       ClusterReplicationRole = 3
-)
-
-// Enum value maps for ClusterReplicationRole.
-var (
-	ClusterReplicationRole_name = map[int32]string{
-		0: "CLUSTER_REPLICATION_ROLE_UNSPECIFIED",
-		1: "CLUSTER_REPLICATION_ROLE_NOT_APPLICABLE",
-		2: "CLUSTER_REPLICATION_ROLE_PRIMARY",
-		3: "CLUSTER_REPLICATION_ROLE_FOLLOWER",
-	}
-	ClusterReplicationRole_value = map[string]int32{
-		"CLUSTER_REPLICATION_ROLE_UNSPECIFIED":    0,
-		"CLUSTER_REPLICATION_ROLE_NOT_APPLICABLE": 1,
-		"CLUSTER_REPLICATION_ROLE_PRIMARY":        2,
-		"CLUSTER_REPLICATION_ROLE_FOLLOWER":       3,
-	}
-)
-
-func (x ClusterReplicationRole) Enum() *ClusterReplicationRole {
-	p := new(ClusterReplicationRole)
-	*p = x
-	return p
-}
-
-func (x ClusterReplicationRole) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (ClusterReplicationRole) Descriptor() protoreflect.EnumDescriptor {
-	return file_mycel_admin_v1_cluster_proto_enumTypes[6].Descriptor()
-}
-
-func (ClusterReplicationRole) Type() protoreflect.EnumType {
-	return &file_mycel_admin_v1_cluster_proto_enumTypes[6]
-}
-
-func (x ClusterReplicationRole) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use ClusterReplicationRole.Descriptor instead.
-func (ClusterReplicationRole) EnumDescriptor() ([]byte, []int) {
-	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{6}
+	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{7}
 }
 
 type ClusterReplicationCatchupState int32
@@ -475,11 +511,11 @@ func (x ClusterReplicationCatchupState) String() string {
 }
 
 func (ClusterReplicationCatchupState) Descriptor() protoreflect.EnumDescriptor {
-	return file_mycel_admin_v1_cluster_proto_enumTypes[7].Descriptor()
+	return file_mycel_admin_v1_cluster_proto_enumTypes[8].Descriptor()
 }
 
 func (ClusterReplicationCatchupState) Type() protoreflect.EnumType {
-	return &file_mycel_admin_v1_cluster_proto_enumTypes[7]
+	return &file_mycel_admin_v1_cluster_proto_enumTypes[8]
 }
 
 func (x ClusterReplicationCatchupState) Number() protoreflect.EnumNumber {
@@ -488,7 +524,475 @@ func (x ClusterReplicationCatchupState) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use ClusterReplicationCatchupState.Descriptor instead.
 func (ClusterReplicationCatchupState) EnumDescriptor() ([]byte, []int) {
-	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{7}
+	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{8}
+}
+
+type GetClusterRuntimeStatusRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetClusterRuntimeStatusRequest) Reset() {
+	*x = GetClusterRuntimeStatusRequest{}
+	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[0]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetClusterRuntimeStatusRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetClusterRuntimeStatusRequest) ProtoMessage() {}
+
+func (x *GetClusterRuntimeStatusRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[0]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetClusterRuntimeStatusRequest.ProtoReflect.Descriptor instead.
+func (*GetClusterRuntimeStatusRequest) Descriptor() ([]byte, []int) {
+	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{0}
+}
+
+type GetClusterRuntimeStatusResponse struct {
+	state                protoimpl.MessageState `protogen:"open.v1"`
+	Engine               ClusterEngine          `protobuf:"varint,1,opt,name=engine,proto3,enum=mycel.admin.v1.ClusterEngine" json:"engine,omitempty"`
+	ClusterName          string                 `protobuf:"bytes,2,opt,name=cluster_name,json=clusterName,proto3" json:"cluster_name,omitempty"`
+	RaftNodeCount        uint32                 `protobuf:"varint,3,opt,name=raft_node_count,json=raftNodeCount,proto3" json:"raft_node_count,omitempty"`
+	RaftPartitionCount   uint32                 `protobuf:"varint,4,opt,name=raft_partition_count,json=raftPartitionCount,proto3" json:"raft_partition_count,omitempty"`
+	RaftReplicaFactor    uint32                 `protobuf:"varint,5,opt,name=raft_replica_factor,json=raftReplicaFactor,proto3" json:"raft_replica_factor,omitempty"`
+	LocalRaftNodeId      uint64                 `protobuf:"varint,6,opt,name=local_raft_node_id,json=localRaftNodeId,proto3" json:"local_raft_node_id,omitempty"`
+	RaftNodeAddrs        []string               `protobuf:"bytes,7,rep,name=raft_node_addrs,json=raftNodeAddrs,proto3" json:"raft_node_addrs,omitempty"`
+	RaftGroupCount       int32                  `protobuf:"varint,8,opt,name=raft_group_count,json=raftGroupCount,proto3" json:"raft_group_count,omitempty"`
+	RaftGroupsWithLeader int32                  `protobuf:"varint,9,opt,name=raft_groups_with_leader,json=raftGroupsWithLeader,proto3" json:"raft_groups_with_leader,omitempty"`
+	unknownFields        protoimpl.UnknownFields
+	sizeCache            protoimpl.SizeCache
+}
+
+func (x *GetClusterRuntimeStatusResponse) Reset() {
+	*x = GetClusterRuntimeStatusResponse{}
+	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[1]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetClusterRuntimeStatusResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetClusterRuntimeStatusResponse) ProtoMessage() {}
+
+func (x *GetClusterRuntimeStatusResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[1]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetClusterRuntimeStatusResponse.ProtoReflect.Descriptor instead.
+func (*GetClusterRuntimeStatusResponse) Descriptor() ([]byte, []int) {
+	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *GetClusterRuntimeStatusResponse) GetEngine() ClusterEngine {
+	if x != nil {
+		return x.Engine
+	}
+	return ClusterEngine_CLUSTER_ENGINE_UNSPECIFIED
+}
+
+func (x *GetClusterRuntimeStatusResponse) GetClusterName() string {
+	if x != nil {
+		return x.ClusterName
+	}
+	return ""
+}
+
+func (x *GetClusterRuntimeStatusResponse) GetRaftNodeCount() uint32 {
+	if x != nil {
+		return x.RaftNodeCount
+	}
+	return 0
+}
+
+func (x *GetClusterRuntimeStatusResponse) GetRaftPartitionCount() uint32 {
+	if x != nil {
+		return x.RaftPartitionCount
+	}
+	return 0
+}
+
+func (x *GetClusterRuntimeStatusResponse) GetRaftReplicaFactor() uint32 {
+	if x != nil {
+		return x.RaftReplicaFactor
+	}
+	return 0
+}
+
+func (x *GetClusterRuntimeStatusResponse) GetLocalRaftNodeId() uint64 {
+	if x != nil {
+		return x.LocalRaftNodeId
+	}
+	return 0
+}
+
+func (x *GetClusterRuntimeStatusResponse) GetRaftNodeAddrs() []string {
+	if x != nil {
+		return x.RaftNodeAddrs
+	}
+	return nil
+}
+
+func (x *GetClusterRuntimeStatusResponse) GetRaftGroupCount() int32 {
+	if x != nil {
+		return x.RaftGroupCount
+	}
+	return 0
+}
+
+func (x *GetClusterRuntimeStatusResponse) GetRaftGroupsWithLeader() int32 {
+	if x != nil {
+		return x.RaftGroupsWithLeader
+	}
+	return 0
+}
+
+type ListRaftGroupsRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListRaftGroupsRequest) Reset() {
+	*x = ListRaftGroupsRequest{}
+	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[2]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListRaftGroupsRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListRaftGroupsRequest) ProtoMessage() {}
+
+func (x *ListRaftGroupsRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[2]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListRaftGroupsRequest.ProtoReflect.Descriptor instead.
+func (*ListRaftGroupsRequest) Descriptor() ([]byte, []int) {
+	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{2}
+}
+
+type ListRaftGroupsResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Groups        []*RaftGroupStatus     `protobuf:"bytes,1,rep,name=groups,proto3" json:"groups,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListRaftGroupsResponse) Reset() {
+	*x = ListRaftGroupsResponse{}
+	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[3]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListRaftGroupsResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListRaftGroupsResponse) ProtoMessage() {}
+
+func (x *ListRaftGroupsResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[3]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListRaftGroupsResponse.ProtoReflect.Descriptor instead.
+func (*ListRaftGroupsResponse) Descriptor() ([]byte, []int) {
+	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *ListRaftGroupsResponse) GetGroups() []*RaftGroupStatus {
+	if x != nil {
+		return x.Groups
+	}
+	return nil
+}
+
+type RaftGroupStatus struct {
+	state                 protoimpl.MessageState `protogen:"open.v1"`
+	GroupId               string                 `protobuf:"bytes,1,opt,name=group_id,json=groupId,proto3" json:"group_id,omitempty"`
+	Kind                  RaftGroupKind          `protobuf:"varint,2,opt,name=kind,proto3,enum=mycel.admin.v1.RaftGroupKind" json:"kind,omitempty"`
+	PartitionId           uint32                 `protobuf:"varint,3,opt,name=partition_id,json=partitionId,proto3" json:"partition_id,omitempty"`
+	LocalNodeId           uint64                 `protobuf:"varint,4,opt,name=local_node_id,json=localNodeId,proto3" json:"local_node_id,omitempty"`
+	LeaderNodeId          uint64                 `protobuf:"varint,5,opt,name=leader_node_id,json=leaderNodeId,proto3" json:"leader_node_id,omitempty"`
+	PreferredLeaderNodeId uint64                 `protobuf:"varint,6,opt,name=preferred_leader_node_id,json=preferredLeaderNodeId,proto3" json:"preferred_leader_node_id,omitempty"`
+	ReplicaNodeIds        []uint64               `protobuf:"varint,7,rep,packed,name=replica_node_ids,json=replicaNodeIds,proto3" json:"replica_node_ids,omitempty"`
+	Health                RaftGroupHealth        `protobuf:"varint,8,opt,name=health,proto3,enum=mycel.admin.v1.RaftGroupHealth" json:"health,omitempty"`
+	Term                  uint64                 `protobuf:"varint,9,opt,name=term,proto3" json:"term,omitempty"`
+	CommitIndex           uint64                 `protobuf:"varint,10,opt,name=commit_index,json=commitIndex,proto3" json:"commit_index,omitempty"`
+	AppliedIndex          uint64                 `protobuf:"varint,11,opt,name=applied_index,json=appliedIndex,proto3" json:"applied_index,omitempty"`
+	ApplyLag              uint64                 `protobuf:"varint,12,opt,name=apply_lag,json=applyLag,proto3" json:"apply_lag,omitempty"`
+	unknownFields         protoimpl.UnknownFields
+	sizeCache             protoimpl.SizeCache
+}
+
+func (x *RaftGroupStatus) Reset() {
+	*x = RaftGroupStatus{}
+	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[4]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *RaftGroupStatus) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RaftGroupStatus) ProtoMessage() {}
+
+func (x *RaftGroupStatus) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[4]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RaftGroupStatus.ProtoReflect.Descriptor instead.
+func (*RaftGroupStatus) Descriptor() ([]byte, []int) {
+	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *RaftGroupStatus) GetGroupId() string {
+	if x != nil {
+		return x.GroupId
+	}
+	return ""
+}
+
+func (x *RaftGroupStatus) GetKind() RaftGroupKind {
+	if x != nil {
+		return x.Kind
+	}
+	return RaftGroupKind_RAFT_GROUP_KIND_UNSPECIFIED
+}
+
+func (x *RaftGroupStatus) GetPartitionId() uint32 {
+	if x != nil {
+		return x.PartitionId
+	}
+	return 0
+}
+
+func (x *RaftGroupStatus) GetLocalNodeId() uint64 {
+	if x != nil {
+		return x.LocalNodeId
+	}
+	return 0
+}
+
+func (x *RaftGroupStatus) GetLeaderNodeId() uint64 {
+	if x != nil {
+		return x.LeaderNodeId
+	}
+	return 0
+}
+
+func (x *RaftGroupStatus) GetPreferredLeaderNodeId() uint64 {
+	if x != nil {
+		return x.PreferredLeaderNodeId
+	}
+	return 0
+}
+
+func (x *RaftGroupStatus) GetReplicaNodeIds() []uint64 {
+	if x != nil {
+		return x.ReplicaNodeIds
+	}
+	return nil
+}
+
+func (x *RaftGroupStatus) GetHealth() RaftGroupHealth {
+	if x != nil {
+		return x.Health
+	}
+	return RaftGroupHealth_RAFT_GROUP_HEALTH_UNSPECIFIED
+}
+
+func (x *RaftGroupStatus) GetTerm() uint64 {
+	if x != nil {
+		return x.Term
+	}
+	return 0
+}
+
+func (x *RaftGroupStatus) GetCommitIndex() uint64 {
+	if x != nil {
+		return x.CommitIndex
+	}
+	return 0
+}
+
+func (x *RaftGroupStatus) GetAppliedIndex() uint64 {
+	if x != nil {
+		return x.AppliedIndex
+	}
+	return 0
+}
+
+func (x *RaftGroupStatus) GetApplyLag() uint64 {
+	if x != nil {
+		return x.ApplyLag
+	}
+	return 0
+}
+
+type LookupSpaceRouteRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	SpaceId       string                 `protobuf:"bytes,1,opt,name=space_id,json=spaceId,proto3" json:"space_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *LookupSpaceRouteRequest) Reset() {
+	*x = LookupSpaceRouteRequest{}
+	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[5]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *LookupSpaceRouteRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*LookupSpaceRouteRequest) ProtoMessage() {}
+
+func (x *LookupSpaceRouteRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[5]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use LookupSpaceRouteRequest.ProtoReflect.Descriptor instead.
+func (*LookupSpaceRouteRequest) Descriptor() ([]byte, []int) {
+	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *LookupSpaceRouteRequest) GetSpaceId() string {
+	if x != nil {
+		return x.SpaceId
+	}
+	return ""
+}
+
+type LookupSpaceRouteResponse struct {
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	SpaceId        string                 `protobuf:"bytes,1,opt,name=space_id,json=spaceId,proto3" json:"space_id,omitempty"`
+	PartitionId    uint32                 `protobuf:"varint,2,opt,name=partition_id,json=partitionId,proto3" json:"partition_id,omitempty"`
+	LeaderNodeId   uint64                 `protobuf:"varint,3,opt,name=leader_node_id,json=leaderNodeId,proto3" json:"leader_node_id,omitempty"`
+	ReplicaNodeIds []uint64               `protobuf:"varint,4,rep,packed,name=replica_node_ids,json=replicaNodeIds,proto3" json:"replica_node_ids,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
+}
+
+func (x *LookupSpaceRouteResponse) Reset() {
+	*x = LookupSpaceRouteResponse{}
+	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[6]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *LookupSpaceRouteResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*LookupSpaceRouteResponse) ProtoMessage() {}
+
+func (x *LookupSpaceRouteResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[6]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use LookupSpaceRouteResponse.ProtoReflect.Descriptor instead.
+func (*LookupSpaceRouteResponse) Descriptor() ([]byte, []int) {
+	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *LookupSpaceRouteResponse) GetSpaceId() string {
+	if x != nil {
+		return x.SpaceId
+	}
+	return ""
+}
+
+func (x *LookupSpaceRouteResponse) GetPartitionId() uint32 {
+	if x != nil {
+		return x.PartitionId
+	}
+	return 0
+}
+
+func (x *LookupSpaceRouteResponse) GetLeaderNodeId() uint64 {
+	if x != nil {
+		return x.LeaderNodeId
+	}
+	return 0
+}
+
+func (x *LookupSpaceRouteResponse) GetReplicaNodeIds() []uint64 {
+	if x != nil {
+		return x.ReplicaNodeIds
+	}
+	return nil
 }
 
 type GetClusterStatusRequest struct {
@@ -499,7 +1003,7 @@ type GetClusterStatusRequest struct {
 
 func (x *GetClusterStatusRequest) Reset() {
 	*x = GetClusterStatusRequest{}
-	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[0]
+	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[7]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -511,7 +1015,7 @@ func (x *GetClusterStatusRequest) String() string {
 func (*GetClusterStatusRequest) ProtoMessage() {}
 
 func (x *GetClusterStatusRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[0]
+	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[7]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -524,23 +1028,21 @@ func (x *GetClusterStatusRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetClusterStatusRequest.ProtoReflect.Descriptor instead.
 func (*GetClusterStatusRequest) Descriptor() ([]byte, []int) {
-	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{0}
+	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{7}
 }
 
 type GetClusterStatusResponse struct {
-	state         protoimpl.MessageState    `protogen:"open.v1"`
-	Node          *ClusterLocalNode         `protobuf:"bytes,1,opt,name=node,proto3" json:"node,omitempty"`
-	Cluster       *ClusterInfo              `protobuf:"bytes,2,opt,name=cluster,proto3" json:"cluster,omitempty"`
-	Peers         []*ClusterPeer            `protobuf:"bytes,3,rep,name=peers,proto3" json:"peers,omitempty"`
-	Authority     *ClusterAuthority         `protobuf:"bytes,4,opt,name=authority,proto3" json:"authority,omitempty"`
-	Replication   *ClusterReplicationStatus `protobuf:"bytes,5,opt,name=replication,proto3" json:"replication,omitempty"`
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Node          *ClusterLocalNode      `protobuf:"bytes,1,opt,name=node,proto3" json:"node,omitempty"`
+	Cluster       *ClusterInfo           `protobuf:"bytes,2,opt,name=cluster,proto3" json:"cluster,omitempty"`
+	Peers         []*ClusterPeer         `protobuf:"bytes,3,rep,name=peers,proto3" json:"peers,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *GetClusterStatusResponse) Reset() {
 	*x = GetClusterStatusResponse{}
-	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[1]
+	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[8]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -552,7 +1054,7 @@ func (x *GetClusterStatusResponse) String() string {
 func (*GetClusterStatusResponse) ProtoMessage() {}
 
 func (x *GetClusterStatusResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[1]
+	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[8]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -565,7 +1067,7 @@ func (x *GetClusterStatusResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetClusterStatusResponse.ProtoReflect.Descriptor instead.
 func (*GetClusterStatusResponse) Descriptor() ([]byte, []int) {
-	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{1}
+	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{8}
 }
 
 func (x *GetClusterStatusResponse) GetNode() *ClusterLocalNode {
@@ -589,20 +1091,6 @@ func (x *GetClusterStatusResponse) GetPeers() []*ClusterPeer {
 	return nil
 }
 
-func (x *GetClusterStatusResponse) GetAuthority() *ClusterAuthority {
-	if x != nil {
-		return x.Authority
-	}
-	return nil
-}
-
-func (x *GetClusterStatusResponse) GetReplication() *ClusterReplicationStatus {
-	if x != nil {
-		return x.Replication
-	}
-	return nil
-}
-
 type ClusterLocalNode struct {
 	state                    protoimpl.MessageState `protogen:"open.v1"`
 	NodeId                   string                 `protobuf:"bytes,1,opt,name=node_id,json=nodeId,proto3" json:"node_id,omitempty"`
@@ -612,14 +1100,13 @@ type ClusterLocalNode struct {
 	Bootstrap                bool                   `protobuf:"varint,5,opt,name=bootstrap,proto3" json:"bootstrap,omitempty"`
 	BackendAdvertiseAddr     string                 `protobuf:"bytes,6,opt,name=backend_advertise_addr,json=backendAdvertiseAddr,proto3" json:"backend_advertise_addr,omitempty"`
 	NodePublicKeyFingerprint string                 `protobuf:"bytes,7,opt,name=node_public_key_fingerprint,json=nodePublicKeyFingerprint,proto3" json:"node_public_key_fingerprint,omitempty"`
-	Role                     ClusterNodeRole        `protobuf:"varint,8,opt,name=role,proto3,enum=mycel.admin.v1.ClusterNodeRole" json:"role,omitempty"`
 	unknownFields            protoimpl.UnknownFields
 	sizeCache                protoimpl.SizeCache
 }
 
 func (x *ClusterLocalNode) Reset() {
 	*x = ClusterLocalNode{}
-	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[2]
+	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[9]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -631,7 +1118,7 @@ func (x *ClusterLocalNode) String() string {
 func (*ClusterLocalNode) ProtoMessage() {}
 
 func (x *ClusterLocalNode) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[2]
+	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[9]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -644,7 +1131,7 @@ func (x *ClusterLocalNode) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ClusterLocalNode.ProtoReflect.Descriptor instead.
 func (*ClusterLocalNode) Descriptor() ([]byte, []int) {
-	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{2}
+	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{9}
 }
 
 func (x *ClusterLocalNode) GetNodeId() string {
@@ -696,13 +1183,6 @@ func (x *ClusterLocalNode) GetNodePublicKeyFingerprint() string {
 	return ""
 }
 
-func (x *ClusterLocalNode) GetRole() ClusterNodeRole {
-	if x != nil {
-		return x.Role
-	}
-	return ClusterNodeRole_CLUSTER_NODE_ROLE_UNSPECIFIED
-}
-
 type ClusterInfo struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	ClusterId     string                 `protobuf:"bytes,1,opt,name=cluster_id,json=clusterId,proto3" json:"cluster_id,omitempty"`
@@ -714,7 +1194,7 @@ type ClusterInfo struct {
 
 func (x *ClusterInfo) Reset() {
 	*x = ClusterInfo{}
-	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[3]
+	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[10]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -726,7 +1206,7 @@ func (x *ClusterInfo) String() string {
 func (*ClusterInfo) ProtoMessage() {}
 
 func (x *ClusterInfo) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[3]
+	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[10]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -739,7 +1219,7 @@ func (x *ClusterInfo) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ClusterInfo.ProtoReflect.Descriptor instead.
 func (*ClusterInfo) Descriptor() ([]byte, []int) {
-	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{3}
+	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{10}
 }
 
 func (x *ClusterInfo) GetClusterId() string {
@@ -779,7 +1259,7 @@ type ClusterPeer struct {
 
 func (x *ClusterPeer) Reset() {
 	*x = ClusterPeer{}
-	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[4]
+	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[11]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -791,7 +1271,7 @@ func (x *ClusterPeer) String() string {
 func (*ClusterPeer) ProtoMessage() {}
 
 func (x *ClusterPeer) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[4]
+	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[11]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -804,7 +1284,7 @@ func (x *ClusterPeer) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ClusterPeer.ProtoReflect.Descriptor instead.
 func (*ClusterPeer) Descriptor() ([]byte, []int) {
-	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{4}
+	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{11}
 }
 
 func (x *ClusterPeer) GetNodeId() string {
@@ -863,362 +1343,6 @@ func (x *ClusterPeer) GetLastSeenAt() string {
 	return ""
 }
 
-type ClusterAuthority struct {
-	state                       protoimpl.MessageState `protogen:"open.v1"`
-	ClusterId                   string                 `protobuf:"bytes,1,opt,name=cluster_id,json=clusterId,proto3" json:"cluster_id,omitempty"`
-	PrimaryNodeId               string                 `protobuf:"bytes,2,opt,name=primary_node_id,json=primaryNodeId,proto3" json:"primary_node_id,omitempty"`
-	PrimaryNodeName             string                 `protobuf:"bytes,3,opt,name=primary_node_name,json=primaryNodeName,proto3" json:"primary_node_name,omitempty"`
-	PrimaryBackendAdvertiseAddr string                 `protobuf:"bytes,4,opt,name=primary_backend_advertise_addr,json=primaryBackendAdvertiseAddr,proto3" json:"primary_backend_advertise_addr,omitempty"`
-	AuthorityEpoch              int64                  `protobuf:"varint,5,opt,name=authority_epoch,json=authorityEpoch,proto3" json:"authority_epoch,omitempty"`
-	Term                        int64                  `protobuf:"varint,6,opt,name=term,proto3" json:"term,omitempty"`
-	Source                      string                 `protobuf:"bytes,7,opt,name=source,proto3" json:"source,omitempty"`
-	UpdatedAt                   string                 `protobuf:"bytes,8,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
-	unknownFields               protoimpl.UnknownFields
-	sizeCache                   protoimpl.SizeCache
-}
-
-func (x *ClusterAuthority) Reset() {
-	*x = ClusterAuthority{}
-	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[5]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *ClusterAuthority) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*ClusterAuthority) ProtoMessage() {}
-
-func (x *ClusterAuthority) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[5]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use ClusterAuthority.ProtoReflect.Descriptor instead.
-func (*ClusterAuthority) Descriptor() ([]byte, []int) {
-	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{5}
-}
-
-func (x *ClusterAuthority) GetClusterId() string {
-	if x != nil {
-		return x.ClusterId
-	}
-	return ""
-}
-
-func (x *ClusterAuthority) GetPrimaryNodeId() string {
-	if x != nil {
-		return x.PrimaryNodeId
-	}
-	return ""
-}
-
-func (x *ClusterAuthority) GetPrimaryNodeName() string {
-	if x != nil {
-		return x.PrimaryNodeName
-	}
-	return ""
-}
-
-func (x *ClusterAuthority) GetPrimaryBackendAdvertiseAddr() string {
-	if x != nil {
-		return x.PrimaryBackendAdvertiseAddr
-	}
-	return ""
-}
-
-func (x *ClusterAuthority) GetAuthorityEpoch() int64 {
-	if x != nil {
-		return x.AuthorityEpoch
-	}
-	return 0
-}
-
-func (x *ClusterAuthority) GetTerm() int64 {
-	if x != nil {
-		return x.Term
-	}
-	return 0
-}
-
-func (x *ClusterAuthority) GetSource() string {
-	if x != nil {
-		return x.Source
-	}
-	return ""
-}
-
-func (x *ClusterAuthority) GetUpdatedAt() string {
-	if x != nil {
-		return x.UpdatedAt
-	}
-	return ""
-}
-
-type ClusterReplicationStatus struct {
-	state                       protoimpl.MessageState         `protogen:"open.v1"`
-	PrimaryNodeId               string                         `protobuf:"bytes,1,opt,name=primary_node_id,json=primaryNodeId,proto3" json:"primary_node_id,omitempty"`
-	PrimaryNodeName             string                         `protobuf:"bytes,2,opt,name=primary_node_name,json=primaryNodeName,proto3" json:"primary_node_name,omitempty"`
-	PrimaryBackendAdvertiseAddr string                         `protobuf:"bytes,3,opt,name=primary_backend_advertise_addr,json=primaryBackendAdvertiseAddr,proto3" json:"primary_backend_advertise_addr,omitempty"`
-	AuthorityEpoch              int64                          `protobuf:"varint,4,opt,name=authority_epoch,json=authorityEpoch,proto3" json:"authority_epoch,omitempty"`
-	ReceivedLsn                 uint64                         `protobuf:"varint,5,opt,name=received_lsn,json=receivedLsn,proto3" json:"received_lsn,omitempty"`
-	AppliedLsn                  uint64                         `protobuf:"varint,6,opt,name=applied_lsn,json=appliedLsn,proto3" json:"applied_lsn,omitempty"`
-	PrimaryLastLsn              uint64                         `protobuf:"varint,7,opt,name=primary_last_lsn,json=primaryLastLsn,proto3" json:"primary_last_lsn,omitempty"`
-	LagRecords                  uint64                         `protobuf:"varint,8,opt,name=lag_records,json=lagRecords,proto3" json:"lag_records,omitempty"`
-	Connected                   bool                           `protobuf:"varint,9,opt,name=connected,proto3" json:"connected,omitempty"`
-	LastError                   string                         `protobuf:"bytes,10,opt,name=last_error,json=lastError,proto3" json:"last_error,omitempty"`
-	UpdatedAt                   string                         `protobuf:"bytes,11,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
-	Role                        ClusterReplicationRole         `protobuf:"varint,12,opt,name=role,proto3,enum=mycel.admin.v1.ClusterReplicationRole" json:"role,omitempty"`
-	CatchupState                ClusterReplicationCatchupState `protobuf:"varint,13,opt,name=catchup_state,json=catchupState,proto3,enum=mycel.admin.v1.ClusterReplicationCatchupState" json:"catchup_state,omitempty"`
-	FirstRetainedLsn            uint64                         `protobuf:"varint,14,opt,name=first_retained_lsn,json=firstRetainedLsn,proto3" json:"first_retained_lsn,omitempty"`
-	CheckpointLsn               uint64                         `protobuf:"varint,15,opt,name=checkpoint_lsn,json=checkpointLsn,proto3" json:"checkpoint_lsn,omitempty"`
-	SnapshotRequired            *SnapshotRequiredInfo          `protobuf:"bytes,16,opt,name=snapshot_required,json=snapshotRequired,proto3" json:"snapshot_required,omitempty"`
-	unknownFields               protoimpl.UnknownFields
-	sizeCache                   protoimpl.SizeCache
-}
-
-func (x *ClusterReplicationStatus) Reset() {
-	*x = ClusterReplicationStatus{}
-	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[6]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *ClusterReplicationStatus) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*ClusterReplicationStatus) ProtoMessage() {}
-
-func (x *ClusterReplicationStatus) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[6]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use ClusterReplicationStatus.ProtoReflect.Descriptor instead.
-func (*ClusterReplicationStatus) Descriptor() ([]byte, []int) {
-	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{6}
-}
-
-func (x *ClusterReplicationStatus) GetPrimaryNodeId() string {
-	if x != nil {
-		return x.PrimaryNodeId
-	}
-	return ""
-}
-
-func (x *ClusterReplicationStatus) GetPrimaryNodeName() string {
-	if x != nil {
-		return x.PrimaryNodeName
-	}
-	return ""
-}
-
-func (x *ClusterReplicationStatus) GetPrimaryBackendAdvertiseAddr() string {
-	if x != nil {
-		return x.PrimaryBackendAdvertiseAddr
-	}
-	return ""
-}
-
-func (x *ClusterReplicationStatus) GetAuthorityEpoch() int64 {
-	if x != nil {
-		return x.AuthorityEpoch
-	}
-	return 0
-}
-
-func (x *ClusterReplicationStatus) GetReceivedLsn() uint64 {
-	if x != nil {
-		return x.ReceivedLsn
-	}
-	return 0
-}
-
-func (x *ClusterReplicationStatus) GetAppliedLsn() uint64 {
-	if x != nil {
-		return x.AppliedLsn
-	}
-	return 0
-}
-
-func (x *ClusterReplicationStatus) GetPrimaryLastLsn() uint64 {
-	if x != nil {
-		return x.PrimaryLastLsn
-	}
-	return 0
-}
-
-func (x *ClusterReplicationStatus) GetLagRecords() uint64 {
-	if x != nil {
-		return x.LagRecords
-	}
-	return 0
-}
-
-func (x *ClusterReplicationStatus) GetConnected() bool {
-	if x != nil {
-		return x.Connected
-	}
-	return false
-}
-
-func (x *ClusterReplicationStatus) GetLastError() string {
-	if x != nil {
-		return x.LastError
-	}
-	return ""
-}
-
-func (x *ClusterReplicationStatus) GetUpdatedAt() string {
-	if x != nil {
-		return x.UpdatedAt
-	}
-	return ""
-}
-
-func (x *ClusterReplicationStatus) GetRole() ClusterReplicationRole {
-	if x != nil {
-		return x.Role
-	}
-	return ClusterReplicationRole_CLUSTER_REPLICATION_ROLE_UNSPECIFIED
-}
-
-func (x *ClusterReplicationStatus) GetCatchupState() ClusterReplicationCatchupState {
-	if x != nil {
-		return x.CatchupState
-	}
-	return ClusterReplicationCatchupState_CLUSTER_REPLICATION_CATCHUP_STATE_UNSPECIFIED
-}
-
-func (x *ClusterReplicationStatus) GetFirstRetainedLsn() uint64 {
-	if x != nil {
-		return x.FirstRetainedLsn
-	}
-	return 0
-}
-
-func (x *ClusterReplicationStatus) GetCheckpointLsn() uint64 {
-	if x != nil {
-		return x.CheckpointLsn
-	}
-	return 0
-}
-
-func (x *ClusterReplicationStatus) GetSnapshotRequired() *SnapshotRequiredInfo {
-	if x != nil {
-		return x.SnapshotRequired
-	}
-	return nil
-}
-
-type SnapshotRequiredInfo struct {
-	state             protoimpl.MessageState `protogen:"open.v1"`
-	RequestedAfterLsn uint64                 `protobuf:"varint,1,opt,name=requested_after_lsn,json=requestedAfterLsn,proto3" json:"requested_after_lsn,omitempty"`
-	NextRequestedLsn  uint64                 `protobuf:"varint,2,opt,name=next_requested_lsn,json=nextRequestedLsn,proto3" json:"next_requested_lsn,omitempty"`
-	FirstRetainedLsn  uint64                 `protobuf:"varint,3,opt,name=first_retained_lsn,json=firstRetainedLsn,proto3" json:"first_retained_lsn,omitempty"`
-	LastCommittedLsn  uint64                 `protobuf:"varint,4,opt,name=last_committed_lsn,json=lastCommittedLsn,proto3" json:"last_committed_lsn,omitempty"`
-	CheckpointLsn     uint64                 `protobuf:"varint,5,opt,name=checkpoint_lsn,json=checkpointLsn,proto3" json:"checkpoint_lsn,omitempty"`
-	PrimaryNodeId     string                 `protobuf:"bytes,6,opt,name=primary_node_id,json=primaryNodeId,proto3" json:"primary_node_id,omitempty"`
-	AuthorityEpoch    int64                  `protobuf:"varint,7,opt,name=authority_epoch,json=authorityEpoch,proto3" json:"authority_epoch,omitempty"`
-	unknownFields     protoimpl.UnknownFields
-	sizeCache         protoimpl.SizeCache
-}
-
-func (x *SnapshotRequiredInfo) Reset() {
-	*x = SnapshotRequiredInfo{}
-	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[7]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *SnapshotRequiredInfo) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*SnapshotRequiredInfo) ProtoMessage() {}
-
-func (x *SnapshotRequiredInfo) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[7]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use SnapshotRequiredInfo.ProtoReflect.Descriptor instead.
-func (*SnapshotRequiredInfo) Descriptor() ([]byte, []int) {
-	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{7}
-}
-
-func (x *SnapshotRequiredInfo) GetRequestedAfterLsn() uint64 {
-	if x != nil {
-		return x.RequestedAfterLsn
-	}
-	return 0
-}
-
-func (x *SnapshotRequiredInfo) GetNextRequestedLsn() uint64 {
-	if x != nil {
-		return x.NextRequestedLsn
-	}
-	return 0
-}
-
-func (x *SnapshotRequiredInfo) GetFirstRetainedLsn() uint64 {
-	if x != nil {
-		return x.FirstRetainedLsn
-	}
-	return 0
-}
-
-func (x *SnapshotRequiredInfo) GetLastCommittedLsn() uint64 {
-	if x != nil {
-		return x.LastCommittedLsn
-	}
-	return 0
-}
-
-func (x *SnapshotRequiredInfo) GetCheckpointLsn() uint64 {
-	if x != nil {
-		return x.CheckpointLsn
-	}
-	return 0
-}
-
-func (x *SnapshotRequiredInfo) GetPrimaryNodeId() string {
-	if x != nil {
-		return x.PrimaryNodeId
-	}
-	return ""
-}
-
-func (x *SnapshotRequiredInfo) GetAuthorityEpoch() int64 {
-	if x != nil {
-		return x.AuthorityEpoch
-	}
-	return 0
-}
-
 type ListClusterMembersRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	unknownFields protoimpl.UnknownFields
@@ -1227,7 +1351,7 @@ type ListClusterMembersRequest struct {
 
 func (x *ListClusterMembersRequest) Reset() {
 	*x = ListClusterMembersRequest{}
-	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[8]
+	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[12]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1239,7 +1363,7 @@ func (x *ListClusterMembersRequest) String() string {
 func (*ListClusterMembersRequest) ProtoMessage() {}
 
 func (x *ListClusterMembersRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[8]
+	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[12]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1252,7 +1376,7 @@ func (x *ListClusterMembersRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListClusterMembersRequest.ProtoReflect.Descriptor instead.
 func (*ListClusterMembersRequest) Descriptor() ([]byte, []int) {
-	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{8}
+	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{12}
 }
 
 type ListClusterMembersResponse struct {
@@ -1266,7 +1390,7 @@ type ListClusterMembersResponse struct {
 
 func (x *ListClusterMembersResponse) Reset() {
 	*x = ListClusterMembersResponse{}
-	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[9]
+	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[13]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1278,7 +1402,7 @@ func (x *ListClusterMembersResponse) String() string {
 func (*ListClusterMembersResponse) ProtoMessage() {}
 
 func (x *ListClusterMembersResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[9]
+	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[13]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1291,7 +1415,7 @@ func (x *ListClusterMembersResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListClusterMembersResponse.ProtoReflect.Descriptor instead.
 func (*ListClusterMembersResponse) Descriptor() ([]byte, []int) {
-	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{9}
+	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{13}
 }
 
 func (x *ListClusterMembersResponse) GetClusterId() string {
@@ -1337,7 +1461,7 @@ type ClusterMember struct {
 
 func (x *ClusterMember) Reset() {
 	*x = ClusterMember{}
-	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[10]
+	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[14]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1349,7 +1473,7 @@ func (x *ClusterMember) String() string {
 func (*ClusterMember) ProtoMessage() {}
 
 func (x *ClusterMember) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[10]
+	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[14]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1362,7 +1486,7 @@ func (x *ClusterMember) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ClusterMember.ProtoReflect.Descriptor instead.
 func (*ClusterMember) Descriptor() ([]byte, []int) {
-	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{10}
+	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{14}
 }
 
 func (x *ClusterMember) GetNodeName() string {
@@ -1463,970 +1587,6 @@ func (x *ClusterMember) GetJoinedAt() string {
 	return ""
 }
 
-type AddClusterNodeRequest struct {
-	state           protoimpl.MessageState `protogen:"open.v1"`
-	NodeName        string                 `protobuf:"bytes,1,opt,name=node_name,json=nodeName,proto3" json:"node_name,omitempty"`
-	TokenTtlSeconds int64                  `protobuf:"varint,2,opt,name=token_ttl_seconds,json=tokenTtlSeconds,proto3" json:"token_ttl_seconds,omitempty"`
-	unknownFields   protoimpl.UnknownFields
-	sizeCache       protoimpl.SizeCache
-}
-
-func (x *AddClusterNodeRequest) Reset() {
-	*x = AddClusterNodeRequest{}
-	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[11]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *AddClusterNodeRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*AddClusterNodeRequest) ProtoMessage() {}
-
-func (x *AddClusterNodeRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[11]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use AddClusterNodeRequest.ProtoReflect.Descriptor instead.
-func (*AddClusterNodeRequest) Descriptor() ([]byte, []int) {
-	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{11}
-}
-
-func (x *AddClusterNodeRequest) GetNodeName() string {
-	if x != nil {
-		return x.NodeName
-	}
-	return ""
-}
-
-func (x *AddClusterNodeRequest) GetTokenTtlSeconds() int64 {
-	if x != nil {
-		return x.TokenTtlSeconds
-	}
-	return 0
-}
-
-type AddClusterNodeResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	NodeName      string                 `protobuf:"bytes,1,opt,name=node_name,json=nodeName,proto3" json:"node_name,omitempty"`
-	State         ClusterMemberState     `protobuf:"varint,2,opt,name=state,proto3,enum=mycel.admin.v1.ClusterMemberState" json:"state,omitempty"`
-	Token         string                 `protobuf:"bytes,3,opt,name=token,proto3" json:"token,omitempty"`
-	TokenId       string                 `protobuf:"bytes,4,opt,name=token_id,json=tokenId,proto3" json:"token_id,omitempty"`
-	ExpiresAt     string                 `protobuf:"bytes,5,opt,name=expires_at,json=expiresAt,proto3" json:"expires_at,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *AddClusterNodeResponse) Reset() {
-	*x = AddClusterNodeResponse{}
-	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[12]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *AddClusterNodeResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*AddClusterNodeResponse) ProtoMessage() {}
-
-func (x *AddClusterNodeResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[12]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use AddClusterNodeResponse.ProtoReflect.Descriptor instead.
-func (*AddClusterNodeResponse) Descriptor() ([]byte, []int) {
-	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{12}
-}
-
-func (x *AddClusterNodeResponse) GetNodeName() string {
-	if x != nil {
-		return x.NodeName
-	}
-	return ""
-}
-
-func (x *AddClusterNodeResponse) GetState() ClusterMemberState {
-	if x != nil {
-		return x.State
-	}
-	return ClusterMemberState_CLUSTER_MEMBER_STATE_UNSPECIFIED
-}
-
-func (x *AddClusterNodeResponse) GetToken() string {
-	if x != nil {
-		return x.Token
-	}
-	return ""
-}
-
-func (x *AddClusterNodeResponse) GetTokenId() string {
-	if x != nil {
-		return x.TokenId
-	}
-	return ""
-}
-
-func (x *AddClusterNodeResponse) GetExpiresAt() string {
-	if x != nil {
-		return x.ExpiresAt
-	}
-	return ""
-}
-
-type RemoveClusterNodeRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Target        string                 `protobuf:"bytes,1,opt,name=target,proto3" json:"target,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *RemoveClusterNodeRequest) Reset() {
-	*x = RemoveClusterNodeRequest{}
-	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[13]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *RemoveClusterNodeRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*RemoveClusterNodeRequest) ProtoMessage() {}
-
-func (x *RemoveClusterNodeRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[13]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use RemoveClusterNodeRequest.ProtoReflect.Descriptor instead.
-func (*RemoveClusterNodeRequest) Descriptor() ([]byte, []int) {
-	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{13}
-}
-
-func (x *RemoveClusterNodeRequest) GetTarget() string {
-	if x != nil {
-		return x.Target
-	}
-	return ""
-}
-
-type RemoveClusterNodeResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	NodeId        string                 `protobuf:"bytes,1,opt,name=node_id,json=nodeId,proto3" json:"node_id,omitempty"`
-	NodeName      string                 `protobuf:"bytes,2,opt,name=node_name,json=nodeName,proto3" json:"node_name,omitempty"`
-	State         ClusterMemberState     `protobuf:"varint,3,opt,name=state,proto3,enum=mycel.admin.v1.ClusterMemberState" json:"state,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *RemoveClusterNodeResponse) Reset() {
-	*x = RemoveClusterNodeResponse{}
-	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[14]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *RemoveClusterNodeResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*RemoveClusterNodeResponse) ProtoMessage() {}
-
-func (x *RemoveClusterNodeResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[14]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use RemoveClusterNodeResponse.ProtoReflect.Descriptor instead.
-func (*RemoveClusterNodeResponse) Descriptor() ([]byte, []int) {
-	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{14}
-}
-
-func (x *RemoveClusterNodeResponse) GetNodeId() string {
-	if x != nil {
-		return x.NodeId
-	}
-	return ""
-}
-
-func (x *RemoveClusterNodeResponse) GetNodeName() string {
-	if x != nil {
-		return x.NodeName
-	}
-	return ""
-}
-
-func (x *RemoveClusterNodeResponse) GetState() ClusterMemberState {
-	if x != nil {
-		return x.State
-	}
-	return ClusterMemberState_CLUSTER_MEMBER_STATE_UNSPECIFIED
-}
-
-type RenameClusterNodeRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Target        string                 `protobuf:"bytes,1,opt,name=target,proto3" json:"target,omitempty"`
-	NewNodeName   string                 `protobuf:"bytes,2,opt,name=new_node_name,json=newNodeName,proto3" json:"new_node_name,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *RenameClusterNodeRequest) Reset() {
-	*x = RenameClusterNodeRequest{}
-	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[15]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *RenameClusterNodeRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*RenameClusterNodeRequest) ProtoMessage() {}
-
-func (x *RenameClusterNodeRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[15]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use RenameClusterNodeRequest.ProtoReflect.Descriptor instead.
-func (*RenameClusterNodeRequest) Descriptor() ([]byte, []int) {
-	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{15}
-}
-
-func (x *RenameClusterNodeRequest) GetTarget() string {
-	if x != nil {
-		return x.Target
-	}
-	return ""
-}
-
-func (x *RenameClusterNodeRequest) GetNewNodeName() string {
-	if x != nil {
-		return x.NewNodeName
-	}
-	return ""
-}
-
-type RenameClusterNodeResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	NodeId        string                 `protobuf:"bytes,1,opt,name=node_id,json=nodeId,proto3" json:"node_id,omitempty"`
-	NodeName      string                 `protobuf:"bytes,2,opt,name=node_name,json=nodeName,proto3" json:"node_name,omitempty"`
-	State         ClusterMemberState     `protobuf:"varint,3,opt,name=state,proto3,enum=mycel.admin.v1.ClusterMemberState" json:"state,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *RenameClusterNodeResponse) Reset() {
-	*x = RenameClusterNodeResponse{}
-	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[16]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *RenameClusterNodeResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*RenameClusterNodeResponse) ProtoMessage() {}
-
-func (x *RenameClusterNodeResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[16]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use RenameClusterNodeResponse.ProtoReflect.Descriptor instead.
-func (*RenameClusterNodeResponse) Descriptor() ([]byte, []int) {
-	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{16}
-}
-
-func (x *RenameClusterNodeResponse) GetNodeId() string {
-	if x != nil {
-		return x.NodeId
-	}
-	return ""
-}
-
-func (x *RenameClusterNodeResponse) GetNodeName() string {
-	if x != nil {
-		return x.NodeName
-	}
-	return ""
-}
-
-func (x *RenameClusterNodeResponse) GetState() ClusterMemberState {
-	if x != nil {
-		return x.State
-	}
-	return ClusterMemberState_CLUSTER_MEMBER_STATE_UNSPECIFIED
-}
-
-type ResyncClusterNodeRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Target        string                 `protobuf:"bytes,1,opt,name=target,proto3" json:"target,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *ResyncClusterNodeRequest) Reset() {
-	*x = ResyncClusterNodeRequest{}
-	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[17]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *ResyncClusterNodeRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*ResyncClusterNodeRequest) ProtoMessage() {}
-
-func (x *ResyncClusterNodeRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[17]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use ResyncClusterNodeRequest.ProtoReflect.Descriptor instead.
-func (*ResyncClusterNodeRequest) Descriptor() ([]byte, []int) {
-	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{17}
-}
-
-func (x *ResyncClusterNodeRequest) GetTarget() string {
-	if x != nil {
-		return x.Target
-	}
-	return ""
-}
-
-type ResyncClusterNodeResponse struct {
-	state           protoimpl.MessageState `protogen:"open.v1"`
-	OperationId     string                 `protobuf:"bytes,1,opt,name=operation_id,json=operationId,proto3" json:"operation_id,omitempty"`
-	TargetNodeId    string                 `protobuf:"bytes,2,opt,name=target_node_id,json=targetNodeId,proto3" json:"target_node_id,omitempty"`
-	TargetNodeName  string                 `protobuf:"bytes,3,opt,name=target_node_name,json=targetNodeName,proto3" json:"target_node_name,omitempty"`
-	SnapshotBaseLsn uint64                 `protobuf:"varint,4,opt,name=snapshot_base_lsn,json=snapshotBaseLsn,proto3" json:"snapshot_base_lsn,omitempty"`
-	TotalBytes      uint64                 `protobuf:"varint,5,opt,name=total_bytes,json=totalBytes,proto3" json:"total_bytes,omitempty"`
-	Checksum        string                 `protobuf:"bytes,6,opt,name=checksum,proto3" json:"checksum,omitempty"`
-	unknownFields   protoimpl.UnknownFields
-	sizeCache       protoimpl.SizeCache
-}
-
-func (x *ResyncClusterNodeResponse) Reset() {
-	*x = ResyncClusterNodeResponse{}
-	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[18]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *ResyncClusterNodeResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*ResyncClusterNodeResponse) ProtoMessage() {}
-
-func (x *ResyncClusterNodeResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[18]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use ResyncClusterNodeResponse.ProtoReflect.Descriptor instead.
-func (*ResyncClusterNodeResponse) Descriptor() ([]byte, []int) {
-	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{18}
-}
-
-func (x *ResyncClusterNodeResponse) GetOperationId() string {
-	if x != nil {
-		return x.OperationId
-	}
-	return ""
-}
-
-func (x *ResyncClusterNodeResponse) GetTargetNodeId() string {
-	if x != nil {
-		return x.TargetNodeId
-	}
-	return ""
-}
-
-func (x *ResyncClusterNodeResponse) GetTargetNodeName() string {
-	if x != nil {
-		return x.TargetNodeName
-	}
-	return ""
-}
-
-func (x *ResyncClusterNodeResponse) GetSnapshotBaseLsn() uint64 {
-	if x != nil {
-		return x.SnapshotBaseLsn
-	}
-	return 0
-}
-
-func (x *ResyncClusterNodeResponse) GetTotalBytes() uint64 {
-	if x != nil {
-		return x.TotalBytes
-	}
-	return 0
-}
-
-func (x *ResyncClusterNodeResponse) GetChecksum() string {
-	if x != nil {
-		return x.Checksum
-	}
-	return ""
-}
-
-type ListClusterResyncOperationsRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *ListClusterResyncOperationsRequest) Reset() {
-	*x = ListClusterResyncOperationsRequest{}
-	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[19]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *ListClusterResyncOperationsRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*ListClusterResyncOperationsRequest) ProtoMessage() {}
-
-func (x *ListClusterResyncOperationsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[19]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use ListClusterResyncOperationsRequest.ProtoReflect.Descriptor instead.
-func (*ListClusterResyncOperationsRequest) Descriptor() ([]byte, []int) {
-	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{19}
-}
-
-type ListClusterResyncOperationsResponse struct {
-	state         protoimpl.MessageState    `protogen:"open.v1"`
-	Operations    []*ClusterResyncOperation `protobuf:"bytes,1,rep,name=operations,proto3" json:"operations,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *ListClusterResyncOperationsResponse) Reset() {
-	*x = ListClusterResyncOperationsResponse{}
-	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[20]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *ListClusterResyncOperationsResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*ListClusterResyncOperationsResponse) ProtoMessage() {}
-
-func (x *ListClusterResyncOperationsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[20]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use ListClusterResyncOperationsResponse.ProtoReflect.Descriptor instead.
-func (*ListClusterResyncOperationsResponse) Descriptor() ([]byte, []int) {
-	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{20}
-}
-
-func (x *ListClusterResyncOperationsResponse) GetOperations() []*ClusterResyncOperation {
-	if x != nil {
-		return x.Operations
-	}
-	return nil
-}
-
-type ClusterResyncOperation struct {
-	state                      protoimpl.MessageState `protogen:"open.v1"`
-	OperationId                string                 `protobuf:"bytes,1,opt,name=operation_id,json=operationId,proto3" json:"operation_id,omitempty"`
-	TargetNodeId               string                 `protobuf:"bytes,2,opt,name=target_node_id,json=targetNodeId,proto3" json:"target_node_id,omitempty"`
-	TargetNodeName             string                 `protobuf:"bytes,3,opt,name=target_node_name,json=targetNodeName,proto3" json:"target_node_name,omitempty"`
-	TargetBackendAdvertiseAddr string                 `protobuf:"bytes,4,opt,name=target_backend_advertise_addr,json=targetBackendAdvertiseAddr,proto3" json:"target_backend_advertise_addr,omitempty"`
-	StartedAt                  string                 `protobuf:"bytes,5,opt,name=started_at,json=startedAt,proto3" json:"started_at,omitempty"`
-	CompletedAt                string                 `protobuf:"bytes,6,opt,name=completed_at,json=completedAt,proto3" json:"completed_at,omitempty"`
-	Status                     string                 `protobuf:"bytes,7,opt,name=status,proto3" json:"status,omitempty"`
-	SnapshotBaseLsn            uint64                 `protobuf:"varint,8,opt,name=snapshot_base_lsn,json=snapshotBaseLsn,proto3" json:"snapshot_base_lsn,omitempty"`
-	TotalBytes                 uint64                 `protobuf:"varint,9,opt,name=total_bytes,json=totalBytes,proto3" json:"total_bytes,omitempty"`
-	Checksum                   string                 `protobuf:"bytes,10,opt,name=checksum,proto3" json:"checksum,omitempty"`
-	Error                      string                 `protobuf:"bytes,11,opt,name=error,proto3" json:"error,omitempty"`
-	unknownFields              protoimpl.UnknownFields
-	sizeCache                  protoimpl.SizeCache
-}
-
-func (x *ClusterResyncOperation) Reset() {
-	*x = ClusterResyncOperation{}
-	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[21]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *ClusterResyncOperation) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*ClusterResyncOperation) ProtoMessage() {}
-
-func (x *ClusterResyncOperation) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[21]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use ClusterResyncOperation.ProtoReflect.Descriptor instead.
-func (*ClusterResyncOperation) Descriptor() ([]byte, []int) {
-	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{21}
-}
-
-func (x *ClusterResyncOperation) GetOperationId() string {
-	if x != nil {
-		return x.OperationId
-	}
-	return ""
-}
-
-func (x *ClusterResyncOperation) GetTargetNodeId() string {
-	if x != nil {
-		return x.TargetNodeId
-	}
-	return ""
-}
-
-func (x *ClusterResyncOperation) GetTargetNodeName() string {
-	if x != nil {
-		return x.TargetNodeName
-	}
-	return ""
-}
-
-func (x *ClusterResyncOperation) GetTargetBackendAdvertiseAddr() string {
-	if x != nil {
-		return x.TargetBackendAdvertiseAddr
-	}
-	return ""
-}
-
-func (x *ClusterResyncOperation) GetStartedAt() string {
-	if x != nil {
-		return x.StartedAt
-	}
-	return ""
-}
-
-func (x *ClusterResyncOperation) GetCompletedAt() string {
-	if x != nil {
-		return x.CompletedAt
-	}
-	return ""
-}
-
-func (x *ClusterResyncOperation) GetStatus() string {
-	if x != nil {
-		return x.Status
-	}
-	return ""
-}
-
-func (x *ClusterResyncOperation) GetSnapshotBaseLsn() uint64 {
-	if x != nil {
-		return x.SnapshotBaseLsn
-	}
-	return 0
-}
-
-func (x *ClusterResyncOperation) GetTotalBytes() uint64 {
-	if x != nil {
-		return x.TotalBytes
-	}
-	return 0
-}
-
-func (x *ClusterResyncOperation) GetChecksum() string {
-	if x != nil {
-		return x.Checksum
-	}
-	return ""
-}
-
-func (x *ClusterResyncOperation) GetError() string {
-	if x != nil {
-		return x.Error
-	}
-	return ""
-}
-
-type SwitchClusterPrimaryRequest struct {
-	state          protoimpl.MessageState `protogen:"open.v1"`
-	Target         string                 `protobuf:"bytes,1,opt,name=target,proto3" json:"target,omitempty"`
-	TimeoutSeconds int64                  `protobuf:"varint,2,opt,name=timeout_seconds,json=timeoutSeconds,proto3" json:"timeout_seconds,omitempty"`
-	DryRun         bool                   `protobuf:"varint,3,opt,name=dry_run,json=dryRun,proto3" json:"dry_run,omitempty"`
-	unknownFields  protoimpl.UnknownFields
-	sizeCache      protoimpl.SizeCache
-}
-
-func (x *SwitchClusterPrimaryRequest) Reset() {
-	*x = SwitchClusterPrimaryRequest{}
-	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[22]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *SwitchClusterPrimaryRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*SwitchClusterPrimaryRequest) ProtoMessage() {}
-
-func (x *SwitchClusterPrimaryRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[22]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use SwitchClusterPrimaryRequest.ProtoReflect.Descriptor instead.
-func (*SwitchClusterPrimaryRequest) Descriptor() ([]byte, []int) {
-	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{22}
-}
-
-func (x *SwitchClusterPrimaryRequest) GetTarget() string {
-	if x != nil {
-		return x.Target
-	}
-	return ""
-}
-
-func (x *SwitchClusterPrimaryRequest) GetTimeoutSeconds() int64 {
-	if x != nil {
-		return x.TimeoutSeconds
-	}
-	return 0
-}
-
-func (x *SwitchClusterPrimaryRequest) GetDryRun() bool {
-	if x != nil {
-		return x.DryRun
-	}
-	return false
-}
-
-type SwitchClusterPrimaryResponse struct {
-	state              protoimpl.MessageState `protogen:"open.v1"`
-	OperationId        string                 `protobuf:"bytes,1,opt,name=operation_id,json=operationId,proto3" json:"operation_id,omitempty"`
-	OldPrimaryNodeId   string                 `protobuf:"bytes,2,opt,name=old_primary_node_id,json=oldPrimaryNodeId,proto3" json:"old_primary_node_id,omitempty"`
-	OldPrimaryNodeName string                 `protobuf:"bytes,3,opt,name=old_primary_node_name,json=oldPrimaryNodeName,proto3" json:"old_primary_node_name,omitempty"`
-	NewPrimaryNodeId   string                 `protobuf:"bytes,4,opt,name=new_primary_node_id,json=newPrimaryNodeId,proto3" json:"new_primary_node_id,omitempty"`
-	NewPrimaryNodeName string                 `protobuf:"bytes,5,opt,name=new_primary_node_name,json=newPrimaryNodeName,proto3" json:"new_primary_node_name,omitempty"`
-	AuthorityEpoch     int64                  `protobuf:"varint,6,opt,name=authority_epoch,json=authorityEpoch,proto3" json:"authority_epoch,omitempty"`
-	FinalLsn           uint64                 `protobuf:"varint,7,opt,name=final_lsn,json=finalLsn,proto3" json:"final_lsn,omitempty"`
-	unknownFields      protoimpl.UnknownFields
-	sizeCache          protoimpl.SizeCache
-}
-
-func (x *SwitchClusterPrimaryResponse) Reset() {
-	*x = SwitchClusterPrimaryResponse{}
-	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[23]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *SwitchClusterPrimaryResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*SwitchClusterPrimaryResponse) ProtoMessage() {}
-
-func (x *SwitchClusterPrimaryResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[23]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use SwitchClusterPrimaryResponse.ProtoReflect.Descriptor instead.
-func (*SwitchClusterPrimaryResponse) Descriptor() ([]byte, []int) {
-	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{23}
-}
-
-func (x *SwitchClusterPrimaryResponse) GetOperationId() string {
-	if x != nil {
-		return x.OperationId
-	}
-	return ""
-}
-
-func (x *SwitchClusterPrimaryResponse) GetOldPrimaryNodeId() string {
-	if x != nil {
-		return x.OldPrimaryNodeId
-	}
-	return ""
-}
-
-func (x *SwitchClusterPrimaryResponse) GetOldPrimaryNodeName() string {
-	if x != nil {
-		return x.OldPrimaryNodeName
-	}
-	return ""
-}
-
-func (x *SwitchClusterPrimaryResponse) GetNewPrimaryNodeId() string {
-	if x != nil {
-		return x.NewPrimaryNodeId
-	}
-	return ""
-}
-
-func (x *SwitchClusterPrimaryResponse) GetNewPrimaryNodeName() string {
-	if x != nil {
-		return x.NewPrimaryNodeName
-	}
-	return ""
-}
-
-func (x *SwitchClusterPrimaryResponse) GetAuthorityEpoch() int64 {
-	if x != nil {
-		return x.AuthorityEpoch
-	}
-	return 0
-}
-
-func (x *SwitchClusterPrimaryResponse) GetFinalLsn() uint64 {
-	if x != nil {
-		return x.FinalLsn
-	}
-	return 0
-}
-
-type PromoteLocalPrimaryRequest struct {
-	state                   protoimpl.MessageState `protogen:"open.v1"`
-	Force                   bool                   `protobuf:"varint,1,opt,name=force,proto3" json:"force,omitempty"`
-	ConfirmOldPrimaryFenced string                 `protobuf:"bytes,2,opt,name=confirm_old_primary_fenced,json=confirmOldPrimaryFenced,proto3" json:"confirm_old_primary_fenced,omitempty"`
-	unknownFields           protoimpl.UnknownFields
-	sizeCache               protoimpl.SizeCache
-}
-
-func (x *PromoteLocalPrimaryRequest) Reset() {
-	*x = PromoteLocalPrimaryRequest{}
-	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[24]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *PromoteLocalPrimaryRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*PromoteLocalPrimaryRequest) ProtoMessage() {}
-
-func (x *PromoteLocalPrimaryRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[24]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use PromoteLocalPrimaryRequest.ProtoReflect.Descriptor instead.
-func (*PromoteLocalPrimaryRequest) Descriptor() ([]byte, []int) {
-	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{24}
-}
-
-func (x *PromoteLocalPrimaryRequest) GetForce() bool {
-	if x != nil {
-		return x.Force
-	}
-	return false
-}
-
-func (x *PromoteLocalPrimaryRequest) GetConfirmOldPrimaryFenced() string {
-	if x != nil {
-		return x.ConfirmOldPrimaryFenced
-	}
-	return ""
-}
-
-type PromoteLocalPrimaryResponse struct {
-	state              protoimpl.MessageState `protogen:"open.v1"`
-	OperationId        string                 `protobuf:"bytes,1,opt,name=operation_id,json=operationId,proto3" json:"operation_id,omitempty"`
-	OldPrimaryNodeId   string                 `protobuf:"bytes,2,opt,name=old_primary_node_id,json=oldPrimaryNodeId,proto3" json:"old_primary_node_id,omitempty"`
-	OldPrimaryNodeName string                 `protobuf:"bytes,3,opt,name=old_primary_node_name,json=oldPrimaryNodeName,proto3" json:"old_primary_node_name,omitempty"`
-	NewPrimaryNodeId   string                 `protobuf:"bytes,4,opt,name=new_primary_node_id,json=newPrimaryNodeId,proto3" json:"new_primary_node_id,omitempty"`
-	NewPrimaryNodeName string                 `protobuf:"bytes,5,opt,name=new_primary_node_name,json=newPrimaryNodeName,proto3" json:"new_primary_node_name,omitempty"`
-	AuthorityEpoch     int64                  `protobuf:"varint,6,opt,name=authority_epoch,json=authorityEpoch,proto3" json:"authority_epoch,omitempty"`
-	unknownFields      protoimpl.UnknownFields
-	sizeCache          protoimpl.SizeCache
-}
-
-func (x *PromoteLocalPrimaryResponse) Reset() {
-	*x = PromoteLocalPrimaryResponse{}
-	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[25]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *PromoteLocalPrimaryResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*PromoteLocalPrimaryResponse) ProtoMessage() {}
-
-func (x *PromoteLocalPrimaryResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[25]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use PromoteLocalPrimaryResponse.ProtoReflect.Descriptor instead.
-func (*PromoteLocalPrimaryResponse) Descriptor() ([]byte, []int) {
-	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{25}
-}
-
-func (x *PromoteLocalPrimaryResponse) GetOperationId() string {
-	if x != nil {
-		return x.OperationId
-	}
-	return ""
-}
-
-func (x *PromoteLocalPrimaryResponse) GetOldPrimaryNodeId() string {
-	if x != nil {
-		return x.OldPrimaryNodeId
-	}
-	return ""
-}
-
-func (x *PromoteLocalPrimaryResponse) GetOldPrimaryNodeName() string {
-	if x != nil {
-		return x.OldPrimaryNodeName
-	}
-	return ""
-}
-
-func (x *PromoteLocalPrimaryResponse) GetNewPrimaryNodeId() string {
-	if x != nil {
-		return x.NewPrimaryNodeId
-	}
-	return ""
-}
-
-func (x *PromoteLocalPrimaryResponse) GetNewPrimaryNodeName() string {
-	if x != nil {
-		return x.NewPrimaryNodeName
-	}
-	return ""
-}
-
-func (x *PromoteLocalPrimaryResponse) GetAuthorityEpoch() int64 {
-	if x != nil {
-		return x.AuthorityEpoch
-	}
-	return 0
-}
-
 type GetClusterHealthRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	unknownFields protoimpl.UnknownFields
@@ -2435,7 +1595,7 @@ type GetClusterHealthRequest struct {
 
 func (x *GetClusterHealthRequest) Reset() {
 	*x = GetClusterHealthRequest{}
-	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[26]
+	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[15]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2447,7 +1607,7 @@ func (x *GetClusterHealthRequest) String() string {
 func (*GetClusterHealthRequest) ProtoMessage() {}
 
 func (x *GetClusterHealthRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[26]
+	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[15]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2460,30 +1620,23 @@ func (x *GetClusterHealthRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetClusterHealthRequest.ProtoReflect.Descriptor instead.
 func (*GetClusterHealthRequest) Descriptor() ([]byte, []int) {
-	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{26}
+	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{15}
 }
 
 type GetClusterHealthResponse struct {
-	state                 protoimpl.MessageState `protogen:"open.v1"`
-	Status                string                 `protobuf:"bytes,1,opt,name=status,proto3" json:"status,omitempty"`
-	Warnings              []string               `protobuf:"bytes,2,rep,name=warnings,proto3" json:"warnings,omitempty"`
-	LocalRole             string                 `protobuf:"bytes,3,opt,name=local_role,json=localRole,proto3" json:"local_role,omitempty"`
-	PrimaryNodeId         string                 `protobuf:"bytes,4,opt,name=primary_node_id,json=primaryNodeId,proto3" json:"primary_node_id,omitempty"`
-	PrimaryNodeName       string                 `protobuf:"bytes,5,opt,name=primary_node_name,json=primaryNodeName,proto3" json:"primary_node_name,omitempty"`
-	AuthorityEpoch        int64                  `protobuf:"varint,6,opt,name=authority_epoch,json=authorityEpoch,proto3" json:"authority_epoch,omitempty"`
-	ReplicationLagRecords uint64                 `protobuf:"varint,7,opt,name=replication_lag_records,json=replicationLagRecords,proto3" json:"replication_lag_records,omitempty"`
-	CatchupState          string                 `protobuf:"bytes,8,opt,name=catchup_state,json=catchupState,proto3" json:"catchup_state,omitempty"`
-	SnapshotRequired      bool                   `protobuf:"varint,9,opt,name=snapshot_required,json=snapshotRequired,proto3" json:"snapshot_required,omitempty"`
-	ActiveMembers         int32                  `protobuf:"varint,10,opt,name=active_members,json=activeMembers,proto3" json:"active_members,omitempty"`
-	PendingMembers        int32                  `protobuf:"varint,11,opt,name=pending_members,json=pendingMembers,proto3" json:"pending_members,omitempty"`
-	UnreachablePeers      int32                  `protobuf:"varint,12,opt,name=unreachable_peers,json=unreachablePeers,proto3" json:"unreachable_peers,omitempty"`
-	unknownFields         protoimpl.UnknownFields
-	sizeCache             protoimpl.SizeCache
+	state            protoimpl.MessageState `protogen:"open.v1"`
+	Status           string                 `protobuf:"bytes,1,opt,name=status,proto3" json:"status,omitempty"`
+	Warnings         []string               `protobuf:"bytes,2,rep,name=warnings,proto3" json:"warnings,omitempty"`
+	ActiveMembers    int32                  `protobuf:"varint,3,opt,name=active_members,json=activeMembers,proto3" json:"active_members,omitempty"`
+	PendingMembers   int32                  `protobuf:"varint,4,opt,name=pending_members,json=pendingMembers,proto3" json:"pending_members,omitempty"`
+	UnreachablePeers int32                  `protobuf:"varint,5,opt,name=unreachable_peers,json=unreachablePeers,proto3" json:"unreachable_peers,omitempty"`
+	unknownFields    protoimpl.UnknownFields
+	sizeCache        protoimpl.SizeCache
 }
 
 func (x *GetClusterHealthResponse) Reset() {
 	*x = GetClusterHealthResponse{}
-	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[27]
+	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[16]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2495,7 +1648,7 @@ func (x *GetClusterHealthResponse) String() string {
 func (*GetClusterHealthResponse) ProtoMessage() {}
 
 func (x *GetClusterHealthResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[27]
+	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[16]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2508,7 +1661,7 @@ func (x *GetClusterHealthResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetClusterHealthResponse.ProtoReflect.Descriptor instead.
 func (*GetClusterHealthResponse) Descriptor() ([]byte, []int) {
-	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{27}
+	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{16}
 }
 
 func (x *GetClusterHealthResponse) GetStatus() string {
@@ -2523,55 +1676,6 @@ func (x *GetClusterHealthResponse) GetWarnings() []string {
 		return x.Warnings
 	}
 	return nil
-}
-
-func (x *GetClusterHealthResponse) GetLocalRole() string {
-	if x != nil {
-		return x.LocalRole
-	}
-	return ""
-}
-
-func (x *GetClusterHealthResponse) GetPrimaryNodeId() string {
-	if x != nil {
-		return x.PrimaryNodeId
-	}
-	return ""
-}
-
-func (x *GetClusterHealthResponse) GetPrimaryNodeName() string {
-	if x != nil {
-		return x.PrimaryNodeName
-	}
-	return ""
-}
-
-func (x *GetClusterHealthResponse) GetAuthorityEpoch() int64 {
-	if x != nil {
-		return x.AuthorityEpoch
-	}
-	return 0
-}
-
-func (x *GetClusterHealthResponse) GetReplicationLagRecords() uint64 {
-	if x != nil {
-		return x.ReplicationLagRecords
-	}
-	return 0
-}
-
-func (x *GetClusterHealthResponse) GetCatchupState() string {
-	if x != nil {
-		return x.CatchupState
-	}
-	return ""
-}
-
-func (x *GetClusterHealthResponse) GetSnapshotRequired() bool {
-	if x != nil {
-		return x.SnapshotRequired
-	}
-	return false
 }
 
 func (x *GetClusterHealthResponse) GetActiveMembers() int32 {
@@ -2599,14 +1703,47 @@ var File_mycel_admin_v1_cluster_proto protoreflect.FileDescriptor
 
 const file_mycel_admin_v1_cluster_proto_rawDesc = "" +
 	"\n" +
-	"\x1cmycel/admin/v1/cluster.proto\x12\x0emycel.admin.v1\"\x19\n" +
-	"\x17GetClusterStatusRequest\"\xc6\x02\n" +
+	"\x1cmycel/admin/v1/cluster.proto\x12\x0emycel.admin.v1\" \n" +
+	"\x1eGetClusterRuntimeStatusRequest\"\xbb\x03\n" +
+	"\x1fGetClusterRuntimeStatusResponse\x125\n" +
+	"\x06engine\x18\x01 \x01(\x0e2\x1d.mycel.admin.v1.ClusterEngineR\x06engine\x12!\n" +
+	"\fcluster_name\x18\x02 \x01(\tR\vclusterName\x12&\n" +
+	"\x0fraft_node_count\x18\x03 \x01(\rR\rraftNodeCount\x120\n" +
+	"\x14raft_partition_count\x18\x04 \x01(\rR\x12raftPartitionCount\x12.\n" +
+	"\x13raft_replica_factor\x18\x05 \x01(\rR\x11raftReplicaFactor\x12+\n" +
+	"\x12local_raft_node_id\x18\x06 \x01(\x04R\x0flocalRaftNodeId\x12&\n" +
+	"\x0fraft_node_addrs\x18\a \x03(\tR\rraftNodeAddrs\x12(\n" +
+	"\x10raft_group_count\x18\b \x01(\x05R\x0eraftGroupCount\x125\n" +
+	"\x17raft_groups_with_leader\x18\t \x01(\x05R\x14raftGroupsWithLeader\"\x17\n" +
+	"\x15ListRaftGroupsRequest\"Q\n" +
+	"\x16ListRaftGroupsResponse\x127\n" +
+	"\x06groups\x18\x01 \x03(\v2\x1f.mycel.admin.v1.RaftGroupStatusR\x06groups\"\xe1\x03\n" +
+	"\x0fRaftGroupStatus\x12\x19\n" +
+	"\bgroup_id\x18\x01 \x01(\tR\agroupId\x121\n" +
+	"\x04kind\x18\x02 \x01(\x0e2\x1d.mycel.admin.v1.RaftGroupKindR\x04kind\x12!\n" +
+	"\fpartition_id\x18\x03 \x01(\rR\vpartitionId\x12\"\n" +
+	"\rlocal_node_id\x18\x04 \x01(\x04R\vlocalNodeId\x12$\n" +
+	"\x0eleader_node_id\x18\x05 \x01(\x04R\fleaderNodeId\x127\n" +
+	"\x18preferred_leader_node_id\x18\x06 \x01(\x04R\x15preferredLeaderNodeId\x12(\n" +
+	"\x10replica_node_ids\x18\a \x03(\x04R\x0ereplicaNodeIds\x127\n" +
+	"\x06health\x18\b \x01(\x0e2\x1f.mycel.admin.v1.RaftGroupHealthR\x06health\x12\x12\n" +
+	"\x04term\x18\t \x01(\x04R\x04term\x12!\n" +
+	"\fcommit_index\x18\n" +
+	" \x01(\x04R\vcommitIndex\x12#\n" +
+	"\rapplied_index\x18\v \x01(\x04R\fappliedIndex\x12\x1b\n" +
+	"\tapply_lag\x18\f \x01(\x04R\bapplyLag\"4\n" +
+	"\x17LookupSpaceRouteRequest\x12\x19\n" +
+	"\bspace_id\x18\x01 \x01(\tR\aspaceId\"\xa8\x01\n" +
+	"\x18LookupSpaceRouteResponse\x12\x19\n" +
+	"\bspace_id\x18\x01 \x01(\tR\aspaceId\x12!\n" +
+	"\fpartition_id\x18\x02 \x01(\rR\vpartitionId\x12$\n" +
+	"\x0eleader_node_id\x18\x03 \x01(\x04R\fleaderNodeId\x12(\n" +
+	"\x10replica_node_ids\x18\x04 \x03(\x04R\x0ereplicaNodeIds\"\x19\n" +
+	"\x17GetClusterStatusRequest\"\xba\x01\n" +
 	"\x18GetClusterStatusResponse\x124\n" +
 	"\x04node\x18\x01 \x01(\v2 .mycel.admin.v1.ClusterLocalNodeR\x04node\x125\n" +
 	"\acluster\x18\x02 \x01(\v2\x1b.mycel.admin.v1.ClusterInfoR\acluster\x121\n" +
-	"\x05peers\x18\x03 \x03(\v2\x1b.mycel.admin.v1.ClusterPeerR\x05peers\x12>\n" +
-	"\tauthority\x18\x04 \x01(\v2 .mycel.admin.v1.ClusterAuthorityR\tauthority\x12J\n" +
-	"\vreplication\x18\x05 \x01(\v2(.mycel.admin.v1.ClusterReplicationStatusR\vreplication\"\xe4\x02\n" +
+	"\x05peers\x18\x03 \x03(\v2\x1b.mycel.admin.v1.ClusterPeerR\x05peers\"\xaf\x02\n" +
 	"\x10ClusterLocalNode\x12\x17\n" +
 	"\anode_id\x18\x01 \x01(\tR\x06nodeId\x12\x1b\n" +
 	"\tnode_name\x18\x02 \x01(\tR\bnodeName\x126\n" +
@@ -2614,8 +1751,7 @@ const file_mycel_admin_v1_cluster_proto_rawDesc = "" +
 	"\badmitted\x18\x04 \x01(\bR\badmitted\x12\x1c\n" +
 	"\tbootstrap\x18\x05 \x01(\bR\tbootstrap\x124\n" +
 	"\x16backend_advertise_addr\x18\x06 \x01(\tR\x14backendAdvertiseAddr\x12=\n" +
-	"\x1bnode_public_key_fingerprint\x18\a \x01(\tR\x18nodePublicKeyFingerprint\x123\n" +
-	"\x04role\x18\b \x01(\x0e2\x1f.mycel.admin.v1.ClusterNodeRoleR\x04role\"\x80\x01\n" +
+	"\x1bnode_public_key_fingerprint\x18\a \x01(\tR\x18nodePublicKeyFingerprint\"\x80\x01\n" +
 	"\vClusterInfo\x12\x1d\n" +
 	"\n" +
 	"cluster_id\x18\x01 \x01(\tR\tclusterId\x12!\n" +
@@ -2631,48 +1767,7 @@ const file_mycel_admin_v1_cluster_proto_rawDesc = "" +
 	"\x05state\x18\x06 \x01(\x0e2 .mycel.admin.v1.ClusterPeerStateR\x05state\x129\n" +
 	"\x06source\x18\a \x01(\x0e2!.mycel.admin.v1.ClusterPeerSourceR\x06source\x12 \n" +
 	"\flast_seen_at\x18\b \x01(\tR\n" +
-	"lastSeenAt\"\xbe\x02\n" +
-	"\x10ClusterAuthority\x12\x1d\n" +
-	"\n" +
-	"cluster_id\x18\x01 \x01(\tR\tclusterId\x12&\n" +
-	"\x0fprimary_node_id\x18\x02 \x01(\tR\rprimaryNodeId\x12*\n" +
-	"\x11primary_node_name\x18\x03 \x01(\tR\x0fprimaryNodeName\x12C\n" +
-	"\x1eprimary_backend_advertise_addr\x18\x04 \x01(\tR\x1bprimaryBackendAdvertiseAddr\x12'\n" +
-	"\x0fauthority_epoch\x18\x05 \x01(\x03R\x0eauthorityEpoch\x12\x12\n" +
-	"\x04term\x18\x06 \x01(\x03R\x04term\x12\x16\n" +
-	"\x06source\x18\a \x01(\tR\x06source\x12\x1d\n" +
-	"\n" +
-	"updated_at\x18\b \x01(\tR\tupdatedAt\"\x80\x06\n" +
-	"\x18ClusterReplicationStatus\x12&\n" +
-	"\x0fprimary_node_id\x18\x01 \x01(\tR\rprimaryNodeId\x12*\n" +
-	"\x11primary_node_name\x18\x02 \x01(\tR\x0fprimaryNodeName\x12C\n" +
-	"\x1eprimary_backend_advertise_addr\x18\x03 \x01(\tR\x1bprimaryBackendAdvertiseAddr\x12'\n" +
-	"\x0fauthority_epoch\x18\x04 \x01(\x03R\x0eauthorityEpoch\x12!\n" +
-	"\freceived_lsn\x18\x05 \x01(\x04R\vreceivedLsn\x12\x1f\n" +
-	"\vapplied_lsn\x18\x06 \x01(\x04R\n" +
-	"appliedLsn\x12(\n" +
-	"\x10primary_last_lsn\x18\a \x01(\x04R\x0eprimaryLastLsn\x12\x1f\n" +
-	"\vlag_records\x18\b \x01(\x04R\n" +
-	"lagRecords\x12\x1c\n" +
-	"\tconnected\x18\t \x01(\bR\tconnected\x12\x1d\n" +
-	"\n" +
-	"last_error\x18\n" +
-	" \x01(\tR\tlastError\x12\x1d\n" +
-	"\n" +
-	"updated_at\x18\v \x01(\tR\tupdatedAt\x12:\n" +
-	"\x04role\x18\f \x01(\x0e2&.mycel.admin.v1.ClusterReplicationRoleR\x04role\x12S\n" +
-	"\rcatchup_state\x18\r \x01(\x0e2..mycel.admin.v1.ClusterReplicationCatchupStateR\fcatchupState\x12,\n" +
-	"\x12first_retained_lsn\x18\x0e \x01(\x04R\x10firstRetainedLsn\x12%\n" +
-	"\x0echeckpoint_lsn\x18\x0f \x01(\x04R\rcheckpointLsn\x12Q\n" +
-	"\x11snapshot_required\x18\x10 \x01(\v2$.mycel.admin.v1.SnapshotRequiredInfoR\x10snapshotRequired\"\xc8\x02\n" +
-	"\x14SnapshotRequiredInfo\x12.\n" +
-	"\x13requested_after_lsn\x18\x01 \x01(\x04R\x11requestedAfterLsn\x12,\n" +
-	"\x12next_requested_lsn\x18\x02 \x01(\x04R\x10nextRequestedLsn\x12,\n" +
-	"\x12first_retained_lsn\x18\x03 \x01(\x04R\x10firstRetainedLsn\x12,\n" +
-	"\x12last_committed_lsn\x18\x04 \x01(\x04R\x10lastCommittedLsn\x12%\n" +
-	"\x0echeckpoint_lsn\x18\x05 \x01(\x04R\rcheckpointLsn\x12&\n" +
-	"\x0fprimary_node_id\x18\x06 \x01(\tR\rprimaryNodeId\x12'\n" +
-	"\x0fauthority_epoch\x18\a \x01(\x03R\x0eauthorityEpoch\"\x1b\n" +
+	"lastSeenAt\"\x1b\n" +
 	"\x19ListClusterMembersRequest\"\x97\x01\n" +
 	"\x1aListClusterMembersResponse\x12\x1d\n" +
 	"\n" +
@@ -2696,98 +1791,26 @@ const file_mycel_admin_v1_cluster_proto_rawDesc = "" +
 	"created_at\x18\f \x01(\tR\tcreatedAt\x12\x1d\n" +
 	"\n" +
 	"updated_at\x18\r \x01(\tR\tupdatedAt\x12\x1b\n" +
-	"\tjoined_at\x18\x0e \x01(\tR\bjoinedAt\"`\n" +
-	"\x15AddClusterNodeRequest\x12\x1b\n" +
-	"\tnode_name\x18\x01 \x01(\tR\bnodeName\x12*\n" +
-	"\x11token_ttl_seconds\x18\x02 \x01(\x03R\x0ftokenTtlSeconds\"\xbf\x01\n" +
-	"\x16AddClusterNodeResponse\x12\x1b\n" +
-	"\tnode_name\x18\x01 \x01(\tR\bnodeName\x128\n" +
-	"\x05state\x18\x02 \x01(\x0e2\".mycel.admin.v1.ClusterMemberStateR\x05state\x12\x14\n" +
-	"\x05token\x18\x03 \x01(\tR\x05token\x12\x19\n" +
-	"\btoken_id\x18\x04 \x01(\tR\atokenId\x12\x1d\n" +
-	"\n" +
-	"expires_at\x18\x05 \x01(\tR\texpiresAt\"2\n" +
-	"\x18RemoveClusterNodeRequest\x12\x16\n" +
-	"\x06target\x18\x01 \x01(\tR\x06target\"\x8b\x01\n" +
-	"\x19RemoveClusterNodeResponse\x12\x17\n" +
-	"\anode_id\x18\x01 \x01(\tR\x06nodeId\x12\x1b\n" +
-	"\tnode_name\x18\x02 \x01(\tR\bnodeName\x128\n" +
-	"\x05state\x18\x03 \x01(\x0e2\".mycel.admin.v1.ClusterMemberStateR\x05state\"V\n" +
-	"\x18RenameClusterNodeRequest\x12\x16\n" +
-	"\x06target\x18\x01 \x01(\tR\x06target\x12\"\n" +
-	"\rnew_node_name\x18\x02 \x01(\tR\vnewNodeName\"\x8b\x01\n" +
-	"\x19RenameClusterNodeResponse\x12\x17\n" +
-	"\anode_id\x18\x01 \x01(\tR\x06nodeId\x12\x1b\n" +
-	"\tnode_name\x18\x02 \x01(\tR\bnodeName\x128\n" +
-	"\x05state\x18\x03 \x01(\x0e2\".mycel.admin.v1.ClusterMemberStateR\x05state\"2\n" +
-	"\x18ResyncClusterNodeRequest\x12\x16\n" +
-	"\x06target\x18\x01 \x01(\tR\x06target\"\xf7\x01\n" +
-	"\x19ResyncClusterNodeResponse\x12!\n" +
-	"\foperation_id\x18\x01 \x01(\tR\voperationId\x12$\n" +
-	"\x0etarget_node_id\x18\x02 \x01(\tR\ftargetNodeId\x12(\n" +
-	"\x10target_node_name\x18\x03 \x01(\tR\x0etargetNodeName\x12*\n" +
-	"\x11snapshot_base_lsn\x18\x04 \x01(\x04R\x0fsnapshotBaseLsn\x12\x1f\n" +
-	"\vtotal_bytes\x18\x05 \x01(\x04R\n" +
-	"totalBytes\x12\x1a\n" +
-	"\bchecksum\x18\x06 \x01(\tR\bchecksum\"$\n" +
-	"\"ListClusterResyncOperationsRequest\"m\n" +
-	"#ListClusterResyncOperationsResponse\x12F\n" +
-	"\n" +
-	"operations\x18\x01 \x03(\v2&.mycel.admin.v1.ClusterResyncOperationR\n" +
-	"operations\"\xa7\x03\n" +
-	"\x16ClusterResyncOperation\x12!\n" +
-	"\foperation_id\x18\x01 \x01(\tR\voperationId\x12$\n" +
-	"\x0etarget_node_id\x18\x02 \x01(\tR\ftargetNodeId\x12(\n" +
-	"\x10target_node_name\x18\x03 \x01(\tR\x0etargetNodeName\x12A\n" +
-	"\x1dtarget_backend_advertise_addr\x18\x04 \x01(\tR\x1atargetBackendAdvertiseAddr\x12\x1d\n" +
-	"\n" +
-	"started_at\x18\x05 \x01(\tR\tstartedAt\x12!\n" +
-	"\fcompleted_at\x18\x06 \x01(\tR\vcompletedAt\x12\x16\n" +
-	"\x06status\x18\a \x01(\tR\x06status\x12*\n" +
-	"\x11snapshot_base_lsn\x18\b \x01(\x04R\x0fsnapshotBaseLsn\x12\x1f\n" +
-	"\vtotal_bytes\x18\t \x01(\x04R\n" +
-	"totalBytes\x12\x1a\n" +
-	"\bchecksum\x18\n" +
-	" \x01(\tR\bchecksum\x12\x14\n" +
-	"\x05error\x18\v \x01(\tR\x05error\"w\n" +
-	"\x1bSwitchClusterPrimaryRequest\x12\x16\n" +
-	"\x06target\x18\x01 \x01(\tR\x06target\x12'\n" +
-	"\x0ftimeout_seconds\x18\x02 \x01(\x03R\x0etimeoutSeconds\x12\x17\n" +
-	"\adry_run\x18\x03 \x01(\bR\x06dryRun\"\xcb\x02\n" +
-	"\x1cSwitchClusterPrimaryResponse\x12!\n" +
-	"\foperation_id\x18\x01 \x01(\tR\voperationId\x12-\n" +
-	"\x13old_primary_node_id\x18\x02 \x01(\tR\x10oldPrimaryNodeId\x121\n" +
-	"\x15old_primary_node_name\x18\x03 \x01(\tR\x12oldPrimaryNodeName\x12-\n" +
-	"\x13new_primary_node_id\x18\x04 \x01(\tR\x10newPrimaryNodeId\x121\n" +
-	"\x15new_primary_node_name\x18\x05 \x01(\tR\x12newPrimaryNodeName\x12'\n" +
-	"\x0fauthority_epoch\x18\x06 \x01(\x03R\x0eauthorityEpoch\x12\x1b\n" +
-	"\tfinal_lsn\x18\a \x01(\x04R\bfinalLsn\"o\n" +
-	"\x1aPromoteLocalPrimaryRequest\x12\x14\n" +
-	"\x05force\x18\x01 \x01(\bR\x05force\x12;\n" +
-	"\x1aconfirm_old_primary_fenced\x18\x02 \x01(\tR\x17confirmOldPrimaryFenced\"\xad\x02\n" +
-	"\x1bPromoteLocalPrimaryResponse\x12!\n" +
-	"\foperation_id\x18\x01 \x01(\tR\voperationId\x12-\n" +
-	"\x13old_primary_node_id\x18\x02 \x01(\tR\x10oldPrimaryNodeId\x121\n" +
-	"\x15old_primary_node_name\x18\x03 \x01(\tR\x12oldPrimaryNodeName\x12-\n" +
-	"\x13new_primary_node_id\x18\x04 \x01(\tR\x10newPrimaryNodeId\x121\n" +
-	"\x15new_primary_node_name\x18\x05 \x01(\tR\x12newPrimaryNodeName\x12'\n" +
-	"\x0fauthority_epoch\x18\x06 \x01(\x03R\x0eauthorityEpoch\"\x19\n" +
-	"\x17GetClusterHealthRequest\"\xf1\x03\n" +
+	"\tjoined_at\x18\x0e \x01(\tR\bjoinedAt\"\x19\n" +
+	"\x17GetClusterHealthRequest\"\xcb\x01\n" +
 	"\x18GetClusterHealthResponse\x12\x16\n" +
 	"\x06status\x18\x01 \x01(\tR\x06status\x12\x1a\n" +
-	"\bwarnings\x18\x02 \x03(\tR\bwarnings\x12\x1d\n" +
-	"\n" +
-	"local_role\x18\x03 \x01(\tR\tlocalRole\x12&\n" +
-	"\x0fprimary_node_id\x18\x04 \x01(\tR\rprimaryNodeId\x12*\n" +
-	"\x11primary_node_name\x18\x05 \x01(\tR\x0fprimaryNodeName\x12'\n" +
-	"\x0fauthority_epoch\x18\x06 \x01(\x03R\x0eauthorityEpoch\x126\n" +
-	"\x17replication_lag_records\x18\a \x01(\x04R\x15replicationLagRecords\x12#\n" +
-	"\rcatchup_state\x18\b \x01(\tR\fcatchupState\x12+\n" +
-	"\x11snapshot_required\x18\t \x01(\bR\x10snapshotRequired\x12%\n" +
-	"\x0eactive_members\x18\n" +
-	" \x01(\x05R\ractiveMembers\x12'\n" +
-	"\x0fpending_members\x18\v \x01(\x05R\x0ependingMembers\x12+\n" +
-	"\x11unreachable_peers\x18\f \x01(\x05R\x10unreachablePeers*d\n" +
+	"\bwarnings\x18\x02 \x03(\tR\bwarnings\x12%\n" +
+	"\x0eactive_members\x18\x03 \x01(\x05R\ractiveMembers\x12'\n" +
+	"\x0fpending_members\x18\x04 \x01(\x05R\x0ependingMembers\x12+\n" +
+	"\x11unreachable_peers\x18\x05 \x01(\x05R\x10unreachablePeers*H\n" +
+	"\rClusterEngine\x12\x1e\n" +
+	"\x1aCLUSTER_ENGINE_UNSPECIFIED\x10\x00\x12\x17\n" +
+	"\x13CLUSTER_ENGINE_RAFT\x10\x01*k\n" +
+	"\rRaftGroupKind\x12\x1f\n" +
+	"\x1bRAFT_GROUP_KIND_UNSPECIFIED\x10\x00\x12\x1a\n" +
+	"\x16RAFT_GROUP_KIND_SYSTEM\x10\x01\x12\x1d\n" +
+	"\x19RAFT_GROUP_KIND_PARTITION\x10\x02*\x93\x01\n" +
+	"\x0fRaftGroupHealth\x12!\n" +
+	"\x1dRAFT_GROUP_HEALTH_UNSPECIFIED\x10\x00\x12\x1d\n" +
+	"\x19RAFT_GROUP_HEALTH_UNKNOWN\x10\x01\x12\x1d\n" +
+	"\x19RAFT_GROUP_HEALTH_HEALTHY\x10\x02\x12\x1f\n" +
+	"\x1bRAFT_GROUP_HEALTH_NO_LEADER\x10\x03*d\n" +
 	"\vClusterMode\x12\x1c\n" +
 	"\x18CLUSTER_MODE_UNSPECIFIED\x10\x00\x12\x1b\n" +
 	"\x17CLUSTER_MODE_STANDALONE\x10\x01\x12\x1a\n" +
@@ -2822,20 +1845,7 @@ const file_mycel_admin_v1_cluster_proto_rawDesc = "" +
 	"\x1cCLUSTER_MEMBER_STATE_PENDING\x10\x01\x12\x1f\n" +
 	"\x1bCLUSTER_MEMBER_STATE_ACTIVE\x10\x02\x12!\n" +
 	"\x1dCLUSTER_MEMBER_STATE_REJECTED\x10\x03\x12 \n" +
-	"\x1cCLUSTER_MEMBER_STATE_REMOVED\x10\x04*\xef\x01\n" +
-	"\x0fClusterNodeRole\x12!\n" +
-	"\x1dCLUSTER_NODE_ROLE_UNSPECIFIED\x10\x00\x12\x1a\n" +
-	"\x16CLUSTER_NODE_ROLE_NONE\x10\x01\x12\x1d\n" +
-	"\x19CLUSTER_NODE_ROLE_PRIMARY\x10\x02\x12\x1e\n" +
-	"\x1aCLUSTER_NODE_ROLE_FOLLOWER\x10\x03\x12\x1f\n" +
-	"\x1bCLUSTER_NODE_ROLE_CANDIDATE\x10\x04\x12\x1e\n" +
-	"\x1aCLUSTER_NODE_ROLE_OBSERVER\x10\x05\x12\x1d\n" +
-	"\x19CLUSTER_NODE_ROLE_LEARNER\x10\x06*\xbc\x01\n" +
-	"\x16ClusterReplicationRole\x12(\n" +
-	"$CLUSTER_REPLICATION_ROLE_UNSPECIFIED\x10\x00\x12+\n" +
-	"'CLUSTER_REPLICATION_ROLE_NOT_APPLICABLE\x10\x01\x12$\n" +
-	" CLUSTER_REPLICATION_ROLE_PRIMARY\x10\x02\x12%\n" +
-	"!CLUSTER_REPLICATION_ROLE_FOLLOWER\x10\x03*\xfa\x02\n" +
+	"\x1cCLUSTER_MEMBER_STATE_REMOVED\x10\x04*\xfa\x02\n" +
 	"\x1eClusterReplicationCatchupState\x121\n" +
 	"-CLUSTER_REPLICATION_CATCHUP_STATE_UNSPECIFIED\x10\x00\x12-\n" +
 	")CLUSTER_REPLICATION_CATCHUP_STATE_UNKNOWN\x10\x01\x12/\n" +
@@ -2843,18 +1853,14 @@ const file_mycel_admin_v1_cluster_proto_rawDesc = "" +
 	"+CLUSTER_REPLICATION_CATCHUP_STATE_CAUGHT_UP\x10\x03\x12.\n" +
 	"*CLUSTER_REPLICATION_CATCHUP_STATE_RETRYING\x10\x04\x127\n" +
 	"3CLUSTER_REPLICATION_CATCHUP_STATE_SNAPSHOT_REQUIRED\x10\x05\x12+\n" +
-	"'CLUSTER_REPLICATION_CATCHUP_STATE_ERROR\x10\x062\xdb\b\n" +
+	"'CLUSTER_REPLICATION_CATCHUP_STATE_ERROR\x10\x062\x94\x05\n" +
 	"\x13AdminClusterService\x12e\n" +
 	"\x10GetClusterStatus\x12'.mycel.admin.v1.GetClusterStatusRequest\x1a(.mycel.admin.v1.GetClusterStatusResponse\x12k\n" +
-	"\x12ListClusterMembers\x12).mycel.admin.v1.ListClusterMembersRequest\x1a*.mycel.admin.v1.ListClusterMembersResponse\x12_\n" +
-	"\x0eAddClusterNode\x12%.mycel.admin.v1.AddClusterNodeRequest\x1a&.mycel.admin.v1.AddClusterNodeResponse\x12h\n" +
-	"\x11RemoveClusterNode\x12(.mycel.admin.v1.RemoveClusterNodeRequest\x1a).mycel.admin.v1.RemoveClusterNodeResponse\x12h\n" +
-	"\x11RenameClusterNode\x12(.mycel.admin.v1.RenameClusterNodeRequest\x1a).mycel.admin.v1.RenameClusterNodeResponse\x12h\n" +
-	"\x11ResyncClusterNode\x12(.mycel.admin.v1.ResyncClusterNodeRequest\x1a).mycel.admin.v1.ResyncClusterNodeResponse\x12\x86\x01\n" +
-	"\x1bListClusterResyncOperations\x122.mycel.admin.v1.ListClusterResyncOperationsRequest\x1a3.mycel.admin.v1.ListClusterResyncOperationsResponse\x12q\n" +
-	"\x14SwitchClusterPrimary\x12+.mycel.admin.v1.SwitchClusterPrimaryRequest\x1a,.mycel.admin.v1.SwitchClusterPrimaryResponse\x12n\n" +
-	"\x13PromoteLocalPrimary\x12*.mycel.admin.v1.PromoteLocalPrimaryRequest\x1a+.mycel.admin.v1.PromoteLocalPrimaryResponse\x12e\n" +
-	"\x10GetClusterHealth\x12'.mycel.admin.v1.GetClusterHealthRequest\x1a(.mycel.admin.v1.GetClusterHealthResponseB\xbb\x01\n" +
+	"\x12ListClusterMembers\x12).mycel.admin.v1.ListClusterMembersRequest\x1a*.mycel.admin.v1.ListClusterMembersResponse\x12e\n" +
+	"\x10GetClusterHealth\x12'.mycel.admin.v1.GetClusterHealthRequest\x1a(.mycel.admin.v1.GetClusterHealthResponse\x12z\n" +
+	"\x17GetClusterRuntimeStatus\x12..mycel.admin.v1.GetClusterRuntimeStatusRequest\x1a/.mycel.admin.v1.GetClusterRuntimeStatusResponse\x12_\n" +
+	"\x0eListRaftGroups\x12%.mycel.admin.v1.ListRaftGroupsRequest\x1a&.mycel.admin.v1.ListRaftGroupsResponse\x12e\n" +
+	"\x10LookupSpaceRoute\x12'.mycel.admin.v1.LookupSpaceRouteRequest\x1a(.mycel.admin.v1.LookupSpaceRouteResponseB\xbb\x01\n" +
 	"\x12com.mycel.admin.v1B\fClusterProtoP\x01Z=github.com/myceldb/mycel-go-sdk/gen/go/mycel/admin/v1;adminv1\xa2\x02\x03MAX\xaa\x02\x0eMycel.Admin.V1\xca\x02\x0eMycel\\Admin\\V1\xe2\x02\x1aMycel\\Admin\\V1\\GPBMetadata\xea\x02\x10Mycel::Admin::V1b\x06proto3"
 
 var (
@@ -2869,91 +1875,67 @@ func file_mycel_admin_v1_cluster_proto_rawDescGZIP() []byte {
 	return file_mycel_admin_v1_cluster_proto_rawDescData
 }
 
-var file_mycel_admin_v1_cluster_proto_enumTypes = make([]protoimpl.EnumInfo, 8)
-var file_mycel_admin_v1_cluster_proto_msgTypes = make([]protoimpl.MessageInfo, 28)
+var file_mycel_admin_v1_cluster_proto_enumTypes = make([]protoimpl.EnumInfo, 9)
+var file_mycel_admin_v1_cluster_proto_msgTypes = make([]protoimpl.MessageInfo, 17)
 var file_mycel_admin_v1_cluster_proto_goTypes = []any{
-	(ClusterMode)(0),                            // 0: mycel.admin.v1.ClusterMode
-	(ClusterNodeState)(0),                       // 1: mycel.admin.v1.ClusterNodeState
-	(ClusterPeerState)(0),                       // 2: mycel.admin.v1.ClusterPeerState
-	(ClusterPeerSource)(0),                      // 3: mycel.admin.v1.ClusterPeerSource
-	(ClusterMemberState)(0),                     // 4: mycel.admin.v1.ClusterMemberState
-	(ClusterNodeRole)(0),                        // 5: mycel.admin.v1.ClusterNodeRole
-	(ClusterReplicationRole)(0),                 // 6: mycel.admin.v1.ClusterReplicationRole
-	(ClusterReplicationCatchupState)(0),         // 7: mycel.admin.v1.ClusterReplicationCatchupState
-	(*GetClusterStatusRequest)(nil),             // 8: mycel.admin.v1.GetClusterStatusRequest
-	(*GetClusterStatusResponse)(nil),            // 9: mycel.admin.v1.GetClusterStatusResponse
-	(*ClusterLocalNode)(nil),                    // 10: mycel.admin.v1.ClusterLocalNode
-	(*ClusterInfo)(nil),                         // 11: mycel.admin.v1.ClusterInfo
-	(*ClusterPeer)(nil),                         // 12: mycel.admin.v1.ClusterPeer
-	(*ClusterAuthority)(nil),                    // 13: mycel.admin.v1.ClusterAuthority
-	(*ClusterReplicationStatus)(nil),            // 14: mycel.admin.v1.ClusterReplicationStatus
-	(*SnapshotRequiredInfo)(nil),                // 15: mycel.admin.v1.SnapshotRequiredInfo
-	(*ListClusterMembersRequest)(nil),           // 16: mycel.admin.v1.ListClusterMembersRequest
-	(*ListClusterMembersResponse)(nil),          // 17: mycel.admin.v1.ListClusterMembersResponse
-	(*ClusterMember)(nil),                       // 18: mycel.admin.v1.ClusterMember
-	(*AddClusterNodeRequest)(nil),               // 19: mycel.admin.v1.AddClusterNodeRequest
-	(*AddClusterNodeResponse)(nil),              // 20: mycel.admin.v1.AddClusterNodeResponse
-	(*RemoveClusterNodeRequest)(nil),            // 21: mycel.admin.v1.RemoveClusterNodeRequest
-	(*RemoveClusterNodeResponse)(nil),           // 22: mycel.admin.v1.RemoveClusterNodeResponse
-	(*RenameClusterNodeRequest)(nil),            // 23: mycel.admin.v1.RenameClusterNodeRequest
-	(*RenameClusterNodeResponse)(nil),           // 24: mycel.admin.v1.RenameClusterNodeResponse
-	(*ResyncClusterNodeRequest)(nil),            // 25: mycel.admin.v1.ResyncClusterNodeRequest
-	(*ResyncClusterNodeResponse)(nil),           // 26: mycel.admin.v1.ResyncClusterNodeResponse
-	(*ListClusterResyncOperationsRequest)(nil),  // 27: mycel.admin.v1.ListClusterResyncOperationsRequest
-	(*ListClusterResyncOperationsResponse)(nil), // 28: mycel.admin.v1.ListClusterResyncOperationsResponse
-	(*ClusterResyncOperation)(nil),              // 29: mycel.admin.v1.ClusterResyncOperation
-	(*SwitchClusterPrimaryRequest)(nil),         // 30: mycel.admin.v1.SwitchClusterPrimaryRequest
-	(*SwitchClusterPrimaryResponse)(nil),        // 31: mycel.admin.v1.SwitchClusterPrimaryResponse
-	(*PromoteLocalPrimaryRequest)(nil),          // 32: mycel.admin.v1.PromoteLocalPrimaryRequest
-	(*PromoteLocalPrimaryResponse)(nil),         // 33: mycel.admin.v1.PromoteLocalPrimaryResponse
-	(*GetClusterHealthRequest)(nil),             // 34: mycel.admin.v1.GetClusterHealthRequest
-	(*GetClusterHealthResponse)(nil),            // 35: mycel.admin.v1.GetClusterHealthResponse
+	(ClusterEngine)(0),                      // 0: mycel.admin.v1.ClusterEngine
+	(RaftGroupKind)(0),                      // 1: mycel.admin.v1.RaftGroupKind
+	(RaftGroupHealth)(0),                    // 2: mycel.admin.v1.RaftGroupHealth
+	(ClusterMode)(0),                        // 3: mycel.admin.v1.ClusterMode
+	(ClusterNodeState)(0),                   // 4: mycel.admin.v1.ClusterNodeState
+	(ClusterPeerState)(0),                   // 5: mycel.admin.v1.ClusterPeerState
+	(ClusterPeerSource)(0),                  // 6: mycel.admin.v1.ClusterPeerSource
+	(ClusterMemberState)(0),                 // 7: mycel.admin.v1.ClusterMemberState
+	(ClusterReplicationCatchupState)(0),     // 8: mycel.admin.v1.ClusterReplicationCatchupState
+	(*GetClusterRuntimeStatusRequest)(nil),  // 9: mycel.admin.v1.GetClusterRuntimeStatusRequest
+	(*GetClusterRuntimeStatusResponse)(nil), // 10: mycel.admin.v1.GetClusterRuntimeStatusResponse
+	(*ListRaftGroupsRequest)(nil),           // 11: mycel.admin.v1.ListRaftGroupsRequest
+	(*ListRaftGroupsResponse)(nil),          // 12: mycel.admin.v1.ListRaftGroupsResponse
+	(*RaftGroupStatus)(nil),                 // 13: mycel.admin.v1.RaftGroupStatus
+	(*LookupSpaceRouteRequest)(nil),         // 14: mycel.admin.v1.LookupSpaceRouteRequest
+	(*LookupSpaceRouteResponse)(nil),        // 15: mycel.admin.v1.LookupSpaceRouteResponse
+	(*GetClusterStatusRequest)(nil),         // 16: mycel.admin.v1.GetClusterStatusRequest
+	(*GetClusterStatusResponse)(nil),        // 17: mycel.admin.v1.GetClusterStatusResponse
+	(*ClusterLocalNode)(nil),                // 18: mycel.admin.v1.ClusterLocalNode
+	(*ClusterInfo)(nil),                     // 19: mycel.admin.v1.ClusterInfo
+	(*ClusterPeer)(nil),                     // 20: mycel.admin.v1.ClusterPeer
+	(*ListClusterMembersRequest)(nil),       // 21: mycel.admin.v1.ListClusterMembersRequest
+	(*ListClusterMembersResponse)(nil),      // 22: mycel.admin.v1.ListClusterMembersResponse
+	(*ClusterMember)(nil),                   // 23: mycel.admin.v1.ClusterMember
+	(*GetClusterHealthRequest)(nil),         // 24: mycel.admin.v1.GetClusterHealthRequest
+	(*GetClusterHealthResponse)(nil),        // 25: mycel.admin.v1.GetClusterHealthResponse
 }
 var file_mycel_admin_v1_cluster_proto_depIdxs = []int32{
-	10, // 0: mycel.admin.v1.GetClusterStatusResponse.node:type_name -> mycel.admin.v1.ClusterLocalNode
-	11, // 1: mycel.admin.v1.GetClusterStatusResponse.cluster:type_name -> mycel.admin.v1.ClusterInfo
-	12, // 2: mycel.admin.v1.GetClusterStatusResponse.peers:type_name -> mycel.admin.v1.ClusterPeer
-	13, // 3: mycel.admin.v1.GetClusterStatusResponse.authority:type_name -> mycel.admin.v1.ClusterAuthority
-	14, // 4: mycel.admin.v1.GetClusterStatusResponse.replication:type_name -> mycel.admin.v1.ClusterReplicationStatus
-	1,  // 5: mycel.admin.v1.ClusterLocalNode.state:type_name -> mycel.admin.v1.ClusterNodeState
-	5,  // 6: mycel.admin.v1.ClusterLocalNode.role:type_name -> mycel.admin.v1.ClusterNodeRole
-	0,  // 7: mycel.admin.v1.ClusterInfo.mode:type_name -> mycel.admin.v1.ClusterMode
-	2,  // 8: mycel.admin.v1.ClusterPeer.state:type_name -> mycel.admin.v1.ClusterPeerState
-	3,  // 9: mycel.admin.v1.ClusterPeer.source:type_name -> mycel.admin.v1.ClusterPeerSource
-	6,  // 10: mycel.admin.v1.ClusterReplicationStatus.role:type_name -> mycel.admin.v1.ClusterReplicationRole
-	7,  // 11: mycel.admin.v1.ClusterReplicationStatus.catchup_state:type_name -> mycel.admin.v1.ClusterReplicationCatchupState
-	15, // 12: mycel.admin.v1.ClusterReplicationStatus.snapshot_required:type_name -> mycel.admin.v1.SnapshotRequiredInfo
-	18, // 13: mycel.admin.v1.ListClusterMembersResponse.members:type_name -> mycel.admin.v1.ClusterMember
-	4,  // 14: mycel.admin.v1.ClusterMember.state:type_name -> mycel.admin.v1.ClusterMemberState
-	4,  // 15: mycel.admin.v1.AddClusterNodeResponse.state:type_name -> mycel.admin.v1.ClusterMemberState
-	4,  // 16: mycel.admin.v1.RemoveClusterNodeResponse.state:type_name -> mycel.admin.v1.ClusterMemberState
-	4,  // 17: mycel.admin.v1.RenameClusterNodeResponse.state:type_name -> mycel.admin.v1.ClusterMemberState
-	29, // 18: mycel.admin.v1.ListClusterResyncOperationsResponse.operations:type_name -> mycel.admin.v1.ClusterResyncOperation
-	8,  // 19: mycel.admin.v1.AdminClusterService.GetClusterStatus:input_type -> mycel.admin.v1.GetClusterStatusRequest
-	16, // 20: mycel.admin.v1.AdminClusterService.ListClusterMembers:input_type -> mycel.admin.v1.ListClusterMembersRequest
-	19, // 21: mycel.admin.v1.AdminClusterService.AddClusterNode:input_type -> mycel.admin.v1.AddClusterNodeRequest
-	21, // 22: mycel.admin.v1.AdminClusterService.RemoveClusterNode:input_type -> mycel.admin.v1.RemoveClusterNodeRequest
-	23, // 23: mycel.admin.v1.AdminClusterService.RenameClusterNode:input_type -> mycel.admin.v1.RenameClusterNodeRequest
-	25, // 24: mycel.admin.v1.AdminClusterService.ResyncClusterNode:input_type -> mycel.admin.v1.ResyncClusterNodeRequest
-	27, // 25: mycel.admin.v1.AdminClusterService.ListClusterResyncOperations:input_type -> mycel.admin.v1.ListClusterResyncOperationsRequest
-	30, // 26: mycel.admin.v1.AdminClusterService.SwitchClusterPrimary:input_type -> mycel.admin.v1.SwitchClusterPrimaryRequest
-	32, // 27: mycel.admin.v1.AdminClusterService.PromoteLocalPrimary:input_type -> mycel.admin.v1.PromoteLocalPrimaryRequest
-	34, // 28: mycel.admin.v1.AdminClusterService.GetClusterHealth:input_type -> mycel.admin.v1.GetClusterHealthRequest
-	9,  // 29: mycel.admin.v1.AdminClusterService.GetClusterStatus:output_type -> mycel.admin.v1.GetClusterStatusResponse
-	17, // 30: mycel.admin.v1.AdminClusterService.ListClusterMembers:output_type -> mycel.admin.v1.ListClusterMembersResponse
-	20, // 31: mycel.admin.v1.AdminClusterService.AddClusterNode:output_type -> mycel.admin.v1.AddClusterNodeResponse
-	22, // 32: mycel.admin.v1.AdminClusterService.RemoveClusterNode:output_type -> mycel.admin.v1.RemoveClusterNodeResponse
-	24, // 33: mycel.admin.v1.AdminClusterService.RenameClusterNode:output_type -> mycel.admin.v1.RenameClusterNodeResponse
-	26, // 34: mycel.admin.v1.AdminClusterService.ResyncClusterNode:output_type -> mycel.admin.v1.ResyncClusterNodeResponse
-	28, // 35: mycel.admin.v1.AdminClusterService.ListClusterResyncOperations:output_type -> mycel.admin.v1.ListClusterResyncOperationsResponse
-	31, // 36: mycel.admin.v1.AdminClusterService.SwitchClusterPrimary:output_type -> mycel.admin.v1.SwitchClusterPrimaryResponse
-	33, // 37: mycel.admin.v1.AdminClusterService.PromoteLocalPrimary:output_type -> mycel.admin.v1.PromoteLocalPrimaryResponse
-	35, // 38: mycel.admin.v1.AdminClusterService.GetClusterHealth:output_type -> mycel.admin.v1.GetClusterHealthResponse
-	29, // [29:39] is the sub-list for method output_type
-	19, // [19:29] is the sub-list for method input_type
-	19, // [19:19] is the sub-list for extension type_name
-	19, // [19:19] is the sub-list for extension extendee
-	0,  // [0:19] is the sub-list for field type_name
+	0,  // 0: mycel.admin.v1.GetClusterRuntimeStatusResponse.engine:type_name -> mycel.admin.v1.ClusterEngine
+	13, // 1: mycel.admin.v1.ListRaftGroupsResponse.groups:type_name -> mycel.admin.v1.RaftGroupStatus
+	1,  // 2: mycel.admin.v1.RaftGroupStatus.kind:type_name -> mycel.admin.v1.RaftGroupKind
+	2,  // 3: mycel.admin.v1.RaftGroupStatus.health:type_name -> mycel.admin.v1.RaftGroupHealth
+	18, // 4: mycel.admin.v1.GetClusterStatusResponse.node:type_name -> mycel.admin.v1.ClusterLocalNode
+	19, // 5: mycel.admin.v1.GetClusterStatusResponse.cluster:type_name -> mycel.admin.v1.ClusterInfo
+	20, // 6: mycel.admin.v1.GetClusterStatusResponse.peers:type_name -> mycel.admin.v1.ClusterPeer
+	4,  // 7: mycel.admin.v1.ClusterLocalNode.state:type_name -> mycel.admin.v1.ClusterNodeState
+	3,  // 8: mycel.admin.v1.ClusterInfo.mode:type_name -> mycel.admin.v1.ClusterMode
+	5,  // 9: mycel.admin.v1.ClusterPeer.state:type_name -> mycel.admin.v1.ClusterPeerState
+	6,  // 10: mycel.admin.v1.ClusterPeer.source:type_name -> mycel.admin.v1.ClusterPeerSource
+	23, // 11: mycel.admin.v1.ListClusterMembersResponse.members:type_name -> mycel.admin.v1.ClusterMember
+	7,  // 12: mycel.admin.v1.ClusterMember.state:type_name -> mycel.admin.v1.ClusterMemberState
+	16, // 13: mycel.admin.v1.AdminClusterService.GetClusterStatus:input_type -> mycel.admin.v1.GetClusterStatusRequest
+	21, // 14: mycel.admin.v1.AdminClusterService.ListClusterMembers:input_type -> mycel.admin.v1.ListClusterMembersRequest
+	24, // 15: mycel.admin.v1.AdminClusterService.GetClusterHealth:input_type -> mycel.admin.v1.GetClusterHealthRequest
+	9,  // 16: mycel.admin.v1.AdminClusterService.GetClusterRuntimeStatus:input_type -> mycel.admin.v1.GetClusterRuntimeStatusRequest
+	11, // 17: mycel.admin.v1.AdminClusterService.ListRaftGroups:input_type -> mycel.admin.v1.ListRaftGroupsRequest
+	14, // 18: mycel.admin.v1.AdminClusterService.LookupSpaceRoute:input_type -> mycel.admin.v1.LookupSpaceRouteRequest
+	17, // 19: mycel.admin.v1.AdminClusterService.GetClusterStatus:output_type -> mycel.admin.v1.GetClusterStatusResponse
+	22, // 20: mycel.admin.v1.AdminClusterService.ListClusterMembers:output_type -> mycel.admin.v1.ListClusterMembersResponse
+	25, // 21: mycel.admin.v1.AdminClusterService.GetClusterHealth:output_type -> mycel.admin.v1.GetClusterHealthResponse
+	10, // 22: mycel.admin.v1.AdminClusterService.GetClusterRuntimeStatus:output_type -> mycel.admin.v1.GetClusterRuntimeStatusResponse
+	12, // 23: mycel.admin.v1.AdminClusterService.ListRaftGroups:output_type -> mycel.admin.v1.ListRaftGroupsResponse
+	15, // 24: mycel.admin.v1.AdminClusterService.LookupSpaceRoute:output_type -> mycel.admin.v1.LookupSpaceRouteResponse
+	19, // [19:25] is the sub-list for method output_type
+	13, // [13:19] is the sub-list for method input_type
+	13, // [13:13] is the sub-list for extension type_name
+	13, // [13:13] is the sub-list for extension extendee
+	0,  // [0:13] is the sub-list for field type_name
 }
 
 func init() { file_mycel_admin_v1_cluster_proto_init() }
@@ -2966,8 +1948,8 @@ func file_mycel_admin_v1_cluster_proto_init() {
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_mycel_admin_v1_cluster_proto_rawDesc), len(file_mycel_admin_v1_cluster_proto_rawDesc)),
-			NumEnums:      8,
-			NumMessages:   28,
+			NumEnums:      9,
+			NumMessages:   17,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

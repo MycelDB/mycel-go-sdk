@@ -19,16 +19,12 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	AdminClusterService_GetClusterStatus_FullMethodName            = "/mycel.admin.v1.AdminClusterService/GetClusterStatus"
-	AdminClusterService_ListClusterMembers_FullMethodName          = "/mycel.admin.v1.AdminClusterService/ListClusterMembers"
-	AdminClusterService_AddClusterNode_FullMethodName              = "/mycel.admin.v1.AdminClusterService/AddClusterNode"
-	AdminClusterService_RemoveClusterNode_FullMethodName           = "/mycel.admin.v1.AdminClusterService/RemoveClusterNode"
-	AdminClusterService_RenameClusterNode_FullMethodName           = "/mycel.admin.v1.AdminClusterService/RenameClusterNode"
-	AdminClusterService_ResyncClusterNode_FullMethodName           = "/mycel.admin.v1.AdminClusterService/ResyncClusterNode"
-	AdminClusterService_ListClusterResyncOperations_FullMethodName = "/mycel.admin.v1.AdminClusterService/ListClusterResyncOperations"
-	AdminClusterService_SwitchClusterPrimary_FullMethodName        = "/mycel.admin.v1.AdminClusterService/SwitchClusterPrimary"
-	AdminClusterService_PromoteLocalPrimary_FullMethodName         = "/mycel.admin.v1.AdminClusterService/PromoteLocalPrimary"
-	AdminClusterService_GetClusterHealth_FullMethodName            = "/mycel.admin.v1.AdminClusterService/GetClusterHealth"
+	AdminClusterService_GetClusterStatus_FullMethodName        = "/mycel.admin.v1.AdminClusterService/GetClusterStatus"
+	AdminClusterService_ListClusterMembers_FullMethodName      = "/mycel.admin.v1.AdminClusterService/ListClusterMembers"
+	AdminClusterService_GetClusterHealth_FullMethodName        = "/mycel.admin.v1.AdminClusterService/GetClusterHealth"
+	AdminClusterService_GetClusterRuntimeStatus_FullMethodName = "/mycel.admin.v1.AdminClusterService/GetClusterRuntimeStatus"
+	AdminClusterService_ListRaftGroups_FullMethodName          = "/mycel.admin.v1.AdminClusterService/ListRaftGroups"
+	AdminClusterService_LookupSpaceRoute_FullMethodName        = "/mycel.admin.v1.AdminClusterService/LookupSpaceRoute"
 )
 
 // AdminClusterServiceClient is the client API for AdminClusterService service.
@@ -46,24 +42,14 @@ type AdminClusterServiceClient interface {
 	// ListClusterMembers returns the authoritative admission/membership view.
 	// Token hashes and plaintext token values are never returned.
 	ListClusterMembers(ctx context.Context, in *ListClusterMembersRequest, opts ...grpc.CallOption) (*ListClusterMembersResponse, error)
-	// AddClusterNode creates or updates a pending membership record and returns a
-	// node-scoped one-time join token. The plaintext token is returned only in
-	// this response and should be displayed once by admin clients.
-	AddClusterNode(ctx context.Context, in *AddClusterNodeRequest, opts ...grpc.CallOption) (*AddClusterNodeResponse, error)
-	// RemoveClusterNode marks a non-primary member removed.
-	RemoveClusterNode(ctx context.Context, in *RemoveClusterNodeRequest, opts ...grpc.CallOption) (*RemoveClusterNodeResponse, error)
-	// RenameClusterNode changes a member's human-facing node name.
-	RenameClusterNode(ctx context.Context, in *RenameClusterNodeRequest, opts ...grpc.CallOption) (*RenameClusterNodeResponse, error)
-	// ResyncClusterNode creates a primary snapshot and installs it on an active follower.
-	ResyncClusterNode(ctx context.Context, in *ResyncClusterNodeRequest, opts ...grpc.CallOption) (*ResyncClusterNodeResponse, error)
-	// ListClusterResyncOperations returns recent primary-initiated resync operations.
-	ListClusterResyncOperations(ctx context.Context, in *ListClusterResyncOperationsRequest, opts ...grpc.CallOption) (*ListClusterResyncOperationsResponse, error)
-	// SwitchClusterPrimary performs a safe planned primary switchover.
-	SwitchClusterPrimary(ctx context.Context, in *SwitchClusterPrimaryRequest, opts ...grpc.CallOption) (*SwitchClusterPrimaryResponse, error)
-	// PromoteLocalPrimary force-promotes the connected local node for emergency failover.
-	PromoteLocalPrimary(ctx context.Context, in *PromoteLocalPrimaryRequest, opts ...grpc.CallOption) (*PromoteLocalPrimaryResponse, error)
 	// GetClusterHealth returns an operator-oriented aggregate cluster health summary.
 	GetClusterHealth(ctx context.Context, in *GetClusterHealthRequest, opts ...grpc.CallOption) (*GetClusterHealthResponse, error)
+	// GetClusterRuntimeStatus returns engine-aware clustering runtime status.
+	GetClusterRuntimeStatus(ctx context.Context, in *GetClusterRuntimeStatusRequest, opts ...grpc.CallOption) (*GetClusterRuntimeStatusResponse, error)
+	// ListRaftGroups returns read-only status for the local daemon's Raft groups.
+	ListRaftGroups(ctx context.Context, in *ListRaftGroupsRequest, opts ...grpc.CallOption) (*ListRaftGroupsResponse, error)
+	// LookupSpaceRoute returns the Raft partition and replica set for a space ID.
+	LookupSpaceRoute(ctx context.Context, in *LookupSpaceRouteRequest, opts ...grpc.CallOption) (*LookupSpaceRouteResponse, error)
 }
 
 type adminClusterServiceClient struct {
@@ -94,80 +80,40 @@ func (c *adminClusterServiceClient) ListClusterMembers(ctx context.Context, in *
 	return out, nil
 }
 
-func (c *adminClusterServiceClient) AddClusterNode(ctx context.Context, in *AddClusterNodeRequest, opts ...grpc.CallOption) (*AddClusterNodeResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(AddClusterNodeResponse)
-	err := c.cc.Invoke(ctx, AdminClusterService_AddClusterNode_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *adminClusterServiceClient) RemoveClusterNode(ctx context.Context, in *RemoveClusterNodeRequest, opts ...grpc.CallOption) (*RemoveClusterNodeResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(RemoveClusterNodeResponse)
-	err := c.cc.Invoke(ctx, AdminClusterService_RemoveClusterNode_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *adminClusterServiceClient) RenameClusterNode(ctx context.Context, in *RenameClusterNodeRequest, opts ...grpc.CallOption) (*RenameClusterNodeResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(RenameClusterNodeResponse)
-	err := c.cc.Invoke(ctx, AdminClusterService_RenameClusterNode_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *adminClusterServiceClient) ResyncClusterNode(ctx context.Context, in *ResyncClusterNodeRequest, opts ...grpc.CallOption) (*ResyncClusterNodeResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(ResyncClusterNodeResponse)
-	err := c.cc.Invoke(ctx, AdminClusterService_ResyncClusterNode_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *adminClusterServiceClient) ListClusterResyncOperations(ctx context.Context, in *ListClusterResyncOperationsRequest, opts ...grpc.CallOption) (*ListClusterResyncOperationsResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(ListClusterResyncOperationsResponse)
-	err := c.cc.Invoke(ctx, AdminClusterService_ListClusterResyncOperations_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *adminClusterServiceClient) SwitchClusterPrimary(ctx context.Context, in *SwitchClusterPrimaryRequest, opts ...grpc.CallOption) (*SwitchClusterPrimaryResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(SwitchClusterPrimaryResponse)
-	err := c.cc.Invoke(ctx, AdminClusterService_SwitchClusterPrimary_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *adminClusterServiceClient) PromoteLocalPrimary(ctx context.Context, in *PromoteLocalPrimaryRequest, opts ...grpc.CallOption) (*PromoteLocalPrimaryResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(PromoteLocalPrimaryResponse)
-	err := c.cc.Invoke(ctx, AdminClusterService_PromoteLocalPrimary_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 func (c *adminClusterServiceClient) GetClusterHealth(ctx context.Context, in *GetClusterHealthRequest, opts ...grpc.CallOption) (*GetClusterHealthResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(GetClusterHealthResponse)
 	err := c.cc.Invoke(ctx, AdminClusterService_GetClusterHealth_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *adminClusterServiceClient) GetClusterRuntimeStatus(ctx context.Context, in *GetClusterRuntimeStatusRequest, opts ...grpc.CallOption) (*GetClusterRuntimeStatusResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetClusterRuntimeStatusResponse)
+	err := c.cc.Invoke(ctx, AdminClusterService_GetClusterRuntimeStatus_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *adminClusterServiceClient) ListRaftGroups(ctx context.Context, in *ListRaftGroupsRequest, opts ...grpc.CallOption) (*ListRaftGroupsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListRaftGroupsResponse)
+	err := c.cc.Invoke(ctx, AdminClusterService_ListRaftGroups_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *adminClusterServiceClient) LookupSpaceRoute(ctx context.Context, in *LookupSpaceRouteRequest, opts ...grpc.CallOption) (*LookupSpaceRouteResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(LookupSpaceRouteResponse)
+	err := c.cc.Invoke(ctx, AdminClusterService_LookupSpaceRoute_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -189,24 +135,14 @@ type AdminClusterServiceServer interface {
 	// ListClusterMembers returns the authoritative admission/membership view.
 	// Token hashes and plaintext token values are never returned.
 	ListClusterMembers(context.Context, *ListClusterMembersRequest) (*ListClusterMembersResponse, error)
-	// AddClusterNode creates or updates a pending membership record and returns a
-	// node-scoped one-time join token. The plaintext token is returned only in
-	// this response and should be displayed once by admin clients.
-	AddClusterNode(context.Context, *AddClusterNodeRequest) (*AddClusterNodeResponse, error)
-	// RemoveClusterNode marks a non-primary member removed.
-	RemoveClusterNode(context.Context, *RemoveClusterNodeRequest) (*RemoveClusterNodeResponse, error)
-	// RenameClusterNode changes a member's human-facing node name.
-	RenameClusterNode(context.Context, *RenameClusterNodeRequest) (*RenameClusterNodeResponse, error)
-	// ResyncClusterNode creates a primary snapshot and installs it on an active follower.
-	ResyncClusterNode(context.Context, *ResyncClusterNodeRequest) (*ResyncClusterNodeResponse, error)
-	// ListClusterResyncOperations returns recent primary-initiated resync operations.
-	ListClusterResyncOperations(context.Context, *ListClusterResyncOperationsRequest) (*ListClusterResyncOperationsResponse, error)
-	// SwitchClusterPrimary performs a safe planned primary switchover.
-	SwitchClusterPrimary(context.Context, *SwitchClusterPrimaryRequest) (*SwitchClusterPrimaryResponse, error)
-	// PromoteLocalPrimary force-promotes the connected local node for emergency failover.
-	PromoteLocalPrimary(context.Context, *PromoteLocalPrimaryRequest) (*PromoteLocalPrimaryResponse, error)
 	// GetClusterHealth returns an operator-oriented aggregate cluster health summary.
 	GetClusterHealth(context.Context, *GetClusterHealthRequest) (*GetClusterHealthResponse, error)
+	// GetClusterRuntimeStatus returns engine-aware clustering runtime status.
+	GetClusterRuntimeStatus(context.Context, *GetClusterRuntimeStatusRequest) (*GetClusterRuntimeStatusResponse, error)
+	// ListRaftGroups returns read-only status for the local daemon's Raft groups.
+	ListRaftGroups(context.Context, *ListRaftGroupsRequest) (*ListRaftGroupsResponse, error)
+	// LookupSpaceRoute returns the Raft partition and replica set for a space ID.
+	LookupSpaceRoute(context.Context, *LookupSpaceRouteRequest) (*LookupSpaceRouteResponse, error)
 	mustEmbedUnimplementedAdminClusterServiceServer()
 }
 
@@ -223,29 +159,17 @@ func (UnimplementedAdminClusterServiceServer) GetClusterStatus(context.Context, 
 func (UnimplementedAdminClusterServiceServer) ListClusterMembers(context.Context, *ListClusterMembersRequest) (*ListClusterMembersResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListClusterMembers not implemented")
 }
-func (UnimplementedAdminClusterServiceServer) AddClusterNode(context.Context, *AddClusterNodeRequest) (*AddClusterNodeResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method AddClusterNode not implemented")
-}
-func (UnimplementedAdminClusterServiceServer) RemoveClusterNode(context.Context, *RemoveClusterNodeRequest) (*RemoveClusterNodeResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method RemoveClusterNode not implemented")
-}
-func (UnimplementedAdminClusterServiceServer) RenameClusterNode(context.Context, *RenameClusterNodeRequest) (*RenameClusterNodeResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method RenameClusterNode not implemented")
-}
-func (UnimplementedAdminClusterServiceServer) ResyncClusterNode(context.Context, *ResyncClusterNodeRequest) (*ResyncClusterNodeResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ResyncClusterNode not implemented")
-}
-func (UnimplementedAdminClusterServiceServer) ListClusterResyncOperations(context.Context, *ListClusterResyncOperationsRequest) (*ListClusterResyncOperationsResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ListClusterResyncOperations not implemented")
-}
-func (UnimplementedAdminClusterServiceServer) SwitchClusterPrimary(context.Context, *SwitchClusterPrimaryRequest) (*SwitchClusterPrimaryResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method SwitchClusterPrimary not implemented")
-}
-func (UnimplementedAdminClusterServiceServer) PromoteLocalPrimary(context.Context, *PromoteLocalPrimaryRequest) (*PromoteLocalPrimaryResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method PromoteLocalPrimary not implemented")
-}
 func (UnimplementedAdminClusterServiceServer) GetClusterHealth(context.Context, *GetClusterHealthRequest) (*GetClusterHealthResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetClusterHealth not implemented")
+}
+func (UnimplementedAdminClusterServiceServer) GetClusterRuntimeStatus(context.Context, *GetClusterRuntimeStatusRequest) (*GetClusterRuntimeStatusResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetClusterRuntimeStatus not implemented")
+}
+func (UnimplementedAdminClusterServiceServer) ListRaftGroups(context.Context, *ListRaftGroupsRequest) (*ListRaftGroupsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListRaftGroups not implemented")
+}
+func (UnimplementedAdminClusterServiceServer) LookupSpaceRoute(context.Context, *LookupSpaceRouteRequest) (*LookupSpaceRouteResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method LookupSpaceRoute not implemented")
 }
 func (UnimplementedAdminClusterServiceServer) mustEmbedUnimplementedAdminClusterServiceServer() {}
 func (UnimplementedAdminClusterServiceServer) testEmbeddedByValue()                             {}
@@ -304,132 +228,6 @@ func _AdminClusterService_ListClusterMembers_Handler(srv interface{}, ctx contex
 	return interceptor(ctx, in, info, handler)
 }
 
-func _AdminClusterService_AddClusterNode_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(AddClusterNodeRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(AdminClusterServiceServer).AddClusterNode(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: AdminClusterService_AddClusterNode_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AdminClusterServiceServer).AddClusterNode(ctx, req.(*AddClusterNodeRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _AdminClusterService_RemoveClusterNode_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(RemoveClusterNodeRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(AdminClusterServiceServer).RemoveClusterNode(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: AdminClusterService_RemoveClusterNode_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AdminClusterServiceServer).RemoveClusterNode(ctx, req.(*RemoveClusterNodeRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _AdminClusterService_RenameClusterNode_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(RenameClusterNodeRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(AdminClusterServiceServer).RenameClusterNode(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: AdminClusterService_RenameClusterNode_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AdminClusterServiceServer).RenameClusterNode(ctx, req.(*RenameClusterNodeRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _AdminClusterService_ResyncClusterNode_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ResyncClusterNodeRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(AdminClusterServiceServer).ResyncClusterNode(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: AdminClusterService_ResyncClusterNode_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AdminClusterServiceServer).ResyncClusterNode(ctx, req.(*ResyncClusterNodeRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _AdminClusterService_ListClusterResyncOperations_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ListClusterResyncOperationsRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(AdminClusterServiceServer).ListClusterResyncOperations(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: AdminClusterService_ListClusterResyncOperations_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AdminClusterServiceServer).ListClusterResyncOperations(ctx, req.(*ListClusterResyncOperationsRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _AdminClusterService_SwitchClusterPrimary_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(SwitchClusterPrimaryRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(AdminClusterServiceServer).SwitchClusterPrimary(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: AdminClusterService_SwitchClusterPrimary_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AdminClusterServiceServer).SwitchClusterPrimary(ctx, req.(*SwitchClusterPrimaryRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _AdminClusterService_PromoteLocalPrimary_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(PromoteLocalPrimaryRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(AdminClusterServiceServer).PromoteLocalPrimary(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: AdminClusterService_PromoteLocalPrimary_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AdminClusterServiceServer).PromoteLocalPrimary(ctx, req.(*PromoteLocalPrimaryRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 func _AdminClusterService_GetClusterHealth_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetClusterHealthRequest)
 	if err := dec(in); err != nil {
@@ -444,6 +242,60 @@ func _AdminClusterService_GetClusterHealth_Handler(srv interface{}, ctx context.
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(AdminClusterServiceServer).GetClusterHealth(ctx, req.(*GetClusterHealthRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AdminClusterService_GetClusterRuntimeStatus_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetClusterRuntimeStatusRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminClusterServiceServer).GetClusterRuntimeStatus(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AdminClusterService_GetClusterRuntimeStatus_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminClusterServiceServer).GetClusterRuntimeStatus(ctx, req.(*GetClusterRuntimeStatusRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AdminClusterService_ListRaftGroups_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListRaftGroupsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminClusterServiceServer).ListRaftGroups(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AdminClusterService_ListRaftGroups_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminClusterServiceServer).ListRaftGroups(ctx, req.(*ListRaftGroupsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AdminClusterService_LookupSpaceRoute_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(LookupSpaceRouteRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminClusterServiceServer).LookupSpaceRoute(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AdminClusterService_LookupSpaceRoute_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminClusterServiceServer).LookupSpaceRoute(ctx, req.(*LookupSpaceRouteRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -464,36 +316,20 @@ var AdminClusterService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _AdminClusterService_ListClusterMembers_Handler,
 		},
 		{
-			MethodName: "AddClusterNode",
-			Handler:    _AdminClusterService_AddClusterNode_Handler,
-		},
-		{
-			MethodName: "RemoveClusterNode",
-			Handler:    _AdminClusterService_RemoveClusterNode_Handler,
-		},
-		{
-			MethodName: "RenameClusterNode",
-			Handler:    _AdminClusterService_RenameClusterNode_Handler,
-		},
-		{
-			MethodName: "ResyncClusterNode",
-			Handler:    _AdminClusterService_ResyncClusterNode_Handler,
-		},
-		{
-			MethodName: "ListClusterResyncOperations",
-			Handler:    _AdminClusterService_ListClusterResyncOperations_Handler,
-		},
-		{
-			MethodName: "SwitchClusterPrimary",
-			Handler:    _AdminClusterService_SwitchClusterPrimary_Handler,
-		},
-		{
-			MethodName: "PromoteLocalPrimary",
-			Handler:    _AdminClusterService_PromoteLocalPrimary_Handler,
-		},
-		{
 			MethodName: "GetClusterHealth",
 			Handler:    _AdminClusterService_GetClusterHealth_Handler,
+		},
+		{
+			MethodName: "GetClusterRuntimeStatus",
+			Handler:    _AdminClusterService_GetClusterRuntimeStatus_Handler,
+		},
+		{
+			MethodName: "ListRaftGroups",
+			Handler:    _AdminClusterService_ListRaftGroups_Handler,
+		},
+		{
+			MethodName: "LookupSpaceRoute",
+			Handler:    _AdminClusterService_LookupSpaceRoute_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
