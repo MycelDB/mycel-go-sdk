@@ -429,7 +429,9 @@ type NodePattern struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	Alias string                 `protobuf:"bytes,1,opt,name=alias,proto3" json:"alias,omitempty"`
 	// Optional template key restriction.
-	TemplateKey   *string `protobuf:"bytes,2,opt,name=template_key,json=templateKey,proto3,oneof" json:"template_key,omitempty"`
+	TemplateKey *string `protobuf:"bytes,2,opt,name=template_key,json=templateKey,proto3,oneof" json:"template_key,omitempty"`
+	// Required labels for the matched node.
+	Labels        []string `protobuf:"bytes,3,rep,name=labels,proto3" json:"labels,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -476,6 +478,13 @@ func (x *NodePattern) GetTemplateKey() string {
 		return *x.TemplateKey
 	}
 	return ""
+}
+
+func (x *NodePattern) GetLabels() []string {
+	if x != nil {
+		return x.Labels
+	}
+	return nil
 }
 
 type TraversalStep struct {
@@ -833,7 +842,7 @@ func (x *AndExpr) GetExprs() []*Expr {
 	return nil
 }
 
-// HasTagExpr matches nodes whose canonical metadata tags include tag. The daemon
+// HasTagExpr matches nodes whose user properties include the tag. The daemon
 // applies Mycel tag normalization rules before evaluating the predicate.
 type HasTagExpr struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
@@ -887,8 +896,8 @@ func (x *HasTagExpr) GetTag() string {
 	return ""
 }
 
-// PropertyExistsExpr matches nodes whose canonical custom metadata properties
-// contain name. The daemon applies Mycel property-name normalization rules.
+// PropertyExistsExpr matches nodes whose user properties contain name. The
+// daemon applies Mycel property-name normalization rules.
 type PropertyExistsExpr struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Alias         string                 `protobuf:"bytes,1,opt,name=alias,proto3" json:"alias,omitempty"`
@@ -941,8 +950,8 @@ func (x *PropertyExistsExpr) GetName() string {
 	return ""
 }
 
-// PropertyEqualsExpr matches nodes whose canonical custom metadata property name
-// equals value. Supported values are string, number, and boolean.
+// PropertyEqualsExpr matches nodes whose user property name equals value.
+// Supported values are string, number, and boolean.
 type PropertyEqualsExpr struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Alias         string                 `protobuf:"bytes,1,opt,name=alias,proto3" json:"alias,omitempty"`
@@ -1686,10 +1695,11 @@ const file_mycel_client_v1_query_proto_rawDesc = "" +
 	"\x06_where\"x\n" +
 	"\fGraphPattern\x122\n" +
 	"\x05start\x18\x01 \x01(\v2\x1c.mycel.client.v1.NodePatternR\x05start\x124\n" +
-	"\x05steps\x18\x02 \x03(\v2\x1e.mycel.client.v1.TraversalStepR\x05steps\"\\\n" +
+	"\x05steps\x18\x02 \x03(\v2\x1e.mycel.client.v1.TraversalStepR\x05steps\"t\n" +
 	"\vNodePattern\x12\x14\n" +
 	"\x05alias\x18\x01 \x01(\tR\x05alias\x12&\n" +
-	"\ftemplate_key\x18\x02 \x01(\tH\x00R\vtemplateKey\x88\x01\x01B\x0f\n" +
+	"\ftemplate_key\x18\x02 \x01(\tH\x00R\vtemplateKey\x88\x01\x01\x12\x16\n" +
+	"\x06labels\x18\x03 \x03(\tR\x06labelsB\x0f\n" +
 	"\r_template_key\"\xd7\x01\n" +
 	"\rTraversalStep\x12A\n" +
 	"\tdirection\x18\x01 \x01(\x0e2#.mycel.client.v1.TraversalDirectionR\tdirection\x12\x1b\n" +
