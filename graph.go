@@ -5,6 +5,7 @@ import (
 
 	clientv1 "github.com/myceldb/mycel-go-sdk/gen/go/mycel/client/v1"
 	"google.golang.org/protobuf/types/known/fieldmaskpb"
+	"google.golang.org/protobuf/types/known/structpb"
 )
 
 func (c *Client) CreateNode(ctx context.Context, txID string, node *clientv1.NodeCreate) (*clientv1.Node, error) {
@@ -26,7 +27,11 @@ func (c *Client) ApplyGraphOperations(ctx context.Context, txID string, ops []*c
 func (c *Client) UpdateNodeContent(ctx context.Context, txID, nodeID, content string) (*clientv1.Node, error) {
 	callCtx, cancel := c.AuthCallContext(ctx)
 	defer cancel()
-	res, err := c.Graph.UpdateNode(callCtx, &clientv1.UpdateNodeRequest{TransactionId: txID, Node: &clientv1.Node{NodeId: nodeID, Content: content}, UpdateMask: &fieldmaskpb.FieldMask{Paths: []string{"content"}}})
+	payload, err := structpb.NewStruct(map[string]any{"text": content})
+	if err != nil {
+		return nil, err
+	}
+	res, err := c.Graph.UpdateNode(callCtx, &clientv1.UpdateNodeRequest{TransactionId: txID, Node: &clientv1.Node{NodeId: nodeID, Payload: payload}, UpdateMask: &fieldmaskpb.FieldMask{Paths: []string{"payload"}}})
 	if err != nil {
 		return nil, err
 	}
