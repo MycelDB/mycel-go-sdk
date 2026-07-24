@@ -1817,6 +1817,7 @@ type QueryValue struct {
 	//	*QueryValue_Node
 	//	*QueryValue_Tree
 	//	*QueryValue_Scalar
+	//	*QueryValue_Edge
 	Value         isQueryValue_Value `protobuf_oneof:"value"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -1886,6 +1887,15 @@ func (x *QueryValue) GetScalar() *structpb.Value {
 	return nil
 }
 
+func (x *QueryValue) GetEdge() *Edge {
+	if x != nil {
+		if x, ok := x.Value.(*QueryValue_Edge); ok {
+			return x.Edge
+		}
+	}
+	return nil
+}
+
 type isQueryValue_Value interface {
 	isQueryValue_Value()
 }
@@ -1902,11 +1912,17 @@ type QueryValue_Scalar struct {
 	Scalar *structpb.Value `protobuf:"bytes,3,opt,name=scalar,proto3,oneof"`
 }
 
+type QueryValue_Edge struct {
+	Edge *Edge `protobuf:"bytes,4,opt,name=edge,proto3,oneof"`
+}
+
 func (*QueryValue_Node) isQueryValue_Value() {}
 
 func (*QueryValue_Tree) isQueryValue_Value() {}
 
 func (*QueryValue_Scalar) isQueryValue_Value() {}
+
+func (*QueryValue_Edge) isQueryValue_Value() {}
 
 type Tree struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
@@ -2124,12 +2140,13 @@ const file_mycel_client_v1_query_proto_rawDesc = "" +
 	"\x06fields\x18\x01 \x03(\v2%.mycel.client.v1.QueryRow.FieldsEntryR\x06fields\x1aV\n" +
 	"\vFieldsEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x121\n" +
-	"\x05value\x18\x02 \x01(\v2\x1b.mycel.client.v1.QueryValueR\x05value:\x028\x01\"\xa1\x01\n" +
+	"\x05value\x18\x02 \x01(\v2\x1b.mycel.client.v1.QueryValueR\x05value:\x028\x01\"\xce\x01\n" +
 	"\n" +
 	"QueryValue\x12+\n" +
 	"\x04node\x18\x01 \x01(\v2\x15.mycel.client.v1.NodeH\x00R\x04node\x12+\n" +
 	"\x04tree\x18\x02 \x01(\v2\x15.mycel.client.v1.TreeH\x00R\x04tree\x120\n" +
-	"\x06scalar\x18\x03 \x01(\v2\x16.google.protobuf.ValueH\x00R\x06scalarB\a\n" +
+	"\x06scalar\x18\x03 \x01(\v2\x16.google.protobuf.ValueH\x00R\x06scalar\x12+\n" +
+	"\x04edge\x18\x04 \x01(\v2\x15.mycel.client.v1.EdgeH\x00R\x04edgeB\a\n" +
 	"\x05value\"7\n" +
 	"\x04Tree\x12/\n" +
 	"\x05roots\x18\x01 \x03(\v2\x19.mycel.client.v1.TreeNodeR\x05roots\"l\n" +
@@ -2251,20 +2268,21 @@ var file_mycel_client_v1_query_proto_depIdxs = []int32{
 	34, // 38: mycel.client.v1.QueryValue.node:type_name -> mycel.client.v1.Node
 	30, // 39: mycel.client.v1.QueryValue.tree:type_name -> mycel.client.v1.Tree
 	36, // 40: mycel.client.v1.QueryValue.scalar:type_name -> google.protobuf.Value
-	31, // 41: mycel.client.v1.Tree.roots:type_name -> mycel.client.v1.TreeNode
-	34, // 42: mycel.client.v1.TreeNode.node:type_name -> mycel.client.v1.Node
-	31, // 43: mycel.client.v1.TreeNode.children:type_name -> mycel.client.v1.TreeNode
-	36, // 44: mycel.client.v1.ExecuteGQLRequest.ParamsEntry.value:type_name -> google.protobuf.Value
-	29, // 45: mycel.client.v1.QueryRow.FieldsEntry.value:type_name -> mycel.client.v1.QueryValue
-	3,  // 46: mycel.client.v1.QueryService.ExecuteQuery:input_type -> mycel.client.v1.ExecuteQueryRequest
-	5,  // 47: mycel.client.v1.QueryService.ExecuteGQL:input_type -> mycel.client.v1.ExecuteGQLRequest
-	4,  // 48: mycel.client.v1.QueryService.ExecuteQuery:output_type -> mycel.client.v1.ExecuteQueryResponse
-	6,  // 49: mycel.client.v1.QueryService.ExecuteGQL:output_type -> mycel.client.v1.ExecuteGQLResponse
-	48, // [48:50] is the sub-list for method output_type
-	46, // [46:48] is the sub-list for method input_type
-	46, // [46:46] is the sub-list for extension type_name
-	46, // [46:46] is the sub-list for extension extendee
-	0,  // [0:46] is the sub-list for field type_name
+	35, // 41: mycel.client.v1.QueryValue.edge:type_name -> mycel.client.v1.Edge
+	31, // 42: mycel.client.v1.Tree.roots:type_name -> mycel.client.v1.TreeNode
+	34, // 43: mycel.client.v1.TreeNode.node:type_name -> mycel.client.v1.Node
+	31, // 44: mycel.client.v1.TreeNode.children:type_name -> mycel.client.v1.TreeNode
+	36, // 45: mycel.client.v1.ExecuteGQLRequest.ParamsEntry.value:type_name -> google.protobuf.Value
+	29, // 46: mycel.client.v1.QueryRow.FieldsEntry.value:type_name -> mycel.client.v1.QueryValue
+	3,  // 47: mycel.client.v1.QueryService.ExecuteQuery:input_type -> mycel.client.v1.ExecuteQueryRequest
+	5,  // 48: mycel.client.v1.QueryService.ExecuteGQL:input_type -> mycel.client.v1.ExecuteGQLRequest
+	4,  // 49: mycel.client.v1.QueryService.ExecuteQuery:output_type -> mycel.client.v1.ExecuteQueryResponse
+	6,  // 50: mycel.client.v1.QueryService.ExecuteGQL:output_type -> mycel.client.v1.ExecuteGQLResponse
+	49, // [49:51] is the sub-list for method output_type
+	47, // [47:49] is the sub-list for method input_type
+	47, // [47:47] is the sub-list for extension type_name
+	47, // [47:47] is the sub-list for extension extendee
+	0,  // [0:47] is the sub-list for field type_name
 }
 
 func init() { file_mycel_client_v1_query_proto_init() }
@@ -2292,6 +2310,7 @@ func file_mycel_client_v1_query_proto_init() {
 		(*QueryValue_Node)(nil),
 		(*QueryValue_Tree)(nil),
 		(*QueryValue_Scalar)(nil),
+		(*QueryValue_Edge)(nil),
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
