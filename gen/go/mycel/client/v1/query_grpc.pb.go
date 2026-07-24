@@ -20,6 +20,7 @@ const _ = grpc.SupportPackageIsVersion9
 
 const (
 	QueryService_ExecuteQuery_FullMethodName = "/mycel.client.v1.QueryService/ExecuteQuery"
+	QueryService_ExecuteGQL_FullMethodName   = "/mycel.client.v1.QueryService/ExecuteGQL"
 )
 
 // QueryServiceClient is the client API for QueryService service.
@@ -31,6 +32,8 @@ type QueryServiceClient interface {
 	// ExecuteQuery executes a read-only structured graph query inside a
 	// transaction snapshot.
 	ExecuteQuery(ctx context.Context, in *ExecuteQueryRequest, opts ...grpc.CallOption) (*ExecuteQueryResponse, error)
+	// ExecuteGQL executes textual Mycel GQL inside an existing transaction.
+	ExecuteGQL(ctx context.Context, in *ExecuteGQLRequest, opts ...grpc.CallOption) (*ExecuteGQLResponse, error)
 }
 
 type queryServiceClient struct {
@@ -51,6 +54,16 @@ func (c *queryServiceClient) ExecuteQuery(ctx context.Context, in *ExecuteQueryR
 	return out, nil
 }
 
+func (c *queryServiceClient) ExecuteGQL(ctx context.Context, in *ExecuteGQLRequest, opts ...grpc.CallOption) (*ExecuteGQLResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ExecuteGQLResponse)
+	err := c.cc.Invoke(ctx, QueryService_ExecuteGQL_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // QueryServiceServer is the server API for QueryService service.
 // All implementations must embed UnimplementedQueryServiceServer
 // for forward compatibility.
@@ -60,6 +73,8 @@ type QueryServiceServer interface {
 	// ExecuteQuery executes a read-only structured graph query inside a
 	// transaction snapshot.
 	ExecuteQuery(context.Context, *ExecuteQueryRequest) (*ExecuteQueryResponse, error)
+	// ExecuteGQL executes textual Mycel GQL inside an existing transaction.
+	ExecuteGQL(context.Context, *ExecuteGQLRequest) (*ExecuteGQLResponse, error)
 	mustEmbedUnimplementedQueryServiceServer()
 }
 
@@ -72,6 +87,9 @@ type UnimplementedQueryServiceServer struct{}
 
 func (UnimplementedQueryServiceServer) ExecuteQuery(context.Context, *ExecuteQueryRequest) (*ExecuteQueryResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ExecuteQuery not implemented")
+}
+func (UnimplementedQueryServiceServer) ExecuteGQL(context.Context, *ExecuteGQLRequest) (*ExecuteGQLResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ExecuteGQL not implemented")
 }
 func (UnimplementedQueryServiceServer) mustEmbedUnimplementedQueryServiceServer() {}
 func (UnimplementedQueryServiceServer) testEmbeddedByValue()                      {}
@@ -112,6 +130,24 @@ func _QueryService_ExecuteQuery_Handler(srv interface{}, ctx context.Context, de
 	return interceptor(ctx, in, info, handler)
 }
 
+func _QueryService_ExecuteGQL_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ExecuteGQLRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(QueryServiceServer).ExecuteGQL(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: QueryService_ExecuteGQL_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(QueryServiceServer).ExecuteGQL(ctx, req.(*ExecuteGQLRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // QueryService_ServiceDesc is the grpc.ServiceDesc for QueryService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -122,6 +158,10 @@ var QueryService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ExecuteQuery",
 			Handler:    _QueryService_ExecuteQuery_Handler,
+		},
+		{
+			MethodName: "ExecuteGQL",
+			Handler:    _QueryService_ExecuteGQL_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
