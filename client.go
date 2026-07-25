@@ -15,7 +15,6 @@ type Client struct {
 	Auth         clientv1.AuthServiceClient
 	Space        clientv1.SpaceServiceClient
 	Domain       clientv1.DomainServiceClient
-	Template     clientv1.TemplateServiceClient
 	Session      clientv1.SessionServiceClient
 	Transaction  clientv1.TransactionServiceClient
 	Graph        clientv1.GraphServiceClient
@@ -59,7 +58,6 @@ func Dial(ctx context.Context, cfg Config, opts ...grpc.DialOption) (*Client, er
 	c.Auth = clientv1.NewAuthServiceClient(conn)
 	c.Space = clientv1.NewSpaceServiceClient(conn)
 	c.Domain = clientv1.NewDomainServiceClient(conn)
-	c.Template = clientv1.NewTemplateServiceClient(conn)
 	c.Session = clientv1.NewSessionServiceClient(conn)
 	c.Transaction = clientv1.NewTransactionServiceClient(conn)
 	c.Graph = clientv1.NewGraphServiceClient(conn)

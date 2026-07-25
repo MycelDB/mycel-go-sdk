@@ -415,7 +415,6 @@ type CreateBlobNodeMetadata struct {
 	TransactionId string                 `protobuf:"bytes,1,opt,name=transaction_id,json=transactionId,proto3" json:"transaction_id,omitempty"`
 	// Optional client-supplied node id. If omitted, the daemon allocates one.
 	NodeId           *string          `protobuf:"bytes,2,opt,name=node_id,json=nodeId,proto3,oneof" json:"node_id,omitempty"`
-	TemplateId       *string          `protobuf:"bytes,3,opt,name=template_id,json=templateId,proto3,oneof" json:"template_id,omitempty"`
 	DeclaredMimeType string           `protobuf:"bytes,4,opt,name=declared_mime_type,json=declaredMimeType,proto3" json:"declared_mime_type,omitempty"`
 	OriginalFilename string           `protobuf:"bytes,5,opt,name=original_filename,json=originalFilename,proto3" json:"original_filename,omitempty"`
 	Labels           []string         `protobuf:"bytes,6,rep,name=labels,proto3" json:"labels,omitempty"`
@@ -466,13 +465,6 @@ func (x *CreateBlobNodeMetadata) GetTransactionId() string {
 func (x *CreateBlobNodeMetadata) GetNodeId() string {
 	if x != nil && x.NodeId != nil {
 		return *x.NodeId
-	}
-	return ""
-}
-
-func (x *CreateBlobNodeMetadata) GetTemplateId() string {
-	if x != nil && x.TemplateId != nil {
-		return *x.TemplateId
 	}
 	return ""
 }
@@ -575,8 +567,7 @@ type UpdateNodeRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	TransactionId string                 `protobuf:"bytes,1,opt,name=transaction_id,json=transactionId,proto3" json:"transaction_id,omitempty"`
 	Node          *Node                  `protobuf:"bytes,2,opt,name=node,proto3" json:"node,omitempty"`
-	// Mutable paths currently include "template_id", "labels", "properties",
-	// "payload", and system-allowed "meta" fields.
+	// Mutable paths currently include "labels", "properties", "payload", and system-allowed "meta" fields.
 	UpdateMask    *fieldmaskpb.FieldMask `protobuf:"bytes,3,opt,name=update_mask,json=updateMask,proto3" json:"update_mask,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -1908,7 +1899,6 @@ type Node struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	NodeId        string                 `protobuf:"bytes,1,opt,name=node_id,json=nodeId,proto3" json:"node_id,omitempty"`
 	DomainId      string                 `protobuf:"bytes,2,opt,name=domain_id,json=domainId,proto3" json:"domain_id,omitempty"`
-	TemplateId    *string                `protobuf:"bytes,3,opt,name=template_id,json=templateId,proto3,oneof" json:"template_id,omitempty"`
 	Labels        []string               `protobuf:"bytes,4,rep,name=labels,proto3" json:"labels,omitempty"`
 	Properties    *structpb.Struct       `protobuf:"bytes,5,opt,name=properties,proto3" json:"properties,omitempty"`
 	Payload       *structpb.Struct       `protobuf:"bytes,6,opt,name=payload,proto3" json:"payload,omitempty"`
@@ -1963,13 +1953,6 @@ func (x *Node) GetDomainId() string {
 	return ""
 }
 
-func (x *Node) GetTemplateId() string {
-	if x != nil && x.TemplateId != nil {
-		return *x.TemplateId
-	}
-	return ""
-}
-
 func (x *Node) GetLabels() []string {
 	if x != nil {
 		return x.Labels
@@ -2017,7 +2000,6 @@ type NodeCreate struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// Optional client-supplied id. If omitted, the daemon allocates one.
 	NodeId        *string          `protobuf:"bytes,1,opt,name=node_id,json=nodeId,proto3,oneof" json:"node_id,omitempty"`
-	TemplateId    *string          `protobuf:"bytes,2,opt,name=template_id,json=templateId,proto3,oneof" json:"template_id,omitempty"`
 	Labels        []string         `protobuf:"bytes,3,rep,name=labels,proto3" json:"labels,omitempty"`
 	Properties    *structpb.Struct `protobuf:"bytes,4,opt,name=properties,proto3" json:"properties,omitempty"`
 	Payload       *structpb.Struct `protobuf:"bytes,5,opt,name=payload,proto3" json:"payload,omitempty"`
@@ -2059,13 +2041,6 @@ func (*NodeCreate) Descriptor() ([]byte, []int) {
 func (x *NodeCreate) GetNodeId() string {
 	if x != nil && x.NodeId != nil {
 		return *x.NodeId
-	}
-	return ""
-}
-
-func (x *NodeCreate) GetTemplateId() string {
-	if x != nil && x.TemplateId != nil {
-		return *x.TemplateId
 	}
 	return ""
 }
@@ -3219,12 +3194,10 @@ const file_mycel_client_v1_graph_proto_rawDesc = "" +
 	"\x15CreateBlobNodeRequest\x12E\n" +
 	"\bmetadata\x18\x01 \x01(\v2'.mycel.client.v1.CreateBlobNodeMetadataH\x00R\bmetadata\x12\x16\n" +
 	"\x05chunk\x18\x02 \x01(\fH\x00R\x05chunkB\x06\n" +
-	"\x04part\"\xab\x03\n" +
+	"\x04part\"\xf5\x02\n" +
 	"\x16CreateBlobNodeMetadata\x12%\n" +
 	"\x0etransaction_id\x18\x01 \x01(\tR\rtransactionId\x12\x1c\n" +
-	"\anode_id\x18\x02 \x01(\tH\x00R\x06nodeId\x88\x01\x01\x12$\n" +
-	"\vtemplate_id\x18\x03 \x01(\tH\x01R\n" +
-	"templateId\x88\x01\x01\x12,\n" +
+	"\anode_id\x18\x02 \x01(\tH\x00R\x06nodeId\x88\x01\x01\x12,\n" +
 	"\x12declared_mime_type\x18\x04 \x01(\tR\x10declaredMimeType\x12+\n" +
 	"\x11original_filename\x18\x05 \x01(\tR\x10originalFilename\x12\x16\n" +
 	"\x06labels\x18\x06 \x03(\tR\x06labels\x127\n" +
@@ -3234,8 +3207,7 @@ const file_mycel_client_v1_graph_proto_rawDesc = "" +
 	"\apayload\x18\b \x01(\v2\x17.google.protobuf.StructR\apayload\x12+\n" +
 	"\x04meta\x18\t \x01(\v2\x17.google.protobuf.StructR\x04metaB\n" +
 	"\n" +
-	"\b_node_idB\x0e\n" +
-	"\f_template_id\"n\n" +
+	"\b_node_id\"n\n" +
 	"\x16CreateBlobNodeResponse\x12)\n" +
 	"\x04node\x18\x01 \x01(\v2\x15.mycel.client.v1.NodeR\x04node\x12)\n" +
 	"\x04blob\x18\x02 \x01(\v2\x15.mycel.client.v1.BlobR\x04blob\"\xa2\x01\n" +
@@ -3319,12 +3291,10 @@ const file_mycel_client_v1_graph_proto_rawDesc = "" +
 	"operations\x18\x02 \x03(\v2\x1f.mycel.client.v1.GraphOperationR\n" +
 	"operations\"_\n" +
 	"\x1cApplyGraphOperationsResponse\x12?\n" +
-	"\aresults\x18\x01 \x03(\v2%.mycel.client.v1.GraphOperationResultR\aresults\"\x9d\x03\n" +
+	"\aresults\x18\x01 \x03(\v2%.mycel.client.v1.GraphOperationResultR\aresults\"\xe7\x02\n" +
 	"\x04Node\x12\x17\n" +
 	"\anode_id\x18\x01 \x01(\tR\x06nodeId\x12\x1b\n" +
-	"\tdomain_id\x18\x02 \x01(\tR\bdomainId\x12$\n" +
-	"\vtemplate_id\x18\x03 \x01(\tH\x00R\n" +
-	"templateId\x88\x01\x01\x12\x16\n" +
+	"\tdomain_id\x18\x02 \x01(\tR\bdomainId\x12\x16\n" +
 	"\x06labels\x18\x04 \x03(\tR\x06labels\x127\n" +
 	"\n" +
 	"properties\x18\x05 \x01(\v2\x17.google.protobuf.StructR\n" +
@@ -3334,13 +3304,10 @@ const file_mycel_client_v1_graph_proto_rawDesc = "" +
 	"\vcreate_time\x18\b \x01(\v2\x1a.google.protobuf.TimestampR\n" +
 	"createTime\x12;\n" +
 	"\vupdate_time\x18\t \x01(\v2\x1a.google.protobuf.TimestampR\n" +
-	"updateTimeB\x0e\n" +
-	"\f_template_id\"\x9d\x02\n" +
+	"updateTime\"\xe7\x01\n" +
 	"\n" +
 	"NodeCreate\x12\x1c\n" +
-	"\anode_id\x18\x01 \x01(\tH\x00R\x06nodeId\x88\x01\x01\x12$\n" +
-	"\vtemplate_id\x18\x02 \x01(\tH\x01R\n" +
-	"templateId\x88\x01\x01\x12\x16\n" +
+	"\anode_id\x18\x01 \x01(\tH\x00R\x06nodeId\x88\x01\x01\x12\x16\n" +
 	"\x06labels\x18\x03 \x03(\tR\x06labels\x127\n" +
 	"\n" +
 	"properties\x18\x04 \x01(\v2\x17.google.protobuf.StructR\n" +
@@ -3348,8 +3315,7 @@ const file_mycel_client_v1_graph_proto_rawDesc = "" +
 	"\apayload\x18\x05 \x01(\v2\x17.google.protobuf.StructR\apayload\x12+\n" +
 	"\x04meta\x18\x06 \x01(\v2\x17.google.protobuf.StructR\x04metaB\n" +
 	"\n" +
-	"\b_node_idB\x0e\n" +
-	"\f_template_id\"\xa7\x03\n" +
+	"\b_node_id\"\xa7\x03\n" +
 	"\x04Edge\x12\x17\n" +
 	"\aedge_id\x18\x01 \x01(\tR\x06edgeId\x12\x1b\n" +
 	"\tdomain_id\x18\x02 \x01(\tR\bdomainId\x12 \n" +
@@ -3668,7 +3634,6 @@ func file_mycel_client_v1_graph_proto_init() {
 	file_mycel_client_v1_graph_proto_msgTypes[7].OneofWrappers = []any{}
 	file_mycel_client_v1_graph_proto_msgTypes[28].OneofWrappers = []any{}
 	file_mycel_client_v1_graph_proto_msgTypes[29].OneofWrappers = []any{}
-	file_mycel_client_v1_graph_proto_msgTypes[35].OneofWrappers = []any{}
 	file_mycel_client_v1_graph_proto_msgTypes[36].OneofWrappers = []any{}
 	file_mycel_client_v1_graph_proto_msgTypes[38].OneofWrappers = []any{}
 	file_mycel_client_v1_graph_proto_msgTypes[39].OneofWrappers = []any{

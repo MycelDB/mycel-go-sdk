@@ -965,8 +965,6 @@ func (x *GraphPattern) GetSteps() []*TraversalStep {
 type NodePattern struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	Alias string                 `protobuf:"bytes,1,opt,name=alias,proto3" json:"alias,omitempty"`
-	// Optional template key restriction.
-	TemplateKey *string `protobuf:"bytes,2,opt,name=template_key,json=templateKey,proto3,oneof" json:"template_key,omitempty"`
 	// Required labels for the matched node.
 	Labels        []string `protobuf:"bytes,3,rep,name=labels,proto3" json:"labels,omitempty"`
 	unknownFields protoimpl.UnknownFields
@@ -1006,13 +1004,6 @@ func (*NodePattern) Descriptor() ([]byte, []int) {
 func (x *NodePattern) GetAlias() string {
 	if x != nil {
 		return x.Alias
-	}
-	return ""
-}
-
-func (x *NodePattern) GetTemplateKey() string {
-	if x != nil && x.TemplateKey != nil {
-		return *x.TemplateKey
 	}
 	return ""
 }
@@ -2296,12 +2287,10 @@ const file_mycel_client_v1_query_proto_rawDesc = "" +
 	"\x06_where\"x\n" +
 	"\fGraphPattern\x122\n" +
 	"\x05start\x18\x01 \x01(\v2\x1c.mycel.client.v1.NodePatternR\x05start\x124\n" +
-	"\x05steps\x18\x02 \x03(\v2\x1e.mycel.client.v1.TraversalStepR\x05steps\"t\n" +
+	"\x05steps\x18\x02 \x03(\v2\x1e.mycel.client.v1.TraversalStepR\x05steps\";\n" +
 	"\vNodePattern\x12\x14\n" +
-	"\x05alias\x18\x01 \x01(\tR\x05alias\x12&\n" +
-	"\ftemplate_key\x18\x02 \x01(\tH\x00R\vtemplateKey\x88\x01\x01\x12\x16\n" +
-	"\x06labels\x18\x03 \x03(\tR\x06labelsB\x0f\n" +
-	"\r_template_key\"\xd7\x01\n" +
+	"\x05alias\x18\x01 \x01(\tR\x05alias\x12\x16\n" +
+	"\x06labels\x18\x03 \x03(\tR\x06labels\"\xd7\x01\n" +
 	"\rTraversalStep\x12A\n" +
 	"\tdirection\x18\x01 \x01(\x0e2#.mycel.client.v1.TraversalDirectionR\tdirection\x12\x1b\n" +
 	"\tedge_kind\x18\x02 \x01(\tR\bedgeKind\x120\n" +
@@ -2528,7 +2517,6 @@ func file_mycel_client_v1_query_proto_init() {
 	}
 	file_mycel_client_v1_graph_proto_init()
 	file_mycel_client_v1_query_proto_msgTypes[10].OneofWrappers = []any{}
-	file_mycel_client_v1_query_proto_msgTypes[12].OneofWrappers = []any{}
 	file_mycel_client_v1_query_proto_msgTypes[15].OneofWrappers = []any{
 		(*Expr_Between)(nil),
 		(*Expr_And)(nil),
