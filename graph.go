@@ -107,6 +107,68 @@ func (c *Client) ExecuteGQL(ctx context.Context, txID string, query string, para
 	})
 }
 
+func (c *Client) ExecuteGQLScript(ctx context.Context, txID string, script string, params map[string]*structpb.Value, stopOnError bool, pageSize int32) (*clientv1.ExecuteGQLScriptResponse, error) {
+	return DoReadValue(ctx, c, "execute gql script", func() (*clientv1.ExecuteGQLScriptResponse, error) {
+		callCtx, cancel := c.AuthCallContext(ctx)
+		defer cancel()
+		return c.Query.ExecuteGQLScript(callCtx, &clientv1.ExecuteGQLScriptRequest{TransactionId: txID, Script: script, Params: params, StopOnError: stopOnError, PageSize: pageSize})
+	})
+}
+
+func (c *Client) QueryGQLScriptReadOnly(ctx context.Context, spaceID, domainID, script string, pageSize int32) (*clientv1.ExecuteGQLScriptResponse, error) {
+	sessionID, err := c.OpenSession(ctx, spaceID, domainID)
+	if err != nil {
+		return nil, err
+	}
+	defer func() { _ = c.CloseSession(ctx, sessionID) }()
+	txID, err := c.BeginReadOnlyTransaction(ctx, sessionID)
+	if err != nil {
+		return nil, err
+	}
+	closed := false
+	defer func() {
+		if !closed {
+			_ = c.CloseTransaction(ctx, txID)
+		}
+	}()
+	res, err := c.ExecuteGQLScript(ctx, txID, script, nil, true, pageSize)
+	if err != nil {
+		return nil, err
+	}
+	if err := c.CloseTransaction(ctx, txID); err != nil {
+		return nil, err
+	}
+	closed = true
+	return res, nil
+}
+
+func (c *Client) QueryGQLScriptReadWrite(ctx context.Context, spaceID, domainID, script string, pageSize int32) (*clientv1.ExecuteGQLScriptResponse, error) {
+	sessionID, err := c.OpenSession(ctx, spaceID, domainID)
+	if err != nil {
+		return nil, err
+	}
+	defer func() { _ = c.CloseSession(ctx, sessionID) }()
+	txID, err := c.BeginReadWriteTransaction(ctx, sessionID)
+	if err != nil {
+		return nil, err
+	}
+	res, err := c.ExecuteGQLScript(ctx, txID, script, nil, true, pageSize)
+	if err != nil {
+		_ = c.CloseTransaction(ctx, txID)
+		return nil, err
+	}
+	for _, statement := range res.GetStatements() {
+		if !statement.GetSuccess() {
+			_ = c.CloseTransaction(ctx, txID)
+			return res, nil
+		}
+	}
+	if err := c.CommitTransaction(ctx, txID); err != nil {
+		return nil, err
+	}
+	return res, nil
+}
+
 func (c *Client) QueryGQLReadOnly(ctx context.Context, spaceID, domainID, query string, pageSize int32) (*clientv1.QueryResult, error) {
 	sessionID, err := c.OpenSession(ctx, spaceID, domainID)
 	if err != nil {

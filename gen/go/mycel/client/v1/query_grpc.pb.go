@@ -19,8 +19,9 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	QueryService_ExecuteQuery_FullMethodName = "/mycel.client.v1.QueryService/ExecuteQuery"
-	QueryService_ExecuteGQL_FullMethodName   = "/mycel.client.v1.QueryService/ExecuteGQL"
+	QueryService_ExecuteQuery_FullMethodName     = "/mycel.client.v1.QueryService/ExecuteQuery"
+	QueryService_ExecuteGQL_FullMethodName       = "/mycel.client.v1.QueryService/ExecuteGQL"
+	QueryService_ExecuteGQLScript_FullMethodName = "/mycel.client.v1.QueryService/ExecuteGQLScript"
 )
 
 // QueryServiceClient is the client API for QueryService service.
@@ -34,6 +35,8 @@ type QueryServiceClient interface {
 	ExecuteQuery(ctx context.Context, in *ExecuteQueryRequest, opts ...grpc.CallOption) (*ExecuteQueryResponse, error)
 	// ExecuteGQL executes textual Mycel GQL inside an existing transaction.
 	ExecuteGQL(ctx context.Context, in *ExecuteGQLRequest, opts ...grpc.CallOption) (*ExecuteGQLResponse, error)
+	// ExecuteGQLScript executes multiple semicolon-separated Mycel GQL statements.
+	ExecuteGQLScript(ctx context.Context, in *ExecuteGQLScriptRequest, opts ...grpc.CallOption) (*ExecuteGQLScriptResponse, error)
 }
 
 type queryServiceClient struct {
@@ -64,6 +67,16 @@ func (c *queryServiceClient) ExecuteGQL(ctx context.Context, in *ExecuteGQLReque
 	return out, nil
 }
 
+func (c *queryServiceClient) ExecuteGQLScript(ctx context.Context, in *ExecuteGQLScriptRequest, opts ...grpc.CallOption) (*ExecuteGQLScriptResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ExecuteGQLScriptResponse)
+	err := c.cc.Invoke(ctx, QueryService_ExecuteGQLScript_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // QueryServiceServer is the server API for QueryService service.
 // All implementations must embed UnimplementedQueryServiceServer
 // for forward compatibility.
@@ -75,6 +88,8 @@ type QueryServiceServer interface {
 	ExecuteQuery(context.Context, *ExecuteQueryRequest) (*ExecuteQueryResponse, error)
 	// ExecuteGQL executes textual Mycel GQL inside an existing transaction.
 	ExecuteGQL(context.Context, *ExecuteGQLRequest) (*ExecuteGQLResponse, error)
+	// ExecuteGQLScript executes multiple semicolon-separated Mycel GQL statements.
+	ExecuteGQLScript(context.Context, *ExecuteGQLScriptRequest) (*ExecuteGQLScriptResponse, error)
 	mustEmbedUnimplementedQueryServiceServer()
 }
 
@@ -90,6 +105,9 @@ func (UnimplementedQueryServiceServer) ExecuteQuery(context.Context, *ExecuteQue
 }
 func (UnimplementedQueryServiceServer) ExecuteGQL(context.Context, *ExecuteGQLRequest) (*ExecuteGQLResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ExecuteGQL not implemented")
+}
+func (UnimplementedQueryServiceServer) ExecuteGQLScript(context.Context, *ExecuteGQLScriptRequest) (*ExecuteGQLScriptResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ExecuteGQLScript not implemented")
 }
 func (UnimplementedQueryServiceServer) mustEmbedUnimplementedQueryServiceServer() {}
 func (UnimplementedQueryServiceServer) testEmbeddedByValue()                      {}
@@ -148,6 +166,24 @@ func _QueryService_ExecuteGQL_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _QueryService_ExecuteGQLScript_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ExecuteGQLScriptRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(QueryServiceServer).ExecuteGQLScript(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: QueryService_ExecuteGQLScript_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(QueryServiceServer).ExecuteGQLScript(ctx, req.(*ExecuteGQLScriptRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // QueryService_ServiceDesc is the grpc.ServiceDesc for QueryService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -162,6 +198,10 @@ var QueryService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ExecuteGQL",
 			Handler:    _QueryService_ExecuteGQL_Handler,
+		},
+		{
+			MethodName: "ExecuteGQLScript",
+			Handler:    _QueryService_ExecuteGQLScript_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
