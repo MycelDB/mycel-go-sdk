@@ -21,6 +21,7 @@ type Client struct {
 	Blob         clientv1.BlobServiceClient
 	Query        clientv1.QueryServiceClient
 	Schema       clientv1.SchemaServiceClient
+	Automation   clientv1.AutomationServiceClient
 	ImportExport clientv1.ImportExportServiceClient
 	Metadata     clientv1.MetadataCatalogServiceClient
 	Semantic     clientv1.SemanticServiceClient
@@ -44,6 +45,7 @@ type AdminClient struct {
 	Inference           adminv1.AdminInferenceServiceClient
 	Backup              adminv1.AdminBackupServiceClient
 	Schema              adminv1.AdminSchemaServiceClient
+	Automation          adminv1.AdminAutomationServiceClient
 
 	tokens *tokenSource
 	cfg    Config
@@ -66,6 +68,7 @@ func Dial(ctx context.Context, cfg Config, opts ...grpc.DialOption) (*Client, er
 	c.Blob = clientv1.NewBlobServiceClient(conn)
 	c.Query = clientv1.NewQueryServiceClient(conn)
 	c.Schema = clientv1.NewSchemaServiceClient(conn)
+	c.Automation = clientv1.NewAutomationServiceClient(conn)
 	c.ImportExport = clientv1.NewImportExportServiceClient(conn)
 	c.Metadata = clientv1.NewMetadataCatalogServiceClient(conn)
 	c.Semantic = clientv1.NewSemanticServiceClient(conn)
@@ -98,6 +101,7 @@ func DialAdmin(ctx context.Context, cfg Config, opts ...grpc.DialOption) (*Admin
 	c.Inference = adminv1.NewAdminInferenceServiceClient(conn)
 	c.Backup = adminv1.NewAdminBackupServiceClient(conn)
 	c.Schema = adminv1.NewAdminSchemaServiceClient(conn)
+	c.Automation = adminv1.NewAdminAutomationServiceClient(conn)
 	if cfg.Username != "" || cfg.Password != "" {
 		if _, err := c.LoginOperator(ctx, cfg.Username, cfg.Password); err != nil {
 			_ = conn.Close()
