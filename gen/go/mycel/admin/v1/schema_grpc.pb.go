@@ -19,8 +19,9 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	AdminSchemaService_GetDomainSchema_FullMethodName = "/mycel.admin.v1.AdminSchemaService/GetDomainSchema"
-	AdminSchemaService_ValidateSchema_FullMethodName  = "/mycel.admin.v1.AdminSchemaService/ValidateSchema"
+	AdminSchemaService_GetDomainSchema_FullMethodName    = "/mycel.admin.v1.AdminSchemaService/GetDomainSchema"
+	AdminSchemaService_DeleteDomainSchema_FullMethodName = "/mycel.admin.v1.AdminSchemaService/DeleteDomainSchema"
+	AdminSchemaService_ValidateSchema_FullMethodName     = "/mycel.admin.v1.AdminSchemaService/ValidateSchema"
 )
 
 // AdminSchemaServiceClient is the client API for AdminSchemaService service.
@@ -30,6 +31,7 @@ const (
 // AdminSchemaService exposes operator read/validation access to domain schemas.
 type AdminSchemaServiceClient interface {
 	GetDomainSchema(ctx context.Context, in *GetDomainSchemaRequest, opts ...grpc.CallOption) (*GetDomainSchemaResponse, error)
+	DeleteDomainSchema(ctx context.Context, in *DeleteDomainSchemaRequest, opts ...grpc.CallOption) (*DeleteDomainSchemaResponse, error)
 	ValidateSchema(ctx context.Context, in *ValidateSchemaRequest, opts ...grpc.CallOption) (*ValidateSchemaResponse, error)
 }
 
@@ -45,6 +47,16 @@ func (c *adminSchemaServiceClient) GetDomainSchema(ctx context.Context, in *GetD
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(GetDomainSchemaResponse)
 	err := c.cc.Invoke(ctx, AdminSchemaService_GetDomainSchema_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *adminSchemaServiceClient) DeleteDomainSchema(ctx context.Context, in *DeleteDomainSchemaRequest, opts ...grpc.CallOption) (*DeleteDomainSchemaResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(DeleteDomainSchemaResponse)
+	err := c.cc.Invoke(ctx, AdminSchemaService_DeleteDomainSchema_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -68,6 +80,7 @@ func (c *adminSchemaServiceClient) ValidateSchema(ctx context.Context, in *Valid
 // AdminSchemaService exposes operator read/validation access to domain schemas.
 type AdminSchemaServiceServer interface {
 	GetDomainSchema(context.Context, *GetDomainSchemaRequest) (*GetDomainSchemaResponse, error)
+	DeleteDomainSchema(context.Context, *DeleteDomainSchemaRequest) (*DeleteDomainSchemaResponse, error)
 	ValidateSchema(context.Context, *ValidateSchemaRequest) (*ValidateSchemaResponse, error)
 	mustEmbedUnimplementedAdminSchemaServiceServer()
 }
@@ -81,6 +94,9 @@ type UnimplementedAdminSchemaServiceServer struct{}
 
 func (UnimplementedAdminSchemaServiceServer) GetDomainSchema(context.Context, *GetDomainSchemaRequest) (*GetDomainSchemaResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetDomainSchema not implemented")
+}
+func (UnimplementedAdminSchemaServiceServer) DeleteDomainSchema(context.Context, *DeleteDomainSchemaRequest) (*DeleteDomainSchemaResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteDomainSchema not implemented")
 }
 func (UnimplementedAdminSchemaServiceServer) ValidateSchema(context.Context, *ValidateSchemaRequest) (*ValidateSchemaResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ValidateSchema not implemented")
@@ -124,6 +140,24 @@ func _AdminSchemaService_GetDomainSchema_Handler(srv interface{}, ctx context.Co
 	return interceptor(ctx, in, info, handler)
 }
 
+func _AdminSchemaService_DeleteDomainSchema_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteDomainSchemaRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminSchemaServiceServer).DeleteDomainSchema(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AdminSchemaService_DeleteDomainSchema_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminSchemaServiceServer).DeleteDomainSchema(ctx, req.(*DeleteDomainSchemaRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _AdminSchemaService_ValidateSchema_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ValidateSchemaRequest)
 	if err := dec(in); err != nil {
@@ -152,6 +186,10 @@ var AdminSchemaService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetDomainSchema",
 			Handler:    _AdminSchemaService_GetDomainSchema_Handler,
+		},
+		{
+			MethodName: "DeleteDomainSchema",
+			Handler:    _AdminSchemaService_DeleteDomainSchema_Handler,
 		},
 		{
 			MethodName: "ValidateSchema",
