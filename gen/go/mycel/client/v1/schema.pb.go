@@ -67,7 +67,7 @@ func (x *GetDomainSchemaRequest) GetDomainId() string {
 
 type GetDomainSchemaResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	SchemaJson    string                 `protobuf:"bytes,1,opt,name=schema_json,json=schemaJson,proto3" json:"schema_json,omitempty"`
+	Gwl           string                 `protobuf:"bytes,1,opt,name=gwl,proto3" json:"gwl,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -102,9 +102,9 @@ func (*GetDomainSchemaResponse) Descriptor() ([]byte, []int) {
 	return file_mycel_client_v1_schema_proto_rawDescGZIP(), []int{1}
 }
 
-func (x *GetDomainSchemaResponse) GetSchemaJson() string {
+func (x *GetDomainSchemaResponse) GetGwl() string {
 	if x != nil {
-		return x.SchemaJson
+		return x.Gwl
 	}
 	return ""
 }
@@ -112,7 +112,7 @@ func (x *GetDomainSchemaResponse) GetSchemaJson() string {
 type PutDomainSchemaRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	DomainId      string                 `protobuf:"bytes,1,opt,name=domain_id,json=domainId,proto3" json:"domain_id,omitempty"`
-	SchemaJson    string                 `protobuf:"bytes,2,opt,name=schema_json,json=schemaJson,proto3" json:"schema_json,omitempty"`
+	Gwl           string                 `protobuf:"bytes,2,opt,name=gwl,proto3" json:"gwl,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -154,16 +154,16 @@ func (x *PutDomainSchemaRequest) GetDomainId() string {
 	return ""
 }
 
-func (x *PutDomainSchemaRequest) GetSchemaJson() string {
+func (x *PutDomainSchemaRequest) GetGwl() string {
 	if x != nil {
-		return x.SchemaJson
+		return x.Gwl
 	}
 	return ""
 }
 
 type PutDomainSchemaResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	SchemaJson    string                 `protobuf:"bytes,1,opt,name=schema_json,json=schemaJson,proto3" json:"schema_json,omitempty"`
+	Gwl           string                 `protobuf:"bytes,1,opt,name=gwl,proto3" json:"gwl,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -198,23 +198,103 @@ func (*PutDomainSchemaResponse) Descriptor() ([]byte, []int) {
 	return file_mycel_client_v1_schema_proto_rawDescGZIP(), []int{3}
 }
 
-func (x *PutDomainSchemaResponse) GetSchemaJson() string {
+func (x *PutDomainSchemaResponse) GetGwl() string {
 	if x != nil {
-		return x.SchemaJson
+		return x.Gwl
 	}
 	return ""
 }
 
+type DeleteDomainSchemaRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	DomainId      string                 `protobuf:"bytes,1,opt,name=domain_id,json=domainId,proto3" json:"domain_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DeleteDomainSchemaRequest) Reset() {
+	*x = DeleteDomainSchemaRequest{}
+	mi := &file_mycel_client_v1_schema_proto_msgTypes[4]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DeleteDomainSchemaRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteDomainSchemaRequest) ProtoMessage() {}
+
+func (x *DeleteDomainSchemaRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_client_v1_schema_proto_msgTypes[4]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteDomainSchemaRequest.ProtoReflect.Descriptor instead.
+func (*DeleteDomainSchemaRequest) Descriptor() ([]byte, []int) {
+	return file_mycel_client_v1_schema_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *DeleteDomainSchemaRequest) GetDomainId() string {
+	if x != nil {
+		return x.DomainId
+	}
+	return ""
+}
+
+type DeleteDomainSchemaResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DeleteDomainSchemaResponse) Reset() {
+	*x = DeleteDomainSchemaResponse{}
+	mi := &file_mycel_client_v1_schema_proto_msgTypes[5]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DeleteDomainSchemaResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteDomainSchemaResponse) ProtoMessage() {}
+
+func (x *DeleteDomainSchemaResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_client_v1_schema_proto_msgTypes[5]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteDomainSchemaResponse.ProtoReflect.Descriptor instead.
+func (*DeleteDomainSchemaResponse) Descriptor() ([]byte, []int) {
+	return file_mycel_client_v1_schema_proto_rawDescGZIP(), []int{5}
+}
+
 type ValidateSchemaRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	SchemaJson    string                 `protobuf:"bytes,1,opt,name=schema_json,json=schemaJson,proto3" json:"schema_json,omitempty"`
+	Gwl           string                 `protobuf:"bytes,1,opt,name=gwl,proto3" json:"gwl,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *ValidateSchemaRequest) Reset() {
 	*x = ValidateSchemaRequest{}
-	mi := &file_mycel_client_v1_schema_proto_msgTypes[4]
+	mi := &file_mycel_client_v1_schema_proto_msgTypes[6]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -226,7 +306,7 @@ func (x *ValidateSchemaRequest) String() string {
 func (*ValidateSchemaRequest) ProtoMessage() {}
 
 func (x *ValidateSchemaRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_client_v1_schema_proto_msgTypes[4]
+	mi := &file_mycel_client_v1_schema_proto_msgTypes[6]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -239,12 +319,12 @@ func (x *ValidateSchemaRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ValidateSchemaRequest.ProtoReflect.Descriptor instead.
 func (*ValidateSchemaRequest) Descriptor() ([]byte, []int) {
-	return file_mycel_client_v1_schema_proto_rawDescGZIP(), []int{4}
+	return file_mycel_client_v1_schema_proto_rawDescGZIP(), []int{6}
 }
 
-func (x *ValidateSchemaRequest) GetSchemaJson() string {
+func (x *ValidateSchemaRequest) GetGwl() string {
 	if x != nil {
-		return x.SchemaJson
+		return x.Gwl
 	}
 	return ""
 }
@@ -259,7 +339,7 @@ type ValidateSchemaResponse struct {
 
 func (x *ValidateSchemaResponse) Reset() {
 	*x = ValidateSchemaResponse{}
-	mi := &file_mycel_client_v1_schema_proto_msgTypes[5]
+	mi := &file_mycel_client_v1_schema_proto_msgTypes[7]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -271,7 +351,7 @@ func (x *ValidateSchemaResponse) String() string {
 func (*ValidateSchemaResponse) ProtoMessage() {}
 
 func (x *ValidateSchemaResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_client_v1_schema_proto_msgTypes[5]
+	mi := &file_mycel_client_v1_schema_proto_msgTypes[7]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -284,7 +364,7 @@ func (x *ValidateSchemaResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ValidateSchemaResponse.ProtoReflect.Descriptor instead.
 func (*ValidateSchemaResponse) Descriptor() ([]byte, []int) {
-	return file_mycel_client_v1_schema_proto_rawDescGZIP(), []int{5}
+	return file_mycel_client_v1_schema_proto_rawDescGZIP(), []int{7}
 }
 
 func (x *ValidateSchemaResponse) GetValid() bool {
@@ -311,7 +391,7 @@ type ValidateGraphRequest struct {
 
 func (x *ValidateGraphRequest) Reset() {
 	*x = ValidateGraphRequest{}
-	mi := &file_mycel_client_v1_schema_proto_msgTypes[6]
+	mi := &file_mycel_client_v1_schema_proto_msgTypes[8]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -323,7 +403,7 @@ func (x *ValidateGraphRequest) String() string {
 func (*ValidateGraphRequest) ProtoMessage() {}
 
 func (x *ValidateGraphRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_client_v1_schema_proto_msgTypes[6]
+	mi := &file_mycel_client_v1_schema_proto_msgTypes[8]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -336,7 +416,7 @@ func (x *ValidateGraphRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ValidateGraphRequest.ProtoReflect.Descriptor instead.
 func (*ValidateGraphRequest) Descriptor() ([]byte, []int) {
-	return file_mycel_client_v1_schema_proto_rawDescGZIP(), []int{6}
+	return file_mycel_client_v1_schema_proto_rawDescGZIP(), []int{8}
 }
 
 func (x *ValidateGraphRequest) GetDomainId() string {
@@ -363,7 +443,7 @@ type ValidateGraphResponse struct {
 
 func (x *ValidateGraphResponse) Reset() {
 	*x = ValidateGraphResponse{}
-	mi := &file_mycel_client_v1_schema_proto_msgTypes[7]
+	mi := &file_mycel_client_v1_schema_proto_msgTypes[9]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -375,7 +455,7 @@ func (x *ValidateGraphResponse) String() string {
 func (*ValidateGraphResponse) ProtoMessage() {}
 
 func (x *ValidateGraphResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_client_v1_schema_proto_msgTypes[7]
+	mi := &file_mycel_client_v1_schema_proto_msgTypes[9]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -388,7 +468,7 @@ func (x *ValidateGraphResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ValidateGraphResponse.ProtoReflect.Descriptor instead.
 func (*ValidateGraphResponse) Descriptor() ([]byte, []int) {
-	return file_mycel_client_v1_schema_proto_rawDescGZIP(), []int{7}
+	return file_mycel_client_v1_schema_proto_rawDescGZIP(), []int{9}
 }
 
 func (x *ValidateGraphResponse) GetValid() bool {
@@ -416,7 +496,7 @@ type SchemaValidationIssue struct {
 
 func (x *SchemaValidationIssue) Reset() {
 	*x = SchemaValidationIssue{}
-	mi := &file_mycel_client_v1_schema_proto_msgTypes[8]
+	mi := &file_mycel_client_v1_schema_proto_msgTypes[10]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -428,7 +508,7 @@ func (x *SchemaValidationIssue) String() string {
 func (*SchemaValidationIssue) ProtoMessage() {}
 
 func (x *SchemaValidationIssue) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_client_v1_schema_proto_msgTypes[8]
+	mi := &file_mycel_client_v1_schema_proto_msgTypes[10]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -441,7 +521,7 @@ func (x *SchemaValidationIssue) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SchemaValidationIssue.ProtoReflect.Descriptor instead.
 func (*SchemaValidationIssue) Descriptor() ([]byte, []int) {
-	return file_mycel_client_v1_schema_proto_rawDescGZIP(), []int{8}
+	return file_mycel_client_v1_schema_proto_rawDescGZIP(), []int{10}
 }
 
 func (x *SchemaValidationIssue) GetSeverity() string {
@@ -471,20 +551,19 @@ const file_mycel_client_v1_schema_proto_rawDesc = "" +
 	"\n" +
 	"\x1cmycel/client/v1/schema.proto\x12\x0fmycel.client.v1\"5\n" +
 	"\x16GetDomainSchemaRequest\x12\x1b\n" +
-	"\tdomain_id\x18\x01 \x01(\tR\bdomainId\":\n" +
-	"\x17GetDomainSchemaResponse\x12\x1f\n" +
-	"\vschema_json\x18\x01 \x01(\tR\n" +
-	"schemaJson\"V\n" +
+	"\tdomain_id\x18\x01 \x01(\tR\bdomainId\"+\n" +
+	"\x17GetDomainSchemaResponse\x12\x10\n" +
+	"\x03gwl\x18\x01 \x01(\tR\x03gwl\"G\n" +
 	"\x16PutDomainSchemaRequest\x12\x1b\n" +
-	"\tdomain_id\x18\x01 \x01(\tR\bdomainId\x12\x1f\n" +
-	"\vschema_json\x18\x02 \x01(\tR\n" +
-	"schemaJson\":\n" +
-	"\x17PutDomainSchemaResponse\x12\x1f\n" +
-	"\vschema_json\x18\x01 \x01(\tR\n" +
-	"schemaJson\"8\n" +
-	"\x15ValidateSchemaRequest\x12\x1f\n" +
-	"\vschema_json\x18\x01 \x01(\tR\n" +
-	"schemaJson\"n\n" +
+	"\tdomain_id\x18\x01 \x01(\tR\bdomainId\x12\x10\n" +
+	"\x03gwl\x18\x02 \x01(\tR\x03gwl\"+\n" +
+	"\x17PutDomainSchemaResponse\x12\x10\n" +
+	"\x03gwl\x18\x01 \x01(\tR\x03gwl\"8\n" +
+	"\x19DeleteDomainSchemaRequest\x12\x1b\n" +
+	"\tdomain_id\x18\x01 \x01(\tR\bdomainId\"\x1c\n" +
+	"\x1aDeleteDomainSchemaResponse\")\n" +
+	"\x15ValidateSchemaRequest\x12\x10\n" +
+	"\x03gwl\x18\x01 \x01(\tR\x03gwl\"n\n" +
 	"\x16ValidateSchemaResponse\x12\x14\n" +
 	"\x05valid\x18\x01 \x01(\bR\x05valid\x12>\n" +
 	"\x06issues\x18\x02 \x03(\v2&.mycel.client.v1.SchemaValidationIssueR\x06issues\"R\n" +
@@ -498,10 +577,11 @@ const file_mycel_client_v1_schema_proto_rawDesc = "" +
 	"\x15SchemaValidationIssue\x12\x1a\n" +
 	"\bseverity\x18\x01 \x01(\tR\bseverity\x12\x12\n" +
 	"\x04path\x18\x02 \x01(\tR\x04path\x12\x18\n" +
-	"\amessage\x18\x03 \x01(\tR\amessage2\x9e\x03\n" +
+	"\amessage\x18\x03 \x01(\tR\amessage2\x8d\x04\n" +
 	"\rSchemaService\x12d\n" +
 	"\x0fGetDomainSchema\x12'.mycel.client.v1.GetDomainSchemaRequest\x1a(.mycel.client.v1.GetDomainSchemaResponse\x12d\n" +
-	"\x0fPutDomainSchema\x12'.mycel.client.v1.PutDomainSchemaRequest\x1a(.mycel.client.v1.PutDomainSchemaResponse\x12a\n" +
+	"\x0fPutDomainSchema\x12'.mycel.client.v1.PutDomainSchemaRequest\x1a(.mycel.client.v1.PutDomainSchemaResponse\x12m\n" +
+	"\x12DeleteDomainSchema\x12*.mycel.client.v1.DeleteDomainSchemaRequest\x1a+.mycel.client.v1.DeleteDomainSchemaResponse\x12a\n" +
 	"\x0eValidateSchema\x12&.mycel.client.v1.ValidateSchemaRequest\x1a'.mycel.client.v1.ValidateSchemaResponse\x12^\n" +
 	"\rValidateGraph\x12%.mycel.client.v1.ValidateGraphRequest\x1a&.mycel.client.v1.ValidateGraphResponseB\xc1\x01\n" +
 	"\x13com.mycel.client.v1B\vSchemaProtoP\x01Z?github.com/myceldb/mycel-go-sdk/gen/go/mycel/client/v1;clientv1\xa2\x02\x03MCX\xaa\x02\x0fMycel.Client.V1\xca\x02\x0fMycel\\Client\\V1\xe2\x02\x1bMycel\\Client\\V1\\GPBMetadata\xea\x02\x11Mycel::Client::V1b\x06proto3"
@@ -518,34 +598,38 @@ func file_mycel_client_v1_schema_proto_rawDescGZIP() []byte {
 	return file_mycel_client_v1_schema_proto_rawDescData
 }
 
-var file_mycel_client_v1_schema_proto_msgTypes = make([]protoimpl.MessageInfo, 9)
+var file_mycel_client_v1_schema_proto_msgTypes = make([]protoimpl.MessageInfo, 11)
 var file_mycel_client_v1_schema_proto_goTypes = []any{
-	(*GetDomainSchemaRequest)(nil),  // 0: mycel.client.v1.GetDomainSchemaRequest
-	(*GetDomainSchemaResponse)(nil), // 1: mycel.client.v1.GetDomainSchemaResponse
-	(*PutDomainSchemaRequest)(nil),  // 2: mycel.client.v1.PutDomainSchemaRequest
-	(*PutDomainSchemaResponse)(nil), // 3: mycel.client.v1.PutDomainSchemaResponse
-	(*ValidateSchemaRequest)(nil),   // 4: mycel.client.v1.ValidateSchemaRequest
-	(*ValidateSchemaResponse)(nil),  // 5: mycel.client.v1.ValidateSchemaResponse
-	(*ValidateGraphRequest)(nil),    // 6: mycel.client.v1.ValidateGraphRequest
-	(*ValidateGraphResponse)(nil),   // 7: mycel.client.v1.ValidateGraphResponse
-	(*SchemaValidationIssue)(nil),   // 8: mycel.client.v1.SchemaValidationIssue
+	(*GetDomainSchemaRequest)(nil),     // 0: mycel.client.v1.GetDomainSchemaRequest
+	(*GetDomainSchemaResponse)(nil),    // 1: mycel.client.v1.GetDomainSchemaResponse
+	(*PutDomainSchemaRequest)(nil),     // 2: mycel.client.v1.PutDomainSchemaRequest
+	(*PutDomainSchemaResponse)(nil),    // 3: mycel.client.v1.PutDomainSchemaResponse
+	(*DeleteDomainSchemaRequest)(nil),  // 4: mycel.client.v1.DeleteDomainSchemaRequest
+	(*DeleteDomainSchemaResponse)(nil), // 5: mycel.client.v1.DeleteDomainSchemaResponse
+	(*ValidateSchemaRequest)(nil),      // 6: mycel.client.v1.ValidateSchemaRequest
+	(*ValidateSchemaResponse)(nil),     // 7: mycel.client.v1.ValidateSchemaResponse
+	(*ValidateGraphRequest)(nil),       // 8: mycel.client.v1.ValidateGraphRequest
+	(*ValidateGraphResponse)(nil),      // 9: mycel.client.v1.ValidateGraphResponse
+	(*SchemaValidationIssue)(nil),      // 10: mycel.client.v1.SchemaValidationIssue
 }
 var file_mycel_client_v1_schema_proto_depIdxs = []int32{
-	8, // 0: mycel.client.v1.ValidateSchemaResponse.issues:type_name -> mycel.client.v1.SchemaValidationIssue
-	8, // 1: mycel.client.v1.ValidateGraphResponse.issues:type_name -> mycel.client.v1.SchemaValidationIssue
-	0, // 2: mycel.client.v1.SchemaService.GetDomainSchema:input_type -> mycel.client.v1.GetDomainSchemaRequest
-	2, // 3: mycel.client.v1.SchemaService.PutDomainSchema:input_type -> mycel.client.v1.PutDomainSchemaRequest
-	4, // 4: mycel.client.v1.SchemaService.ValidateSchema:input_type -> mycel.client.v1.ValidateSchemaRequest
-	6, // 5: mycel.client.v1.SchemaService.ValidateGraph:input_type -> mycel.client.v1.ValidateGraphRequest
-	1, // 6: mycel.client.v1.SchemaService.GetDomainSchema:output_type -> mycel.client.v1.GetDomainSchemaResponse
-	3, // 7: mycel.client.v1.SchemaService.PutDomainSchema:output_type -> mycel.client.v1.PutDomainSchemaResponse
-	5, // 8: mycel.client.v1.SchemaService.ValidateSchema:output_type -> mycel.client.v1.ValidateSchemaResponse
-	7, // 9: mycel.client.v1.SchemaService.ValidateGraph:output_type -> mycel.client.v1.ValidateGraphResponse
-	6, // [6:10] is the sub-list for method output_type
-	2, // [2:6] is the sub-list for method input_type
-	2, // [2:2] is the sub-list for extension type_name
-	2, // [2:2] is the sub-list for extension extendee
-	0, // [0:2] is the sub-list for field type_name
+	10, // 0: mycel.client.v1.ValidateSchemaResponse.issues:type_name -> mycel.client.v1.SchemaValidationIssue
+	10, // 1: mycel.client.v1.ValidateGraphResponse.issues:type_name -> mycel.client.v1.SchemaValidationIssue
+	0,  // 2: mycel.client.v1.SchemaService.GetDomainSchema:input_type -> mycel.client.v1.GetDomainSchemaRequest
+	2,  // 3: mycel.client.v1.SchemaService.PutDomainSchema:input_type -> mycel.client.v1.PutDomainSchemaRequest
+	4,  // 4: mycel.client.v1.SchemaService.DeleteDomainSchema:input_type -> mycel.client.v1.DeleteDomainSchemaRequest
+	6,  // 5: mycel.client.v1.SchemaService.ValidateSchema:input_type -> mycel.client.v1.ValidateSchemaRequest
+	8,  // 6: mycel.client.v1.SchemaService.ValidateGraph:input_type -> mycel.client.v1.ValidateGraphRequest
+	1,  // 7: mycel.client.v1.SchemaService.GetDomainSchema:output_type -> mycel.client.v1.GetDomainSchemaResponse
+	3,  // 8: mycel.client.v1.SchemaService.PutDomainSchema:output_type -> mycel.client.v1.PutDomainSchemaResponse
+	5,  // 9: mycel.client.v1.SchemaService.DeleteDomainSchema:output_type -> mycel.client.v1.DeleteDomainSchemaResponse
+	7,  // 10: mycel.client.v1.SchemaService.ValidateSchema:output_type -> mycel.client.v1.ValidateSchemaResponse
+	9,  // 11: mycel.client.v1.SchemaService.ValidateGraph:output_type -> mycel.client.v1.ValidateGraphResponse
+	7,  // [7:12] is the sub-list for method output_type
+	2,  // [2:7] is the sub-list for method input_type
+	2,  // [2:2] is the sub-list for extension type_name
+	2,  // [2:2] is the sub-list for extension extendee
+	0,  // [0:2] is the sub-list for field type_name
 }
 
 func init() { file_mycel_client_v1_schema_proto_init() }
@@ -559,7 +643,7 @@ func file_mycel_client_v1_schema_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_mycel_client_v1_schema_proto_rawDesc), len(file_mycel_client_v1_schema_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   9,
+			NumMessages:   11,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

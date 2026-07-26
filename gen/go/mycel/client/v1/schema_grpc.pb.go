@@ -19,10 +19,11 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	SchemaService_GetDomainSchema_FullMethodName = "/mycel.client.v1.SchemaService/GetDomainSchema"
-	SchemaService_PutDomainSchema_FullMethodName = "/mycel.client.v1.SchemaService/PutDomainSchema"
-	SchemaService_ValidateSchema_FullMethodName  = "/mycel.client.v1.SchemaService/ValidateSchema"
-	SchemaService_ValidateGraph_FullMethodName   = "/mycel.client.v1.SchemaService/ValidateGraph"
+	SchemaService_GetDomainSchema_FullMethodName    = "/mycel.client.v1.SchemaService/GetDomainSchema"
+	SchemaService_PutDomainSchema_FullMethodName    = "/mycel.client.v1.SchemaService/PutDomainSchema"
+	SchemaService_DeleteDomainSchema_FullMethodName = "/mycel.client.v1.SchemaService/DeleteDomainSchema"
+	SchemaService_ValidateSchema_FullMethodName     = "/mycel.client.v1.SchemaService/ValidateSchema"
+	SchemaService_ValidateGraph_FullMethodName      = "/mycel.client.v1.SchemaService/ValidateGraph"
 )
 
 // SchemaServiceClient is the client API for SchemaService service.
@@ -33,6 +34,7 @@ const (
 type SchemaServiceClient interface {
 	GetDomainSchema(ctx context.Context, in *GetDomainSchemaRequest, opts ...grpc.CallOption) (*GetDomainSchemaResponse, error)
 	PutDomainSchema(ctx context.Context, in *PutDomainSchemaRequest, opts ...grpc.CallOption) (*PutDomainSchemaResponse, error)
+	DeleteDomainSchema(ctx context.Context, in *DeleteDomainSchemaRequest, opts ...grpc.CallOption) (*DeleteDomainSchemaResponse, error)
 	ValidateSchema(ctx context.Context, in *ValidateSchemaRequest, opts ...grpc.CallOption) (*ValidateSchemaResponse, error)
 	ValidateGraph(ctx context.Context, in *ValidateGraphRequest, opts ...grpc.CallOption) (*ValidateGraphResponse, error)
 }
@@ -59,6 +61,16 @@ func (c *schemaServiceClient) PutDomainSchema(ctx context.Context, in *PutDomain
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(PutDomainSchemaResponse)
 	err := c.cc.Invoke(ctx, SchemaService_PutDomainSchema_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *schemaServiceClient) DeleteDomainSchema(ctx context.Context, in *DeleteDomainSchemaRequest, opts ...grpc.CallOption) (*DeleteDomainSchemaResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(DeleteDomainSchemaResponse)
+	err := c.cc.Invoke(ctx, SchemaService_DeleteDomainSchema_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -93,6 +105,7 @@ func (c *schemaServiceClient) ValidateGraph(ctx context.Context, in *ValidateGra
 type SchemaServiceServer interface {
 	GetDomainSchema(context.Context, *GetDomainSchemaRequest) (*GetDomainSchemaResponse, error)
 	PutDomainSchema(context.Context, *PutDomainSchemaRequest) (*PutDomainSchemaResponse, error)
+	DeleteDomainSchema(context.Context, *DeleteDomainSchemaRequest) (*DeleteDomainSchemaResponse, error)
 	ValidateSchema(context.Context, *ValidateSchemaRequest) (*ValidateSchemaResponse, error)
 	ValidateGraph(context.Context, *ValidateGraphRequest) (*ValidateGraphResponse, error)
 	mustEmbedUnimplementedSchemaServiceServer()
@@ -110,6 +123,9 @@ func (UnimplementedSchemaServiceServer) GetDomainSchema(context.Context, *GetDom
 }
 func (UnimplementedSchemaServiceServer) PutDomainSchema(context.Context, *PutDomainSchemaRequest) (*PutDomainSchemaResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method PutDomainSchema not implemented")
+}
+func (UnimplementedSchemaServiceServer) DeleteDomainSchema(context.Context, *DeleteDomainSchemaRequest) (*DeleteDomainSchemaResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteDomainSchema not implemented")
 }
 func (UnimplementedSchemaServiceServer) ValidateSchema(context.Context, *ValidateSchemaRequest) (*ValidateSchemaResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ValidateSchema not implemented")
@@ -174,6 +190,24 @@ func _SchemaService_PutDomainSchema_Handler(srv interface{}, ctx context.Context
 	return interceptor(ctx, in, info, handler)
 }
 
+func _SchemaService_DeleteDomainSchema_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteDomainSchemaRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SchemaServiceServer).DeleteDomainSchema(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: SchemaService_DeleteDomainSchema_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SchemaServiceServer).DeleteDomainSchema(ctx, req.(*DeleteDomainSchemaRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _SchemaService_ValidateSchema_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ValidateSchemaRequest)
 	if err := dec(in); err != nil {
@@ -224,6 +258,10 @@ var SchemaService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "PutDomainSchema",
 			Handler:    _SchemaService_PutDomainSchema_Handler,
+		},
+		{
+			MethodName: "DeleteDomainSchema",
+			Handler:    _SchemaService_DeleteDomainSchema_Handler,
 		},
 		{
 			MethodName: "ValidateSchema",
