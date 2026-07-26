@@ -575,9 +575,8 @@ func (x *ImportDomainMetadata) GetSourceLabel() string {
 }
 
 type DomainExportOptions struct {
-	state            protoimpl.MessageState `protogen:"open.v1"`
-	IncludeTemplates bool                   `protobuf:"varint,1,opt,name=include_templates,json=includeTemplates,proto3" json:"include_templates,omitempty"`
-	IncludeBlobs     bool                   `protobuf:"varint,2,opt,name=include_blobs,json=includeBlobs,proto3" json:"include_blobs,omitempty"`
+	state        protoimpl.MessageState `protogen:"open.v1"`
+	IncludeBlobs bool                   `protobuf:"varint,2,opt,name=include_blobs,json=includeBlobs,proto3" json:"include_blobs,omitempty"`
 	// Semantic index configuration/content is not exported by the Client API in
 	// v1. This field is reserved as an explicit, currently unsupported request
 	// flag so clients can receive a clear error if they ask for it.
@@ -616,13 +615,6 @@ func (*DomainExportOptions) Descriptor() ([]byte, []int) {
 	return file_mycel_client_v1_import_export_proto_rawDescGZIP(), []int{5}
 }
 
-func (x *DomainExportOptions) GetIncludeTemplates() bool {
-	if x != nil {
-		return x.IncludeTemplates
-	}
-	return false
-}
-
 func (x *DomainExportOptions) GetIncludeBlobs() bool {
 	if x != nil {
 		return x.IncludeBlobs
@@ -638,9 +630,8 @@ func (x *DomainExportOptions) GetIncludeSemanticIndexes() bool {
 }
 
 type DomainImportOptions struct {
-	state            protoimpl.MessageState `protogen:"open.v1"`
-	IncludeTemplates bool                   `protobuf:"varint,1,opt,name=include_templates,json=includeTemplates,proto3" json:"include_templates,omitempty"`
-	IncludeBlobs     bool                   `protobuf:"varint,2,opt,name=include_blobs,json=includeBlobs,proto3" json:"include_blobs,omitempty"`
+	state        protoimpl.MessageState `protogen:"open.v1"`
+	IncludeBlobs bool                   `protobuf:"varint,2,opt,name=include_blobs,json=includeBlobs,proto3" json:"include_blobs,omitempty"`
 	// Preserve client-supplied ids where valid. If false, the daemon may allocate
 	// new ids and return counts only.
 	PreserveIds bool `protobuf:"varint,3,opt,name=preserve_ids,json=preserveIds,proto3" json:"preserve_ids,omitempty"`
@@ -679,13 +670,6 @@ func (x *DomainImportOptions) ProtoReflect() protoreflect.Message {
 // Deprecated: Use DomainImportOptions.ProtoReflect.Descriptor instead.
 func (*DomainImportOptions) Descriptor() ([]byte, []int) {
 	return file_mycel_client_v1_import_export_proto_rawDescGZIP(), []int{6}
-}
-
-func (x *DomainImportOptions) GetIncludeTemplates() bool {
-	if x != nil {
-		return x.IncludeTemplates
-	}
-	return false
 }
 
 func (x *DomainImportOptions) GetIncludeBlobs() bool {
@@ -794,17 +778,16 @@ func (x *DomainExportManifest) GetOptions() *DomainExportOptions {
 }
 
 type ImportSummary struct {
-	state             protoimpl.MessageState `protogen:"open.v1"`
-	TemplatesImported int64                  `protobuf:"varint,1,opt,name=templates_imported,json=templatesImported,proto3" json:"templates_imported,omitempty"`
-	NodesImported     int64                  `protobuf:"varint,2,opt,name=nodes_imported,json=nodesImported,proto3" json:"nodes_imported,omitempty"`
-	EdgesImported     int64                  `protobuf:"varint,3,opt,name=edges_imported,json=edgesImported,proto3" json:"edges_imported,omitempty"`
-	BlobsImported     int64                  `protobuf:"varint,4,opt,name=blobs_imported,json=blobsImported,proto3" json:"blobs_imported,omitempty"`
-	NodesUpdated      int64                  `protobuf:"varint,5,opt,name=nodes_updated,json=nodesUpdated,proto3" json:"nodes_updated,omitempty"`
-	EdgesUpdated      int64                  `protobuf:"varint,6,opt,name=edges_updated,json=edgesUpdated,proto3" json:"edges_updated,omitempty"`
-	DryRun            bool                   `protobuf:"varint,7,opt,name=dry_run,json=dryRun,proto3" json:"dry_run,omitempty"`
-	Warnings          []string               `protobuf:"bytes,8,rep,name=warnings,proto3" json:"warnings,omitempty"`
-	unknownFields     protoimpl.UnknownFields
-	sizeCache         protoimpl.SizeCache
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	NodesImported int64                  `protobuf:"varint,2,opt,name=nodes_imported,json=nodesImported,proto3" json:"nodes_imported,omitempty"`
+	EdgesImported int64                  `protobuf:"varint,3,opt,name=edges_imported,json=edgesImported,proto3" json:"edges_imported,omitempty"`
+	BlobsImported int64                  `protobuf:"varint,4,opt,name=blobs_imported,json=blobsImported,proto3" json:"blobs_imported,omitempty"`
+	NodesUpdated  int64                  `protobuf:"varint,5,opt,name=nodes_updated,json=nodesUpdated,proto3" json:"nodes_updated,omitempty"`
+	EdgesUpdated  int64                  `protobuf:"varint,6,opt,name=edges_updated,json=edgesUpdated,proto3" json:"edges_updated,omitempty"`
+	DryRun        bool                   `protobuf:"varint,7,opt,name=dry_run,json=dryRun,proto3" json:"dry_run,omitempty"`
+	Warnings      []string               `protobuf:"bytes,8,rep,name=warnings,proto3" json:"warnings,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
 func (x *ImportSummary) Reset() {
@@ -835,13 +818,6 @@ func (x *ImportSummary) ProtoReflect() protoreflect.Message {
 // Deprecated: Use ImportSummary.ProtoReflect.Descriptor instead.
 func (*ImportSummary) Descriptor() ([]byte, []int) {
 	return file_mycel_client_v1_import_export_proto_rawDescGZIP(), []int{8}
-}
-
-func (x *ImportSummary) GetTemplatesImported() int64 {
-	if x != nil {
-		return x.TemplatesImported
-	}
-	return 0
 }
 
 func (x *ImportSummary) GetNodesImported() int64 {
@@ -905,7 +881,6 @@ type ImportExportRecord struct {
 	Identity *ImportIdentity `protobuf:"bytes,1,opt,name=identity,proto3" json:"identity,omitempty"`
 	// Types that are valid to be assigned to Record:
 	//
-	//	*ImportExportRecord_Template
 	//	*ImportExportRecord_Node
 	//	*ImportExportRecord_Edge
 	//	*ImportExportRecord_BlobMetadata
@@ -959,15 +934,6 @@ func (x *ImportExportRecord) GetRecord() isImportExportRecord_Record {
 	return nil
 }
 
-func (x *ImportExportRecord) GetTemplate() *TemplateDefinition {
-	if x != nil {
-		if x, ok := x.Record.(*ImportExportRecord_Template); ok {
-			return x.Template
-		}
-	}
-	return nil
-}
-
 func (x *ImportExportRecord) GetNode() *Node {
 	if x != nil {
 		if x, ok := x.Record.(*ImportExportRecord_Node); ok {
@@ -1008,10 +974,6 @@ type isImportExportRecord_Record interface {
 	isImportExportRecord_Record()
 }
 
-type ImportExportRecord_Template struct {
-	Template *TemplateDefinition `protobuf:"bytes,2,opt,name=template,proto3,oneof"`
-}
-
 type ImportExportRecord_Node struct {
 	Node *Node `protobuf:"bytes,3,opt,name=node,proto3,oneof"`
 }
@@ -1027,8 +989,6 @@ type ImportExportRecord_BlobMetadata struct {
 type ImportExportRecord_BlobChunk struct {
 	BlobChunk *BlobImportChunk `protobuf:"bytes,6,opt,name=blob_chunk,json=blobChunk,proto3,oneof"`
 }
-
-func (*ImportExportRecord_Template) isImportExportRecord_Record() {}
 
 func (*ImportExportRecord_Node) isImportExportRecord_Record() {}
 
@@ -1223,7 +1183,7 @@ var File_mycel_client_v1_import_export_proto protoreflect.FileDescriptor
 
 const file_mycel_client_v1_import_export_proto_rawDesc = "" +
 	"\n" +
-	"#mycel/client/v1/import_export.proto\x12\x0fmycel.client.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1bmycel/client/v1/graph.proto\x1a\x1emycel/client/v1/template.proto\"\xb9\x01\n" +
+	"#mycel/client/v1/import_export.proto\x12\x0fmycel.client.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1bmycel/client/v1/graph.proto\"\xb9\x01\n" +
 	"\x13ExportDomainRequest\x12%\n" +
 	"\x0etransaction_id\x18\x01 \x01(\tR\rtransactionId\x12;\n" +
 	"\x06format\x18\x02 \x01(\x0e2#.mycel.client.v1.DomainExportFormatR\x06format\x12>\n" +
@@ -1246,13 +1206,11 @@ const file_mycel_client_v1_import_export_proto_rawDesc = "" +
 	"\x04mode\x18\x03 \x01(\x0e2!.mycel.client.v1.DomainImportModeR\x04mode\x12>\n" +
 	"\aoptions\x18\x04 \x01(\v2$.mycel.client.v1.DomainImportOptionsR\aoptions\x12#\n" +
 	"\rsource_system\x18\x05 \x01(\tR\fsourceSystem\x12!\n" +
-	"\fsource_label\x18\x06 \x01(\tR\vsourceLabel\"\xa1\x01\n" +
-	"\x13DomainExportOptions\x12+\n" +
-	"\x11include_templates\x18\x01 \x01(\bR\x10includeTemplates\x12#\n" +
+	"\fsource_label\x18\x06 \x01(\tR\vsourceLabel\"t\n" +
+	"\x13DomainExportOptions\x12#\n" +
 	"\rinclude_blobs\x18\x02 \x01(\bR\fincludeBlobs\x128\n" +
-	"\x18include_semantic_indexes\x18\x03 \x01(\bR\x16includeSemanticIndexes\"\xa3\x01\n" +
-	"\x13DomainImportOptions\x12+\n" +
-	"\x11include_templates\x18\x01 \x01(\bR\x10includeTemplates\x12#\n" +
+	"\x18include_semantic_indexes\x18\x03 \x01(\bR\x16includeSemanticIndexes\"v\n" +
+	"\x13DomainImportOptions\x12#\n" +
 	"\rinclude_blobs\x18\x02 \x01(\bR\fincludeBlobs\x12!\n" +
 	"\fpreserve_ids\x18\x03 \x01(\bR\vpreserveIds\x12\x17\n" +
 	"\adry_run\x18\x04 \x01(\bR\x06dryRun\"\xad\x02\n" +
@@ -1263,19 +1221,17 @@ const file_mycel_client_v1_import_export_proto_rawDesc = "" +
 	"\rbase_revision\x18\x04 \x01(\x03R\fbaseRevision\x12;\n" +
 	"\vexport_time\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
 	"exportTime\x12>\n" +
-	"\aoptions\x18\x06 \x01(\v2$.mycel.client.v1.DomainExportOptionsR\aoptions\"\xb2\x02\n" +
-	"\rImportSummary\x12-\n" +
-	"\x12templates_imported\x18\x01 \x01(\x03R\x11templatesImported\x12%\n" +
+	"\aoptions\x18\x06 \x01(\v2$.mycel.client.v1.DomainExportOptionsR\aoptions\"\x83\x02\n" +
+	"\rImportSummary\x12%\n" +
 	"\x0enodes_imported\x18\x02 \x01(\x03R\rnodesImported\x12%\n" +
 	"\x0eedges_imported\x18\x03 \x01(\x03R\redgesImported\x12%\n" +
 	"\x0eblobs_imported\x18\x04 \x01(\x03R\rblobsImported\x12#\n" +
 	"\rnodes_updated\x18\x05 \x01(\x03R\fnodesUpdated\x12#\n" +
 	"\redges_updated\x18\x06 \x01(\x03R\fedgesUpdated\x12\x17\n" +
 	"\adry_run\x18\a \x01(\bR\x06dryRun\x12\x1a\n" +
-	"\bwarnings\x18\b \x03(\tR\bwarnings\"\x87\x03\n" +
+	"\bwarnings\x18\b \x03(\tR\bwarnings\"\xc4\x02\n" +
 	"\x12ImportExportRecord\x12;\n" +
-	"\bidentity\x18\x01 \x01(\v2\x1f.mycel.client.v1.ImportIdentityR\bidentity\x12A\n" +
-	"\btemplate\x18\x02 \x01(\v2#.mycel.client.v1.TemplateDefinitionH\x00R\btemplate\x12+\n" +
+	"\bidentity\x18\x01 \x01(\v2\x1f.mycel.client.v1.ImportIdentityR\bidentity\x12+\n" +
 	"\x04node\x18\x03 \x01(\v2\x15.mycel.client.v1.NodeH\x00R\x04node\x12+\n" +
 	"\x04edge\x18\x04 \x01(\v2\x15.mycel.client.v1.EdgeH\x00R\x04edge\x12J\n" +
 	"\rblob_metadata\x18\x05 \x01(\v2#.mycel.client.v1.BlobImportMetadataH\x00R\fblobMetadata\x12A\n" +
@@ -1347,9 +1303,8 @@ var file_mycel_client_v1_import_export_proto_goTypes = []any{
 	(*BlobImportMetadata)(nil),    // 14: mycel.client.v1.BlobImportMetadata
 	(*BlobImportChunk)(nil),       // 15: mycel.client.v1.BlobImportChunk
 	(*timestamppb.Timestamp)(nil), // 16: google.protobuf.Timestamp
-	(*TemplateDefinition)(nil),    // 17: mycel.client.v1.TemplateDefinition
-	(*Node)(nil),                  // 18: mycel.client.v1.Node
-	(*Edge)(nil),                  // 19: mycel.client.v1.Edge
+	(*Node)(nil),                  // 17: mycel.client.v1.Node
+	(*Edge)(nil),                  // 18: mycel.client.v1.Edge
 }
 var file_mycel_client_v1_import_export_proto_depIdxs = []int32{
 	0,  // 0: mycel.client.v1.ExportDomainRequest.format:type_name -> mycel.client.v1.DomainExportFormat
@@ -1366,20 +1321,19 @@ var file_mycel_client_v1_import_export_proto_depIdxs = []int32{
 	16, // 11: mycel.client.v1.DomainExportManifest.export_time:type_name -> google.protobuf.Timestamp
 	8,  // 12: mycel.client.v1.DomainExportManifest.options:type_name -> mycel.client.v1.DomainExportOptions
 	13, // 13: mycel.client.v1.ImportExportRecord.identity:type_name -> mycel.client.v1.ImportIdentity
-	17, // 14: mycel.client.v1.ImportExportRecord.template:type_name -> mycel.client.v1.TemplateDefinition
-	18, // 15: mycel.client.v1.ImportExportRecord.node:type_name -> mycel.client.v1.Node
-	19, // 16: mycel.client.v1.ImportExportRecord.edge:type_name -> mycel.client.v1.Edge
-	14, // 17: mycel.client.v1.ImportExportRecord.blob_metadata:type_name -> mycel.client.v1.BlobImportMetadata
-	15, // 18: mycel.client.v1.ImportExportRecord.blob_chunk:type_name -> mycel.client.v1.BlobImportChunk
-	3,  // 19: mycel.client.v1.ImportExportService.ExportDomain:input_type -> mycel.client.v1.ExportDomainRequest
-	5,  // 20: mycel.client.v1.ImportExportService.ImportDomain:input_type -> mycel.client.v1.ImportDomainRequest
-	4,  // 21: mycel.client.v1.ImportExportService.ExportDomain:output_type -> mycel.client.v1.ExportDomainResponse
-	6,  // 22: mycel.client.v1.ImportExportService.ImportDomain:output_type -> mycel.client.v1.ImportDomainResponse
-	21, // [21:23] is the sub-list for method output_type
-	19, // [19:21] is the sub-list for method input_type
-	19, // [19:19] is the sub-list for extension type_name
-	19, // [19:19] is the sub-list for extension extendee
-	0,  // [0:19] is the sub-list for field type_name
+	17, // 14: mycel.client.v1.ImportExportRecord.node:type_name -> mycel.client.v1.Node
+	18, // 15: mycel.client.v1.ImportExportRecord.edge:type_name -> mycel.client.v1.Edge
+	14, // 16: mycel.client.v1.ImportExportRecord.blob_metadata:type_name -> mycel.client.v1.BlobImportMetadata
+	15, // 17: mycel.client.v1.ImportExportRecord.blob_chunk:type_name -> mycel.client.v1.BlobImportChunk
+	3,  // 18: mycel.client.v1.ImportExportService.ExportDomain:input_type -> mycel.client.v1.ExportDomainRequest
+	5,  // 19: mycel.client.v1.ImportExportService.ImportDomain:input_type -> mycel.client.v1.ImportDomainRequest
+	4,  // 20: mycel.client.v1.ImportExportService.ExportDomain:output_type -> mycel.client.v1.ExportDomainResponse
+	6,  // 21: mycel.client.v1.ImportExportService.ImportDomain:output_type -> mycel.client.v1.ImportDomainResponse
+	20, // [20:22] is the sub-list for method output_type
+	18, // [18:20] is the sub-list for method input_type
+	18, // [18:18] is the sub-list for extension type_name
+	18, // [18:18] is the sub-list for extension extendee
+	0,  // [0:18] is the sub-list for field type_name
 }
 
 func init() { file_mycel_client_v1_import_export_proto_init() }
@@ -1388,7 +1342,6 @@ func file_mycel_client_v1_import_export_proto_init() {
 		return
 	}
 	file_mycel_client_v1_graph_proto_init()
-	file_mycel_client_v1_template_proto_init()
 	file_mycel_client_v1_import_export_proto_msgTypes[1].OneofWrappers = []any{
 		(*ExportDomainResponse_Manifest)(nil),
 		(*ExportDomainResponse_Record)(nil),
@@ -1400,7 +1353,6 @@ func file_mycel_client_v1_import_export_proto_init() {
 		(*ImportDomainRequest_Chunk)(nil),
 	}
 	file_mycel_client_v1_import_export_proto_msgTypes[9].OneofWrappers = []any{
-		(*ImportExportRecord_Template)(nil),
 		(*ImportExportRecord_Node)(nil),
 		(*ImportExportRecord_Edge)(nil),
 		(*ImportExportRecord_BlobMetadata)(nil),

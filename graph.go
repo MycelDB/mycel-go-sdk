@@ -5,6 +5,7 @@ import (
 
 	clientv1 "github.com/myceldb/mycel-go-sdk/gen/go/mycel/client/v1"
 	"google.golang.org/protobuf/types/known/fieldmaskpb"
+	"google.golang.org/protobuf/types/known/structpb"
 )
 
 func (c *Client) CreateNode(ctx context.Context, txID string, node *clientv1.NodeCreate) (*clientv1.Node, error) {
@@ -26,7 +27,11 @@ func (c *Client) ApplyGraphOperations(ctx context.Context, txID string, ops []*c
 func (c *Client) UpdateNodeContent(ctx context.Context, txID, nodeID, content string) (*clientv1.Node, error) {
 	callCtx, cancel := c.AuthCallContext(ctx)
 	defer cancel()
-	res, err := c.Graph.UpdateNode(callCtx, &clientv1.UpdateNodeRequest{TransactionId: txID, Node: &clientv1.Node{NodeId: nodeID, Content: content}, UpdateMask: &fieldmaskpb.FieldMask{Paths: []string{"content"}}})
+	payload, err := structpb.NewStruct(map[string]any{"text": content})
+	if err != nil {
+		return nil, err
+	}
+	res, err := c.Graph.UpdateNode(callCtx, &clientv1.UpdateNodeRequest{TransactionId: txID, Node: &clientv1.Node{NodeId: nodeID, Payload: payload}, UpdateMask: &fieldmaskpb.FieldMask{Paths: []string{"payload"}}})
 	if err != nil {
 		return nil, err
 	}
@@ -88,4 +93,107 @@ func (c *Client) ExecuteQuery(ctx context.Context, txID string, query *clientv1.
 		defer cancel()
 		return c.Query.ExecuteQuery(callCtx, &clientv1.ExecuteQueryRequest{TransactionId: txID, Query: query, PageSize: pageSize})
 	})
+}
+
+func (c *Client) ExecuteGQL(ctx context.Context, txID string, query string, params map[string]*structpb.Value, pageSize int32) (*clientv1.QueryResult, error) {
+	return DoReadValue(ctx, c, "execute gql", func() (*clientv1.QueryResult, error) {
+		callCtx, cancel := c.AuthCallContext(ctx)
+		defer cancel()
+		res, err := c.Query.ExecuteGQL(callCtx, &clientv1.ExecuteGQLRequest{TransactionId: txID, Query: query, Params: params, PageSize: pageSize})
+		if err != nil {
+			return nil, err
+		}
+		return res.GetResult(), nil
+	})
+}
+
+func (c *Client) ExecuteGQLScript(ctx context.Context, txID string, script string, params map[string]*structpb.Value, stopOnError bool, pageSize int32) (*clientv1.ExecuteGQLScriptResponse, error) {
+	return DoReadValue(ctx, c, "execute gql script", func() (*clientv1.ExecuteGQLScriptResponse, error) {
+		callCtx, cancel := c.AuthCallContext(ctx)
+		defer cancel()
+		return c.Query.ExecuteGQLScript(callCtx, &clientv1.ExecuteGQLScriptRequest{TransactionId: txID, Script: script, Params: params, StopOnError: stopOnError, PageSize: pageSize})
+	})
+}
+
+func (c *Client) QueryGQLScriptReadOnly(ctx context.Context, spaceID, domainID, script string, pageSize int32) (*clientv1.ExecuteGQLScriptResponse, error) {
+	sessionID, err := c.OpenSession(ctx, spaceID, domainID)
+	if err != nil {
+		return nil, err
+	}
+	defer func() { _ = c.CloseSession(ctx, sessionID) }()
+	txID, err := c.BeginReadOnlyTransaction(ctx, sessionID)
+	if err != nil {
+		return nil, err
+	}
+	closed := false
+	defer func() {
+		if !closed {
+			_ = c.CloseTransaction(ctx, txID)
+		}
+	}()
+	res, err := c.ExecuteGQLScript(ctx, txID, script, nil, true, pageSize)
+	if err != nil {
+		return nil, err
+	}
+	if err := c.CloseTransaction(ctx, txID); err != nil {
+		return nil, err
+	}
+	closed = true
+	return res, nil
+}
+
+func (c *Client) QueryGQLScriptReadWrite(ctx context.Context, spaceID, domainID, script string, pageSize int32) (*clientv1.ExecuteGQLScriptResponse, error) {
+	sessionID, err := c.OpenSession(ctx, spaceID, domainID)
+	if err != nil {
+		return nil, err
+	}
+	defer func() { _ = c.CloseSession(ctx, sessionID) }()
+	txID, err := c.BeginReadWriteTransaction(ctx, sessionID)
+	if err != nil {
+		return nil, err
+	}
+	res, err := c.ExecuteGQLScript(ctx, txID, script, nil, true, pageSize)
+	if err != nil {
+		_ = c.CloseTransaction(ctx, txID)
+		return nil, err
+	}
+	for _, statement := range res.GetStatements() {
+		if !statement.GetSuccess() {
+			_ = c.CloseTransaction(ctx, txID)
+			return res, nil
+		}
+	}
+	if err := c.CommitTransaction(ctx, txID); err != nil {
+		return nil, err
+	}
+	return res, nil
+}
+
+func (c *Client) QueryGQLReadOnly(ctx context.Context, spaceID, domainID, query string, pageSize int32) (*clientv1.QueryResult, error) {
+	sessionID, err := c.OpenSession(ctx, spaceID, domainID)
+	if err != nil {
+		return nil, err
+	}
+	defer func() { _ = c.CloseSession(ctx, sessionID) }()
+
+	txID, err := c.BeginReadOnlyTransaction(ctx, sessionID)
+	if err != nil {
+		return nil, err
+	}
+	closed := false
+	defer func() {
+		if !closed {
+			_ = c.CloseTransaction(ctx, txID)
+		}
+	}()
+
+	result, err := c.ExecuteGQL(ctx, txID, query, nil, pageSize)
+	if err != nil {
+		return nil, err
+	}
+	if err := c.CloseTransaction(ctx, txID); err != nil {
+		return nil, err
+	}
+	closed = true
+	return result, nil
 }

@@ -467,7 +467,6 @@ func (x *DeleteSemanticIndexResponse) GetPolicyDecisionsDeleted() int32 {
 type SemanticSourcePolicy struct {
 	state             protoimpl.MessageState `protogen:"open.v1"`
 	Extraction        string                 `protobuf:"bytes,1,opt,name=extraction,proto3" json:"extraction,omitempty"`
-	TemplateKeys      []string               `protobuf:"bytes,2,rep,name=template_keys,json=templateKeys,proto3" json:"template_keys,omitempty"`
 	IncludeProps      []string               `protobuf:"bytes,3,rep,name=include_props,json=includeProps,proto3" json:"include_props,omitempty"`
 	MaxDepth          *int32                 `protobuf:"varint,4,opt,name=max_depth,json=maxDepth,proto3,oneof" json:"max_depth,omitempty"`
 	MinimumTextLength int32                  `protobuf:"varint,5,opt,name=minimum_text_length,json=minimumTextLength,proto3" json:"minimum_text_length,omitempty"`
@@ -510,13 +509,6 @@ func (x *SemanticSourcePolicy) GetExtraction() string {
 		return x.Extraction
 	}
 	return ""
-}
-
-func (x *SemanticSourcePolicy) GetTemplateKeys() []string {
-	if x != nil {
-		return x.TemplateKeys
-	}
-	return nil
 }
 
 func (x *SemanticSourcePolicy) GetIncludeProps() []string {
@@ -580,12 +572,11 @@ const file_mycel_admin_v1_semantic_proto_rawDesc = "" +
 	"\x19credential_grants_deleted\x18\x02 \x01(\x05R\x17credentialGrantsDeleted\x12<\n" +
 	"\x1ainference_policies_deleted\x18\x03 \x01(\x05R\x18inferencePoliciesDeleted\x12%\n" +
 	"\x0evectors_purged\x18\x04 \x01(\bR\rvectorsPurged\x128\n" +
-	"\x18policy_decisions_deleted\x18\x05 \x01(\x05R\x16policyDecisionsDeleted\"\xe0\x01\n" +
+	"\x18policy_decisions_deleted\x18\x05 \x01(\x05R\x16policyDecisionsDeleted\"\xbb\x01\n" +
 	"\x14SemanticSourcePolicy\x12\x1e\n" +
 	"\n" +
 	"extraction\x18\x01 \x01(\tR\n" +
 	"extraction\x12#\n" +
-	"\rtemplate_keys\x18\x02 \x03(\tR\ftemplateKeys\x12#\n" +
 	"\rinclude_props\x18\x03 \x03(\tR\fincludeProps\x12 \n" +
 	"\tmax_depth\x18\x04 \x01(\x05H\x00R\bmaxDepth\x88\x01\x01\x12.\n" +
 	"\x13minimum_text_length\x18\x05 \x01(\x05R\x11minimumTextLengthB\f\n" +

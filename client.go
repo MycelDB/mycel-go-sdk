@@ -15,12 +15,13 @@ type Client struct {
 	Auth         clientv1.AuthServiceClient
 	Space        clientv1.SpaceServiceClient
 	Domain       clientv1.DomainServiceClient
-	Template     clientv1.TemplateServiceClient
 	Session      clientv1.SessionServiceClient
 	Transaction  clientv1.TransactionServiceClient
 	Graph        clientv1.GraphServiceClient
 	Blob         clientv1.BlobServiceClient
 	Query        clientv1.QueryServiceClient
+	Schema       clientv1.SchemaServiceClient
+	Automation   clientv1.AutomationServiceClient
 	ImportExport clientv1.ImportExportServiceClient
 	Metadata     clientv1.MetadataCatalogServiceClient
 	Semantic     clientv1.SemanticServiceClient
@@ -43,6 +44,8 @@ type AdminClient struct {
 	SemanticMigration   adminv1.AdminSemanticMigrationServiceClient
 	Inference           adminv1.AdminInferenceServiceClient
 	Backup              adminv1.AdminBackupServiceClient
+	Schema              adminv1.AdminSchemaServiceClient
+	Automation          adminv1.AdminAutomationServiceClient
 
 	tokens *tokenSource
 	cfg    Config
@@ -59,12 +62,13 @@ func Dial(ctx context.Context, cfg Config, opts ...grpc.DialOption) (*Client, er
 	c.Auth = clientv1.NewAuthServiceClient(conn)
 	c.Space = clientv1.NewSpaceServiceClient(conn)
 	c.Domain = clientv1.NewDomainServiceClient(conn)
-	c.Template = clientv1.NewTemplateServiceClient(conn)
 	c.Session = clientv1.NewSessionServiceClient(conn)
 	c.Transaction = clientv1.NewTransactionServiceClient(conn)
 	c.Graph = clientv1.NewGraphServiceClient(conn)
 	c.Blob = clientv1.NewBlobServiceClient(conn)
 	c.Query = clientv1.NewQueryServiceClient(conn)
+	c.Schema = clientv1.NewSchemaServiceClient(conn)
+	c.Automation = clientv1.NewAutomationServiceClient(conn)
 	c.ImportExport = clientv1.NewImportExportServiceClient(conn)
 	c.Metadata = clientv1.NewMetadataCatalogServiceClient(conn)
 	c.Semantic = clientv1.NewSemanticServiceClient(conn)
@@ -96,6 +100,8 @@ func DialAdmin(ctx context.Context, cfg Config, opts ...grpc.DialOption) (*Admin
 	c.SemanticMigration = adminv1.NewAdminSemanticMigrationServiceClient(conn)
 	c.Inference = adminv1.NewAdminInferenceServiceClient(conn)
 	c.Backup = adminv1.NewAdminBackupServiceClient(conn)
+	c.Schema = adminv1.NewAdminSchemaServiceClient(conn)
+	c.Automation = adminv1.NewAdminAutomationServiceClient(conn)
 	if cfg.Username != "" || cfg.Password != "" {
 		if _, err := c.LoginOperator(ctx, cfg.Username, cfg.Password); err != nil {
 			_ = conn.Close()

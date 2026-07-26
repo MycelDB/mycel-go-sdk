@@ -246,6 +246,8 @@ type ExecuteQueryResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Rows          []*QueryRow            `protobuf:"bytes,1,rep,name=rows,proto3" json:"rows,omitempty"`
 	NextPageToken string                 `protobuf:"bytes,2,opt,name=next_page_token,json=nextPageToken,proto3" json:"next_page_token,omitempty"`
+	// Normalized result envelope shared with textual GQL responses.
+	Result        *QueryResult `protobuf:"bytes,3,opt,name=result,proto3" json:"result,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -294,6 +296,541 @@ func (x *ExecuteQueryResponse) GetNextPageToken() string {
 	return ""
 }
 
+func (x *ExecuteQueryResponse) GetResult() *QueryResult {
+	if x != nil {
+		return x.Result
+	}
+	return nil
+}
+
+type ExecuteGQLRequest struct {
+	state         protoimpl.MessageState     `protogen:"open.v1"`
+	TransactionId string                     `protobuf:"bytes,1,opt,name=transaction_id,json=transactionId,proto3" json:"transaction_id,omitempty"`
+	Query         string                     `protobuf:"bytes,2,opt,name=query,proto3" json:"query,omitempty"`
+	Params        map[string]*structpb.Value `protobuf:"bytes,3,rep,name=params,proto3" json:"params,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
+	PageSize      int32                      `protobuf:"varint,4,opt,name=page_size,json=pageSize,proto3" json:"page_size,omitempty"`
+	PageToken     string                     `protobuf:"bytes,5,opt,name=page_token,json=pageToken,proto3" json:"page_token,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ExecuteGQLRequest) Reset() {
+	*x = ExecuteGQLRequest{}
+	mi := &file_mycel_client_v1_query_proto_msgTypes[2]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ExecuteGQLRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ExecuteGQLRequest) ProtoMessage() {}
+
+func (x *ExecuteGQLRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_client_v1_query_proto_msgTypes[2]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ExecuteGQLRequest.ProtoReflect.Descriptor instead.
+func (*ExecuteGQLRequest) Descriptor() ([]byte, []int) {
+	return file_mycel_client_v1_query_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *ExecuteGQLRequest) GetTransactionId() string {
+	if x != nil {
+		return x.TransactionId
+	}
+	return ""
+}
+
+func (x *ExecuteGQLRequest) GetQuery() string {
+	if x != nil {
+		return x.Query
+	}
+	return ""
+}
+
+func (x *ExecuteGQLRequest) GetParams() map[string]*structpb.Value {
+	if x != nil {
+		return x.Params
+	}
+	return nil
+}
+
+func (x *ExecuteGQLRequest) GetPageSize() int32 {
+	if x != nil {
+		return x.PageSize
+	}
+	return 0
+}
+
+func (x *ExecuteGQLRequest) GetPageToken() string {
+	if x != nil {
+		return x.PageToken
+	}
+	return ""
+}
+
+type ExecuteGQLResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Result        *QueryResult           `protobuf:"bytes,1,opt,name=result,proto3" json:"result,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ExecuteGQLResponse) Reset() {
+	*x = ExecuteGQLResponse{}
+	mi := &file_mycel_client_v1_query_proto_msgTypes[3]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ExecuteGQLResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ExecuteGQLResponse) ProtoMessage() {}
+
+func (x *ExecuteGQLResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_client_v1_query_proto_msgTypes[3]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ExecuteGQLResponse.ProtoReflect.Descriptor instead.
+func (*ExecuteGQLResponse) Descriptor() ([]byte, []int) {
+	return file_mycel_client_v1_query_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *ExecuteGQLResponse) GetResult() *QueryResult {
+	if x != nil {
+		return x.Result
+	}
+	return nil
+}
+
+type ExecuteGQLScriptRequest struct {
+	state         protoimpl.MessageState     `protogen:"open.v1"`
+	TransactionId string                     `protobuf:"bytes,1,opt,name=transaction_id,json=transactionId,proto3" json:"transaction_id,omitempty"`
+	Script        string                     `protobuf:"bytes,2,opt,name=script,proto3" json:"script,omitempty"`
+	Params        map[string]*structpb.Value `protobuf:"bytes,3,rep,name=params,proto3" json:"params,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
+	StopOnError   bool                       `protobuf:"varint,4,opt,name=stop_on_error,json=stopOnError,proto3" json:"stop_on_error,omitempty"`
+	PageSize      int32                      `protobuf:"varint,5,opt,name=page_size,json=pageSize,proto3" json:"page_size,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ExecuteGQLScriptRequest) Reset() {
+	*x = ExecuteGQLScriptRequest{}
+	mi := &file_mycel_client_v1_query_proto_msgTypes[4]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ExecuteGQLScriptRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ExecuteGQLScriptRequest) ProtoMessage() {}
+
+func (x *ExecuteGQLScriptRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_client_v1_query_proto_msgTypes[4]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ExecuteGQLScriptRequest.ProtoReflect.Descriptor instead.
+func (*ExecuteGQLScriptRequest) Descriptor() ([]byte, []int) {
+	return file_mycel_client_v1_query_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *ExecuteGQLScriptRequest) GetTransactionId() string {
+	if x != nil {
+		return x.TransactionId
+	}
+	return ""
+}
+
+func (x *ExecuteGQLScriptRequest) GetScript() string {
+	if x != nil {
+		return x.Script
+	}
+	return ""
+}
+
+func (x *ExecuteGQLScriptRequest) GetParams() map[string]*structpb.Value {
+	if x != nil {
+		return x.Params
+	}
+	return nil
+}
+
+func (x *ExecuteGQLScriptRequest) GetStopOnError() bool {
+	if x != nil {
+		return x.StopOnError
+	}
+	return false
+}
+
+func (x *ExecuteGQLScriptRequest) GetPageSize() int32 {
+	if x != nil {
+		return x.PageSize
+	}
+	return 0
+}
+
+type ExecuteGQLScriptResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Statements    []*GQLStatementResult  `protobuf:"bytes,1,rep,name=statements,proto3" json:"statements,omitempty"`
+	Result        *QueryResult           `protobuf:"bytes,2,opt,name=result,proto3" json:"result,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ExecuteGQLScriptResponse) Reset() {
+	*x = ExecuteGQLScriptResponse{}
+	mi := &file_mycel_client_v1_query_proto_msgTypes[5]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ExecuteGQLScriptResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ExecuteGQLScriptResponse) ProtoMessage() {}
+
+func (x *ExecuteGQLScriptResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_client_v1_query_proto_msgTypes[5]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ExecuteGQLScriptResponse.ProtoReflect.Descriptor instead.
+func (*ExecuteGQLScriptResponse) Descriptor() ([]byte, []int) {
+	return file_mycel_client_v1_query_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *ExecuteGQLScriptResponse) GetStatements() []*GQLStatementResult {
+	if x != nil {
+		return x.Statements
+	}
+	return nil
+}
+
+func (x *ExecuteGQLScriptResponse) GetResult() *QueryResult {
+	if x != nil {
+		return x.Result
+	}
+	return nil
+}
+
+type GQLStatementResult struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Index         int32                  `protobuf:"varint,1,opt,name=index,proto3" json:"index,omitempty"`
+	Statement     string                 `protobuf:"bytes,2,opt,name=statement,proto3" json:"statement,omitempty"`
+	Success       bool                   `protobuf:"varint,3,opt,name=success,proto3" json:"success,omitempty"`
+	Result        *QueryResult           `protobuf:"bytes,4,opt,name=result,proto3" json:"result,omitempty"`
+	Error         string                 `protobuf:"bytes,5,opt,name=error,proto3" json:"error,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GQLStatementResult) Reset() {
+	*x = GQLStatementResult{}
+	mi := &file_mycel_client_v1_query_proto_msgTypes[6]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GQLStatementResult) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GQLStatementResult) ProtoMessage() {}
+
+func (x *GQLStatementResult) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_client_v1_query_proto_msgTypes[6]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GQLStatementResult.ProtoReflect.Descriptor instead.
+func (*GQLStatementResult) Descriptor() ([]byte, []int) {
+	return file_mycel_client_v1_query_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *GQLStatementResult) GetIndex() int32 {
+	if x != nil {
+		return x.Index
+	}
+	return 0
+}
+
+func (x *GQLStatementResult) GetStatement() string {
+	if x != nil {
+		return x.Statement
+	}
+	return ""
+}
+
+func (x *GQLStatementResult) GetSuccess() bool {
+	if x != nil {
+		return x.Success
+	}
+	return false
+}
+
+func (x *GQLStatementResult) GetResult() *QueryResult {
+	if x != nil {
+		return x.Result
+	}
+	return nil
+}
+
+func (x *GQLStatementResult) GetError() string {
+	if x != nil {
+		return x.Error
+	}
+	return ""
+}
+
+type QueryResult struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Rows          []*QueryRow            `protobuf:"bytes,1,rep,name=rows,proto3" json:"rows,omitempty"`
+	Graph         *ResultGraph           `protobuf:"bytes,2,opt,name=graph,proto3" json:"graph,omitempty"`
+	Counters      *QueryCounters         `protobuf:"bytes,3,opt,name=counters,proto3" json:"counters,omitempty"`
+	NextPageToken string                 `protobuf:"bytes,4,opt,name=next_page_token,json=nextPageToken,proto3" json:"next_page_token,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *QueryResult) Reset() {
+	*x = QueryResult{}
+	mi := &file_mycel_client_v1_query_proto_msgTypes[7]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *QueryResult) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*QueryResult) ProtoMessage() {}
+
+func (x *QueryResult) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_client_v1_query_proto_msgTypes[7]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use QueryResult.ProtoReflect.Descriptor instead.
+func (*QueryResult) Descriptor() ([]byte, []int) {
+	return file_mycel_client_v1_query_proto_rawDescGZIP(), []int{7}
+}
+
+func (x *QueryResult) GetRows() []*QueryRow {
+	if x != nil {
+		return x.Rows
+	}
+	return nil
+}
+
+func (x *QueryResult) GetGraph() *ResultGraph {
+	if x != nil {
+		return x.Graph
+	}
+	return nil
+}
+
+func (x *QueryResult) GetCounters() *QueryCounters {
+	if x != nil {
+		return x.Counters
+	}
+	return nil
+}
+
+func (x *QueryResult) GetNextPageToken() string {
+	if x != nil {
+		return x.NextPageToken
+	}
+	return ""
+}
+
+type ResultGraph struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Nodes         []*Node                `protobuf:"bytes,1,rep,name=nodes,proto3" json:"nodes,omitempty"`
+	Edges         []*Edge                `protobuf:"bytes,2,rep,name=edges,proto3" json:"edges,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ResultGraph) Reset() {
+	*x = ResultGraph{}
+	mi := &file_mycel_client_v1_query_proto_msgTypes[8]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ResultGraph) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ResultGraph) ProtoMessage() {}
+
+func (x *ResultGraph) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_client_v1_query_proto_msgTypes[8]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ResultGraph.ProtoReflect.Descriptor instead.
+func (*ResultGraph) Descriptor() ([]byte, []int) {
+	return file_mycel_client_v1_query_proto_rawDescGZIP(), []int{8}
+}
+
+func (x *ResultGraph) GetNodes() []*Node {
+	if x != nil {
+		return x.Nodes
+	}
+	return nil
+}
+
+func (x *ResultGraph) GetEdges() []*Edge {
+	if x != nil {
+		return x.Edges
+	}
+	return nil
+}
+
+type QueryCounters struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	RowsReturned  int32                  `protobuf:"varint,1,opt,name=rows_returned,json=rowsReturned,proto3" json:"rows_returned,omitempty"`
+	NodesInserted int32                  `protobuf:"varint,2,opt,name=nodes_inserted,json=nodesInserted,proto3" json:"nodes_inserted,omitempty"`
+	NodesUpdated  int32                  `protobuf:"varint,3,opt,name=nodes_updated,json=nodesUpdated,proto3" json:"nodes_updated,omitempty"`
+	NodesDeleted  int32                  `protobuf:"varint,4,opt,name=nodes_deleted,json=nodesDeleted,proto3" json:"nodes_deleted,omitempty"`
+	EdgesInserted int32                  `protobuf:"varint,5,opt,name=edges_inserted,json=edgesInserted,proto3" json:"edges_inserted,omitempty"`
+	EdgesDeleted  int32                  `protobuf:"varint,6,opt,name=edges_deleted,json=edgesDeleted,proto3" json:"edges_deleted,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *QueryCounters) Reset() {
+	*x = QueryCounters{}
+	mi := &file_mycel_client_v1_query_proto_msgTypes[9]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *QueryCounters) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*QueryCounters) ProtoMessage() {}
+
+func (x *QueryCounters) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_client_v1_query_proto_msgTypes[9]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use QueryCounters.ProtoReflect.Descriptor instead.
+func (*QueryCounters) Descriptor() ([]byte, []int) {
+	return file_mycel_client_v1_query_proto_rawDescGZIP(), []int{9}
+}
+
+func (x *QueryCounters) GetRowsReturned() int32 {
+	if x != nil {
+		return x.RowsReturned
+	}
+	return 0
+}
+
+func (x *QueryCounters) GetNodesInserted() int32 {
+	if x != nil {
+		return x.NodesInserted
+	}
+	return 0
+}
+
+func (x *QueryCounters) GetNodesUpdated() int32 {
+	if x != nil {
+		return x.NodesUpdated
+	}
+	return 0
+}
+
+func (x *QueryCounters) GetNodesDeleted() int32 {
+	if x != nil {
+		return x.NodesDeleted
+	}
+	return 0
+}
+
+func (x *QueryCounters) GetEdgesInserted() int32 {
+	if x != nil {
+		return x.EdgesInserted
+	}
+	return 0
+}
+
+func (x *QueryCounters) GetEdgesDeleted() int32 {
+	if x != nil {
+		return x.EdgesDeleted
+	}
+	return 0
+}
+
 type GraphQuery struct {
 	state   protoimpl.MessageState `protogen:"open.v1"`
 	Match   *GraphPattern          `protobuf:"bytes,1,opt,name=match,proto3" json:"match,omitempty"`
@@ -309,7 +846,7 @@ type GraphQuery struct {
 
 func (x *GraphQuery) Reset() {
 	*x = GraphQuery{}
-	mi := &file_mycel_client_v1_query_proto_msgTypes[2]
+	mi := &file_mycel_client_v1_query_proto_msgTypes[10]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -321,7 +858,7 @@ func (x *GraphQuery) String() string {
 func (*GraphQuery) ProtoMessage() {}
 
 func (x *GraphQuery) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_client_v1_query_proto_msgTypes[2]
+	mi := &file_mycel_client_v1_query_proto_msgTypes[10]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -334,7 +871,7 @@ func (x *GraphQuery) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GraphQuery.ProtoReflect.Descriptor instead.
 func (*GraphQuery) Descriptor() ([]byte, []int) {
-	return file_mycel_client_v1_query_proto_rawDescGZIP(), []int{2}
+	return file_mycel_client_v1_query_proto_rawDescGZIP(), []int{10}
 }
 
 func (x *GraphQuery) GetMatch() *GraphPattern {
@@ -383,7 +920,7 @@ type GraphPattern struct {
 
 func (x *GraphPattern) Reset() {
 	*x = GraphPattern{}
-	mi := &file_mycel_client_v1_query_proto_msgTypes[3]
+	mi := &file_mycel_client_v1_query_proto_msgTypes[11]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -395,7 +932,7 @@ func (x *GraphPattern) String() string {
 func (*GraphPattern) ProtoMessage() {}
 
 func (x *GraphPattern) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_client_v1_query_proto_msgTypes[3]
+	mi := &file_mycel_client_v1_query_proto_msgTypes[11]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -408,7 +945,7 @@ func (x *GraphPattern) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GraphPattern.ProtoReflect.Descriptor instead.
 func (*GraphPattern) Descriptor() ([]byte, []int) {
-	return file_mycel_client_v1_query_proto_rawDescGZIP(), []int{3}
+	return file_mycel_client_v1_query_proto_rawDescGZIP(), []int{11}
 }
 
 func (x *GraphPattern) GetStart() *NodePattern {
@@ -428,15 +965,15 @@ func (x *GraphPattern) GetSteps() []*TraversalStep {
 type NodePattern struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	Alias string                 `protobuf:"bytes,1,opt,name=alias,proto3" json:"alias,omitempty"`
-	// Optional template key restriction.
-	TemplateKey   *string `protobuf:"bytes,2,opt,name=template_key,json=templateKey,proto3,oneof" json:"template_key,omitempty"`
+	// Required labels for the matched node.
+	Labels        []string `protobuf:"bytes,3,rep,name=labels,proto3" json:"labels,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *NodePattern) Reset() {
 	*x = NodePattern{}
-	mi := &file_mycel_client_v1_query_proto_msgTypes[4]
+	mi := &file_mycel_client_v1_query_proto_msgTypes[12]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -448,7 +985,7 @@ func (x *NodePattern) String() string {
 func (*NodePattern) ProtoMessage() {}
 
 func (x *NodePattern) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_client_v1_query_proto_msgTypes[4]
+	mi := &file_mycel_client_v1_query_proto_msgTypes[12]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -461,7 +998,7 @@ func (x *NodePattern) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use NodePattern.ProtoReflect.Descriptor instead.
 func (*NodePattern) Descriptor() ([]byte, []int) {
-	return file_mycel_client_v1_query_proto_rawDescGZIP(), []int{4}
+	return file_mycel_client_v1_query_proto_rawDescGZIP(), []int{12}
 }
 
 func (x *NodePattern) GetAlias() string {
@@ -471,11 +1008,11 @@ func (x *NodePattern) GetAlias() string {
 	return ""
 }
 
-func (x *NodePattern) GetTemplateKey() string {
-	if x != nil && x.TemplateKey != nil {
-		return *x.TemplateKey
+func (x *NodePattern) GetLabels() []string {
+	if x != nil {
+		return x.Labels
 	}
-	return ""
+	return nil
 }
 
 type TraversalStep struct {
@@ -490,7 +1027,7 @@ type TraversalStep struct {
 
 func (x *TraversalStep) Reset() {
 	*x = TraversalStep{}
-	mi := &file_mycel_client_v1_query_proto_msgTypes[5]
+	mi := &file_mycel_client_v1_query_proto_msgTypes[13]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -502,7 +1039,7 @@ func (x *TraversalStep) String() string {
 func (*TraversalStep) ProtoMessage() {}
 
 func (x *TraversalStep) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_client_v1_query_proto_msgTypes[5]
+	mi := &file_mycel_client_v1_query_proto_msgTypes[13]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -515,7 +1052,7 @@ func (x *TraversalStep) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use TraversalStep.ProtoReflect.Descriptor instead.
 func (*TraversalStep) Descriptor() ([]byte, []int) {
-	return file_mycel_client_v1_query_proto_rawDescGZIP(), []int{5}
+	return file_mycel_client_v1_query_proto_rawDescGZIP(), []int{13}
 }
 
 func (x *TraversalStep) GetDirection() TraversalDirection {
@@ -557,7 +1094,7 @@ type DepthSpec struct {
 
 func (x *DepthSpec) Reset() {
 	*x = DepthSpec{}
-	mi := &file_mycel_client_v1_query_proto_msgTypes[6]
+	mi := &file_mycel_client_v1_query_proto_msgTypes[14]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -569,7 +1106,7 @@ func (x *DepthSpec) String() string {
 func (*DepthSpec) ProtoMessage() {}
 
 func (x *DepthSpec) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_client_v1_query_proto_msgTypes[6]
+	mi := &file_mycel_client_v1_query_proto_msgTypes[14]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -582,7 +1119,7 @@ func (x *DepthSpec) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DepthSpec.ProtoReflect.Descriptor instead.
 func (*DepthSpec) Descriptor() ([]byte, []int) {
-	return file_mycel_client_v1_query_proto_rawDescGZIP(), []int{6}
+	return file_mycel_client_v1_query_proto_rawDescGZIP(), []int{14}
 }
 
 func (x *DepthSpec) GetMinDepth() int32 {
@@ -615,7 +1152,7 @@ type Expr struct {
 
 func (x *Expr) Reset() {
 	*x = Expr{}
-	mi := &file_mycel_client_v1_query_proto_msgTypes[7]
+	mi := &file_mycel_client_v1_query_proto_msgTypes[15]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -627,7 +1164,7 @@ func (x *Expr) String() string {
 func (*Expr) ProtoMessage() {}
 
 func (x *Expr) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_client_v1_query_proto_msgTypes[7]
+	mi := &file_mycel_client_v1_query_proto_msgTypes[15]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -640,7 +1177,7 @@ func (x *Expr) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Expr.ProtoReflect.Descriptor instead.
 func (*Expr) Descriptor() ([]byte, []int) {
-	return file_mycel_client_v1_query_proto_rawDescGZIP(), []int{7}
+	return file_mycel_client_v1_query_proto_rawDescGZIP(), []int{15}
 }
 
 func (x *Expr) GetExpr() isExpr_Expr {
@@ -740,7 +1277,7 @@ type BetweenExpr struct {
 
 func (x *BetweenExpr) Reset() {
 	*x = BetweenExpr{}
-	mi := &file_mycel_client_v1_query_proto_msgTypes[8]
+	mi := &file_mycel_client_v1_query_proto_msgTypes[16]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -752,7 +1289,7 @@ func (x *BetweenExpr) String() string {
 func (*BetweenExpr) ProtoMessage() {}
 
 func (x *BetweenExpr) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_client_v1_query_proto_msgTypes[8]
+	mi := &file_mycel_client_v1_query_proto_msgTypes[16]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -765,7 +1302,7 @@ func (x *BetweenExpr) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use BetweenExpr.ProtoReflect.Descriptor instead.
 func (*BetweenExpr) Descriptor() ([]byte, []int) {
-	return file_mycel_client_v1_query_proto_rawDescGZIP(), []int{8}
+	return file_mycel_client_v1_query_proto_rawDescGZIP(), []int{16}
 }
 
 func (x *BetweenExpr) GetValue() *ValueExpr {
@@ -798,7 +1335,7 @@ type AndExpr struct {
 
 func (x *AndExpr) Reset() {
 	*x = AndExpr{}
-	mi := &file_mycel_client_v1_query_proto_msgTypes[9]
+	mi := &file_mycel_client_v1_query_proto_msgTypes[17]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -810,7 +1347,7 @@ func (x *AndExpr) String() string {
 func (*AndExpr) ProtoMessage() {}
 
 func (x *AndExpr) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_client_v1_query_proto_msgTypes[9]
+	mi := &file_mycel_client_v1_query_proto_msgTypes[17]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -823,7 +1360,7 @@ func (x *AndExpr) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AndExpr.ProtoReflect.Descriptor instead.
 func (*AndExpr) Descriptor() ([]byte, []int) {
-	return file_mycel_client_v1_query_proto_rawDescGZIP(), []int{9}
+	return file_mycel_client_v1_query_proto_rawDescGZIP(), []int{17}
 }
 
 func (x *AndExpr) GetExprs() []*Expr {
@@ -833,7 +1370,7 @@ func (x *AndExpr) GetExprs() []*Expr {
 	return nil
 }
 
-// HasTagExpr matches nodes whose canonical metadata tags include tag. The daemon
+// HasTagExpr matches nodes whose user properties include the tag. The daemon
 // applies Mycel tag normalization rules before evaluating the predicate.
 type HasTagExpr struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
@@ -845,7 +1382,7 @@ type HasTagExpr struct {
 
 func (x *HasTagExpr) Reset() {
 	*x = HasTagExpr{}
-	mi := &file_mycel_client_v1_query_proto_msgTypes[10]
+	mi := &file_mycel_client_v1_query_proto_msgTypes[18]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -857,7 +1394,7 @@ func (x *HasTagExpr) String() string {
 func (*HasTagExpr) ProtoMessage() {}
 
 func (x *HasTagExpr) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_client_v1_query_proto_msgTypes[10]
+	mi := &file_mycel_client_v1_query_proto_msgTypes[18]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -870,7 +1407,7 @@ func (x *HasTagExpr) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use HasTagExpr.ProtoReflect.Descriptor instead.
 func (*HasTagExpr) Descriptor() ([]byte, []int) {
-	return file_mycel_client_v1_query_proto_rawDescGZIP(), []int{10}
+	return file_mycel_client_v1_query_proto_rawDescGZIP(), []int{18}
 }
 
 func (x *HasTagExpr) GetAlias() string {
@@ -887,8 +1424,8 @@ func (x *HasTagExpr) GetTag() string {
 	return ""
 }
 
-// PropertyExistsExpr matches nodes whose canonical custom metadata properties
-// contain name. The daemon applies Mycel property-name normalization rules.
+// PropertyExistsExpr matches nodes whose user properties contain name. The
+// daemon applies Mycel property-name normalization rules.
 type PropertyExistsExpr struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Alias         string                 `protobuf:"bytes,1,opt,name=alias,proto3" json:"alias,omitempty"`
@@ -899,7 +1436,7 @@ type PropertyExistsExpr struct {
 
 func (x *PropertyExistsExpr) Reset() {
 	*x = PropertyExistsExpr{}
-	mi := &file_mycel_client_v1_query_proto_msgTypes[11]
+	mi := &file_mycel_client_v1_query_proto_msgTypes[19]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -911,7 +1448,7 @@ func (x *PropertyExistsExpr) String() string {
 func (*PropertyExistsExpr) ProtoMessage() {}
 
 func (x *PropertyExistsExpr) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_client_v1_query_proto_msgTypes[11]
+	mi := &file_mycel_client_v1_query_proto_msgTypes[19]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -924,7 +1461,7 @@ func (x *PropertyExistsExpr) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PropertyExistsExpr.ProtoReflect.Descriptor instead.
 func (*PropertyExistsExpr) Descriptor() ([]byte, []int) {
-	return file_mycel_client_v1_query_proto_rawDescGZIP(), []int{11}
+	return file_mycel_client_v1_query_proto_rawDescGZIP(), []int{19}
 }
 
 func (x *PropertyExistsExpr) GetAlias() string {
@@ -941,8 +1478,8 @@ func (x *PropertyExistsExpr) GetName() string {
 	return ""
 }
 
-// PropertyEqualsExpr matches nodes whose canonical custom metadata property name
-// equals value. Supported values are string, number, and boolean.
+// PropertyEqualsExpr matches nodes whose user property name equals value.
+// Supported values are string, number, and boolean.
 type PropertyEqualsExpr struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Alias         string                 `protobuf:"bytes,1,opt,name=alias,proto3" json:"alias,omitempty"`
@@ -954,7 +1491,7 @@ type PropertyEqualsExpr struct {
 
 func (x *PropertyEqualsExpr) Reset() {
 	*x = PropertyEqualsExpr{}
-	mi := &file_mycel_client_v1_query_proto_msgTypes[12]
+	mi := &file_mycel_client_v1_query_proto_msgTypes[20]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -966,7 +1503,7 @@ func (x *PropertyEqualsExpr) String() string {
 func (*PropertyEqualsExpr) ProtoMessage() {}
 
 func (x *PropertyEqualsExpr) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_client_v1_query_proto_msgTypes[12]
+	mi := &file_mycel_client_v1_query_proto_msgTypes[20]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -979,7 +1516,7 @@ func (x *PropertyEqualsExpr) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PropertyEqualsExpr.ProtoReflect.Descriptor instead.
 func (*PropertyEqualsExpr) Descriptor() ([]byte, []int) {
-	return file_mycel_client_v1_query_proto_rawDescGZIP(), []int{12}
+	return file_mycel_client_v1_query_proto_rawDescGZIP(), []int{20}
 }
 
 func (x *PropertyEqualsExpr) GetAlias() string {
@@ -1018,7 +1555,7 @@ type ValueExpr struct {
 
 func (x *ValueExpr) Reset() {
 	*x = ValueExpr{}
-	mi := &file_mycel_client_v1_query_proto_msgTypes[13]
+	mi := &file_mycel_client_v1_query_proto_msgTypes[21]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1030,7 +1567,7 @@ func (x *ValueExpr) String() string {
 func (*ValueExpr) ProtoMessage() {}
 
 func (x *ValueExpr) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_client_v1_query_proto_msgTypes[13]
+	mi := &file_mycel_client_v1_query_proto_msgTypes[21]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1043,7 +1580,7 @@ func (x *ValueExpr) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ValueExpr.ProtoReflect.Descriptor instead.
 func (*ValueExpr) Descriptor() ([]byte, []int) {
-	return file_mycel_client_v1_query_proto_rawDescGZIP(), []int{13}
+	return file_mycel_client_v1_query_proto_rawDescGZIP(), []int{21}
 }
 
 func (x *ValueExpr) GetExpr() isValueExpr_Expr {
@@ -1127,7 +1664,7 @@ type PropExpr struct {
 
 func (x *PropExpr) Reset() {
 	*x = PropExpr{}
-	mi := &file_mycel_client_v1_query_proto_msgTypes[14]
+	mi := &file_mycel_client_v1_query_proto_msgTypes[22]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1139,7 +1676,7 @@ func (x *PropExpr) String() string {
 func (*PropExpr) ProtoMessage() {}
 
 func (x *PropExpr) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_client_v1_query_proto_msgTypes[14]
+	mi := &file_mycel_client_v1_query_proto_msgTypes[22]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1152,7 +1689,7 @@ func (x *PropExpr) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PropExpr.ProtoReflect.Descriptor instead.
 func (*PropExpr) Descriptor() ([]byte, []int) {
-	return file_mycel_client_v1_query_proto_rawDescGZIP(), []int{14}
+	return file_mycel_client_v1_query_proto_rawDescGZIP(), []int{22}
 }
 
 func (x *PropExpr) GetAlias() string {
@@ -1178,7 +1715,7 @@ type LiteralExpr struct {
 
 func (x *LiteralExpr) Reset() {
 	*x = LiteralExpr{}
-	mi := &file_mycel_client_v1_query_proto_msgTypes[15]
+	mi := &file_mycel_client_v1_query_proto_msgTypes[23]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1190,7 +1727,7 @@ func (x *LiteralExpr) String() string {
 func (*LiteralExpr) ProtoMessage() {}
 
 func (x *LiteralExpr) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_client_v1_query_proto_msgTypes[15]
+	mi := &file_mycel_client_v1_query_proto_msgTypes[23]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1203,7 +1740,7 @@ func (x *LiteralExpr) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use LiteralExpr.ProtoReflect.Descriptor instead.
 func (*LiteralExpr) Descriptor() ([]byte, []int) {
-	return file_mycel_client_v1_query_proto_rawDescGZIP(), []int{15}
+	return file_mycel_client_v1_query_proto_rawDescGZIP(), []int{23}
 }
 
 func (x *LiteralExpr) GetValue() *structpb.Value {
@@ -1225,7 +1762,7 @@ type DateExpr struct {
 
 func (x *DateExpr) Reset() {
 	*x = DateExpr{}
-	mi := &file_mycel_client_v1_query_proto_msgTypes[16]
+	mi := &file_mycel_client_v1_query_proto_msgTypes[24]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1237,7 +1774,7 @@ func (x *DateExpr) String() string {
 func (*DateExpr) ProtoMessage() {}
 
 func (x *DateExpr) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_client_v1_query_proto_msgTypes[16]
+	mi := &file_mycel_client_v1_query_proto_msgTypes[24]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1250,7 +1787,7 @@ func (x *DateExpr) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DateExpr.ProtoReflect.Descriptor instead.
 func (*DateExpr) Descriptor() ([]byte, []int) {
-	return file_mycel_client_v1_query_proto_rawDescGZIP(), []int{16}
+	return file_mycel_client_v1_query_proto_rawDescGZIP(), []int{24}
 }
 
 func (x *DateExpr) GetValue() string {
@@ -1277,7 +1814,7 @@ type CurrentDateExpr struct {
 
 func (x *CurrentDateExpr) Reset() {
 	*x = CurrentDateExpr{}
-	mi := &file_mycel_client_v1_query_proto_msgTypes[17]
+	mi := &file_mycel_client_v1_query_proto_msgTypes[25]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1289,7 +1826,7 @@ func (x *CurrentDateExpr) String() string {
 func (*CurrentDateExpr) ProtoMessage() {}
 
 func (x *CurrentDateExpr) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_client_v1_query_proto_msgTypes[17]
+	mi := &file_mycel_client_v1_query_proto_msgTypes[25]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1302,7 +1839,7 @@ func (x *CurrentDateExpr) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CurrentDateExpr.ProtoReflect.Descriptor instead.
 func (*CurrentDateExpr) Descriptor() ([]byte, []int) {
-	return file_mycel_client_v1_query_proto_rawDescGZIP(), []int{17}
+	return file_mycel_client_v1_query_proto_rawDescGZIP(), []int{25}
 }
 
 func (x *CurrentDateExpr) GetOffsetDays() int32 {
@@ -1323,7 +1860,7 @@ type ReturnProjection struct {
 
 func (x *ReturnProjection) Reset() {
 	*x = ReturnProjection{}
-	mi := &file_mycel_client_v1_query_proto_msgTypes[18]
+	mi := &file_mycel_client_v1_query_proto_msgTypes[26]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1335,7 +1872,7 @@ func (x *ReturnProjection) String() string {
 func (*ReturnProjection) ProtoMessage() {}
 
 func (x *ReturnProjection) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_client_v1_query_proto_msgTypes[18]
+	mi := &file_mycel_client_v1_query_proto_msgTypes[26]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1348,7 +1885,7 @@ func (x *ReturnProjection) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ReturnProjection.ProtoReflect.Descriptor instead.
 func (*ReturnProjection) Descriptor() ([]byte, []int) {
-	return file_mycel_client_v1_query_proto_rawDescGZIP(), []int{18}
+	return file_mycel_client_v1_query_proto_rawDescGZIP(), []int{26}
 }
 
 func (x *ReturnProjection) GetAlias() string {
@@ -1382,7 +1919,7 @@ type OrderSpec struct {
 
 func (x *OrderSpec) Reset() {
 	*x = OrderSpec{}
-	mi := &file_mycel_client_v1_query_proto_msgTypes[19]
+	mi := &file_mycel_client_v1_query_proto_msgTypes[27]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1394,7 +1931,7 @@ func (x *OrderSpec) String() string {
 func (*OrderSpec) ProtoMessage() {}
 
 func (x *OrderSpec) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_client_v1_query_proto_msgTypes[19]
+	mi := &file_mycel_client_v1_query_proto_msgTypes[27]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1407,7 +1944,7 @@ func (x *OrderSpec) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use OrderSpec.ProtoReflect.Descriptor instead.
 func (*OrderSpec) Descriptor() ([]byte, []int) {
-	return file_mycel_client_v1_query_proto_rawDescGZIP(), []int{19}
+	return file_mycel_client_v1_query_proto_rawDescGZIP(), []int{27}
 }
 
 func (x *OrderSpec) GetValue() *ValueExpr {
@@ -1433,7 +1970,7 @@ type QueryRow struct {
 
 func (x *QueryRow) Reset() {
 	*x = QueryRow{}
-	mi := &file_mycel_client_v1_query_proto_msgTypes[20]
+	mi := &file_mycel_client_v1_query_proto_msgTypes[28]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1445,7 +1982,7 @@ func (x *QueryRow) String() string {
 func (*QueryRow) ProtoMessage() {}
 
 func (x *QueryRow) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_client_v1_query_proto_msgTypes[20]
+	mi := &file_mycel_client_v1_query_proto_msgTypes[28]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1458,7 +1995,7 @@ func (x *QueryRow) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use QueryRow.ProtoReflect.Descriptor instead.
 func (*QueryRow) Descriptor() ([]byte, []int) {
-	return file_mycel_client_v1_query_proto_rawDescGZIP(), []int{20}
+	return file_mycel_client_v1_query_proto_rawDescGZIP(), []int{28}
 }
 
 func (x *QueryRow) GetFields() map[string]*QueryValue {
@@ -1475,6 +2012,7 @@ type QueryValue struct {
 	//	*QueryValue_Node
 	//	*QueryValue_Tree
 	//	*QueryValue_Scalar
+	//	*QueryValue_Edge
 	Value         isQueryValue_Value `protobuf_oneof:"value"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -1482,7 +2020,7 @@ type QueryValue struct {
 
 func (x *QueryValue) Reset() {
 	*x = QueryValue{}
-	mi := &file_mycel_client_v1_query_proto_msgTypes[21]
+	mi := &file_mycel_client_v1_query_proto_msgTypes[29]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1494,7 +2032,7 @@ func (x *QueryValue) String() string {
 func (*QueryValue) ProtoMessage() {}
 
 func (x *QueryValue) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_client_v1_query_proto_msgTypes[21]
+	mi := &file_mycel_client_v1_query_proto_msgTypes[29]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1507,7 +2045,7 @@ func (x *QueryValue) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use QueryValue.ProtoReflect.Descriptor instead.
 func (*QueryValue) Descriptor() ([]byte, []int) {
-	return file_mycel_client_v1_query_proto_rawDescGZIP(), []int{21}
+	return file_mycel_client_v1_query_proto_rawDescGZIP(), []int{29}
 }
 
 func (x *QueryValue) GetValue() isQueryValue_Value {
@@ -1544,6 +2082,15 @@ func (x *QueryValue) GetScalar() *structpb.Value {
 	return nil
 }
 
+func (x *QueryValue) GetEdge() *Edge {
+	if x != nil {
+		if x, ok := x.Value.(*QueryValue_Edge); ok {
+			return x.Edge
+		}
+	}
+	return nil
+}
+
 type isQueryValue_Value interface {
 	isQueryValue_Value()
 }
@@ -1560,11 +2107,17 @@ type QueryValue_Scalar struct {
 	Scalar *structpb.Value `protobuf:"bytes,3,opt,name=scalar,proto3,oneof"`
 }
 
+type QueryValue_Edge struct {
+	Edge *Edge `protobuf:"bytes,4,opt,name=edge,proto3,oneof"`
+}
+
 func (*QueryValue_Node) isQueryValue_Value() {}
 
 func (*QueryValue_Tree) isQueryValue_Value() {}
 
 func (*QueryValue_Scalar) isQueryValue_Value() {}
+
+func (*QueryValue_Edge) isQueryValue_Value() {}
 
 type Tree struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
@@ -1575,7 +2128,7 @@ type Tree struct {
 
 func (x *Tree) Reset() {
 	*x = Tree{}
-	mi := &file_mycel_client_v1_query_proto_msgTypes[22]
+	mi := &file_mycel_client_v1_query_proto_msgTypes[30]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1587,7 +2140,7 @@ func (x *Tree) String() string {
 func (*Tree) ProtoMessage() {}
 
 func (x *Tree) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_client_v1_query_proto_msgTypes[22]
+	mi := &file_mycel_client_v1_query_proto_msgTypes[30]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1600,7 +2153,7 @@ func (x *Tree) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Tree.ProtoReflect.Descriptor instead.
 func (*Tree) Descriptor() ([]byte, []int) {
-	return file_mycel_client_v1_query_proto_rawDescGZIP(), []int{22}
+	return file_mycel_client_v1_query_proto_rawDescGZIP(), []int{30}
 }
 
 func (x *Tree) GetRoots() []*TreeNode {
@@ -1620,7 +2173,7 @@ type TreeNode struct {
 
 func (x *TreeNode) Reset() {
 	*x = TreeNode{}
-	mi := &file_mycel_client_v1_query_proto_msgTypes[23]
+	mi := &file_mycel_client_v1_query_proto_msgTypes[31]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1632,7 +2185,7 @@ func (x *TreeNode) String() string {
 func (*TreeNode) ProtoMessage() {}
 
 func (x *TreeNode) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_client_v1_query_proto_msgTypes[23]
+	mi := &file_mycel_client_v1_query_proto_msgTypes[31]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1645,7 +2198,7 @@ func (x *TreeNode) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use TreeNode.ProtoReflect.Descriptor instead.
 func (*TreeNode) Descriptor() ([]byte, []int) {
-	return file_mycel_client_v1_query_proto_rawDescGZIP(), []int{23}
+	return file_mycel_client_v1_query_proto_rawDescGZIP(), []int{31}
 }
 
 func (x *TreeNode) GetNode() *Node {
@@ -1672,10 +2225,58 @@ const file_mycel_client_v1_query_proto_rawDesc = "" +
 	"\x05query\x18\x02 \x01(\v2\x1b.mycel.client.v1.GraphQueryR\x05query\x12\x1b\n" +
 	"\tpage_size\x18\x03 \x01(\x05R\bpageSize\x12\x1d\n" +
 	"\n" +
-	"page_token\x18\x04 \x01(\tR\tpageToken\"m\n" +
+	"page_token\x18\x04 \x01(\tR\tpageToken\"\xa3\x01\n" +
 	"\x14ExecuteQueryResponse\x12-\n" +
 	"\x04rows\x18\x01 \x03(\v2\x19.mycel.client.v1.QueryRowR\x04rows\x12&\n" +
-	"\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken\"\x87\x02\n" +
+	"\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken\x124\n" +
+	"\x06result\x18\x03 \x01(\v2\x1c.mycel.client.v1.QueryResultR\x06result\"\xa7\x02\n" +
+	"\x11ExecuteGQLRequest\x12%\n" +
+	"\x0etransaction_id\x18\x01 \x01(\tR\rtransactionId\x12\x14\n" +
+	"\x05query\x18\x02 \x01(\tR\x05query\x12F\n" +
+	"\x06params\x18\x03 \x03(\v2..mycel.client.v1.ExecuteGQLRequest.ParamsEntryR\x06params\x12\x1b\n" +
+	"\tpage_size\x18\x04 \x01(\x05R\bpageSize\x12\x1d\n" +
+	"\n" +
+	"page_token\x18\x05 \x01(\tR\tpageToken\x1aQ\n" +
+	"\vParamsEntry\x12\x10\n" +
+	"\x03key\x18\x01 \x01(\tR\x03key\x12,\n" +
+	"\x05value\x18\x02 \x01(\v2\x16.google.protobuf.ValueR\x05value:\x028\x01\"J\n" +
+	"\x12ExecuteGQLResponse\x124\n" +
+	"\x06result\x18\x01 \x01(\v2\x1c.mycel.client.v1.QueryResultR\x06result\"\xba\x02\n" +
+	"\x17ExecuteGQLScriptRequest\x12%\n" +
+	"\x0etransaction_id\x18\x01 \x01(\tR\rtransactionId\x12\x16\n" +
+	"\x06script\x18\x02 \x01(\tR\x06script\x12L\n" +
+	"\x06params\x18\x03 \x03(\v24.mycel.client.v1.ExecuteGQLScriptRequest.ParamsEntryR\x06params\x12\"\n" +
+	"\rstop_on_error\x18\x04 \x01(\bR\vstopOnError\x12\x1b\n" +
+	"\tpage_size\x18\x05 \x01(\x05R\bpageSize\x1aQ\n" +
+	"\vParamsEntry\x12\x10\n" +
+	"\x03key\x18\x01 \x01(\tR\x03key\x12,\n" +
+	"\x05value\x18\x02 \x01(\v2\x16.google.protobuf.ValueR\x05value:\x028\x01\"\x95\x01\n" +
+	"\x18ExecuteGQLScriptResponse\x12C\n" +
+	"\n" +
+	"statements\x18\x01 \x03(\v2#.mycel.client.v1.GQLStatementResultR\n" +
+	"statements\x124\n" +
+	"\x06result\x18\x02 \x01(\v2\x1c.mycel.client.v1.QueryResultR\x06result\"\xae\x01\n" +
+	"\x12GQLStatementResult\x12\x14\n" +
+	"\x05index\x18\x01 \x01(\x05R\x05index\x12\x1c\n" +
+	"\tstatement\x18\x02 \x01(\tR\tstatement\x12\x18\n" +
+	"\asuccess\x18\x03 \x01(\bR\asuccess\x124\n" +
+	"\x06result\x18\x04 \x01(\v2\x1c.mycel.client.v1.QueryResultR\x06result\x12\x14\n" +
+	"\x05error\x18\x05 \x01(\tR\x05error\"\xd4\x01\n" +
+	"\vQueryResult\x12-\n" +
+	"\x04rows\x18\x01 \x03(\v2\x19.mycel.client.v1.QueryRowR\x04rows\x122\n" +
+	"\x05graph\x18\x02 \x01(\v2\x1c.mycel.client.v1.ResultGraphR\x05graph\x12:\n" +
+	"\bcounters\x18\x03 \x01(\v2\x1e.mycel.client.v1.QueryCountersR\bcounters\x12&\n" +
+	"\x0fnext_page_token\x18\x04 \x01(\tR\rnextPageToken\"g\n" +
+	"\vResultGraph\x12+\n" +
+	"\x05nodes\x18\x01 \x03(\v2\x15.mycel.client.v1.NodeR\x05nodes\x12+\n" +
+	"\x05edges\x18\x02 \x03(\v2\x15.mycel.client.v1.EdgeR\x05edges\"\xf1\x01\n" +
+	"\rQueryCounters\x12#\n" +
+	"\rrows_returned\x18\x01 \x01(\x05R\frowsReturned\x12%\n" +
+	"\x0enodes_inserted\x18\x02 \x01(\x05R\rnodesInserted\x12#\n" +
+	"\rnodes_updated\x18\x03 \x01(\x05R\fnodesUpdated\x12#\n" +
+	"\rnodes_deleted\x18\x04 \x01(\x05R\fnodesDeleted\x12%\n" +
+	"\x0eedges_inserted\x18\x05 \x01(\x05R\redgesInserted\x12#\n" +
+	"\redges_deleted\x18\x06 \x01(\x05R\fedgesDeleted\"\x87\x02\n" +
 	"\n" +
 	"GraphQuery\x123\n" +
 	"\x05match\x18\x01 \x01(\v2\x1d.mycel.client.v1.GraphPatternR\x05match\x120\n" +
@@ -1686,11 +2287,10 @@ const file_mycel_client_v1_query_proto_rawDesc = "" +
 	"\x06_where\"x\n" +
 	"\fGraphPattern\x122\n" +
 	"\x05start\x18\x01 \x01(\v2\x1c.mycel.client.v1.NodePatternR\x05start\x124\n" +
-	"\x05steps\x18\x02 \x03(\v2\x1e.mycel.client.v1.TraversalStepR\x05steps\"\\\n" +
+	"\x05steps\x18\x02 \x03(\v2\x1e.mycel.client.v1.TraversalStepR\x05steps\";\n" +
 	"\vNodePattern\x12\x14\n" +
-	"\x05alias\x18\x01 \x01(\tR\x05alias\x12&\n" +
-	"\ftemplate_key\x18\x02 \x01(\tH\x00R\vtemplateKey\x88\x01\x01B\x0f\n" +
-	"\r_template_key\"\xd7\x01\n" +
+	"\x05alias\x18\x01 \x01(\tR\x05alias\x12\x16\n" +
+	"\x06labels\x18\x03 \x03(\tR\x06labels\"\xd7\x01\n" +
 	"\rTraversalStep\x12A\n" +
 	"\tdirection\x18\x01 \x01(\x0e2#.mycel.client.v1.TraversalDirectionR\tdirection\x12\x1b\n" +
 	"\tedge_kind\x18\x02 \x01(\tR\bedgeKind\x120\n" +
@@ -1753,12 +2353,13 @@ const file_mycel_client_v1_query_proto_rawDesc = "" +
 	"\x06fields\x18\x01 \x03(\v2%.mycel.client.v1.QueryRow.FieldsEntryR\x06fields\x1aV\n" +
 	"\vFieldsEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x121\n" +
-	"\x05value\x18\x02 \x01(\v2\x1b.mycel.client.v1.QueryValueR\x05value:\x028\x01\"\xa1\x01\n" +
+	"\x05value\x18\x02 \x01(\v2\x1b.mycel.client.v1.QueryValueR\x05value:\x028\x01\"\xce\x01\n" +
 	"\n" +
 	"QueryValue\x12+\n" +
 	"\x04node\x18\x01 \x01(\v2\x15.mycel.client.v1.NodeH\x00R\x04node\x12+\n" +
 	"\x04tree\x18\x02 \x01(\v2\x15.mycel.client.v1.TreeH\x00R\x04tree\x120\n" +
-	"\x06scalar\x18\x03 \x01(\v2\x16.google.protobuf.ValueH\x00R\x06scalarB\a\n" +
+	"\x06scalar\x18\x03 \x01(\v2\x16.google.protobuf.ValueH\x00R\x06scalar\x12+\n" +
+	"\x04edge\x18\x04 \x01(\v2\x15.mycel.client.v1.EdgeH\x00R\x04edgeB\a\n" +
 	"\x05value\"7\n" +
 	"\x04Tree\x12/\n" +
 	"\x05roots\x18\x01 \x03(\v2\x19.mycel.client.v1.TreeNodeR\x05roots\"l\n" +
@@ -1777,9 +2378,12 @@ const file_mycel_client_v1_query_proto_rawDesc = "" +
 	"\rSortDirection\x12\x1e\n" +
 	"\x1aSORT_DIRECTION_UNSPECIFIED\x10\x00\x12\x16\n" +
 	"\x12SORT_DIRECTION_ASC\x10\x01\x12\x17\n" +
-	"\x13SORT_DIRECTION_DESC\x10\x022k\n" +
+	"\x13SORT_DIRECTION_DESC\x10\x022\xab\x02\n" +
 	"\fQueryService\x12[\n" +
-	"\fExecuteQuery\x12$.mycel.client.v1.ExecuteQueryRequest\x1a%.mycel.client.v1.ExecuteQueryResponseB\xc0\x01\n" +
+	"\fExecuteQuery\x12$.mycel.client.v1.ExecuteQueryRequest\x1a%.mycel.client.v1.ExecuteQueryResponse\x12U\n" +
+	"\n" +
+	"ExecuteGQL\x12\".mycel.client.v1.ExecuteGQLRequest\x1a#.mycel.client.v1.ExecuteGQLResponse\x12g\n" +
+	"\x10ExecuteGQLScript\x12(.mycel.client.v1.ExecuteGQLScriptRequest\x1a).mycel.client.v1.ExecuteGQLScriptResponseB\xc0\x01\n" +
 	"\x13com.mycel.client.v1B\n" +
 	"QueryProtoP\x01Z?github.com/myceldb/mycel-go-sdk/gen/go/mycel/client/v1;clientv1\xa2\x02\x03MCX\xaa\x02\x0fMycel.Client.V1\xca\x02\x0fMycel\\Client\\V1\xe2\x02\x1bMycel\\Client\\V1\\GPBMetadata\xea\x02\x11Mycel::Client::V1b\x06proto3"
 
@@ -1796,84 +2400,114 @@ func file_mycel_client_v1_query_proto_rawDescGZIP() []byte {
 }
 
 var file_mycel_client_v1_query_proto_enumTypes = make([]protoimpl.EnumInfo, 3)
-var file_mycel_client_v1_query_proto_msgTypes = make([]protoimpl.MessageInfo, 25)
+var file_mycel_client_v1_query_proto_msgTypes = make([]protoimpl.MessageInfo, 35)
 var file_mycel_client_v1_query_proto_goTypes = []any{
-	(TraversalDirection)(0),      // 0: mycel.client.v1.TraversalDirection
-	(ReturnProjectionKind)(0),    // 1: mycel.client.v1.ReturnProjectionKind
-	(SortDirection)(0),           // 2: mycel.client.v1.SortDirection
-	(*ExecuteQueryRequest)(nil),  // 3: mycel.client.v1.ExecuteQueryRequest
-	(*ExecuteQueryResponse)(nil), // 4: mycel.client.v1.ExecuteQueryResponse
-	(*GraphQuery)(nil),           // 5: mycel.client.v1.GraphQuery
-	(*GraphPattern)(nil),         // 6: mycel.client.v1.GraphPattern
-	(*NodePattern)(nil),          // 7: mycel.client.v1.NodePattern
-	(*TraversalStep)(nil),        // 8: mycel.client.v1.TraversalStep
-	(*DepthSpec)(nil),            // 9: mycel.client.v1.DepthSpec
-	(*Expr)(nil),                 // 10: mycel.client.v1.Expr
-	(*BetweenExpr)(nil),          // 11: mycel.client.v1.BetweenExpr
-	(*AndExpr)(nil),              // 12: mycel.client.v1.AndExpr
-	(*HasTagExpr)(nil),           // 13: mycel.client.v1.HasTagExpr
-	(*PropertyExistsExpr)(nil),   // 14: mycel.client.v1.PropertyExistsExpr
-	(*PropertyEqualsExpr)(nil),   // 15: mycel.client.v1.PropertyEqualsExpr
-	(*ValueExpr)(nil),            // 16: mycel.client.v1.ValueExpr
-	(*PropExpr)(nil),             // 17: mycel.client.v1.PropExpr
-	(*LiteralExpr)(nil),          // 18: mycel.client.v1.LiteralExpr
-	(*DateExpr)(nil),             // 19: mycel.client.v1.DateExpr
-	(*CurrentDateExpr)(nil),      // 20: mycel.client.v1.CurrentDateExpr
-	(*ReturnProjection)(nil),     // 21: mycel.client.v1.ReturnProjection
-	(*OrderSpec)(nil),            // 22: mycel.client.v1.OrderSpec
-	(*QueryRow)(nil),             // 23: mycel.client.v1.QueryRow
-	(*QueryValue)(nil),           // 24: mycel.client.v1.QueryValue
-	(*Tree)(nil),                 // 25: mycel.client.v1.Tree
-	(*TreeNode)(nil),             // 26: mycel.client.v1.TreeNode
-	nil,                          // 27: mycel.client.v1.QueryRow.FieldsEntry
-	(*structpb.Value)(nil),       // 28: google.protobuf.Value
-	(*Node)(nil),                 // 29: mycel.client.v1.Node
+	(TraversalDirection)(0),          // 0: mycel.client.v1.TraversalDirection
+	(ReturnProjectionKind)(0),        // 1: mycel.client.v1.ReturnProjectionKind
+	(SortDirection)(0),               // 2: mycel.client.v1.SortDirection
+	(*ExecuteQueryRequest)(nil),      // 3: mycel.client.v1.ExecuteQueryRequest
+	(*ExecuteQueryResponse)(nil),     // 4: mycel.client.v1.ExecuteQueryResponse
+	(*ExecuteGQLRequest)(nil),        // 5: mycel.client.v1.ExecuteGQLRequest
+	(*ExecuteGQLResponse)(nil),       // 6: mycel.client.v1.ExecuteGQLResponse
+	(*ExecuteGQLScriptRequest)(nil),  // 7: mycel.client.v1.ExecuteGQLScriptRequest
+	(*ExecuteGQLScriptResponse)(nil), // 8: mycel.client.v1.ExecuteGQLScriptResponse
+	(*GQLStatementResult)(nil),       // 9: mycel.client.v1.GQLStatementResult
+	(*QueryResult)(nil),              // 10: mycel.client.v1.QueryResult
+	(*ResultGraph)(nil),              // 11: mycel.client.v1.ResultGraph
+	(*QueryCounters)(nil),            // 12: mycel.client.v1.QueryCounters
+	(*GraphQuery)(nil),               // 13: mycel.client.v1.GraphQuery
+	(*GraphPattern)(nil),             // 14: mycel.client.v1.GraphPattern
+	(*NodePattern)(nil),              // 15: mycel.client.v1.NodePattern
+	(*TraversalStep)(nil),            // 16: mycel.client.v1.TraversalStep
+	(*DepthSpec)(nil),                // 17: mycel.client.v1.DepthSpec
+	(*Expr)(nil),                     // 18: mycel.client.v1.Expr
+	(*BetweenExpr)(nil),              // 19: mycel.client.v1.BetweenExpr
+	(*AndExpr)(nil),                  // 20: mycel.client.v1.AndExpr
+	(*HasTagExpr)(nil),               // 21: mycel.client.v1.HasTagExpr
+	(*PropertyExistsExpr)(nil),       // 22: mycel.client.v1.PropertyExistsExpr
+	(*PropertyEqualsExpr)(nil),       // 23: mycel.client.v1.PropertyEqualsExpr
+	(*ValueExpr)(nil),                // 24: mycel.client.v1.ValueExpr
+	(*PropExpr)(nil),                 // 25: mycel.client.v1.PropExpr
+	(*LiteralExpr)(nil),              // 26: mycel.client.v1.LiteralExpr
+	(*DateExpr)(nil),                 // 27: mycel.client.v1.DateExpr
+	(*CurrentDateExpr)(nil),          // 28: mycel.client.v1.CurrentDateExpr
+	(*ReturnProjection)(nil),         // 29: mycel.client.v1.ReturnProjection
+	(*OrderSpec)(nil),                // 30: mycel.client.v1.OrderSpec
+	(*QueryRow)(nil),                 // 31: mycel.client.v1.QueryRow
+	(*QueryValue)(nil),               // 32: mycel.client.v1.QueryValue
+	(*Tree)(nil),                     // 33: mycel.client.v1.Tree
+	(*TreeNode)(nil),                 // 34: mycel.client.v1.TreeNode
+	nil,                              // 35: mycel.client.v1.ExecuteGQLRequest.ParamsEntry
+	nil,                              // 36: mycel.client.v1.ExecuteGQLScriptRequest.ParamsEntry
+	nil,                              // 37: mycel.client.v1.QueryRow.FieldsEntry
+	(*Node)(nil),                     // 38: mycel.client.v1.Node
+	(*Edge)(nil),                     // 39: mycel.client.v1.Edge
+	(*structpb.Value)(nil),           // 40: google.protobuf.Value
 }
 var file_mycel_client_v1_query_proto_depIdxs = []int32{
-	5,  // 0: mycel.client.v1.ExecuteQueryRequest.query:type_name -> mycel.client.v1.GraphQuery
-	23, // 1: mycel.client.v1.ExecuteQueryResponse.rows:type_name -> mycel.client.v1.QueryRow
-	6,  // 2: mycel.client.v1.GraphQuery.match:type_name -> mycel.client.v1.GraphPattern
-	10, // 3: mycel.client.v1.GraphQuery.where:type_name -> mycel.client.v1.Expr
-	21, // 4: mycel.client.v1.GraphQuery.returns:type_name -> mycel.client.v1.ReturnProjection
-	22, // 5: mycel.client.v1.GraphQuery.order_by:type_name -> mycel.client.v1.OrderSpec
-	7,  // 6: mycel.client.v1.GraphPattern.start:type_name -> mycel.client.v1.NodePattern
-	8,  // 7: mycel.client.v1.GraphPattern.steps:type_name -> mycel.client.v1.TraversalStep
-	0,  // 8: mycel.client.v1.TraversalStep.direction:type_name -> mycel.client.v1.TraversalDirection
-	9,  // 9: mycel.client.v1.TraversalStep.depth:type_name -> mycel.client.v1.DepthSpec
-	7,  // 10: mycel.client.v1.TraversalStep.target:type_name -> mycel.client.v1.NodePattern
-	11, // 11: mycel.client.v1.Expr.between:type_name -> mycel.client.v1.BetweenExpr
-	12, // 12: mycel.client.v1.Expr.and:type_name -> mycel.client.v1.AndExpr
-	13, // 13: mycel.client.v1.Expr.has_tag:type_name -> mycel.client.v1.HasTagExpr
-	14, // 14: mycel.client.v1.Expr.property_exists:type_name -> mycel.client.v1.PropertyExistsExpr
-	15, // 15: mycel.client.v1.Expr.property_equals:type_name -> mycel.client.v1.PropertyEqualsExpr
-	16, // 16: mycel.client.v1.BetweenExpr.value:type_name -> mycel.client.v1.ValueExpr
-	16, // 17: mycel.client.v1.BetweenExpr.low:type_name -> mycel.client.v1.ValueExpr
-	16, // 18: mycel.client.v1.BetweenExpr.high:type_name -> mycel.client.v1.ValueExpr
-	10, // 19: mycel.client.v1.AndExpr.exprs:type_name -> mycel.client.v1.Expr
-	28, // 20: mycel.client.v1.PropertyEqualsExpr.value:type_name -> google.protobuf.Value
-	17, // 21: mycel.client.v1.ValueExpr.prop:type_name -> mycel.client.v1.PropExpr
-	18, // 22: mycel.client.v1.ValueExpr.literal:type_name -> mycel.client.v1.LiteralExpr
-	19, // 23: mycel.client.v1.ValueExpr.date:type_name -> mycel.client.v1.DateExpr
-	20, // 24: mycel.client.v1.ValueExpr.current_date:type_name -> mycel.client.v1.CurrentDateExpr
-	28, // 25: mycel.client.v1.LiteralExpr.value:type_name -> google.protobuf.Value
-	1,  // 26: mycel.client.v1.ReturnProjection.kind:type_name -> mycel.client.v1.ReturnProjectionKind
-	16, // 27: mycel.client.v1.OrderSpec.value:type_name -> mycel.client.v1.ValueExpr
-	2,  // 28: mycel.client.v1.OrderSpec.direction:type_name -> mycel.client.v1.SortDirection
-	27, // 29: mycel.client.v1.QueryRow.fields:type_name -> mycel.client.v1.QueryRow.FieldsEntry
-	29, // 30: mycel.client.v1.QueryValue.node:type_name -> mycel.client.v1.Node
-	25, // 31: mycel.client.v1.QueryValue.tree:type_name -> mycel.client.v1.Tree
-	28, // 32: mycel.client.v1.QueryValue.scalar:type_name -> google.protobuf.Value
-	26, // 33: mycel.client.v1.Tree.roots:type_name -> mycel.client.v1.TreeNode
-	29, // 34: mycel.client.v1.TreeNode.node:type_name -> mycel.client.v1.Node
-	26, // 35: mycel.client.v1.TreeNode.children:type_name -> mycel.client.v1.TreeNode
-	24, // 36: mycel.client.v1.QueryRow.FieldsEntry.value:type_name -> mycel.client.v1.QueryValue
-	3,  // 37: mycel.client.v1.QueryService.ExecuteQuery:input_type -> mycel.client.v1.ExecuteQueryRequest
-	4,  // 38: mycel.client.v1.QueryService.ExecuteQuery:output_type -> mycel.client.v1.ExecuteQueryResponse
-	38, // [38:39] is the sub-list for method output_type
-	37, // [37:38] is the sub-list for method input_type
-	37, // [37:37] is the sub-list for extension type_name
-	37, // [37:37] is the sub-list for extension extendee
-	0,  // [0:37] is the sub-list for field type_name
+	13, // 0: mycel.client.v1.ExecuteQueryRequest.query:type_name -> mycel.client.v1.GraphQuery
+	31, // 1: mycel.client.v1.ExecuteQueryResponse.rows:type_name -> mycel.client.v1.QueryRow
+	10, // 2: mycel.client.v1.ExecuteQueryResponse.result:type_name -> mycel.client.v1.QueryResult
+	35, // 3: mycel.client.v1.ExecuteGQLRequest.params:type_name -> mycel.client.v1.ExecuteGQLRequest.ParamsEntry
+	10, // 4: mycel.client.v1.ExecuteGQLResponse.result:type_name -> mycel.client.v1.QueryResult
+	36, // 5: mycel.client.v1.ExecuteGQLScriptRequest.params:type_name -> mycel.client.v1.ExecuteGQLScriptRequest.ParamsEntry
+	9,  // 6: mycel.client.v1.ExecuteGQLScriptResponse.statements:type_name -> mycel.client.v1.GQLStatementResult
+	10, // 7: mycel.client.v1.ExecuteGQLScriptResponse.result:type_name -> mycel.client.v1.QueryResult
+	10, // 8: mycel.client.v1.GQLStatementResult.result:type_name -> mycel.client.v1.QueryResult
+	31, // 9: mycel.client.v1.QueryResult.rows:type_name -> mycel.client.v1.QueryRow
+	11, // 10: mycel.client.v1.QueryResult.graph:type_name -> mycel.client.v1.ResultGraph
+	12, // 11: mycel.client.v1.QueryResult.counters:type_name -> mycel.client.v1.QueryCounters
+	38, // 12: mycel.client.v1.ResultGraph.nodes:type_name -> mycel.client.v1.Node
+	39, // 13: mycel.client.v1.ResultGraph.edges:type_name -> mycel.client.v1.Edge
+	14, // 14: mycel.client.v1.GraphQuery.match:type_name -> mycel.client.v1.GraphPattern
+	18, // 15: mycel.client.v1.GraphQuery.where:type_name -> mycel.client.v1.Expr
+	29, // 16: mycel.client.v1.GraphQuery.returns:type_name -> mycel.client.v1.ReturnProjection
+	30, // 17: mycel.client.v1.GraphQuery.order_by:type_name -> mycel.client.v1.OrderSpec
+	15, // 18: mycel.client.v1.GraphPattern.start:type_name -> mycel.client.v1.NodePattern
+	16, // 19: mycel.client.v1.GraphPattern.steps:type_name -> mycel.client.v1.TraversalStep
+	0,  // 20: mycel.client.v1.TraversalStep.direction:type_name -> mycel.client.v1.TraversalDirection
+	17, // 21: mycel.client.v1.TraversalStep.depth:type_name -> mycel.client.v1.DepthSpec
+	15, // 22: mycel.client.v1.TraversalStep.target:type_name -> mycel.client.v1.NodePattern
+	19, // 23: mycel.client.v1.Expr.between:type_name -> mycel.client.v1.BetweenExpr
+	20, // 24: mycel.client.v1.Expr.and:type_name -> mycel.client.v1.AndExpr
+	21, // 25: mycel.client.v1.Expr.has_tag:type_name -> mycel.client.v1.HasTagExpr
+	22, // 26: mycel.client.v1.Expr.property_exists:type_name -> mycel.client.v1.PropertyExistsExpr
+	23, // 27: mycel.client.v1.Expr.property_equals:type_name -> mycel.client.v1.PropertyEqualsExpr
+	24, // 28: mycel.client.v1.BetweenExpr.value:type_name -> mycel.client.v1.ValueExpr
+	24, // 29: mycel.client.v1.BetweenExpr.low:type_name -> mycel.client.v1.ValueExpr
+	24, // 30: mycel.client.v1.BetweenExpr.high:type_name -> mycel.client.v1.ValueExpr
+	18, // 31: mycel.client.v1.AndExpr.exprs:type_name -> mycel.client.v1.Expr
+	40, // 32: mycel.client.v1.PropertyEqualsExpr.value:type_name -> google.protobuf.Value
+	25, // 33: mycel.client.v1.ValueExpr.prop:type_name -> mycel.client.v1.PropExpr
+	26, // 34: mycel.client.v1.ValueExpr.literal:type_name -> mycel.client.v1.LiteralExpr
+	27, // 35: mycel.client.v1.ValueExpr.date:type_name -> mycel.client.v1.DateExpr
+	28, // 36: mycel.client.v1.ValueExpr.current_date:type_name -> mycel.client.v1.CurrentDateExpr
+	40, // 37: mycel.client.v1.LiteralExpr.value:type_name -> google.protobuf.Value
+	1,  // 38: mycel.client.v1.ReturnProjection.kind:type_name -> mycel.client.v1.ReturnProjectionKind
+	24, // 39: mycel.client.v1.OrderSpec.value:type_name -> mycel.client.v1.ValueExpr
+	2,  // 40: mycel.client.v1.OrderSpec.direction:type_name -> mycel.client.v1.SortDirection
+	37, // 41: mycel.client.v1.QueryRow.fields:type_name -> mycel.client.v1.QueryRow.FieldsEntry
+	38, // 42: mycel.client.v1.QueryValue.node:type_name -> mycel.client.v1.Node
+	33, // 43: mycel.client.v1.QueryValue.tree:type_name -> mycel.client.v1.Tree
+	40, // 44: mycel.client.v1.QueryValue.scalar:type_name -> google.protobuf.Value
+	39, // 45: mycel.client.v1.QueryValue.edge:type_name -> mycel.client.v1.Edge
+	34, // 46: mycel.client.v1.Tree.roots:type_name -> mycel.client.v1.TreeNode
+	38, // 47: mycel.client.v1.TreeNode.node:type_name -> mycel.client.v1.Node
+	34, // 48: mycel.client.v1.TreeNode.children:type_name -> mycel.client.v1.TreeNode
+	40, // 49: mycel.client.v1.ExecuteGQLRequest.ParamsEntry.value:type_name -> google.protobuf.Value
+	40, // 50: mycel.client.v1.ExecuteGQLScriptRequest.ParamsEntry.value:type_name -> google.protobuf.Value
+	32, // 51: mycel.client.v1.QueryRow.FieldsEntry.value:type_name -> mycel.client.v1.QueryValue
+	3,  // 52: mycel.client.v1.QueryService.ExecuteQuery:input_type -> mycel.client.v1.ExecuteQueryRequest
+	5,  // 53: mycel.client.v1.QueryService.ExecuteGQL:input_type -> mycel.client.v1.ExecuteGQLRequest
+	7,  // 54: mycel.client.v1.QueryService.ExecuteGQLScript:input_type -> mycel.client.v1.ExecuteGQLScriptRequest
+	4,  // 55: mycel.client.v1.QueryService.ExecuteQuery:output_type -> mycel.client.v1.ExecuteQueryResponse
+	6,  // 56: mycel.client.v1.QueryService.ExecuteGQL:output_type -> mycel.client.v1.ExecuteGQLResponse
+	8,  // 57: mycel.client.v1.QueryService.ExecuteGQLScript:output_type -> mycel.client.v1.ExecuteGQLScriptResponse
+	55, // [55:58] is the sub-list for method output_type
+	52, // [52:55] is the sub-list for method input_type
+	52, // [52:52] is the sub-list for extension type_name
+	52, // [52:52] is the sub-list for extension extendee
+	0,  // [0:52] is the sub-list for field type_name
 }
 
 func init() { file_mycel_client_v1_query_proto_init() }
@@ -1882,25 +2516,25 @@ func file_mycel_client_v1_query_proto_init() {
 		return
 	}
 	file_mycel_client_v1_graph_proto_init()
-	file_mycel_client_v1_query_proto_msgTypes[2].OneofWrappers = []any{}
-	file_mycel_client_v1_query_proto_msgTypes[4].OneofWrappers = []any{}
-	file_mycel_client_v1_query_proto_msgTypes[7].OneofWrappers = []any{
+	file_mycel_client_v1_query_proto_msgTypes[10].OneofWrappers = []any{}
+	file_mycel_client_v1_query_proto_msgTypes[15].OneofWrappers = []any{
 		(*Expr_Between)(nil),
 		(*Expr_And)(nil),
 		(*Expr_HasTag)(nil),
 		(*Expr_PropertyExists)(nil),
 		(*Expr_PropertyEquals)(nil),
 	}
-	file_mycel_client_v1_query_proto_msgTypes[13].OneofWrappers = []any{
+	file_mycel_client_v1_query_proto_msgTypes[21].OneofWrappers = []any{
 		(*ValueExpr_Prop)(nil),
 		(*ValueExpr_Literal)(nil),
 		(*ValueExpr_Date)(nil),
 		(*ValueExpr_CurrentDate)(nil),
 	}
-	file_mycel_client_v1_query_proto_msgTypes[21].OneofWrappers = []any{
+	file_mycel_client_v1_query_proto_msgTypes[29].OneofWrappers = []any{
 		(*QueryValue_Node)(nil),
 		(*QueryValue_Tree)(nil),
 		(*QueryValue_Scalar)(nil),
+		(*QueryValue_Edge)(nil),
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
@@ -1908,7 +2542,7 @@ func file_mycel_client_v1_query_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_mycel_client_v1_query_proto_rawDesc), len(file_mycel_client_v1_query_proto_rawDesc)),
 			NumEnums:      3,
-			NumMessages:   25,
+			NumMessages:   35,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

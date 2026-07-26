@@ -26,7 +26,7 @@ Generated code is committed under `gen/go/` so tagged Go module releases are sel
 
 ## Generate protobuf stubs
 
-The committed stubs are generated from the `mycel-api` `v0.2.0` contracts. CI checks regeneration against that tag.
+The committed stubs are generated from the `mycel-api` `v0.4.0` contracts. CI checks regeneration against that tag.
 
 By default generation reads protobufs from a sibling checkout:
 
@@ -34,7 +34,7 @@ By default generation reads protobufs from a sibling checkout:
 ../mycel-api/api/proto
 ```
 
-For release-aligned regeneration, check out `mycel-api` at `v0.2.0`, then run:
+For release-aligned regeneration, check out `mycel-api` at `v0.4.0`, then run:
 
 ```sh
 make generate

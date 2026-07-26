@@ -72,60 +72,6 @@ func (SpaceState) EnumDescriptor() ([]byte, []int) {
 	return file_mycel_client_v1_space_proto_rawDescGZIP(), []int{0}
 }
 
-type SpaceTemplateUsage int32
-
-const (
-	SpaceTemplateUsage_SPACE_TEMPLATE_USAGE_UNSPECIFIED SpaceTemplateUsage = 0
-	// Nodes may omit template_id. Deleting a template may detach references from
-	// active nodes when explicitly requested.
-	SpaceTemplateUsage_SPACE_TEMPLATE_USAGE_OPTIONAL SpaceTemplateUsage = 1
-	// Nodes must have template_id. Template deletion is blocked until referencing
-	// nodes are migrated, deleted, or archived; archived nodes require the
-	// template to be archived rather than hard-deleted.
-	SpaceTemplateUsage_SPACE_TEMPLATE_USAGE_MANDATORY SpaceTemplateUsage = 2
-)
-
-// Enum value maps for SpaceTemplateUsage.
-var (
-	SpaceTemplateUsage_name = map[int32]string{
-		0: "SPACE_TEMPLATE_USAGE_UNSPECIFIED",
-		1: "SPACE_TEMPLATE_USAGE_OPTIONAL",
-		2: "SPACE_TEMPLATE_USAGE_MANDATORY",
-	}
-	SpaceTemplateUsage_value = map[string]int32{
-		"SPACE_TEMPLATE_USAGE_UNSPECIFIED": 0,
-		"SPACE_TEMPLATE_USAGE_OPTIONAL":    1,
-		"SPACE_TEMPLATE_USAGE_MANDATORY":   2,
-	}
-)
-
-func (x SpaceTemplateUsage) Enum() *SpaceTemplateUsage {
-	p := new(SpaceTemplateUsage)
-	*p = x
-	return p
-}
-
-func (x SpaceTemplateUsage) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (SpaceTemplateUsage) Descriptor() protoreflect.EnumDescriptor {
-	return file_mycel_client_v1_space_proto_enumTypes[1].Descriptor()
-}
-
-func (SpaceTemplateUsage) Type() protoreflect.EnumType {
-	return &file_mycel_client_v1_space_proto_enumTypes[1]
-}
-
-func (x SpaceTemplateUsage) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use SpaceTemplateUsage.Descriptor instead.
-func (SpaceTemplateUsage) EnumDescriptor() ([]byte, []int) {
-	return file_mycel_client_v1_space_proto_rawDescGZIP(), []int{1}
-}
-
 type ListSpacesRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// Maximum number of spaces to return. The daemon may cap this value.
@@ -340,10 +286,7 @@ type Space struct {
 	UpdateTime *timestamppb.Timestamp `protobuf:"bytes,6,opt,name=update_time,json=updateTime,proto3" json:"update_time,omitempty"`
 	// Access currently effective for the authenticated caller. This is advisory
 	// for client UI; the daemon still enforces authorization on each request.
-	CallerAccess *v1.EffectiveAccess `protobuf:"bytes,7,opt,name=caller_access,json=callerAccess,proto3" json:"caller_access,omitempty"`
-	// Template usage policy selected when the space is created. Space creation is
-	// an Admin API operation.
-	TemplateUsage SpaceTemplateUsage `protobuf:"varint,8,opt,name=template_usage,json=templateUsage,proto3,enum=mycel.client.v1.SpaceTemplateUsage" json:"template_usage,omitempty"`
+	CallerAccess  *v1.EffectiveAccess `protobuf:"bytes,7,opt,name=caller_access,json=callerAccess,proto3" json:"caller_access,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -427,13 +370,6 @@ func (x *Space) GetCallerAccess() *v1.EffectiveAccess {
 	return nil
 }
 
-func (x *Space) GetTemplateUsage() SpaceTemplateUsage {
-	if x != nil {
-		return x.TemplateUsage
-	}
-	return SpaceTemplateUsage_SPACE_TEMPLATE_USAGE_UNSPECIFIED
-}
-
 var File_mycel_client_v1_space_proto protoreflect.FileDescriptor
 
 const file_mycel_client_v1_space_proto_rawDesc = "" +
@@ -450,7 +386,7 @@ const file_mycel_client_v1_space_proto_rawDesc = "" +
 	"\x0fGetSpaceRequest\x12\x19\n" +
 	"\bspace_id\x18\x01 \x01(\tR\aspaceId\"@\n" +
 	"\x10GetSpaceResponse\x12,\n" +
-	"\x05space\x18\x01 \x01(\v2\x16.mycel.client.v1.SpaceR\x05space\"\xa8\x03\n" +
+	"\x05space\x18\x01 \x01(\v2\x16.mycel.client.v1.SpaceR\x05space\"\xdc\x02\n" +
 	"\x05Space\x12\x19\n" +
 	"\bspace_id\x18\x01 \x01(\tR\aspaceId\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x120\n" +
@@ -460,17 +396,12 @@ const file_mycel_client_v1_space_proto_rawDesc = "" +
 	"createTime\x12;\n" +
 	"\vupdate_time\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
 	"updateTime\x12E\n" +
-	"\rcaller_access\x18\a \x01(\v2 .mycel.common.v1.EffectiveAccessR\fcallerAccess\x12J\n" +
-	"\x0etemplate_usage\x18\b \x01(\x0e2#.mycel.client.v1.SpaceTemplateUsageR\rtemplateUsage*[\n" +
+	"\rcaller_access\x18\a \x01(\v2 .mycel.common.v1.EffectiveAccessR\fcallerAccess*[\n" +
 	"\n" +
 	"SpaceState\x12\x1b\n" +
 	"\x17SPACE_STATE_UNSPECIFIED\x10\x00\x12\x16\n" +
 	"\x12SPACE_STATE_ACTIVE\x10\x01\x12\x18\n" +
-	"\x14SPACE_STATE_ARCHIVED\x10\x02*\x81\x01\n" +
-	"\x12SpaceTemplateUsage\x12$\n" +
-	" SPACE_TEMPLATE_USAGE_UNSPECIFIED\x10\x00\x12!\n" +
-	"\x1dSPACE_TEMPLATE_USAGE_OPTIONAL\x10\x01\x12\"\n" +
-	"\x1eSPACE_TEMPLATE_USAGE_MANDATORY\x10\x022\xb6\x01\n" +
+	"\x14SPACE_STATE_ARCHIVED\x10\x022\xb6\x01\n" +
 	"\fSpaceService\x12U\n" +
 	"\n" +
 	"ListSpaces\x12\".mycel.client.v1.ListSpacesRequest\x1a#.mycel.client.v1.ListSpacesResponse\x12O\n" +
@@ -490,38 +421,36 @@ func file_mycel_client_v1_space_proto_rawDescGZIP() []byte {
 	return file_mycel_client_v1_space_proto_rawDescData
 }
 
-var file_mycel_client_v1_space_proto_enumTypes = make([]protoimpl.EnumInfo, 2)
+var file_mycel_client_v1_space_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
 var file_mycel_client_v1_space_proto_msgTypes = make([]protoimpl.MessageInfo, 5)
 var file_mycel_client_v1_space_proto_goTypes = []any{
 	(SpaceState)(0),               // 0: mycel.client.v1.SpaceState
-	(SpaceTemplateUsage)(0),       // 1: mycel.client.v1.SpaceTemplateUsage
-	(*ListSpacesRequest)(nil),     // 2: mycel.client.v1.ListSpacesRequest
-	(*ListSpacesResponse)(nil),    // 3: mycel.client.v1.ListSpacesResponse
-	(*GetSpaceRequest)(nil),       // 4: mycel.client.v1.GetSpaceRequest
-	(*GetSpaceResponse)(nil),      // 5: mycel.client.v1.GetSpaceResponse
-	(*Space)(nil),                 // 6: mycel.client.v1.Space
-	(*v1.Principal)(nil),          // 7: mycel.common.v1.Principal
-	(*timestamppb.Timestamp)(nil), // 8: google.protobuf.Timestamp
-	(*v1.EffectiveAccess)(nil),    // 9: mycel.common.v1.EffectiveAccess
+	(*ListSpacesRequest)(nil),     // 1: mycel.client.v1.ListSpacesRequest
+	(*ListSpacesResponse)(nil),    // 2: mycel.client.v1.ListSpacesResponse
+	(*GetSpaceRequest)(nil),       // 3: mycel.client.v1.GetSpaceRequest
+	(*GetSpaceResponse)(nil),      // 4: mycel.client.v1.GetSpaceResponse
+	(*Space)(nil),                 // 5: mycel.client.v1.Space
+	(*v1.Principal)(nil),          // 6: mycel.common.v1.Principal
+	(*timestamppb.Timestamp)(nil), // 7: google.protobuf.Timestamp
+	(*v1.EffectiveAccess)(nil),    // 8: mycel.common.v1.EffectiveAccess
 }
 var file_mycel_client_v1_space_proto_depIdxs = []int32{
-	6,  // 0: mycel.client.v1.ListSpacesResponse.spaces:type_name -> mycel.client.v1.Space
-	6,  // 1: mycel.client.v1.GetSpaceResponse.space:type_name -> mycel.client.v1.Space
-	7,  // 2: mycel.client.v1.Space.owner:type_name -> mycel.common.v1.Principal
-	0,  // 3: mycel.client.v1.Space.state:type_name -> mycel.client.v1.SpaceState
-	8,  // 4: mycel.client.v1.Space.create_time:type_name -> google.protobuf.Timestamp
-	8,  // 5: mycel.client.v1.Space.update_time:type_name -> google.protobuf.Timestamp
-	9,  // 6: mycel.client.v1.Space.caller_access:type_name -> mycel.common.v1.EffectiveAccess
-	1,  // 7: mycel.client.v1.Space.template_usage:type_name -> mycel.client.v1.SpaceTemplateUsage
-	2,  // 8: mycel.client.v1.SpaceService.ListSpaces:input_type -> mycel.client.v1.ListSpacesRequest
-	4,  // 9: mycel.client.v1.SpaceService.GetSpace:input_type -> mycel.client.v1.GetSpaceRequest
-	3,  // 10: mycel.client.v1.SpaceService.ListSpaces:output_type -> mycel.client.v1.ListSpacesResponse
-	5,  // 11: mycel.client.v1.SpaceService.GetSpace:output_type -> mycel.client.v1.GetSpaceResponse
-	10, // [10:12] is the sub-list for method output_type
-	8,  // [8:10] is the sub-list for method input_type
-	8,  // [8:8] is the sub-list for extension type_name
-	8,  // [8:8] is the sub-list for extension extendee
-	0,  // [0:8] is the sub-list for field type_name
+	5, // 0: mycel.client.v1.ListSpacesResponse.spaces:type_name -> mycel.client.v1.Space
+	5, // 1: mycel.client.v1.GetSpaceResponse.space:type_name -> mycel.client.v1.Space
+	6, // 2: mycel.client.v1.Space.owner:type_name -> mycel.common.v1.Principal
+	0, // 3: mycel.client.v1.Space.state:type_name -> mycel.client.v1.SpaceState
+	7, // 4: mycel.client.v1.Space.create_time:type_name -> google.protobuf.Timestamp
+	7, // 5: mycel.client.v1.Space.update_time:type_name -> google.protobuf.Timestamp
+	8, // 6: mycel.client.v1.Space.caller_access:type_name -> mycel.common.v1.EffectiveAccess
+	1, // 7: mycel.client.v1.SpaceService.ListSpaces:input_type -> mycel.client.v1.ListSpacesRequest
+	3, // 8: mycel.client.v1.SpaceService.GetSpace:input_type -> mycel.client.v1.GetSpaceRequest
+	2, // 9: mycel.client.v1.SpaceService.ListSpaces:output_type -> mycel.client.v1.ListSpacesResponse
+	4, // 10: mycel.client.v1.SpaceService.GetSpace:output_type -> mycel.client.v1.GetSpaceResponse
+	9, // [9:11] is the sub-list for method output_type
+	7, // [7:9] is the sub-list for method input_type
+	7, // [7:7] is the sub-list for extension type_name
+	7, // [7:7] is the sub-list for extension extendee
+	0, // [0:7] is the sub-list for field type_name
 }
 
 func init() { file_mycel_client_v1_space_proto_init() }
@@ -534,7 +463,7 @@ func file_mycel_client_v1_space_proto_init() {
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_mycel_client_v1_space_proto_rawDesc), len(file_mycel_client_v1_space_proto_rawDesc)),
-			NumEnums:      2,
+			NumEnums:      1,
 			NumMessages:   5,
 			NumExtensions: 0,
 			NumServices:   1,

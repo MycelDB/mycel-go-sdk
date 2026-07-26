@@ -93,10 +93,9 @@ const (
 	Capability_CAPABILITY_DOMAIN_UPDATE Capability = 22
 	Capability_CAPABILITY_DOMAIN_DELETE Capability = 23
 	// Graph capabilities.
-	Capability_CAPABILITY_GRAPH_READ   Capability = 40
-	Capability_CAPABILITY_GRAPH_WRITE  Capability = 41
-	Capability_CAPABILITY_GRAPH_DELETE Capability = 42
-	// Template capabilities.
+	Capability_CAPABILITY_GRAPH_READ      Capability = 40
+	Capability_CAPABILITY_GRAPH_WRITE     Capability = 41
+	Capability_CAPABILITY_GRAPH_DELETE    Capability = 42
 	Capability_CAPABILITY_TEMPLATE_READ   Capability = 60
 	Capability_CAPABILITY_TEMPLATE_MANAGE Capability = 61
 	// Blob capabilities.
