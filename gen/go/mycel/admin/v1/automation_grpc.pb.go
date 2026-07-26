@@ -19,15 +19,18 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	AdminAutomationService_CreateAutomation_FullMethodName          = "/mycel.admin.v1.AdminAutomationService/CreateAutomation"
-	AdminAutomationService_UpdateAutomation_FullMethodName          = "/mycel.admin.v1.AdminAutomationService/UpdateAutomation"
-	AdminAutomationService_DeleteAutomation_FullMethodName          = "/mycel.admin.v1.AdminAutomationService/DeleteAutomation"
-	AdminAutomationService_GetAutomation_FullMethodName             = "/mycel.admin.v1.AdminAutomationService/GetAutomation"
-	AdminAutomationService_ListAutomations_FullMethodName           = "/mycel.admin.v1.AdminAutomationService/ListAutomations"
-	AdminAutomationService_EnableAutomation_FullMethodName          = "/mycel.admin.v1.AdminAutomationService/EnableAutomation"
-	AdminAutomationService_DisableAutomation_FullMethodName         = "/mycel.admin.v1.AdminAutomationService/DisableAutomation"
-	AdminAutomationService_ListAutomationInvocations_FullMethodName = "/mycel.admin.v1.AdminAutomationService/ListAutomationInvocations"
-	AdminAutomationService_GetAutomationRun_FullMethodName          = "/mycel.admin.v1.AdminAutomationService/GetAutomationRun"
+	AdminAutomationService_ValidateAutomation_FullMethodName         = "/mycel.admin.v1.AdminAutomationService/ValidateAutomation"
+	AdminAutomationService_CreateAutomation_FullMethodName           = "/mycel.admin.v1.AdminAutomationService/CreateAutomation"
+	AdminAutomationService_UpdateAutomation_FullMethodName           = "/mycel.admin.v1.AdminAutomationService/UpdateAutomation"
+	AdminAutomationService_DeleteAutomation_FullMethodName           = "/mycel.admin.v1.AdminAutomationService/DeleteAutomation"
+	AdminAutomationService_GetAutomation_FullMethodName              = "/mycel.admin.v1.AdminAutomationService/GetAutomation"
+	AdminAutomationService_ListAutomations_FullMethodName            = "/mycel.admin.v1.AdminAutomationService/ListAutomations"
+	AdminAutomationService_EnableAutomation_FullMethodName           = "/mycel.admin.v1.AdminAutomationService/EnableAutomation"
+	AdminAutomationService_DisableAutomation_FullMethodName          = "/mycel.admin.v1.AdminAutomationService/DisableAutomation"
+	AdminAutomationService_ListAutomationInvocations_FullMethodName  = "/mycel.admin.v1.AdminAutomationService/ListAutomationInvocations"
+	AdminAutomationService_GetAutomationRun_FullMethodName           = "/mycel.admin.v1.AdminAutomationService/GetAutomationRun"
+	AdminAutomationService_RetryAutomationInvocation_FullMethodName  = "/mycel.admin.v1.AdminAutomationService/RetryAutomationInvocation"
+	AdminAutomationService_CancelAutomationInvocation_FullMethodName = "/mycel.admin.v1.AdminAutomationService/CancelAutomationInvocation"
 )
 
 // AdminAutomationServiceClient is the client API for AdminAutomationService service.
@@ -36,6 +39,7 @@ const (
 //
 // AdminAutomationService exposes operator access to graph automation definitions and run history.
 type AdminAutomationServiceClient interface {
+	ValidateAutomation(ctx context.Context, in *ValidateAutomationRequest, opts ...grpc.CallOption) (*ValidateAutomationResponse, error)
 	CreateAutomation(ctx context.Context, in *CreateAutomationRequest, opts ...grpc.CallOption) (*CreateAutomationResponse, error)
 	UpdateAutomation(ctx context.Context, in *UpdateAutomationRequest, opts ...grpc.CallOption) (*UpdateAutomationResponse, error)
 	DeleteAutomation(ctx context.Context, in *DeleteAutomationRequest, opts ...grpc.CallOption) (*DeleteAutomationResponse, error)
@@ -45,6 +49,8 @@ type AdminAutomationServiceClient interface {
 	DisableAutomation(ctx context.Context, in *DisableAutomationRequest, opts ...grpc.CallOption) (*DisableAutomationResponse, error)
 	ListAutomationInvocations(ctx context.Context, in *ListAutomationInvocationsRequest, opts ...grpc.CallOption) (*ListAutomationInvocationsResponse, error)
 	GetAutomationRun(ctx context.Context, in *GetAutomationRunRequest, opts ...grpc.CallOption) (*GetAutomationRunResponse, error)
+	RetryAutomationInvocation(ctx context.Context, in *RetryAutomationInvocationRequest, opts ...grpc.CallOption) (*RetryAutomationInvocationResponse, error)
+	CancelAutomationInvocation(ctx context.Context, in *CancelAutomationInvocationRequest, opts ...grpc.CallOption) (*CancelAutomationInvocationResponse, error)
 }
 
 type adminAutomationServiceClient struct {
@@ -53,6 +59,16 @@ type adminAutomationServiceClient struct {
 
 func NewAdminAutomationServiceClient(cc grpc.ClientConnInterface) AdminAutomationServiceClient {
 	return &adminAutomationServiceClient{cc}
+}
+
+func (c *adminAutomationServiceClient) ValidateAutomation(ctx context.Context, in *ValidateAutomationRequest, opts ...grpc.CallOption) (*ValidateAutomationResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ValidateAutomationResponse)
+	err := c.cc.Invoke(ctx, AdminAutomationService_ValidateAutomation_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
 func (c *adminAutomationServiceClient) CreateAutomation(ctx context.Context, in *CreateAutomationRequest, opts ...grpc.CallOption) (*CreateAutomationResponse, error) {
@@ -145,12 +161,33 @@ func (c *adminAutomationServiceClient) GetAutomationRun(ctx context.Context, in 
 	return out, nil
 }
 
+func (c *adminAutomationServiceClient) RetryAutomationInvocation(ctx context.Context, in *RetryAutomationInvocationRequest, opts ...grpc.CallOption) (*RetryAutomationInvocationResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(RetryAutomationInvocationResponse)
+	err := c.cc.Invoke(ctx, AdminAutomationService_RetryAutomationInvocation_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *adminAutomationServiceClient) CancelAutomationInvocation(ctx context.Context, in *CancelAutomationInvocationRequest, opts ...grpc.CallOption) (*CancelAutomationInvocationResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CancelAutomationInvocationResponse)
+	err := c.cc.Invoke(ctx, AdminAutomationService_CancelAutomationInvocation_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // AdminAutomationServiceServer is the server API for AdminAutomationService service.
 // All implementations must embed UnimplementedAdminAutomationServiceServer
 // for forward compatibility.
 //
 // AdminAutomationService exposes operator access to graph automation definitions and run history.
 type AdminAutomationServiceServer interface {
+	ValidateAutomation(context.Context, *ValidateAutomationRequest) (*ValidateAutomationResponse, error)
 	CreateAutomation(context.Context, *CreateAutomationRequest) (*CreateAutomationResponse, error)
 	UpdateAutomation(context.Context, *UpdateAutomationRequest) (*UpdateAutomationResponse, error)
 	DeleteAutomation(context.Context, *DeleteAutomationRequest) (*DeleteAutomationResponse, error)
@@ -160,6 +197,8 @@ type AdminAutomationServiceServer interface {
 	DisableAutomation(context.Context, *DisableAutomationRequest) (*DisableAutomationResponse, error)
 	ListAutomationInvocations(context.Context, *ListAutomationInvocationsRequest) (*ListAutomationInvocationsResponse, error)
 	GetAutomationRun(context.Context, *GetAutomationRunRequest) (*GetAutomationRunResponse, error)
+	RetryAutomationInvocation(context.Context, *RetryAutomationInvocationRequest) (*RetryAutomationInvocationResponse, error)
+	CancelAutomationInvocation(context.Context, *CancelAutomationInvocationRequest) (*CancelAutomationInvocationResponse, error)
 	mustEmbedUnimplementedAdminAutomationServiceServer()
 }
 
@@ -170,6 +209,9 @@ type AdminAutomationServiceServer interface {
 // pointer dereference when methods are called.
 type UnimplementedAdminAutomationServiceServer struct{}
 
+func (UnimplementedAdminAutomationServiceServer) ValidateAutomation(context.Context, *ValidateAutomationRequest) (*ValidateAutomationResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ValidateAutomation not implemented")
+}
 func (UnimplementedAdminAutomationServiceServer) CreateAutomation(context.Context, *CreateAutomationRequest) (*CreateAutomationResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateAutomation not implemented")
 }
@@ -197,6 +239,12 @@ func (UnimplementedAdminAutomationServiceServer) ListAutomationInvocations(conte
 func (UnimplementedAdminAutomationServiceServer) GetAutomationRun(context.Context, *GetAutomationRunRequest) (*GetAutomationRunResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAutomationRun not implemented")
 }
+func (UnimplementedAdminAutomationServiceServer) RetryAutomationInvocation(context.Context, *RetryAutomationInvocationRequest) (*RetryAutomationInvocationResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RetryAutomationInvocation not implemented")
+}
+func (UnimplementedAdminAutomationServiceServer) CancelAutomationInvocation(context.Context, *CancelAutomationInvocationRequest) (*CancelAutomationInvocationResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CancelAutomationInvocation not implemented")
+}
 func (UnimplementedAdminAutomationServiceServer) mustEmbedUnimplementedAdminAutomationServiceServer() {
 }
 func (UnimplementedAdminAutomationServiceServer) testEmbeddedByValue() {}
@@ -217,6 +265,24 @@ func RegisterAdminAutomationServiceServer(s grpc.ServiceRegistrar, srv AdminAuto
 		t.testEmbeddedByValue()
 	}
 	s.RegisterService(&AdminAutomationService_ServiceDesc, srv)
+}
+
+func _AdminAutomationService_ValidateAutomation_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ValidateAutomationRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminAutomationServiceServer).ValidateAutomation(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AdminAutomationService_ValidateAutomation_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminAutomationServiceServer).ValidateAutomation(ctx, req.(*ValidateAutomationRequest))
+	}
+	return interceptor(ctx, in, info, handler)
 }
 
 func _AdminAutomationService_CreateAutomation_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -381,6 +447,42 @@ func _AdminAutomationService_GetAutomationRun_Handler(srv interface{}, ctx conte
 	return interceptor(ctx, in, info, handler)
 }
 
+func _AdminAutomationService_RetryAutomationInvocation_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RetryAutomationInvocationRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminAutomationServiceServer).RetryAutomationInvocation(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AdminAutomationService_RetryAutomationInvocation_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminAutomationServiceServer).RetryAutomationInvocation(ctx, req.(*RetryAutomationInvocationRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AdminAutomationService_CancelAutomationInvocation_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CancelAutomationInvocationRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminAutomationServiceServer).CancelAutomationInvocation(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AdminAutomationService_CancelAutomationInvocation_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminAutomationServiceServer).CancelAutomationInvocation(ctx, req.(*CancelAutomationInvocationRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // AdminAutomationService_ServiceDesc is the grpc.ServiceDesc for AdminAutomationService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -388,6 +490,10 @@ var AdminAutomationService_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "mycel.admin.v1.AdminAutomationService",
 	HandlerType: (*AdminAutomationServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "ValidateAutomation",
+			Handler:    _AdminAutomationService_ValidateAutomation_Handler,
+		},
 		{
 			MethodName: "CreateAutomation",
 			Handler:    _AdminAutomationService_CreateAutomation_Handler,
@@ -423,6 +529,14 @@ var AdminAutomationService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetAutomationRun",
 			Handler:    _AdminAutomationService_GetAutomationRun_Handler,
+		},
+		{
+			MethodName: "RetryAutomationInvocation",
+			Handler:    _AdminAutomationService_RetryAutomationInvocation_Handler,
+		},
+		{
+			MethodName: "CancelAutomationInvocation",
+			Handler:    _AdminAutomationService_CancelAutomationInvocation_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

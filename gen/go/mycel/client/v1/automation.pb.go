@@ -21,6 +21,118 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
+type ValidateAutomationRequest struct {
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	DomainId       string                 `protobuf:"bytes,1,opt,name=domain_id,json=domainId,proto3" json:"domain_id,omitempty"`
+	DefinitionJson string                 `protobuf:"bytes,2,opt,name=definition_json,json=definitionJson,proto3" json:"definition_json,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
+}
+
+func (x *ValidateAutomationRequest) Reset() {
+	*x = ValidateAutomationRequest{}
+	mi := &file_mycel_client_v1_automation_proto_msgTypes[0]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ValidateAutomationRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ValidateAutomationRequest) ProtoMessage() {}
+
+func (x *ValidateAutomationRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_client_v1_automation_proto_msgTypes[0]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ValidateAutomationRequest.ProtoReflect.Descriptor instead.
+func (*ValidateAutomationRequest) Descriptor() ([]byte, []int) {
+	return file_mycel_client_v1_automation_proto_rawDescGZIP(), []int{0}
+}
+
+func (x *ValidateAutomationRequest) GetDomainId() string {
+	if x != nil {
+		return x.DomainId
+	}
+	return ""
+}
+
+func (x *ValidateAutomationRequest) GetDefinitionJson() string {
+	if x != nil {
+		return x.DefinitionJson
+	}
+	return ""
+}
+
+type ValidateAutomationResponse struct {
+	state                    protoimpl.MessageState `protogen:"open.v1"`
+	Valid                    bool                   `protobuf:"varint,1,opt,name=valid,proto3" json:"valid,omitempty"`
+	Error                    string                 `protobuf:"bytes,2,opt,name=error,proto3" json:"error,omitempty"`
+	NormalizedDefinitionJson string                 `protobuf:"bytes,3,opt,name=normalized_definition_json,json=normalizedDefinitionJson,proto3" json:"normalized_definition_json,omitempty"`
+	unknownFields            protoimpl.UnknownFields
+	sizeCache                protoimpl.SizeCache
+}
+
+func (x *ValidateAutomationResponse) Reset() {
+	*x = ValidateAutomationResponse{}
+	mi := &file_mycel_client_v1_automation_proto_msgTypes[1]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ValidateAutomationResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ValidateAutomationResponse) ProtoMessage() {}
+
+func (x *ValidateAutomationResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_client_v1_automation_proto_msgTypes[1]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ValidateAutomationResponse.ProtoReflect.Descriptor instead.
+func (*ValidateAutomationResponse) Descriptor() ([]byte, []int) {
+	return file_mycel_client_v1_automation_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *ValidateAutomationResponse) GetValid() bool {
+	if x != nil {
+		return x.Valid
+	}
+	return false
+}
+
+func (x *ValidateAutomationResponse) GetError() string {
+	if x != nil {
+		return x.Error
+	}
+	return ""
+}
+
+func (x *ValidateAutomationResponse) GetNormalizedDefinitionJson() string {
+	if x != nil {
+		return x.NormalizedDefinitionJson
+	}
+	return ""
+}
+
 type CreateAutomationRequest struct {
 	state          protoimpl.MessageState `protogen:"open.v1"`
 	DomainId       string                 `protobuf:"bytes,1,opt,name=domain_id,json=domainId,proto3" json:"domain_id,omitempty"`
@@ -31,7 +143,7 @@ type CreateAutomationRequest struct {
 
 func (x *CreateAutomationRequest) Reset() {
 	*x = CreateAutomationRequest{}
-	mi := &file_mycel_client_v1_automation_proto_msgTypes[0]
+	mi := &file_mycel_client_v1_automation_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -43,7 +155,7 @@ func (x *CreateAutomationRequest) String() string {
 func (*CreateAutomationRequest) ProtoMessage() {}
 
 func (x *CreateAutomationRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_client_v1_automation_proto_msgTypes[0]
+	mi := &file_mycel_client_v1_automation_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -56,7 +168,7 @@ func (x *CreateAutomationRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateAutomationRequest.ProtoReflect.Descriptor instead.
 func (*CreateAutomationRequest) Descriptor() ([]byte, []int) {
-	return file_mycel_client_v1_automation_proto_rawDescGZIP(), []int{0}
+	return file_mycel_client_v1_automation_proto_rawDescGZIP(), []int{2}
 }
 
 func (x *CreateAutomationRequest) GetDomainId() string {
@@ -84,7 +196,7 @@ type UpdateAutomationRequest struct {
 
 func (x *UpdateAutomationRequest) Reset() {
 	*x = UpdateAutomationRequest{}
-	mi := &file_mycel_client_v1_automation_proto_msgTypes[1]
+	mi := &file_mycel_client_v1_automation_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -96,7 +208,7 @@ func (x *UpdateAutomationRequest) String() string {
 func (*UpdateAutomationRequest) ProtoMessage() {}
 
 func (x *UpdateAutomationRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_client_v1_automation_proto_msgTypes[1]
+	mi := &file_mycel_client_v1_automation_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -109,7 +221,7 @@ func (x *UpdateAutomationRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateAutomationRequest.ProtoReflect.Descriptor instead.
 func (*UpdateAutomationRequest) Descriptor() ([]byte, []int) {
-	return file_mycel_client_v1_automation_proto_rawDescGZIP(), []int{1}
+	return file_mycel_client_v1_automation_proto_rawDescGZIP(), []int{3}
 }
 
 func (x *UpdateAutomationRequest) GetDomainId() string {
@@ -143,7 +255,7 @@ type DeleteAutomationRequest struct {
 
 func (x *DeleteAutomationRequest) Reset() {
 	*x = DeleteAutomationRequest{}
-	mi := &file_mycel_client_v1_automation_proto_msgTypes[2]
+	mi := &file_mycel_client_v1_automation_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -155,7 +267,7 @@ func (x *DeleteAutomationRequest) String() string {
 func (*DeleteAutomationRequest) ProtoMessage() {}
 
 func (x *DeleteAutomationRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_client_v1_automation_proto_msgTypes[2]
+	mi := &file_mycel_client_v1_automation_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -168,7 +280,7 @@ func (x *DeleteAutomationRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteAutomationRequest.ProtoReflect.Descriptor instead.
 func (*DeleteAutomationRequest) Descriptor() ([]byte, []int) {
-	return file_mycel_client_v1_automation_proto_rawDescGZIP(), []int{2}
+	return file_mycel_client_v1_automation_proto_rawDescGZIP(), []int{4}
 }
 
 func (x *DeleteAutomationRequest) GetDomainId() string {
@@ -193,7 +305,7 @@ type DeleteAutomationResponse struct {
 
 func (x *DeleteAutomationResponse) Reset() {
 	*x = DeleteAutomationResponse{}
-	mi := &file_mycel_client_v1_automation_proto_msgTypes[3]
+	mi := &file_mycel_client_v1_automation_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -205,7 +317,7 @@ func (x *DeleteAutomationResponse) String() string {
 func (*DeleteAutomationResponse) ProtoMessage() {}
 
 func (x *DeleteAutomationResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_client_v1_automation_proto_msgTypes[3]
+	mi := &file_mycel_client_v1_automation_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -218,7 +330,7 @@ func (x *DeleteAutomationResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteAutomationResponse.ProtoReflect.Descriptor instead.
 func (*DeleteAutomationResponse) Descriptor() ([]byte, []int) {
-	return file_mycel_client_v1_automation_proto_rawDescGZIP(), []int{3}
+	return file_mycel_client_v1_automation_proto_rawDescGZIP(), []int{5}
 }
 
 type GetAutomationRequest struct {
@@ -231,7 +343,7 @@ type GetAutomationRequest struct {
 
 func (x *GetAutomationRequest) Reset() {
 	*x = GetAutomationRequest{}
-	mi := &file_mycel_client_v1_automation_proto_msgTypes[4]
+	mi := &file_mycel_client_v1_automation_proto_msgTypes[6]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -243,7 +355,7 @@ func (x *GetAutomationRequest) String() string {
 func (*GetAutomationRequest) ProtoMessage() {}
 
 func (x *GetAutomationRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_client_v1_automation_proto_msgTypes[4]
+	mi := &file_mycel_client_v1_automation_proto_msgTypes[6]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -256,7 +368,7 @@ func (x *GetAutomationRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetAutomationRequest.ProtoReflect.Descriptor instead.
 func (*GetAutomationRequest) Descriptor() ([]byte, []int) {
-	return file_mycel_client_v1_automation_proto_rawDescGZIP(), []int{4}
+	return file_mycel_client_v1_automation_proto_rawDescGZIP(), []int{6}
 }
 
 func (x *GetAutomationRequest) GetDomainId() string {
@@ -283,7 +395,7 @@ type ListAutomationsRequest struct {
 
 func (x *ListAutomationsRequest) Reset() {
 	*x = ListAutomationsRequest{}
-	mi := &file_mycel_client_v1_automation_proto_msgTypes[5]
+	mi := &file_mycel_client_v1_automation_proto_msgTypes[7]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -295,7 +407,7 @@ func (x *ListAutomationsRequest) String() string {
 func (*ListAutomationsRequest) ProtoMessage() {}
 
 func (x *ListAutomationsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_client_v1_automation_proto_msgTypes[5]
+	mi := &file_mycel_client_v1_automation_proto_msgTypes[7]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -308,7 +420,7 @@ func (x *ListAutomationsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListAutomationsRequest.ProtoReflect.Descriptor instead.
 func (*ListAutomationsRequest) Descriptor() ([]byte, []int) {
-	return file_mycel_client_v1_automation_proto_rawDescGZIP(), []int{5}
+	return file_mycel_client_v1_automation_proto_rawDescGZIP(), []int{7}
 }
 
 func (x *ListAutomationsRequest) GetDomainId() string {
@@ -334,7 +446,7 @@ type ListAutomationsResponse struct {
 
 func (x *ListAutomationsResponse) Reset() {
 	*x = ListAutomationsResponse{}
-	mi := &file_mycel_client_v1_automation_proto_msgTypes[6]
+	mi := &file_mycel_client_v1_automation_proto_msgTypes[8]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -346,7 +458,7 @@ func (x *ListAutomationsResponse) String() string {
 func (*ListAutomationsResponse) ProtoMessage() {}
 
 func (x *ListAutomationsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_client_v1_automation_proto_msgTypes[6]
+	mi := &file_mycel_client_v1_automation_proto_msgTypes[8]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -359,7 +471,7 @@ func (x *ListAutomationsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListAutomationsResponse.ProtoReflect.Descriptor instead.
 func (*ListAutomationsResponse) Descriptor() ([]byte, []int) {
-	return file_mycel_client_v1_automation_proto_rawDescGZIP(), []int{6}
+	return file_mycel_client_v1_automation_proto_rawDescGZIP(), []int{8}
 }
 
 func (x *ListAutomationsResponse) GetAutomations() []*AutomationDefinitionSummary {
@@ -379,7 +491,7 @@ type EnableAutomationRequest struct {
 
 func (x *EnableAutomationRequest) Reset() {
 	*x = EnableAutomationRequest{}
-	mi := &file_mycel_client_v1_automation_proto_msgTypes[7]
+	mi := &file_mycel_client_v1_automation_proto_msgTypes[9]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -391,7 +503,7 @@ func (x *EnableAutomationRequest) String() string {
 func (*EnableAutomationRequest) ProtoMessage() {}
 
 func (x *EnableAutomationRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_client_v1_automation_proto_msgTypes[7]
+	mi := &file_mycel_client_v1_automation_proto_msgTypes[9]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -404,7 +516,7 @@ func (x *EnableAutomationRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use EnableAutomationRequest.ProtoReflect.Descriptor instead.
 func (*EnableAutomationRequest) Descriptor() ([]byte, []int) {
-	return file_mycel_client_v1_automation_proto_rawDescGZIP(), []int{7}
+	return file_mycel_client_v1_automation_proto_rawDescGZIP(), []int{9}
 }
 
 func (x *EnableAutomationRequest) GetDomainId() string {
@@ -431,7 +543,7 @@ type DisableAutomationRequest struct {
 
 func (x *DisableAutomationRequest) Reset() {
 	*x = DisableAutomationRequest{}
-	mi := &file_mycel_client_v1_automation_proto_msgTypes[8]
+	mi := &file_mycel_client_v1_automation_proto_msgTypes[10]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -443,7 +555,7 @@ func (x *DisableAutomationRequest) String() string {
 func (*DisableAutomationRequest) ProtoMessage() {}
 
 func (x *DisableAutomationRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_client_v1_automation_proto_msgTypes[8]
+	mi := &file_mycel_client_v1_automation_proto_msgTypes[10]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -456,7 +568,7 @@ func (x *DisableAutomationRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DisableAutomationRequest.ProtoReflect.Descriptor instead.
 func (*DisableAutomationRequest) Descriptor() ([]byte, []int) {
-	return file_mycel_client_v1_automation_proto_rawDescGZIP(), []int{8}
+	return file_mycel_client_v1_automation_proto_rawDescGZIP(), []int{10}
 }
 
 func (x *DisableAutomationRequest) GetDomainId() string {
@@ -482,7 +594,7 @@ type CreateAutomationResponse struct {
 
 func (x *CreateAutomationResponse) Reset() {
 	*x = CreateAutomationResponse{}
-	mi := &file_mycel_client_v1_automation_proto_msgTypes[9]
+	mi := &file_mycel_client_v1_automation_proto_msgTypes[11]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -494,7 +606,7 @@ func (x *CreateAutomationResponse) String() string {
 func (*CreateAutomationResponse) ProtoMessage() {}
 
 func (x *CreateAutomationResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_client_v1_automation_proto_msgTypes[9]
+	mi := &file_mycel_client_v1_automation_proto_msgTypes[11]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -507,7 +619,7 @@ func (x *CreateAutomationResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateAutomationResponse.ProtoReflect.Descriptor instead.
 func (*CreateAutomationResponse) Descriptor() ([]byte, []int) {
-	return file_mycel_client_v1_automation_proto_rawDescGZIP(), []int{9}
+	return file_mycel_client_v1_automation_proto_rawDescGZIP(), []int{11}
 }
 
 func (x *CreateAutomationResponse) GetDefinitionJson() string {
@@ -526,7 +638,7 @@ type UpdateAutomationResponse struct {
 
 func (x *UpdateAutomationResponse) Reset() {
 	*x = UpdateAutomationResponse{}
-	mi := &file_mycel_client_v1_automation_proto_msgTypes[10]
+	mi := &file_mycel_client_v1_automation_proto_msgTypes[12]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -538,7 +650,7 @@ func (x *UpdateAutomationResponse) String() string {
 func (*UpdateAutomationResponse) ProtoMessage() {}
 
 func (x *UpdateAutomationResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_client_v1_automation_proto_msgTypes[10]
+	mi := &file_mycel_client_v1_automation_proto_msgTypes[12]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -551,7 +663,7 @@ func (x *UpdateAutomationResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateAutomationResponse.ProtoReflect.Descriptor instead.
 func (*UpdateAutomationResponse) Descriptor() ([]byte, []int) {
-	return file_mycel_client_v1_automation_proto_rawDescGZIP(), []int{10}
+	return file_mycel_client_v1_automation_proto_rawDescGZIP(), []int{12}
 }
 
 func (x *UpdateAutomationResponse) GetDefinitionJson() string {
@@ -570,7 +682,7 @@ type GetAutomationResponse struct {
 
 func (x *GetAutomationResponse) Reset() {
 	*x = GetAutomationResponse{}
-	mi := &file_mycel_client_v1_automation_proto_msgTypes[11]
+	mi := &file_mycel_client_v1_automation_proto_msgTypes[13]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -582,7 +694,7 @@ func (x *GetAutomationResponse) String() string {
 func (*GetAutomationResponse) ProtoMessage() {}
 
 func (x *GetAutomationResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_client_v1_automation_proto_msgTypes[11]
+	mi := &file_mycel_client_v1_automation_proto_msgTypes[13]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -595,7 +707,7 @@ func (x *GetAutomationResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetAutomationResponse.ProtoReflect.Descriptor instead.
 func (*GetAutomationResponse) Descriptor() ([]byte, []int) {
-	return file_mycel_client_v1_automation_proto_rawDescGZIP(), []int{11}
+	return file_mycel_client_v1_automation_proto_rawDescGZIP(), []int{13}
 }
 
 func (x *GetAutomationResponse) GetDefinitionJson() string {
@@ -614,7 +726,7 @@ type EnableAutomationResponse struct {
 
 func (x *EnableAutomationResponse) Reset() {
 	*x = EnableAutomationResponse{}
-	mi := &file_mycel_client_v1_automation_proto_msgTypes[12]
+	mi := &file_mycel_client_v1_automation_proto_msgTypes[14]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -626,7 +738,7 @@ func (x *EnableAutomationResponse) String() string {
 func (*EnableAutomationResponse) ProtoMessage() {}
 
 func (x *EnableAutomationResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_client_v1_automation_proto_msgTypes[12]
+	mi := &file_mycel_client_v1_automation_proto_msgTypes[14]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -639,7 +751,7 @@ func (x *EnableAutomationResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use EnableAutomationResponse.ProtoReflect.Descriptor instead.
 func (*EnableAutomationResponse) Descriptor() ([]byte, []int) {
-	return file_mycel_client_v1_automation_proto_rawDescGZIP(), []int{12}
+	return file_mycel_client_v1_automation_proto_rawDescGZIP(), []int{14}
 }
 
 func (x *EnableAutomationResponse) GetDefinitionJson() string {
@@ -658,7 +770,7 @@ type DisableAutomationResponse struct {
 
 func (x *DisableAutomationResponse) Reset() {
 	*x = DisableAutomationResponse{}
-	mi := &file_mycel_client_v1_automation_proto_msgTypes[13]
+	mi := &file_mycel_client_v1_automation_proto_msgTypes[15]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -670,7 +782,7 @@ func (x *DisableAutomationResponse) String() string {
 func (*DisableAutomationResponse) ProtoMessage() {}
 
 func (x *DisableAutomationResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_client_v1_automation_proto_msgTypes[13]
+	mi := &file_mycel_client_v1_automation_proto_msgTypes[15]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -683,7 +795,7 @@ func (x *DisableAutomationResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DisableAutomationResponse.ProtoReflect.Descriptor instead.
 func (*DisableAutomationResponse) Descriptor() ([]byte, []int) {
-	return file_mycel_client_v1_automation_proto_rawDescGZIP(), []int{13}
+	return file_mycel_client_v1_automation_proto_rawDescGZIP(), []int{15}
 }
 
 func (x *DisableAutomationResponse) GetDefinitionJson() string {
@@ -708,7 +820,7 @@ type AutomationDefinitionSummary struct {
 
 func (x *AutomationDefinitionSummary) Reset() {
 	*x = AutomationDefinitionSummary{}
-	mi := &file_mycel_client_v1_automation_proto_msgTypes[14]
+	mi := &file_mycel_client_v1_automation_proto_msgTypes[16]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -720,7 +832,7 @@ func (x *AutomationDefinitionSummary) String() string {
 func (*AutomationDefinitionSummary) ProtoMessage() {}
 
 func (x *AutomationDefinitionSummary) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_client_v1_automation_proto_msgTypes[14]
+	mi := &file_mycel_client_v1_automation_proto_msgTypes[16]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -733,7 +845,7 @@ func (x *AutomationDefinitionSummary) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AutomationDefinitionSummary.ProtoReflect.Descriptor instead.
 func (*AutomationDefinitionSummary) Descriptor() ([]byte, []int) {
-	return file_mycel_client_v1_automation_proto_rawDescGZIP(), []int{14}
+	return file_mycel_client_v1_automation_proto_rawDescGZIP(), []int{16}
 }
 
 func (x *AutomationDefinitionSummary) GetId() string {
@@ -797,7 +909,7 @@ type ListAutomationInvocationsRequest struct {
 
 func (x *ListAutomationInvocationsRequest) Reset() {
 	*x = ListAutomationInvocationsRequest{}
-	mi := &file_mycel_client_v1_automation_proto_msgTypes[15]
+	mi := &file_mycel_client_v1_automation_proto_msgTypes[17]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -809,7 +921,7 @@ func (x *ListAutomationInvocationsRequest) String() string {
 func (*ListAutomationInvocationsRequest) ProtoMessage() {}
 
 func (x *ListAutomationInvocationsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_client_v1_automation_proto_msgTypes[15]
+	mi := &file_mycel_client_v1_automation_proto_msgTypes[17]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -822,7 +934,7 @@ func (x *ListAutomationInvocationsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListAutomationInvocationsRequest.ProtoReflect.Descriptor instead.
 func (*ListAutomationInvocationsRequest) Descriptor() ([]byte, []int) {
-	return file_mycel_client_v1_automation_proto_rawDescGZIP(), []int{15}
+	return file_mycel_client_v1_automation_proto_rawDescGZIP(), []int{17}
 }
 
 func (x *ListAutomationInvocationsRequest) GetDomainId() string {
@@ -862,7 +974,7 @@ type ListAutomationInvocationsResponse struct {
 
 func (x *ListAutomationInvocationsResponse) Reset() {
 	*x = ListAutomationInvocationsResponse{}
-	mi := &file_mycel_client_v1_automation_proto_msgTypes[16]
+	mi := &file_mycel_client_v1_automation_proto_msgTypes[18]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -874,7 +986,7 @@ func (x *ListAutomationInvocationsResponse) String() string {
 func (*ListAutomationInvocationsResponse) ProtoMessage() {}
 
 func (x *ListAutomationInvocationsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_client_v1_automation_proto_msgTypes[16]
+	mi := &file_mycel_client_v1_automation_proto_msgTypes[18]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -887,7 +999,7 @@ func (x *ListAutomationInvocationsResponse) ProtoReflect() protoreflect.Message 
 
 // Deprecated: Use ListAutomationInvocationsResponse.ProtoReflect.Descriptor instead.
 func (*ListAutomationInvocationsResponse) Descriptor() ([]byte, []int) {
-	return file_mycel_client_v1_automation_proto_rawDescGZIP(), []int{16}
+	return file_mycel_client_v1_automation_proto_rawDescGZIP(), []int{18}
 }
 
 func (x *ListAutomationInvocationsResponse) GetInvocations() []*AutomationInvocationSummary {
@@ -915,7 +1027,7 @@ type AutomationInvocationSummary struct {
 
 func (x *AutomationInvocationSummary) Reset() {
 	*x = AutomationInvocationSummary{}
-	mi := &file_mycel_client_v1_automation_proto_msgTypes[17]
+	mi := &file_mycel_client_v1_automation_proto_msgTypes[19]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -927,7 +1039,7 @@ func (x *AutomationInvocationSummary) String() string {
 func (*AutomationInvocationSummary) ProtoMessage() {}
 
 func (x *AutomationInvocationSummary) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_client_v1_automation_proto_msgTypes[17]
+	mi := &file_mycel_client_v1_automation_proto_msgTypes[19]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -940,7 +1052,7 @@ func (x *AutomationInvocationSummary) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AutomationInvocationSummary.ProtoReflect.Descriptor instead.
 func (*AutomationInvocationSummary) Descriptor() ([]byte, []int) {
-	return file_mycel_client_v1_automation_proto_rawDescGZIP(), []int{17}
+	return file_mycel_client_v1_automation_proto_rawDescGZIP(), []int{19}
 }
 
 func (x *AutomationInvocationSummary) GetId() string {
@@ -1023,7 +1135,7 @@ type GetAutomationRunRequest struct {
 
 func (x *GetAutomationRunRequest) Reset() {
 	*x = GetAutomationRunRequest{}
-	mi := &file_mycel_client_v1_automation_proto_msgTypes[18]
+	mi := &file_mycel_client_v1_automation_proto_msgTypes[20]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1035,7 +1147,7 @@ func (x *GetAutomationRunRequest) String() string {
 func (*GetAutomationRunRequest) ProtoMessage() {}
 
 func (x *GetAutomationRunRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_client_v1_automation_proto_msgTypes[18]
+	mi := &file_mycel_client_v1_automation_proto_msgTypes[20]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1048,7 +1160,7 @@ func (x *GetAutomationRunRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetAutomationRunRequest.ProtoReflect.Descriptor instead.
 func (*GetAutomationRunRequest) Descriptor() ([]byte, []int) {
-	return file_mycel_client_v1_automation_proto_rawDescGZIP(), []int{18}
+	return file_mycel_client_v1_automation_proto_rawDescGZIP(), []int{20}
 }
 
 func (x *GetAutomationRunRequest) GetDomainId() string {
@@ -1074,7 +1186,7 @@ type GetAutomationRunResponse struct {
 
 func (x *GetAutomationRunResponse) Reset() {
 	*x = GetAutomationRunResponse{}
-	mi := &file_mycel_client_v1_automation_proto_msgTypes[19]
+	mi := &file_mycel_client_v1_automation_proto_msgTypes[21]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1086,7 +1198,7 @@ func (x *GetAutomationRunResponse) String() string {
 func (*GetAutomationRunResponse) ProtoMessage() {}
 
 func (x *GetAutomationRunResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_client_v1_automation_proto_msgTypes[19]
+	mi := &file_mycel_client_v1_automation_proto_msgTypes[21]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1099,7 +1211,7 @@ func (x *GetAutomationRunResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetAutomationRunResponse.ProtoReflect.Descriptor instead.
 func (*GetAutomationRunResponse) Descriptor() ([]byte, []int) {
-	return file_mycel_client_v1_automation_proto_rawDescGZIP(), []int{19}
+	return file_mycel_client_v1_automation_proto_rawDescGZIP(), []int{21}
 }
 
 func (x *GetAutomationRunResponse) GetRunJson() string {
@@ -1109,11 +1221,210 @@ func (x *GetAutomationRunResponse) GetRunJson() string {
 	return ""
 }
 
+type RetryAutomationInvocationRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	DomainId      string                 `protobuf:"bytes,1,opt,name=domain_id,json=domainId,proto3" json:"domain_id,omitempty"`
+	InvocationId  string                 `protobuf:"bytes,2,opt,name=invocation_id,json=invocationId,proto3" json:"invocation_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *RetryAutomationInvocationRequest) Reset() {
+	*x = RetryAutomationInvocationRequest{}
+	mi := &file_mycel_client_v1_automation_proto_msgTypes[22]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *RetryAutomationInvocationRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RetryAutomationInvocationRequest) ProtoMessage() {}
+
+func (x *RetryAutomationInvocationRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_client_v1_automation_proto_msgTypes[22]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RetryAutomationInvocationRequest.ProtoReflect.Descriptor instead.
+func (*RetryAutomationInvocationRequest) Descriptor() ([]byte, []int) {
+	return file_mycel_client_v1_automation_proto_rawDescGZIP(), []int{22}
+}
+
+func (x *RetryAutomationInvocationRequest) GetDomainId() string {
+	if x != nil {
+		return x.DomainId
+	}
+	return ""
+}
+
+func (x *RetryAutomationInvocationRequest) GetInvocationId() string {
+	if x != nil {
+		return x.InvocationId
+	}
+	return ""
+}
+
+type RetryAutomationInvocationResponse struct {
+	state         protoimpl.MessageState       `protogen:"open.v1"`
+	Invocation    *AutomationInvocationSummary `protobuf:"bytes,1,opt,name=invocation,proto3" json:"invocation,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *RetryAutomationInvocationResponse) Reset() {
+	*x = RetryAutomationInvocationResponse{}
+	mi := &file_mycel_client_v1_automation_proto_msgTypes[23]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *RetryAutomationInvocationResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RetryAutomationInvocationResponse) ProtoMessage() {}
+
+func (x *RetryAutomationInvocationResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_client_v1_automation_proto_msgTypes[23]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RetryAutomationInvocationResponse.ProtoReflect.Descriptor instead.
+func (*RetryAutomationInvocationResponse) Descriptor() ([]byte, []int) {
+	return file_mycel_client_v1_automation_proto_rawDescGZIP(), []int{23}
+}
+
+func (x *RetryAutomationInvocationResponse) GetInvocation() *AutomationInvocationSummary {
+	if x != nil {
+		return x.Invocation
+	}
+	return nil
+}
+
+type CancelAutomationInvocationRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	DomainId      string                 `protobuf:"bytes,1,opt,name=domain_id,json=domainId,proto3" json:"domain_id,omitempty"`
+	InvocationId  string                 `protobuf:"bytes,2,opt,name=invocation_id,json=invocationId,proto3" json:"invocation_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CancelAutomationInvocationRequest) Reset() {
+	*x = CancelAutomationInvocationRequest{}
+	mi := &file_mycel_client_v1_automation_proto_msgTypes[24]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CancelAutomationInvocationRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CancelAutomationInvocationRequest) ProtoMessage() {}
+
+func (x *CancelAutomationInvocationRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_client_v1_automation_proto_msgTypes[24]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CancelAutomationInvocationRequest.ProtoReflect.Descriptor instead.
+func (*CancelAutomationInvocationRequest) Descriptor() ([]byte, []int) {
+	return file_mycel_client_v1_automation_proto_rawDescGZIP(), []int{24}
+}
+
+func (x *CancelAutomationInvocationRequest) GetDomainId() string {
+	if x != nil {
+		return x.DomainId
+	}
+	return ""
+}
+
+func (x *CancelAutomationInvocationRequest) GetInvocationId() string {
+	if x != nil {
+		return x.InvocationId
+	}
+	return ""
+}
+
+type CancelAutomationInvocationResponse struct {
+	state         protoimpl.MessageState       `protogen:"open.v1"`
+	Invocation    *AutomationInvocationSummary `protobuf:"bytes,1,opt,name=invocation,proto3" json:"invocation,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CancelAutomationInvocationResponse) Reset() {
+	*x = CancelAutomationInvocationResponse{}
+	mi := &file_mycel_client_v1_automation_proto_msgTypes[25]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CancelAutomationInvocationResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CancelAutomationInvocationResponse) ProtoMessage() {}
+
+func (x *CancelAutomationInvocationResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_client_v1_automation_proto_msgTypes[25]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CancelAutomationInvocationResponse.ProtoReflect.Descriptor instead.
+func (*CancelAutomationInvocationResponse) Descriptor() ([]byte, []int) {
+	return file_mycel_client_v1_automation_proto_rawDescGZIP(), []int{25}
+}
+
+func (x *CancelAutomationInvocationResponse) GetInvocation() *AutomationInvocationSummary {
+	if x != nil {
+		return x.Invocation
+	}
+	return nil
+}
+
 var File_mycel_client_v1_automation_proto protoreflect.FileDescriptor
 
 const file_mycel_client_v1_automation_proto_rawDesc = "" +
 	"\n" +
-	" mycel/client/v1/automation.proto\x12\x0fmycel.client.v1\"_\n" +
+	" mycel/client/v1/automation.proto\x12\x0fmycel.client.v1\"a\n" +
+	"\x19ValidateAutomationRequest\x12\x1b\n" +
+	"\tdomain_id\x18\x01 \x01(\tR\bdomainId\x12'\n" +
+	"\x0fdefinition_json\x18\x02 \x01(\tR\x0edefinitionJson\"\x86\x01\n" +
+	"\x1aValidateAutomationResponse\x12\x14\n" +
+	"\x05valid\x18\x01 \x01(\bR\x05valid\x12\x14\n" +
+	"\x05error\x18\x02 \x01(\tR\x05error\x12<\n" +
+	"\x1anormalized_definition_json\x18\x03 \x01(\tR\x18normalizedDefinitionJson\"_\n" +
 	"\x17CreateAutomationRequest\x12\x1b\n" +
 	"\tdomain_id\x18\x01 \x01(\tR\bdomainId\x12'\n" +
 	"\x0fdefinition_json\x18\x02 \x01(\tR\x0edefinitionJson\"\x84\x01\n" +
@@ -1185,8 +1496,24 @@ const file_mycel_client_v1_automation_proto_rawDesc = "" +
 	"\tdomain_id\x18\x01 \x01(\tR\bdomainId\x12\x15\n" +
 	"\x06run_id\x18\x02 \x01(\tR\x05runId\"5\n" +
 	"\x18GetAutomationRunResponse\x12\x19\n" +
-	"\brun_json\x18\x01 \x01(\tR\arunJson2\xd7\a\n" +
-	"\x11AutomationService\x12g\n" +
+	"\brun_json\x18\x01 \x01(\tR\arunJson\"d\n" +
+	" RetryAutomationInvocationRequest\x12\x1b\n" +
+	"\tdomain_id\x18\x01 \x01(\tR\bdomainId\x12#\n" +
+	"\rinvocation_id\x18\x02 \x01(\tR\finvocationId\"q\n" +
+	"!RetryAutomationInvocationResponse\x12L\n" +
+	"\n" +
+	"invocation\x18\x01 \x01(\v2,.mycel.client.v1.AutomationInvocationSummaryR\n" +
+	"invocation\"e\n" +
+	"!CancelAutomationInvocationRequest\x12\x1b\n" +
+	"\tdomain_id\x18\x01 \x01(\tR\bdomainId\x12#\n" +
+	"\rinvocation_id\x18\x02 \x01(\tR\finvocationId\"r\n" +
+	"\"CancelAutomationInvocationResponse\x12L\n" +
+	"\n" +
+	"invocation\x18\x01 \x01(\v2,.mycel.client.v1.AutomationInvocationSummaryR\n" +
+	"invocation2\xd3\n" +
+	"\n" +
+	"\x11AutomationService\x12m\n" +
+	"\x12ValidateAutomation\x12*.mycel.client.v1.ValidateAutomationRequest\x1a+.mycel.client.v1.ValidateAutomationResponse\x12g\n" +
 	"\x10CreateAutomation\x12(.mycel.client.v1.CreateAutomationRequest\x1a).mycel.client.v1.CreateAutomationResponse\x12g\n" +
 	"\x10UpdateAutomation\x12(.mycel.client.v1.UpdateAutomationRequest\x1a).mycel.client.v1.UpdateAutomationResponse\x12g\n" +
 	"\x10DeleteAutomation\x12(.mycel.client.v1.DeleteAutomationRequest\x1a).mycel.client.v1.DeleteAutomationResponse\x12^\n" +
@@ -1195,7 +1522,9 @@ const file_mycel_client_v1_automation_proto_rawDesc = "" +
 	"\x10EnableAutomation\x12(.mycel.client.v1.EnableAutomationRequest\x1a).mycel.client.v1.EnableAutomationResponse\x12j\n" +
 	"\x11DisableAutomation\x12).mycel.client.v1.DisableAutomationRequest\x1a*.mycel.client.v1.DisableAutomationResponse\x12\x82\x01\n" +
 	"\x19ListAutomationInvocations\x121.mycel.client.v1.ListAutomationInvocationsRequest\x1a2.mycel.client.v1.ListAutomationInvocationsResponse\x12g\n" +
-	"\x10GetAutomationRun\x12(.mycel.client.v1.GetAutomationRunRequest\x1a).mycel.client.v1.GetAutomationRunResponseB\xc5\x01\n" +
+	"\x10GetAutomationRun\x12(.mycel.client.v1.GetAutomationRunRequest\x1a).mycel.client.v1.GetAutomationRunResponse\x12\x82\x01\n" +
+	"\x19RetryAutomationInvocation\x121.mycel.client.v1.RetryAutomationInvocationRequest\x1a2.mycel.client.v1.RetryAutomationInvocationResponse\x12\x85\x01\n" +
+	"\x1aCancelAutomationInvocation\x122.mycel.client.v1.CancelAutomationInvocationRequest\x1a3.mycel.client.v1.CancelAutomationInvocationResponseB\xc5\x01\n" +
 	"\x13com.mycel.client.v1B\x0fAutomationProtoP\x01Z?github.com/myceldb/mycel-go-sdk/gen/go/mycel/client/v1;clientv1\xa2\x02\x03MCX\xaa\x02\x0fMycel.Client.V1\xca\x02\x0fMycel\\Client\\V1\xe2\x02\x1bMycel\\Client\\V1\\GPBMetadata\xea\x02\x11Mycel::Client::V1b\x06proto3"
 
 var (
@@ -1210,55 +1539,69 @@ func file_mycel_client_v1_automation_proto_rawDescGZIP() []byte {
 	return file_mycel_client_v1_automation_proto_rawDescData
 }
 
-var file_mycel_client_v1_automation_proto_msgTypes = make([]protoimpl.MessageInfo, 20)
+var file_mycel_client_v1_automation_proto_msgTypes = make([]protoimpl.MessageInfo, 26)
 var file_mycel_client_v1_automation_proto_goTypes = []any{
-	(*CreateAutomationRequest)(nil),           // 0: mycel.client.v1.CreateAutomationRequest
-	(*UpdateAutomationRequest)(nil),           // 1: mycel.client.v1.UpdateAutomationRequest
-	(*DeleteAutomationRequest)(nil),           // 2: mycel.client.v1.DeleteAutomationRequest
-	(*DeleteAutomationResponse)(nil),          // 3: mycel.client.v1.DeleteAutomationResponse
-	(*GetAutomationRequest)(nil),              // 4: mycel.client.v1.GetAutomationRequest
-	(*ListAutomationsRequest)(nil),            // 5: mycel.client.v1.ListAutomationsRequest
-	(*ListAutomationsResponse)(nil),           // 6: mycel.client.v1.ListAutomationsResponse
-	(*EnableAutomationRequest)(nil),           // 7: mycel.client.v1.EnableAutomationRequest
-	(*DisableAutomationRequest)(nil),          // 8: mycel.client.v1.DisableAutomationRequest
-	(*CreateAutomationResponse)(nil),          // 9: mycel.client.v1.CreateAutomationResponse
-	(*UpdateAutomationResponse)(nil),          // 10: mycel.client.v1.UpdateAutomationResponse
-	(*GetAutomationResponse)(nil),             // 11: mycel.client.v1.GetAutomationResponse
-	(*EnableAutomationResponse)(nil),          // 12: mycel.client.v1.EnableAutomationResponse
-	(*DisableAutomationResponse)(nil),         // 13: mycel.client.v1.DisableAutomationResponse
-	(*AutomationDefinitionSummary)(nil),       // 14: mycel.client.v1.AutomationDefinitionSummary
-	(*ListAutomationInvocationsRequest)(nil),  // 15: mycel.client.v1.ListAutomationInvocationsRequest
-	(*ListAutomationInvocationsResponse)(nil), // 16: mycel.client.v1.ListAutomationInvocationsResponse
-	(*AutomationInvocationSummary)(nil),       // 17: mycel.client.v1.AutomationInvocationSummary
-	(*GetAutomationRunRequest)(nil),           // 18: mycel.client.v1.GetAutomationRunRequest
-	(*GetAutomationRunResponse)(nil),          // 19: mycel.client.v1.GetAutomationRunResponse
+	(*ValidateAutomationRequest)(nil),          // 0: mycel.client.v1.ValidateAutomationRequest
+	(*ValidateAutomationResponse)(nil),         // 1: mycel.client.v1.ValidateAutomationResponse
+	(*CreateAutomationRequest)(nil),            // 2: mycel.client.v1.CreateAutomationRequest
+	(*UpdateAutomationRequest)(nil),            // 3: mycel.client.v1.UpdateAutomationRequest
+	(*DeleteAutomationRequest)(nil),            // 4: mycel.client.v1.DeleteAutomationRequest
+	(*DeleteAutomationResponse)(nil),           // 5: mycel.client.v1.DeleteAutomationResponse
+	(*GetAutomationRequest)(nil),               // 6: mycel.client.v1.GetAutomationRequest
+	(*ListAutomationsRequest)(nil),             // 7: mycel.client.v1.ListAutomationsRequest
+	(*ListAutomationsResponse)(nil),            // 8: mycel.client.v1.ListAutomationsResponse
+	(*EnableAutomationRequest)(nil),            // 9: mycel.client.v1.EnableAutomationRequest
+	(*DisableAutomationRequest)(nil),           // 10: mycel.client.v1.DisableAutomationRequest
+	(*CreateAutomationResponse)(nil),           // 11: mycel.client.v1.CreateAutomationResponse
+	(*UpdateAutomationResponse)(nil),           // 12: mycel.client.v1.UpdateAutomationResponse
+	(*GetAutomationResponse)(nil),              // 13: mycel.client.v1.GetAutomationResponse
+	(*EnableAutomationResponse)(nil),           // 14: mycel.client.v1.EnableAutomationResponse
+	(*DisableAutomationResponse)(nil),          // 15: mycel.client.v1.DisableAutomationResponse
+	(*AutomationDefinitionSummary)(nil),        // 16: mycel.client.v1.AutomationDefinitionSummary
+	(*ListAutomationInvocationsRequest)(nil),   // 17: mycel.client.v1.ListAutomationInvocationsRequest
+	(*ListAutomationInvocationsResponse)(nil),  // 18: mycel.client.v1.ListAutomationInvocationsResponse
+	(*AutomationInvocationSummary)(nil),        // 19: mycel.client.v1.AutomationInvocationSummary
+	(*GetAutomationRunRequest)(nil),            // 20: mycel.client.v1.GetAutomationRunRequest
+	(*GetAutomationRunResponse)(nil),           // 21: mycel.client.v1.GetAutomationRunResponse
+	(*RetryAutomationInvocationRequest)(nil),   // 22: mycel.client.v1.RetryAutomationInvocationRequest
+	(*RetryAutomationInvocationResponse)(nil),  // 23: mycel.client.v1.RetryAutomationInvocationResponse
+	(*CancelAutomationInvocationRequest)(nil),  // 24: mycel.client.v1.CancelAutomationInvocationRequest
+	(*CancelAutomationInvocationResponse)(nil), // 25: mycel.client.v1.CancelAutomationInvocationResponse
 }
 var file_mycel_client_v1_automation_proto_depIdxs = []int32{
-	14, // 0: mycel.client.v1.ListAutomationsResponse.automations:type_name -> mycel.client.v1.AutomationDefinitionSummary
-	17, // 1: mycel.client.v1.ListAutomationInvocationsResponse.invocations:type_name -> mycel.client.v1.AutomationInvocationSummary
-	0,  // 2: mycel.client.v1.AutomationService.CreateAutomation:input_type -> mycel.client.v1.CreateAutomationRequest
-	1,  // 3: mycel.client.v1.AutomationService.UpdateAutomation:input_type -> mycel.client.v1.UpdateAutomationRequest
-	2,  // 4: mycel.client.v1.AutomationService.DeleteAutomation:input_type -> mycel.client.v1.DeleteAutomationRequest
-	4,  // 5: mycel.client.v1.AutomationService.GetAutomation:input_type -> mycel.client.v1.GetAutomationRequest
-	5,  // 6: mycel.client.v1.AutomationService.ListAutomations:input_type -> mycel.client.v1.ListAutomationsRequest
-	7,  // 7: mycel.client.v1.AutomationService.EnableAutomation:input_type -> mycel.client.v1.EnableAutomationRequest
-	8,  // 8: mycel.client.v1.AutomationService.DisableAutomation:input_type -> mycel.client.v1.DisableAutomationRequest
-	15, // 9: mycel.client.v1.AutomationService.ListAutomationInvocations:input_type -> mycel.client.v1.ListAutomationInvocationsRequest
-	18, // 10: mycel.client.v1.AutomationService.GetAutomationRun:input_type -> mycel.client.v1.GetAutomationRunRequest
-	9,  // 11: mycel.client.v1.AutomationService.CreateAutomation:output_type -> mycel.client.v1.CreateAutomationResponse
-	10, // 12: mycel.client.v1.AutomationService.UpdateAutomation:output_type -> mycel.client.v1.UpdateAutomationResponse
-	3,  // 13: mycel.client.v1.AutomationService.DeleteAutomation:output_type -> mycel.client.v1.DeleteAutomationResponse
-	11, // 14: mycel.client.v1.AutomationService.GetAutomation:output_type -> mycel.client.v1.GetAutomationResponse
-	6,  // 15: mycel.client.v1.AutomationService.ListAutomations:output_type -> mycel.client.v1.ListAutomationsResponse
-	12, // 16: mycel.client.v1.AutomationService.EnableAutomation:output_type -> mycel.client.v1.EnableAutomationResponse
-	13, // 17: mycel.client.v1.AutomationService.DisableAutomation:output_type -> mycel.client.v1.DisableAutomationResponse
-	16, // 18: mycel.client.v1.AutomationService.ListAutomationInvocations:output_type -> mycel.client.v1.ListAutomationInvocationsResponse
-	19, // 19: mycel.client.v1.AutomationService.GetAutomationRun:output_type -> mycel.client.v1.GetAutomationRunResponse
-	11, // [11:20] is the sub-list for method output_type
-	2,  // [2:11] is the sub-list for method input_type
-	2,  // [2:2] is the sub-list for extension type_name
-	2,  // [2:2] is the sub-list for extension extendee
-	0,  // [0:2] is the sub-list for field type_name
+	16, // 0: mycel.client.v1.ListAutomationsResponse.automations:type_name -> mycel.client.v1.AutomationDefinitionSummary
+	19, // 1: mycel.client.v1.ListAutomationInvocationsResponse.invocations:type_name -> mycel.client.v1.AutomationInvocationSummary
+	19, // 2: mycel.client.v1.RetryAutomationInvocationResponse.invocation:type_name -> mycel.client.v1.AutomationInvocationSummary
+	19, // 3: mycel.client.v1.CancelAutomationInvocationResponse.invocation:type_name -> mycel.client.v1.AutomationInvocationSummary
+	0,  // 4: mycel.client.v1.AutomationService.ValidateAutomation:input_type -> mycel.client.v1.ValidateAutomationRequest
+	2,  // 5: mycel.client.v1.AutomationService.CreateAutomation:input_type -> mycel.client.v1.CreateAutomationRequest
+	3,  // 6: mycel.client.v1.AutomationService.UpdateAutomation:input_type -> mycel.client.v1.UpdateAutomationRequest
+	4,  // 7: mycel.client.v1.AutomationService.DeleteAutomation:input_type -> mycel.client.v1.DeleteAutomationRequest
+	6,  // 8: mycel.client.v1.AutomationService.GetAutomation:input_type -> mycel.client.v1.GetAutomationRequest
+	7,  // 9: mycel.client.v1.AutomationService.ListAutomations:input_type -> mycel.client.v1.ListAutomationsRequest
+	9,  // 10: mycel.client.v1.AutomationService.EnableAutomation:input_type -> mycel.client.v1.EnableAutomationRequest
+	10, // 11: mycel.client.v1.AutomationService.DisableAutomation:input_type -> mycel.client.v1.DisableAutomationRequest
+	17, // 12: mycel.client.v1.AutomationService.ListAutomationInvocations:input_type -> mycel.client.v1.ListAutomationInvocationsRequest
+	20, // 13: mycel.client.v1.AutomationService.GetAutomationRun:input_type -> mycel.client.v1.GetAutomationRunRequest
+	22, // 14: mycel.client.v1.AutomationService.RetryAutomationInvocation:input_type -> mycel.client.v1.RetryAutomationInvocationRequest
+	24, // 15: mycel.client.v1.AutomationService.CancelAutomationInvocation:input_type -> mycel.client.v1.CancelAutomationInvocationRequest
+	1,  // 16: mycel.client.v1.AutomationService.ValidateAutomation:output_type -> mycel.client.v1.ValidateAutomationResponse
+	11, // 17: mycel.client.v1.AutomationService.CreateAutomation:output_type -> mycel.client.v1.CreateAutomationResponse
+	12, // 18: mycel.client.v1.AutomationService.UpdateAutomation:output_type -> mycel.client.v1.UpdateAutomationResponse
+	5,  // 19: mycel.client.v1.AutomationService.DeleteAutomation:output_type -> mycel.client.v1.DeleteAutomationResponse
+	13, // 20: mycel.client.v1.AutomationService.GetAutomation:output_type -> mycel.client.v1.GetAutomationResponse
+	8,  // 21: mycel.client.v1.AutomationService.ListAutomations:output_type -> mycel.client.v1.ListAutomationsResponse
+	14, // 22: mycel.client.v1.AutomationService.EnableAutomation:output_type -> mycel.client.v1.EnableAutomationResponse
+	15, // 23: mycel.client.v1.AutomationService.DisableAutomation:output_type -> mycel.client.v1.DisableAutomationResponse
+	18, // 24: mycel.client.v1.AutomationService.ListAutomationInvocations:output_type -> mycel.client.v1.ListAutomationInvocationsResponse
+	21, // 25: mycel.client.v1.AutomationService.GetAutomationRun:output_type -> mycel.client.v1.GetAutomationRunResponse
+	23, // 26: mycel.client.v1.AutomationService.RetryAutomationInvocation:output_type -> mycel.client.v1.RetryAutomationInvocationResponse
+	25, // 27: mycel.client.v1.AutomationService.CancelAutomationInvocation:output_type -> mycel.client.v1.CancelAutomationInvocationResponse
+	16, // [16:28] is the sub-list for method output_type
+	4,  // [4:16] is the sub-list for method input_type
+	4,  // [4:4] is the sub-list for extension type_name
+	4,  // [4:4] is the sub-list for extension extendee
+	0,  // [0:4] is the sub-list for field type_name
 }
 
 func init() { file_mycel_client_v1_automation_proto_init() }
@@ -1272,7 +1615,7 @@ func file_mycel_client_v1_automation_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_mycel_client_v1_automation_proto_rawDesc), len(file_mycel_client_v1_automation_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   20,
+			NumMessages:   26,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
