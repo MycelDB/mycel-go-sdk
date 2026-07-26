@@ -68,7 +68,7 @@ func (x *GetDomainSchemaRequest) GetDomainId() string {
 
 type GetDomainSchemaResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	SchemaJson    string                 `protobuf:"bytes,1,opt,name=schema_json,json=schemaJson,proto3" json:"schema_json,omitempty"`
+	Gwl           string                 `protobuf:"bytes,1,opt,name=gwl,proto3" json:"gwl,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -103,16 +103,16 @@ func (*GetDomainSchemaResponse) Descriptor() ([]byte, []int) {
 	return file_mycel_admin_v1_schema_proto_rawDescGZIP(), []int{1}
 }
 
-func (x *GetDomainSchemaResponse) GetSchemaJson() string {
+func (x *GetDomainSchemaResponse) GetGwl() string {
 	if x != nil {
-		return x.SchemaJson
+		return x.Gwl
 	}
 	return ""
 }
 
 type ValidateSchemaRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	SchemaJson    string                 `protobuf:"bytes,1,opt,name=schema_json,json=schemaJson,proto3" json:"schema_json,omitempty"`
+	Gwl           string                 `protobuf:"bytes,1,opt,name=gwl,proto3" json:"gwl,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -147,9 +147,9 @@ func (*ValidateSchemaRequest) Descriptor() ([]byte, []int) {
 	return file_mycel_admin_v1_schema_proto_rawDescGZIP(), []int{2}
 }
 
-func (x *ValidateSchemaRequest) GetSchemaJson() string {
+func (x *ValidateSchemaRequest) GetGwl() string {
 	if x != nil {
-		return x.SchemaJson
+		return x.Gwl
 	}
 	return ""
 }
@@ -212,13 +212,11 @@ const file_mycel_admin_v1_schema_proto_rawDesc = "" +
 	"\n" +
 	"\x1bmycel/admin/v1/schema.proto\x12\x0emycel.admin.v1\x1a\x1cmycel/client/v1/schema.proto\"5\n" +
 	"\x16GetDomainSchemaRequest\x12\x1b\n" +
-	"\tdomain_id\x18\x01 \x01(\tR\bdomainId\":\n" +
-	"\x17GetDomainSchemaResponse\x12\x1f\n" +
-	"\vschema_json\x18\x01 \x01(\tR\n" +
-	"schemaJson\"8\n" +
-	"\x15ValidateSchemaRequest\x12\x1f\n" +
-	"\vschema_json\x18\x01 \x01(\tR\n" +
-	"schemaJson\"n\n" +
+	"\tdomain_id\x18\x01 \x01(\tR\bdomainId\"+\n" +
+	"\x17GetDomainSchemaResponse\x12\x10\n" +
+	"\x03gwl\x18\x01 \x01(\tR\x03gwl\")\n" +
+	"\x15ValidateSchemaRequest\x12\x10\n" +
+	"\x03gwl\x18\x01 \x01(\tR\x03gwl\"n\n" +
 	"\x16ValidateSchemaResponse\x12\x14\n" +
 	"\x05valid\x18\x01 \x01(\bR\x05valid\x12>\n" +
 	"\x06issues\x18\x02 \x03(\v2&.mycel.client.v1.SchemaValidationIssueR\x06issues2\xd9\x01\n" +
