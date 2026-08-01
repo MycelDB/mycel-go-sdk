@@ -32,10 +32,10 @@ const (
 // names. Metadata filtering/search belongs in QueryService so graph traversal
 // and metadata predicates can be composed in one query.
 type MetadataCatalogServiceClient interface {
-	// ListTags lists known canonical tags visible in the transaction snapshot.
+	// ListTags lists known canonical tags visible in the transaction read context.
 	ListTags(ctx context.Context, in *ListTagsRequest, opts ...grpc.CallOption) (*ListTagsResponse, error)
 	// ListPropertyNames lists known canonical custom property names visible in the
-	// transaction snapshot.
+	// transaction read context.
 	ListPropertyNames(ctx context.Context, in *ListPropertyNamesRequest, opts ...grpc.CallOption) (*ListPropertyNamesResponse, error)
 }
 
@@ -76,10 +76,10 @@ func (c *metadataCatalogServiceClient) ListPropertyNames(ctx context.Context, in
 // names. Metadata filtering/search belongs in QueryService so graph traversal
 // and metadata predicates can be composed in one query.
 type MetadataCatalogServiceServer interface {
-	// ListTags lists known canonical tags visible in the transaction snapshot.
+	// ListTags lists known canonical tags visible in the transaction read context.
 	ListTags(context.Context, *ListTagsRequest) (*ListTagsResponse, error)
 	// ListPropertyNames lists known canonical custom property names visible in the
-	// transaction snapshot.
+	// transaction read context.
 	ListPropertyNames(context.Context, *ListPropertyNamesRequest) (*ListPropertyNamesResponse, error)
 	mustEmbedUnimplementedMetadataCatalogServiceServer()
 }

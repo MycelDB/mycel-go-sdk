@@ -19,12 +19,15 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	AdminClusterService_GetClusterStatus_FullMethodName        = "/mycel.admin.v1.AdminClusterService/GetClusterStatus"
-	AdminClusterService_ListClusterMembers_FullMethodName      = "/mycel.admin.v1.AdminClusterService/ListClusterMembers"
-	AdminClusterService_GetClusterHealth_FullMethodName        = "/mycel.admin.v1.AdminClusterService/GetClusterHealth"
-	AdminClusterService_GetClusterRuntimeStatus_FullMethodName = "/mycel.admin.v1.AdminClusterService/GetClusterRuntimeStatus"
-	AdminClusterService_ListRaftGroups_FullMethodName          = "/mycel.admin.v1.AdminClusterService/ListRaftGroups"
-	AdminClusterService_LookupSpaceRoute_FullMethodName        = "/mycel.admin.v1.AdminClusterService/LookupSpaceRoute"
+	AdminClusterService_GetClusterStatus_FullMethodName            = "/mycel.admin.v1.AdminClusterService/GetClusterStatus"
+	AdminClusterService_ListClusterMembers_FullMethodName          = "/mycel.admin.v1.AdminClusterService/ListClusterMembers"
+	AdminClusterService_GetClusterHealth_FullMethodName            = "/mycel.admin.v1.AdminClusterService/GetClusterHealth"
+	AdminClusterService_GetClusterRuntimeStatus_FullMethodName     = "/mycel.admin.v1.AdminClusterService/GetClusterRuntimeStatus"
+	AdminClusterService_ListRaftGroups_FullMethodName              = "/mycel.admin.v1.AdminClusterService/ListRaftGroups"
+	AdminClusterService_LookupSpaceRoute_FullMethodName            = "/mycel.admin.v1.AdminClusterService/LookupSpaceRoute"
+	AdminClusterService_GetLocalGraphConsistency_FullMethodName    = "/mycel.admin.v1.AdminClusterService/GetLocalGraphConsistency"
+	AdminClusterService_GetGraphConsistencyReport_FullMethodName   = "/mycel.admin.v1.AdminClusterService/GetGraphConsistencyReport"
+	AdminClusterService_GetLocalGraphForensicExport_FullMethodName = "/mycel.admin.v1.AdminClusterService/GetLocalGraphForensicExport"
 )
 
 // AdminClusterServiceClient is the client API for AdminClusterService service.
@@ -50,6 +53,19 @@ type AdminClusterServiceClient interface {
 	ListRaftGroups(ctx context.Context, in *ListRaftGroupsRequest, opts ...grpc.CallOption) (*ListRaftGroupsResponse, error)
 	// LookupSpaceRoute returns the Raft partition and replica set for a space ID.
 	LookupSpaceRoute(ctx context.Context, in *LookupSpaceRouteRequest, opts ...grpc.CallOption) (*LookupSpaceRouteResponse, error)
+	// GetLocalGraphConsistency returns read-only local latest-state graph
+	// consistency diagnostics for one space/domain on this daemon. It does not
+	// collect from peers or prove cluster-wide consistency.
+	GetLocalGraphConsistency(ctx context.Context, in *GetLocalGraphConsistencyRequest, opts ...grpc.CallOption) (*GetLocalGraphConsistencyResponse, error)
+	// GetGraphConsistencyReport collects local latest-state graph diagnostics
+	// from the expected raft replicas for one space/domain and classifies the
+	// currently observable cluster state. V1 compares latest-state checksums only;
+	// it is read-only and never performs repair.
+	GetGraphConsistencyReport(ctx context.Context, in *GetGraphConsistencyReportRequest, opts ...grpc.CallOption) (*GetGraphConsistencyReportResponse, error)
+	// GetLocalGraphForensicExport returns a bounded, read-only local entity export
+	// for one space/domain. The response is intended for forensic diff tooling;
+	// it does not repair, merge, delete, or rebalance data.
+	GetLocalGraphForensicExport(ctx context.Context, in *GetLocalGraphForensicExportRequest, opts ...grpc.CallOption) (*GetLocalGraphForensicExportResponse, error)
 }
 
 type adminClusterServiceClient struct {
@@ -120,6 +136,36 @@ func (c *adminClusterServiceClient) LookupSpaceRoute(ctx context.Context, in *Lo
 	return out, nil
 }
 
+func (c *adminClusterServiceClient) GetLocalGraphConsistency(ctx context.Context, in *GetLocalGraphConsistencyRequest, opts ...grpc.CallOption) (*GetLocalGraphConsistencyResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetLocalGraphConsistencyResponse)
+	err := c.cc.Invoke(ctx, AdminClusterService_GetLocalGraphConsistency_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *adminClusterServiceClient) GetGraphConsistencyReport(ctx context.Context, in *GetGraphConsistencyReportRequest, opts ...grpc.CallOption) (*GetGraphConsistencyReportResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetGraphConsistencyReportResponse)
+	err := c.cc.Invoke(ctx, AdminClusterService_GetGraphConsistencyReport_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *adminClusterServiceClient) GetLocalGraphForensicExport(ctx context.Context, in *GetLocalGraphForensicExportRequest, opts ...grpc.CallOption) (*GetLocalGraphForensicExportResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetLocalGraphForensicExportResponse)
+	err := c.cc.Invoke(ctx, AdminClusterService_GetLocalGraphForensicExport_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // AdminClusterServiceServer is the server API for AdminClusterService service.
 // All implementations must embed UnimplementedAdminClusterServiceServer
 // for forward compatibility.
@@ -143,6 +189,19 @@ type AdminClusterServiceServer interface {
 	ListRaftGroups(context.Context, *ListRaftGroupsRequest) (*ListRaftGroupsResponse, error)
 	// LookupSpaceRoute returns the Raft partition and replica set for a space ID.
 	LookupSpaceRoute(context.Context, *LookupSpaceRouteRequest) (*LookupSpaceRouteResponse, error)
+	// GetLocalGraphConsistency returns read-only local latest-state graph
+	// consistency diagnostics for one space/domain on this daemon. It does not
+	// collect from peers or prove cluster-wide consistency.
+	GetLocalGraphConsistency(context.Context, *GetLocalGraphConsistencyRequest) (*GetLocalGraphConsistencyResponse, error)
+	// GetGraphConsistencyReport collects local latest-state graph diagnostics
+	// from the expected raft replicas for one space/domain and classifies the
+	// currently observable cluster state. V1 compares latest-state checksums only;
+	// it is read-only and never performs repair.
+	GetGraphConsistencyReport(context.Context, *GetGraphConsistencyReportRequest) (*GetGraphConsistencyReportResponse, error)
+	// GetLocalGraphForensicExport returns a bounded, read-only local entity export
+	// for one space/domain. The response is intended for forensic diff tooling;
+	// it does not repair, merge, delete, or rebalance data.
+	GetLocalGraphForensicExport(context.Context, *GetLocalGraphForensicExportRequest) (*GetLocalGraphForensicExportResponse, error)
 	mustEmbedUnimplementedAdminClusterServiceServer()
 }
 
@@ -170,6 +229,15 @@ func (UnimplementedAdminClusterServiceServer) ListRaftGroups(context.Context, *L
 }
 func (UnimplementedAdminClusterServiceServer) LookupSpaceRoute(context.Context, *LookupSpaceRouteRequest) (*LookupSpaceRouteResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method LookupSpaceRoute not implemented")
+}
+func (UnimplementedAdminClusterServiceServer) GetLocalGraphConsistency(context.Context, *GetLocalGraphConsistencyRequest) (*GetLocalGraphConsistencyResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetLocalGraphConsistency not implemented")
+}
+func (UnimplementedAdminClusterServiceServer) GetGraphConsistencyReport(context.Context, *GetGraphConsistencyReportRequest) (*GetGraphConsistencyReportResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetGraphConsistencyReport not implemented")
+}
+func (UnimplementedAdminClusterServiceServer) GetLocalGraphForensicExport(context.Context, *GetLocalGraphForensicExportRequest) (*GetLocalGraphForensicExportResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetLocalGraphForensicExport not implemented")
 }
 func (UnimplementedAdminClusterServiceServer) mustEmbedUnimplementedAdminClusterServiceServer() {}
 func (UnimplementedAdminClusterServiceServer) testEmbeddedByValue()                             {}
@@ -300,6 +368,60 @@ func _AdminClusterService_LookupSpaceRoute_Handler(srv interface{}, ctx context.
 	return interceptor(ctx, in, info, handler)
 }
 
+func _AdminClusterService_GetLocalGraphConsistency_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetLocalGraphConsistencyRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminClusterServiceServer).GetLocalGraphConsistency(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AdminClusterService_GetLocalGraphConsistency_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminClusterServiceServer).GetLocalGraphConsistency(ctx, req.(*GetLocalGraphConsistencyRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AdminClusterService_GetGraphConsistencyReport_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetGraphConsistencyReportRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminClusterServiceServer).GetGraphConsistencyReport(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AdminClusterService_GetGraphConsistencyReport_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminClusterServiceServer).GetGraphConsistencyReport(ctx, req.(*GetGraphConsistencyReportRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AdminClusterService_GetLocalGraphForensicExport_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetLocalGraphForensicExportRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminClusterServiceServer).GetLocalGraphForensicExport(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AdminClusterService_GetLocalGraphForensicExport_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminClusterServiceServer).GetLocalGraphForensicExport(ctx, req.(*GetLocalGraphForensicExportRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // AdminClusterService_ServiceDesc is the grpc.ServiceDesc for AdminClusterService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -330,6 +452,18 @@ var AdminClusterService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "LookupSpaceRoute",
 			Handler:    _AdminClusterService_LookupSpaceRoute_Handler,
+		},
+		{
+			MethodName: "GetLocalGraphConsistency",
+			Handler:    _AdminClusterService_GetLocalGraphConsistency_Handler,
+		},
+		{
+			MethodName: "GetGraphConsistencyReport",
+			Handler:    _AdminClusterService_GetGraphConsistencyReport_Handler,
+		},
+		{
+			MethodName: "GetLocalGraphForensicExport",
+			Handler:    _AdminClusterService_GetLocalGraphForensicExport_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

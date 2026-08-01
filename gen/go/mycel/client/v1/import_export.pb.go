@@ -184,8 +184,9 @@ func (DomainImportMode) EnumDescriptor() ([]byte, []int) {
 
 type ExportDomainRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// Readable transaction id. The transaction determines space/domain and
-	// snapshot consistency.
+	// Readable transaction id. The transaction determines space/domain and read
+	// consistency. Read-only exports are current reads in V1, not pinned
+	// historical snapshots.
 	TransactionId string               `protobuf:"bytes,1,opt,name=transaction_id,json=transactionId,proto3" json:"transaction_id,omitempty"`
 	Format        DomainExportFormat   `protobuf:"varint,2,opt,name=format,proto3,enum=mycel.client.v1.DomainExportFormat" json:"format,omitempty"`
 	Options       *DomainExportOptions `protobuf:"bytes,3,opt,name=options,proto3" json:"options,omitempty"`

@@ -27,7 +27,8 @@ type ListTagsRequest struct {
 	// Maximum number of tags to return. The daemon may cap this value.
 	PageSize int32 `protobuf:"varint,2,opt,name=page_size,json=pageSize,proto3" json:"page_size,omitempty"`
 	// Opaque continuation token returned by a previous list call.
-	PageToken     string `protobuf:"bytes,3,opt,name=page_token,json=pageToken,proto3" json:"page_token,omitempty"`
+	PageToken     string       `protobuf:"bytes,3,opt,name=page_token,json=pageToken,proto3" json:"page_token,omitempty"`
+	ReadOptions   *ReadOptions `protobuf:"bytes,4,opt,name=read_options,json=readOptions,proto3" json:"read_options,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -83,10 +84,18 @@ func (x *ListTagsRequest) GetPageToken() string {
 	return ""
 }
 
+func (x *ListTagsRequest) GetReadOptions() *ReadOptions {
+	if x != nil {
+		return x.ReadOptions
+	}
+	return nil
+}
+
 type ListTagsResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Tags          []*TagSummary          `protobuf:"bytes,1,rep,name=tags,proto3" json:"tags,omitempty"`
 	NextPageToken string                 `protobuf:"bytes,2,opt,name=next_page_token,json=nextPageToken,proto3" json:"next_page_token,omitempty"`
+	ReadMetadata  *ReadMetadata          `protobuf:"bytes,3,opt,name=read_metadata,json=readMetadata,proto3" json:"read_metadata,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -135,13 +144,21 @@ func (x *ListTagsResponse) GetNextPageToken() string {
 	return ""
 }
 
+func (x *ListTagsResponse) GetReadMetadata() *ReadMetadata {
+	if x != nil {
+		return x.ReadMetadata
+	}
+	return nil
+}
+
 type ListPropertyNamesRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	TransactionId string                 `protobuf:"bytes,1,opt,name=transaction_id,json=transactionId,proto3" json:"transaction_id,omitempty"`
 	// Maximum number of property names to return. The daemon may cap this value.
 	PageSize int32 `protobuf:"varint,2,opt,name=page_size,json=pageSize,proto3" json:"page_size,omitempty"`
 	// Opaque continuation token returned by a previous list call.
-	PageToken     string `protobuf:"bytes,3,opt,name=page_token,json=pageToken,proto3" json:"page_token,omitempty"`
+	PageToken     string       `protobuf:"bytes,3,opt,name=page_token,json=pageToken,proto3" json:"page_token,omitempty"`
+	ReadOptions   *ReadOptions `protobuf:"bytes,4,opt,name=read_options,json=readOptions,proto3" json:"read_options,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -197,10 +214,18 @@ func (x *ListPropertyNamesRequest) GetPageToken() string {
 	return ""
 }
 
+func (x *ListPropertyNamesRequest) GetReadOptions() *ReadOptions {
+	if x != nil {
+		return x.ReadOptions
+	}
+	return nil
+}
+
 type ListPropertyNamesResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Properties    []*PropertySummary     `protobuf:"bytes,1,rep,name=properties,proto3" json:"properties,omitempty"`
 	NextPageToken string                 `protobuf:"bytes,2,opt,name=next_page_token,json=nextPageToken,proto3" json:"next_page_token,omitempty"`
+	ReadMetadata  *ReadMetadata          `protobuf:"bytes,3,opt,name=read_metadata,json=readMetadata,proto3" json:"read_metadata,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -247,6 +272,13 @@ func (x *ListPropertyNamesResponse) GetNextPageToken() string {
 		return x.NextPageToken
 	}
 	return ""
+}
+
+func (x *ListPropertyNamesResponse) GetReadMetadata() *ReadMetadata {
+	if x != nil {
+		return x.ReadMetadata
+	}
+	return nil
 }
 
 type TagSummary struct {
@@ -357,25 +389,29 @@ var File_mycel_client_v1_metadata_catalog_proto protoreflect.FileDescriptor
 
 const file_mycel_client_v1_metadata_catalog_proto_rawDesc = "" +
 	"\n" +
-	"&mycel/client/v1/metadata_catalog.proto\x12\x0fmycel.client.v1\"t\n" +
+	"&mycel/client/v1/metadata_catalog.proto\x12\x0fmycel.client.v1\x1a\x1bmycel/client/v1/graph.proto\"\xb5\x01\n" +
 	"\x0fListTagsRequest\x12%\n" +
 	"\x0etransaction_id\x18\x01 \x01(\tR\rtransactionId\x12\x1b\n" +
 	"\tpage_size\x18\x02 \x01(\x05R\bpageSize\x12\x1d\n" +
 	"\n" +
-	"page_token\x18\x03 \x01(\tR\tpageToken\"k\n" +
+	"page_token\x18\x03 \x01(\tR\tpageToken\x12?\n" +
+	"\fread_options\x18\x04 \x01(\v2\x1c.mycel.client.v1.ReadOptionsR\vreadOptions\"\xaf\x01\n" +
 	"\x10ListTagsResponse\x12/\n" +
 	"\x04tags\x18\x01 \x03(\v2\x1b.mycel.client.v1.TagSummaryR\x04tags\x12&\n" +
-	"\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken\"}\n" +
+	"\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken\x12B\n" +
+	"\rread_metadata\x18\x03 \x01(\v2\x1d.mycel.client.v1.ReadMetadataR\freadMetadata\"\xbe\x01\n" +
 	"\x18ListPropertyNamesRequest\x12%\n" +
 	"\x0etransaction_id\x18\x01 \x01(\tR\rtransactionId\x12\x1b\n" +
 	"\tpage_size\x18\x02 \x01(\x05R\bpageSize\x12\x1d\n" +
 	"\n" +
-	"page_token\x18\x03 \x01(\tR\tpageToken\"\x85\x01\n" +
+	"page_token\x18\x03 \x01(\tR\tpageToken\x12?\n" +
+	"\fread_options\x18\x04 \x01(\v2\x1c.mycel.client.v1.ReadOptionsR\vreadOptions\"\xc9\x01\n" +
 	"\x19ListPropertyNamesResponse\x12@\n" +
 	"\n" +
 	"properties\x18\x01 \x03(\v2 .mycel.client.v1.PropertySummaryR\n" +
 	"properties\x12&\n" +
-	"\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken\"?\n" +
+	"\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken\x12B\n" +
+	"\rread_metadata\x18\x03 \x01(\v2\x1d.mycel.client.v1.ReadMetadataR\freadMetadata\"?\n" +
 	"\n" +
 	"TagSummary\x12\x12\n" +
 	"\x04name\x18\x01 \x01(\tR\x04name\x12\x1d\n" +
@@ -410,19 +446,25 @@ var file_mycel_client_v1_metadata_catalog_proto_goTypes = []any{
 	(*ListPropertyNamesResponse)(nil), // 3: mycel.client.v1.ListPropertyNamesResponse
 	(*TagSummary)(nil),                // 4: mycel.client.v1.TagSummary
 	(*PropertySummary)(nil),           // 5: mycel.client.v1.PropertySummary
+	(*ReadOptions)(nil),               // 6: mycel.client.v1.ReadOptions
+	(*ReadMetadata)(nil),              // 7: mycel.client.v1.ReadMetadata
 }
 var file_mycel_client_v1_metadata_catalog_proto_depIdxs = []int32{
-	4, // 0: mycel.client.v1.ListTagsResponse.tags:type_name -> mycel.client.v1.TagSummary
-	5, // 1: mycel.client.v1.ListPropertyNamesResponse.properties:type_name -> mycel.client.v1.PropertySummary
-	0, // 2: mycel.client.v1.MetadataCatalogService.ListTags:input_type -> mycel.client.v1.ListTagsRequest
-	2, // 3: mycel.client.v1.MetadataCatalogService.ListPropertyNames:input_type -> mycel.client.v1.ListPropertyNamesRequest
-	1, // 4: mycel.client.v1.MetadataCatalogService.ListTags:output_type -> mycel.client.v1.ListTagsResponse
-	3, // 5: mycel.client.v1.MetadataCatalogService.ListPropertyNames:output_type -> mycel.client.v1.ListPropertyNamesResponse
-	4, // [4:6] is the sub-list for method output_type
-	2, // [2:4] is the sub-list for method input_type
-	2, // [2:2] is the sub-list for extension type_name
-	2, // [2:2] is the sub-list for extension extendee
-	0, // [0:2] is the sub-list for field type_name
+	6, // 0: mycel.client.v1.ListTagsRequest.read_options:type_name -> mycel.client.v1.ReadOptions
+	4, // 1: mycel.client.v1.ListTagsResponse.tags:type_name -> mycel.client.v1.TagSummary
+	7, // 2: mycel.client.v1.ListTagsResponse.read_metadata:type_name -> mycel.client.v1.ReadMetadata
+	6, // 3: mycel.client.v1.ListPropertyNamesRequest.read_options:type_name -> mycel.client.v1.ReadOptions
+	5, // 4: mycel.client.v1.ListPropertyNamesResponse.properties:type_name -> mycel.client.v1.PropertySummary
+	7, // 5: mycel.client.v1.ListPropertyNamesResponse.read_metadata:type_name -> mycel.client.v1.ReadMetadata
+	0, // 6: mycel.client.v1.MetadataCatalogService.ListTags:input_type -> mycel.client.v1.ListTagsRequest
+	2, // 7: mycel.client.v1.MetadataCatalogService.ListPropertyNames:input_type -> mycel.client.v1.ListPropertyNamesRequest
+	1, // 8: mycel.client.v1.MetadataCatalogService.ListTags:output_type -> mycel.client.v1.ListTagsResponse
+	3, // 9: mycel.client.v1.MetadataCatalogService.ListPropertyNames:output_type -> mycel.client.v1.ListPropertyNamesResponse
+	8, // [8:10] is the sub-list for method output_type
+	6, // [6:8] is the sub-list for method input_type
+	6, // [6:6] is the sub-list for extension type_name
+	6, // [6:6] is the sub-list for extension extendee
+	0, // [0:6] is the sub-list for field type_name
 }
 
 func init() { file_mycel_client_v1_metadata_catalog_proto_init() }
@@ -430,6 +472,7 @@ func file_mycel_client_v1_metadata_catalog_proto_init() {
 	if File_mycel_client_v1_metadata_catalog_proto != nil {
 		return
 	}
+	file_mycel_client_v1_graph_proto_init()
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{

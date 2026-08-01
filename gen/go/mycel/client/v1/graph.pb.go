@@ -28,6 +28,7 @@ type GetNodeRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	TransactionId string                 `protobuf:"bytes,1,opt,name=transaction_id,json=transactionId,proto3" json:"transaction_id,omitempty"`
 	NodeId        string                 `protobuf:"bytes,2,opt,name=node_id,json=nodeId,proto3" json:"node_id,omitempty"`
+	ReadOptions   *ReadOptions           `protobuf:"bytes,3,opt,name=read_options,json=readOptions,proto3" json:"read_options,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -76,9 +77,17 @@ func (x *GetNodeRequest) GetNodeId() string {
 	return ""
 }
 
+func (x *GetNodeRequest) GetReadOptions() *ReadOptions {
+	if x != nil {
+		return x.ReadOptions
+	}
+	return nil
+}
+
 type GetNodeResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Node          *Node                  `protobuf:"bytes,1,opt,name=node,proto3" json:"node,omitempty"`
+	ReadMetadata  *ReadMetadata          `protobuf:"bytes,2,opt,name=read_metadata,json=readMetadata,proto3" json:"read_metadata,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -120,11 +129,19 @@ func (x *GetNodeResponse) GetNode() *Node {
 	return nil
 }
 
+func (x *GetNodeResponse) GetReadMetadata() *ReadMetadata {
+	if x != nil {
+		return x.ReadMetadata
+	}
+	return nil
+}
+
 type ListNodesRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	TransactionId string                 `protobuf:"bytes,1,opt,name=transaction_id,json=transactionId,proto3" json:"transaction_id,omitempty"`
 	PageSize      int32                  `protobuf:"varint,2,opt,name=page_size,json=pageSize,proto3" json:"page_size,omitempty"`
 	PageToken     string                 `protobuf:"bytes,3,opt,name=page_token,json=pageToken,proto3" json:"page_token,omitempty"`
+	ReadOptions   *ReadOptions           `protobuf:"bytes,4,opt,name=read_options,json=readOptions,proto3" json:"read_options,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -180,10 +197,18 @@ func (x *ListNodesRequest) GetPageToken() string {
 	return ""
 }
 
+func (x *ListNodesRequest) GetReadOptions() *ReadOptions {
+	if x != nil {
+		return x.ReadOptions
+	}
+	return nil
+}
+
 type ListNodesResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Nodes         []*Node                `protobuf:"bytes,1,rep,name=nodes,proto3" json:"nodes,omitempty"`
 	NextPageToken string                 `protobuf:"bytes,2,opt,name=next_page_token,json=nextPageToken,proto3" json:"next_page_token,omitempty"`
+	ReadMetadata  *ReadMetadata          `protobuf:"bytes,3,opt,name=read_metadata,json=readMetadata,proto3" json:"read_metadata,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -230,6 +255,13 @@ func (x *ListNodesResponse) GetNextPageToken() string {
 		return x.NextPageToken
 	}
 	return ""
+}
+
+func (x *ListNodesResponse) GetReadMetadata() *ReadMetadata {
+	if x != nil {
+		return x.ReadMetadata
+	}
+	return nil
 }
 
 type CreateNodeRequest struct {
@@ -881,6 +913,7 @@ type GetEdgeRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	TransactionId string                 `protobuf:"bytes,1,opt,name=transaction_id,json=transactionId,proto3" json:"transaction_id,omitempty"`
 	EdgeId        string                 `protobuf:"bytes,2,opt,name=edge_id,json=edgeId,proto3" json:"edge_id,omitempty"`
+	ReadOptions   *ReadOptions           `protobuf:"bytes,3,opt,name=read_options,json=readOptions,proto3" json:"read_options,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -929,9 +962,17 @@ func (x *GetEdgeRequest) GetEdgeId() string {
 	return ""
 }
 
+func (x *GetEdgeRequest) GetReadOptions() *ReadOptions {
+	if x != nil {
+		return x.ReadOptions
+	}
+	return nil
+}
+
 type GetEdgeResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Edge          *Edge                  `protobuf:"bytes,1,opt,name=edge,proto3" json:"edge,omitempty"`
+	ReadMetadata  *ReadMetadata          `protobuf:"bytes,2,opt,name=read_metadata,json=readMetadata,proto3" json:"read_metadata,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -973,11 +1014,19 @@ func (x *GetEdgeResponse) GetEdge() *Edge {
 	return nil
 }
 
+func (x *GetEdgeResponse) GetReadMetadata() *ReadMetadata {
+	if x != nil {
+		return x.ReadMetadata
+	}
+	return nil
+}
+
 type ListEdgesRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	TransactionId string                 `protobuf:"bytes,1,opt,name=transaction_id,json=transactionId,proto3" json:"transaction_id,omitempty"`
 	PageSize      int32                  `protobuf:"varint,2,opt,name=page_size,json=pageSize,proto3" json:"page_size,omitempty"`
 	PageToken     string                 `protobuf:"bytes,3,opt,name=page_token,json=pageToken,proto3" json:"page_token,omitempty"`
+	ReadOptions   *ReadOptions           `protobuf:"bytes,4,opt,name=read_options,json=readOptions,proto3" json:"read_options,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1033,10 +1082,18 @@ func (x *ListEdgesRequest) GetPageToken() string {
 	return ""
 }
 
+func (x *ListEdgesRequest) GetReadOptions() *ReadOptions {
+	if x != nil {
+		return x.ReadOptions
+	}
+	return nil
+}
+
 type ListEdgesResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Edges         []*Edge                `protobuf:"bytes,1,rep,name=edges,proto3" json:"edges,omitempty"`
 	NextPageToken string                 `protobuf:"bytes,2,opt,name=next_page_token,json=nextPageToken,proto3" json:"next_page_token,omitempty"`
+	ReadMetadata  *ReadMetadata          `protobuf:"bytes,3,opt,name=read_metadata,json=readMetadata,proto3" json:"read_metadata,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1083,6 +1140,13 @@ func (x *ListEdgesResponse) GetNextPageToken() string {
 		return x.NextPageToken
 	}
 	return ""
+}
+
+func (x *ListEdgesResponse) GetReadMetadata() *ReadMetadata {
+	if x != nil {
+		return x.ReadMetadata
+	}
+	return nil
 }
 
 type CreateEdgeRequest struct {
@@ -1386,6 +1450,7 @@ type ListChildrenRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	TransactionId string                 `protobuf:"bytes,1,opt,name=transaction_id,json=transactionId,proto3" json:"transaction_id,omitempty"`
 	ParentNodeId  string                 `protobuf:"bytes,2,opt,name=parent_node_id,json=parentNodeId,proto3" json:"parent_node_id,omitempty"`
+	ReadOptions   *ReadOptions           `protobuf:"bytes,3,opt,name=read_options,json=readOptions,proto3" json:"read_options,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1434,11 +1499,19 @@ func (x *ListChildrenRequest) GetParentNodeId() string {
 	return ""
 }
 
+func (x *ListChildrenRequest) GetReadOptions() *ReadOptions {
+	if x != nil {
+		return x.ReadOptions
+	}
+	return nil
+}
+
 type ListChildrenResponse struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// Contains edges from the parent to its children, ordered according to the
 	// domain/template child ordering policy.
-	ContainsEdges []*Edge `protobuf:"bytes,1,rep,name=contains_edges,json=containsEdges,proto3" json:"contains_edges,omitempty"`
+	ContainsEdges []*Edge       `protobuf:"bytes,1,rep,name=contains_edges,json=containsEdges,proto3" json:"contains_edges,omitempty"`
+	ReadMetadata  *ReadMetadata `protobuf:"bytes,2,opt,name=read_metadata,json=readMetadata,proto3" json:"read_metadata,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1480,10 +1553,18 @@ func (x *ListChildrenResponse) GetContainsEdges() []*Edge {
 	return nil
 }
 
+func (x *ListChildrenResponse) GetReadMetadata() *ReadMetadata {
+	if x != nil {
+		return x.ReadMetadata
+	}
+	return nil
+}
+
 type GetParentRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	TransactionId string                 `protobuf:"bytes,1,opt,name=transaction_id,json=transactionId,proto3" json:"transaction_id,omitempty"`
 	ChildNodeId   string                 `protobuf:"bytes,2,opt,name=child_node_id,json=childNodeId,proto3" json:"child_node_id,omitempty"`
+	ReadOptions   *ReadOptions           `protobuf:"bytes,3,opt,name=read_options,json=readOptions,proto3" json:"read_options,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1532,10 +1613,18 @@ func (x *GetParentRequest) GetChildNodeId() string {
 	return ""
 }
 
+func (x *GetParentRequest) GetReadOptions() *ReadOptions {
+	if x != nil {
+		return x.ReadOptions
+	}
+	return nil
+}
+
 type GetParentResponse struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// Empty when the node has no parent contains edge.
-	ContainsEdge  *Edge `protobuf:"bytes,1,opt,name=contains_edge,json=containsEdge,proto3,oneof" json:"contains_edge,omitempty"`
+	ContainsEdge  *Edge         `protobuf:"bytes,1,opt,name=contains_edge,json=containsEdge,proto3,oneof" json:"contains_edge,omitempty"`
+	ReadMetadata  *ReadMetadata `protobuf:"bytes,2,opt,name=read_metadata,json=readMetadata,proto3" json:"read_metadata,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1573,6 +1662,13 @@ func (*GetParentResponse) Descriptor() ([]byte, []int) {
 func (x *GetParentResponse) GetContainsEdge() *Edge {
 	if x != nil {
 		return x.ContainsEdge
+	}
+	return nil
+}
+
+func (x *GetParentResponse) GetReadMetadata() *ReadMetadata {
+	if x != nil {
+		return x.ReadMetadata
 	}
 	return nil
 }
@@ -1894,6 +1990,154 @@ func (x *ApplyGraphOperationsResponse) GetResults() []*GraphOperationResult {
 	return nil
 }
 
+// ReadOptions carries explicit read-consistency options. Stale reads require
+// daemon support and are rejected unless both request and daemon config opt in.
+type ReadOptions struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	AllowStale    bool                   `protobuf:"varint,1,opt,name=allow_stale,json=allowStale,proto3" json:"allow_stale,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ReadOptions) Reset() {
+	*x = ReadOptions{}
+	mi := &file_mycel_client_v1_graph_proto_msgTypes[35]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ReadOptions) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ReadOptions) ProtoMessage() {}
+
+func (x *ReadOptions) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_client_v1_graph_proto_msgTypes[35]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ReadOptions.ProtoReflect.Descriptor instead.
+func (*ReadOptions) Descriptor() ([]byte, []int) {
+	return file_mycel_client_v1_graph_proto_rawDescGZIP(), []int{35}
+}
+
+func (x *ReadOptions) GetAllowStale() bool {
+	if x != nil {
+		return x.AllowStale
+	}
+	return false
+}
+
+// ReadMetadata describes the consistency proof/context for graph-derived reads.
+type ReadMetadata struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Consistency mode for the read: "strong", "overlay", or "stale".
+	Consistency      string `protobuf:"bytes,1,opt,name=consistency,proto3" json:"consistency,omitempty"`
+	RaftGroupId      string `protobuf:"bytes,2,opt,name=raft_group_id,json=raftGroupId,proto3" json:"raft_group_id,omitempty"`
+	LeaderNodeId     uint64 `protobuf:"varint,3,opt,name=leader_node_id,json=leaderNodeId,proto3" json:"leader_node_id,omitempty"`
+	ReadIndex        uint64 `protobuf:"varint,4,opt,name=read_index,json=readIndex,proto3" json:"read_index,omitempty"`
+	AppliedIndex     uint64 `protobuf:"varint,5,opt,name=applied_index,json=appliedIndex,proto3" json:"applied_index,omitempty"`
+	ObservedRevision int64  `protobuf:"varint,6,opt,name=observed_revision,json=observedRevision,proto3" json:"observed_revision,omitempty"`
+	Stale            bool   `protobuf:"varint,7,opt,name=stale,proto3" json:"stale,omitempty"`
+	StaleReason      string `protobuf:"bytes,8,opt,name=stale_reason,json=staleReason,proto3" json:"stale_reason,omitempty"`
+	unknownFields    protoimpl.UnknownFields
+	sizeCache        protoimpl.SizeCache
+}
+
+func (x *ReadMetadata) Reset() {
+	*x = ReadMetadata{}
+	mi := &file_mycel_client_v1_graph_proto_msgTypes[36]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ReadMetadata) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ReadMetadata) ProtoMessage() {}
+
+func (x *ReadMetadata) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_client_v1_graph_proto_msgTypes[36]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ReadMetadata.ProtoReflect.Descriptor instead.
+func (*ReadMetadata) Descriptor() ([]byte, []int) {
+	return file_mycel_client_v1_graph_proto_rawDescGZIP(), []int{36}
+}
+
+func (x *ReadMetadata) GetConsistency() string {
+	if x != nil {
+		return x.Consistency
+	}
+	return ""
+}
+
+func (x *ReadMetadata) GetRaftGroupId() string {
+	if x != nil {
+		return x.RaftGroupId
+	}
+	return ""
+}
+
+func (x *ReadMetadata) GetLeaderNodeId() uint64 {
+	if x != nil {
+		return x.LeaderNodeId
+	}
+	return 0
+}
+
+func (x *ReadMetadata) GetReadIndex() uint64 {
+	if x != nil {
+		return x.ReadIndex
+	}
+	return 0
+}
+
+func (x *ReadMetadata) GetAppliedIndex() uint64 {
+	if x != nil {
+		return x.AppliedIndex
+	}
+	return 0
+}
+
+func (x *ReadMetadata) GetObservedRevision() int64 {
+	if x != nil {
+		return x.ObservedRevision
+	}
+	return 0
+}
+
+func (x *ReadMetadata) GetStale() bool {
+	if x != nil {
+		return x.Stale
+	}
+	return false
+}
+
+func (x *ReadMetadata) GetStaleReason() string {
+	if x != nil {
+		return x.StaleReason
+	}
+	return ""
+}
+
 // Node is the client-visible graph node representation.
 type Node struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
@@ -1911,7 +2155,7 @@ type Node struct {
 
 func (x *Node) Reset() {
 	*x = Node{}
-	mi := &file_mycel_client_v1_graph_proto_msgTypes[35]
+	mi := &file_mycel_client_v1_graph_proto_msgTypes[37]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1923,7 +2167,7 @@ func (x *Node) String() string {
 func (*Node) ProtoMessage() {}
 
 func (x *Node) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_client_v1_graph_proto_msgTypes[35]
+	mi := &file_mycel_client_v1_graph_proto_msgTypes[37]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1936,7 +2180,7 @@ func (x *Node) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Node.ProtoReflect.Descriptor instead.
 func (*Node) Descriptor() ([]byte, []int) {
-	return file_mycel_client_v1_graph_proto_rawDescGZIP(), []int{35}
+	return file_mycel_client_v1_graph_proto_rawDescGZIP(), []int{37}
 }
 
 func (x *Node) GetNodeId() string {
@@ -2010,7 +2254,7 @@ type NodeCreate struct {
 
 func (x *NodeCreate) Reset() {
 	*x = NodeCreate{}
-	mi := &file_mycel_client_v1_graph_proto_msgTypes[36]
+	mi := &file_mycel_client_v1_graph_proto_msgTypes[38]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2022,7 +2266,7 @@ func (x *NodeCreate) String() string {
 func (*NodeCreate) ProtoMessage() {}
 
 func (x *NodeCreate) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_client_v1_graph_proto_msgTypes[36]
+	mi := &file_mycel_client_v1_graph_proto_msgTypes[38]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2035,7 +2279,7 @@ func (x *NodeCreate) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use NodeCreate.ProtoReflect.Descriptor instead.
 func (*NodeCreate) Descriptor() ([]byte, []int) {
-	return file_mycel_client_v1_graph_proto_rawDescGZIP(), []int{36}
+	return file_mycel_client_v1_graph_proto_rawDescGZIP(), []int{38}
 }
 
 func (x *NodeCreate) GetNodeId() string {
@@ -2092,7 +2336,7 @@ type Edge struct {
 
 func (x *Edge) Reset() {
 	*x = Edge{}
-	mi := &file_mycel_client_v1_graph_proto_msgTypes[37]
+	mi := &file_mycel_client_v1_graph_proto_msgTypes[39]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2104,7 +2348,7 @@ func (x *Edge) String() string {
 func (*Edge) ProtoMessage() {}
 
 func (x *Edge) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_client_v1_graph_proto_msgTypes[37]
+	mi := &file_mycel_client_v1_graph_proto_msgTypes[39]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2117,7 +2361,7 @@ func (x *Edge) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Edge.ProtoReflect.Descriptor instead.
 func (*Edge) Descriptor() ([]byte, []int) {
-	return file_mycel_client_v1_graph_proto_rawDescGZIP(), []int{37}
+	return file_mycel_client_v1_graph_proto_rawDescGZIP(), []int{39}
 }
 
 func (x *Edge) GetEdgeId() string {
@@ -2207,7 +2451,7 @@ type EdgeCreate struct {
 
 func (x *EdgeCreate) Reset() {
 	*x = EdgeCreate{}
-	mi := &file_mycel_client_v1_graph_proto_msgTypes[38]
+	mi := &file_mycel_client_v1_graph_proto_msgTypes[40]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2219,7 +2463,7 @@ func (x *EdgeCreate) String() string {
 func (*EdgeCreate) ProtoMessage() {}
 
 func (x *EdgeCreate) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_client_v1_graph_proto_msgTypes[38]
+	mi := &file_mycel_client_v1_graph_proto_msgTypes[40]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2232,7 +2476,7 @@ func (x *EdgeCreate) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use EdgeCreate.ProtoReflect.Descriptor instead.
 func (*EdgeCreate) Descriptor() ([]byte, []int) {
-	return file_mycel_client_v1_graph_proto_rawDescGZIP(), []int{38}
+	return file_mycel_client_v1_graph_proto_rawDescGZIP(), []int{40}
 }
 
 func (x *EdgeCreate) GetEdgeId() string {
@@ -2304,7 +2548,7 @@ type GraphOperation struct {
 
 func (x *GraphOperation) Reset() {
 	*x = GraphOperation{}
-	mi := &file_mycel_client_v1_graph_proto_msgTypes[39]
+	mi := &file_mycel_client_v1_graph_proto_msgTypes[41]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2316,7 +2560,7 @@ func (x *GraphOperation) String() string {
 func (*GraphOperation) ProtoMessage() {}
 
 func (x *GraphOperation) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_client_v1_graph_proto_msgTypes[39]
+	mi := &file_mycel_client_v1_graph_proto_msgTypes[41]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2329,7 +2573,7 @@ func (x *GraphOperation) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GraphOperation.ProtoReflect.Descriptor instead.
 func (*GraphOperation) Descriptor() ([]byte, []int) {
-	return file_mycel_client_v1_graph_proto_rawDescGZIP(), []int{39}
+	return file_mycel_client_v1_graph_proto_rawDescGZIP(), []int{41}
 }
 
 func (x *GraphOperation) GetOperation() isGraphOperation_Operation {
@@ -2498,7 +2742,7 @@ type GraphOperationResult struct {
 
 func (x *GraphOperationResult) Reset() {
 	*x = GraphOperationResult{}
-	mi := &file_mycel_client_v1_graph_proto_msgTypes[40]
+	mi := &file_mycel_client_v1_graph_proto_msgTypes[42]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2510,7 +2754,7 @@ func (x *GraphOperationResult) String() string {
 func (*GraphOperationResult) ProtoMessage() {}
 
 func (x *GraphOperationResult) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_client_v1_graph_proto_msgTypes[40]
+	mi := &file_mycel_client_v1_graph_proto_msgTypes[42]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2523,7 +2767,7 @@ func (x *GraphOperationResult) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GraphOperationResult.ProtoReflect.Descriptor instead.
 func (*GraphOperationResult) Descriptor() ([]byte, []int) {
-	return file_mycel_client_v1_graph_proto_rawDescGZIP(), []int{40}
+	return file_mycel_client_v1_graph_proto_rawDescGZIP(), []int{42}
 }
 
 func (x *GraphOperationResult) GetResult() isGraphOperationResult_Result {
@@ -2682,7 +2926,7 @@ type NodeUpdate struct {
 
 func (x *NodeUpdate) Reset() {
 	*x = NodeUpdate{}
-	mi := &file_mycel_client_v1_graph_proto_msgTypes[41]
+	mi := &file_mycel_client_v1_graph_proto_msgTypes[43]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2694,7 +2938,7 @@ func (x *NodeUpdate) String() string {
 func (*NodeUpdate) ProtoMessage() {}
 
 func (x *NodeUpdate) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_client_v1_graph_proto_msgTypes[41]
+	mi := &file_mycel_client_v1_graph_proto_msgTypes[43]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2707,7 +2951,7 @@ func (x *NodeUpdate) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use NodeUpdate.ProtoReflect.Descriptor instead.
 func (*NodeUpdate) Descriptor() ([]byte, []int) {
-	return file_mycel_client_v1_graph_proto_rawDescGZIP(), []int{41}
+	return file_mycel_client_v1_graph_proto_rawDescGZIP(), []int{43}
 }
 
 func (x *NodeUpdate) GetNode() *Node {
@@ -2733,7 +2977,7 @@ type NodeUpsert struct {
 
 func (x *NodeUpsert) Reset() {
 	*x = NodeUpsert{}
-	mi := &file_mycel_client_v1_graph_proto_msgTypes[42]
+	mi := &file_mycel_client_v1_graph_proto_msgTypes[44]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2745,7 +2989,7 @@ func (x *NodeUpsert) String() string {
 func (*NodeUpsert) ProtoMessage() {}
 
 func (x *NodeUpsert) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_client_v1_graph_proto_msgTypes[42]
+	mi := &file_mycel_client_v1_graph_proto_msgTypes[44]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2758,7 +3002,7 @@ func (x *NodeUpsert) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use NodeUpsert.ProtoReflect.Descriptor instead.
 func (*NodeUpsert) Descriptor() ([]byte, []int) {
-	return file_mycel_client_v1_graph_proto_rawDescGZIP(), []int{42}
+	return file_mycel_client_v1_graph_proto_rawDescGZIP(), []int{44}
 }
 
 func (x *NodeUpsert) GetNode() *NodeCreate {
@@ -2778,7 +3022,7 @@ type NodeDelete struct {
 
 func (x *NodeDelete) Reset() {
 	*x = NodeDelete{}
-	mi := &file_mycel_client_v1_graph_proto_msgTypes[43]
+	mi := &file_mycel_client_v1_graph_proto_msgTypes[45]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2790,7 +3034,7 @@ func (x *NodeDelete) String() string {
 func (*NodeDelete) ProtoMessage() {}
 
 func (x *NodeDelete) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_client_v1_graph_proto_msgTypes[43]
+	mi := &file_mycel_client_v1_graph_proto_msgTypes[45]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2803,7 +3047,7 @@ func (x *NodeDelete) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use NodeDelete.ProtoReflect.Descriptor instead.
 func (*NodeDelete) Descriptor() ([]byte, []int) {
-	return file_mycel_client_v1_graph_proto_rawDescGZIP(), []int{43}
+	return file_mycel_client_v1_graph_proto_rawDescGZIP(), []int{45}
 }
 
 func (x *NodeDelete) GetNodeId() string {
@@ -2830,7 +3074,7 @@ type NodeDeleteResult struct {
 
 func (x *NodeDeleteResult) Reset() {
 	*x = NodeDeleteResult{}
-	mi := &file_mycel_client_v1_graph_proto_msgTypes[44]
+	mi := &file_mycel_client_v1_graph_proto_msgTypes[46]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2842,7 +3086,7 @@ func (x *NodeDeleteResult) String() string {
 func (*NodeDeleteResult) ProtoMessage() {}
 
 func (x *NodeDeleteResult) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_client_v1_graph_proto_msgTypes[44]
+	mi := &file_mycel_client_v1_graph_proto_msgTypes[46]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2855,7 +3099,7 @@ func (x *NodeDeleteResult) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use NodeDeleteResult.ProtoReflect.Descriptor instead.
 func (*NodeDeleteResult) Descriptor() ([]byte, []int) {
-	return file_mycel_client_v1_graph_proto_rawDescGZIP(), []int{44}
+	return file_mycel_client_v1_graph_proto_rawDescGZIP(), []int{46}
 }
 
 func (x *NodeDeleteResult) GetDeletedNodeIds() []string {
@@ -2882,7 +3126,7 @@ type EdgeUpdate struct {
 
 func (x *EdgeUpdate) Reset() {
 	*x = EdgeUpdate{}
-	mi := &file_mycel_client_v1_graph_proto_msgTypes[45]
+	mi := &file_mycel_client_v1_graph_proto_msgTypes[47]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2894,7 +3138,7 @@ func (x *EdgeUpdate) String() string {
 func (*EdgeUpdate) ProtoMessage() {}
 
 func (x *EdgeUpdate) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_client_v1_graph_proto_msgTypes[45]
+	mi := &file_mycel_client_v1_graph_proto_msgTypes[47]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2907,7 +3151,7 @@ func (x *EdgeUpdate) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use EdgeUpdate.ProtoReflect.Descriptor instead.
 func (*EdgeUpdate) Descriptor() ([]byte, []int) {
-	return file_mycel_client_v1_graph_proto_rawDescGZIP(), []int{45}
+	return file_mycel_client_v1_graph_proto_rawDescGZIP(), []int{47}
 }
 
 func (x *EdgeUpdate) GetEdge() *Edge {
@@ -2933,7 +3177,7 @@ type EdgeDelete struct {
 
 func (x *EdgeDelete) Reset() {
 	*x = EdgeDelete{}
-	mi := &file_mycel_client_v1_graph_proto_msgTypes[46]
+	mi := &file_mycel_client_v1_graph_proto_msgTypes[48]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2945,7 +3189,7 @@ func (x *EdgeDelete) String() string {
 func (*EdgeDelete) ProtoMessage() {}
 
 func (x *EdgeDelete) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_client_v1_graph_proto_msgTypes[46]
+	mi := &file_mycel_client_v1_graph_proto_msgTypes[48]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2958,7 +3202,7 @@ func (x *EdgeDelete) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use EdgeDelete.ProtoReflect.Descriptor instead.
 func (*EdgeDelete) Descriptor() ([]byte, []int) {
-	return file_mycel_client_v1_graph_proto_rawDescGZIP(), []int{46}
+	return file_mycel_client_v1_graph_proto_rawDescGZIP(), []int{48}
 }
 
 func (x *EdgeDelete) GetEdgeId() string {
@@ -2977,7 +3221,7 @@ type EdgeDeleteResult struct {
 
 func (x *EdgeDeleteResult) Reset() {
 	*x = EdgeDeleteResult{}
-	mi := &file_mycel_client_v1_graph_proto_msgTypes[47]
+	mi := &file_mycel_client_v1_graph_proto_msgTypes[49]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2989,7 +3233,7 @@ func (x *EdgeDeleteResult) String() string {
 func (*EdgeDeleteResult) ProtoMessage() {}
 
 func (x *EdgeDeleteResult) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_client_v1_graph_proto_msgTypes[47]
+	mi := &file_mycel_client_v1_graph_proto_msgTypes[49]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3002,7 +3246,7 @@ func (x *EdgeDeleteResult) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use EdgeDeleteResult.ProtoReflect.Descriptor instead.
 func (*EdgeDeleteResult) Descriptor() ([]byte, []int) {
-	return file_mycel_client_v1_graph_proto_rawDescGZIP(), []int{47}
+	return file_mycel_client_v1_graph_proto_rawDescGZIP(), []int{49}
 }
 
 func (x *EdgeDeleteResult) GetDeletedEdgeId() string {
@@ -3023,7 +3267,7 @@ type SubtreeMove struct {
 
 func (x *SubtreeMove) Reset() {
 	*x = SubtreeMove{}
-	mi := &file_mycel_client_v1_graph_proto_msgTypes[48]
+	mi := &file_mycel_client_v1_graph_proto_msgTypes[50]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3035,7 +3279,7 @@ func (x *SubtreeMove) String() string {
 func (*SubtreeMove) ProtoMessage() {}
 
 func (x *SubtreeMove) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_client_v1_graph_proto_msgTypes[48]
+	mi := &file_mycel_client_v1_graph_proto_msgTypes[50]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3048,7 +3292,7 @@ func (x *SubtreeMove) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SubtreeMove.ProtoReflect.Descriptor instead.
 func (*SubtreeMove) Descriptor() ([]byte, []int) {
-	return file_mycel_client_v1_graph_proto_rawDescGZIP(), []int{48}
+	return file_mycel_client_v1_graph_proto_rawDescGZIP(), []int{50}
 }
 
 func (x *SubtreeMove) GetNodeId() string {
@@ -3082,7 +3326,7 @@ type ChildrenReorder struct {
 
 func (x *ChildrenReorder) Reset() {
 	*x = ChildrenReorder{}
-	mi := &file_mycel_client_v1_graph_proto_msgTypes[49]
+	mi := &file_mycel_client_v1_graph_proto_msgTypes[51]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3094,7 +3338,7 @@ func (x *ChildrenReorder) String() string {
 func (*ChildrenReorder) ProtoMessage() {}
 
 func (x *ChildrenReorder) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_client_v1_graph_proto_msgTypes[49]
+	mi := &file_mycel_client_v1_graph_proto_msgTypes[51]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3107,7 +3351,7 @@ func (x *ChildrenReorder) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ChildrenReorder.ProtoReflect.Descriptor instead.
 func (*ChildrenReorder) Descriptor() ([]byte, []int) {
-	return file_mycel_client_v1_graph_proto_rawDescGZIP(), []int{49}
+	return file_mycel_client_v1_graph_proto_rawDescGZIP(), []int{51}
 }
 
 func (x *ChildrenReorder) GetParentNodeId() string {
@@ -3133,7 +3377,7 @@ type ChildrenReorderResult struct {
 
 func (x *ChildrenReorderResult) Reset() {
 	*x = ChildrenReorderResult{}
-	mi := &file_mycel_client_v1_graph_proto_msgTypes[50]
+	mi := &file_mycel_client_v1_graph_proto_msgTypes[52]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3145,7 +3389,7 @@ func (x *ChildrenReorderResult) String() string {
 func (*ChildrenReorderResult) ProtoMessage() {}
 
 func (x *ChildrenReorderResult) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_client_v1_graph_proto_msgTypes[50]
+	mi := &file_mycel_client_v1_graph_proto_msgTypes[52]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3158,7 +3402,7 @@ func (x *ChildrenReorderResult) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ChildrenReorderResult.ProtoReflect.Descriptor instead.
 func (*ChildrenReorderResult) Descriptor() ([]byte, []int) {
-	return file_mycel_client_v1_graph_proto_rawDescGZIP(), []int{50}
+	return file_mycel_client_v1_graph_proto_rawDescGZIP(), []int{52}
 }
 
 func (x *ChildrenReorderResult) GetContainsEdges() []*Edge {
@@ -3172,20 +3416,24 @@ var File_mycel_client_v1_graph_proto protoreflect.FileDescriptor
 
 const file_mycel_client_v1_graph_proto_rawDesc = "" +
 	"\n" +
-	"\x1bmycel/client/v1/graph.proto\x12\x0fmycel.client.v1\x1a google/protobuf/field_mask.proto\x1a\x1cgoogle/protobuf/struct.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1amycel/client/v1/blob.proto\"P\n" +
+	"\x1bmycel/client/v1/graph.proto\x12\x0fmycel.client.v1\x1a google/protobuf/field_mask.proto\x1a\x1cgoogle/protobuf/struct.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1amycel/client/v1/blob.proto\"\x91\x01\n" +
 	"\x0eGetNodeRequest\x12%\n" +
 	"\x0etransaction_id\x18\x01 \x01(\tR\rtransactionId\x12\x17\n" +
-	"\anode_id\x18\x02 \x01(\tR\x06nodeId\"<\n" +
+	"\anode_id\x18\x02 \x01(\tR\x06nodeId\x12?\n" +
+	"\fread_options\x18\x03 \x01(\v2\x1c.mycel.client.v1.ReadOptionsR\vreadOptions\"\x80\x01\n" +
 	"\x0fGetNodeResponse\x12)\n" +
-	"\x04node\x18\x01 \x01(\v2\x15.mycel.client.v1.NodeR\x04node\"u\n" +
+	"\x04node\x18\x01 \x01(\v2\x15.mycel.client.v1.NodeR\x04node\x12B\n" +
+	"\rread_metadata\x18\x02 \x01(\v2\x1d.mycel.client.v1.ReadMetadataR\freadMetadata\"\xb6\x01\n" +
 	"\x10ListNodesRequest\x12%\n" +
 	"\x0etransaction_id\x18\x01 \x01(\tR\rtransactionId\x12\x1b\n" +
 	"\tpage_size\x18\x02 \x01(\x05R\bpageSize\x12\x1d\n" +
 	"\n" +
-	"page_token\x18\x03 \x01(\tR\tpageToken\"h\n" +
+	"page_token\x18\x03 \x01(\tR\tpageToken\x12?\n" +
+	"\fread_options\x18\x04 \x01(\v2\x1c.mycel.client.v1.ReadOptionsR\vreadOptions\"\xac\x01\n" +
 	"\x11ListNodesResponse\x12+\n" +
 	"\x05nodes\x18\x01 \x03(\v2\x15.mycel.client.v1.NodeR\x05nodes\x12&\n" +
-	"\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken\"k\n" +
+	"\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken\x12B\n" +
+	"\rread_metadata\x18\x03 \x01(\v2\x1d.mycel.client.v1.ReadMetadataR\freadMetadata\"k\n" +
 	"\x11CreateNodeRequest\x12%\n" +
 	"\x0etransaction_id\x18\x01 \x01(\tR\rtransactionId\x12/\n" +
 	"\x04node\x18\x02 \x01(\v2\x1b.mycel.client.v1.NodeCreateR\x04node\"?\n" +
@@ -3229,20 +3477,24 @@ const file_mycel_client_v1_graph_proto_rawDesc = "" +
 	"\trecursive\x18\x03 \x01(\bR\trecursive\"h\n" +
 	"\x12DeleteNodeResponse\x12(\n" +
 	"\x10deleted_node_ids\x18\x01 \x03(\tR\x0edeletedNodeIds\x12(\n" +
-	"\x10deleted_edge_ids\x18\x02 \x03(\tR\x0edeletedEdgeIds\"P\n" +
+	"\x10deleted_edge_ids\x18\x02 \x03(\tR\x0edeletedEdgeIds\"\x91\x01\n" +
 	"\x0eGetEdgeRequest\x12%\n" +
 	"\x0etransaction_id\x18\x01 \x01(\tR\rtransactionId\x12\x17\n" +
-	"\aedge_id\x18\x02 \x01(\tR\x06edgeId\"<\n" +
+	"\aedge_id\x18\x02 \x01(\tR\x06edgeId\x12?\n" +
+	"\fread_options\x18\x03 \x01(\v2\x1c.mycel.client.v1.ReadOptionsR\vreadOptions\"\x80\x01\n" +
 	"\x0fGetEdgeResponse\x12)\n" +
-	"\x04edge\x18\x01 \x01(\v2\x15.mycel.client.v1.EdgeR\x04edge\"u\n" +
+	"\x04edge\x18\x01 \x01(\v2\x15.mycel.client.v1.EdgeR\x04edge\x12B\n" +
+	"\rread_metadata\x18\x02 \x01(\v2\x1d.mycel.client.v1.ReadMetadataR\freadMetadata\"\xb6\x01\n" +
 	"\x10ListEdgesRequest\x12%\n" +
 	"\x0etransaction_id\x18\x01 \x01(\tR\rtransactionId\x12\x1b\n" +
 	"\tpage_size\x18\x02 \x01(\x05R\bpageSize\x12\x1d\n" +
 	"\n" +
-	"page_token\x18\x03 \x01(\tR\tpageToken\"h\n" +
+	"page_token\x18\x03 \x01(\tR\tpageToken\x12?\n" +
+	"\fread_options\x18\x04 \x01(\v2\x1c.mycel.client.v1.ReadOptionsR\vreadOptions\"\xac\x01\n" +
 	"\x11ListEdgesResponse\x12+\n" +
 	"\x05edges\x18\x01 \x03(\v2\x15.mycel.client.v1.EdgeR\x05edges\x12&\n" +
-	"\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken\"k\n" +
+	"\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken\x12B\n" +
+	"\rread_metadata\x18\x03 \x01(\v2\x1d.mycel.client.v1.ReadMetadataR\freadMetadata\"k\n" +
 	"\x11CreateEdgeRequest\x12%\n" +
 	"\x0etransaction_id\x18\x01 \x01(\tR\rtransactionId\x12/\n" +
 	"\x04edge\x18\x02 \x01(\v2\x1b.mycel.client.v1.EdgeCreateR\x04edge\"?\n" +
@@ -3259,17 +3511,21 @@ const file_mycel_client_v1_graph_proto_rawDesc = "" +
 	"\x0etransaction_id\x18\x01 \x01(\tR\rtransactionId\x12\x17\n" +
 	"\aedge_id\x18\x02 \x01(\tR\x06edgeId\"<\n" +
 	"\x12DeleteEdgeResponse\x12&\n" +
-	"\x0fdeleted_edge_id\x18\x01 \x01(\tR\rdeletedEdgeId\"b\n" +
+	"\x0fdeleted_edge_id\x18\x01 \x01(\tR\rdeletedEdgeId\"\xa3\x01\n" +
 	"\x13ListChildrenRequest\x12%\n" +
 	"\x0etransaction_id\x18\x01 \x01(\tR\rtransactionId\x12$\n" +
-	"\x0eparent_node_id\x18\x02 \x01(\tR\fparentNodeId\"T\n" +
+	"\x0eparent_node_id\x18\x02 \x01(\tR\fparentNodeId\x12?\n" +
+	"\fread_options\x18\x03 \x01(\v2\x1c.mycel.client.v1.ReadOptionsR\vreadOptions\"\x98\x01\n" +
 	"\x14ListChildrenResponse\x12<\n" +
-	"\x0econtains_edges\x18\x01 \x03(\v2\x15.mycel.client.v1.EdgeR\rcontainsEdges\"]\n" +
+	"\x0econtains_edges\x18\x01 \x03(\v2\x15.mycel.client.v1.EdgeR\rcontainsEdges\x12B\n" +
+	"\rread_metadata\x18\x02 \x01(\v2\x1d.mycel.client.v1.ReadMetadataR\freadMetadata\"\x9e\x01\n" +
 	"\x10GetParentRequest\x12%\n" +
 	"\x0etransaction_id\x18\x01 \x01(\tR\rtransactionId\x12\"\n" +
-	"\rchild_node_id\x18\x02 \x01(\tR\vchildNodeId\"f\n" +
+	"\rchild_node_id\x18\x02 \x01(\tR\vchildNodeId\x12?\n" +
+	"\fread_options\x18\x03 \x01(\v2\x1c.mycel.client.v1.ReadOptionsR\vreadOptions\"\xaa\x01\n" +
 	"\x11GetParentResponse\x12?\n" +
-	"\rcontains_edge\x18\x01 \x01(\v2\x15.mycel.client.v1.EdgeH\x00R\fcontainsEdge\x88\x01\x01B\x10\n" +
+	"\rcontains_edge\x18\x01 \x01(\v2\x15.mycel.client.v1.EdgeH\x00R\fcontainsEdge\x88\x01\x01\x12B\n" +
+	"\rread_metadata\x18\x02 \x01(\v2\x1d.mycel.client.v1.ReadMetadataR\freadMetadataB\x10\n" +
 	"\x0e_contains_edge\"\xa6\x01\n" +
 	"\x12MoveSubtreeRequest\x12%\n" +
 	"\x0etransaction_id\x18\x01 \x01(\tR\rtransactionId\x12\x17\n" +
@@ -3291,7 +3547,20 @@ const file_mycel_client_v1_graph_proto_rawDesc = "" +
 	"operations\x18\x02 \x03(\v2\x1f.mycel.client.v1.GraphOperationR\n" +
 	"operations\"_\n" +
 	"\x1cApplyGraphOperationsResponse\x12?\n" +
-	"\aresults\x18\x01 \x03(\v2%.mycel.client.v1.GraphOperationResultR\aresults\"\xe7\x02\n" +
+	"\aresults\x18\x01 \x03(\v2%.mycel.client.v1.GraphOperationResultR\aresults\".\n" +
+	"\vReadOptions\x12\x1f\n" +
+	"\vallow_stale\x18\x01 \x01(\bR\n" +
+	"allowStale\"\xa4\x02\n" +
+	"\fReadMetadata\x12 \n" +
+	"\vconsistency\x18\x01 \x01(\tR\vconsistency\x12\"\n" +
+	"\rraft_group_id\x18\x02 \x01(\tR\vraftGroupId\x12$\n" +
+	"\x0eleader_node_id\x18\x03 \x01(\x04R\fleaderNodeId\x12\x1d\n" +
+	"\n" +
+	"read_index\x18\x04 \x01(\x04R\treadIndex\x12#\n" +
+	"\rapplied_index\x18\x05 \x01(\x04R\fappliedIndex\x12+\n" +
+	"\x11observed_revision\x18\x06 \x01(\x03R\x10observedRevision\x12\x14\n" +
+	"\x05stale\x18\a \x01(\bR\x05stale\x12!\n" +
+	"\fstale_reason\x18\b \x01(\tR\vstaleReason\"\xe7\x02\n" +
 	"\x04Node\x12\x17\n" +
 	"\anode_id\x18\x01 \x01(\tR\x06nodeId\x12\x1b\n" +
 	"\tdomain_id\x18\x02 \x01(\tR\bdomainId\x12\x16\n" +
@@ -3453,7 +3722,7 @@ func file_mycel_client_v1_graph_proto_rawDescGZIP() []byte {
 	return file_mycel_client_v1_graph_proto_rawDescData
 }
 
-var file_mycel_client_v1_graph_proto_msgTypes = make([]protoimpl.MessageInfo, 51)
+var file_mycel_client_v1_graph_proto_msgTypes = make([]protoimpl.MessageInfo, 53)
 var file_mycel_client_v1_graph_proto_goTypes = []any{
 	(*GetNodeRequest)(nil),               // 0: mycel.client.v1.GetNodeRequest
 	(*GetNodeResponse)(nil),              // 1: mycel.client.v1.GetNodeResponse
@@ -3490,135 +3759,149 @@ var file_mycel_client_v1_graph_proto_goTypes = []any{
 	(*ReorderChildrenResponse)(nil),      // 32: mycel.client.v1.ReorderChildrenResponse
 	(*ApplyGraphOperationsRequest)(nil),  // 33: mycel.client.v1.ApplyGraphOperationsRequest
 	(*ApplyGraphOperationsResponse)(nil), // 34: mycel.client.v1.ApplyGraphOperationsResponse
-	(*Node)(nil),                         // 35: mycel.client.v1.Node
-	(*NodeCreate)(nil),                   // 36: mycel.client.v1.NodeCreate
-	(*Edge)(nil),                         // 37: mycel.client.v1.Edge
-	(*EdgeCreate)(nil),                   // 38: mycel.client.v1.EdgeCreate
-	(*GraphOperation)(nil),               // 39: mycel.client.v1.GraphOperation
-	(*GraphOperationResult)(nil),         // 40: mycel.client.v1.GraphOperationResult
-	(*NodeUpdate)(nil),                   // 41: mycel.client.v1.NodeUpdate
-	(*NodeUpsert)(nil),                   // 42: mycel.client.v1.NodeUpsert
-	(*NodeDelete)(nil),                   // 43: mycel.client.v1.NodeDelete
-	(*NodeDeleteResult)(nil),             // 44: mycel.client.v1.NodeDeleteResult
-	(*EdgeUpdate)(nil),                   // 45: mycel.client.v1.EdgeUpdate
-	(*EdgeDelete)(nil),                   // 46: mycel.client.v1.EdgeDelete
-	(*EdgeDeleteResult)(nil),             // 47: mycel.client.v1.EdgeDeleteResult
-	(*SubtreeMove)(nil),                  // 48: mycel.client.v1.SubtreeMove
-	(*ChildrenReorder)(nil),              // 49: mycel.client.v1.ChildrenReorder
-	(*ChildrenReorderResult)(nil),        // 50: mycel.client.v1.ChildrenReorderResult
-	(*structpb.Struct)(nil),              // 51: google.protobuf.Struct
-	(*Blob)(nil),                         // 52: mycel.client.v1.Blob
-	(*fieldmaskpb.FieldMask)(nil),        // 53: google.protobuf.FieldMask
-	(*timestamppb.Timestamp)(nil),        // 54: google.protobuf.Timestamp
+	(*ReadOptions)(nil),                  // 35: mycel.client.v1.ReadOptions
+	(*ReadMetadata)(nil),                 // 36: mycel.client.v1.ReadMetadata
+	(*Node)(nil),                         // 37: mycel.client.v1.Node
+	(*NodeCreate)(nil),                   // 38: mycel.client.v1.NodeCreate
+	(*Edge)(nil),                         // 39: mycel.client.v1.Edge
+	(*EdgeCreate)(nil),                   // 40: mycel.client.v1.EdgeCreate
+	(*GraphOperation)(nil),               // 41: mycel.client.v1.GraphOperation
+	(*GraphOperationResult)(nil),         // 42: mycel.client.v1.GraphOperationResult
+	(*NodeUpdate)(nil),                   // 43: mycel.client.v1.NodeUpdate
+	(*NodeUpsert)(nil),                   // 44: mycel.client.v1.NodeUpsert
+	(*NodeDelete)(nil),                   // 45: mycel.client.v1.NodeDelete
+	(*NodeDeleteResult)(nil),             // 46: mycel.client.v1.NodeDeleteResult
+	(*EdgeUpdate)(nil),                   // 47: mycel.client.v1.EdgeUpdate
+	(*EdgeDelete)(nil),                   // 48: mycel.client.v1.EdgeDelete
+	(*EdgeDeleteResult)(nil),             // 49: mycel.client.v1.EdgeDeleteResult
+	(*SubtreeMove)(nil),                  // 50: mycel.client.v1.SubtreeMove
+	(*ChildrenReorder)(nil),              // 51: mycel.client.v1.ChildrenReorder
+	(*ChildrenReorderResult)(nil),        // 52: mycel.client.v1.ChildrenReorderResult
+	(*structpb.Struct)(nil),              // 53: google.protobuf.Struct
+	(*Blob)(nil),                         // 54: mycel.client.v1.Blob
+	(*fieldmaskpb.FieldMask)(nil),        // 55: google.protobuf.FieldMask
+	(*timestamppb.Timestamp)(nil),        // 56: google.protobuf.Timestamp
 }
 var file_mycel_client_v1_graph_proto_depIdxs = []int32{
-	35, // 0: mycel.client.v1.GetNodeResponse.node:type_name -> mycel.client.v1.Node
-	35, // 1: mycel.client.v1.ListNodesResponse.nodes:type_name -> mycel.client.v1.Node
-	36, // 2: mycel.client.v1.CreateNodeRequest.node:type_name -> mycel.client.v1.NodeCreate
-	35, // 3: mycel.client.v1.CreateNodeResponse.node:type_name -> mycel.client.v1.Node
-	7,  // 4: mycel.client.v1.CreateBlobNodeRequest.metadata:type_name -> mycel.client.v1.CreateBlobNodeMetadata
-	51, // 5: mycel.client.v1.CreateBlobNodeMetadata.properties:type_name -> google.protobuf.Struct
-	51, // 6: mycel.client.v1.CreateBlobNodeMetadata.payload:type_name -> google.protobuf.Struct
-	51, // 7: mycel.client.v1.CreateBlobNodeMetadata.meta:type_name -> google.protobuf.Struct
-	35, // 8: mycel.client.v1.CreateBlobNodeResponse.node:type_name -> mycel.client.v1.Node
-	52, // 9: mycel.client.v1.CreateBlobNodeResponse.blob:type_name -> mycel.client.v1.Blob
-	35, // 10: mycel.client.v1.UpdateNodeRequest.node:type_name -> mycel.client.v1.Node
-	53, // 11: mycel.client.v1.UpdateNodeRequest.update_mask:type_name -> google.protobuf.FieldMask
-	35, // 12: mycel.client.v1.UpdateNodeResponse.node:type_name -> mycel.client.v1.Node
-	36, // 13: mycel.client.v1.UpsertNodeRequest.node:type_name -> mycel.client.v1.NodeCreate
-	35, // 14: mycel.client.v1.UpsertNodeResponse.node:type_name -> mycel.client.v1.Node
-	37, // 15: mycel.client.v1.GetEdgeResponse.edge:type_name -> mycel.client.v1.Edge
-	37, // 16: mycel.client.v1.ListEdgesResponse.edges:type_name -> mycel.client.v1.Edge
-	38, // 17: mycel.client.v1.CreateEdgeRequest.edge:type_name -> mycel.client.v1.EdgeCreate
-	37, // 18: mycel.client.v1.CreateEdgeResponse.edge:type_name -> mycel.client.v1.Edge
-	37, // 19: mycel.client.v1.UpdateEdgeRequest.edge:type_name -> mycel.client.v1.Edge
-	53, // 20: mycel.client.v1.UpdateEdgeRequest.update_mask:type_name -> google.protobuf.FieldMask
-	37, // 21: mycel.client.v1.UpdateEdgeResponse.edge:type_name -> mycel.client.v1.Edge
-	37, // 22: mycel.client.v1.ListChildrenResponse.contains_edges:type_name -> mycel.client.v1.Edge
-	37, // 23: mycel.client.v1.GetParentResponse.contains_edge:type_name -> mycel.client.v1.Edge
-	37, // 24: mycel.client.v1.MoveSubtreeResponse.contains_edge:type_name -> mycel.client.v1.Edge
-	37, // 25: mycel.client.v1.ReorderChildrenResponse.contains_edges:type_name -> mycel.client.v1.Edge
-	39, // 26: mycel.client.v1.ApplyGraphOperationsRequest.operations:type_name -> mycel.client.v1.GraphOperation
-	40, // 27: mycel.client.v1.ApplyGraphOperationsResponse.results:type_name -> mycel.client.v1.GraphOperationResult
-	51, // 28: mycel.client.v1.Node.properties:type_name -> google.protobuf.Struct
-	51, // 29: mycel.client.v1.Node.payload:type_name -> google.protobuf.Struct
-	51, // 30: mycel.client.v1.Node.meta:type_name -> google.protobuf.Struct
-	54, // 31: mycel.client.v1.Node.create_time:type_name -> google.protobuf.Timestamp
-	54, // 32: mycel.client.v1.Node.update_time:type_name -> google.protobuf.Timestamp
-	51, // 33: mycel.client.v1.NodeCreate.properties:type_name -> google.protobuf.Struct
-	51, // 34: mycel.client.v1.NodeCreate.payload:type_name -> google.protobuf.Struct
-	51, // 35: mycel.client.v1.NodeCreate.meta:type_name -> google.protobuf.Struct
-	51, // 36: mycel.client.v1.Edge.properties:type_name -> google.protobuf.Struct
-	51, // 37: mycel.client.v1.Edge.payload:type_name -> google.protobuf.Struct
-	51, // 38: mycel.client.v1.Edge.meta:type_name -> google.protobuf.Struct
-	54, // 39: mycel.client.v1.Edge.create_time:type_name -> google.protobuf.Timestamp
-	54, // 40: mycel.client.v1.Edge.update_time:type_name -> google.protobuf.Timestamp
-	51, // 41: mycel.client.v1.EdgeCreate.properties:type_name -> google.protobuf.Struct
-	51, // 42: mycel.client.v1.EdgeCreate.payload:type_name -> google.protobuf.Struct
-	51, // 43: mycel.client.v1.EdgeCreate.meta:type_name -> google.protobuf.Struct
-	36, // 44: mycel.client.v1.GraphOperation.create_node:type_name -> mycel.client.v1.NodeCreate
-	41, // 45: mycel.client.v1.GraphOperation.update_node:type_name -> mycel.client.v1.NodeUpdate
-	42, // 46: mycel.client.v1.GraphOperation.upsert_node:type_name -> mycel.client.v1.NodeUpsert
-	43, // 47: mycel.client.v1.GraphOperation.delete_node:type_name -> mycel.client.v1.NodeDelete
-	38, // 48: mycel.client.v1.GraphOperation.create_edge:type_name -> mycel.client.v1.EdgeCreate
-	45, // 49: mycel.client.v1.GraphOperation.update_edge:type_name -> mycel.client.v1.EdgeUpdate
-	46, // 50: mycel.client.v1.GraphOperation.delete_edge:type_name -> mycel.client.v1.EdgeDelete
-	48, // 51: mycel.client.v1.GraphOperation.move_subtree:type_name -> mycel.client.v1.SubtreeMove
-	49, // 52: mycel.client.v1.GraphOperation.reorder_children:type_name -> mycel.client.v1.ChildrenReorder
-	35, // 53: mycel.client.v1.GraphOperationResult.created_node:type_name -> mycel.client.v1.Node
-	35, // 54: mycel.client.v1.GraphOperationResult.updated_node:type_name -> mycel.client.v1.Node
-	35, // 55: mycel.client.v1.GraphOperationResult.upserted_node:type_name -> mycel.client.v1.Node
-	44, // 56: mycel.client.v1.GraphOperationResult.deleted_node:type_name -> mycel.client.v1.NodeDeleteResult
-	37, // 57: mycel.client.v1.GraphOperationResult.created_edge:type_name -> mycel.client.v1.Edge
-	37, // 58: mycel.client.v1.GraphOperationResult.updated_edge:type_name -> mycel.client.v1.Edge
-	47, // 59: mycel.client.v1.GraphOperationResult.deleted_edge:type_name -> mycel.client.v1.EdgeDeleteResult
-	37, // 60: mycel.client.v1.GraphOperationResult.moved_subtree_edge:type_name -> mycel.client.v1.Edge
-	50, // 61: mycel.client.v1.GraphOperationResult.reordered_children:type_name -> mycel.client.v1.ChildrenReorderResult
-	35, // 62: mycel.client.v1.NodeUpdate.node:type_name -> mycel.client.v1.Node
-	53, // 63: mycel.client.v1.NodeUpdate.update_mask:type_name -> google.protobuf.FieldMask
-	36, // 64: mycel.client.v1.NodeUpsert.node:type_name -> mycel.client.v1.NodeCreate
-	37, // 65: mycel.client.v1.EdgeUpdate.edge:type_name -> mycel.client.v1.Edge
-	53, // 66: mycel.client.v1.EdgeUpdate.update_mask:type_name -> google.protobuf.FieldMask
-	37, // 67: mycel.client.v1.ChildrenReorderResult.contains_edges:type_name -> mycel.client.v1.Edge
-	0,  // 68: mycel.client.v1.GraphService.GetNode:input_type -> mycel.client.v1.GetNodeRequest
-	2,  // 69: mycel.client.v1.GraphService.ListNodes:input_type -> mycel.client.v1.ListNodesRequest
-	4,  // 70: mycel.client.v1.GraphService.CreateNode:input_type -> mycel.client.v1.CreateNodeRequest
-	6,  // 71: mycel.client.v1.GraphService.CreateBlobNode:input_type -> mycel.client.v1.CreateBlobNodeRequest
-	9,  // 72: mycel.client.v1.GraphService.UpdateNode:input_type -> mycel.client.v1.UpdateNodeRequest
-	11, // 73: mycel.client.v1.GraphService.UpsertNode:input_type -> mycel.client.v1.UpsertNodeRequest
-	13, // 74: mycel.client.v1.GraphService.DeleteNode:input_type -> mycel.client.v1.DeleteNodeRequest
-	15, // 75: mycel.client.v1.GraphService.GetEdge:input_type -> mycel.client.v1.GetEdgeRequest
-	17, // 76: mycel.client.v1.GraphService.ListEdges:input_type -> mycel.client.v1.ListEdgesRequest
-	19, // 77: mycel.client.v1.GraphService.CreateEdge:input_type -> mycel.client.v1.CreateEdgeRequest
-	21, // 78: mycel.client.v1.GraphService.UpdateEdge:input_type -> mycel.client.v1.UpdateEdgeRequest
-	23, // 79: mycel.client.v1.GraphService.DeleteEdge:input_type -> mycel.client.v1.DeleteEdgeRequest
-	25, // 80: mycel.client.v1.GraphService.ListChildren:input_type -> mycel.client.v1.ListChildrenRequest
-	27, // 81: mycel.client.v1.GraphService.GetParent:input_type -> mycel.client.v1.GetParentRequest
-	29, // 82: mycel.client.v1.GraphService.MoveSubtree:input_type -> mycel.client.v1.MoveSubtreeRequest
-	31, // 83: mycel.client.v1.GraphService.ReorderChildren:input_type -> mycel.client.v1.ReorderChildrenRequest
-	33, // 84: mycel.client.v1.GraphService.ApplyGraphOperations:input_type -> mycel.client.v1.ApplyGraphOperationsRequest
-	1,  // 85: mycel.client.v1.GraphService.GetNode:output_type -> mycel.client.v1.GetNodeResponse
-	3,  // 86: mycel.client.v1.GraphService.ListNodes:output_type -> mycel.client.v1.ListNodesResponse
-	5,  // 87: mycel.client.v1.GraphService.CreateNode:output_type -> mycel.client.v1.CreateNodeResponse
-	8,  // 88: mycel.client.v1.GraphService.CreateBlobNode:output_type -> mycel.client.v1.CreateBlobNodeResponse
-	10, // 89: mycel.client.v1.GraphService.UpdateNode:output_type -> mycel.client.v1.UpdateNodeResponse
-	12, // 90: mycel.client.v1.GraphService.UpsertNode:output_type -> mycel.client.v1.UpsertNodeResponse
-	14, // 91: mycel.client.v1.GraphService.DeleteNode:output_type -> mycel.client.v1.DeleteNodeResponse
-	16, // 92: mycel.client.v1.GraphService.GetEdge:output_type -> mycel.client.v1.GetEdgeResponse
-	18, // 93: mycel.client.v1.GraphService.ListEdges:output_type -> mycel.client.v1.ListEdgesResponse
-	20, // 94: mycel.client.v1.GraphService.CreateEdge:output_type -> mycel.client.v1.CreateEdgeResponse
-	22, // 95: mycel.client.v1.GraphService.UpdateEdge:output_type -> mycel.client.v1.UpdateEdgeResponse
-	24, // 96: mycel.client.v1.GraphService.DeleteEdge:output_type -> mycel.client.v1.DeleteEdgeResponse
-	26, // 97: mycel.client.v1.GraphService.ListChildren:output_type -> mycel.client.v1.ListChildrenResponse
-	28, // 98: mycel.client.v1.GraphService.GetParent:output_type -> mycel.client.v1.GetParentResponse
-	30, // 99: mycel.client.v1.GraphService.MoveSubtree:output_type -> mycel.client.v1.MoveSubtreeResponse
-	32, // 100: mycel.client.v1.GraphService.ReorderChildren:output_type -> mycel.client.v1.ReorderChildrenResponse
-	34, // 101: mycel.client.v1.GraphService.ApplyGraphOperations:output_type -> mycel.client.v1.ApplyGraphOperationsResponse
-	85, // [85:102] is the sub-list for method output_type
-	68, // [68:85] is the sub-list for method input_type
-	68, // [68:68] is the sub-list for extension type_name
-	68, // [68:68] is the sub-list for extension extendee
-	0,  // [0:68] is the sub-list for field type_name
+	35, // 0: mycel.client.v1.GetNodeRequest.read_options:type_name -> mycel.client.v1.ReadOptions
+	37, // 1: mycel.client.v1.GetNodeResponse.node:type_name -> mycel.client.v1.Node
+	36, // 2: mycel.client.v1.GetNodeResponse.read_metadata:type_name -> mycel.client.v1.ReadMetadata
+	35, // 3: mycel.client.v1.ListNodesRequest.read_options:type_name -> mycel.client.v1.ReadOptions
+	37, // 4: mycel.client.v1.ListNodesResponse.nodes:type_name -> mycel.client.v1.Node
+	36, // 5: mycel.client.v1.ListNodesResponse.read_metadata:type_name -> mycel.client.v1.ReadMetadata
+	38, // 6: mycel.client.v1.CreateNodeRequest.node:type_name -> mycel.client.v1.NodeCreate
+	37, // 7: mycel.client.v1.CreateNodeResponse.node:type_name -> mycel.client.v1.Node
+	7,  // 8: mycel.client.v1.CreateBlobNodeRequest.metadata:type_name -> mycel.client.v1.CreateBlobNodeMetadata
+	53, // 9: mycel.client.v1.CreateBlobNodeMetadata.properties:type_name -> google.protobuf.Struct
+	53, // 10: mycel.client.v1.CreateBlobNodeMetadata.payload:type_name -> google.protobuf.Struct
+	53, // 11: mycel.client.v1.CreateBlobNodeMetadata.meta:type_name -> google.protobuf.Struct
+	37, // 12: mycel.client.v1.CreateBlobNodeResponse.node:type_name -> mycel.client.v1.Node
+	54, // 13: mycel.client.v1.CreateBlobNodeResponse.blob:type_name -> mycel.client.v1.Blob
+	37, // 14: mycel.client.v1.UpdateNodeRequest.node:type_name -> mycel.client.v1.Node
+	55, // 15: mycel.client.v1.UpdateNodeRequest.update_mask:type_name -> google.protobuf.FieldMask
+	37, // 16: mycel.client.v1.UpdateNodeResponse.node:type_name -> mycel.client.v1.Node
+	38, // 17: mycel.client.v1.UpsertNodeRequest.node:type_name -> mycel.client.v1.NodeCreate
+	37, // 18: mycel.client.v1.UpsertNodeResponse.node:type_name -> mycel.client.v1.Node
+	35, // 19: mycel.client.v1.GetEdgeRequest.read_options:type_name -> mycel.client.v1.ReadOptions
+	39, // 20: mycel.client.v1.GetEdgeResponse.edge:type_name -> mycel.client.v1.Edge
+	36, // 21: mycel.client.v1.GetEdgeResponse.read_metadata:type_name -> mycel.client.v1.ReadMetadata
+	35, // 22: mycel.client.v1.ListEdgesRequest.read_options:type_name -> mycel.client.v1.ReadOptions
+	39, // 23: mycel.client.v1.ListEdgesResponse.edges:type_name -> mycel.client.v1.Edge
+	36, // 24: mycel.client.v1.ListEdgesResponse.read_metadata:type_name -> mycel.client.v1.ReadMetadata
+	40, // 25: mycel.client.v1.CreateEdgeRequest.edge:type_name -> mycel.client.v1.EdgeCreate
+	39, // 26: mycel.client.v1.CreateEdgeResponse.edge:type_name -> mycel.client.v1.Edge
+	39, // 27: mycel.client.v1.UpdateEdgeRequest.edge:type_name -> mycel.client.v1.Edge
+	55, // 28: mycel.client.v1.UpdateEdgeRequest.update_mask:type_name -> google.protobuf.FieldMask
+	39, // 29: mycel.client.v1.UpdateEdgeResponse.edge:type_name -> mycel.client.v1.Edge
+	35, // 30: mycel.client.v1.ListChildrenRequest.read_options:type_name -> mycel.client.v1.ReadOptions
+	39, // 31: mycel.client.v1.ListChildrenResponse.contains_edges:type_name -> mycel.client.v1.Edge
+	36, // 32: mycel.client.v1.ListChildrenResponse.read_metadata:type_name -> mycel.client.v1.ReadMetadata
+	35, // 33: mycel.client.v1.GetParentRequest.read_options:type_name -> mycel.client.v1.ReadOptions
+	39, // 34: mycel.client.v1.GetParentResponse.contains_edge:type_name -> mycel.client.v1.Edge
+	36, // 35: mycel.client.v1.GetParentResponse.read_metadata:type_name -> mycel.client.v1.ReadMetadata
+	39, // 36: mycel.client.v1.MoveSubtreeResponse.contains_edge:type_name -> mycel.client.v1.Edge
+	39, // 37: mycel.client.v1.ReorderChildrenResponse.contains_edges:type_name -> mycel.client.v1.Edge
+	41, // 38: mycel.client.v1.ApplyGraphOperationsRequest.operations:type_name -> mycel.client.v1.GraphOperation
+	42, // 39: mycel.client.v1.ApplyGraphOperationsResponse.results:type_name -> mycel.client.v1.GraphOperationResult
+	53, // 40: mycel.client.v1.Node.properties:type_name -> google.protobuf.Struct
+	53, // 41: mycel.client.v1.Node.payload:type_name -> google.protobuf.Struct
+	53, // 42: mycel.client.v1.Node.meta:type_name -> google.protobuf.Struct
+	56, // 43: mycel.client.v1.Node.create_time:type_name -> google.protobuf.Timestamp
+	56, // 44: mycel.client.v1.Node.update_time:type_name -> google.protobuf.Timestamp
+	53, // 45: mycel.client.v1.NodeCreate.properties:type_name -> google.protobuf.Struct
+	53, // 46: mycel.client.v1.NodeCreate.payload:type_name -> google.protobuf.Struct
+	53, // 47: mycel.client.v1.NodeCreate.meta:type_name -> google.protobuf.Struct
+	53, // 48: mycel.client.v1.Edge.properties:type_name -> google.protobuf.Struct
+	53, // 49: mycel.client.v1.Edge.payload:type_name -> google.protobuf.Struct
+	53, // 50: mycel.client.v1.Edge.meta:type_name -> google.protobuf.Struct
+	56, // 51: mycel.client.v1.Edge.create_time:type_name -> google.protobuf.Timestamp
+	56, // 52: mycel.client.v1.Edge.update_time:type_name -> google.protobuf.Timestamp
+	53, // 53: mycel.client.v1.EdgeCreate.properties:type_name -> google.protobuf.Struct
+	53, // 54: mycel.client.v1.EdgeCreate.payload:type_name -> google.protobuf.Struct
+	53, // 55: mycel.client.v1.EdgeCreate.meta:type_name -> google.protobuf.Struct
+	38, // 56: mycel.client.v1.GraphOperation.create_node:type_name -> mycel.client.v1.NodeCreate
+	43, // 57: mycel.client.v1.GraphOperation.update_node:type_name -> mycel.client.v1.NodeUpdate
+	44, // 58: mycel.client.v1.GraphOperation.upsert_node:type_name -> mycel.client.v1.NodeUpsert
+	45, // 59: mycel.client.v1.GraphOperation.delete_node:type_name -> mycel.client.v1.NodeDelete
+	40, // 60: mycel.client.v1.GraphOperation.create_edge:type_name -> mycel.client.v1.EdgeCreate
+	47, // 61: mycel.client.v1.GraphOperation.update_edge:type_name -> mycel.client.v1.EdgeUpdate
+	48, // 62: mycel.client.v1.GraphOperation.delete_edge:type_name -> mycel.client.v1.EdgeDelete
+	50, // 63: mycel.client.v1.GraphOperation.move_subtree:type_name -> mycel.client.v1.SubtreeMove
+	51, // 64: mycel.client.v1.GraphOperation.reorder_children:type_name -> mycel.client.v1.ChildrenReorder
+	37, // 65: mycel.client.v1.GraphOperationResult.created_node:type_name -> mycel.client.v1.Node
+	37, // 66: mycel.client.v1.GraphOperationResult.updated_node:type_name -> mycel.client.v1.Node
+	37, // 67: mycel.client.v1.GraphOperationResult.upserted_node:type_name -> mycel.client.v1.Node
+	46, // 68: mycel.client.v1.GraphOperationResult.deleted_node:type_name -> mycel.client.v1.NodeDeleteResult
+	39, // 69: mycel.client.v1.GraphOperationResult.created_edge:type_name -> mycel.client.v1.Edge
+	39, // 70: mycel.client.v1.GraphOperationResult.updated_edge:type_name -> mycel.client.v1.Edge
+	49, // 71: mycel.client.v1.GraphOperationResult.deleted_edge:type_name -> mycel.client.v1.EdgeDeleteResult
+	39, // 72: mycel.client.v1.GraphOperationResult.moved_subtree_edge:type_name -> mycel.client.v1.Edge
+	52, // 73: mycel.client.v1.GraphOperationResult.reordered_children:type_name -> mycel.client.v1.ChildrenReorderResult
+	37, // 74: mycel.client.v1.NodeUpdate.node:type_name -> mycel.client.v1.Node
+	55, // 75: mycel.client.v1.NodeUpdate.update_mask:type_name -> google.protobuf.FieldMask
+	38, // 76: mycel.client.v1.NodeUpsert.node:type_name -> mycel.client.v1.NodeCreate
+	39, // 77: mycel.client.v1.EdgeUpdate.edge:type_name -> mycel.client.v1.Edge
+	55, // 78: mycel.client.v1.EdgeUpdate.update_mask:type_name -> google.protobuf.FieldMask
+	39, // 79: mycel.client.v1.ChildrenReorderResult.contains_edges:type_name -> mycel.client.v1.Edge
+	0,  // 80: mycel.client.v1.GraphService.GetNode:input_type -> mycel.client.v1.GetNodeRequest
+	2,  // 81: mycel.client.v1.GraphService.ListNodes:input_type -> mycel.client.v1.ListNodesRequest
+	4,  // 82: mycel.client.v1.GraphService.CreateNode:input_type -> mycel.client.v1.CreateNodeRequest
+	6,  // 83: mycel.client.v1.GraphService.CreateBlobNode:input_type -> mycel.client.v1.CreateBlobNodeRequest
+	9,  // 84: mycel.client.v1.GraphService.UpdateNode:input_type -> mycel.client.v1.UpdateNodeRequest
+	11, // 85: mycel.client.v1.GraphService.UpsertNode:input_type -> mycel.client.v1.UpsertNodeRequest
+	13, // 86: mycel.client.v1.GraphService.DeleteNode:input_type -> mycel.client.v1.DeleteNodeRequest
+	15, // 87: mycel.client.v1.GraphService.GetEdge:input_type -> mycel.client.v1.GetEdgeRequest
+	17, // 88: mycel.client.v1.GraphService.ListEdges:input_type -> mycel.client.v1.ListEdgesRequest
+	19, // 89: mycel.client.v1.GraphService.CreateEdge:input_type -> mycel.client.v1.CreateEdgeRequest
+	21, // 90: mycel.client.v1.GraphService.UpdateEdge:input_type -> mycel.client.v1.UpdateEdgeRequest
+	23, // 91: mycel.client.v1.GraphService.DeleteEdge:input_type -> mycel.client.v1.DeleteEdgeRequest
+	25, // 92: mycel.client.v1.GraphService.ListChildren:input_type -> mycel.client.v1.ListChildrenRequest
+	27, // 93: mycel.client.v1.GraphService.GetParent:input_type -> mycel.client.v1.GetParentRequest
+	29, // 94: mycel.client.v1.GraphService.MoveSubtree:input_type -> mycel.client.v1.MoveSubtreeRequest
+	31, // 95: mycel.client.v1.GraphService.ReorderChildren:input_type -> mycel.client.v1.ReorderChildrenRequest
+	33, // 96: mycel.client.v1.GraphService.ApplyGraphOperations:input_type -> mycel.client.v1.ApplyGraphOperationsRequest
+	1,  // 97: mycel.client.v1.GraphService.GetNode:output_type -> mycel.client.v1.GetNodeResponse
+	3,  // 98: mycel.client.v1.GraphService.ListNodes:output_type -> mycel.client.v1.ListNodesResponse
+	5,  // 99: mycel.client.v1.GraphService.CreateNode:output_type -> mycel.client.v1.CreateNodeResponse
+	8,  // 100: mycel.client.v1.GraphService.CreateBlobNode:output_type -> mycel.client.v1.CreateBlobNodeResponse
+	10, // 101: mycel.client.v1.GraphService.UpdateNode:output_type -> mycel.client.v1.UpdateNodeResponse
+	12, // 102: mycel.client.v1.GraphService.UpsertNode:output_type -> mycel.client.v1.UpsertNodeResponse
+	14, // 103: mycel.client.v1.GraphService.DeleteNode:output_type -> mycel.client.v1.DeleteNodeResponse
+	16, // 104: mycel.client.v1.GraphService.GetEdge:output_type -> mycel.client.v1.GetEdgeResponse
+	18, // 105: mycel.client.v1.GraphService.ListEdges:output_type -> mycel.client.v1.ListEdgesResponse
+	20, // 106: mycel.client.v1.GraphService.CreateEdge:output_type -> mycel.client.v1.CreateEdgeResponse
+	22, // 107: mycel.client.v1.GraphService.UpdateEdge:output_type -> mycel.client.v1.UpdateEdgeResponse
+	24, // 108: mycel.client.v1.GraphService.DeleteEdge:output_type -> mycel.client.v1.DeleteEdgeResponse
+	26, // 109: mycel.client.v1.GraphService.ListChildren:output_type -> mycel.client.v1.ListChildrenResponse
+	28, // 110: mycel.client.v1.GraphService.GetParent:output_type -> mycel.client.v1.GetParentResponse
+	30, // 111: mycel.client.v1.GraphService.MoveSubtree:output_type -> mycel.client.v1.MoveSubtreeResponse
+	32, // 112: mycel.client.v1.GraphService.ReorderChildren:output_type -> mycel.client.v1.ReorderChildrenResponse
+	34, // 113: mycel.client.v1.GraphService.ApplyGraphOperations:output_type -> mycel.client.v1.ApplyGraphOperationsResponse
+	97, // [97:114] is the sub-list for method output_type
+	80, // [80:97] is the sub-list for method input_type
+	80, // [80:80] is the sub-list for extension type_name
+	80, // [80:80] is the sub-list for extension extendee
+	0,  // [0:80] is the sub-list for field type_name
 }
 
 func init() { file_mycel_client_v1_graph_proto_init() }
@@ -3634,9 +3917,9 @@ func file_mycel_client_v1_graph_proto_init() {
 	file_mycel_client_v1_graph_proto_msgTypes[7].OneofWrappers = []any{}
 	file_mycel_client_v1_graph_proto_msgTypes[28].OneofWrappers = []any{}
 	file_mycel_client_v1_graph_proto_msgTypes[29].OneofWrappers = []any{}
-	file_mycel_client_v1_graph_proto_msgTypes[36].OneofWrappers = []any{}
 	file_mycel_client_v1_graph_proto_msgTypes[38].OneofWrappers = []any{}
-	file_mycel_client_v1_graph_proto_msgTypes[39].OneofWrappers = []any{
+	file_mycel_client_v1_graph_proto_msgTypes[40].OneofWrappers = []any{}
+	file_mycel_client_v1_graph_proto_msgTypes[41].OneofWrappers = []any{
 		(*GraphOperation_CreateNode)(nil),
 		(*GraphOperation_UpdateNode)(nil),
 		(*GraphOperation_UpsertNode)(nil),
@@ -3647,7 +3930,7 @@ func file_mycel_client_v1_graph_proto_init() {
 		(*GraphOperation_MoveSubtree)(nil),
 		(*GraphOperation_ReorderChildren)(nil),
 	}
-	file_mycel_client_v1_graph_proto_msgTypes[40].OneofWrappers = []any{
+	file_mycel_client_v1_graph_proto_msgTypes[42].OneofWrappers = []any{
 		(*GraphOperationResult_CreatedNode)(nil),
 		(*GraphOperationResult_UpdatedNode)(nil),
 		(*GraphOperationResult_UpsertedNode)(nil),
@@ -3658,14 +3941,14 @@ func file_mycel_client_v1_graph_proto_init() {
 		(*GraphOperationResult_MovedSubtreeEdge)(nil),
 		(*GraphOperationResult_ReorderedChildren)(nil),
 	}
-	file_mycel_client_v1_graph_proto_msgTypes[48].OneofWrappers = []any{}
+	file_mycel_client_v1_graph_proto_msgTypes[50].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_mycel_client_v1_graph_proto_rawDesc), len(file_mycel_client_v1_graph_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   51,
+			NumMessages:   53,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
