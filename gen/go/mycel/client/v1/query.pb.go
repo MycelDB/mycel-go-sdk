@@ -179,7 +179,8 @@ type ExecuteQueryRequest struct {
 	// Maximum number of rows to return. The daemon may cap this value.
 	PageSize int32 `protobuf:"varint,3,opt,name=page_size,json=pageSize,proto3" json:"page_size,omitempty"`
 	// Opaque continuation token returned by a previous query call.
-	PageToken     string `protobuf:"bytes,4,opt,name=page_token,json=pageToken,proto3" json:"page_token,omitempty"`
+	PageToken     string       `protobuf:"bytes,4,opt,name=page_token,json=pageToken,proto3" json:"page_token,omitempty"`
+	ReadOptions   *ReadOptions `protobuf:"bytes,5,opt,name=read_options,json=readOptions,proto3" json:"read_options,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -242,12 +243,20 @@ func (x *ExecuteQueryRequest) GetPageToken() string {
 	return ""
 }
 
+func (x *ExecuteQueryRequest) GetReadOptions() *ReadOptions {
+	if x != nil {
+		return x.ReadOptions
+	}
+	return nil
+}
+
 type ExecuteQueryResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Rows          []*QueryRow            `protobuf:"bytes,1,rep,name=rows,proto3" json:"rows,omitempty"`
 	NextPageToken string                 `protobuf:"bytes,2,opt,name=next_page_token,json=nextPageToken,proto3" json:"next_page_token,omitempty"`
 	// Normalized result envelope shared with textual GQL responses.
-	Result        *QueryResult `protobuf:"bytes,3,opt,name=result,proto3" json:"result,omitempty"`
+	Result        *QueryResult  `protobuf:"bytes,3,opt,name=result,proto3" json:"result,omitempty"`
+	ReadMetadata  *ReadMetadata `protobuf:"bytes,4,opt,name=read_metadata,json=readMetadata,proto3" json:"read_metadata,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -303,6 +312,13 @@ func (x *ExecuteQueryResponse) GetResult() *QueryResult {
 	return nil
 }
 
+func (x *ExecuteQueryResponse) GetReadMetadata() *ReadMetadata {
+	if x != nil {
+		return x.ReadMetadata
+	}
+	return nil
+}
+
 type ExecuteGQLRequest struct {
 	state         protoimpl.MessageState     `protogen:"open.v1"`
 	TransactionId string                     `protobuf:"bytes,1,opt,name=transaction_id,json=transactionId,proto3" json:"transaction_id,omitempty"`
@@ -310,6 +326,7 @@ type ExecuteGQLRequest struct {
 	Params        map[string]*structpb.Value `protobuf:"bytes,3,rep,name=params,proto3" json:"params,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
 	PageSize      int32                      `protobuf:"varint,4,opt,name=page_size,json=pageSize,proto3" json:"page_size,omitempty"`
 	PageToken     string                     `protobuf:"bytes,5,opt,name=page_token,json=pageToken,proto3" json:"page_token,omitempty"`
+	ReadOptions   *ReadOptions               `protobuf:"bytes,6,opt,name=read_options,json=readOptions,proto3" json:"read_options,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -379,9 +396,17 @@ func (x *ExecuteGQLRequest) GetPageToken() string {
 	return ""
 }
 
+func (x *ExecuteGQLRequest) GetReadOptions() *ReadOptions {
+	if x != nil {
+		return x.ReadOptions
+	}
+	return nil
+}
+
 type ExecuteGQLResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Result        *QueryResult           `protobuf:"bytes,1,opt,name=result,proto3" json:"result,omitempty"`
+	ReadMetadata  *ReadMetadata          `protobuf:"bytes,2,opt,name=read_metadata,json=readMetadata,proto3" json:"read_metadata,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -423,6 +448,13 @@ func (x *ExecuteGQLResponse) GetResult() *QueryResult {
 	return nil
 }
 
+func (x *ExecuteGQLResponse) GetReadMetadata() *ReadMetadata {
+	if x != nil {
+		return x.ReadMetadata
+	}
+	return nil
+}
+
 type ExecuteGQLScriptRequest struct {
 	state         protoimpl.MessageState     `protogen:"open.v1"`
 	TransactionId string                     `protobuf:"bytes,1,opt,name=transaction_id,json=transactionId,proto3" json:"transaction_id,omitempty"`
@@ -430,6 +462,7 @@ type ExecuteGQLScriptRequest struct {
 	Params        map[string]*structpb.Value `protobuf:"bytes,3,rep,name=params,proto3" json:"params,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
 	StopOnError   bool                       `protobuf:"varint,4,opt,name=stop_on_error,json=stopOnError,proto3" json:"stop_on_error,omitempty"`
 	PageSize      int32                      `protobuf:"varint,5,opt,name=page_size,json=pageSize,proto3" json:"page_size,omitempty"`
+	ReadOptions   *ReadOptions               `protobuf:"bytes,6,opt,name=read_options,json=readOptions,proto3" json:"read_options,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -499,10 +532,18 @@ func (x *ExecuteGQLScriptRequest) GetPageSize() int32 {
 	return 0
 }
 
+func (x *ExecuteGQLScriptRequest) GetReadOptions() *ReadOptions {
+	if x != nil {
+		return x.ReadOptions
+	}
+	return nil
+}
+
 type ExecuteGQLScriptResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Statements    []*GQLStatementResult  `protobuf:"bytes,1,rep,name=statements,proto3" json:"statements,omitempty"`
 	Result        *QueryResult           `protobuf:"bytes,2,opt,name=result,proto3" json:"result,omitempty"`
+	ReadMetadata  *ReadMetadata          `protobuf:"bytes,3,opt,name=read_metadata,json=readMetadata,proto3" json:"read_metadata,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -551,6 +592,13 @@ func (x *ExecuteGQLScriptResponse) GetResult() *QueryResult {
 	return nil
 }
 
+func (x *ExecuteGQLScriptResponse) GetReadMetadata() *ReadMetadata {
+	if x != nil {
+		return x.ReadMetadata
+	}
+	return nil
+}
+
 type GQLStatementResult struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Index         int32                  `protobuf:"varint,1,opt,name=index,proto3" json:"index,omitempty"`
@@ -558,6 +606,7 @@ type GQLStatementResult struct {
 	Success       bool                   `protobuf:"varint,3,opt,name=success,proto3" json:"success,omitempty"`
 	Result        *QueryResult           `protobuf:"bytes,4,opt,name=result,proto3" json:"result,omitempty"`
 	Error         string                 `protobuf:"bytes,5,opt,name=error,proto3" json:"error,omitempty"`
+	ReadMetadata  *ReadMetadata          `protobuf:"bytes,6,opt,name=read_metadata,json=readMetadata,proto3" json:"read_metadata,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -625,6 +674,13 @@ func (x *GQLStatementResult) GetError() string {
 		return x.Error
 	}
 	return ""
+}
+
+func (x *GQLStatementResult) GetReadMetadata() *ReadMetadata {
+	if x != nil {
+		return x.ReadMetadata
+	}
+	return nil
 }
 
 type QueryResult struct {
@@ -2219,49 +2275,56 @@ var File_mycel_client_v1_query_proto protoreflect.FileDescriptor
 
 const file_mycel_client_v1_query_proto_rawDesc = "" +
 	"\n" +
-	"\x1bmycel/client/v1/query.proto\x12\x0fmycel.client.v1\x1a\x1cgoogle/protobuf/struct.proto\x1a\x1bmycel/client/v1/graph.proto\"\xab\x01\n" +
+	"\x1bmycel/client/v1/query.proto\x12\x0fmycel.client.v1\x1a\x1cgoogle/protobuf/struct.proto\x1a\x1bmycel/client/v1/graph.proto\"\xec\x01\n" +
 	"\x13ExecuteQueryRequest\x12%\n" +
 	"\x0etransaction_id\x18\x01 \x01(\tR\rtransactionId\x121\n" +
 	"\x05query\x18\x02 \x01(\v2\x1b.mycel.client.v1.GraphQueryR\x05query\x12\x1b\n" +
 	"\tpage_size\x18\x03 \x01(\x05R\bpageSize\x12\x1d\n" +
 	"\n" +
-	"page_token\x18\x04 \x01(\tR\tpageToken\"\xa3\x01\n" +
+	"page_token\x18\x04 \x01(\tR\tpageToken\x12?\n" +
+	"\fread_options\x18\x05 \x01(\v2\x1c.mycel.client.v1.ReadOptionsR\vreadOptions\"\xe7\x01\n" +
 	"\x14ExecuteQueryResponse\x12-\n" +
 	"\x04rows\x18\x01 \x03(\v2\x19.mycel.client.v1.QueryRowR\x04rows\x12&\n" +
 	"\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken\x124\n" +
-	"\x06result\x18\x03 \x01(\v2\x1c.mycel.client.v1.QueryResultR\x06result\"\xa7\x02\n" +
+	"\x06result\x18\x03 \x01(\v2\x1c.mycel.client.v1.QueryResultR\x06result\x12B\n" +
+	"\rread_metadata\x18\x04 \x01(\v2\x1d.mycel.client.v1.ReadMetadataR\freadMetadata\"\xe8\x02\n" +
 	"\x11ExecuteGQLRequest\x12%\n" +
 	"\x0etransaction_id\x18\x01 \x01(\tR\rtransactionId\x12\x14\n" +
 	"\x05query\x18\x02 \x01(\tR\x05query\x12F\n" +
 	"\x06params\x18\x03 \x03(\v2..mycel.client.v1.ExecuteGQLRequest.ParamsEntryR\x06params\x12\x1b\n" +
 	"\tpage_size\x18\x04 \x01(\x05R\bpageSize\x12\x1d\n" +
 	"\n" +
-	"page_token\x18\x05 \x01(\tR\tpageToken\x1aQ\n" +
+	"page_token\x18\x05 \x01(\tR\tpageToken\x12?\n" +
+	"\fread_options\x18\x06 \x01(\v2\x1c.mycel.client.v1.ReadOptionsR\vreadOptions\x1aQ\n" +
 	"\vParamsEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12,\n" +
-	"\x05value\x18\x02 \x01(\v2\x16.google.protobuf.ValueR\x05value:\x028\x01\"J\n" +
+	"\x05value\x18\x02 \x01(\v2\x16.google.protobuf.ValueR\x05value:\x028\x01\"\x8e\x01\n" +
 	"\x12ExecuteGQLResponse\x124\n" +
-	"\x06result\x18\x01 \x01(\v2\x1c.mycel.client.v1.QueryResultR\x06result\"\xba\x02\n" +
+	"\x06result\x18\x01 \x01(\v2\x1c.mycel.client.v1.QueryResultR\x06result\x12B\n" +
+	"\rread_metadata\x18\x02 \x01(\v2\x1d.mycel.client.v1.ReadMetadataR\freadMetadata\"\xfb\x02\n" +
 	"\x17ExecuteGQLScriptRequest\x12%\n" +
 	"\x0etransaction_id\x18\x01 \x01(\tR\rtransactionId\x12\x16\n" +
 	"\x06script\x18\x02 \x01(\tR\x06script\x12L\n" +
 	"\x06params\x18\x03 \x03(\v24.mycel.client.v1.ExecuteGQLScriptRequest.ParamsEntryR\x06params\x12\"\n" +
 	"\rstop_on_error\x18\x04 \x01(\bR\vstopOnError\x12\x1b\n" +
-	"\tpage_size\x18\x05 \x01(\x05R\bpageSize\x1aQ\n" +
+	"\tpage_size\x18\x05 \x01(\x05R\bpageSize\x12?\n" +
+	"\fread_options\x18\x06 \x01(\v2\x1c.mycel.client.v1.ReadOptionsR\vreadOptions\x1aQ\n" +
 	"\vParamsEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12,\n" +
-	"\x05value\x18\x02 \x01(\v2\x16.google.protobuf.ValueR\x05value:\x028\x01\"\x95\x01\n" +
+	"\x05value\x18\x02 \x01(\v2\x16.google.protobuf.ValueR\x05value:\x028\x01\"\xd9\x01\n" +
 	"\x18ExecuteGQLScriptResponse\x12C\n" +
 	"\n" +
 	"statements\x18\x01 \x03(\v2#.mycel.client.v1.GQLStatementResultR\n" +
 	"statements\x124\n" +
-	"\x06result\x18\x02 \x01(\v2\x1c.mycel.client.v1.QueryResultR\x06result\"\xae\x01\n" +
+	"\x06result\x18\x02 \x01(\v2\x1c.mycel.client.v1.QueryResultR\x06result\x12B\n" +
+	"\rread_metadata\x18\x03 \x01(\v2\x1d.mycel.client.v1.ReadMetadataR\freadMetadata\"\xf2\x01\n" +
 	"\x12GQLStatementResult\x12\x14\n" +
 	"\x05index\x18\x01 \x01(\x05R\x05index\x12\x1c\n" +
 	"\tstatement\x18\x02 \x01(\tR\tstatement\x12\x18\n" +
 	"\asuccess\x18\x03 \x01(\bR\asuccess\x124\n" +
 	"\x06result\x18\x04 \x01(\v2\x1c.mycel.client.v1.QueryResultR\x06result\x12\x14\n" +
-	"\x05error\x18\x05 \x01(\tR\x05error\"\xd4\x01\n" +
+	"\x05error\x18\x05 \x01(\tR\x05error\x12B\n" +
+	"\rread_metadata\x18\x06 \x01(\v2\x1d.mycel.client.v1.ReadMetadataR\freadMetadata\"\xd4\x01\n" +
 	"\vQueryResult\x12-\n" +
 	"\x04rows\x18\x01 \x03(\v2\x19.mycel.client.v1.QueryRowR\x04rows\x122\n" +
 	"\x05graph\x18\x02 \x01(\v2\x1c.mycel.client.v1.ResultGraphR\x05graph\x12:\n" +
@@ -2440,74 +2503,83 @@ var file_mycel_client_v1_query_proto_goTypes = []any{
 	nil,                              // 35: mycel.client.v1.ExecuteGQLRequest.ParamsEntry
 	nil,                              // 36: mycel.client.v1.ExecuteGQLScriptRequest.ParamsEntry
 	nil,                              // 37: mycel.client.v1.QueryRow.FieldsEntry
-	(*Node)(nil),                     // 38: mycel.client.v1.Node
-	(*Edge)(nil),                     // 39: mycel.client.v1.Edge
-	(*structpb.Value)(nil),           // 40: google.protobuf.Value
+	(*ReadOptions)(nil),              // 38: mycel.client.v1.ReadOptions
+	(*ReadMetadata)(nil),             // 39: mycel.client.v1.ReadMetadata
+	(*Node)(nil),                     // 40: mycel.client.v1.Node
+	(*Edge)(nil),                     // 41: mycel.client.v1.Edge
+	(*structpb.Value)(nil),           // 42: google.protobuf.Value
 }
 var file_mycel_client_v1_query_proto_depIdxs = []int32{
 	13, // 0: mycel.client.v1.ExecuteQueryRequest.query:type_name -> mycel.client.v1.GraphQuery
-	31, // 1: mycel.client.v1.ExecuteQueryResponse.rows:type_name -> mycel.client.v1.QueryRow
-	10, // 2: mycel.client.v1.ExecuteQueryResponse.result:type_name -> mycel.client.v1.QueryResult
-	35, // 3: mycel.client.v1.ExecuteGQLRequest.params:type_name -> mycel.client.v1.ExecuteGQLRequest.ParamsEntry
-	10, // 4: mycel.client.v1.ExecuteGQLResponse.result:type_name -> mycel.client.v1.QueryResult
-	36, // 5: mycel.client.v1.ExecuteGQLScriptRequest.params:type_name -> mycel.client.v1.ExecuteGQLScriptRequest.ParamsEntry
-	9,  // 6: mycel.client.v1.ExecuteGQLScriptResponse.statements:type_name -> mycel.client.v1.GQLStatementResult
-	10, // 7: mycel.client.v1.ExecuteGQLScriptResponse.result:type_name -> mycel.client.v1.QueryResult
-	10, // 8: mycel.client.v1.GQLStatementResult.result:type_name -> mycel.client.v1.QueryResult
-	31, // 9: mycel.client.v1.QueryResult.rows:type_name -> mycel.client.v1.QueryRow
-	11, // 10: mycel.client.v1.QueryResult.graph:type_name -> mycel.client.v1.ResultGraph
-	12, // 11: mycel.client.v1.QueryResult.counters:type_name -> mycel.client.v1.QueryCounters
-	38, // 12: mycel.client.v1.ResultGraph.nodes:type_name -> mycel.client.v1.Node
-	39, // 13: mycel.client.v1.ResultGraph.edges:type_name -> mycel.client.v1.Edge
-	14, // 14: mycel.client.v1.GraphQuery.match:type_name -> mycel.client.v1.GraphPattern
-	18, // 15: mycel.client.v1.GraphQuery.where:type_name -> mycel.client.v1.Expr
-	29, // 16: mycel.client.v1.GraphQuery.returns:type_name -> mycel.client.v1.ReturnProjection
-	30, // 17: mycel.client.v1.GraphQuery.order_by:type_name -> mycel.client.v1.OrderSpec
-	15, // 18: mycel.client.v1.GraphPattern.start:type_name -> mycel.client.v1.NodePattern
-	16, // 19: mycel.client.v1.GraphPattern.steps:type_name -> mycel.client.v1.TraversalStep
-	0,  // 20: mycel.client.v1.TraversalStep.direction:type_name -> mycel.client.v1.TraversalDirection
-	17, // 21: mycel.client.v1.TraversalStep.depth:type_name -> mycel.client.v1.DepthSpec
-	15, // 22: mycel.client.v1.TraversalStep.target:type_name -> mycel.client.v1.NodePattern
-	19, // 23: mycel.client.v1.Expr.between:type_name -> mycel.client.v1.BetweenExpr
-	20, // 24: mycel.client.v1.Expr.and:type_name -> mycel.client.v1.AndExpr
-	21, // 25: mycel.client.v1.Expr.has_tag:type_name -> mycel.client.v1.HasTagExpr
-	22, // 26: mycel.client.v1.Expr.property_exists:type_name -> mycel.client.v1.PropertyExistsExpr
-	23, // 27: mycel.client.v1.Expr.property_equals:type_name -> mycel.client.v1.PropertyEqualsExpr
-	24, // 28: mycel.client.v1.BetweenExpr.value:type_name -> mycel.client.v1.ValueExpr
-	24, // 29: mycel.client.v1.BetweenExpr.low:type_name -> mycel.client.v1.ValueExpr
-	24, // 30: mycel.client.v1.BetweenExpr.high:type_name -> mycel.client.v1.ValueExpr
-	18, // 31: mycel.client.v1.AndExpr.exprs:type_name -> mycel.client.v1.Expr
-	40, // 32: mycel.client.v1.PropertyEqualsExpr.value:type_name -> google.protobuf.Value
-	25, // 33: mycel.client.v1.ValueExpr.prop:type_name -> mycel.client.v1.PropExpr
-	26, // 34: mycel.client.v1.ValueExpr.literal:type_name -> mycel.client.v1.LiteralExpr
-	27, // 35: mycel.client.v1.ValueExpr.date:type_name -> mycel.client.v1.DateExpr
-	28, // 36: mycel.client.v1.ValueExpr.current_date:type_name -> mycel.client.v1.CurrentDateExpr
-	40, // 37: mycel.client.v1.LiteralExpr.value:type_name -> google.protobuf.Value
-	1,  // 38: mycel.client.v1.ReturnProjection.kind:type_name -> mycel.client.v1.ReturnProjectionKind
-	24, // 39: mycel.client.v1.OrderSpec.value:type_name -> mycel.client.v1.ValueExpr
-	2,  // 40: mycel.client.v1.OrderSpec.direction:type_name -> mycel.client.v1.SortDirection
-	37, // 41: mycel.client.v1.QueryRow.fields:type_name -> mycel.client.v1.QueryRow.FieldsEntry
-	38, // 42: mycel.client.v1.QueryValue.node:type_name -> mycel.client.v1.Node
-	33, // 43: mycel.client.v1.QueryValue.tree:type_name -> mycel.client.v1.Tree
-	40, // 44: mycel.client.v1.QueryValue.scalar:type_name -> google.protobuf.Value
-	39, // 45: mycel.client.v1.QueryValue.edge:type_name -> mycel.client.v1.Edge
-	34, // 46: mycel.client.v1.Tree.roots:type_name -> mycel.client.v1.TreeNode
-	38, // 47: mycel.client.v1.TreeNode.node:type_name -> mycel.client.v1.Node
-	34, // 48: mycel.client.v1.TreeNode.children:type_name -> mycel.client.v1.TreeNode
-	40, // 49: mycel.client.v1.ExecuteGQLRequest.ParamsEntry.value:type_name -> google.protobuf.Value
-	40, // 50: mycel.client.v1.ExecuteGQLScriptRequest.ParamsEntry.value:type_name -> google.protobuf.Value
-	32, // 51: mycel.client.v1.QueryRow.FieldsEntry.value:type_name -> mycel.client.v1.QueryValue
-	3,  // 52: mycel.client.v1.QueryService.ExecuteQuery:input_type -> mycel.client.v1.ExecuteQueryRequest
-	5,  // 53: mycel.client.v1.QueryService.ExecuteGQL:input_type -> mycel.client.v1.ExecuteGQLRequest
-	7,  // 54: mycel.client.v1.QueryService.ExecuteGQLScript:input_type -> mycel.client.v1.ExecuteGQLScriptRequest
-	4,  // 55: mycel.client.v1.QueryService.ExecuteQuery:output_type -> mycel.client.v1.ExecuteQueryResponse
-	6,  // 56: mycel.client.v1.QueryService.ExecuteGQL:output_type -> mycel.client.v1.ExecuteGQLResponse
-	8,  // 57: mycel.client.v1.QueryService.ExecuteGQLScript:output_type -> mycel.client.v1.ExecuteGQLScriptResponse
-	55, // [55:58] is the sub-list for method output_type
-	52, // [52:55] is the sub-list for method input_type
-	52, // [52:52] is the sub-list for extension type_name
-	52, // [52:52] is the sub-list for extension extendee
-	0,  // [0:52] is the sub-list for field type_name
+	38, // 1: mycel.client.v1.ExecuteQueryRequest.read_options:type_name -> mycel.client.v1.ReadOptions
+	31, // 2: mycel.client.v1.ExecuteQueryResponse.rows:type_name -> mycel.client.v1.QueryRow
+	10, // 3: mycel.client.v1.ExecuteQueryResponse.result:type_name -> mycel.client.v1.QueryResult
+	39, // 4: mycel.client.v1.ExecuteQueryResponse.read_metadata:type_name -> mycel.client.v1.ReadMetadata
+	35, // 5: mycel.client.v1.ExecuteGQLRequest.params:type_name -> mycel.client.v1.ExecuteGQLRequest.ParamsEntry
+	38, // 6: mycel.client.v1.ExecuteGQLRequest.read_options:type_name -> mycel.client.v1.ReadOptions
+	10, // 7: mycel.client.v1.ExecuteGQLResponse.result:type_name -> mycel.client.v1.QueryResult
+	39, // 8: mycel.client.v1.ExecuteGQLResponse.read_metadata:type_name -> mycel.client.v1.ReadMetadata
+	36, // 9: mycel.client.v1.ExecuteGQLScriptRequest.params:type_name -> mycel.client.v1.ExecuteGQLScriptRequest.ParamsEntry
+	38, // 10: mycel.client.v1.ExecuteGQLScriptRequest.read_options:type_name -> mycel.client.v1.ReadOptions
+	9,  // 11: mycel.client.v1.ExecuteGQLScriptResponse.statements:type_name -> mycel.client.v1.GQLStatementResult
+	10, // 12: mycel.client.v1.ExecuteGQLScriptResponse.result:type_name -> mycel.client.v1.QueryResult
+	39, // 13: mycel.client.v1.ExecuteGQLScriptResponse.read_metadata:type_name -> mycel.client.v1.ReadMetadata
+	10, // 14: mycel.client.v1.GQLStatementResult.result:type_name -> mycel.client.v1.QueryResult
+	39, // 15: mycel.client.v1.GQLStatementResult.read_metadata:type_name -> mycel.client.v1.ReadMetadata
+	31, // 16: mycel.client.v1.QueryResult.rows:type_name -> mycel.client.v1.QueryRow
+	11, // 17: mycel.client.v1.QueryResult.graph:type_name -> mycel.client.v1.ResultGraph
+	12, // 18: mycel.client.v1.QueryResult.counters:type_name -> mycel.client.v1.QueryCounters
+	40, // 19: mycel.client.v1.ResultGraph.nodes:type_name -> mycel.client.v1.Node
+	41, // 20: mycel.client.v1.ResultGraph.edges:type_name -> mycel.client.v1.Edge
+	14, // 21: mycel.client.v1.GraphQuery.match:type_name -> mycel.client.v1.GraphPattern
+	18, // 22: mycel.client.v1.GraphQuery.where:type_name -> mycel.client.v1.Expr
+	29, // 23: mycel.client.v1.GraphQuery.returns:type_name -> mycel.client.v1.ReturnProjection
+	30, // 24: mycel.client.v1.GraphQuery.order_by:type_name -> mycel.client.v1.OrderSpec
+	15, // 25: mycel.client.v1.GraphPattern.start:type_name -> mycel.client.v1.NodePattern
+	16, // 26: mycel.client.v1.GraphPattern.steps:type_name -> mycel.client.v1.TraversalStep
+	0,  // 27: mycel.client.v1.TraversalStep.direction:type_name -> mycel.client.v1.TraversalDirection
+	17, // 28: mycel.client.v1.TraversalStep.depth:type_name -> mycel.client.v1.DepthSpec
+	15, // 29: mycel.client.v1.TraversalStep.target:type_name -> mycel.client.v1.NodePattern
+	19, // 30: mycel.client.v1.Expr.between:type_name -> mycel.client.v1.BetweenExpr
+	20, // 31: mycel.client.v1.Expr.and:type_name -> mycel.client.v1.AndExpr
+	21, // 32: mycel.client.v1.Expr.has_tag:type_name -> mycel.client.v1.HasTagExpr
+	22, // 33: mycel.client.v1.Expr.property_exists:type_name -> mycel.client.v1.PropertyExistsExpr
+	23, // 34: mycel.client.v1.Expr.property_equals:type_name -> mycel.client.v1.PropertyEqualsExpr
+	24, // 35: mycel.client.v1.BetweenExpr.value:type_name -> mycel.client.v1.ValueExpr
+	24, // 36: mycel.client.v1.BetweenExpr.low:type_name -> mycel.client.v1.ValueExpr
+	24, // 37: mycel.client.v1.BetweenExpr.high:type_name -> mycel.client.v1.ValueExpr
+	18, // 38: mycel.client.v1.AndExpr.exprs:type_name -> mycel.client.v1.Expr
+	42, // 39: mycel.client.v1.PropertyEqualsExpr.value:type_name -> google.protobuf.Value
+	25, // 40: mycel.client.v1.ValueExpr.prop:type_name -> mycel.client.v1.PropExpr
+	26, // 41: mycel.client.v1.ValueExpr.literal:type_name -> mycel.client.v1.LiteralExpr
+	27, // 42: mycel.client.v1.ValueExpr.date:type_name -> mycel.client.v1.DateExpr
+	28, // 43: mycel.client.v1.ValueExpr.current_date:type_name -> mycel.client.v1.CurrentDateExpr
+	42, // 44: mycel.client.v1.LiteralExpr.value:type_name -> google.protobuf.Value
+	1,  // 45: mycel.client.v1.ReturnProjection.kind:type_name -> mycel.client.v1.ReturnProjectionKind
+	24, // 46: mycel.client.v1.OrderSpec.value:type_name -> mycel.client.v1.ValueExpr
+	2,  // 47: mycel.client.v1.OrderSpec.direction:type_name -> mycel.client.v1.SortDirection
+	37, // 48: mycel.client.v1.QueryRow.fields:type_name -> mycel.client.v1.QueryRow.FieldsEntry
+	40, // 49: mycel.client.v1.QueryValue.node:type_name -> mycel.client.v1.Node
+	33, // 50: mycel.client.v1.QueryValue.tree:type_name -> mycel.client.v1.Tree
+	42, // 51: mycel.client.v1.QueryValue.scalar:type_name -> google.protobuf.Value
+	41, // 52: mycel.client.v1.QueryValue.edge:type_name -> mycel.client.v1.Edge
+	34, // 53: mycel.client.v1.Tree.roots:type_name -> mycel.client.v1.TreeNode
+	40, // 54: mycel.client.v1.TreeNode.node:type_name -> mycel.client.v1.Node
+	34, // 55: mycel.client.v1.TreeNode.children:type_name -> mycel.client.v1.TreeNode
+	42, // 56: mycel.client.v1.ExecuteGQLRequest.ParamsEntry.value:type_name -> google.protobuf.Value
+	42, // 57: mycel.client.v1.ExecuteGQLScriptRequest.ParamsEntry.value:type_name -> google.protobuf.Value
+	32, // 58: mycel.client.v1.QueryRow.FieldsEntry.value:type_name -> mycel.client.v1.QueryValue
+	3,  // 59: mycel.client.v1.QueryService.ExecuteQuery:input_type -> mycel.client.v1.ExecuteQueryRequest
+	5,  // 60: mycel.client.v1.QueryService.ExecuteGQL:input_type -> mycel.client.v1.ExecuteGQLRequest
+	7,  // 61: mycel.client.v1.QueryService.ExecuteGQLScript:input_type -> mycel.client.v1.ExecuteGQLScriptRequest
+	4,  // 62: mycel.client.v1.QueryService.ExecuteQuery:output_type -> mycel.client.v1.ExecuteQueryResponse
+	6,  // 63: mycel.client.v1.QueryService.ExecuteGQL:output_type -> mycel.client.v1.ExecuteGQLResponse
+	8,  // 64: mycel.client.v1.QueryService.ExecuteGQLScript:output_type -> mycel.client.v1.ExecuteGQLScriptResponse
+	62, // [62:65] is the sub-list for method output_type
+	59, // [59:62] is the sub-list for method input_type
+	59, // [59:59] is the sub-list for extension type_name
+	59, // [59:59] is the sub-list for extension extendee
+	0,  // [0:59] is the sub-list for field type_name
 }
 
 func init() { file_mycel_client_v1_query_proto_init() }

@@ -32,7 +32,7 @@ const (
 // Logseq importers convert source data into Mycel-native import streams before
 // calling this service.
 type ImportExportServiceClient interface {
-	// ExportDomain streams graph/domain data from a transaction snapshot.
+	// ExportDomain streams graph/domain data from a transaction read context.
 	ExportDomain(ctx context.Context, in *ExportDomainRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[ExportDomainResponse], error)
 	// ImportDomain streams Mycel-native records into a read-write transaction.
 	ImportDomain(ctx context.Context, opts ...grpc.CallOption) (grpc.ClientStreamingClient[ImportDomainRequest, ImportDomainResponse], error)
@@ -87,7 +87,7 @@ type ImportExportService_ImportDomainClient = grpc.ClientStreamingClient[ImportD
 // Logseq importers convert source data into Mycel-native import streams before
 // calling this service.
 type ImportExportServiceServer interface {
-	// ExportDomain streams graph/domain data from a transaction snapshot.
+	// ExportDomain streams graph/domain data from a transaction read context.
 	ExportDomain(*ExportDomainRequest, grpc.ServerStreamingServer[ExportDomainResponse]) error
 	// ImportDomain streams Mycel-native records into a read-write transaction.
 	ImportDomain(grpc.ClientStreamingServer[ImportDomainRequest, ImportDomainResponse]) error

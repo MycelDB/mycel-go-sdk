@@ -31,7 +31,8 @@ const (
 // QueryService provides transaction-scoped structured graph queries.
 type QueryServiceClient interface {
 	// ExecuteQuery executes a read-only structured graph query inside a
-	// transaction snapshot.
+	// transaction read context. Read-only transactions are current-read contexts
+	// in V1 and do not pin historical snapshots.
 	ExecuteQuery(ctx context.Context, in *ExecuteQueryRequest, opts ...grpc.CallOption) (*ExecuteQueryResponse, error)
 	// ExecuteGQL executes textual Mycel GQL inside an existing transaction.
 	ExecuteGQL(ctx context.Context, in *ExecuteGQLRequest, opts ...grpc.CallOption) (*ExecuteGQLResponse, error)
@@ -84,7 +85,8 @@ func (c *queryServiceClient) ExecuteGQLScript(ctx context.Context, in *ExecuteGQ
 // QueryService provides transaction-scoped structured graph queries.
 type QueryServiceServer interface {
 	// ExecuteQuery executes a read-only structured graph query inside a
-	// transaction snapshot.
+	// transaction read context. Read-only transactions are current-read contexts
+	// in V1 and do not pin historical snapshots.
 	ExecuteQuery(context.Context, *ExecuteQueryRequest) (*ExecuteQueryResponse, error)
 	// ExecuteGQL executes textual Mycel GQL inside an existing transaction.
 	ExecuteGQL(context.Context, *ExecuteGQLRequest) (*ExecuteGQLResponse, error)
