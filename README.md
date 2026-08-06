@@ -21,12 +21,13 @@ The SDK generates Go protobuf/gRPC stubs from the language-independent `mycel-ap
 - session/transaction helpers
 - thin graph/query convenience methods
 - Admin backup policy/status/list/trigger/delete helpers
+- Admin cluster backup trigger/status/list/validate helpers
 
 Generated code is committed under `gen/go/` so tagged Go module releases are self-contained.
 
 ## Generate protobuf stubs
 
-The committed stubs are generated from the `mycel-api` `v0.5.0` contracts. CI checks regeneration against that tag.
+The committed stubs are generated from the `mycel-api` `v0.6.0` contracts. CI checks regeneration against that tag.
 
 By default generation reads protobufs from a sibling checkout:
 
@@ -34,7 +35,7 @@ By default generation reads protobufs from a sibling checkout:
 ../mycel-api/api/proto
 ```
 
-For release-aligned regeneration, check out `mycel-api` at `v0.5.0`, then run:
+For release-aligned regeneration, check out `mycel-api` at `v0.6.0`, then run:
 
 ```sh
 make generate
@@ -99,15 +100,17 @@ admin, err := mycel.DialAdmin(ctx, mycel.Config{
 
 `Dial` and `DialAdmin` store access-token expiry and refresh tokens returned by login. Before protected RPCs, the SDK refreshes near-expiry tokens automatically. If a protected unary RPC or stream setup fails with `Unauthenticated` because the access token is expired, the SDK refreshes once and retries once. You can also call `Refresh`, `RefreshOperator`, `Logout`, or `LogoutOperator` directly.
 
-Admin backup helpers wrap `mycel.admin.v1.AdminBackupService`:
+Admin backup helpers wrap `mycel.admin.v1.AdminBackupService`. Cluster backup archive formats use `adminv1` from `github.com/myceldb/mycel-go-sdk/gen/go/mycel/admin/v1`:
 
 ```go
 policy, err := admin.GetBackupPolicy(ctx)
 status, err := admin.GetBackupStatus(ctx)
 trigger, err := admin.TriggerBackup(ctx, "before upgrade")
+cluster, err := admin.TriggerClusterBackup(ctx, "before upgrade", "/mnt/mycel-backups", adminv1.BackupArchiveFormat_BACKUP_ARCHIVE_FORMAT_TAR_ZST)
 _ = policy
 _ = status
 _ = trigger
+_ = cluster
 ```
 
 ## Environment config
