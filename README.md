@@ -27,7 +27,7 @@ Generated code is committed under `gen/go/` so tagged Go module releases are sel
 
 ## Generate protobuf stubs
 
-The committed stubs are generated from the `mycel-api` `v0.6.0` contracts. CI checks regeneration against that tag.
+The committed stubs on release branches are generated from the matching `mycel-api` release tag. This `add_callbacks` branch is generated from `mycel-api/add_callbacks`.
 
 By default generation reads protobufs from a sibling checkout:
 
@@ -35,7 +35,7 @@ By default generation reads protobufs from a sibling checkout:
 ../mycel-api/api/proto
 ```
 
-For release-aligned regeneration, check out `mycel-api` at `v0.6.0`, then run:
+For release-aligned regeneration, check out `mycel-api` at the matching release tag. For this branch, check out `mycel-api/add_callbacks`, then run:
 
 ```sh
 make generate
@@ -99,6 +99,21 @@ admin, err := mycel.DialAdmin(ctx, mycel.Config{
 ```
 
 `Dial` and `DialAdmin` store access-token expiry and refresh tokens returned by login. Before protected RPCs, the SDK refreshes near-expiry tokens automatically. If a protected unary RPC or stream setup fails with `Unauthenticated` because the access token is expired, the SDK refreshes once and retries once. You can also call `Refresh`, `RefreshOperator`, `Logout`, or `LogoutOperator` directly.
+
+Transaction operation IDs can be generated client-side and passed when beginning a transaction. They are correlation metadata only, not idempotency keys:
+
+```go
+operationID := mycel.NewOperationID()
+tx, err := client.BeginReadWriteTransactionWithOperationID(ctx, sessionID, operationID)
+if err != nil {
+    panic(err)
+}
+commit, err := client.CommitTransactionResult(ctx, tx.GetTransactionId())
+if err != nil {
+    panic(err)
+}
+_ = commit.GetOperationId()
+```
 
 Admin backup helpers wrap `mycel.admin.v1.AdminBackupService`. Cluster backup archive formats use `adminv1` from `github.com/myceldb/mycel-go-sdk/gen/go/mycel/admin/v1`:
 

@@ -42,31 +42,59 @@ func (c *Client) CloseSession(ctx context.Context, sessionID string) error {
 }
 
 func (c *Client) BeginTransaction(ctx context.Context, sessionID string, mode clientv1.TransactionMode) (string, error) {
-	callCtx, cancel := c.AuthCallContext(ctx)
-	defer cancel()
-	res, err := c.Transaction.BeginTransaction(callCtx, &clientv1.BeginTransactionRequest{SessionId: sessionID, Mode: mode})
+	tx, err := c.BeginTransactionWithOperationID(ctx, sessionID, mode, "")
 	if err != nil {
-		if mode == clientv1.TransactionMode_TRANSACTION_MODE_READ_WRITE {
-			return "", err
-		}
 		return "", err
 	}
-	return res.GetTransaction().GetTransactionId(), nil
+	return tx.GetTransactionId(), nil
+}
+
+// BeginTransactionWithOperationID begins a transaction with optional client
+// operation correlation metadata. Pass NewOperationID() to correlate the write
+// with later graph-change events; pass an empty string to let the daemon
+// generate an operation ID. The returned transaction includes the resolved
+// operation ID.
+func (c *Client) BeginTransactionWithOperationID(ctx context.Context, sessionID string, mode clientv1.TransactionMode, operationID string) (*clientv1.GraphTransaction, error) {
+	callCtx, cancel := c.AuthCallContext(ctx)
+	defer cancel()
+	res, err := c.Transaction.BeginTransaction(callCtx, &clientv1.BeginTransactionRequest{SessionId: sessionID, Mode: mode, OperationId: operationID})
+	if err != nil {
+		return nil, err
+	}
+	return res.GetTransaction(), nil
 }
 
 func (c *Client) BeginReadWriteTransaction(ctx context.Context, sessionID string) (string, error) {
 	return c.BeginTransaction(ctx, sessionID, clientv1.TransactionMode_TRANSACTION_MODE_READ_WRITE)
 }
 
+func (c *Client) BeginReadWriteTransactionWithOperationID(ctx context.Context, sessionID string, operationID string) (*clientv1.GraphTransaction, error) {
+	return c.BeginTransactionWithOperationID(ctx, sessionID, clientv1.TransactionMode_TRANSACTION_MODE_READ_WRITE, operationID)
+}
+
 func (c *Client) BeginReadOnlyTransaction(ctx context.Context, sessionID string) (string, error) {
 	return c.BeginTransaction(ctx, sessionID, clientv1.TransactionMode_TRANSACTION_MODE_READ_ONLY)
 }
 
+func (c *Client) BeginReadOnlyTransactionWithOperationID(ctx context.Context, sessionID string, operationID string) (*clientv1.GraphTransaction, error) {
+	return c.BeginTransactionWithOperationID(ctx, sessionID, clientv1.TransactionMode_TRANSACTION_MODE_READ_ONLY, operationID)
+}
+
 func (c *Client) CommitTransaction(ctx context.Context, txID string) error {
+	_, err := c.CommitTransactionResult(ctx, txID)
+	return err
+}
+
+// CommitTransactionResult commits a read-write transaction and returns commit
+// metadata, including the operation ID associated with the transaction.
+func (c *Client) CommitTransactionResult(ctx context.Context, txID string) (*clientv1.TransactionCommit, error) {
 	callCtx, cancel := c.AuthCallContext(ctx)
 	defer cancel()
-	_, err := c.Transaction.CommitTransaction(callCtx, &clientv1.CommitTransactionRequest{TransactionId: txID})
-	return err
+	res, err := c.Transaction.CommitTransaction(callCtx, &clientv1.CommitTransactionRequest{TransactionId: txID})
+	if err != nil {
+		return nil, err
+	}
+	return res.GetCommit(), nil
 }
 
 func (c *Client) CloseTransaction(ctx context.Context, txID string) error {
