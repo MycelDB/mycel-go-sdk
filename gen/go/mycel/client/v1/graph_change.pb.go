@@ -369,7 +369,6 @@ type GraphChangeEvent struct {
 	SpaceId         string                 `protobuf:"bytes,2,opt,name=space_id,json=spaceId,proto3" json:"space_id,omitempty"`
 	DomainId        string                 `protobuf:"bytes,3,opt,name=domain_id,json=domainId,proto3" json:"domain_id,omitempty"`
 	Revision        int64                  `protobuf:"varint,4,opt,name=revision,proto3" json:"revision,omitempty"`
-	CommitId        string                 `protobuf:"bytes,5,opt,name=commit_id,json=commitId,proto3" json:"commit_id,omitempty"`
 	TransactionId   string                 `protobuf:"bytes,6,opt,name=transaction_id,json=transactionId,proto3" json:"transaction_id,omitempty"`
 	CommitTime      *timestamppb.Timestamp `protobuf:"bytes,7,opt,name=commit_time,json=commitTime,proto3" json:"commit_time,omitempty"`
 	Origin          *GraphChangeOrigin     `protobuf:"bytes,8,opt,name=origin,proto3" json:"origin,omitempty"`
@@ -436,13 +435,6 @@ func (x *GraphChangeEvent) GetRevision() int64 {
 		return x.Revision
 	}
 	return 0
-}
-
-func (x *GraphChangeEvent) GetCommitId() string {
-	if x != nil {
-		return x.CommitId
-	}
-	return ""
 }
 
 func (x *GraphChangeEvent) GetTransactionId() string {
@@ -977,13 +969,12 @@ const file_mycel_client_v1_graph_change_proto_rawDesc = "" +
 	"\bspace_id\x18\x01 \x01(\tR\aspaceId\x12\x1b\n" +
 	"\tdomain_id\x18\x02 \x01(\tR\bdomainId\x12)\n" +
 	"\x10current_revision\x18\x03 \x01(\x03R\x0fcurrentRevision\x12C\n" +
-	"\x0fcheckpoint_time\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\x0echeckpointTime\"\xd4\x03\n" +
+	"\x0fcheckpoint_time\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\x0echeckpointTime\"\xc8\x03\n" +
 	"\x10GraphChangeEvent\x12\x19\n" +
 	"\bevent_id\x18\x01 \x01(\tR\aeventId\x12\x19\n" +
 	"\bspace_id\x18\x02 \x01(\tR\aspaceId\x12\x1b\n" +
 	"\tdomain_id\x18\x03 \x01(\tR\bdomainId\x12\x1a\n" +
-	"\brevision\x18\x04 \x01(\x03R\brevision\x12\x1b\n" +
-	"\tcommit_id\x18\x05 \x01(\tR\bcommitId\x12%\n" +
+	"\brevision\x18\x04 \x01(\x03R\brevision\x12%\n" +
 	"\x0etransaction_id\x18\x06 \x01(\tR\rtransactionId\x12;\n" +
 	"\vcommit_time\x18\a \x01(\v2\x1a.google.protobuf.TimestampR\n" +
 	"commitTime\x12:\n" +
@@ -991,7 +982,7 @@ const file_mycel_client_v1_graph_change_proto_rawDesc = "" +
 	"\achanges\x18\t \x03(\v2\".mycel.client.v1.GraphObjectChangeR\achanges\x12*\n" +
 	"\x11affected_node_ids\x18\n" +
 	" \x03(\tR\x0faffectedNodeIds\x12*\n" +
-	"\x11affected_edge_ids\x18\v \x03(\tR\x0faffectedEdgeIds\"6\n" +
+	"\x11affected_edge_ids\x18\v \x03(\tR\x0faffectedEdgeIdsJ\x04\b\x05\x10\x06R\tcommit_id\"6\n" +
 	"\x11GraphChangeOrigin\x12!\n" +
 	"\foperation_id\x18\x01 \x01(\tR\voperationId\"\xc2\x03\n" +
 	"\x11GraphObjectChange\x124\n" +
