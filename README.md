@@ -20,6 +20,7 @@ The SDK generates Go protobuf/gRPC stubs from the language-independent `mycel-ap
 - call timeout helpers
 - session/transaction helpers
 - thin graph/query convenience methods
+- graph-change watch helpers
 - Admin backup policy/status/list/trigger/delete helpers
 - Admin cluster backup trigger/status/list/validate helpers
 
@@ -99,6 +100,21 @@ admin, err := mycel.DialAdmin(ctx, mycel.Config{
 ```
 
 `Dial` and `DialAdmin` store access-token expiry and refresh tokens returned by login. Before protected RPCs, the SDK refreshes near-expiry tokens automatically. If a protected unary RPC or stream setup fails with `Unauthenticated` because the access token is expired, the SDK refreshes once and retries once. You can also call `Refresh`, `RefreshOperator`, `Logout`, or `LogoutOperator` directly.
+
+Graph changes can be watched with `GraphChangeService.WatchGraphChanges` through the SDK helper:
+
+```go
+stream, err := client.WatchGraphChanges(ctx, &clientv1.WatchGraphChangesRequest{
+    SpaceId:        spaceID,
+    DomainId:       domainID,
+    IncludeCurrent: true,
+})
+if err != nil {
+    panic(err)
+}
+msg, err := stream.Recv()
+_ = msg
+```
 
 Transaction operation IDs can be generated client-side and passed when beginning a transaction. They are correlation metadata only, not idempotency keys:
 
