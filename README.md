@@ -104,7 +104,9 @@ admin, err := mycel.DialAdmin(ctx, mycel.Config{
 Graph changes can be watched with `GraphChangeService.WatchGraphChanges` through the SDK helper:
 
 ```go
-stream, err := client.WatchGraphChanges(ctx, &clientv1.WatchGraphChangesRequest{
+watchCtx, stopWatch := context.WithCancel(ctx)
+defer stopWatch()
+stream, err := client.WatchGraphChanges(watchCtx, &clientv1.WatchGraphChangesRequest{
     SpaceId:        spaceID,
     DomainId:       domainID,
     IncludeCurrent: true,
@@ -115,6 +117,8 @@ if err != nil {
 msg, err := stream.Recv()
 _ = msg
 ```
+
+Watch helpers refresh/retry only while opening the stream. They do not automatically reconnect or resume if a long-lived stream ends later. Track the last received `event.revision`, reconnect with `after_revision`, and handle `gap` by invalidating or rebuilding local derived state. If you stop reading early, cancel the parent context. Global `CallTimeout` / `MYCEL_CALL_TIMEOUT` applies to watch streams, so long-lived watchers should usually avoid a short global call timeout.
 
 Transaction operation IDs can be generated client-side and passed when beginning a transaction. They are correlation metadata only, not idempotency keys:
 
