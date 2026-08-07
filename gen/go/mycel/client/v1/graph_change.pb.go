@@ -94,8 +94,9 @@ type WatchGraphChangesRequest struct {
 	// domain revision. If the revision is older than retained history, the daemon
 	// sends a GraphChangeGap response and closes the stream successfully.
 	AfterRevision *int64 `protobuf:"varint,3,opt,name=after_revision,json=afterRevision,proto3,oneof" json:"after_revision,omitempty"`
-	// When true, the daemon should first send a checkpoint containing the current
-	// observed domain revision.
+	// When true, the daemon first sends a checkpoint containing the current
+	// observed domain revision. If after_revision is also set, replayed events
+	// after that revision may follow the checkpoint.
 	IncludeCurrent bool `protobuf:"varint,4,opt,name=include_current,json=includeCurrent,proto3" json:"include_current,omitempty"`
 	// Optional event filters. Empty means all supported event types and objects.
 	Filter *GraphChangeFilter `protobuf:"bytes,5,opt,name=filter,proto3" json:"filter,omitempty"`
@@ -535,13 +536,14 @@ type GraphObjectChange struct {
 	EdgeId          string                 `protobuf:"bytes,3,opt,name=edge_id,json=edgeId,proto3" json:"edge_id,omitempty"`
 	AffectedNodeIds []string               `protobuf:"bytes,4,rep,name=affected_node_ids,json=affectedNodeIds,proto3" json:"affected_node_ids,omitempty"`
 	AffectedEdgeIds []string               `protobuf:"bytes,5,rep,name=affected_edge_ids,json=affectedEdgeIds,proto3" json:"affected_edge_ids,omitempty"`
-	ChangedFields   []string               `protobuf:"bytes,6,rep,name=changed_fields,json=changedFields,proto3" json:"changed_fields,omitempty"`
-	OldNode         *Node                  `protobuf:"bytes,7,opt,name=old_node,json=oldNode,proto3" json:"old_node,omitempty"`
-	NewNode         *Node                  `protobuf:"bytes,8,opt,name=new_node,json=newNode,proto3" json:"new_node,omitempty"`
-	OldEdge         *Edge                  `protobuf:"bytes,9,opt,name=old_edge,json=oldEdge,proto3" json:"old_edge,omitempty"`
-	NewEdge         *Edge                  `protobuf:"bytes,10,opt,name=new_edge,json=newEdge,proto3" json:"new_edge,omitempty"`
-	unknownFields   protoimpl.UnknownFields
-	sizeCache       protoimpl.SizeCache
+	// Best-effort changed field names when the producer can determine them.
+	ChangedFields []string `protobuf:"bytes,6,rep,name=changed_fields,json=changedFields,proto3" json:"changed_fields,omitempty"`
+	OldNode       *Node    `protobuf:"bytes,7,opt,name=old_node,json=oldNode,proto3" json:"old_node,omitempty"`
+	NewNode       *Node    `protobuf:"bytes,8,opt,name=new_node,json=newNode,proto3" json:"new_node,omitempty"`
+	OldEdge       *Edge    `protobuf:"bytes,9,opt,name=old_edge,json=oldEdge,proto3" json:"old_edge,omitempty"`
+	NewEdge       *Edge    `protobuf:"bytes,10,opt,name=new_edge,json=newEdge,proto3" json:"new_edge,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
 func (x *GraphObjectChange) Reset() {
@@ -645,12 +647,14 @@ func (x *GraphObjectChange) GetNewEdge() *Edge {
 }
 
 type GraphChangeFilter struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	EventTypes    []GraphChangeType      `protobuf:"varint,1,rep,packed,name=event_types,json=eventTypes,proto3,enum=mycel.client.v1.GraphChangeType" json:"event_types,omitempty"`
-	NodeIds       []string               `protobuf:"bytes,2,rep,name=node_ids,json=nodeIds,proto3" json:"node_ids,omitempty"`
-	EdgeIds       []string               `protobuf:"bytes,3,rep,name=edge_ids,json=edgeIds,proto3" json:"edge_ids,omitempty"`
-	Labels        []string               `protobuf:"bytes,4,rep,name=labels,proto3" json:"labels,omitempty"`
-	ChangedFields []string               `protobuf:"bytes,5,rep,name=changed_fields,json=changedFields,proto3" json:"changed_fields,omitempty"`
+	state      protoimpl.MessageState `protogen:"open.v1"`
+	EventTypes []GraphChangeType      `protobuf:"varint,1,rep,packed,name=event_types,json=eventTypes,proto3,enum=mycel.client.v1.GraphChangeType" json:"event_types,omitempty"`
+	NodeIds    []string               `protobuf:"bytes,2,rep,name=node_ids,json=nodeIds,proto3" json:"node_ids,omitempty"`
+	EdgeIds    []string               `protobuf:"bytes,3,rep,name=edge_ids,json=edgeIds,proto3" json:"edge_ids,omitempty"`
+	Labels     []string               `protobuf:"bytes,4,rep,name=labels,proto3" json:"labels,omitempty"`
+	// Best-effort field-name filter. Producers that cannot determine changed
+	// field names may not match this filter.
+	ChangedFields []string `protobuf:"bytes,5,rep,name=changed_fields,json=changedFields,proto3" json:"changed_fields,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
