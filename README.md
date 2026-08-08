@@ -20,6 +20,7 @@ The SDK generates Go protobuf/gRPC stubs from the language-independent `mycel-ap
 - call timeout helpers
 - session/transaction helpers
 - thin graph/query convenience methods
+- graph-change watch helpers
 - Admin backup policy/status/list/trigger/delete helpers
 - Admin cluster backup trigger/status/list/validate helpers
 
@@ -27,7 +28,7 @@ Generated code is committed under `gen/go/` so tagged Go module releases are sel
 
 ## Generate protobuf stubs
 
-The committed stubs are generated from the `mycel-api` `v0.6.0` contracts. CI checks regeneration against that tag.
+The committed stubs on release branches are generated from the matching `mycel-api` release tag. This `add_callbacks` branch is generated from `mycel-api/add_callbacks`.
 
 By default generation reads protobufs from a sibling checkout:
 
@@ -35,7 +36,7 @@ By default generation reads protobufs from a sibling checkout:
 ../mycel-api/api/proto
 ```
 
-For release-aligned regeneration, check out `mycel-api` at `v0.6.0`, then run:
+For release-aligned regeneration, check out `mycel-api` at the matching release tag. For this branch, check out `mycel-api/add_callbacks`, then run:
 
 ```sh
 make generate
@@ -99,6 +100,61 @@ admin, err := mycel.DialAdmin(ctx, mycel.Config{
 ```
 
 `Dial` and `DialAdmin` store access-token expiry and refresh tokens returned by login. Before protected RPCs, the SDK refreshes near-expiry tokens automatically. If a protected unary RPC or stream setup fails with `Unauthenticated` because the access token is expired, the SDK refreshes once and retries once. You can also call `Refresh`, `RefreshOperator`, `Logout`, or `LogoutOperator` directly.
+
+Transaction operation IDs can be generated client-side and passed when beginning a transaction. They are correlation metadata only, not idempotency keys:
+
+```go
+operationID := mycel.NewOperationID()
+tx, err := client.BeginReadWriteTransactionWithOperationID(ctx, sessionID, operationID)
+if err != nil {
+    panic(err)
+}
+// Perform graph writes against tx.GetTransactionId().
+commit, err := client.CommitTransactionResult(ctx, tx.GetTransactionId())
+if err != nil {
+    panic(err)
+}
+_ = commit.GetOperationId() // matches operationID
+```
+
+Graph changes can be watched with `GraphChangeService.WatchGraphChanges` through the SDK helper. Persist the last processed `event.revision` and use it as `after_revision` when reconnecting:
+
+```go
+var lastRevision int64 // load from durable client checkpoint storage
+watchCtx, stopWatch := context.WithCancel(ctx)
+defer stopWatch()
+stream, err := client.WatchGraphChanges(watchCtx, &clientv1.WatchGraphChangesRequest{
+    SpaceId:        spaceID,
+    DomainId:       domainID,
+    AfterRevision:  &lastRevision,
+    IncludeCurrent: true,
+})
+if err != nil {
+    panic(err)
+}
+for {
+    msg, err := stream.Recv()
+    if err != nil {
+        break // reconnect later with the last persisted revision
+    }
+    switch payload := msg.GetMessage().(type) {
+    case *clientv1.WatchGraphChangesResponse_Event:
+        event := payload.Event
+        if event.GetOrigin().GetOperationId() == operationID {
+            continue // optional: ignore a write issued by this workflow
+        }
+        // Apply event to local cache or derived state.
+        lastRevision = event.GetRevision()
+        // Persist lastRevision after successful processing.
+    case *clientv1.WatchGraphChangesResponse_Gap:
+        // Requested history is unavailable. Rebuild/resync local state, persist
+        // a fresh checkpoint, and open a new stream.
+        return
+    }
+}
+```
+
+Watch helpers refresh/retry only while opening the stream. They do not automatically reconnect or resume if a long-lived stream ends later. Track the last received `event.revision`, reconnect with `after_revision`, and handle `gap` by invalidating or rebuilding local derived state. If you stop reading early, cancel the parent context. Global `CallTimeout` / `MYCEL_CALL_TIMEOUT` applies to watch streams, so long-lived watchers should usually avoid a short global call timeout.
 
 Admin backup helpers wrap `mycel.admin.v1.AdminBackupService`. Cluster backup archive formats use `adminv1` from `github.com/myceldb/mycel-go-sdk/gen/go/mycel/admin/v1`:
 

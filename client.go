@@ -25,7 +25,7 @@ type Client struct {
 	ImportExport clientv1.ImportExportServiceClient
 	Metadata     clientv1.MetadataCatalogServiceClient
 	Semantic     clientv1.SemanticServiceClient
-	ChangeStream clientv1.ChangeStreamServiceClient
+	GraphChange  clientv1.GraphChangeServiceClient
 
 	tokens *tokenSource
 	cfg    Config
@@ -72,7 +72,7 @@ func Dial(ctx context.Context, cfg Config, opts ...grpc.DialOption) (*Client, er
 	c.ImportExport = clientv1.NewImportExportServiceClient(conn)
 	c.Metadata = clientv1.NewMetadataCatalogServiceClient(conn)
 	c.Semantic = clientv1.NewSemanticServiceClient(conn)
-	c.ChangeStream = clientv1.NewChangeStreamServiceClient(conn)
+	c.GraphChange = clientv1.NewGraphChangeServiceClient(conn)
 	if cfg.Username != "" || cfg.Password != "" {
 		if _, err := c.Login(ctx, cfg.Username, cfg.Password); err != nil {
 			_ = conn.Close()
