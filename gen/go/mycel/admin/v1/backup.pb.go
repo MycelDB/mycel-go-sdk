@@ -1176,6 +1176,778 @@ func (x *DeleteBackupResponse) GetBackupId() string {
 	return ""
 }
 
+type TriggerClusterBackupRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Reason        string                 `protobuf:"bytes,1,opt,name=reason,proto3" json:"reason,omitempty"`
+	OutputDir     string                 `protobuf:"bytes,2,opt,name=output_dir,json=outputDir,proto3" json:"output_dir,omitempty"`
+	ArchiveFormat BackupArchiveFormat    `protobuf:"varint,3,opt,name=archive_format,json=archiveFormat,proto3,enum=mycel.admin.v1.BackupArchiveFormat" json:"archive_format,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *TriggerClusterBackupRequest) Reset() {
+	*x = TriggerClusterBackupRequest{}
+	mi := &file_mycel_admin_v1_backup_proto_msgTypes[17]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *TriggerClusterBackupRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TriggerClusterBackupRequest) ProtoMessage() {}
+
+func (x *TriggerClusterBackupRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_admin_v1_backup_proto_msgTypes[17]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TriggerClusterBackupRequest.ProtoReflect.Descriptor instead.
+func (*TriggerClusterBackupRequest) Descriptor() ([]byte, []int) {
+	return file_mycel_admin_v1_backup_proto_rawDescGZIP(), []int{17}
+}
+
+func (x *TriggerClusterBackupRequest) GetReason() string {
+	if x != nil {
+		return x.Reason
+	}
+	return ""
+}
+
+func (x *TriggerClusterBackupRequest) GetOutputDir() string {
+	if x != nil {
+		return x.OutputDir
+	}
+	return ""
+}
+
+func (x *TriggerClusterBackupRequest) GetArchiveFormat() BackupArchiveFormat {
+	if x != nil {
+		return x.ArchiveFormat
+	}
+	return BackupArchiveFormat_BACKUP_ARCHIVE_FORMAT_UNSPECIFIED
+}
+
+type TriggerClusterBackupResponse struct {
+	state         protoimpl.MessageState   `protogen:"open.v1"`
+	Status        *ClusterBackupStatus     `protobuf:"bytes,1,opt,name=status,proto3" json:"status,omitempty"`
+	BackupSet     *ClusterBackupSetSummary `protobuf:"bytes,2,opt,name=backup_set,json=backupSet,proto3" json:"backup_set,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *TriggerClusterBackupResponse) Reset() {
+	*x = TriggerClusterBackupResponse{}
+	mi := &file_mycel_admin_v1_backup_proto_msgTypes[18]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *TriggerClusterBackupResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TriggerClusterBackupResponse) ProtoMessage() {}
+
+func (x *TriggerClusterBackupResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_admin_v1_backup_proto_msgTypes[18]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TriggerClusterBackupResponse.ProtoReflect.Descriptor instead.
+func (*TriggerClusterBackupResponse) Descriptor() ([]byte, []int) {
+	return file_mycel_admin_v1_backup_proto_rawDescGZIP(), []int{18}
+}
+
+func (x *TriggerClusterBackupResponse) GetStatus() *ClusterBackupStatus {
+	if x != nil {
+		return x.Status
+	}
+	return nil
+}
+
+func (x *TriggerClusterBackupResponse) GetBackupSet() *ClusterBackupSetSummary {
+	if x != nil {
+		return x.BackupSet
+	}
+	return nil
+}
+
+type GetClusterBackupStatusRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	BackupSetId   string                 `protobuf:"bytes,1,opt,name=backup_set_id,json=backupSetId,proto3" json:"backup_set_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetClusterBackupStatusRequest) Reset() {
+	*x = GetClusterBackupStatusRequest{}
+	mi := &file_mycel_admin_v1_backup_proto_msgTypes[19]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetClusterBackupStatusRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetClusterBackupStatusRequest) ProtoMessage() {}
+
+func (x *GetClusterBackupStatusRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_admin_v1_backup_proto_msgTypes[19]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetClusterBackupStatusRequest.ProtoReflect.Descriptor instead.
+func (*GetClusterBackupStatusRequest) Descriptor() ([]byte, []int) {
+	return file_mycel_admin_v1_backup_proto_rawDescGZIP(), []int{19}
+}
+
+func (x *GetClusterBackupStatusRequest) GetBackupSetId() string {
+	if x != nil {
+		return x.BackupSetId
+	}
+	return ""
+}
+
+type GetClusterBackupStatusResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Status        *ClusterBackupStatus   `protobuf:"bytes,1,opt,name=status,proto3" json:"status,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetClusterBackupStatusResponse) Reset() {
+	*x = GetClusterBackupStatusResponse{}
+	mi := &file_mycel_admin_v1_backup_proto_msgTypes[20]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetClusterBackupStatusResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetClusterBackupStatusResponse) ProtoMessage() {}
+
+func (x *GetClusterBackupStatusResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_admin_v1_backup_proto_msgTypes[20]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetClusterBackupStatusResponse.ProtoReflect.Descriptor instead.
+func (*GetClusterBackupStatusResponse) Descriptor() ([]byte, []int) {
+	return file_mycel_admin_v1_backup_proto_rawDescGZIP(), []int{20}
+}
+
+func (x *GetClusterBackupStatusResponse) GetStatus() *ClusterBackupStatus {
+	if x != nil {
+		return x.Status
+	}
+	return nil
+}
+
+type ListClusterBackupsRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	PageSize      int32                  `protobuf:"varint,1,opt,name=page_size,json=pageSize,proto3" json:"page_size,omitempty"`
+	PageToken     string                 `protobuf:"bytes,2,opt,name=page_token,json=pageToken,proto3" json:"page_token,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListClusterBackupsRequest) Reset() {
+	*x = ListClusterBackupsRequest{}
+	mi := &file_mycel_admin_v1_backup_proto_msgTypes[21]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListClusterBackupsRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListClusterBackupsRequest) ProtoMessage() {}
+
+func (x *ListClusterBackupsRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_admin_v1_backup_proto_msgTypes[21]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListClusterBackupsRequest.ProtoReflect.Descriptor instead.
+func (*ListClusterBackupsRequest) Descriptor() ([]byte, []int) {
+	return file_mycel_admin_v1_backup_proto_rawDescGZIP(), []int{21}
+}
+
+func (x *ListClusterBackupsRequest) GetPageSize() int32 {
+	if x != nil {
+		return x.PageSize
+	}
+	return 0
+}
+
+func (x *ListClusterBackupsRequest) GetPageToken() string {
+	if x != nil {
+		return x.PageToken
+	}
+	return ""
+}
+
+type ListClusterBackupsResponse struct {
+	state         protoimpl.MessageState     `protogen:"open.v1"`
+	BackupSets    []*ClusterBackupSetSummary `protobuf:"bytes,1,rep,name=backup_sets,json=backupSets,proto3" json:"backup_sets,omitempty"`
+	NextPageToken string                     `protobuf:"bytes,2,opt,name=next_page_token,json=nextPageToken,proto3" json:"next_page_token,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListClusterBackupsResponse) Reset() {
+	*x = ListClusterBackupsResponse{}
+	mi := &file_mycel_admin_v1_backup_proto_msgTypes[22]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListClusterBackupsResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListClusterBackupsResponse) ProtoMessage() {}
+
+func (x *ListClusterBackupsResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_admin_v1_backup_proto_msgTypes[22]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListClusterBackupsResponse.ProtoReflect.Descriptor instead.
+func (*ListClusterBackupsResponse) Descriptor() ([]byte, []int) {
+	return file_mycel_admin_v1_backup_proto_rawDescGZIP(), []int{22}
+}
+
+func (x *ListClusterBackupsResponse) GetBackupSets() []*ClusterBackupSetSummary {
+	if x != nil {
+		return x.BackupSets
+	}
+	return nil
+}
+
+func (x *ListClusterBackupsResponse) GetNextPageToken() string {
+	if x != nil {
+		return x.NextPageToken
+	}
+	return ""
+}
+
+type ValidateClusterBackupSetRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	BackupSetPath string                 `protobuf:"bytes,1,opt,name=backup_set_path,json=backupSetPath,proto3" json:"backup_set_path,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ValidateClusterBackupSetRequest) Reset() {
+	*x = ValidateClusterBackupSetRequest{}
+	mi := &file_mycel_admin_v1_backup_proto_msgTypes[23]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ValidateClusterBackupSetRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ValidateClusterBackupSetRequest) ProtoMessage() {}
+
+func (x *ValidateClusterBackupSetRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_admin_v1_backup_proto_msgTypes[23]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ValidateClusterBackupSetRequest.ProtoReflect.Descriptor instead.
+func (*ValidateClusterBackupSetRequest) Descriptor() ([]byte, []int) {
+	return file_mycel_admin_v1_backup_proto_rawDescGZIP(), []int{23}
+}
+
+func (x *ValidateClusterBackupSetRequest) GetBackupSetPath() string {
+	if x != nil {
+		return x.BackupSetPath
+	}
+	return ""
+}
+
+type ValidateClusterBackupSetResponse struct {
+	state         protoimpl.MessageState   `protogen:"open.v1"`
+	Valid         bool                     `protobuf:"varint,1,opt,name=valid,proto3" json:"valid,omitempty"`
+	Errors        []string                 `protobuf:"bytes,2,rep,name=errors,proto3" json:"errors,omitempty"`
+	BackupSet     *ClusterBackupSetSummary `protobuf:"bytes,3,opt,name=backup_set,json=backupSet,proto3" json:"backup_set,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ValidateClusterBackupSetResponse) Reset() {
+	*x = ValidateClusterBackupSetResponse{}
+	mi := &file_mycel_admin_v1_backup_proto_msgTypes[24]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ValidateClusterBackupSetResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ValidateClusterBackupSetResponse) ProtoMessage() {}
+
+func (x *ValidateClusterBackupSetResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_admin_v1_backup_proto_msgTypes[24]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ValidateClusterBackupSetResponse.ProtoReflect.Descriptor instead.
+func (*ValidateClusterBackupSetResponse) Descriptor() ([]byte, []int) {
+	return file_mycel_admin_v1_backup_proto_rawDescGZIP(), []int{24}
+}
+
+func (x *ValidateClusterBackupSetResponse) GetValid() bool {
+	if x != nil {
+		return x.Valid
+	}
+	return false
+}
+
+func (x *ValidateClusterBackupSetResponse) GetErrors() []string {
+	if x != nil {
+		return x.Errors
+	}
+	return nil
+}
+
+func (x *ValidateClusterBackupSetResponse) GetBackupSet() *ClusterBackupSetSummary {
+	if x != nil {
+		return x.BackupSet
+	}
+	return nil
+}
+
+type ClusterBackupStatus struct {
+	state         protoimpl.MessageState       `protogen:"open.v1"`
+	BackupSetId   string                       `protobuf:"bytes,1,opt,name=backup_set_id,json=backupSetId,proto3" json:"backup_set_id,omitempty"`
+	State         string                       `protobuf:"bytes,2,opt,name=state,proto3" json:"state,omitempty"`
+	ClusterId     string                       `protobuf:"bytes,3,opt,name=cluster_id,json=clusterId,proto3" json:"cluster_id,omitempty"`
+	Reason        string                       `protobuf:"bytes,4,opt,name=reason,proto3" json:"reason,omitempty"`
+	CreatedAt     string                       `protobuf:"bytes,5,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
+	UpdatedAt     string                       `protobuf:"bytes,6,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
+	CompletedAt   string                       `protobuf:"bytes,7,opt,name=completed_at,json=completedAt,proto3" json:"completed_at,omitempty"`
+	ExpectedNodes int32                        `protobuf:"varint,8,opt,name=expected_nodes,json=expectedNodes,proto3" json:"expected_nodes,omitempty"`
+	ManifestUri   string                       `protobuf:"bytes,9,opt,name=manifest_uri,json=manifestUri,proto3" json:"manifest_uri,omitempty"`
+	Nodes         []*ClusterBackupNodeArtifact `protobuf:"bytes,10,rep,name=nodes,proto3" json:"nodes,omitempty"`
+	FailedPhase   string                       `protobuf:"bytes,11,opt,name=failed_phase,json=failedPhase,proto3" json:"failed_phase,omitempty"`
+	Error         string                       `protobuf:"bytes,12,opt,name=error,proto3" json:"error,omitempty"`
+	RaftBarriers  map[string]uint64            `protobuf:"bytes,13,rep,name=raft_barriers,json=raftBarriers,proto3" json:"raft_barriers,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"varint,2,opt,name=value"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ClusterBackupStatus) Reset() {
+	*x = ClusterBackupStatus{}
+	mi := &file_mycel_admin_v1_backup_proto_msgTypes[25]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ClusterBackupStatus) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ClusterBackupStatus) ProtoMessage() {}
+
+func (x *ClusterBackupStatus) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_admin_v1_backup_proto_msgTypes[25]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ClusterBackupStatus.ProtoReflect.Descriptor instead.
+func (*ClusterBackupStatus) Descriptor() ([]byte, []int) {
+	return file_mycel_admin_v1_backup_proto_rawDescGZIP(), []int{25}
+}
+
+func (x *ClusterBackupStatus) GetBackupSetId() string {
+	if x != nil {
+		return x.BackupSetId
+	}
+	return ""
+}
+
+func (x *ClusterBackupStatus) GetState() string {
+	if x != nil {
+		return x.State
+	}
+	return ""
+}
+
+func (x *ClusterBackupStatus) GetClusterId() string {
+	if x != nil {
+		return x.ClusterId
+	}
+	return ""
+}
+
+func (x *ClusterBackupStatus) GetReason() string {
+	if x != nil {
+		return x.Reason
+	}
+	return ""
+}
+
+func (x *ClusterBackupStatus) GetCreatedAt() string {
+	if x != nil {
+		return x.CreatedAt
+	}
+	return ""
+}
+
+func (x *ClusterBackupStatus) GetUpdatedAt() string {
+	if x != nil {
+		return x.UpdatedAt
+	}
+	return ""
+}
+
+func (x *ClusterBackupStatus) GetCompletedAt() string {
+	if x != nil {
+		return x.CompletedAt
+	}
+	return ""
+}
+
+func (x *ClusterBackupStatus) GetExpectedNodes() int32 {
+	if x != nil {
+		return x.ExpectedNodes
+	}
+	return 0
+}
+
+func (x *ClusterBackupStatus) GetManifestUri() string {
+	if x != nil {
+		return x.ManifestUri
+	}
+	return ""
+}
+
+func (x *ClusterBackupStatus) GetNodes() []*ClusterBackupNodeArtifact {
+	if x != nil {
+		return x.Nodes
+	}
+	return nil
+}
+
+func (x *ClusterBackupStatus) GetFailedPhase() string {
+	if x != nil {
+		return x.FailedPhase
+	}
+	return ""
+}
+
+func (x *ClusterBackupStatus) GetError() string {
+	if x != nil {
+		return x.Error
+	}
+	return ""
+}
+
+func (x *ClusterBackupStatus) GetRaftBarriers() map[string]uint64 {
+	if x != nil {
+		return x.RaftBarriers
+	}
+	return nil
+}
+
+type ClusterBackupSetSummary struct {
+	state         protoimpl.MessageState       `protogen:"open.v1"`
+	BackupSetId   string                       `protobuf:"bytes,1,opt,name=backup_set_id,json=backupSetId,proto3" json:"backup_set_id,omitempty"`
+	State         string                       `protobuf:"bytes,2,opt,name=state,proto3" json:"state,omitempty"`
+	ClusterId     string                       `protobuf:"bytes,3,opt,name=cluster_id,json=clusterId,proto3" json:"cluster_id,omitempty"`
+	CreatedAt     string                       `protobuf:"bytes,4,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
+	CompletedAt   string                       `protobuf:"bytes,5,opt,name=completed_at,json=completedAt,proto3" json:"completed_at,omitempty"`
+	ExpectedNodes int32                        `protobuf:"varint,6,opt,name=expected_nodes,json=expectedNodes,proto3" json:"expected_nodes,omitempty"`
+	ManifestUri   string                       `protobuf:"bytes,7,opt,name=manifest_uri,json=manifestUri,proto3" json:"manifest_uri,omitempty"`
+	Nodes         []*ClusterBackupNodeArtifact `protobuf:"bytes,8,rep,name=nodes,proto3" json:"nodes,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ClusterBackupSetSummary) Reset() {
+	*x = ClusterBackupSetSummary{}
+	mi := &file_mycel_admin_v1_backup_proto_msgTypes[26]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ClusterBackupSetSummary) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ClusterBackupSetSummary) ProtoMessage() {}
+
+func (x *ClusterBackupSetSummary) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_admin_v1_backup_proto_msgTypes[26]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ClusterBackupSetSummary.ProtoReflect.Descriptor instead.
+func (*ClusterBackupSetSummary) Descriptor() ([]byte, []int) {
+	return file_mycel_admin_v1_backup_proto_rawDescGZIP(), []int{26}
+}
+
+func (x *ClusterBackupSetSummary) GetBackupSetId() string {
+	if x != nil {
+		return x.BackupSetId
+	}
+	return ""
+}
+
+func (x *ClusterBackupSetSummary) GetState() string {
+	if x != nil {
+		return x.State
+	}
+	return ""
+}
+
+func (x *ClusterBackupSetSummary) GetClusterId() string {
+	if x != nil {
+		return x.ClusterId
+	}
+	return ""
+}
+
+func (x *ClusterBackupSetSummary) GetCreatedAt() string {
+	if x != nil {
+		return x.CreatedAt
+	}
+	return ""
+}
+
+func (x *ClusterBackupSetSummary) GetCompletedAt() string {
+	if x != nil {
+		return x.CompletedAt
+	}
+	return ""
+}
+
+func (x *ClusterBackupSetSummary) GetExpectedNodes() int32 {
+	if x != nil {
+		return x.ExpectedNodes
+	}
+	return 0
+}
+
+func (x *ClusterBackupSetSummary) GetManifestUri() string {
+	if x != nil {
+		return x.ManifestUri
+	}
+	return ""
+}
+
+func (x *ClusterBackupSetSummary) GetNodes() []*ClusterBackupNodeArtifact {
+	if x != nil {
+		return x.Nodes
+	}
+	return nil
+}
+
+type ClusterBackupNodeArtifact struct {
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	PodName        string                 `protobuf:"bytes,1,opt,name=pod_name,json=podName,proto3" json:"pod_name,omitempty"`
+	NodeId         string                 `protobuf:"bytes,2,opt,name=node_id,json=nodeId,proto3" json:"node_id,omitempty"`
+	Ordinal        int32                  `protobuf:"varint,3,opt,name=ordinal,proto3" json:"ordinal,omitempty"`
+	RaftNodeId     uint64                 `protobuf:"varint,4,opt,name=raft_node_id,json=raftNodeId,proto3" json:"raft_node_id,omitempty"`
+	ArchiveName    string                 `protobuf:"bytes,5,opt,name=archive_name,json=archiveName,proto3" json:"archive_name,omitempty"`
+	ArchiveUri     string                 `protobuf:"bytes,6,opt,name=archive_uri,json=archiveUri,proto3" json:"archive_uri,omitempty"`
+	ManifestName   string                 `protobuf:"bytes,7,opt,name=manifest_name,json=manifestName,proto3" json:"manifest_name,omitempty"`
+	ManifestUri    string                 `protobuf:"bytes,8,opt,name=manifest_uri,json=manifestUri,proto3" json:"manifest_uri,omitempty"`
+	SizeBytes      int64                  `protobuf:"varint,9,opt,name=size_bytes,json=sizeBytes,proto3" json:"size_bytes,omitempty"`
+	ChecksumSha256 string                 `protobuf:"bytes,10,opt,name=checksum_sha256,json=checksumSha256,proto3" json:"checksum_sha256,omitempty"`
+	AppliedIndexes map[string]uint64      `protobuf:"bytes,11,rep,name=applied_indexes,json=appliedIndexes,proto3" json:"applied_indexes,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"varint,2,opt,name=value"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
+}
+
+func (x *ClusterBackupNodeArtifact) Reset() {
+	*x = ClusterBackupNodeArtifact{}
+	mi := &file_mycel_admin_v1_backup_proto_msgTypes[27]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ClusterBackupNodeArtifact) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ClusterBackupNodeArtifact) ProtoMessage() {}
+
+func (x *ClusterBackupNodeArtifact) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_admin_v1_backup_proto_msgTypes[27]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ClusterBackupNodeArtifact.ProtoReflect.Descriptor instead.
+func (*ClusterBackupNodeArtifact) Descriptor() ([]byte, []int) {
+	return file_mycel_admin_v1_backup_proto_rawDescGZIP(), []int{27}
+}
+
+func (x *ClusterBackupNodeArtifact) GetPodName() string {
+	if x != nil {
+		return x.PodName
+	}
+	return ""
+}
+
+func (x *ClusterBackupNodeArtifact) GetNodeId() string {
+	if x != nil {
+		return x.NodeId
+	}
+	return ""
+}
+
+func (x *ClusterBackupNodeArtifact) GetOrdinal() int32 {
+	if x != nil {
+		return x.Ordinal
+	}
+	return 0
+}
+
+func (x *ClusterBackupNodeArtifact) GetRaftNodeId() uint64 {
+	if x != nil {
+		return x.RaftNodeId
+	}
+	return 0
+}
+
+func (x *ClusterBackupNodeArtifact) GetArchiveName() string {
+	if x != nil {
+		return x.ArchiveName
+	}
+	return ""
+}
+
+func (x *ClusterBackupNodeArtifact) GetArchiveUri() string {
+	if x != nil {
+		return x.ArchiveUri
+	}
+	return ""
+}
+
+func (x *ClusterBackupNodeArtifact) GetManifestName() string {
+	if x != nil {
+		return x.ManifestName
+	}
+	return ""
+}
+
+func (x *ClusterBackupNodeArtifact) GetManifestUri() string {
+	if x != nil {
+		return x.ManifestUri
+	}
+	return ""
+}
+
+func (x *ClusterBackupNodeArtifact) GetSizeBytes() int64 {
+	if x != nil {
+		return x.SizeBytes
+	}
+	return 0
+}
+
+func (x *ClusterBackupNodeArtifact) GetChecksumSha256() string {
+	if x != nil {
+		return x.ChecksumSha256
+	}
+	return ""
+}
+
+func (x *ClusterBackupNodeArtifact) GetAppliedIndexes() map[string]uint64 {
+	if x != nil {
+		return x.AppliedIndexes
+	}
+	return nil
+}
+
 var File_mycel_admin_v1_backup_proto protoreflect.FileDescriptor
 
 const file_mycel_admin_v1_backup_proto_rawDesc = "" +
@@ -1265,20 +2037,103 @@ const file_mycel_admin_v1_backup_proto_rawDesc = "" +
 	"\x13DeleteBackupRequest\x12\x1b\n" +
 	"\tbackup_id\x18\x01 \x01(\tR\bbackupId\"3\n" +
 	"\x14DeleteBackupResponse\x12\x1b\n" +
-	"\tbackup_id\x18\x01 \x01(\tR\bbackupId*\xbf\x01\n" +
+	"\tbackup_id\x18\x01 \x01(\tR\bbackupId\"\xa0\x01\n" +
+	"\x1bTriggerClusterBackupRequest\x12\x16\n" +
+	"\x06reason\x18\x01 \x01(\tR\x06reason\x12\x1d\n" +
+	"\n" +
+	"output_dir\x18\x02 \x01(\tR\toutputDir\x12J\n" +
+	"\x0earchive_format\x18\x03 \x01(\x0e2#.mycel.admin.v1.BackupArchiveFormatR\rarchiveFormat\"\xa3\x01\n" +
+	"\x1cTriggerClusterBackupResponse\x12;\n" +
+	"\x06status\x18\x01 \x01(\v2#.mycel.admin.v1.ClusterBackupStatusR\x06status\x12F\n" +
+	"\n" +
+	"backup_set\x18\x02 \x01(\v2'.mycel.admin.v1.ClusterBackupSetSummaryR\tbackupSet\"C\n" +
+	"\x1dGetClusterBackupStatusRequest\x12\"\n" +
+	"\rbackup_set_id\x18\x01 \x01(\tR\vbackupSetId\"]\n" +
+	"\x1eGetClusterBackupStatusResponse\x12;\n" +
+	"\x06status\x18\x01 \x01(\v2#.mycel.admin.v1.ClusterBackupStatusR\x06status\"W\n" +
+	"\x19ListClusterBackupsRequest\x12\x1b\n" +
+	"\tpage_size\x18\x01 \x01(\x05R\bpageSize\x12\x1d\n" +
+	"\n" +
+	"page_token\x18\x02 \x01(\tR\tpageToken\"\x8e\x01\n" +
+	"\x1aListClusterBackupsResponse\x12H\n" +
+	"\vbackup_sets\x18\x01 \x03(\v2'.mycel.admin.v1.ClusterBackupSetSummaryR\n" +
+	"backupSets\x12&\n" +
+	"\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken\"I\n" +
+	"\x1fValidateClusterBackupSetRequest\x12&\n" +
+	"\x0fbackup_set_path\x18\x01 \x01(\tR\rbackupSetPath\"\x98\x01\n" +
+	" ValidateClusterBackupSetResponse\x12\x14\n" +
+	"\x05valid\x18\x01 \x01(\bR\x05valid\x12\x16\n" +
+	"\x06errors\x18\x02 \x03(\tR\x06errors\x12F\n" +
+	"\n" +
+	"backup_set\x18\x03 \x01(\v2'.mycel.admin.v1.ClusterBackupSetSummaryR\tbackupSet\"\xc8\x04\n" +
+	"\x13ClusterBackupStatus\x12\"\n" +
+	"\rbackup_set_id\x18\x01 \x01(\tR\vbackupSetId\x12\x14\n" +
+	"\x05state\x18\x02 \x01(\tR\x05state\x12\x1d\n" +
+	"\n" +
+	"cluster_id\x18\x03 \x01(\tR\tclusterId\x12\x16\n" +
+	"\x06reason\x18\x04 \x01(\tR\x06reason\x12\x1d\n" +
+	"\n" +
+	"created_at\x18\x05 \x01(\tR\tcreatedAt\x12\x1d\n" +
+	"\n" +
+	"updated_at\x18\x06 \x01(\tR\tupdatedAt\x12!\n" +
+	"\fcompleted_at\x18\a \x01(\tR\vcompletedAt\x12%\n" +
+	"\x0eexpected_nodes\x18\b \x01(\x05R\rexpectedNodes\x12!\n" +
+	"\fmanifest_uri\x18\t \x01(\tR\vmanifestUri\x12?\n" +
+	"\x05nodes\x18\n" +
+	" \x03(\v2).mycel.admin.v1.ClusterBackupNodeArtifactR\x05nodes\x12!\n" +
+	"\ffailed_phase\x18\v \x01(\tR\vfailedPhase\x12\x14\n" +
+	"\x05error\x18\f \x01(\tR\x05error\x12Z\n" +
+	"\rraft_barriers\x18\r \x03(\v25.mycel.admin.v1.ClusterBackupStatus.RaftBarriersEntryR\fraftBarriers\x1a?\n" +
+	"\x11RaftBarriersEntry\x12\x10\n" +
+	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
+	"\x05value\x18\x02 \x01(\x04R\x05value:\x028\x01\"\xbf\x02\n" +
+	"\x17ClusterBackupSetSummary\x12\"\n" +
+	"\rbackup_set_id\x18\x01 \x01(\tR\vbackupSetId\x12\x14\n" +
+	"\x05state\x18\x02 \x01(\tR\x05state\x12\x1d\n" +
+	"\n" +
+	"cluster_id\x18\x03 \x01(\tR\tclusterId\x12\x1d\n" +
+	"\n" +
+	"created_at\x18\x04 \x01(\tR\tcreatedAt\x12!\n" +
+	"\fcompleted_at\x18\x05 \x01(\tR\vcompletedAt\x12%\n" +
+	"\x0eexpected_nodes\x18\x06 \x01(\x05R\rexpectedNodes\x12!\n" +
+	"\fmanifest_uri\x18\a \x01(\tR\vmanifestUri\x12?\n" +
+	"\x05nodes\x18\b \x03(\v2).mycel.admin.v1.ClusterBackupNodeArtifactR\x05nodes\"\x8a\x04\n" +
+	"\x19ClusterBackupNodeArtifact\x12\x19\n" +
+	"\bpod_name\x18\x01 \x01(\tR\apodName\x12\x17\n" +
+	"\anode_id\x18\x02 \x01(\tR\x06nodeId\x12\x18\n" +
+	"\aordinal\x18\x03 \x01(\x05R\aordinal\x12 \n" +
+	"\fraft_node_id\x18\x04 \x01(\x04R\n" +
+	"raftNodeId\x12!\n" +
+	"\farchive_name\x18\x05 \x01(\tR\varchiveName\x12\x1f\n" +
+	"\varchive_uri\x18\x06 \x01(\tR\n" +
+	"archiveUri\x12#\n" +
+	"\rmanifest_name\x18\a \x01(\tR\fmanifestName\x12!\n" +
+	"\fmanifest_uri\x18\b \x01(\tR\vmanifestUri\x12\x1d\n" +
+	"\n" +
+	"size_bytes\x18\t \x01(\x03R\tsizeBytes\x12'\n" +
+	"\x0fchecksum_sha256\x18\n" +
+	" \x01(\tR\x0echecksumSha256\x12f\n" +
+	"\x0fapplied_indexes\x18\v \x03(\v2=.mycel.admin.v1.ClusterBackupNodeArtifact.AppliedIndexesEntryR\x0eappliedIndexes\x1aA\n" +
+	"\x13AppliedIndexesEntry\x12\x10\n" +
+	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
+	"\x05value\x18\x02 \x01(\x04R\x05value:\x028\x01*\xbf\x01\n" +
 	"\x13BackupArchiveFormat\x12%\n" +
 	"!BACKUP_ARCHIVE_FORMAT_UNSPECIFIED\x10\x00\x12\x1d\n" +
 	"\x19BACKUP_ARCHIVE_FORMAT_ZIP\x10\x01\x12\x1d\n" +
 	"\x19BACKUP_ARCHIVE_FORMAT_TAR\x10\x02\x12 \n" +
 	"\x1cBACKUP_ARCHIVE_FORMAT_TAR_GZ\x10\x03\x12!\n" +
-	"\x1dBACKUP_ARCHIVE_FORMAT_TAR_ZST\x10\x042\xda\x04\n" +
+	"\x1dBACKUP_ARCHIVE_FORMAT_TAR_ZST\x10\x042\xb2\b\n" +
 	"\x12AdminBackupService\x12b\n" +
 	"\x0fGetBackupPolicy\x12&.mycel.admin.v1.GetBackupPolicyRequest\x1a'.mycel.admin.v1.GetBackupPolicyResponse\x12k\n" +
 	"\x12UpdateBackupPolicy\x12).mycel.admin.v1.UpdateBackupPolicyRequest\x1a*.mycel.admin.v1.UpdateBackupPolicyResponse\x12\\\n" +
 	"\rTriggerBackup\x12$.mycel.admin.v1.TriggerBackupRequest\x1a%.mycel.admin.v1.TriggerBackupResponse\x12b\n" +
 	"\x0fGetBackupStatus\x12&.mycel.admin.v1.GetBackupStatusRequest\x1a'.mycel.admin.v1.GetBackupStatusResponse\x12V\n" +
 	"\vListBackups\x12\".mycel.admin.v1.ListBackupsRequest\x1a#.mycel.admin.v1.ListBackupsResponse\x12Y\n" +
-	"\fDeleteBackup\x12#.mycel.admin.v1.DeleteBackupRequest\x1a$.mycel.admin.v1.DeleteBackupResponseB\xba\x01\n" +
+	"\fDeleteBackup\x12#.mycel.admin.v1.DeleteBackupRequest\x1a$.mycel.admin.v1.DeleteBackupResponse\x12q\n" +
+	"\x14TriggerClusterBackup\x12+.mycel.admin.v1.TriggerClusterBackupRequest\x1a,.mycel.admin.v1.TriggerClusterBackupResponse\x12w\n" +
+	"\x16GetClusterBackupStatus\x12-.mycel.admin.v1.GetClusterBackupStatusRequest\x1a..mycel.admin.v1.GetClusterBackupStatusResponse\x12k\n" +
+	"\x12ListClusterBackups\x12).mycel.admin.v1.ListClusterBackupsRequest\x1a*.mycel.admin.v1.ListClusterBackupsResponse\x12}\n" +
+	"\x18ValidateClusterBackupSet\x12/.mycel.admin.v1.ValidateClusterBackupSetRequest\x1a0.mycel.admin.v1.ValidateClusterBackupSetResponseB\xba\x01\n" +
 	"\x12com.mycel.admin.v1B\vBackupProtoP\x01Z=github.com/myceldb/mycel-go-sdk/gen/go/mycel/admin/v1;adminv1\xa2\x02\x03MAX\xaa\x02\x0eMycel.Admin.V1\xca\x02\x0eMycel\\Admin\\V1\xe2\x02\x1aMycel\\Admin\\V1\\GPBMetadata\xea\x02\x10Mycel::Admin::V1b\x06proto3"
 
 var (
@@ -1294,26 +2149,39 @@ func file_mycel_admin_v1_backup_proto_rawDescGZIP() []byte {
 }
 
 var file_mycel_admin_v1_backup_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
-var file_mycel_admin_v1_backup_proto_msgTypes = make([]protoimpl.MessageInfo, 17)
+var file_mycel_admin_v1_backup_proto_msgTypes = make([]protoimpl.MessageInfo, 30)
 var file_mycel_admin_v1_backup_proto_goTypes = []any{
-	(BackupArchiveFormat)(0),           // 0: mycel.admin.v1.BackupArchiveFormat
-	(*BackupPolicy)(nil),               // 1: mycel.admin.v1.BackupPolicy
-	(*BackupStatus)(nil),               // 2: mycel.admin.v1.BackupStatus
-	(*BackupSummary)(nil),              // 3: mycel.admin.v1.BackupSummary
-	(*QuiesceStatus)(nil),              // 4: mycel.admin.v1.QuiesceStatus
-	(*QuiesceParticipantStatus)(nil),   // 5: mycel.admin.v1.QuiesceParticipantStatus
-	(*GetBackupPolicyRequest)(nil),     // 6: mycel.admin.v1.GetBackupPolicyRequest
-	(*GetBackupPolicyResponse)(nil),    // 7: mycel.admin.v1.GetBackupPolicyResponse
-	(*UpdateBackupPolicyRequest)(nil),  // 8: mycel.admin.v1.UpdateBackupPolicyRequest
-	(*UpdateBackupPolicyResponse)(nil), // 9: mycel.admin.v1.UpdateBackupPolicyResponse
-	(*TriggerBackupRequest)(nil),       // 10: mycel.admin.v1.TriggerBackupRequest
-	(*TriggerBackupResponse)(nil),      // 11: mycel.admin.v1.TriggerBackupResponse
-	(*GetBackupStatusRequest)(nil),     // 12: mycel.admin.v1.GetBackupStatusRequest
-	(*GetBackupStatusResponse)(nil),    // 13: mycel.admin.v1.GetBackupStatusResponse
-	(*ListBackupsRequest)(nil),         // 14: mycel.admin.v1.ListBackupsRequest
-	(*ListBackupsResponse)(nil),        // 15: mycel.admin.v1.ListBackupsResponse
-	(*DeleteBackupRequest)(nil),        // 16: mycel.admin.v1.DeleteBackupRequest
-	(*DeleteBackupResponse)(nil),       // 17: mycel.admin.v1.DeleteBackupResponse
+	(BackupArchiveFormat)(0),                 // 0: mycel.admin.v1.BackupArchiveFormat
+	(*BackupPolicy)(nil),                     // 1: mycel.admin.v1.BackupPolicy
+	(*BackupStatus)(nil),                     // 2: mycel.admin.v1.BackupStatus
+	(*BackupSummary)(nil),                    // 3: mycel.admin.v1.BackupSummary
+	(*QuiesceStatus)(nil),                    // 4: mycel.admin.v1.QuiesceStatus
+	(*QuiesceParticipantStatus)(nil),         // 5: mycel.admin.v1.QuiesceParticipantStatus
+	(*GetBackupPolicyRequest)(nil),           // 6: mycel.admin.v1.GetBackupPolicyRequest
+	(*GetBackupPolicyResponse)(nil),          // 7: mycel.admin.v1.GetBackupPolicyResponse
+	(*UpdateBackupPolicyRequest)(nil),        // 8: mycel.admin.v1.UpdateBackupPolicyRequest
+	(*UpdateBackupPolicyResponse)(nil),       // 9: mycel.admin.v1.UpdateBackupPolicyResponse
+	(*TriggerBackupRequest)(nil),             // 10: mycel.admin.v1.TriggerBackupRequest
+	(*TriggerBackupResponse)(nil),            // 11: mycel.admin.v1.TriggerBackupResponse
+	(*GetBackupStatusRequest)(nil),           // 12: mycel.admin.v1.GetBackupStatusRequest
+	(*GetBackupStatusResponse)(nil),          // 13: mycel.admin.v1.GetBackupStatusResponse
+	(*ListBackupsRequest)(nil),               // 14: mycel.admin.v1.ListBackupsRequest
+	(*ListBackupsResponse)(nil),              // 15: mycel.admin.v1.ListBackupsResponse
+	(*DeleteBackupRequest)(nil),              // 16: mycel.admin.v1.DeleteBackupRequest
+	(*DeleteBackupResponse)(nil),             // 17: mycel.admin.v1.DeleteBackupResponse
+	(*TriggerClusterBackupRequest)(nil),      // 18: mycel.admin.v1.TriggerClusterBackupRequest
+	(*TriggerClusterBackupResponse)(nil),     // 19: mycel.admin.v1.TriggerClusterBackupResponse
+	(*GetClusterBackupStatusRequest)(nil),    // 20: mycel.admin.v1.GetClusterBackupStatusRequest
+	(*GetClusterBackupStatusResponse)(nil),   // 21: mycel.admin.v1.GetClusterBackupStatusResponse
+	(*ListClusterBackupsRequest)(nil),        // 22: mycel.admin.v1.ListClusterBackupsRequest
+	(*ListClusterBackupsResponse)(nil),       // 23: mycel.admin.v1.ListClusterBackupsResponse
+	(*ValidateClusterBackupSetRequest)(nil),  // 24: mycel.admin.v1.ValidateClusterBackupSetRequest
+	(*ValidateClusterBackupSetResponse)(nil), // 25: mycel.admin.v1.ValidateClusterBackupSetResponse
+	(*ClusterBackupStatus)(nil),              // 26: mycel.admin.v1.ClusterBackupStatus
+	(*ClusterBackupSetSummary)(nil),          // 27: mycel.admin.v1.ClusterBackupSetSummary
+	(*ClusterBackupNodeArtifact)(nil),        // 28: mycel.admin.v1.ClusterBackupNodeArtifact
+	nil,                                      // 29: mycel.admin.v1.ClusterBackupStatus.RaftBarriersEntry
+	nil,                                      // 30: mycel.admin.v1.ClusterBackupNodeArtifact.AppliedIndexesEntry
 }
 var file_mycel_admin_v1_backup_proto_depIdxs = []int32{
 	0,  // 0: mycel.admin.v1.BackupPolicy.archive_format:type_name -> mycel.admin.v1.BackupArchiveFormat
@@ -1328,23 +2196,41 @@ var file_mycel_admin_v1_backup_proto_depIdxs = []int32{
 	2,  // 9: mycel.admin.v1.GetBackupStatusResponse.status:type_name -> mycel.admin.v1.BackupStatus
 	4,  // 10: mycel.admin.v1.GetBackupStatusResponse.quiesce:type_name -> mycel.admin.v1.QuiesceStatus
 	3,  // 11: mycel.admin.v1.ListBackupsResponse.backups:type_name -> mycel.admin.v1.BackupSummary
-	6,  // 12: mycel.admin.v1.AdminBackupService.GetBackupPolicy:input_type -> mycel.admin.v1.GetBackupPolicyRequest
-	8,  // 13: mycel.admin.v1.AdminBackupService.UpdateBackupPolicy:input_type -> mycel.admin.v1.UpdateBackupPolicyRequest
-	10, // 14: mycel.admin.v1.AdminBackupService.TriggerBackup:input_type -> mycel.admin.v1.TriggerBackupRequest
-	12, // 15: mycel.admin.v1.AdminBackupService.GetBackupStatus:input_type -> mycel.admin.v1.GetBackupStatusRequest
-	14, // 16: mycel.admin.v1.AdminBackupService.ListBackups:input_type -> mycel.admin.v1.ListBackupsRequest
-	16, // 17: mycel.admin.v1.AdminBackupService.DeleteBackup:input_type -> mycel.admin.v1.DeleteBackupRequest
-	7,  // 18: mycel.admin.v1.AdminBackupService.GetBackupPolicy:output_type -> mycel.admin.v1.GetBackupPolicyResponse
-	9,  // 19: mycel.admin.v1.AdminBackupService.UpdateBackupPolicy:output_type -> mycel.admin.v1.UpdateBackupPolicyResponse
-	11, // 20: mycel.admin.v1.AdminBackupService.TriggerBackup:output_type -> mycel.admin.v1.TriggerBackupResponse
-	13, // 21: mycel.admin.v1.AdminBackupService.GetBackupStatus:output_type -> mycel.admin.v1.GetBackupStatusResponse
-	15, // 22: mycel.admin.v1.AdminBackupService.ListBackups:output_type -> mycel.admin.v1.ListBackupsResponse
-	17, // 23: mycel.admin.v1.AdminBackupService.DeleteBackup:output_type -> mycel.admin.v1.DeleteBackupResponse
-	18, // [18:24] is the sub-list for method output_type
-	12, // [12:18] is the sub-list for method input_type
-	12, // [12:12] is the sub-list for extension type_name
-	12, // [12:12] is the sub-list for extension extendee
-	0,  // [0:12] is the sub-list for field type_name
+	0,  // 12: mycel.admin.v1.TriggerClusterBackupRequest.archive_format:type_name -> mycel.admin.v1.BackupArchiveFormat
+	26, // 13: mycel.admin.v1.TriggerClusterBackupResponse.status:type_name -> mycel.admin.v1.ClusterBackupStatus
+	27, // 14: mycel.admin.v1.TriggerClusterBackupResponse.backup_set:type_name -> mycel.admin.v1.ClusterBackupSetSummary
+	26, // 15: mycel.admin.v1.GetClusterBackupStatusResponse.status:type_name -> mycel.admin.v1.ClusterBackupStatus
+	27, // 16: mycel.admin.v1.ListClusterBackupsResponse.backup_sets:type_name -> mycel.admin.v1.ClusterBackupSetSummary
+	27, // 17: mycel.admin.v1.ValidateClusterBackupSetResponse.backup_set:type_name -> mycel.admin.v1.ClusterBackupSetSummary
+	28, // 18: mycel.admin.v1.ClusterBackupStatus.nodes:type_name -> mycel.admin.v1.ClusterBackupNodeArtifact
+	29, // 19: mycel.admin.v1.ClusterBackupStatus.raft_barriers:type_name -> mycel.admin.v1.ClusterBackupStatus.RaftBarriersEntry
+	28, // 20: mycel.admin.v1.ClusterBackupSetSummary.nodes:type_name -> mycel.admin.v1.ClusterBackupNodeArtifact
+	30, // 21: mycel.admin.v1.ClusterBackupNodeArtifact.applied_indexes:type_name -> mycel.admin.v1.ClusterBackupNodeArtifact.AppliedIndexesEntry
+	6,  // 22: mycel.admin.v1.AdminBackupService.GetBackupPolicy:input_type -> mycel.admin.v1.GetBackupPolicyRequest
+	8,  // 23: mycel.admin.v1.AdminBackupService.UpdateBackupPolicy:input_type -> mycel.admin.v1.UpdateBackupPolicyRequest
+	10, // 24: mycel.admin.v1.AdminBackupService.TriggerBackup:input_type -> mycel.admin.v1.TriggerBackupRequest
+	12, // 25: mycel.admin.v1.AdminBackupService.GetBackupStatus:input_type -> mycel.admin.v1.GetBackupStatusRequest
+	14, // 26: mycel.admin.v1.AdminBackupService.ListBackups:input_type -> mycel.admin.v1.ListBackupsRequest
+	16, // 27: mycel.admin.v1.AdminBackupService.DeleteBackup:input_type -> mycel.admin.v1.DeleteBackupRequest
+	18, // 28: mycel.admin.v1.AdminBackupService.TriggerClusterBackup:input_type -> mycel.admin.v1.TriggerClusterBackupRequest
+	20, // 29: mycel.admin.v1.AdminBackupService.GetClusterBackupStatus:input_type -> mycel.admin.v1.GetClusterBackupStatusRequest
+	22, // 30: mycel.admin.v1.AdminBackupService.ListClusterBackups:input_type -> mycel.admin.v1.ListClusterBackupsRequest
+	24, // 31: mycel.admin.v1.AdminBackupService.ValidateClusterBackupSet:input_type -> mycel.admin.v1.ValidateClusterBackupSetRequest
+	7,  // 32: mycel.admin.v1.AdminBackupService.GetBackupPolicy:output_type -> mycel.admin.v1.GetBackupPolicyResponse
+	9,  // 33: mycel.admin.v1.AdminBackupService.UpdateBackupPolicy:output_type -> mycel.admin.v1.UpdateBackupPolicyResponse
+	11, // 34: mycel.admin.v1.AdminBackupService.TriggerBackup:output_type -> mycel.admin.v1.TriggerBackupResponse
+	13, // 35: mycel.admin.v1.AdminBackupService.GetBackupStatus:output_type -> mycel.admin.v1.GetBackupStatusResponse
+	15, // 36: mycel.admin.v1.AdminBackupService.ListBackups:output_type -> mycel.admin.v1.ListBackupsResponse
+	17, // 37: mycel.admin.v1.AdminBackupService.DeleteBackup:output_type -> mycel.admin.v1.DeleteBackupResponse
+	19, // 38: mycel.admin.v1.AdminBackupService.TriggerClusterBackup:output_type -> mycel.admin.v1.TriggerClusterBackupResponse
+	21, // 39: mycel.admin.v1.AdminBackupService.GetClusterBackupStatus:output_type -> mycel.admin.v1.GetClusterBackupStatusResponse
+	23, // 40: mycel.admin.v1.AdminBackupService.ListClusterBackups:output_type -> mycel.admin.v1.ListClusterBackupsResponse
+	25, // 41: mycel.admin.v1.AdminBackupService.ValidateClusterBackupSet:output_type -> mycel.admin.v1.ValidateClusterBackupSetResponse
+	32, // [32:42] is the sub-list for method output_type
+	22, // [22:32] is the sub-list for method input_type
+	22, // [22:22] is the sub-list for extension type_name
+	22, // [22:22] is the sub-list for extension extendee
+	0,  // [0:22] is the sub-list for field type_name
 }
 
 func init() { file_mycel_admin_v1_backup_proto_init() }
@@ -1358,7 +2244,7 @@ func file_mycel_admin_v1_backup_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_mycel_admin_v1_backup_proto_rawDesc), len(file_mycel_admin_v1_backup_proto_rawDesc)),
 			NumEnums:      1,
-			NumMessages:   17,
+			NumMessages:   30,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

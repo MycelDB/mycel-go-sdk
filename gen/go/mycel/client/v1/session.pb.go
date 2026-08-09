@@ -566,9 +566,14 @@ func (x *CloseSessionResponse) GetSession() *GraphSession {
 }
 
 type BeginTransactionRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	SessionId     string                 `protobuf:"bytes,1,opt,name=session_id,json=sessionId,proto3" json:"session_id,omitempty"`
-	Mode          TransactionMode        `protobuf:"varint,2,opt,name=mode,proto3,enum=mycel.client.v1.TransactionMode" json:"mode,omitempty"`
+	state     protoimpl.MessageState `protogen:"open.v1"`
+	SessionId string                 `protobuf:"bytes,1,opt,name=session_id,json=sessionId,proto3" json:"session_id,omitempty"`
+	Mode      TransactionMode        `protobuf:"varint,2,opt,name=mode,proto3,enum=mycel.client.v1.TransactionMode" json:"mode,omitempty"`
+	// Optional client-generated operation UUID used to correlate committed graph
+	// change events with the logical client write that produced them. If omitted,
+	// the daemon generates one and returns it on GraphTransaction and
+	// TransactionCommit.
+	OperationId   string `protobuf:"bytes,3,opt,name=operation_id,json=operationId,proto3" json:"operation_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -615,6 +620,13 @@ func (x *BeginTransactionRequest) GetMode() TransactionMode {
 		return x.Mode
 	}
 	return TransactionMode_TRANSACTION_MODE_UNSPECIFIED
+}
+
+func (x *BeginTransactionRequest) GetOperationId() string {
+	if x != nil {
+		return x.OperationId
+	}
+	return ""
 }
 
 type BeginTransactionResponse struct {
@@ -1122,10 +1134,12 @@ type GraphTransaction struct {
 	// authoritative for this value. For read-only transactions this is a
 	// freshness floor and diagnostic/cache-validation value, not a pinned
 	// historical snapshot revision.
-	BaseRevision  int64                  `protobuf:"varint,7,opt,name=base_revision,json=baseRevision,proto3" json:"base_revision,omitempty"`
-	CreateTime    *timestamppb.Timestamp `protobuf:"bytes,8,opt,name=create_time,json=createTime,proto3" json:"create_time,omitempty"`
-	LastSeenTime  *timestamppb.Timestamp `protobuf:"bytes,9,opt,name=last_seen_time,json=lastSeenTime,proto3" json:"last_seen_time,omitempty"`
-	ExpireTime    *timestamppb.Timestamp `protobuf:"bytes,10,opt,name=expire_time,json=expireTime,proto3" json:"expire_time,omitempty"`
+	BaseRevision int64                  `protobuf:"varint,7,opt,name=base_revision,json=baseRevision,proto3" json:"base_revision,omitempty"`
+	CreateTime   *timestamppb.Timestamp `protobuf:"bytes,8,opt,name=create_time,json=createTime,proto3" json:"create_time,omitempty"`
+	LastSeenTime *timestamppb.Timestamp `protobuf:"bytes,9,opt,name=last_seen_time,json=lastSeenTime,proto3" json:"last_seen_time,omitempty"`
+	ExpireTime   *timestamppb.Timestamp `protobuf:"bytes,10,opt,name=expire_time,json=expireTime,proto3" json:"expire_time,omitempty"`
+	// Client write correlation UUID associated with this transaction.
+	OperationId   string `protobuf:"bytes,11,opt,name=operation_id,json=operationId,proto3" json:"operation_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1230,6 +1244,13 @@ func (x *GraphTransaction) GetExpireTime() *timestamppb.Timestamp {
 	return nil
 }
 
+func (x *GraphTransaction) GetOperationId() string {
+	if x != nil {
+		return x.OperationId
+	}
+	return ""
+}
+
 // TransactionCommit describes a committed read-write transaction. It is the
 // natural unit for audit records and future replication/oplog streams.
 type TransactionCommit struct {
@@ -1243,8 +1264,10 @@ type TransactionCommit struct {
 	CommittedRevision int64                  `protobuf:"varint,7,opt,name=committed_revision,json=committedRevision,proto3" json:"committed_revision,omitempty"`
 	OperationCount    int32                  `protobuf:"varint,8,opt,name=operation_count,json=operationCount,proto3" json:"operation_count,omitempty"`
 	CommitTime        *timestamppb.Timestamp `protobuf:"bytes,9,opt,name=commit_time,json=commitTime,proto3" json:"commit_time,omitempty"`
-	unknownFields     protoimpl.UnknownFields
-	sizeCache         protoimpl.SizeCache
+	// Client write correlation UUID associated with this commit.
+	OperationId   string `protobuf:"bytes,10,opt,name=operation_id,json=operationId,proto3" json:"operation_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
 func (x *TransactionCommit) Reset() {
@@ -1340,6 +1363,13 @@ func (x *TransactionCommit) GetCommitTime() *timestamppb.Timestamp {
 	return nil
 }
 
+func (x *TransactionCommit) GetOperationId() string {
+	if x != nil {
+		return x.OperationId
+	}
+	return ""
+}
+
 var File_mycel_client_v1_session_proto protoreflect.FileDescriptor
 
 const file_mycel_client_v1_session_proto_rawDesc = "" +
@@ -1366,11 +1396,12 @@ const file_mycel_client_v1_session_proto_rawDesc = "" +
 	"\n" +
 	"session_id\x18\x01 \x01(\tR\tsessionId\"O\n" +
 	"\x14CloseSessionResponse\x127\n" +
-	"\asession\x18\x01 \x01(\v2\x1d.mycel.client.v1.GraphSessionR\asession\"n\n" +
+	"\asession\x18\x01 \x01(\v2\x1d.mycel.client.v1.GraphSessionR\asession\"\x91\x01\n" +
 	"\x17BeginTransactionRequest\x12\x1d\n" +
 	"\n" +
 	"session_id\x18\x01 \x01(\tR\tsessionId\x124\n" +
-	"\x04mode\x18\x02 \x01(\x0e2 .mycel.client.v1.TransactionModeR\x04mode\"_\n" +
+	"\x04mode\x18\x02 \x01(\x0e2 .mycel.client.v1.TransactionModeR\x04mode\x12!\n" +
+	"\foperation_id\x18\x03 \x01(\tR\voperationId\"_\n" +
 	"\x18BeginTransactionResponse\x12C\n" +
 	"\vtransaction\x18\x01 \x01(\v2!.mycel.client.v1.GraphTransactionR\vtransaction\">\n" +
 	"\x15GetTransactionRequest\x12%\n" +
@@ -1399,7 +1430,7 @@ const file_mycel_client_v1_session_proto_rawDesc = "" +
 	"createTime\x12@\n" +
 	"\x0elast_seen_time\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampR\flastSeenTime\x12;\n" +
 	"\vexpire_time\x18\a \x01(\v2\x1a.google.protobuf.TimestampR\n" +
-	"expireTime\"\xe0\x03\n" +
+	"expireTime\"\x83\x04\n" +
 	"\x10GraphTransaction\x12%\n" +
 	"\x0etransaction_id\x18\x01 \x01(\tR\rtransactionId\x12\x1d\n" +
 	"\n" +
@@ -1414,7 +1445,8 @@ const file_mycel_client_v1_session_proto_rawDesc = "" +
 	"\x0elast_seen_time\x18\t \x01(\v2\x1a.google.protobuf.TimestampR\flastSeenTime\x12;\n" +
 	"\vexpire_time\x18\n" +
 	" \x01(\v2\x1a.google.protobuf.TimestampR\n" +
-	"expireTime\"\xe8\x02\n" +
+	"expireTime\x12!\n" +
+	"\foperation_id\x18\v \x01(\tR\voperationId\"\x8b\x03\n" +
 	"\x11TransactionCommit\x12\x1b\n" +
 	"\tcommit_id\x18\x01 \x01(\tR\bcommitId\x12%\n" +
 	"\x0etransaction_id\x18\x02 \x01(\tR\rtransactionId\x12\x1d\n" +
@@ -1426,7 +1458,9 @@ const file_mycel_client_v1_session_proto_rawDesc = "" +
 	"\x12committed_revision\x18\a \x01(\x03R\x11committedRevision\x12'\n" +
 	"\x0foperation_count\x18\b \x01(\x05R\x0eoperationCount\x12;\n" +
 	"\vcommit_time\x18\t \x01(\v2\x1a.google.protobuf.TimestampR\n" +
-	"commitTime*|\n" +
+	"commitTime\x12!\n" +
+	"\foperation_id\x18\n" +
+	" \x01(\tR\voperationId*|\n" +
 	"\fSessionState\x12\x1d\n" +
 	"\x19SESSION_STATE_UNSPECIFIED\x10\x00\x12\x18\n" +
 	"\x14SESSION_STATE_ACTIVE\x10\x01\x12\x18\n" +

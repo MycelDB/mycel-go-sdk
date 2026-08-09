@@ -49,3 +49,27 @@ func (c *AdminClient) DeleteBackup(ctx context.Context, backupID string) (*admin
 	defer cancel()
 	return c.Backup.DeleteBackup(callCtx, &adminv1.DeleteBackupRequest{BackupId: backupID})
 }
+
+func (c *AdminClient) TriggerClusterBackup(ctx context.Context, reason, outputDir string, archiveFormat adminv1.BackupArchiveFormat) (*adminv1.TriggerClusterBackupResponse, error) {
+	callCtx, cancel := c.AuthCallContext(ctx)
+	defer cancel()
+	return c.Backup.TriggerClusterBackup(callCtx, &adminv1.TriggerClusterBackupRequest{Reason: reason, OutputDir: outputDir, ArchiveFormat: archiveFormat})
+}
+
+func (c *AdminClient) GetClusterBackupStatus(ctx context.Context, backupSetID string) (*adminv1.GetClusterBackupStatusResponse, error) {
+	callCtx, cancel := c.AuthCallContext(ctx)
+	defer cancel()
+	return c.Backup.GetClusterBackupStatus(callCtx, &adminv1.GetClusterBackupStatusRequest{BackupSetId: backupSetID})
+}
+
+func (c *AdminClient) ListClusterBackups(ctx context.Context, pageSize int32, pageToken string) (*adminv1.ListClusterBackupsResponse, error) {
+	callCtx, cancel := c.AuthCallContext(ctx)
+	defer cancel()
+	return c.Backup.ListClusterBackups(callCtx, &adminv1.ListClusterBackupsRequest{PageSize: pageSize, PageToken: pageToken})
+}
+
+func (c *AdminClient) ValidateClusterBackupSet(ctx context.Context, backupSetPath string) (*adminv1.ValidateClusterBackupSetResponse, error) {
+	callCtx, cancel := c.AuthCallContext(ctx)
+	defer cancel()
+	return c.Backup.ValidateClusterBackupSet(callCtx, &adminv1.ValidateClusterBackupSetRequest{BackupSetPath: backupSetPath})
+}
