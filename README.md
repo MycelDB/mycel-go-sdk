@@ -28,7 +28,7 @@ Generated code is committed under `gen/go/` so tagged Go module releases are sel
 
 ## Generate protobuf stubs
 
-The committed stubs on release branches are generated from the matching `mycel-api` release tag. This `add_callbacks` branch is generated from `mycel-api/add_callbacks`.
+The committed stubs on release branches are generated from the matching `mycel-api` release tag. The current `develop` branch is aligned with `mycel-api` `v0.7.0`.
 
 By default generation reads protobufs from a sibling checkout:
 
@@ -36,7 +36,7 @@ By default generation reads protobufs from a sibling checkout:
 ../mycel-api/api/proto
 ```
 
-For release-aligned regeneration, check out `mycel-api` at the matching release tag. For this branch, check out `mycel-api/add_callbacks`, then run:
+For release-aligned regeneration, check out `mycel-api` at the matching release tag, then run:
 
 ```sh
 make generate
