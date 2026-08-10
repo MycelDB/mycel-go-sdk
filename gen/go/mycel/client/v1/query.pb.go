@@ -918,6 +918,13 @@ type QueryDiagnostics struct {
 	NextCursorKind      string                 `protobuf:"bytes,8,opt,name=next_cursor_kind,json=nextCursorKind,proto3" json:"next_cursor_kind,omitempty"`
 	RejectedReason      string                 `protobuf:"bytes,9,opt,name=rejected_reason,json=rejectedReason,proto3" json:"rejected_reason,omitempty"`
 	RequiredIndex       string                 `protobuf:"bytes,10,opt,name=required_index,json=requiredIndex,proto3" json:"required_index,omitempty"`
+	RootCount           int32                  `protobuf:"varint,11,opt,name=root_count,json=rootCount,proto3" json:"root_count,omitempty"`
+	Truncated           bool                   `protobuf:"varint,12,opt,name=truncated,proto3" json:"truncated,omitempty"`
+	TruncationReason    string                 `protobuf:"bytes,13,opt,name=truncation_reason,json=truncationReason,proto3" json:"truncation_reason,omitempty"`
+	RootScanMillis      int64                  `protobuf:"varint,14,opt,name=root_scan_millis,json=rootScanMillis,proto3" json:"root_scan_millis,omitempty"`
+	ExpansionMillis     int64                  `protobuf:"varint,15,opt,name=expansion_millis,json=expansionMillis,proto3" json:"expansion_millis,omitempty"`
+	AdjacencyScanCalls  int32                  `protobuf:"varint,16,opt,name=adjacency_scan_calls,json=adjacencyScanCalls,proto3" json:"adjacency_scan_calls,omitempty"`
+	NodeReadCalls       int32                  `protobuf:"varint,17,opt,name=node_read_calls,json=nodeReadCalls,proto3" json:"node_read_calls,omitempty"`
 	unknownFields       protoimpl.UnknownFields
 	sizeCache           protoimpl.SizeCache
 }
@@ -1022,15 +1029,70 @@ func (x *QueryDiagnostics) GetRequiredIndex() string {
 	return ""
 }
 
+func (x *QueryDiagnostics) GetRootCount() int32 {
+	if x != nil {
+		return x.RootCount
+	}
+	return 0
+}
+
+func (x *QueryDiagnostics) GetTruncated() bool {
+	if x != nil {
+		return x.Truncated
+	}
+	return false
+}
+
+func (x *QueryDiagnostics) GetTruncationReason() string {
+	if x != nil {
+		return x.TruncationReason
+	}
+	return ""
+}
+
+func (x *QueryDiagnostics) GetRootScanMillis() int64 {
+	if x != nil {
+		return x.RootScanMillis
+	}
+	return 0
+}
+
+func (x *QueryDiagnostics) GetExpansionMillis() int64 {
+	if x != nil {
+		return x.ExpansionMillis
+	}
+	return 0
+}
+
+func (x *QueryDiagnostics) GetAdjacencyScanCalls() int32 {
+	if x != nil {
+		return x.AdjacencyScanCalls
+	}
+	return 0
+}
+
+func (x *QueryDiagnostics) GetNodeReadCalls() int32 {
+	if x != nil {
+		return x.NodeReadCalls
+	}
+	return 0
+}
+
 type GraphQuery struct {
 	state   protoimpl.MessageState `protogen:"open.v1"`
 	Match   *GraphPattern          `protobuf:"bytes,1,opt,name=match,proto3" json:"match,omitempty"`
 	Where   *Expr                  `protobuf:"bytes,2,opt,name=where,proto3,oneof" json:"where,omitempty"`
 	Returns []*ReturnProjection    `protobuf:"bytes,3,rep,name=returns,proto3" json:"returns,omitempty"`
 	OrderBy []*OrderSpec           `protobuf:"bytes,4,rep,name=order_by,json=orderBy,proto3" json:"order_by,omitempty"`
-	// Optional row limit. A value of 0 means no explicit query-level limit; daemon
-	// policy may still impose limits.
-	Limit         int32 `protobuf:"varint,5,opt,name=limit,proto3" json:"limit,omitempty"`
+	// Optional row/root limit. A value of 0 means no explicit query-level limit;
+	// daemon policy may still impose limits. For indexed-root subtree plans this
+	// limit applies to root nodes before traversal expansion.
+	Limit int32 `protobuf:"varint,5,opt,name=limit,proto3" json:"limit,omitempty"`
+	// Optional safety caps for traversal/result graph expansion. A value of 0
+	// uses daemon defaults. If a cap is hit, the response diagnostics mark the
+	// result as truncated rather than falling back to a broad scan.
+	MaxNodes      int32 `protobuf:"varint,6,opt,name=max_nodes,json=maxNodes,proto3" json:"max_nodes,omitempty"`
+	MaxEdges      int32 `protobuf:"varint,7,opt,name=max_edges,json=maxEdges,proto3" json:"max_edges,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1096,6 +1158,20 @@ func (x *GraphQuery) GetOrderBy() []*OrderSpec {
 func (x *GraphQuery) GetLimit() int32 {
 	if x != nil {
 		return x.Limit
+	}
+	return 0
+}
+
+func (x *GraphQuery) GetMaxNodes() int32 {
+	if x != nil {
+		return x.MaxNodes
+	}
+	return 0
+}
+
+func (x *GraphQuery) GetMaxEdges() int32 {
+	if x != nil {
+		return x.MaxEdges
 	}
 	return 0
 }
@@ -2565,7 +2641,7 @@ const file_mycel_client_v1_query_proto_rawDesc = "" +
 	"\rnodes_updated\x18\x03 \x01(\x05R\fnodesUpdated\x12#\n" +
 	"\rnodes_deleted\x18\x04 \x01(\x05R\fnodesDeleted\x12%\n" +
 	"\x0eedges_inserted\x18\x05 \x01(\x05R\redgesInserted\x12#\n" +
-	"\redges_deleted\x18\x06 \x01(\x05R\fedgesDeleted\"\xf6\x02\n" +
+	"\redges_deleted\x18\x06 \x01(\x05R\fedgesDeleted\"\x8f\x05\n" +
 	"\x10QueryDiagnostics\x12\x12\n" +
 	"\x04plan\x18\x01 \x01(\tR\x04plan\x12\x18\n" +
 	"\aindexes\x18\x02 \x03(\tR\aindexes\x12\x1b\n" +
@@ -2577,14 +2653,24 @@ const file_mycel_client_v1_query_proto_rawDesc = "" +
 	"\x10next_cursor_kind\x18\b \x01(\tR\x0enextCursorKind\x12'\n" +
 	"\x0frejected_reason\x18\t \x01(\tR\x0erejectedReason\x12%\n" +
 	"\x0erequired_index\x18\n" +
-	" \x01(\tR\rrequiredIndex\"\x87\x02\n" +
+	" \x01(\tR\rrequiredIndex\x12\x1d\n" +
+	"\n" +
+	"root_count\x18\v \x01(\x05R\trootCount\x12\x1c\n" +
+	"\ttruncated\x18\f \x01(\bR\ttruncated\x12+\n" +
+	"\x11truncation_reason\x18\r \x01(\tR\x10truncationReason\x12(\n" +
+	"\x10root_scan_millis\x18\x0e \x01(\x03R\x0erootScanMillis\x12)\n" +
+	"\x10expansion_millis\x18\x0f \x01(\x03R\x0fexpansionMillis\x120\n" +
+	"\x14adjacency_scan_calls\x18\x10 \x01(\x05R\x12adjacencyScanCalls\x12&\n" +
+	"\x0fnode_read_calls\x18\x11 \x01(\x05R\rnodeReadCalls\"\xc1\x02\n" +
 	"\n" +
 	"GraphQuery\x123\n" +
 	"\x05match\x18\x01 \x01(\v2\x1d.mycel.client.v1.GraphPatternR\x05match\x120\n" +
 	"\x05where\x18\x02 \x01(\v2\x15.mycel.client.v1.ExprH\x00R\x05where\x88\x01\x01\x12;\n" +
 	"\areturns\x18\x03 \x03(\v2!.mycel.client.v1.ReturnProjectionR\areturns\x125\n" +
 	"\border_by\x18\x04 \x03(\v2\x1a.mycel.client.v1.OrderSpecR\aorderBy\x12\x14\n" +
-	"\x05limit\x18\x05 \x01(\x05R\x05limitB\b\n" +
+	"\x05limit\x18\x05 \x01(\x05R\x05limit\x12\x1b\n" +
+	"\tmax_nodes\x18\x06 \x01(\x05R\bmaxNodes\x12\x1b\n" +
+	"\tmax_edges\x18\a \x01(\x05R\bmaxEdgesB\b\n" +
 	"\x06_where\"x\n" +
 	"\fGraphPattern\x122\n" +
 	"\x05start\x18\x01 \x01(\v2\x1c.mycel.client.v1.NodePatternR\x05start\x124\n" +
