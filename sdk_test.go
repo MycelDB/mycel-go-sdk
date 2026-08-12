@@ -217,14 +217,14 @@ func TestClientRefreshUsesStoredRefreshTokenAndRotatesState(t *testing.T) {
 	}
 }
 
-func TestAdminRefreshPrincipalUsesStoredRefreshTokenAndRotatesState(t *testing.T) {
+func TestAdminRefreshUsesStoredRefreshTokenAndRotatesState(t *testing.T) {
 	expire := time.Now().Add(time.Hour).UTC()
 	auth := &fakeAdminAuth{refreshResponse: &commonv1.RefreshResponse{AccessToken: "admin-access-2", AccessTokenExpireTime: timestamppb.New(expire), RefreshToken: ptr("admin-refresh-2")}}
 	c := &AdminClient{Auth: auth, tokens: newTokenSource("admin-access-1")}
 	c.SetRefreshToken("admin-refresh-1")
-	res, err := c.RefreshPrincipal(context.Background(), "")
+	res, err := c.Refresh(context.Background(), "")
 	if err != nil {
-		t.Fatalf("RefreshPrincipal() error = %v", err)
+		t.Fatalf("Refresh() error = %v", err)
 	}
 	if res.GetAccessToken() != "admin-access-2" || c.AccessToken() != "admin-access-2" || c.RefreshToken() != "admin-refresh-2" || !c.AccessTokenExpireTime().Equal(expire) {
 		t.Fatalf("unexpected refreshed admin state token=%q refresh=%q expire=%s res=%#v", c.AccessToken(), c.RefreshToken(), c.AccessTokenExpireTime(), res)
@@ -234,12 +234,12 @@ func TestAdminRefreshPrincipalUsesStoredRefreshTokenAndRotatesState(t *testing.T
 	}
 }
 
-func TestAdminLogoutPrincipalClearsCurrentAuthState(t *testing.T) {
+func TestAdminLogoutClearsCurrentAuthState(t *testing.T) {
 	auth := &fakeAdminAuth{logoutResponse: &commonv1.LogoutResponse{}}
 	c := &AdminClient{Auth: auth, tokens: newTokenSource("admin-access")}
 	c.SetRefreshToken("admin-refresh")
-	if _, err := c.LogoutPrincipal(context.Background(), ""); err != nil {
-		t.Fatalf("LogoutPrincipal() error = %v", err)
+	if _, err := c.Logout(context.Background(), ""); err != nil {
+		t.Fatalf("Logout() error = %v", err)
 	}
 	if c.AccessToken() != "" || c.RefreshToken() != "" {
 		t.Fatalf("expected auth state cleared, got access=%q refresh=%q", c.AccessToken(), c.RefreshToken())

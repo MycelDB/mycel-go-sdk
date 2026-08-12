@@ -102,7 +102,7 @@ func DialAdmin(ctx context.Context, cfg Config, opts ...grpc.DialOption) (*Admin
 	c.Schema = adminv1.NewAdminSchemaServiceClient(conn)
 	c.Automation = adminv1.NewAdminAutomationServiceClient(conn)
 	if cfg.Username != "" || cfg.Password != "" {
-		if _, err := c.LoginPrincipal(ctx, cfg.Username, cfg.Password); err != nil {
+		if _, err := c.Login(ctx, cfg.Username, cfg.Password); err != nil {
 			_ = conn.Close()
 			return nil, err
 		}

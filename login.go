@@ -116,7 +116,7 @@ func (c *Client) clientInfo() *commonv1.ClientInfo {
 	return &commonv1.ClientInfo{Name: firstNonEmpty(c.cfg.ClientName, "mycel-go-sdk"), Version: c.cfg.ClientVersion, Platform: firstNonEmpty(c.cfg.Platform, "go"), DeviceLabel: c.cfg.DeviceLabel}
 }
 
-func (c *AdminClient) LoginPrincipal(ctx context.Context, username, password string) (*commonv1.LoginResponse, error) {
+func (c *AdminClient) Login(ctx context.Context, username, password string) (*commonv1.LoginResponse, error) {
 	callCtx, cancel := c.CallContext(ctx)
 	defer cancel()
 	res, err := c.Auth.Login(callCtx, &commonv1.LoginRequest{Username: username, Password: password, Client: c.adminClientInfo()})
@@ -127,7 +127,7 @@ func (c *AdminClient) LoginPrincipal(ctx context.Context, username, password str
 	return res, nil
 }
 
-func (c *AdminClient) RefreshPrincipal(ctx context.Context, refreshToken string) (*commonv1.RefreshResponse, error) {
+func (c *AdminClient) Refresh(ctx context.Context, refreshToken string) (*commonv1.RefreshResponse, error) {
 	callCtx, cancel := c.AuthCallContext(ctx)
 	defer cancel()
 	if refreshToken == "" {
@@ -145,7 +145,7 @@ func (c *AdminClient) RefreshPrincipal(ctx context.Context, refreshToken string)
 	return res, nil
 }
 
-func (c *AdminClient) LogoutPrincipal(ctx context.Context, authSessionID string) (*commonv1.LogoutResponse, error) {
+func (c *AdminClient) Logout(ctx context.Context, authSessionID string) (*commonv1.LogoutResponse, error) {
 	callCtx, cancel := c.AuthCallContext(ctx)
 	defer cancel()
 	req := &commonv1.LogoutRequest{}
@@ -163,7 +163,7 @@ func (c *AdminClient) LogoutPrincipal(ctx context.Context, authSessionID string)
 }
 
 func (c *AdminClient) refreshWithStoredToken(ctx context.Context) error {
-	_, err := c.RefreshPrincipal(ctx, "")
+	_, err := c.Refresh(ctx, "")
 	return err
 }
 
