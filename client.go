@@ -6,13 +6,14 @@ import (
 
 	adminv1 "github.com/myceldb/mycel-go-sdk/gen/go/mycel/admin/v1"
 	clientv1 "github.com/myceldb/mycel-go-sdk/gen/go/mycel/client/v1"
+	commonv1 "github.com/myceldb/mycel-go-sdk/gen/go/mycel/common/v1"
 	"google.golang.org/grpc"
 )
 
 type Client struct {
 	Conn *grpc.ClientConn
 
-	Auth         clientv1.AuthServiceClient
+	Auth         commonv1.AuthServiceClient
 	Space        clientv1.SpaceServiceClient
 	Domain       clientv1.DomainServiceClient
 	Session      clientv1.SessionServiceClient
@@ -34,9 +35,8 @@ type Client struct {
 type AdminClient struct {
 	Conn *grpc.ClientConn
 
-	Auth                adminv1.AdminAuthServiceClient
-	Operators           adminv1.AdminOperatorServiceClient
-	Users               adminv1.AdminUserServiceClient
+	Auth                commonv1.AuthServiceClient
+	Principals          adminv1.AdminPrincipalServiceClient
 	Spaces              adminv1.AdminSpaceServiceClient
 	Domains             adminv1.AdminDomainServiceClient
 	Semantic            adminv1.AdminSemanticServiceClient
@@ -59,7 +59,7 @@ func Dial(ctx context.Context, cfg Config, opts ...grpc.DialOption) (*Client, er
 	}
 	c := &Client{Conn: conn, tokens: tokens, cfg: cfg}
 	tokens.SetRefresher(c.refreshWithStoredToken)
-	c.Auth = clientv1.NewAuthServiceClient(conn)
+	c.Auth = commonv1.NewAuthServiceClient(conn)
 	c.Space = clientv1.NewSpaceServiceClient(conn)
 	c.Domain = clientv1.NewDomainServiceClient(conn)
 	c.Session = clientv1.NewSessionServiceClient(conn)
@@ -90,9 +90,8 @@ func DialAdmin(ctx context.Context, cfg Config, opts ...grpc.DialOption) (*Admin
 	}
 	c := &AdminClient{Conn: conn, tokens: tokens, cfg: cfg}
 	tokens.SetRefresher(c.refreshWithStoredToken)
-	c.Auth = adminv1.NewAdminAuthServiceClient(conn)
-	c.Operators = adminv1.NewAdminOperatorServiceClient(conn)
-	c.Users = adminv1.NewAdminUserServiceClient(conn)
+	c.Auth = commonv1.NewAuthServiceClient(conn)
+	c.Principals = adminv1.NewAdminPrincipalServiceClient(conn)
 	c.Spaces = adminv1.NewAdminSpaceServiceClient(conn)
 	c.Domains = adminv1.NewAdminDomainServiceClient(conn)
 	c.Semantic = adminv1.NewAdminSemanticServiceClient(conn)
@@ -103,7 +102,7 @@ func DialAdmin(ctx context.Context, cfg Config, opts ...grpc.DialOption) (*Admin
 	c.Schema = adminv1.NewAdminSchemaServiceClient(conn)
 	c.Automation = adminv1.NewAdminAutomationServiceClient(conn)
 	if cfg.Username != "" || cfg.Password != "" {
-		if _, err := c.LoginOperator(ctx, cfg.Username, cfg.Password); err != nil {
+		if _, err := c.LoginPrincipal(ctx, cfg.Username, cfg.Password); err != nil {
 			_ = conn.Close()
 			return nil, err
 		}

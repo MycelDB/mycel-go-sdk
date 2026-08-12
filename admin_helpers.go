@@ -10,7 +10,6 @@ import (
 	commonv1 "github.com/myceldb/mycel-go-sdk/gen/go/mycel/common/v1"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
-	"google.golang.org/protobuf/proto"
 )
 
 type OperatorInfo struct {
@@ -19,8 +18,9 @@ type OperatorInfo struct {
 }
 
 type PrincipalInfo struct {
-	UserID   string
-	Username string
+	UserID      string
+	PrincipalID string
+	Username    string
 }
 
 type UserInfo struct {
@@ -44,10 +44,11 @@ type SpaceInfo struct {
 }
 
 type SpaceGrantInfo struct {
-	GrantID string
-	SpaceID string
-	UserID  string
-	Role    string
+	GrantID     string
+	SpaceID     string
+	UserID      string
+	PrincipalID string
+	Role        string
 }
 
 type DomainInfo struct {
@@ -62,22 +63,22 @@ type DomainInfo struct {
 func (c *AdminClient) WhoAmI(ctx context.Context) (*OperatorInfo, error) {
 	callCtx, cancel := c.AuthCallContext(ctx)
 	defer cancel()
-	res, err := c.Auth.WhoAmI(callCtx, &adminv1.WhoAmIRequest{})
+	res, err := c.Auth.WhoAmI(callCtx, &commonv1.WhoAmIRequest{})
 	if err != nil {
 		return nil, err
 	}
-	op := res.GetOperator()
-	return &OperatorInfo{OperatorID: op.GetOperatorId(), Username: op.GetUsername()}, nil
+	principal := res.GetPrincipal()
+	return &OperatorInfo{OperatorID: principal.GetPrincipalId(), Username: principal.GetUsername()}, nil
 }
 
 func (c *AdminClient) FindUser(ctx context.Context, username string) (*UserInfo, error) {
 	callCtx, cancel := c.AuthCallContext(ctx)
 	defer cancel()
-	res, err := c.Users.FindUser(callCtx, &adminv1.FindUserRequest{Username: strings.TrimSpace(username)})
+	res, err := c.Principals.FindPrincipal(callCtx, &adminv1.FindPrincipalRequest{Lookup: &adminv1.FindPrincipalRequest_Username{Username: strings.TrimSpace(username)}})
 	if err != nil {
 		return nil, err
 	}
-	return userInfo(res.GetUser()), nil
+	return userInfo(res.GetPrincipal()), nil
 }
 
 func (c *AdminClient) EnsureUser(ctx context.Context, username, password string) (*UserInfo, error) {
@@ -94,11 +95,11 @@ func (c *AdminClient) EnsureUser(ctx context.Context, username, password string)
 	}
 	callCtx, cancel := c.AuthCallContext(ctx)
 	defer cancel()
-	res, err := c.Users.CreateUser(callCtx, &adminv1.CreateUserRequest{Username: username, Password: proto.String(password)})
+	res, err := c.Principals.CreatePrincipal(callCtx, &adminv1.CreatePrincipalRequest{Username: username, Password: &password, Type: commonv1.PrincipalType_PRINCIPAL_TYPE_HUMAN, LoginEnabled: true})
 	if err != nil {
 		return nil, err
 	}
-	return userInfo(res.GetUser()), nil
+	return userInfo(res.GetPrincipal()), nil
 }
 
 func (c *AdminClient) CreateUserSession(ctx context.Context, userID string) (*UserSessionInfo, error) {
@@ -108,11 +109,11 @@ func (c *AdminClient) CreateUserSession(ctx context.Context, userID string) (*Us
 	}
 	callCtx, cancel := c.AuthCallContext(ctx)
 	defer cancel()
-	res, err := c.Users.CreateUserSession(callCtx, &adminv1.CreateUserSessionRequest{UserId: userID, Client: c.adminClientInfo()})
+	res, err := c.Principals.CreatePrincipalSession(callCtx, &adminv1.CreatePrincipalSessionRequest{PrincipalId: userID, Client: c.adminClientInfo()})
 	if err != nil {
 		return nil, err
 	}
-	user := userInfo(res.GetUser())
+	user := userInfo(res.GetPrincipal())
 	return &UserSessionInfo{UserID: user.UserID, Username: user.Username, AccessToken: res.GetAccessToken(), AccessTokenExpireTime: timestampAsTime(res.GetAccessTokenExpireTime()), RefreshToken: res.GetRefreshToken(), AuthSessionID: res.GetAuthSessionId()}, nil
 }
 
@@ -143,7 +144,7 @@ func (c *AdminClient) RevokeUserSession(ctx context.Context, userID, authSession
 	}
 	callCtx, cancel := c.AuthCallContext(ctx)
 	defer cancel()
-	_, err := c.Users.RevokeUserSession(callCtx, &adminv1.RevokeUserSessionRequest{UserId: userID, AuthSessionId: authSessionID})
+	_, err := c.Principals.RevokePrincipalSession(callCtx, &adminv1.RevokePrincipalSessionRequest{PrincipalId: userID, AuthSessionId: authSessionID})
 	return err
 }
 
@@ -210,14 +211,18 @@ func (c *AdminClient) EnsureSpace(ctx context.Context, name, ownerUsername, defa
 }
 
 func (c *AdminClient) GrantSpaceUser(ctx context.Context, spaceID, userID, role string) (*SpaceGrantInfo, error) {
+	return c.GrantSpacePrincipal(ctx, spaceID, userID, role)
+}
+
+func (c *AdminClient) GrantSpacePrincipal(ctx context.Context, spaceID, principalID, role string) (*SpaceGrantInfo, error) {
 	spaceID = strings.TrimSpace(spaceID)
-	userID = strings.TrimSpace(userID)
-	if spaceID == "" || userID == "" {
-		return nil, fmt.Errorf("space id and user id are required")
+	principalID = strings.TrimSpace(principalID)
+	if spaceID == "" || principalID == "" {
+		return nil, fmt.Errorf("space id and principal id are required")
 	}
 	callCtx, cancel := c.AuthCallContext(ctx)
 	defer cancel()
-	res, err := c.Spaces.GrantSpaceUser(callCtx, &adminv1.GrantSpaceUserRequest{SpaceId: spaceID, UserId: userID, Role: sdkSpaceRole(role)})
+	res, err := c.Spaces.GrantSpacePrincipal(callCtx, &adminv1.GrantSpacePrincipalRequest{SpaceId: spaceID, PrincipalId: principalID, Role: sdkSpaceRole(role)})
 	if err != nil {
 		return nil, err
 	}
@@ -267,12 +272,13 @@ func spaceGrantInfo(grant *commonv1.AccessGrant) *SpaceGrantInfo {
 	if grant.GetScope() != nil {
 		spaceID = grant.GetScope().GetSpaceId()
 	}
-	return &SpaceGrantInfo{GrantID: grant.GetAccessGrantId(), SpaceID: spaceID, UserID: grant.GetPrincipal().GetId(), Role: role}
+	principalID := grant.GetPrincipal().GetId()
+	return &SpaceGrantInfo{GrantID: grant.GetAccessGrantId(), SpaceID: spaceID, UserID: principalID, PrincipalID: principalID, Role: role}
 }
 
-func userInfo(u *adminv1.User) *UserInfo {
-	if u == nil {
+func userInfo(p *adminv1.Principal) *UserInfo {
+	if p == nil {
 		return &UserInfo{}
 	}
-	return &UserInfo{UserID: u.GetUserId(), Username: u.GetUsername(), State: u.GetState().String()}
+	return &UserInfo{UserID: p.GetPrincipalId(), Username: p.GetUsername(), State: p.GetState().String()}
 }

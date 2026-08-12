@@ -18,12 +18,9 @@ const defaultRefreshBefore = 30 * time.Second
 
 func skipAutoRefresh(method string) bool {
 	switch method {
-	case "/mycel.client.v1.AuthService/Login",
-		"/mycel.client.v1.AuthService/Refresh",
-		"/mycel.client.v1.AuthService/Logout",
-		"/mycel.admin.v1.AdminAuthService/LoginOperator",
-		"/mycel.admin.v1.AdminAuthService/RefreshOperator",
-		"/mycel.admin.v1.AdminAuthService/LogoutOperator":
+	case "/mycel.common.v1.AuthService/Login",
+		"/mycel.common.v1.AuthService/Refresh",
+		"/mycel.common.v1.AuthService/Logout":
 		return true
 	default:
 		return false

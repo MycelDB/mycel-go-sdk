@@ -4,15 +4,14 @@ import (
 	"context"
 	"time"
 
-	adminv1 "github.com/myceldb/mycel-go-sdk/gen/go/mycel/admin/v1"
-	clientv1 "github.com/myceldb/mycel-go-sdk/gen/go/mycel/client/v1"
+	commonv1 "github.com/myceldb/mycel-go-sdk/gen/go/mycel/common/v1"
 	"google.golang.org/protobuf/types/known/timestamppb"
 )
 
-func (c *Client) Login(ctx context.Context, username, password string) (*clientv1.LoginResponse, error) {
+func (c *Client) Login(ctx context.Context, username, password string) (*commonv1.LoginResponse, error) {
 	callCtx, cancel := c.CallContext(ctx)
 	defer cancel()
-	res, err := c.Auth.Login(callCtx, &clientv1.LoginRequest{Username: username, Password: password, Client: c.clientInfo()})
+	res, err := c.Auth.Login(callCtx, &commonv1.LoginRequest{Username: username, Password: password, Client: c.clientInfo()})
 	if err != nil {
 		return nil, err
 	}
@@ -20,13 +19,13 @@ func (c *Client) Login(ctx context.Context, username, password string) (*clientv
 	return res, nil
 }
 
-func (c *Client) Refresh(ctx context.Context, refreshToken string) (*clientv1.RefreshResponse, error) {
+func (c *Client) Refresh(ctx context.Context, refreshToken string) (*commonv1.RefreshResponse, error) {
 	callCtx, cancel := c.AuthCallContext(ctx)
 	defer cancel()
 	if refreshToken == "" {
 		refreshToken = c.RefreshToken()
 	}
-	req := &clientv1.RefreshRequest{Client: c.clientInfo()}
+	req := &commonv1.RefreshRequest{Client: c.clientInfo()}
 	if refreshToken != "" {
 		req.RefreshToken = &refreshToken
 	}
@@ -38,10 +37,10 @@ func (c *Client) Refresh(ctx context.Context, refreshToken string) (*clientv1.Re
 	return res, nil
 }
 
-func (c *Client) Logout(ctx context.Context, authSessionID string) (*clientv1.LogoutResponse, error) {
+func (c *Client) Logout(ctx context.Context, authSessionID string) (*commonv1.LogoutResponse, error) {
 	callCtx, cancel := c.AuthCallContext(ctx)
 	defer cancel()
-	req := &clientv1.LogoutRequest{}
+	req := &commonv1.LogoutRequest{}
 	if authSessionID != "" {
 		req.AuthSessionId = &authSessionID
 	}
@@ -110,17 +109,17 @@ func (c *Client) AuthContext(ctx context.Context) context.Context {
 	return c.tokens.Context(ctx)
 }
 
-func (c *Client) clientInfo() *clientv1.ClientInfo {
+func (c *Client) clientInfo() *commonv1.ClientInfo {
 	if c == nil {
-		return &clientv1.ClientInfo{Name: "mycel-go-sdk", Platform: "go"}
+		return &commonv1.ClientInfo{Name: "mycel-go-sdk", Platform: "go"}
 	}
-	return &clientv1.ClientInfo{Name: firstNonEmpty(c.cfg.ClientName, "mycel-go-sdk"), Version: c.cfg.ClientVersion, Platform: firstNonEmpty(c.cfg.Platform, "go"), DeviceLabel: c.cfg.DeviceLabel}
+	return &commonv1.ClientInfo{Name: firstNonEmpty(c.cfg.ClientName, "mycel-go-sdk"), Version: c.cfg.ClientVersion, Platform: firstNonEmpty(c.cfg.Platform, "go"), DeviceLabel: c.cfg.DeviceLabel}
 }
 
-func (c *AdminClient) LoginOperator(ctx context.Context, username, password string) (*adminv1.LoginOperatorResponse, error) {
+func (c *AdminClient) LoginPrincipal(ctx context.Context, username, password string) (*commonv1.LoginResponse, error) {
 	callCtx, cancel := c.CallContext(ctx)
 	defer cancel()
-	res, err := c.Auth.LoginOperator(callCtx, &adminv1.LoginOperatorRequest{Username: username, Password: password, Client: c.operatorClientInfo()})
+	res, err := c.Auth.Login(callCtx, &commonv1.LoginRequest{Username: username, Password: password, Client: c.adminClientInfo()})
 	if err != nil {
 		return nil, err
 	}
@@ -128,17 +127,17 @@ func (c *AdminClient) LoginOperator(ctx context.Context, username, password stri
 	return res, nil
 }
 
-func (c *AdminClient) RefreshOperator(ctx context.Context, refreshToken string) (*adminv1.RefreshOperatorResponse, error) {
+func (c *AdminClient) RefreshPrincipal(ctx context.Context, refreshToken string) (*commonv1.RefreshResponse, error) {
 	callCtx, cancel := c.AuthCallContext(ctx)
 	defer cancel()
 	if refreshToken == "" {
 		refreshToken = c.RefreshToken()
 	}
-	req := &adminv1.RefreshOperatorRequest{Client: c.operatorClientInfo()}
+	req := &commonv1.RefreshRequest{Client: c.adminClientInfo()}
 	if refreshToken != "" {
 		req.RefreshToken = &refreshToken
 	}
-	res, err := c.Auth.RefreshOperator(callCtx, req)
+	res, err := c.Auth.Refresh(callCtx, req)
 	if err != nil {
 		return nil, err
 	}
@@ -146,14 +145,14 @@ func (c *AdminClient) RefreshOperator(ctx context.Context, refreshToken string) 
 	return res, nil
 }
 
-func (c *AdminClient) LogoutOperator(ctx context.Context, authSessionID string) (*adminv1.LogoutOperatorResponse, error) {
+func (c *AdminClient) LogoutPrincipal(ctx context.Context, authSessionID string) (*commonv1.LogoutResponse, error) {
 	callCtx, cancel := c.AuthCallContext(ctx)
 	defer cancel()
-	req := &adminv1.LogoutOperatorRequest{}
+	req := &commonv1.LogoutRequest{}
 	if authSessionID != "" {
 		req.AuthSessionId = &authSessionID
 	}
-	res, err := c.Auth.LogoutOperator(callCtx, req)
+	res, err := c.Auth.Logout(callCtx, req)
 	if err != nil {
 		return nil, err
 	}
@@ -164,7 +163,7 @@ func (c *AdminClient) LogoutOperator(ctx context.Context, authSessionID string) 
 }
 
 func (c *AdminClient) refreshWithStoredToken(ctx context.Context) error {
-	_, err := c.RefreshOperator(ctx, "")
+	_, err := c.RefreshPrincipal(ctx, "")
 	return err
 }
 
@@ -218,18 +217,11 @@ func (c *AdminClient) AuthContext(ctx context.Context) context.Context {
 	return c.tokens.Context(ctx)
 }
 
-func (c *AdminClient) operatorClientInfo() *adminv1.OperatorClientInfo {
+func (c *AdminClient) adminClientInfo() *commonv1.ClientInfo {
 	if c == nil {
-		return &adminv1.OperatorClientInfo{Name: "mycel-go-sdk", Platform: "go"}
+		return &commonv1.ClientInfo{Name: "mycel-go-sdk", Platform: "go"}
 	}
-	return &adminv1.OperatorClientInfo{Name: firstNonEmpty(c.cfg.ClientName, "mycel-go-sdk"), Version: c.cfg.ClientVersion, Platform: firstNonEmpty(c.cfg.Platform, "go"), DeviceLabel: c.cfg.DeviceLabel}
-}
-
-func (c *AdminClient) adminClientInfo() *adminv1.AdminClientInfo {
-	if c == nil {
-		return &adminv1.AdminClientInfo{Name: "mycel-go-sdk", Platform: "go"}
-	}
-	return &adminv1.AdminClientInfo{Name: firstNonEmpty(c.cfg.ClientName, "mycel-go-sdk"), Version: c.cfg.ClientVersion, Platform: firstNonEmpty(c.cfg.Platform, "go"), DeviceLabel: c.cfg.DeviceLabel}
+	return &commonv1.ClientInfo{Name: firstNonEmpty(c.cfg.ClientName, "mycel-go-sdk"), Version: c.cfg.ClientVersion, Platform: firstNonEmpty(c.cfg.Platform, "go"), DeviceLabel: c.cfg.DeviceLabel}
 }
 
 func timestampAsTime(ts *timestamppb.Timestamp) time.Time {
