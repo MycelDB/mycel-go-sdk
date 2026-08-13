@@ -2,9 +2,9 @@
 // versions:
 // - protoc-gen-go-grpc v1.5.1
 // - protoc             (unknown)
-// source: mycel/client/v1/auth.proto
+// source: mycel/common/v1/auth.proto
 
-package clientv1
+package commonv1
 
 import (
 	context "context"
@@ -19,42 +19,30 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	AuthService_Login_FullMethodName                   = "/mycel.client.v1.AuthService/Login"
-	AuthService_Refresh_FullMethodName                 = "/mycel.client.v1.AuthService/Refresh"
-	AuthService_Logout_FullMethodName                  = "/mycel.client.v1.AuthService/Logout"
-	AuthService_WhoAmI_FullMethodName                  = "/mycel.client.v1.AuthService/WhoAmI"
-	AuthService_ListAuthSessions_FullMethodName        = "/mycel.client.v1.AuthService/ListAuthSessions"
-	AuthService_RevokeAuthSession_FullMethodName       = "/mycel.client.v1.AuthService/RevokeAuthSession"
-	AuthService_RevokeOtherAuthSessions_FullMethodName = "/mycel.client.v1.AuthService/RevokeOtherAuthSessions"
+	AuthService_Login_FullMethodName                   = "/mycel.common.v1.AuthService/Login"
+	AuthService_Refresh_FullMethodName                 = "/mycel.common.v1.AuthService/Refresh"
+	AuthService_Logout_FullMethodName                  = "/mycel.common.v1.AuthService/Logout"
+	AuthService_WhoAmI_FullMethodName                  = "/mycel.common.v1.AuthService/WhoAmI"
+	AuthService_ListAuthSessions_FullMethodName        = "/mycel.common.v1.AuthService/ListAuthSessions"
+	AuthService_RevokeAuthSession_FullMethodName       = "/mycel.common.v1.AuthService/RevokeAuthSession"
+	AuthService_RevokeOtherAuthSessions_FullMethodName = "/mycel.common.v1.AuthService/RevokeOtherAuthSessions"
 )
 
 // AuthServiceClient is the client API for AuthService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 //
-// AuthService manages client authentication and durable auth sessions.
-//
-// Auth sessions are distinct from graph sessions. Auth sessions identify a
-// user/client and issue access tokens. Graph sessions are daemon-owned
-// transactional contexts used by graph APIs.
+// AuthService manages principal authentication and self-service durable auth
+// sessions. The same access tokens authorize data-plane and admin/control-plane
+// APIs; capabilities and scopes determine what the authenticated principal may
+// do.
 type AuthServiceClient interface {
-	// Login authenticates a user and creates a durable auth session.
 	Login(ctx context.Context, in *LoginRequest, opts ...grpc.CallOption) (*LoginResponse, error)
-	// Refresh rotates a refresh token/session and returns a new short-lived
-	// access token. Browser transports may carry the refresh token in an
-	// HttpOnly cookie and omit refresh_token from the request body.
 	Refresh(ctx context.Context, in *RefreshRequest, opts ...grpc.CallOption) (*RefreshResponse, error)
-	// Logout revokes the current auth session, or the supplied session when the
-	// caller is authorized to revoke it.
 	Logout(ctx context.Context, in *LogoutRequest, opts ...grpc.CallOption) (*LogoutResponse, error)
-	// WhoAmI returns the identity associated with the current access token.
 	WhoAmI(ctx context.Context, in *WhoAmIRequest, opts ...grpc.CallOption) (*WhoAmIResponse, error)
-	// ListAuthSessions lists the caller's durable auth sessions.
 	ListAuthSessions(ctx context.Context, in *ListAuthSessionsRequest, opts ...grpc.CallOption) (*ListAuthSessionsResponse, error)
-	// RevokeAuthSession revokes one of the caller's durable auth sessions.
 	RevokeAuthSession(ctx context.Context, in *RevokeAuthSessionRequest, opts ...grpc.CallOption) (*RevokeAuthSessionResponse, error)
-	// RevokeOtherAuthSessions revokes all of the caller's durable auth sessions
-	// except the current one.
 	RevokeOtherAuthSessions(ctx context.Context, in *RevokeOtherAuthSessionsRequest, opts ...grpc.CallOption) (*RevokeOtherAuthSessionsResponse, error)
 }
 
@@ -140,29 +128,17 @@ func (c *authServiceClient) RevokeOtherAuthSessions(ctx context.Context, in *Rev
 // All implementations must embed UnimplementedAuthServiceServer
 // for forward compatibility.
 //
-// AuthService manages client authentication and durable auth sessions.
-//
-// Auth sessions are distinct from graph sessions. Auth sessions identify a
-// user/client and issue access tokens. Graph sessions are daemon-owned
-// transactional contexts used by graph APIs.
+// AuthService manages principal authentication and self-service durable auth
+// sessions. The same access tokens authorize data-plane and admin/control-plane
+// APIs; capabilities and scopes determine what the authenticated principal may
+// do.
 type AuthServiceServer interface {
-	// Login authenticates a user and creates a durable auth session.
 	Login(context.Context, *LoginRequest) (*LoginResponse, error)
-	// Refresh rotates a refresh token/session and returns a new short-lived
-	// access token. Browser transports may carry the refresh token in an
-	// HttpOnly cookie and omit refresh_token from the request body.
 	Refresh(context.Context, *RefreshRequest) (*RefreshResponse, error)
-	// Logout revokes the current auth session, or the supplied session when the
-	// caller is authorized to revoke it.
 	Logout(context.Context, *LogoutRequest) (*LogoutResponse, error)
-	// WhoAmI returns the identity associated with the current access token.
 	WhoAmI(context.Context, *WhoAmIRequest) (*WhoAmIResponse, error)
-	// ListAuthSessions lists the caller's durable auth sessions.
 	ListAuthSessions(context.Context, *ListAuthSessionsRequest) (*ListAuthSessionsResponse, error)
-	// RevokeAuthSession revokes one of the caller's durable auth sessions.
 	RevokeAuthSession(context.Context, *RevokeAuthSessionRequest) (*RevokeAuthSessionResponse, error)
-	// RevokeOtherAuthSessions revokes all of the caller's durable auth sessions
-	// except the current one.
 	RevokeOtherAuthSessions(context.Context, *RevokeOtherAuthSessionsRequest) (*RevokeOtherAuthSessionsResponse, error)
 	mustEmbedUnimplementedAuthServiceServer()
 }
@@ -346,7 +322,7 @@ func _AuthService_RevokeOtherAuthSessions_Handler(srv interface{}, ctx context.C
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var AuthService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "mycel.client.v1.AuthService",
+	ServiceName: "mycel.common.v1.AuthService",
 	HandlerType: (*AuthServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
@@ -379,5 +355,5 @@ var AuthService_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "mycel/client/v1/auth.proto",
+	Metadata: "mycel/common/v1/auth.proto",
 }

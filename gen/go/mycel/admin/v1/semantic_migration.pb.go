@@ -26,7 +26,7 @@ type MigrateLegacyEmbeddingsRequest struct {
 	SpaceId  string                 `protobuf:"bytes,1,opt,name=space_id,json=spaceId,proto3" json:"space_id,omitempty"`
 	DomainId string                 `protobuf:"bytes,2,opt,name=domain_id,json=domainId,proto3" json:"domain_id,omitempty"`
 	// Optional. Defaults to the space owner when omitted.
-	OwnerUserId string `protobuf:"bytes,3,opt,name=owner_user_id,json=ownerUserId,proto3" json:"owner_user_id,omitempty"`
+	OwnerPrincipalId string `protobuf:"bytes,3,opt,name=owner_principal_id,json=ownerPrincipalId,proto3" json:"owner_principal_id,omitempty"`
 	// Optional legacy profile UUID or name.
 	ProfileRef         string `protobuf:"bytes,4,opt,name=profile_ref,json=profileRef,proto3" json:"profile_ref,omitempty"`
 	AllowBackgroundUse bool   `protobuf:"varint,5,opt,name=allow_background_use,json=allowBackgroundUse,proto3" json:"allow_background_use,omitempty"`
@@ -82,9 +82,9 @@ func (x *MigrateLegacyEmbeddingsRequest) GetDomainId() string {
 	return ""
 }
 
-func (x *MigrateLegacyEmbeddingsRequest) GetOwnerUserId() string {
+func (x *MigrateLegacyEmbeddingsRequest) GetOwnerPrincipalId() string {
 	if x != nil {
-		return x.OwnerUserId
+		return x.OwnerPrincipalId
 	}
 	return ""
 }
@@ -259,11 +259,11 @@ var File_mycel_admin_v1_semantic_migration_proto protoreflect.FileDescriptor
 
 const file_mycel_admin_v1_semantic_migration_proto_rawDesc = "" +
 	"\n" +
-	"'mycel/admin/v1/semantic_migration.proto\x12\x0emycel.admin.v1\"\xc0\x02\n" +
+	"'mycel/admin/v1/semantic_migration.proto\x12\x0emycel.admin.v1\"\xca\x02\n" +
 	"\x1eMigrateLegacyEmbeddingsRequest\x12\x19\n" +
 	"\bspace_id\x18\x01 \x01(\tR\aspaceId\x12\x1b\n" +
-	"\tdomain_id\x18\x02 \x01(\tR\bdomainId\x12\"\n" +
-	"\rowner_user_id\x18\x03 \x01(\tR\vownerUserId\x12\x1f\n" +
+	"\tdomain_id\x18\x02 \x01(\tR\bdomainId\x12,\n" +
+	"\x12owner_principal_id\x18\x03 \x01(\tR\x10ownerPrincipalId\x12\x1f\n" +
 	"\vprofile_ref\x18\x04 \x01(\tR\n" +
 	"profileRef\x120\n" +
 	"\x14allow_background_use\x18\x05 \x01(\bR\x12allowBackgroundUse\x12(\n" +

@@ -5,8 +5,7 @@ import (
 	"testing"
 	"time"
 
-	adminv1 "github.com/myceldb/mycel-go-sdk/gen/go/mycel/admin/v1"
-	clientv1 "github.com/myceldb/mycel-go-sdk/gen/go/mycel/client/v1"
+	commonv1 "github.com/myceldb/mycel-go-sdk/gen/go/mycel/common/v1"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/metadata"
@@ -193,7 +192,7 @@ func TestTokenSourceDoesNotRefreshAuthMethods(t *testing.T) {
 		t.Fatal("auth method should not auto-refresh")
 		return nil
 	})
-	err := tokens.unaryInterceptor(context.Background(), "/mycel.admin.v1.AdminAuthService/RefreshOperator", nil, nil, nil, func(ctx context.Context, method string, req, reply any, cc *grpc.ClientConn, opts ...grpc.CallOption) error {
+	err := tokens.unaryInterceptor(context.Background(), "/mycel.common.v1.AuthService/Refresh", nil, nil, nil, func(ctx context.Context, method string, req, reply any, cc *grpc.ClientConn, opts ...grpc.CallOption) error {
 		return status.Error(codes.Unauthenticated, "authorization token is expired")
 	})
 	if status.Code(err) != codes.Unauthenticated {
@@ -203,7 +202,7 @@ func TestTokenSourceDoesNotRefreshAuthMethods(t *testing.T) {
 
 func TestClientRefreshUsesStoredRefreshTokenAndRotatesState(t *testing.T) {
 	expire := time.Now().Add(time.Hour).UTC()
-	auth := &fakeClientAuth{refreshResponse: &clientv1.RefreshResponse{AccessToken: "access-2", AccessTokenExpireTime: timestamppb.New(expire), RefreshToken: ptr("refresh-2")}}
+	auth := &fakeClientAuth{refreshResponse: &commonv1.RefreshResponse{AccessToken: "access-2", AccessTokenExpireTime: timestamppb.New(expire), RefreshToken: ptr("refresh-2")}}
 	c := &Client{Auth: auth, tokens: newTokenSource("access-1")}
 	c.SetRefreshToken("refresh-1")
 	res, err := c.Refresh(context.Background(), "")
@@ -218,14 +217,14 @@ func TestClientRefreshUsesStoredRefreshTokenAndRotatesState(t *testing.T) {
 	}
 }
 
-func TestAdminRefreshOperatorUsesStoredRefreshTokenAndRotatesState(t *testing.T) {
+func TestAdminRefreshUsesStoredRefreshTokenAndRotatesState(t *testing.T) {
 	expire := time.Now().Add(time.Hour).UTC()
-	auth := &fakeAdminAuth{refreshResponse: &adminv1.RefreshOperatorResponse{AccessToken: "admin-access-2", AccessTokenExpireTime: timestamppb.New(expire), RefreshToken: ptr("admin-refresh-2")}}
+	auth := &fakeAdminAuth{refreshResponse: &commonv1.RefreshResponse{AccessToken: "admin-access-2", AccessTokenExpireTime: timestamppb.New(expire), RefreshToken: ptr("admin-refresh-2")}}
 	c := &AdminClient{Auth: auth, tokens: newTokenSource("admin-access-1")}
 	c.SetRefreshToken("admin-refresh-1")
-	res, err := c.RefreshOperator(context.Background(), "")
+	res, err := c.Refresh(context.Background(), "")
 	if err != nil {
-		t.Fatalf("RefreshOperator() error = %v", err)
+		t.Fatalf("Refresh() error = %v", err)
 	}
 	if res.GetAccessToken() != "admin-access-2" || c.AccessToken() != "admin-access-2" || c.RefreshToken() != "admin-refresh-2" || !c.AccessTokenExpireTime().Equal(expire) {
 		t.Fatalf("unexpected refreshed admin state token=%q refresh=%q expire=%s res=%#v", c.AccessToken(), c.RefreshToken(), c.AccessTokenExpireTime(), res)
@@ -235,12 +234,12 @@ func TestAdminRefreshOperatorUsesStoredRefreshTokenAndRotatesState(t *testing.T)
 	}
 }
 
-func TestAdminLogoutOperatorClearsCurrentAuthState(t *testing.T) {
-	auth := &fakeAdminAuth{logoutResponse: &adminv1.LogoutOperatorResponse{}}
+func TestAdminLogoutClearsCurrentAuthState(t *testing.T) {
+	auth := &fakeAdminAuth{logoutResponse: &commonv1.LogoutResponse{}}
 	c := &AdminClient{Auth: auth, tokens: newTokenSource("admin-access")}
 	c.SetRefreshToken("admin-refresh")
-	if _, err := c.LogoutOperator(context.Background(), ""); err != nil {
-		t.Fatalf("LogoutOperator() error = %v", err)
+	if _, err := c.Logout(context.Background(), ""); err != nil {
+		t.Fatalf("Logout() error = %v", err)
 	}
 	if c.AccessToken() != "" || c.RefreshToken() != "" {
 		t.Fatalf("expected auth state cleared, got access=%q refresh=%q", c.AccessToken(), c.RefreshToken())
@@ -250,79 +249,48 @@ func TestAdminLogoutOperatorClearsCurrentAuthState(t *testing.T) {
 func ptr(value string) *string { return &value }
 
 type fakeClientAuth struct {
-	loginResponse   *clientv1.LoginResponse
-	refreshResponse *clientv1.RefreshResponse
-	logoutResponse  *clientv1.LogoutResponse
-	refreshRequest  *clientv1.RefreshRequest
+	loginResponse   *commonv1.LoginResponse
+	refreshResponse *commonv1.RefreshResponse
+	logoutResponse  *commonv1.LogoutResponse
+	refreshRequest  *commonv1.RefreshRequest
 }
 
-func (f *fakeClientAuth) Login(context.Context, *clientv1.LoginRequest, ...grpc.CallOption) (*clientv1.LoginResponse, error) {
+func (f *fakeClientAuth) Login(context.Context, *commonv1.LoginRequest, ...grpc.CallOption) (*commonv1.LoginResponse, error) {
 	if f.loginResponse != nil {
 		return f.loginResponse, nil
 	}
-	return &clientv1.LoginResponse{}, nil
+	return &commonv1.LoginResponse{}, nil
 }
 
-func (f *fakeClientAuth) Refresh(_ context.Context, req *clientv1.RefreshRequest, _ ...grpc.CallOption) (*clientv1.RefreshResponse, error) {
+func (f *fakeClientAuth) Refresh(_ context.Context, req *commonv1.RefreshRequest, _ ...grpc.CallOption) (*commonv1.RefreshResponse, error) {
 	f.refreshRequest = req
 	if f.refreshResponse != nil {
 		return f.refreshResponse, nil
 	}
-	return &clientv1.RefreshResponse{}, nil
+	return &commonv1.RefreshResponse{}, nil
 }
 
-func (f *fakeClientAuth) Logout(context.Context, *clientv1.LogoutRequest, ...grpc.CallOption) (*clientv1.LogoutResponse, error) {
+func (f *fakeClientAuth) Logout(context.Context, *commonv1.LogoutRequest, ...grpc.CallOption) (*commonv1.LogoutResponse, error) {
 	if f.logoutResponse != nil {
 		return f.logoutResponse, nil
 	}
-	return &clientv1.LogoutResponse{}, nil
+	return &commonv1.LogoutResponse{}, nil
 }
 
-func (f *fakeClientAuth) WhoAmI(context.Context, *clientv1.WhoAmIRequest, ...grpc.CallOption) (*clientv1.WhoAmIResponse, error) {
-	return &clientv1.WhoAmIResponse{}, nil
+func (f *fakeClientAuth) WhoAmI(context.Context, *commonv1.WhoAmIRequest, ...grpc.CallOption) (*commonv1.WhoAmIResponse, error) {
+	return &commonv1.WhoAmIResponse{}, nil
 }
 
-func (f *fakeClientAuth) ListAuthSessions(context.Context, *clientv1.ListAuthSessionsRequest, ...grpc.CallOption) (*clientv1.ListAuthSessionsResponse, error) {
-	return &clientv1.ListAuthSessionsResponse{}, nil
+func (f *fakeClientAuth) ListAuthSessions(context.Context, *commonv1.ListAuthSessionsRequest, ...grpc.CallOption) (*commonv1.ListAuthSessionsResponse, error) {
+	return &commonv1.ListAuthSessionsResponse{}, nil
 }
 
-func (f *fakeClientAuth) RevokeAuthSession(context.Context, *clientv1.RevokeAuthSessionRequest, ...grpc.CallOption) (*clientv1.RevokeAuthSessionResponse, error) {
-	return &clientv1.RevokeAuthSessionResponse{}, nil
+func (f *fakeClientAuth) RevokeAuthSession(context.Context, *commonv1.RevokeAuthSessionRequest, ...grpc.CallOption) (*commonv1.RevokeAuthSessionResponse, error) {
+	return &commonv1.RevokeAuthSessionResponse{}, nil
 }
 
-func (f *fakeClientAuth) RevokeOtherAuthSessions(context.Context, *clientv1.RevokeOtherAuthSessionsRequest, ...grpc.CallOption) (*clientv1.RevokeOtherAuthSessionsResponse, error) {
-	return &clientv1.RevokeOtherAuthSessionsResponse{}, nil
+func (f *fakeClientAuth) RevokeOtherAuthSessions(context.Context, *commonv1.RevokeOtherAuthSessionsRequest, ...grpc.CallOption) (*commonv1.RevokeOtherAuthSessionsResponse, error) {
+	return &commonv1.RevokeOtherAuthSessionsResponse{}, nil
 }
 
-type fakeAdminAuth struct {
-	loginResponse   *adminv1.LoginOperatorResponse
-	refreshResponse *adminv1.RefreshOperatorResponse
-	logoutResponse  *adminv1.LogoutOperatorResponse
-	refreshRequest  *adminv1.RefreshOperatorRequest
-}
-
-func (f *fakeAdminAuth) LoginOperator(context.Context, *adminv1.LoginOperatorRequest, ...grpc.CallOption) (*adminv1.LoginOperatorResponse, error) {
-	if f.loginResponse != nil {
-		return f.loginResponse, nil
-	}
-	return &adminv1.LoginOperatorResponse{}, nil
-}
-
-func (f *fakeAdminAuth) RefreshOperator(_ context.Context, req *adminv1.RefreshOperatorRequest, _ ...grpc.CallOption) (*adminv1.RefreshOperatorResponse, error) {
-	f.refreshRequest = req
-	if f.refreshResponse != nil {
-		return f.refreshResponse, nil
-	}
-	return &adminv1.RefreshOperatorResponse{}, nil
-}
-
-func (f *fakeAdminAuth) LogoutOperator(context.Context, *adminv1.LogoutOperatorRequest, ...grpc.CallOption) (*adminv1.LogoutOperatorResponse, error) {
-	if f.logoutResponse != nil {
-		return f.logoutResponse, nil
-	}
-	return &adminv1.LogoutOperatorResponse{}, nil
-}
-
-func (f *fakeAdminAuth) WhoAmI(context.Context, *adminv1.WhoAmIRequest, ...grpc.CallOption) (*adminv1.WhoAmIResponse, error) {
-	return &adminv1.WhoAmIResponse{}, nil
-}
+type fakeAdminAuth = fakeClientAuth
