@@ -2,9 +2,9 @@
 // versions:
 // 	protoc-gen-go v1.36.11
 // 	protoc        (unknown)
-// source: mycel/client/v1/auth.proto
+// source: mycel/common/v1/auth.proto
 
-package clientv1
+package commonv1
 
 import (
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
@@ -22,6 +22,7 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
+// AuthSessionState is the lifecycle state of a durable auth session.
 type AuthSessionState int32
 
 const (
@@ -58,11 +59,11 @@ func (x AuthSessionState) String() string {
 }
 
 func (AuthSessionState) Descriptor() protoreflect.EnumDescriptor {
-	return file_mycel_client_v1_auth_proto_enumTypes[0].Descriptor()
+	return file_mycel_common_v1_auth_proto_enumTypes[0].Descriptor()
 }
 
 func (AuthSessionState) Type() protoreflect.EnumType {
-	return &file_mycel_client_v1_auth_proto_enumTypes[0]
+	return &file_mycel_common_v1_auth_proto_enumTypes[0]
 }
 
 func (x AuthSessionState) Number() protoreflect.EnumNumber {
@@ -71,9 +72,151 @@ func (x AuthSessionState) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use AuthSessionState.Descriptor instead.
 func (AuthSessionState) EnumDescriptor() ([]byte, []int) {
-	return file_mycel_client_v1_auth_proto_rawDescGZIP(), []int{0}
+	return file_mycel_common_v1_auth_proto_rawDescGZIP(), []int{0}
 }
 
+// AuthPrincipal is the authenticated principal summary embedded in auth
+// responses. Detailed lifecycle/admin fields are exposed by admin principal APIs.
+type AuthPrincipal struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	PrincipalId   string                 `protobuf:"bytes,1,opt,name=principal_id,json=principalId,proto3" json:"principal_id,omitempty"`
+	Username      string                 `protobuf:"bytes,2,opt,name=username,proto3" json:"username,omitempty"`
+	Type          PrincipalType          `protobuf:"varint,3,opt,name=type,proto3,enum=mycel.common.v1.PrincipalType" json:"type,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *AuthPrincipal) Reset() {
+	*x = AuthPrincipal{}
+	mi := &file_mycel_common_v1_auth_proto_msgTypes[0]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *AuthPrincipal) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AuthPrincipal) ProtoMessage() {}
+
+func (x *AuthPrincipal) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_common_v1_auth_proto_msgTypes[0]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use AuthPrincipal.ProtoReflect.Descriptor instead.
+func (*AuthPrincipal) Descriptor() ([]byte, []int) {
+	return file_mycel_common_v1_auth_proto_rawDescGZIP(), []int{0}
+}
+
+func (x *AuthPrincipal) GetPrincipalId() string {
+	if x != nil {
+		return x.PrincipalId
+	}
+	return ""
+}
+
+func (x *AuthPrincipal) GetUsername() string {
+	if x != nil {
+		return x.Username
+	}
+	return ""
+}
+
+func (x *AuthPrincipal) GetType() PrincipalType {
+	if x != nil {
+		return x.Type
+	}
+	return PrincipalType_PRINCIPAL_TYPE_UNSPECIFIED
+}
+
+// ClientInfo describes the client/application creating or refreshing an auth
+// session. The daemon records this for operator visibility and session audits;
+// it must not be used for authorization decisions.
+type ClientInfo struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Human-readable client/application name, for example "knot-pkm-client" or
+	// "mycel-cli".
+	Name string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	// Client/application version when known.
+	Version string `protobuf:"bytes,2,opt,name=version,proto3" json:"version,omitempty"`
+	// Coarse platform label, for example "web", "go", "cli", "mobile", or
+	// "server".
+	Platform string `protobuf:"bytes,3,opt,name=platform,proto3" json:"platform,omitempty"`
+	// Optional user-visible device/session label. This is client supplied and
+	// should not be used for security decisions.
+	DeviceLabel   string `protobuf:"bytes,4,opt,name=device_label,json=deviceLabel,proto3" json:"device_label,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ClientInfo) Reset() {
+	*x = ClientInfo{}
+	mi := &file_mycel_common_v1_auth_proto_msgTypes[1]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ClientInfo) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ClientInfo) ProtoMessage() {}
+
+func (x *ClientInfo) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_common_v1_auth_proto_msgTypes[1]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ClientInfo.ProtoReflect.Descriptor instead.
+func (*ClientInfo) Descriptor() ([]byte, []int) {
+	return file_mycel_common_v1_auth_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *ClientInfo) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *ClientInfo) GetVersion() string {
+	if x != nil {
+		return x.Version
+	}
+	return ""
+}
+
+func (x *ClientInfo) GetPlatform() string {
+	if x != nil {
+		return x.Platform
+	}
+	return ""
+}
+
+func (x *ClientInfo) GetDeviceLabel() string {
+	if x != nil {
+		return x.DeviceLabel
+	}
+	return ""
+}
+
+// LoginRequest authenticates a login-enabled principal and creates a durable
+// auth session.
 type LoginRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Username      string                 `protobuf:"bytes,1,opt,name=username,proto3" json:"username,omitempty"`
@@ -85,7 +228,7 @@ type LoginRequest struct {
 
 func (x *LoginRequest) Reset() {
 	*x = LoginRequest{}
-	mi := &file_mycel_client_v1_auth_proto_msgTypes[0]
+	mi := &file_mycel_common_v1_auth_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -97,7 +240,7 @@ func (x *LoginRequest) String() string {
 func (*LoginRequest) ProtoMessage() {}
 
 func (x *LoginRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_client_v1_auth_proto_msgTypes[0]
+	mi := &file_mycel_common_v1_auth_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -110,7 +253,7 @@ func (x *LoginRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use LoginRequest.ProtoReflect.Descriptor instead.
 func (*LoginRequest) Descriptor() ([]byte, []int) {
-	return file_mycel_client_v1_auth_proto_rawDescGZIP(), []int{0}
+	return file_mycel_common_v1_auth_proto_rawDescGZIP(), []int{2}
 }
 
 func (x *LoginRequest) GetUsername() string {
@@ -134,6 +277,8 @@ func (x *LoginRequest) GetClient() *ClientInfo {
 	return nil
 }
 
+// LoginResponse returns an access token plus optional refresh token for the new
+// auth session.
 type LoginResponse struct {
 	state                 protoimpl.MessageState `protogen:"open.v1"`
 	AccessToken           string                 `protobuf:"bytes,1,opt,name=access_token,json=accessToken,proto3" json:"access_token,omitempty"`
@@ -141,14 +286,16 @@ type LoginResponse struct {
 	Principal             *AuthPrincipal         `protobuf:"bytes,3,opt,name=principal,proto3" json:"principal,omitempty"`
 	// Optional for non-browser connectors. Browser transports should prefer an
 	// HttpOnly refresh cookie set by the HTTP layer.
-	RefreshToken  *string `protobuf:"bytes,4,opt,name=refresh_token,json=refreshToken,proto3,oneof" json:"refresh_token,omitempty"`
+	RefreshToken *string `protobuf:"bytes,4,opt,name=refresh_token,json=refreshToken,proto3,oneof" json:"refresh_token,omitempty"`
+	// Durable auth session identifier for the created session.
+	AuthSessionId string `protobuf:"bytes,5,opt,name=auth_session_id,json=authSessionId,proto3" json:"auth_session_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *LoginResponse) Reset() {
 	*x = LoginResponse{}
-	mi := &file_mycel_client_v1_auth_proto_msgTypes[1]
+	mi := &file_mycel_common_v1_auth_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -160,7 +307,7 @@ func (x *LoginResponse) String() string {
 func (*LoginResponse) ProtoMessage() {}
 
 func (x *LoginResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_client_v1_auth_proto_msgTypes[1]
+	mi := &file_mycel_common_v1_auth_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -173,7 +320,7 @@ func (x *LoginResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use LoginResponse.ProtoReflect.Descriptor instead.
 func (*LoginResponse) Descriptor() ([]byte, []int) {
-	return file_mycel_client_v1_auth_proto_rawDescGZIP(), []int{1}
+	return file_mycel_common_v1_auth_proto_rawDescGZIP(), []int{3}
 }
 
 func (x *LoginResponse) GetAccessToken() string {
@@ -204,19 +351,27 @@ func (x *LoginResponse) GetRefreshToken() string {
 	return ""
 }
 
+func (x *LoginResponse) GetAuthSessionId() string {
+	if x != nil {
+		return x.AuthSessionId
+	}
+	return ""
+}
+
+// RefreshRequest rotates a refresh token/session and returns a new short-lived
+// access token. Browser transports may carry the refresh token in an HttpOnly
+// cookie and omit refresh_token from the request body.
 type RefreshRequest struct {
-	state protoimpl.MessageState `protogen:"open.v1"`
-	// Optional because browser transports may provide the refresh token via an
-	// HttpOnly cookie.
-	RefreshToken  *string     `protobuf:"bytes,1,opt,name=refresh_token,json=refreshToken,proto3,oneof" json:"refresh_token,omitempty"`
-	Client        *ClientInfo `protobuf:"bytes,2,opt,name=client,proto3" json:"client,omitempty"`
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	RefreshToken  *string                `protobuf:"bytes,1,opt,name=refresh_token,json=refreshToken,proto3,oneof" json:"refresh_token,omitempty"`
+	Client        *ClientInfo            `protobuf:"bytes,2,opt,name=client,proto3" json:"client,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *RefreshRequest) Reset() {
 	*x = RefreshRequest{}
-	mi := &file_mycel_client_v1_auth_proto_msgTypes[2]
+	mi := &file_mycel_common_v1_auth_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -228,7 +383,7 @@ func (x *RefreshRequest) String() string {
 func (*RefreshRequest) ProtoMessage() {}
 
 func (x *RefreshRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_client_v1_auth_proto_msgTypes[2]
+	mi := &file_mycel_common_v1_auth_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -241,7 +396,7 @@ func (x *RefreshRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RefreshRequest.ProtoReflect.Descriptor instead.
 func (*RefreshRequest) Descriptor() ([]byte, []int) {
-	return file_mycel_client_v1_auth_proto_rawDescGZIP(), []int{2}
+	return file_mycel_common_v1_auth_proto_rawDescGZIP(), []int{4}
 }
 
 func (x *RefreshRequest) GetRefreshToken() string {
@@ -258,6 +413,8 @@ func (x *RefreshRequest) GetClient() *ClientInfo {
 	return nil
 }
 
+// RefreshResponse returns the rotated access token plus optional replacement
+// refresh token.
 type RefreshResponse struct {
 	state                 protoimpl.MessageState `protogen:"open.v1"`
 	AccessToken           string                 `protobuf:"bytes,1,opt,name=access_token,json=accessToken,proto3" json:"access_token,omitempty"`
@@ -265,14 +422,16 @@ type RefreshResponse struct {
 	Principal             *AuthPrincipal         `protobuf:"bytes,3,opt,name=principal,proto3" json:"principal,omitempty"`
 	// Optional for non-browser connectors. Browser transports should prefer an
 	// HttpOnly refresh cookie set by the HTTP layer.
-	RefreshToken  *string `protobuf:"bytes,4,opt,name=refresh_token,json=refreshToken,proto3,oneof" json:"refresh_token,omitempty"`
+	RefreshToken *string `protobuf:"bytes,4,opt,name=refresh_token,json=refreshToken,proto3,oneof" json:"refresh_token,omitempty"`
+	// Durable auth session identifier associated with the refreshed token.
+	AuthSessionId string `protobuf:"bytes,5,opt,name=auth_session_id,json=authSessionId,proto3" json:"auth_session_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *RefreshResponse) Reset() {
 	*x = RefreshResponse{}
-	mi := &file_mycel_client_v1_auth_proto_msgTypes[3]
+	mi := &file_mycel_common_v1_auth_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -284,7 +443,7 @@ func (x *RefreshResponse) String() string {
 func (*RefreshResponse) ProtoMessage() {}
 
 func (x *RefreshResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_client_v1_auth_proto_msgTypes[3]
+	mi := &file_mycel_common_v1_auth_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -297,7 +456,7 @@ func (x *RefreshResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RefreshResponse.ProtoReflect.Descriptor instead.
 func (*RefreshResponse) Descriptor() ([]byte, []int) {
-	return file_mycel_client_v1_auth_proto_rawDescGZIP(), []int{3}
+	return file_mycel_common_v1_auth_proto_rawDescGZIP(), []int{5}
 }
 
 func (x *RefreshResponse) GetAccessToken() string {
@@ -328,6 +487,15 @@ func (x *RefreshResponse) GetRefreshToken() string {
 	return ""
 }
 
+func (x *RefreshResponse) GetAuthSessionId() string {
+	if x != nil {
+		return x.AuthSessionId
+	}
+	return ""
+}
+
+// LogoutRequest revokes the current auth session, or the supplied session when
+// the caller is authorized to revoke it.
 type LogoutRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// If omitted, the daemon revokes the current auth session from request
@@ -339,7 +507,7 @@ type LogoutRequest struct {
 
 func (x *LogoutRequest) Reset() {
 	*x = LogoutRequest{}
-	mi := &file_mycel_client_v1_auth_proto_msgTypes[4]
+	mi := &file_mycel_common_v1_auth_proto_msgTypes[6]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -351,7 +519,7 @@ func (x *LogoutRequest) String() string {
 func (*LogoutRequest) ProtoMessage() {}
 
 func (x *LogoutRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_client_v1_auth_proto_msgTypes[4]
+	mi := &file_mycel_common_v1_auth_proto_msgTypes[6]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -364,7 +532,7 @@ func (x *LogoutRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use LogoutRequest.ProtoReflect.Descriptor instead.
 func (*LogoutRequest) Descriptor() ([]byte, []int) {
-	return file_mycel_client_v1_auth_proto_rawDescGZIP(), []int{4}
+	return file_mycel_common_v1_auth_proto_rawDescGZIP(), []int{6}
 }
 
 func (x *LogoutRequest) GetAuthSessionId() string {
@@ -374,6 +542,7 @@ func (x *LogoutRequest) GetAuthSessionId() string {
 	return ""
 }
 
+// LogoutResponse is returned after an auth session has been revoked.
 type LogoutResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	unknownFields protoimpl.UnknownFields
@@ -382,7 +551,7 @@ type LogoutResponse struct {
 
 func (x *LogoutResponse) Reset() {
 	*x = LogoutResponse{}
-	mi := &file_mycel_client_v1_auth_proto_msgTypes[5]
+	mi := &file_mycel_common_v1_auth_proto_msgTypes[7]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -394,7 +563,7 @@ func (x *LogoutResponse) String() string {
 func (*LogoutResponse) ProtoMessage() {}
 
 func (x *LogoutResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_client_v1_auth_proto_msgTypes[5]
+	mi := &file_mycel_common_v1_auth_proto_msgTypes[7]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -407,9 +576,10 @@ func (x *LogoutResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use LogoutResponse.ProtoReflect.Descriptor instead.
 func (*LogoutResponse) Descriptor() ([]byte, []int) {
-	return file_mycel_client_v1_auth_proto_rawDescGZIP(), []int{5}
+	return file_mycel_common_v1_auth_proto_rawDescGZIP(), []int{7}
 }
 
+// WhoAmIRequest requests the identity associated with the current access token.
 type WhoAmIRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	unknownFields protoimpl.UnknownFields
@@ -418,7 +588,7 @@ type WhoAmIRequest struct {
 
 func (x *WhoAmIRequest) Reset() {
 	*x = WhoAmIRequest{}
-	mi := &file_mycel_client_v1_auth_proto_msgTypes[6]
+	mi := &file_mycel_common_v1_auth_proto_msgTypes[8]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -430,7 +600,7 @@ func (x *WhoAmIRequest) String() string {
 func (*WhoAmIRequest) ProtoMessage() {}
 
 func (x *WhoAmIRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_client_v1_auth_proto_msgTypes[6]
+	mi := &file_mycel_common_v1_auth_proto_msgTypes[8]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -443,9 +613,10 @@ func (x *WhoAmIRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use WhoAmIRequest.ProtoReflect.Descriptor instead.
 func (*WhoAmIRequest) Descriptor() ([]byte, []int) {
-	return file_mycel_client_v1_auth_proto_rawDescGZIP(), []int{6}
+	return file_mycel_common_v1_auth_proto_rawDescGZIP(), []int{8}
 }
 
+// WhoAmIResponse returns the identity associated with the current access token.
 type WhoAmIResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Principal     *AuthPrincipal         `protobuf:"bytes,1,opt,name=principal,proto3" json:"principal,omitempty"`
@@ -455,7 +626,7 @@ type WhoAmIResponse struct {
 
 func (x *WhoAmIResponse) Reset() {
 	*x = WhoAmIResponse{}
-	mi := &file_mycel_client_v1_auth_proto_msgTypes[7]
+	mi := &file_mycel_common_v1_auth_proto_msgTypes[9]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -467,7 +638,7 @@ func (x *WhoAmIResponse) String() string {
 func (*WhoAmIResponse) ProtoMessage() {}
 
 func (x *WhoAmIResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_client_v1_auth_proto_msgTypes[7]
+	mi := &file_mycel_common_v1_auth_proto_msgTypes[9]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -480,7 +651,7 @@ func (x *WhoAmIResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use WhoAmIResponse.ProtoReflect.Descriptor instead.
 func (*WhoAmIResponse) Descriptor() ([]byte, []int) {
-	return file_mycel_client_v1_auth_proto_rawDescGZIP(), []int{7}
+	return file_mycel_common_v1_auth_proto_rawDescGZIP(), []int{9}
 }
 
 func (x *WhoAmIResponse) GetPrincipal() *AuthPrincipal {
@@ -490,6 +661,9 @@ func (x *WhoAmIResponse) GetPrincipal() *AuthPrincipal {
 	return nil
 }
 
+// ListAuthSessionsRequest lists durable auth sessions for the selected view.
+// Client APIs use this as a self-service request; admin APIs scope it through
+// principal-management requests.
 type ListAuthSessionsRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// Maximum number of sessions to return. The daemon may cap this value.
@@ -505,7 +679,7 @@ type ListAuthSessionsRequest struct {
 
 func (x *ListAuthSessionsRequest) Reset() {
 	*x = ListAuthSessionsRequest{}
-	mi := &file_mycel_client_v1_auth_proto_msgTypes[8]
+	mi := &file_mycel_common_v1_auth_proto_msgTypes[10]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -517,7 +691,7 @@ func (x *ListAuthSessionsRequest) String() string {
 func (*ListAuthSessionsRequest) ProtoMessage() {}
 
 func (x *ListAuthSessionsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_client_v1_auth_proto_msgTypes[8]
+	mi := &file_mycel_common_v1_auth_proto_msgTypes[10]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -530,7 +704,7 @@ func (x *ListAuthSessionsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListAuthSessionsRequest.ProtoReflect.Descriptor instead.
 func (*ListAuthSessionsRequest) Descriptor() ([]byte, []int) {
-	return file_mycel_client_v1_auth_proto_rawDescGZIP(), []int{8}
+	return file_mycel_common_v1_auth_proto_rawDescGZIP(), []int{10}
 }
 
 func (x *ListAuthSessionsRequest) GetPageSize() int32 {
@@ -554,6 +728,7 @@ func (x *ListAuthSessionsRequest) GetIncludeInactive() bool {
 	return false
 }
 
+// ListAuthSessionsResponse returns durable auth-session summaries.
 type ListAuthSessionsResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Sessions      []*AuthSessionSummary  `protobuf:"bytes,1,rep,name=sessions,proto3" json:"sessions,omitempty"`
@@ -564,7 +739,7 @@ type ListAuthSessionsResponse struct {
 
 func (x *ListAuthSessionsResponse) Reset() {
 	*x = ListAuthSessionsResponse{}
-	mi := &file_mycel_client_v1_auth_proto_msgTypes[9]
+	mi := &file_mycel_common_v1_auth_proto_msgTypes[11]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -576,7 +751,7 @@ func (x *ListAuthSessionsResponse) String() string {
 func (*ListAuthSessionsResponse) ProtoMessage() {}
 
 func (x *ListAuthSessionsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_client_v1_auth_proto_msgTypes[9]
+	mi := &file_mycel_common_v1_auth_proto_msgTypes[11]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -589,7 +764,7 @@ func (x *ListAuthSessionsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListAuthSessionsResponse.ProtoReflect.Descriptor instead.
 func (*ListAuthSessionsResponse) Descriptor() ([]byte, []int) {
-	return file_mycel_client_v1_auth_proto_rawDescGZIP(), []int{9}
+	return file_mycel_common_v1_auth_proto_rawDescGZIP(), []int{11}
 }
 
 func (x *ListAuthSessionsResponse) GetSessions() []*AuthSessionSummary {
@@ -606,6 +781,7 @@ func (x *ListAuthSessionsResponse) GetNextPageToken() string {
 	return ""
 }
 
+// RevokeAuthSessionRequest revokes one durable auth session.
 type RevokeAuthSessionRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	AuthSessionId string                 `protobuf:"bytes,1,opt,name=auth_session_id,json=authSessionId,proto3" json:"auth_session_id,omitempty"`
@@ -615,7 +791,7 @@ type RevokeAuthSessionRequest struct {
 
 func (x *RevokeAuthSessionRequest) Reset() {
 	*x = RevokeAuthSessionRequest{}
-	mi := &file_mycel_client_v1_auth_proto_msgTypes[10]
+	mi := &file_mycel_common_v1_auth_proto_msgTypes[12]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -627,7 +803,7 @@ func (x *RevokeAuthSessionRequest) String() string {
 func (*RevokeAuthSessionRequest) ProtoMessage() {}
 
 func (x *RevokeAuthSessionRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_client_v1_auth_proto_msgTypes[10]
+	mi := &file_mycel_common_v1_auth_proto_msgTypes[12]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -640,7 +816,7 @@ func (x *RevokeAuthSessionRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RevokeAuthSessionRequest.ProtoReflect.Descriptor instead.
 func (*RevokeAuthSessionRequest) Descriptor() ([]byte, []int) {
-	return file_mycel_client_v1_auth_proto_rawDescGZIP(), []int{10}
+	return file_mycel_common_v1_auth_proto_rawDescGZIP(), []int{12}
 }
 
 func (x *RevokeAuthSessionRequest) GetAuthSessionId() string {
@@ -650,6 +826,7 @@ func (x *RevokeAuthSessionRequest) GetAuthSessionId() string {
 	return ""
 }
 
+// RevokeAuthSessionResponse is returned after one auth session is revoked.
 type RevokeAuthSessionResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	unknownFields protoimpl.UnknownFields
@@ -658,7 +835,7 @@ type RevokeAuthSessionResponse struct {
 
 func (x *RevokeAuthSessionResponse) Reset() {
 	*x = RevokeAuthSessionResponse{}
-	mi := &file_mycel_client_v1_auth_proto_msgTypes[11]
+	mi := &file_mycel_common_v1_auth_proto_msgTypes[13]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -670,7 +847,7 @@ func (x *RevokeAuthSessionResponse) String() string {
 func (*RevokeAuthSessionResponse) ProtoMessage() {}
 
 func (x *RevokeAuthSessionResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_client_v1_auth_proto_msgTypes[11]
+	mi := &file_mycel_common_v1_auth_proto_msgTypes[13]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -683,9 +860,11 @@ func (x *RevokeAuthSessionResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RevokeAuthSessionResponse.ProtoReflect.Descriptor instead.
 func (*RevokeAuthSessionResponse) Descriptor() ([]byte, []int) {
-	return file_mycel_client_v1_auth_proto_rawDescGZIP(), []int{11}
+	return file_mycel_common_v1_auth_proto_rawDescGZIP(), []int{13}
 }
 
+// RevokeOtherAuthSessionsRequest revokes all caller sessions except the current
+// one.
 type RevokeOtherAuthSessionsRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	unknownFields protoimpl.UnknownFields
@@ -694,7 +873,7 @@ type RevokeOtherAuthSessionsRequest struct {
 
 func (x *RevokeOtherAuthSessionsRequest) Reset() {
 	*x = RevokeOtherAuthSessionsRequest{}
-	mi := &file_mycel_client_v1_auth_proto_msgTypes[12]
+	mi := &file_mycel_common_v1_auth_proto_msgTypes[14]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -706,7 +885,7 @@ func (x *RevokeOtherAuthSessionsRequest) String() string {
 func (*RevokeOtherAuthSessionsRequest) ProtoMessage() {}
 
 func (x *RevokeOtherAuthSessionsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_client_v1_auth_proto_msgTypes[12]
+	mi := &file_mycel_common_v1_auth_proto_msgTypes[14]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -719,9 +898,10 @@ func (x *RevokeOtherAuthSessionsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RevokeOtherAuthSessionsRequest.ProtoReflect.Descriptor instead.
 func (*RevokeOtherAuthSessionsRequest) Descriptor() ([]byte, []int) {
-	return file_mycel_client_v1_auth_proto_rawDescGZIP(), []int{12}
+	return file_mycel_common_v1_auth_proto_rawDescGZIP(), []int{14}
 }
 
+// RevokeOtherAuthSessionsResponse reports how many sessions were revoked.
 type RevokeOtherAuthSessionsResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	RevokedCount  int32                  `protobuf:"varint,1,opt,name=revoked_count,json=revokedCount,proto3" json:"revoked_count,omitempty"`
@@ -731,7 +911,7 @@ type RevokeOtherAuthSessionsResponse struct {
 
 func (x *RevokeOtherAuthSessionsResponse) Reset() {
 	*x = RevokeOtherAuthSessionsResponse{}
-	mi := &file_mycel_client_v1_auth_proto_msgTypes[13]
+	mi := &file_mycel_common_v1_auth_proto_msgTypes[15]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -743,7 +923,7 @@ func (x *RevokeOtherAuthSessionsResponse) String() string {
 func (*RevokeOtherAuthSessionsResponse) ProtoMessage() {}
 
 func (x *RevokeOtherAuthSessionsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_client_v1_auth_proto_msgTypes[13]
+	mi := &file_mycel_common_v1_auth_proto_msgTypes[15]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -756,7 +936,7 @@ func (x *RevokeOtherAuthSessionsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RevokeOtherAuthSessionsResponse.ProtoReflect.Descriptor instead.
 func (*RevokeOtherAuthSessionsResponse) Descriptor() ([]byte, []int) {
-	return file_mycel_client_v1_auth_proto_rawDescGZIP(), []int{13}
+	return file_mycel_common_v1_auth_proto_rawDescGZIP(), []int{15}
 }
 
 func (x *RevokeOtherAuthSessionsResponse) GetRevokedCount() int32 {
@@ -766,58 +946,7 @@ func (x *RevokeOtherAuthSessionsResponse) GetRevokedCount() int32 {
 	return 0
 }
 
-type AuthPrincipal struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	UserId        string                 `protobuf:"bytes,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
-	Username      string                 `protobuf:"bytes,2,opt,name=username,proto3" json:"username,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *AuthPrincipal) Reset() {
-	*x = AuthPrincipal{}
-	mi := &file_mycel_client_v1_auth_proto_msgTypes[14]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *AuthPrincipal) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*AuthPrincipal) ProtoMessage() {}
-
-func (x *AuthPrincipal) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_client_v1_auth_proto_msgTypes[14]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use AuthPrincipal.ProtoReflect.Descriptor instead.
-func (*AuthPrincipal) Descriptor() ([]byte, []int) {
-	return file_mycel_client_v1_auth_proto_rawDescGZIP(), []int{14}
-}
-
-func (x *AuthPrincipal) GetUserId() string {
-	if x != nil {
-		return x.UserId
-	}
-	return ""
-}
-
-func (x *AuthPrincipal) GetUsername() string {
-	if x != nil {
-		return x.Username
-	}
-	return ""
-}
-
+// AuthSessionSummary describes a durable auth session.
 type AuthSessionSummary struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	AuthSessionId string                 `protobuf:"bytes,1,opt,name=auth_session_id,json=authSessionId,proto3" json:"auth_session_id,omitempty"`
@@ -826,14 +955,14 @@ type AuthSessionSummary struct {
 	ExpireTime    *timestamppb.Timestamp `protobuf:"bytes,4,opt,name=expire_time,json=expireTime,proto3" json:"expire_time,omitempty"`
 	Current       bool                   `protobuf:"varint,5,opt,name=current,proto3" json:"current,omitempty"`
 	Client        *ClientInfo            `protobuf:"bytes,6,opt,name=client,proto3" json:"client,omitempty"`
-	State         AuthSessionState       `protobuf:"varint,7,opt,name=state,proto3,enum=mycel.client.v1.AuthSessionState" json:"state,omitempty"`
+	State         AuthSessionState       `protobuf:"varint,7,opt,name=state,proto3,enum=mycel.common.v1.AuthSessionState" json:"state,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *AuthSessionSummary) Reset() {
 	*x = AuthSessionSummary{}
-	mi := &file_mycel_client_v1_auth_proto_msgTypes[15]
+	mi := &file_mycel_common_v1_auth_proto_msgTypes[16]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -845,7 +974,7 @@ func (x *AuthSessionSummary) String() string {
 func (*AuthSessionSummary) ProtoMessage() {}
 
 func (x *AuthSessionSummary) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_client_v1_auth_proto_msgTypes[15]
+	mi := &file_mycel_common_v1_auth_proto_msgTypes[16]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -858,7 +987,7 @@ func (x *AuthSessionSummary) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AuthSessionSummary.ProtoReflect.Descriptor instead.
 func (*AuthSessionSummary) Descriptor() ([]byte, []int) {
-	return file_mycel_client_v1_auth_proto_rawDescGZIP(), []int{15}
+	return file_mycel_common_v1_auth_proto_rawDescGZIP(), []int{16}
 }
 
 func (x *AuthSessionSummary) GetAuthSessionId() string {
@@ -910,105 +1039,42 @@ func (x *AuthSessionSummary) GetState() AuthSessionState {
 	return AuthSessionState_AUTH_SESSION_STATE_UNSPECIFIED
 }
 
-type ClientInfo struct {
-	state protoimpl.MessageState `protogen:"open.v1"`
-	// Human-readable client/application name, for example "knot-pkm-client" or
-	// "mycel-cli".
-	Name string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
-	// Client/application version when known.
-	Version string `protobuf:"bytes,2,opt,name=version,proto3" json:"version,omitempty"`
-	// Coarse platform label, for example "web", "go", "cli", "mobile", or
-	// "server".
-	Platform string `protobuf:"bytes,3,opt,name=platform,proto3" json:"platform,omitempty"`
-	// Optional user-visible device/session label. This is client supplied and
-	// should not be used for security decisions.
-	DeviceLabel   string `protobuf:"bytes,4,opt,name=device_label,json=deviceLabel,proto3" json:"device_label,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
+var File_mycel_common_v1_auth_proto protoreflect.FileDescriptor
 
-func (x *ClientInfo) Reset() {
-	*x = ClientInfo{}
-	mi := &file_mycel_client_v1_auth_proto_msgTypes[16]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *ClientInfo) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*ClientInfo) ProtoMessage() {}
-
-func (x *ClientInfo) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_client_v1_auth_proto_msgTypes[16]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use ClientInfo.ProtoReflect.Descriptor instead.
-func (*ClientInfo) Descriptor() ([]byte, []int) {
-	return file_mycel_client_v1_auth_proto_rawDescGZIP(), []int{16}
-}
-
-func (x *ClientInfo) GetName() string {
-	if x != nil {
-		return x.Name
-	}
-	return ""
-}
-
-func (x *ClientInfo) GetVersion() string {
-	if x != nil {
-		return x.Version
-	}
-	return ""
-}
-
-func (x *ClientInfo) GetPlatform() string {
-	if x != nil {
-		return x.Platform
-	}
-	return ""
-}
-
-func (x *ClientInfo) GetDeviceLabel() string {
-	if x != nil {
-		return x.DeviceLabel
-	}
-	return ""
-}
-
-var File_mycel_client_v1_auth_proto protoreflect.FileDescriptor
-
-const file_mycel_client_v1_auth_proto_rawDesc = "" +
+const file_mycel_common_v1_auth_proto_rawDesc = "" +
 	"\n" +
-	"\x1amycel/client/v1/auth.proto\x12\x0fmycel.client.v1\x1a\x1fgoogle/protobuf/timestamp.proto\"{\n" +
+	"\x1amycel/common/v1/auth.proto\x12\x0fmycel.common.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1cmycel/common/v1/access.proto\"\x82\x01\n" +
+	"\rAuthPrincipal\x12!\n" +
+	"\fprincipal_id\x18\x01 \x01(\tR\vprincipalId\x12\x1a\n" +
+	"\busername\x18\x02 \x01(\tR\busername\x122\n" +
+	"\x04type\x18\x03 \x01(\x0e2\x1e.mycel.common.v1.PrincipalTypeR\x04type\"y\n" +
+	"\n" +
+	"ClientInfo\x12\x12\n" +
+	"\x04name\x18\x01 \x01(\tR\x04name\x12\x18\n" +
+	"\aversion\x18\x02 \x01(\tR\aversion\x12\x1a\n" +
+	"\bplatform\x18\x03 \x01(\tR\bplatform\x12!\n" +
+	"\fdevice_label\x18\x04 \x01(\tR\vdeviceLabel\"{\n" +
 	"\fLoginRequest\x12\x1a\n" +
 	"\busername\x18\x01 \x01(\tR\busername\x12\x1a\n" +
 	"\bpassword\x18\x02 \x01(\tR\bpassword\x123\n" +
-	"\x06client\x18\x03 \x01(\v2\x1b.mycel.client.v1.ClientInfoR\x06client\"\x81\x02\n" +
+	"\x06client\x18\x03 \x01(\v2\x1b.mycel.common.v1.ClientInfoR\x06client\"\xa9\x02\n" +
 	"\rLoginResponse\x12!\n" +
 	"\faccess_token\x18\x01 \x01(\tR\vaccessToken\x12S\n" +
 	"\x18access_token_expire_time\x18\x02 \x01(\v2\x1a.google.protobuf.TimestampR\x15accessTokenExpireTime\x12<\n" +
-	"\tprincipal\x18\x03 \x01(\v2\x1e.mycel.client.v1.AuthPrincipalR\tprincipal\x12(\n" +
-	"\rrefresh_token\x18\x04 \x01(\tH\x00R\frefreshToken\x88\x01\x01B\x10\n" +
+	"\tprincipal\x18\x03 \x01(\v2\x1e.mycel.common.v1.AuthPrincipalR\tprincipal\x12(\n" +
+	"\rrefresh_token\x18\x04 \x01(\tH\x00R\frefreshToken\x88\x01\x01\x12&\n" +
+	"\x0fauth_session_id\x18\x05 \x01(\tR\rauthSessionIdB\x10\n" +
 	"\x0e_refresh_token\"\x81\x01\n" +
 	"\x0eRefreshRequest\x12(\n" +
 	"\rrefresh_token\x18\x01 \x01(\tH\x00R\frefreshToken\x88\x01\x01\x123\n" +
-	"\x06client\x18\x02 \x01(\v2\x1b.mycel.client.v1.ClientInfoR\x06clientB\x10\n" +
-	"\x0e_refresh_token\"\x83\x02\n" +
+	"\x06client\x18\x02 \x01(\v2\x1b.mycel.common.v1.ClientInfoR\x06clientB\x10\n" +
+	"\x0e_refresh_token\"\xab\x02\n" +
 	"\x0fRefreshResponse\x12!\n" +
 	"\faccess_token\x18\x01 \x01(\tR\vaccessToken\x12S\n" +
 	"\x18access_token_expire_time\x18\x02 \x01(\v2\x1a.google.protobuf.TimestampR\x15accessTokenExpireTime\x12<\n" +
-	"\tprincipal\x18\x03 \x01(\v2\x1e.mycel.client.v1.AuthPrincipalR\tprincipal\x12(\n" +
-	"\rrefresh_token\x18\x04 \x01(\tH\x00R\frefreshToken\x88\x01\x01B\x10\n" +
+	"\tprincipal\x18\x03 \x01(\v2\x1e.mycel.common.v1.AuthPrincipalR\tprincipal\x12(\n" +
+	"\rrefresh_token\x18\x04 \x01(\tH\x00R\frefreshToken\x88\x01\x01\x12&\n" +
+	"\x0fauth_session_id\x18\x05 \x01(\tR\rauthSessionIdB\x10\n" +
 	"\x0e_refresh_token\"P\n" +
 	"\rLogoutRequest\x12+\n" +
 	"\x0fauth_session_id\x18\x01 \x01(\tH\x00R\rauthSessionId\x88\x01\x01B\x12\n" +
@@ -1016,24 +1082,21 @@ const file_mycel_client_v1_auth_proto_rawDesc = "" +
 	"\x0eLogoutResponse\"\x0f\n" +
 	"\rWhoAmIRequest\"N\n" +
 	"\x0eWhoAmIResponse\x12<\n" +
-	"\tprincipal\x18\x01 \x01(\v2\x1e.mycel.client.v1.AuthPrincipalR\tprincipal\"\x80\x01\n" +
+	"\tprincipal\x18\x01 \x01(\v2\x1e.mycel.common.v1.AuthPrincipalR\tprincipal\"\x80\x01\n" +
 	"\x17ListAuthSessionsRequest\x12\x1b\n" +
 	"\tpage_size\x18\x01 \x01(\x05R\bpageSize\x12\x1d\n" +
 	"\n" +
 	"page_token\x18\x02 \x01(\tR\tpageToken\x12)\n" +
 	"\x10include_inactive\x18\x03 \x01(\bR\x0fincludeInactive\"\x83\x01\n" +
 	"\x18ListAuthSessionsResponse\x12?\n" +
-	"\bsessions\x18\x01 \x03(\v2#.mycel.client.v1.AuthSessionSummaryR\bsessions\x12&\n" +
+	"\bsessions\x18\x01 \x03(\v2#.mycel.common.v1.AuthSessionSummaryR\bsessions\x12&\n" +
 	"\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken\"B\n" +
 	"\x18RevokeAuthSessionRequest\x12&\n" +
 	"\x0fauth_session_id\x18\x01 \x01(\tR\rauthSessionId\"\x1b\n" +
 	"\x19RevokeAuthSessionResponse\" \n" +
 	"\x1eRevokeOtherAuthSessionsRequest\"F\n" +
 	"\x1fRevokeOtherAuthSessionsResponse\x12#\n" +
-	"\rrevoked_count\x18\x01 \x01(\x05R\frevokedCount\"D\n" +
-	"\rAuthPrincipal\x12\x17\n" +
-	"\auser_id\x18\x01 \x01(\tR\x06userId\x12\x1a\n" +
-	"\busername\x18\x02 \x01(\tR\busername\"\x80\x03\n" +
+	"\rrevoked_count\x18\x01 \x01(\x05R\frevokedCount\"\x80\x03\n" +
 	"\x12AuthSessionSummary\x12&\n" +
 	"\x0fauth_session_id\x18\x01 \x01(\tR\rauthSessionId\x12;\n" +
 	"\vcreate_time\x18\x02 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
@@ -1042,124 +1105,121 @@ const file_mycel_client_v1_auth_proto_rawDesc = "" +
 	"\vexpire_time\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
 	"expireTime\x12\x18\n" +
 	"\acurrent\x18\x05 \x01(\bR\acurrent\x123\n" +
-	"\x06client\x18\x06 \x01(\v2\x1b.mycel.client.v1.ClientInfoR\x06client\x127\n" +
-	"\x05state\x18\a \x01(\x0e2!.mycel.client.v1.AuthSessionStateR\x05state\"y\n" +
-	"\n" +
-	"ClientInfo\x12\x12\n" +
-	"\x04name\x18\x01 \x01(\tR\x04name\x12\x18\n" +
-	"\aversion\x18\x02 \x01(\tR\aversion\x12\x1a\n" +
-	"\bplatform\x18\x03 \x01(\tR\bplatform\x12!\n" +
-	"\fdevice_label\x18\x04 \x01(\tR\vdeviceLabel*\x95\x01\n" +
+	"\x06client\x18\x06 \x01(\v2\x1b.mycel.common.v1.ClientInfoR\x06client\x127\n" +
+	"\x05state\x18\a \x01(\x0e2!.mycel.common.v1.AuthSessionStateR\x05state*\x95\x01\n" +
 	"\x10AuthSessionState\x12\"\n" +
 	"\x1eAUTH_SESSION_STATE_UNSPECIFIED\x10\x00\x12\x1d\n" +
 	"\x19AUTH_SESSION_STATE_ACTIVE\x10\x01\x12\x1e\n" +
 	"\x1aAUTH_SESSION_STATE_EXPIRED\x10\x02\x12\x1e\n" +
 	"\x1aAUTH_SESSION_STATE_REVOKED\x10\x032\x8c\x05\n" +
 	"\vAuthService\x12F\n" +
-	"\x05Login\x12\x1d.mycel.client.v1.LoginRequest\x1a\x1e.mycel.client.v1.LoginResponse\x12L\n" +
-	"\aRefresh\x12\x1f.mycel.client.v1.RefreshRequest\x1a .mycel.client.v1.RefreshResponse\x12I\n" +
-	"\x06Logout\x12\x1e.mycel.client.v1.LogoutRequest\x1a\x1f.mycel.client.v1.LogoutResponse\x12I\n" +
-	"\x06WhoAmI\x12\x1e.mycel.client.v1.WhoAmIRequest\x1a\x1f.mycel.client.v1.WhoAmIResponse\x12g\n" +
-	"\x10ListAuthSessions\x12(.mycel.client.v1.ListAuthSessionsRequest\x1a).mycel.client.v1.ListAuthSessionsResponse\x12j\n" +
-	"\x11RevokeAuthSession\x12).mycel.client.v1.RevokeAuthSessionRequest\x1a*.mycel.client.v1.RevokeAuthSessionResponse\x12|\n" +
-	"\x17RevokeOtherAuthSessions\x12/.mycel.client.v1.RevokeOtherAuthSessionsRequest\x1a0.mycel.client.v1.RevokeOtherAuthSessionsResponseB\xbf\x01\n" +
-	"\x13com.mycel.client.v1B\tAuthProtoP\x01Z?github.com/myceldb/mycel-go-sdk/gen/go/mycel/client/v1;clientv1\xa2\x02\x03MCX\xaa\x02\x0fMycel.Client.V1\xca\x02\x0fMycel\\Client\\V1\xe2\x02\x1bMycel\\Client\\V1\\GPBMetadata\xea\x02\x11Mycel::Client::V1b\x06proto3"
+	"\x05Login\x12\x1d.mycel.common.v1.LoginRequest\x1a\x1e.mycel.common.v1.LoginResponse\x12L\n" +
+	"\aRefresh\x12\x1f.mycel.common.v1.RefreshRequest\x1a .mycel.common.v1.RefreshResponse\x12I\n" +
+	"\x06Logout\x12\x1e.mycel.common.v1.LogoutRequest\x1a\x1f.mycel.common.v1.LogoutResponse\x12I\n" +
+	"\x06WhoAmI\x12\x1e.mycel.common.v1.WhoAmIRequest\x1a\x1f.mycel.common.v1.WhoAmIResponse\x12g\n" +
+	"\x10ListAuthSessions\x12(.mycel.common.v1.ListAuthSessionsRequest\x1a).mycel.common.v1.ListAuthSessionsResponse\x12j\n" +
+	"\x11RevokeAuthSession\x12).mycel.common.v1.RevokeAuthSessionRequest\x1a*.mycel.common.v1.RevokeAuthSessionResponse\x12|\n" +
+	"\x17RevokeOtherAuthSessions\x12/.mycel.common.v1.RevokeOtherAuthSessionsRequest\x1a0.mycel.common.v1.RevokeOtherAuthSessionsResponseB\xbf\x01\n" +
+	"\x13com.mycel.common.v1B\tAuthProtoP\x01Z?github.com/myceldb/mycel-go-sdk/gen/go/mycel/common/v1;commonv1\xa2\x02\x03MCX\xaa\x02\x0fMycel.Common.V1\xca\x02\x0fMycel\\Common\\V1\xe2\x02\x1bMycel\\Common\\V1\\GPBMetadata\xea\x02\x11Mycel::Common::V1b\x06proto3"
 
 var (
-	file_mycel_client_v1_auth_proto_rawDescOnce sync.Once
-	file_mycel_client_v1_auth_proto_rawDescData []byte
+	file_mycel_common_v1_auth_proto_rawDescOnce sync.Once
+	file_mycel_common_v1_auth_proto_rawDescData []byte
 )
 
-func file_mycel_client_v1_auth_proto_rawDescGZIP() []byte {
-	file_mycel_client_v1_auth_proto_rawDescOnce.Do(func() {
-		file_mycel_client_v1_auth_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_mycel_client_v1_auth_proto_rawDesc), len(file_mycel_client_v1_auth_proto_rawDesc)))
+func file_mycel_common_v1_auth_proto_rawDescGZIP() []byte {
+	file_mycel_common_v1_auth_proto_rawDescOnce.Do(func() {
+		file_mycel_common_v1_auth_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_mycel_common_v1_auth_proto_rawDesc), len(file_mycel_common_v1_auth_proto_rawDesc)))
 	})
-	return file_mycel_client_v1_auth_proto_rawDescData
+	return file_mycel_common_v1_auth_proto_rawDescData
 }
 
-var file_mycel_client_v1_auth_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
-var file_mycel_client_v1_auth_proto_msgTypes = make([]protoimpl.MessageInfo, 17)
-var file_mycel_client_v1_auth_proto_goTypes = []any{
-	(AuthSessionState)(0),                   // 0: mycel.client.v1.AuthSessionState
-	(*LoginRequest)(nil),                    // 1: mycel.client.v1.LoginRequest
-	(*LoginResponse)(nil),                   // 2: mycel.client.v1.LoginResponse
-	(*RefreshRequest)(nil),                  // 3: mycel.client.v1.RefreshRequest
-	(*RefreshResponse)(nil),                 // 4: mycel.client.v1.RefreshResponse
-	(*LogoutRequest)(nil),                   // 5: mycel.client.v1.LogoutRequest
-	(*LogoutResponse)(nil),                  // 6: mycel.client.v1.LogoutResponse
-	(*WhoAmIRequest)(nil),                   // 7: mycel.client.v1.WhoAmIRequest
-	(*WhoAmIResponse)(nil),                  // 8: mycel.client.v1.WhoAmIResponse
-	(*ListAuthSessionsRequest)(nil),         // 9: mycel.client.v1.ListAuthSessionsRequest
-	(*ListAuthSessionsResponse)(nil),        // 10: mycel.client.v1.ListAuthSessionsResponse
-	(*RevokeAuthSessionRequest)(nil),        // 11: mycel.client.v1.RevokeAuthSessionRequest
-	(*RevokeAuthSessionResponse)(nil),       // 12: mycel.client.v1.RevokeAuthSessionResponse
-	(*RevokeOtherAuthSessionsRequest)(nil),  // 13: mycel.client.v1.RevokeOtherAuthSessionsRequest
-	(*RevokeOtherAuthSessionsResponse)(nil), // 14: mycel.client.v1.RevokeOtherAuthSessionsResponse
-	(*AuthPrincipal)(nil),                   // 15: mycel.client.v1.AuthPrincipal
-	(*AuthSessionSummary)(nil),              // 16: mycel.client.v1.AuthSessionSummary
-	(*ClientInfo)(nil),                      // 17: mycel.client.v1.ClientInfo
-	(*timestamppb.Timestamp)(nil),           // 18: google.protobuf.Timestamp
+var file_mycel_common_v1_auth_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
+var file_mycel_common_v1_auth_proto_msgTypes = make([]protoimpl.MessageInfo, 17)
+var file_mycel_common_v1_auth_proto_goTypes = []any{
+	(AuthSessionState)(0),                   // 0: mycel.common.v1.AuthSessionState
+	(*AuthPrincipal)(nil),                   // 1: mycel.common.v1.AuthPrincipal
+	(*ClientInfo)(nil),                      // 2: mycel.common.v1.ClientInfo
+	(*LoginRequest)(nil),                    // 3: mycel.common.v1.LoginRequest
+	(*LoginResponse)(nil),                   // 4: mycel.common.v1.LoginResponse
+	(*RefreshRequest)(nil),                  // 5: mycel.common.v1.RefreshRequest
+	(*RefreshResponse)(nil),                 // 6: mycel.common.v1.RefreshResponse
+	(*LogoutRequest)(nil),                   // 7: mycel.common.v1.LogoutRequest
+	(*LogoutResponse)(nil),                  // 8: mycel.common.v1.LogoutResponse
+	(*WhoAmIRequest)(nil),                   // 9: mycel.common.v1.WhoAmIRequest
+	(*WhoAmIResponse)(nil),                  // 10: mycel.common.v1.WhoAmIResponse
+	(*ListAuthSessionsRequest)(nil),         // 11: mycel.common.v1.ListAuthSessionsRequest
+	(*ListAuthSessionsResponse)(nil),        // 12: mycel.common.v1.ListAuthSessionsResponse
+	(*RevokeAuthSessionRequest)(nil),        // 13: mycel.common.v1.RevokeAuthSessionRequest
+	(*RevokeAuthSessionResponse)(nil),       // 14: mycel.common.v1.RevokeAuthSessionResponse
+	(*RevokeOtherAuthSessionsRequest)(nil),  // 15: mycel.common.v1.RevokeOtherAuthSessionsRequest
+	(*RevokeOtherAuthSessionsResponse)(nil), // 16: mycel.common.v1.RevokeOtherAuthSessionsResponse
+	(*AuthSessionSummary)(nil),              // 17: mycel.common.v1.AuthSessionSummary
+	(PrincipalType)(0),                      // 18: mycel.common.v1.PrincipalType
+	(*timestamppb.Timestamp)(nil),           // 19: google.protobuf.Timestamp
 }
-var file_mycel_client_v1_auth_proto_depIdxs = []int32{
-	17, // 0: mycel.client.v1.LoginRequest.client:type_name -> mycel.client.v1.ClientInfo
-	18, // 1: mycel.client.v1.LoginResponse.access_token_expire_time:type_name -> google.protobuf.Timestamp
-	15, // 2: mycel.client.v1.LoginResponse.principal:type_name -> mycel.client.v1.AuthPrincipal
-	17, // 3: mycel.client.v1.RefreshRequest.client:type_name -> mycel.client.v1.ClientInfo
-	18, // 4: mycel.client.v1.RefreshResponse.access_token_expire_time:type_name -> google.protobuf.Timestamp
-	15, // 5: mycel.client.v1.RefreshResponse.principal:type_name -> mycel.client.v1.AuthPrincipal
-	15, // 6: mycel.client.v1.WhoAmIResponse.principal:type_name -> mycel.client.v1.AuthPrincipal
-	16, // 7: mycel.client.v1.ListAuthSessionsResponse.sessions:type_name -> mycel.client.v1.AuthSessionSummary
-	18, // 8: mycel.client.v1.AuthSessionSummary.create_time:type_name -> google.protobuf.Timestamp
-	18, // 9: mycel.client.v1.AuthSessionSummary.last_seen_time:type_name -> google.protobuf.Timestamp
-	18, // 10: mycel.client.v1.AuthSessionSummary.expire_time:type_name -> google.protobuf.Timestamp
-	17, // 11: mycel.client.v1.AuthSessionSummary.client:type_name -> mycel.client.v1.ClientInfo
-	0,  // 12: mycel.client.v1.AuthSessionSummary.state:type_name -> mycel.client.v1.AuthSessionState
-	1,  // 13: mycel.client.v1.AuthService.Login:input_type -> mycel.client.v1.LoginRequest
-	3,  // 14: mycel.client.v1.AuthService.Refresh:input_type -> mycel.client.v1.RefreshRequest
-	5,  // 15: mycel.client.v1.AuthService.Logout:input_type -> mycel.client.v1.LogoutRequest
-	7,  // 16: mycel.client.v1.AuthService.WhoAmI:input_type -> mycel.client.v1.WhoAmIRequest
-	9,  // 17: mycel.client.v1.AuthService.ListAuthSessions:input_type -> mycel.client.v1.ListAuthSessionsRequest
-	11, // 18: mycel.client.v1.AuthService.RevokeAuthSession:input_type -> mycel.client.v1.RevokeAuthSessionRequest
-	13, // 19: mycel.client.v1.AuthService.RevokeOtherAuthSessions:input_type -> mycel.client.v1.RevokeOtherAuthSessionsRequest
-	2,  // 20: mycel.client.v1.AuthService.Login:output_type -> mycel.client.v1.LoginResponse
-	4,  // 21: mycel.client.v1.AuthService.Refresh:output_type -> mycel.client.v1.RefreshResponse
-	6,  // 22: mycel.client.v1.AuthService.Logout:output_type -> mycel.client.v1.LogoutResponse
-	8,  // 23: mycel.client.v1.AuthService.WhoAmI:output_type -> mycel.client.v1.WhoAmIResponse
-	10, // 24: mycel.client.v1.AuthService.ListAuthSessions:output_type -> mycel.client.v1.ListAuthSessionsResponse
-	12, // 25: mycel.client.v1.AuthService.RevokeAuthSession:output_type -> mycel.client.v1.RevokeAuthSessionResponse
-	14, // 26: mycel.client.v1.AuthService.RevokeOtherAuthSessions:output_type -> mycel.client.v1.RevokeOtherAuthSessionsResponse
-	20, // [20:27] is the sub-list for method output_type
-	13, // [13:20] is the sub-list for method input_type
-	13, // [13:13] is the sub-list for extension type_name
-	13, // [13:13] is the sub-list for extension extendee
-	0,  // [0:13] is the sub-list for field type_name
+var file_mycel_common_v1_auth_proto_depIdxs = []int32{
+	18, // 0: mycel.common.v1.AuthPrincipal.type:type_name -> mycel.common.v1.PrincipalType
+	2,  // 1: mycel.common.v1.LoginRequest.client:type_name -> mycel.common.v1.ClientInfo
+	19, // 2: mycel.common.v1.LoginResponse.access_token_expire_time:type_name -> google.protobuf.Timestamp
+	1,  // 3: mycel.common.v1.LoginResponse.principal:type_name -> mycel.common.v1.AuthPrincipal
+	2,  // 4: mycel.common.v1.RefreshRequest.client:type_name -> mycel.common.v1.ClientInfo
+	19, // 5: mycel.common.v1.RefreshResponse.access_token_expire_time:type_name -> google.protobuf.Timestamp
+	1,  // 6: mycel.common.v1.RefreshResponse.principal:type_name -> mycel.common.v1.AuthPrincipal
+	1,  // 7: mycel.common.v1.WhoAmIResponse.principal:type_name -> mycel.common.v1.AuthPrincipal
+	17, // 8: mycel.common.v1.ListAuthSessionsResponse.sessions:type_name -> mycel.common.v1.AuthSessionSummary
+	19, // 9: mycel.common.v1.AuthSessionSummary.create_time:type_name -> google.protobuf.Timestamp
+	19, // 10: mycel.common.v1.AuthSessionSummary.last_seen_time:type_name -> google.protobuf.Timestamp
+	19, // 11: mycel.common.v1.AuthSessionSummary.expire_time:type_name -> google.protobuf.Timestamp
+	2,  // 12: mycel.common.v1.AuthSessionSummary.client:type_name -> mycel.common.v1.ClientInfo
+	0,  // 13: mycel.common.v1.AuthSessionSummary.state:type_name -> mycel.common.v1.AuthSessionState
+	3,  // 14: mycel.common.v1.AuthService.Login:input_type -> mycel.common.v1.LoginRequest
+	5,  // 15: mycel.common.v1.AuthService.Refresh:input_type -> mycel.common.v1.RefreshRequest
+	7,  // 16: mycel.common.v1.AuthService.Logout:input_type -> mycel.common.v1.LogoutRequest
+	9,  // 17: mycel.common.v1.AuthService.WhoAmI:input_type -> mycel.common.v1.WhoAmIRequest
+	11, // 18: mycel.common.v1.AuthService.ListAuthSessions:input_type -> mycel.common.v1.ListAuthSessionsRequest
+	13, // 19: mycel.common.v1.AuthService.RevokeAuthSession:input_type -> mycel.common.v1.RevokeAuthSessionRequest
+	15, // 20: mycel.common.v1.AuthService.RevokeOtherAuthSessions:input_type -> mycel.common.v1.RevokeOtherAuthSessionsRequest
+	4,  // 21: mycel.common.v1.AuthService.Login:output_type -> mycel.common.v1.LoginResponse
+	6,  // 22: mycel.common.v1.AuthService.Refresh:output_type -> mycel.common.v1.RefreshResponse
+	8,  // 23: mycel.common.v1.AuthService.Logout:output_type -> mycel.common.v1.LogoutResponse
+	10, // 24: mycel.common.v1.AuthService.WhoAmI:output_type -> mycel.common.v1.WhoAmIResponse
+	12, // 25: mycel.common.v1.AuthService.ListAuthSessions:output_type -> mycel.common.v1.ListAuthSessionsResponse
+	14, // 26: mycel.common.v1.AuthService.RevokeAuthSession:output_type -> mycel.common.v1.RevokeAuthSessionResponse
+	16, // 27: mycel.common.v1.AuthService.RevokeOtherAuthSessions:output_type -> mycel.common.v1.RevokeOtherAuthSessionsResponse
+	21, // [21:28] is the sub-list for method output_type
+	14, // [14:21] is the sub-list for method input_type
+	14, // [14:14] is the sub-list for extension type_name
+	14, // [14:14] is the sub-list for extension extendee
+	0,  // [0:14] is the sub-list for field type_name
 }
 
-func init() { file_mycel_client_v1_auth_proto_init() }
-func file_mycel_client_v1_auth_proto_init() {
-	if File_mycel_client_v1_auth_proto != nil {
+func init() { file_mycel_common_v1_auth_proto_init() }
+func file_mycel_common_v1_auth_proto_init() {
+	if File_mycel_common_v1_auth_proto != nil {
 		return
 	}
-	file_mycel_client_v1_auth_proto_msgTypes[1].OneofWrappers = []any{}
-	file_mycel_client_v1_auth_proto_msgTypes[2].OneofWrappers = []any{}
-	file_mycel_client_v1_auth_proto_msgTypes[3].OneofWrappers = []any{}
-	file_mycel_client_v1_auth_proto_msgTypes[4].OneofWrappers = []any{}
+	file_mycel_common_v1_access_proto_init()
+	file_mycel_common_v1_auth_proto_msgTypes[3].OneofWrappers = []any{}
+	file_mycel_common_v1_auth_proto_msgTypes[4].OneofWrappers = []any{}
+	file_mycel_common_v1_auth_proto_msgTypes[5].OneofWrappers = []any{}
+	file_mycel_common_v1_auth_proto_msgTypes[6].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
-			RawDescriptor: unsafe.Slice(unsafe.StringData(file_mycel_client_v1_auth_proto_rawDesc), len(file_mycel_client_v1_auth_proto_rawDesc)),
+			RawDescriptor: unsafe.Slice(unsafe.StringData(file_mycel_common_v1_auth_proto_rawDesc), len(file_mycel_common_v1_auth_proto_rawDesc)),
 			NumEnums:      1,
 			NumMessages:   17,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
-		GoTypes:           file_mycel_client_v1_auth_proto_goTypes,
-		DependencyIndexes: file_mycel_client_v1_auth_proto_depIdxs,
-		EnumInfos:         file_mycel_client_v1_auth_proto_enumTypes,
-		MessageInfos:      file_mycel_client_v1_auth_proto_msgTypes,
+		GoTypes:           file_mycel_common_v1_auth_proto_goTypes,
+		DependencyIndexes: file_mycel_common_v1_auth_proto_depIdxs,
+		EnumInfos:         file_mycel_common_v1_auth_proto_enumTypes,
+		MessageInfos:      file_mycel_common_v1_auth_proto_msgTypes,
 	}.Build()
-	File_mycel_client_v1_auth_proto = out.File
-	file_mycel_client_v1_auth_proto_goTypes = nil
-	file_mycel_client_v1_auth_proto_depIdxs = nil
+	File_mycel_common_v1_auth_proto = out.File
+	file_mycel_common_v1_auth_proto_goTypes = nil
+	file_mycel_common_v1_auth_proto_depIdxs = nil
 }

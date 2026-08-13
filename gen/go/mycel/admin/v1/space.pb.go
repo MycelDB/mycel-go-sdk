@@ -226,7 +226,7 @@ func (x *AdminSpaceServiceGetSpaceResponse) GetSpace() *v1.Space {
 type CreateSpaceRequest struct {
 	state             protoimpl.MessageState `protogen:"open.v1"`
 	Name              string                 `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
-	OwnerUserId       string                 `protobuf:"bytes,2,opt,name=owner_user_id,json=ownerUserId,proto3" json:"owner_user_id,omitempty"`
+	OwnerPrincipalId  string                 `protobuf:"bytes,2,opt,name=owner_principal_id,json=ownerPrincipalId,proto3" json:"owner_principal_id,omitempty"`
 	OwnerUsername     string                 `protobuf:"bytes,3,opt,name=owner_username,json=ownerUsername,proto3" json:"owner_username,omitempty"`
 	DefaultDomainKey  string                 `protobuf:"bytes,4,opt,name=default_domain_key,json=defaultDomainKey,proto3" json:"default_domain_key,omitempty"`
 	DefaultDomainName string                 `protobuf:"bytes,5,opt,name=default_domain_name,json=defaultDomainName,proto3" json:"default_domain_name,omitempty"`
@@ -271,9 +271,9 @@ func (x *CreateSpaceRequest) GetName() string {
 	return ""
 }
 
-func (x *CreateSpaceRequest) GetOwnerUserId() string {
+func (x *CreateSpaceRequest) GetOwnerPrincipalId() string {
 	if x != nil {
-		return x.OwnerUserId
+		return x.OwnerPrincipalId
 	}
 	return ""
 }
@@ -431,30 +431,30 @@ func (*DeleteSpaceResponse) Descriptor() ([]byte, []int) {
 	return file_mycel_admin_v1_space_proto_rawDescGZIP(), []int{7}
 }
 
-type GrantSpaceUserRequest struct {
+type GrantSpacePrincipalRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	SpaceId       string                 `protobuf:"bytes,1,opt,name=space_id,json=spaceId,proto3" json:"space_id,omitempty"`
-	UserId        string                 `protobuf:"bytes,2,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
+	PrincipalId   string                 `protobuf:"bytes,2,opt,name=principal_id,json=principalId,proto3" json:"principal_id,omitempty"`
 	Username      string                 `protobuf:"bytes,3,opt,name=username,proto3" json:"username,omitempty"`
 	Role          v11.SpaceRole          `protobuf:"varint,4,opt,name=role,proto3,enum=mycel.common.v1.SpaceRole" json:"role,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *GrantSpaceUserRequest) Reset() {
-	*x = GrantSpaceUserRequest{}
+func (x *GrantSpacePrincipalRequest) Reset() {
+	*x = GrantSpacePrincipalRequest{}
 	mi := &file_mycel_admin_v1_space_proto_msgTypes[8]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *GrantSpaceUserRequest) String() string {
+func (x *GrantSpacePrincipalRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*GrantSpaceUserRequest) ProtoMessage() {}
+func (*GrantSpacePrincipalRequest) ProtoMessage() {}
 
-func (x *GrantSpaceUserRequest) ProtoReflect() protoreflect.Message {
+func (x *GrantSpacePrincipalRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_mycel_admin_v1_space_proto_msgTypes[8]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -466,60 +466,60 @@ func (x *GrantSpaceUserRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use GrantSpaceUserRequest.ProtoReflect.Descriptor instead.
-func (*GrantSpaceUserRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use GrantSpacePrincipalRequest.ProtoReflect.Descriptor instead.
+func (*GrantSpacePrincipalRequest) Descriptor() ([]byte, []int) {
 	return file_mycel_admin_v1_space_proto_rawDescGZIP(), []int{8}
 }
 
-func (x *GrantSpaceUserRequest) GetSpaceId() string {
+func (x *GrantSpacePrincipalRequest) GetSpaceId() string {
 	if x != nil {
 		return x.SpaceId
 	}
 	return ""
 }
 
-func (x *GrantSpaceUserRequest) GetUserId() string {
+func (x *GrantSpacePrincipalRequest) GetPrincipalId() string {
 	if x != nil {
-		return x.UserId
+		return x.PrincipalId
 	}
 	return ""
 }
 
-func (x *GrantSpaceUserRequest) GetUsername() string {
+func (x *GrantSpacePrincipalRequest) GetUsername() string {
 	if x != nil {
 		return x.Username
 	}
 	return ""
 }
 
-func (x *GrantSpaceUserRequest) GetRole() v11.SpaceRole {
+func (x *GrantSpacePrincipalRequest) GetRole() v11.SpaceRole {
 	if x != nil {
 		return x.Role
 	}
 	return v11.SpaceRole(0)
 }
 
-type GrantSpaceUserResponse struct {
+type GrantSpacePrincipalResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Grant         *v11.AccessGrant       `protobuf:"bytes,1,opt,name=grant,proto3" json:"grant,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *GrantSpaceUserResponse) Reset() {
-	*x = GrantSpaceUserResponse{}
+func (x *GrantSpacePrincipalResponse) Reset() {
+	*x = GrantSpacePrincipalResponse{}
 	mi := &file_mycel_admin_v1_space_proto_msgTypes[9]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *GrantSpaceUserResponse) String() string {
+func (x *GrantSpacePrincipalResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*GrantSpaceUserResponse) ProtoMessage() {}
+func (*GrantSpacePrincipalResponse) ProtoMessage() {}
 
-func (x *GrantSpaceUserResponse) ProtoReflect() protoreflect.Message {
+func (x *GrantSpacePrincipalResponse) ProtoReflect() protoreflect.Message {
 	mi := &file_mycel_admin_v1_space_proto_msgTypes[9]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -531,12 +531,12 @@ func (x *GrantSpaceUserResponse) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use GrantSpaceUserResponse.ProtoReflect.Descriptor instead.
-func (*GrantSpaceUserResponse) Descriptor() ([]byte, []int) {
+// Deprecated: Use GrantSpacePrincipalResponse.ProtoReflect.Descriptor instead.
+func (*GrantSpacePrincipalResponse) Descriptor() ([]byte, []int) {
 	return file_mycel_admin_v1_space_proto_rawDescGZIP(), []int{9}
 }
 
-func (x *GrantSpaceUserResponse) GetGrant() *v11.AccessGrant {
+func (x *GrantSpacePrincipalResponse) GetGrant() *v11.AccessGrant {
 	if x != nil {
 		return x.Grant
 	}
@@ -559,10 +559,10 @@ const file_mycel_admin_v1_space_proto_rawDesc = "" +
 	" AdminSpaceServiceGetSpaceRequest\x12\x19\n" +
 	"\bspace_id\x18\x01 \x01(\tR\aspaceId\"Q\n" +
 	"!AdminSpaceServiceGetSpaceResponse\x12,\n" +
-	"\x05space\x18\x01 \x01(\v2\x16.mycel.client.v1.SpaceR\x05space\"\xd1\x01\n" +
+	"\x05space\x18\x01 \x01(\v2\x16.mycel.client.v1.SpaceR\x05space\"\xdb\x01\n" +
 	"\x12CreateSpaceRequest\x12\x12\n" +
-	"\x04name\x18\x01 \x01(\tR\x04name\x12\"\n" +
-	"\rowner_user_id\x18\x02 \x01(\tR\vownerUserId\x12%\n" +
+	"\x04name\x18\x01 \x01(\tR\x04name\x12,\n" +
+	"\x12owner_principal_id\x18\x02 \x01(\tR\x10ownerPrincipalId\x12%\n" +
 	"\x0eowner_username\x18\x03 \x01(\tR\rownerUsername\x12,\n" +
 	"\x12default_domain_key\x18\x04 \x01(\tR\x10defaultDomainKey\x12.\n" +
 	"\x13default_domain_name\x18\x05 \x01(\tR\x11defaultDomainName\"o\n" +
@@ -571,21 +571,21 @@ const file_mycel_admin_v1_space_proto_rawDesc = "" +
 	"\x11default_domain_id\x18\x02 \x01(\tR\x0fdefaultDomainId\"/\n" +
 	"\x12DeleteSpaceRequest\x12\x19\n" +
 	"\bspace_id\x18\x01 \x01(\tR\aspaceId\"\x15\n" +
-	"\x13DeleteSpaceResponse\"\x97\x01\n" +
-	"\x15GrantSpaceUserRequest\x12\x19\n" +
-	"\bspace_id\x18\x01 \x01(\tR\aspaceId\x12\x17\n" +
-	"\auser_id\x18\x02 \x01(\tR\x06userId\x12\x1a\n" +
+	"\x13DeleteSpaceResponse\"\xa6\x01\n" +
+	"\x1aGrantSpacePrincipalRequest\x12\x19\n" +
+	"\bspace_id\x18\x01 \x01(\tR\aspaceId\x12!\n" +
+	"\fprincipal_id\x18\x02 \x01(\tR\vprincipalId\x12\x1a\n" +
 	"\busername\x18\x03 \x01(\tR\busername\x12.\n" +
-	"\x04role\x18\x04 \x01(\x0e2\x1a.mycel.common.v1.SpaceRoleR\x04role\"L\n" +
-	"\x16GrantSpaceUserResponse\x122\n" +
-	"\x05grant\x18\x01 \x01(\v2\x1c.mycel.common.v1.AccessGrantR\x05grant2\x8c\x04\n" +
+	"\x04role\x18\x04 \x01(\x0e2\x1a.mycel.common.v1.SpaceRoleR\x04role\"Q\n" +
+	"\x1bGrantSpacePrincipalResponse\x122\n" +
+	"\x05grant\x18\x01 \x01(\v2\x1c.mycel.common.v1.AccessGrantR\x05grant2\x9b\x04\n" +
 	"\x11AdminSpaceService\x12u\n" +
 	"\n" +
 	"ListSpaces\x122.mycel.admin.v1.AdminSpaceServiceListSpacesRequest\x1a3.mycel.admin.v1.AdminSpaceServiceListSpacesResponse\x12o\n" +
 	"\bGetSpace\x120.mycel.admin.v1.AdminSpaceServiceGetSpaceRequest\x1a1.mycel.admin.v1.AdminSpaceServiceGetSpaceResponse\x12V\n" +
 	"\vCreateSpace\x12\".mycel.admin.v1.CreateSpaceRequest\x1a#.mycel.admin.v1.CreateSpaceResponse\x12V\n" +
-	"\vDeleteSpace\x12\".mycel.admin.v1.DeleteSpaceRequest\x1a#.mycel.admin.v1.DeleteSpaceResponse\x12_\n" +
-	"\x0eGrantSpaceUser\x12%.mycel.admin.v1.GrantSpaceUserRequest\x1a&.mycel.admin.v1.GrantSpaceUserResponseB\xb9\x01\n" +
+	"\vDeleteSpace\x12\".mycel.admin.v1.DeleteSpaceRequest\x1a#.mycel.admin.v1.DeleteSpaceResponse\x12n\n" +
+	"\x13GrantSpacePrincipal\x12*.mycel.admin.v1.GrantSpacePrincipalRequest\x1a+.mycel.admin.v1.GrantSpacePrincipalResponseB\xb9\x01\n" +
 	"\x12com.mycel.admin.v1B\n" +
 	"SpaceProtoP\x01Z=github.com/myceldb/mycel-go-sdk/gen/go/mycel/admin/v1;adminv1\xa2\x02\x03MAX\xaa\x02\x0eMycel.Admin.V1\xca\x02\x0eMycel\\Admin\\V1\xe2\x02\x1aMycel\\Admin\\V1\\GPBMetadata\xea\x02\x10Mycel::Admin::V1b\x06proto3"
 
@@ -611,8 +611,8 @@ var file_mycel_admin_v1_space_proto_goTypes = []any{
 	(*CreateSpaceResponse)(nil),                 // 5: mycel.admin.v1.CreateSpaceResponse
 	(*DeleteSpaceRequest)(nil),                  // 6: mycel.admin.v1.DeleteSpaceRequest
 	(*DeleteSpaceResponse)(nil),                 // 7: mycel.admin.v1.DeleteSpaceResponse
-	(*GrantSpaceUserRequest)(nil),               // 8: mycel.admin.v1.GrantSpaceUserRequest
-	(*GrantSpaceUserResponse)(nil),              // 9: mycel.admin.v1.GrantSpaceUserResponse
+	(*GrantSpacePrincipalRequest)(nil),          // 8: mycel.admin.v1.GrantSpacePrincipalRequest
+	(*GrantSpacePrincipalResponse)(nil),         // 9: mycel.admin.v1.GrantSpacePrincipalResponse
 	(*v1.Space)(nil),                            // 10: mycel.client.v1.Space
 	(v11.SpaceRole)(0),                          // 11: mycel.common.v1.SpaceRole
 	(*v11.AccessGrant)(nil),                     // 12: mycel.common.v1.AccessGrant
@@ -621,18 +621,18 @@ var file_mycel_admin_v1_space_proto_depIdxs = []int32{
 	10, // 0: mycel.admin.v1.AdminSpaceServiceListSpacesResponse.spaces:type_name -> mycel.client.v1.Space
 	10, // 1: mycel.admin.v1.AdminSpaceServiceGetSpaceResponse.space:type_name -> mycel.client.v1.Space
 	10, // 2: mycel.admin.v1.CreateSpaceResponse.space:type_name -> mycel.client.v1.Space
-	11, // 3: mycel.admin.v1.GrantSpaceUserRequest.role:type_name -> mycel.common.v1.SpaceRole
-	12, // 4: mycel.admin.v1.GrantSpaceUserResponse.grant:type_name -> mycel.common.v1.AccessGrant
+	11, // 3: mycel.admin.v1.GrantSpacePrincipalRequest.role:type_name -> mycel.common.v1.SpaceRole
+	12, // 4: mycel.admin.v1.GrantSpacePrincipalResponse.grant:type_name -> mycel.common.v1.AccessGrant
 	0,  // 5: mycel.admin.v1.AdminSpaceService.ListSpaces:input_type -> mycel.admin.v1.AdminSpaceServiceListSpacesRequest
 	2,  // 6: mycel.admin.v1.AdminSpaceService.GetSpace:input_type -> mycel.admin.v1.AdminSpaceServiceGetSpaceRequest
 	4,  // 7: mycel.admin.v1.AdminSpaceService.CreateSpace:input_type -> mycel.admin.v1.CreateSpaceRequest
 	6,  // 8: mycel.admin.v1.AdminSpaceService.DeleteSpace:input_type -> mycel.admin.v1.DeleteSpaceRequest
-	8,  // 9: mycel.admin.v1.AdminSpaceService.GrantSpaceUser:input_type -> mycel.admin.v1.GrantSpaceUserRequest
+	8,  // 9: mycel.admin.v1.AdminSpaceService.GrantSpacePrincipal:input_type -> mycel.admin.v1.GrantSpacePrincipalRequest
 	1,  // 10: mycel.admin.v1.AdminSpaceService.ListSpaces:output_type -> mycel.admin.v1.AdminSpaceServiceListSpacesResponse
 	3,  // 11: mycel.admin.v1.AdminSpaceService.GetSpace:output_type -> mycel.admin.v1.AdminSpaceServiceGetSpaceResponse
 	5,  // 12: mycel.admin.v1.AdminSpaceService.CreateSpace:output_type -> mycel.admin.v1.CreateSpaceResponse
 	7,  // 13: mycel.admin.v1.AdminSpaceService.DeleteSpace:output_type -> mycel.admin.v1.DeleteSpaceResponse
-	9,  // 14: mycel.admin.v1.AdminSpaceService.GrantSpaceUser:output_type -> mycel.admin.v1.GrantSpaceUserResponse
+	9,  // 14: mycel.admin.v1.AdminSpaceService.GrantSpacePrincipal:output_type -> mycel.admin.v1.GrantSpacePrincipalResponse
 	10, // [10:15] is the sub-list for method output_type
 	5,  // [5:10] is the sub-list for method input_type
 	5,  // [5:5] is the sub-list for extension type_name

@@ -26,24 +26,24 @@ type PrincipalType int32
 
 const (
 	PrincipalType_PRINCIPAL_TYPE_UNSPECIFIED PrincipalType = 0
-	PrincipalType_PRINCIPAL_TYPE_USER        PrincipalType = 1
 	PrincipalType_PRINCIPAL_TYPE_SYSTEM      PrincipalType = 2
-	PrincipalType_PRINCIPAL_TYPE_OPERATOR    PrincipalType = 3
+	PrincipalType_PRINCIPAL_TYPE_HUMAN       PrincipalType = 4
+	PrincipalType_PRINCIPAL_TYPE_SERVICE     PrincipalType = 5
 )
 
 // Enum value maps for PrincipalType.
 var (
 	PrincipalType_name = map[int32]string{
 		0: "PRINCIPAL_TYPE_UNSPECIFIED",
-		1: "PRINCIPAL_TYPE_USER",
 		2: "PRINCIPAL_TYPE_SYSTEM",
-		3: "PRINCIPAL_TYPE_OPERATOR",
+		4: "PRINCIPAL_TYPE_HUMAN",
+		5: "PRINCIPAL_TYPE_SERVICE",
 	}
 	PrincipalType_value = map[string]int32{
 		"PRINCIPAL_TYPE_UNSPECIFIED": 0,
-		"PRINCIPAL_TYPE_USER":        1,
 		"PRINCIPAL_TYPE_SYSTEM":      2,
-		"PRINCIPAL_TYPE_OPERATOR":    3,
+		"PRINCIPAL_TYPE_HUMAN":       4,
+		"PRINCIPAL_TYPE_SERVICE":     5,
 	}
 )
 
@@ -108,14 +108,16 @@ const (
 	// Query and semantic capabilities.
 	Capability_CAPABILITY_QUERY_RUN       Capability = 120
 	Capability_CAPABILITY_SEMANTIC_SEARCH Capability = 121
-	// Admin capabilities.
-	Capability_CAPABILITY_USER_CREATE           Capability = 140
-	Capability_CAPABILITY_USER_MANAGE           Capability = 141
-	Capability_CAPABILITY_OPERATOR_CREATE       Capability = 142
-	Capability_CAPABILITY_OPERATOR_MANAGE       Capability = 143
-	Capability_CAPABILITY_DAEMON_CONFIGURE      Capability = 144
-	Capability_CAPABILITY_MESH_MANAGE           Capability = 145
-	Capability_CAPABILITY_USER_SESSION_DELEGATE Capability = 146
+	// Identity/control-plane capabilities.
+	Capability_CAPABILITY_DAEMON_CONFIGURE          Capability = 144
+	Capability_CAPABILITY_MESH_MANAGE               Capability = 145
+	Capability_CAPABILITY_IDENTITY_PRINCIPAL_READ   Capability = 147
+	Capability_CAPABILITY_IDENTITY_PRINCIPAL_CREATE Capability = 148
+	Capability_CAPABILITY_IDENTITY_PRINCIPAL_UPDATE Capability = 149
+	Capability_CAPABILITY_IDENTITY_CREDENTIAL_SET   Capability = 150
+	Capability_CAPABILITY_IDENTITY_SESSION_DELEGATE Capability = 151
+	Capability_CAPABILITY_IDENTITY_SESSION_MANAGE   Capability = 152
+	Capability_CAPABILITY_IDENTITY_GRANT_MANAGE     Capability = 153
 	// System capabilities used by daemon/system internals.
 	Capability_CAPABILITY_SYSTEM_COMPACT_SPACE    Capability = 160
 	Capability_CAPABILITY_SYSTEM_MAINTAIN_SPACE   Capability = 161
@@ -149,53 +151,57 @@ var (
 		101: "CAPABILITY_METADATA_WRITE",
 		120: "CAPABILITY_QUERY_RUN",
 		121: "CAPABILITY_SEMANTIC_SEARCH",
-		140: "CAPABILITY_USER_CREATE",
-		141: "CAPABILITY_USER_MANAGE",
-		142: "CAPABILITY_OPERATOR_CREATE",
-		143: "CAPABILITY_OPERATOR_MANAGE",
 		144: "CAPABILITY_DAEMON_CONFIGURE",
 		145: "CAPABILITY_MESH_MANAGE",
-		146: "CAPABILITY_USER_SESSION_DELEGATE",
+		147: "CAPABILITY_IDENTITY_PRINCIPAL_READ",
+		148: "CAPABILITY_IDENTITY_PRINCIPAL_CREATE",
+		149: "CAPABILITY_IDENTITY_PRINCIPAL_UPDATE",
+		150: "CAPABILITY_IDENTITY_CREDENTIAL_SET",
+		151: "CAPABILITY_IDENTITY_SESSION_DELEGATE",
+		152: "CAPABILITY_IDENTITY_SESSION_MANAGE",
+		153: "CAPABILITY_IDENTITY_GRANT_MANAGE",
 		160: "CAPABILITY_SYSTEM_COMPACT_SPACE",
 		161: "CAPABILITY_SYSTEM_MAINTAIN_SPACE",
 		162: "CAPABILITY_SYSTEM_BACKUP_SPACE",
 		163: "CAPABILITY_SYSTEM_REPLICATE_ACCESS",
 	}
 	Capability_value = map[string]int32{
-		"CAPABILITY_UNSPECIFIED":             0,
-		"CAPABILITY_SPACE_READ":              1,
-		"CAPABILITY_SPACE_UPDATE":            2,
-		"CAPABILITY_SPACE_MANAGE_ACCESS":     3,
-		"CAPABILITY_SPACE_ARCHIVE":           4,
-		"CAPABILITY_SPACE_DELETE":            5,
-		"CAPABILITY_SPACE_CREATE":            6,
-		"CAPABILITY_DOMAIN_READ":             20,
-		"CAPABILITY_DOMAIN_CREATE":           21,
-		"CAPABILITY_DOMAIN_UPDATE":           22,
-		"CAPABILITY_DOMAIN_DELETE":           23,
-		"CAPABILITY_GRAPH_READ":              40,
-		"CAPABILITY_GRAPH_WRITE":             41,
-		"CAPABILITY_GRAPH_DELETE":            42,
-		"CAPABILITY_TEMPLATE_READ":           60,
-		"CAPABILITY_TEMPLATE_MANAGE":         61,
-		"CAPABILITY_BLOB_READ":               80,
-		"CAPABILITY_BLOB_WRITE":              81,
-		"CAPABILITY_BLOB_DELETE":             82,
-		"CAPABILITY_METADATA_READ":           100,
-		"CAPABILITY_METADATA_WRITE":          101,
-		"CAPABILITY_QUERY_RUN":               120,
-		"CAPABILITY_SEMANTIC_SEARCH":         121,
-		"CAPABILITY_USER_CREATE":             140,
-		"CAPABILITY_USER_MANAGE":             141,
-		"CAPABILITY_OPERATOR_CREATE":         142,
-		"CAPABILITY_OPERATOR_MANAGE":         143,
-		"CAPABILITY_DAEMON_CONFIGURE":        144,
-		"CAPABILITY_MESH_MANAGE":             145,
-		"CAPABILITY_USER_SESSION_DELEGATE":   146,
-		"CAPABILITY_SYSTEM_COMPACT_SPACE":    160,
-		"CAPABILITY_SYSTEM_MAINTAIN_SPACE":   161,
-		"CAPABILITY_SYSTEM_BACKUP_SPACE":     162,
-		"CAPABILITY_SYSTEM_REPLICATE_ACCESS": 163,
+		"CAPABILITY_UNSPECIFIED":               0,
+		"CAPABILITY_SPACE_READ":                1,
+		"CAPABILITY_SPACE_UPDATE":              2,
+		"CAPABILITY_SPACE_MANAGE_ACCESS":       3,
+		"CAPABILITY_SPACE_ARCHIVE":             4,
+		"CAPABILITY_SPACE_DELETE":              5,
+		"CAPABILITY_SPACE_CREATE":              6,
+		"CAPABILITY_DOMAIN_READ":               20,
+		"CAPABILITY_DOMAIN_CREATE":             21,
+		"CAPABILITY_DOMAIN_UPDATE":             22,
+		"CAPABILITY_DOMAIN_DELETE":             23,
+		"CAPABILITY_GRAPH_READ":                40,
+		"CAPABILITY_GRAPH_WRITE":               41,
+		"CAPABILITY_GRAPH_DELETE":              42,
+		"CAPABILITY_TEMPLATE_READ":             60,
+		"CAPABILITY_TEMPLATE_MANAGE":           61,
+		"CAPABILITY_BLOB_READ":                 80,
+		"CAPABILITY_BLOB_WRITE":                81,
+		"CAPABILITY_BLOB_DELETE":               82,
+		"CAPABILITY_METADATA_READ":             100,
+		"CAPABILITY_METADATA_WRITE":            101,
+		"CAPABILITY_QUERY_RUN":                 120,
+		"CAPABILITY_SEMANTIC_SEARCH":           121,
+		"CAPABILITY_DAEMON_CONFIGURE":          144,
+		"CAPABILITY_MESH_MANAGE":               145,
+		"CAPABILITY_IDENTITY_PRINCIPAL_READ":   147,
+		"CAPABILITY_IDENTITY_PRINCIPAL_CREATE": 148,
+		"CAPABILITY_IDENTITY_PRINCIPAL_UPDATE": 149,
+		"CAPABILITY_IDENTITY_CREDENTIAL_SET":   150,
+		"CAPABILITY_IDENTITY_SESSION_DELEGATE": 151,
+		"CAPABILITY_IDENTITY_SESSION_MANAGE":   152,
+		"CAPABILITY_IDENTITY_GRANT_MANAGE":     153,
+		"CAPABILITY_SYSTEM_COMPACT_SPACE":      160,
+		"CAPABILITY_SYSTEM_MAINTAIN_SPACE":     161,
+		"CAPABILITY_SYSTEM_BACKUP_SPACE":       162,
+		"CAPABILITY_SYSTEM_REPLICATE_ACCESS":   163,
 	}
 )
 
@@ -392,8 +398,8 @@ func (SpaceRole) EnumDescriptor() ([]byte, []int) {
 
 // Principal identifies an actor that can own resources or receive access.
 //
-// Initial v1 principal types are user, operator, and system. Apps/service
-// accounts are represented as users for the initial daemon API.
+// Principal types describe the actor shape. Administration is represented by
+// roles and capabilities, not by a separate operator identity species.
 type Principal struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	Type  PrincipalType          `protobuf:"varint,1,opt,name=type,proto3,enum=mycel.common.v1.PrincipalType" json:"type,omitempty"`
@@ -698,12 +704,13 @@ const file_mycel_common_v1_access_proto_rawDesc = "" +
 	"\vcreate_time\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
 	"createTime\x12;\n" +
 	"\vupdate_time\x18\a \x01(\v2\x1a.google.protobuf.TimestampR\n" +
-	"updateTime*\x80\x01\n" +
+	"updateTime*\xba\x01\n" +
 	"\rPrincipalType\x12\x1e\n" +
-	"\x1aPRINCIPAL_TYPE_UNSPECIFIED\x10\x00\x12\x17\n" +
-	"\x13PRINCIPAL_TYPE_USER\x10\x01\x12\x19\n" +
-	"\x15PRINCIPAL_TYPE_SYSTEM\x10\x02\x12\x1b\n" +
-	"\x17PRINCIPAL_TYPE_OPERATOR\x10\x03*\xa9\b\n" +
+	"\x1aPRINCIPAL_TYPE_UNSPECIFIED\x10\x00\x12\x19\n" +
+	"\x15PRINCIPAL_TYPE_SYSTEM\x10\x02\x12\x18\n" +
+	"\x14PRINCIPAL_TYPE_HUMAN\x10\x04\x12\x1a\n" +
+	"\x16PRINCIPAL_TYPE_SERVICE\x10\x05\"\x04\b\x01\x10\x01\"\x04\b\x03\x10\x03*\x13PRINCIPAL_TYPE_USER*\x17PRINCIPAL_TYPE_OPERATOR*\xc3\n" +
+	"\n" +
 	"\n" +
 	"Capability\x12\x1a\n" +
 	"\x16CAPABILITY_UNSPECIFIED\x10\x00\x12\x19\n" +
@@ -728,18 +735,20 @@ const file_mycel_common_v1_access_proto_rawDesc = "" +
 	"\x18CAPABILITY_METADATA_READ\x10d\x12\x1d\n" +
 	"\x19CAPABILITY_METADATA_WRITE\x10e\x12\x18\n" +
 	"\x14CAPABILITY_QUERY_RUN\x10x\x12\x1e\n" +
-	"\x1aCAPABILITY_SEMANTIC_SEARCH\x10y\x12\x1b\n" +
-	"\x16CAPABILITY_USER_CREATE\x10\x8c\x01\x12\x1b\n" +
-	"\x16CAPABILITY_USER_MANAGE\x10\x8d\x01\x12\x1f\n" +
-	"\x1aCAPABILITY_OPERATOR_CREATE\x10\x8e\x01\x12\x1f\n" +
-	"\x1aCAPABILITY_OPERATOR_MANAGE\x10\x8f\x01\x12 \n" +
+	"\x1aCAPABILITY_SEMANTIC_SEARCH\x10y\x12 \n" +
 	"\x1bCAPABILITY_DAEMON_CONFIGURE\x10\x90\x01\x12\x1b\n" +
-	"\x16CAPABILITY_MESH_MANAGE\x10\x91\x01\x12%\n" +
-	" CAPABILITY_USER_SESSION_DELEGATE\x10\x92\x01\x12$\n" +
+	"\x16CAPABILITY_MESH_MANAGE\x10\x91\x01\x12'\n" +
+	"\"CAPABILITY_IDENTITY_PRINCIPAL_READ\x10\x93\x01\x12)\n" +
+	"$CAPABILITY_IDENTITY_PRINCIPAL_CREATE\x10\x94\x01\x12)\n" +
+	"$CAPABILITY_IDENTITY_PRINCIPAL_UPDATE\x10\x95\x01\x12'\n" +
+	"\"CAPABILITY_IDENTITY_CREDENTIAL_SET\x10\x96\x01\x12)\n" +
+	"$CAPABILITY_IDENTITY_SESSION_DELEGATE\x10\x97\x01\x12'\n" +
+	"\"CAPABILITY_IDENTITY_SESSION_MANAGE\x10\x98\x01\x12%\n" +
+	" CAPABILITY_IDENTITY_GRANT_MANAGE\x10\x99\x01\x12$\n" +
 	"\x1fCAPABILITY_SYSTEM_COMPACT_SPACE\x10\xa0\x01\x12%\n" +
 	" CAPABILITY_SYSTEM_MAINTAIN_SPACE\x10\xa1\x01\x12#\n" +
 	"\x1eCAPABILITY_SYSTEM_BACKUP_SPACE\x10\xa2\x01\x12'\n" +
-	"\"CAPABILITY_SYSTEM_REPLICATE_ACCESS\x10\xa3\x01*\x8c\x01\n" +
+	"\"CAPABILITY_SYSTEM_REPLICATE_ACCESS\x10\xa3\x01\"\x06\b\x8c\x01\x10\x8f\x01\"\x06\b\x92\x01\x10\x92\x01*\x16CAPABILITY_USER_CREATE*\x16CAPABILITY_USER_MANAGE*\x1aCAPABILITY_OPERATOR_CREATE*\x1aCAPABILITY_OPERATOR_MANAGE* CAPABILITY_USER_SESSION_DELEGATE*\x8c\x01\n" +
 	"\x10CapabilityBucket\x12!\n" +
 	"\x1dCAPABILITY_BUCKET_UNSPECIFIED\x10\x00\x12\x1a\n" +
 	"\x16CAPABILITY_BUCKET_USER\x10\x01\x12\x1b\n" +

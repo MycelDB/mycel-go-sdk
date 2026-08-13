@@ -99,7 +99,7 @@ admin, err := mycel.DialAdmin(ctx, mycel.Config{
 })
 ```
 
-`Dial` and `DialAdmin` store access-token expiry and refresh tokens returned by login. Before protected RPCs, the SDK refreshes near-expiry tokens automatically. If a protected unary RPC or stream setup fails with `Unauthenticated` because the access token is expired, the SDK refreshes once and retries once. You can also call `Refresh`, `RefreshOperator`, `Logout`, or `LogoutOperator` directly.
+`Dial` and `DialAdmin` store access-token expiry and refresh tokens returned by login. Before protected RPCs, the SDK refreshes near-expiry tokens automatically. If a protected unary RPC or stream setup fails with `Unauthenticated` because the access token is expired, the SDK refreshes once and retries once. You can also call `Refresh`, `Refresh`, `Logout`, or `Logout` directly.
 
 Transaction operation IDs can be generated client-side and passed when beginning a transaction. They are correlation metadata only, not idempotency keys:
 
