@@ -19,1019 +19,1707 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	AdminInferenceService_ApplyInferencePackage_FullMethodName             = "/mycel.admin.v1.AdminInferenceService/ApplyInferencePackage"
-	AdminInferenceService_ListInferencePackages_FullMethodName             = "/mycel.admin.v1.AdminInferenceService/ListInferencePackages"
-	AdminInferenceService_ListModelEndpoints_FullMethodName                = "/mycel.admin.v1.AdminInferenceService/ListModelEndpoints"
-	AdminInferenceService_ListModels_FullMethodName                        = "/mycel.admin.v1.AdminInferenceService/ListModels"
-	AdminInferenceService_ListVectorStores_FullMethodName                  = "/mycel.admin.v1.AdminInferenceService/ListVectorStores"
-	AdminInferenceService_ListModelEndpointCapabilities_FullMethodName     = "/mycel.admin.v1.AdminInferenceService/ListModelEndpointCapabilities"
-	AdminInferenceService_CreateCredential_FullMethodName                  = "/mycel.admin.v1.AdminInferenceService/CreateCredential"
-	AdminInferenceService_ListCredentials_FullMethodName                   = "/mycel.admin.v1.AdminInferenceService/ListCredentials"
-	AdminInferenceService_CreateCredentialGrant_FullMethodName             = "/mycel.admin.v1.AdminInferenceService/CreateCredentialGrant"
-	AdminInferenceService_ListCredentialGrants_FullMethodName              = "/mycel.admin.v1.AdminInferenceService/ListCredentialGrants"
-	AdminInferenceService_CreateInferencePolicy_FullMethodName             = "/mycel.admin.v1.AdminInferenceService/CreateInferencePolicy"
-	AdminInferenceService_ListInferencePolicies_FullMethodName             = "/mycel.admin.v1.AdminInferenceService/ListInferencePolicies"
-	AdminInferenceService_SetModelEndpointEnabled_FullMethodName           = "/mycel.admin.v1.AdminInferenceService/SetModelEndpointEnabled"
-	AdminInferenceService_SetVectorStoreEnabled_FullMethodName             = "/mycel.admin.v1.AdminInferenceService/SetVectorStoreEnabled"
-	AdminInferenceService_SetModelEndpointCapabilityEnabled_FullMethodName = "/mycel.admin.v1.AdminInferenceService/SetModelEndpointCapabilityEnabled"
-	AdminInferenceService_SetCredentialStatus_FullMethodName               = "/mycel.admin.v1.AdminInferenceService/SetCredentialStatus"
-	AdminInferenceService_ExpireCredentialGrant_FullMethodName             = "/mycel.admin.v1.AdminInferenceService/ExpireCredentialGrant"
-	AdminInferenceService_ExpireInferencePolicy_FullMethodName             = "/mycel.admin.v1.AdminInferenceService/ExpireInferencePolicy"
-	AdminInferenceService_DeleteModelEndpoint_FullMethodName               = "/mycel.admin.v1.AdminInferenceService/DeleteModelEndpoint"
-	AdminInferenceService_DeleteModel_FullMethodName                       = "/mycel.admin.v1.AdminInferenceService/DeleteModel"
-	AdminInferenceService_DeleteVectorStore_FullMethodName                 = "/mycel.admin.v1.AdminInferenceService/DeleteVectorStore"
-	AdminInferenceService_DeleteModelEndpointCapability_FullMethodName     = "/mycel.admin.v1.AdminInferenceService/DeleteModelEndpointCapability"
-	AdminInferenceService_DeleteCredential_FullMethodName                  = "/mycel.admin.v1.AdminInferenceService/DeleteCredential"
-	AdminInferenceService_DeleteCredentialGrant_FullMethodName             = "/mycel.admin.v1.AdminInferenceService/DeleteCredentialGrant"
-	AdminInferenceService_DeleteInferencePolicy_FullMethodName             = "/mycel.admin.v1.AdminInferenceService/DeleteInferencePolicy"
+	AdminInferenceCatalogService_ApplyInferencePackage_FullMethodName             = "/mycel.admin.v1.AdminInferenceCatalogService/ApplyInferencePackage"
+	AdminInferenceCatalogService_ListInferencePackages_FullMethodName             = "/mycel.admin.v1.AdminInferenceCatalogService/ListInferencePackages"
+	AdminInferenceCatalogService_ListModelEndpoints_FullMethodName                = "/mycel.admin.v1.AdminInferenceCatalogService/ListModelEndpoints"
+	AdminInferenceCatalogService_ListModels_FullMethodName                        = "/mycel.admin.v1.AdminInferenceCatalogService/ListModels"
+	AdminInferenceCatalogService_ListVectorStores_FullMethodName                  = "/mycel.admin.v1.AdminInferenceCatalogService/ListVectorStores"
+	AdminInferenceCatalogService_ListModelEndpointCapabilities_FullMethodName     = "/mycel.admin.v1.AdminInferenceCatalogService/ListModelEndpointCapabilities"
+	AdminInferenceCatalogService_SetModelEndpointEnabled_FullMethodName           = "/mycel.admin.v1.AdminInferenceCatalogService/SetModelEndpointEnabled"
+	AdminInferenceCatalogService_SetVectorStoreEnabled_FullMethodName             = "/mycel.admin.v1.AdminInferenceCatalogService/SetVectorStoreEnabled"
+	AdminInferenceCatalogService_SetModelEndpointCapabilityEnabled_FullMethodName = "/mycel.admin.v1.AdminInferenceCatalogService/SetModelEndpointCapabilityEnabled"
+	AdminInferenceCatalogService_DeleteModelEndpoint_FullMethodName               = "/mycel.admin.v1.AdminInferenceCatalogService/DeleteModelEndpoint"
+	AdminInferenceCatalogService_DeleteModel_FullMethodName                       = "/mycel.admin.v1.AdminInferenceCatalogService/DeleteModel"
+	AdminInferenceCatalogService_DeleteVectorStore_FullMethodName                 = "/mycel.admin.v1.AdminInferenceCatalogService/DeleteVectorStore"
+	AdminInferenceCatalogService_DeleteModelEndpointCapability_FullMethodName     = "/mycel.admin.v1.AdminInferenceCatalogService/DeleteModelEndpointCapability"
 )
 
-// AdminInferenceServiceClient is the client API for AdminInferenceService service.
+// AdminInferenceCatalogServiceClient is the client API for AdminInferenceCatalogService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 //
-// AdminInferenceService manages daemon inference catalog/configuration resources
-// used by AdminSemanticService and Client SemanticService.
-type AdminInferenceServiceClient interface {
-	ApplyInferencePackage(ctx context.Context, in *AdminInferenceServiceApplyInferencePackageRequest, opts ...grpc.CallOption) (*AdminInferenceServiceApplyInferencePackageResponse, error)
-	ListInferencePackages(ctx context.Context, in *AdminInferenceServiceListInferencePackagesRequest, opts ...grpc.CallOption) (*AdminInferenceServiceListInferencePackagesResponse, error)
-	ListModelEndpoints(ctx context.Context, in *AdminInferenceServiceListModelEndpointsRequest, opts ...grpc.CallOption) (*AdminInferenceServiceListModelEndpointsResponse, error)
-	ListModels(ctx context.Context, in *AdminInferenceServiceListModelsRequest, opts ...grpc.CallOption) (*AdminInferenceServiceListModelsResponse, error)
-	ListVectorStores(ctx context.Context, in *AdminInferenceServiceListVectorStoresRequest, opts ...grpc.CallOption) (*AdminInferenceServiceListVectorStoresResponse, error)
-	ListModelEndpointCapabilities(ctx context.Context, in *AdminInferenceServiceListModelEndpointCapabilitiesRequest, opts ...grpc.CallOption) (*AdminInferenceServiceListModelEndpointCapabilitiesResponse, error)
-	CreateCredential(ctx context.Context, in *AdminInferenceServiceCreateCredentialRequest, opts ...grpc.CallOption) (*AdminInferenceServiceCreateCredentialResponse, error)
-	ListCredentials(ctx context.Context, in *AdminInferenceServiceListCredentialsRequest, opts ...grpc.CallOption) (*AdminInferenceServiceListCredentialsResponse, error)
-	CreateCredentialGrant(ctx context.Context, in *AdminInferenceServiceCreateCredentialGrantRequest, opts ...grpc.CallOption) (*AdminInferenceServiceCreateCredentialGrantResponse, error)
-	ListCredentialGrants(ctx context.Context, in *AdminInferenceServiceListCredentialGrantsRequest, opts ...grpc.CallOption) (*AdminInferenceServiceListCredentialGrantsResponse, error)
-	CreateInferencePolicy(ctx context.Context, in *AdminInferenceServiceCreateInferencePolicyRequest, opts ...grpc.CallOption) (*AdminInferenceServiceCreateInferencePolicyResponse, error)
-	ListInferencePolicies(ctx context.Context, in *AdminInferenceServiceListInferencePoliciesRequest, opts ...grpc.CallOption) (*AdminInferenceServiceListInferencePoliciesResponse, error)
-	SetModelEndpointEnabled(ctx context.Context, in *AdminInferenceServiceSetModelEndpointEnabledRequest, opts ...grpc.CallOption) (*AdminInferenceServiceSetModelEndpointEnabledResponse, error)
-	SetVectorStoreEnabled(ctx context.Context, in *AdminInferenceServiceSetVectorStoreEnabledRequest, opts ...grpc.CallOption) (*AdminInferenceServiceSetVectorStoreEnabledResponse, error)
-	SetModelEndpointCapabilityEnabled(ctx context.Context, in *AdminInferenceServiceSetModelEndpointCapabilityEnabledRequest, opts ...grpc.CallOption) (*AdminInferenceServiceSetModelEndpointCapabilityEnabledResponse, error)
-	SetCredentialStatus(ctx context.Context, in *AdminInferenceServiceSetCredentialStatusRequest, opts ...grpc.CallOption) (*AdminInferenceServiceSetCredentialStatusResponse, error)
-	ExpireCredentialGrant(ctx context.Context, in *AdminInferenceServiceExpireCredentialGrantRequest, opts ...grpc.CallOption) (*AdminInferenceServiceExpireCredentialGrantResponse, error)
-	ExpireInferencePolicy(ctx context.Context, in *AdminInferenceServiceExpireInferencePolicyRequest, opts ...grpc.CallOption) (*AdminInferenceServiceExpireInferencePolicyResponse, error)
-	DeleteModelEndpoint(ctx context.Context, in *AdminInferenceServiceDeleteModelEndpointRequest, opts ...grpc.CallOption) (*AdminInferenceServiceDeleteModelEndpointResponse, error)
-	DeleteModel(ctx context.Context, in *AdminInferenceServiceDeleteModelRequest, opts ...grpc.CallOption) (*AdminInferenceServiceDeleteModelResponse, error)
-	DeleteVectorStore(ctx context.Context, in *AdminInferenceServiceDeleteVectorStoreRequest, opts ...grpc.CallOption) (*AdminInferenceServiceDeleteVectorStoreResponse, error)
-	DeleteModelEndpointCapability(ctx context.Context, in *AdminInferenceServiceDeleteModelEndpointCapabilityRequest, opts ...grpc.CallOption) (*AdminInferenceServiceDeleteModelEndpointCapabilityResponse, error)
-	DeleteCredential(ctx context.Context, in *AdminInferenceServiceDeleteCredentialRequest, opts ...grpc.CallOption) (*AdminInferenceServiceDeleteCredentialResponse, error)
-	DeleteCredentialGrant(ctx context.Context, in *AdminInferenceServiceDeleteCredentialGrantRequest, opts ...grpc.CallOption) (*AdminInferenceServiceDeleteCredentialGrantResponse, error)
-	DeleteInferencePolicy(ctx context.Context, in *AdminInferenceServiceDeleteInferencePolicyRequest, opts ...grpc.CallOption) (*AdminInferenceServiceDeleteInferencePolicyResponse, error)
+// AdminInferenceCatalogService manages system-level inference catalog resources
+// used by semantic indexes, semantic search, and graph automations.
+type AdminInferenceCatalogServiceClient interface {
+	ApplyInferencePackage(ctx context.Context, in *AdminInferenceCatalogServiceApplyInferencePackageRequest, opts ...grpc.CallOption) (*AdminInferenceCatalogServiceApplyInferencePackageResponse, error)
+	ListInferencePackages(ctx context.Context, in *AdminInferenceCatalogServiceListInferencePackagesRequest, opts ...grpc.CallOption) (*AdminInferenceCatalogServiceListInferencePackagesResponse, error)
+	ListModelEndpoints(ctx context.Context, in *AdminInferenceCatalogServiceListModelEndpointsRequest, opts ...grpc.CallOption) (*AdminInferenceCatalogServiceListModelEndpointsResponse, error)
+	ListModels(ctx context.Context, in *AdminInferenceCatalogServiceListModelsRequest, opts ...grpc.CallOption) (*AdminInferenceCatalogServiceListModelsResponse, error)
+	ListVectorStores(ctx context.Context, in *AdminInferenceCatalogServiceListVectorStoresRequest, opts ...grpc.CallOption) (*AdminInferenceCatalogServiceListVectorStoresResponse, error)
+	ListModelEndpointCapabilities(ctx context.Context, in *AdminInferenceCatalogServiceListModelEndpointCapabilitiesRequest, opts ...grpc.CallOption) (*AdminInferenceCatalogServiceListModelEndpointCapabilitiesResponse, error)
+	SetModelEndpointEnabled(ctx context.Context, in *AdminInferenceCatalogServiceSetModelEndpointEnabledRequest, opts ...grpc.CallOption) (*AdminInferenceCatalogServiceSetModelEndpointEnabledResponse, error)
+	SetVectorStoreEnabled(ctx context.Context, in *AdminInferenceCatalogServiceSetVectorStoreEnabledRequest, opts ...grpc.CallOption) (*AdminInferenceCatalogServiceSetVectorStoreEnabledResponse, error)
+	SetModelEndpointCapabilityEnabled(ctx context.Context, in *AdminInferenceCatalogServiceSetModelEndpointCapabilityEnabledRequest, opts ...grpc.CallOption) (*AdminInferenceCatalogServiceSetModelEndpointCapabilityEnabledResponse, error)
+	DeleteModelEndpoint(ctx context.Context, in *AdminInferenceCatalogServiceDeleteModelEndpointRequest, opts ...grpc.CallOption) (*AdminInferenceCatalogServiceDeleteModelEndpointResponse, error)
+	DeleteModel(ctx context.Context, in *AdminInferenceCatalogServiceDeleteModelRequest, opts ...grpc.CallOption) (*AdminInferenceCatalogServiceDeleteModelResponse, error)
+	DeleteVectorStore(ctx context.Context, in *AdminInferenceCatalogServiceDeleteVectorStoreRequest, opts ...grpc.CallOption) (*AdminInferenceCatalogServiceDeleteVectorStoreResponse, error)
+	DeleteModelEndpointCapability(ctx context.Context, in *AdminInferenceCatalogServiceDeleteModelEndpointCapabilityRequest, opts ...grpc.CallOption) (*AdminInferenceCatalogServiceDeleteModelEndpointCapabilityResponse, error)
 }
 
-type adminInferenceServiceClient struct {
+type adminInferenceCatalogServiceClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewAdminInferenceServiceClient(cc grpc.ClientConnInterface) AdminInferenceServiceClient {
-	return &adminInferenceServiceClient{cc}
+func NewAdminInferenceCatalogServiceClient(cc grpc.ClientConnInterface) AdminInferenceCatalogServiceClient {
+	return &adminInferenceCatalogServiceClient{cc}
 }
 
-func (c *adminInferenceServiceClient) ApplyInferencePackage(ctx context.Context, in *AdminInferenceServiceApplyInferencePackageRequest, opts ...grpc.CallOption) (*AdminInferenceServiceApplyInferencePackageResponse, error) {
+func (c *adminInferenceCatalogServiceClient) ApplyInferencePackage(ctx context.Context, in *AdminInferenceCatalogServiceApplyInferencePackageRequest, opts ...grpc.CallOption) (*AdminInferenceCatalogServiceApplyInferencePackageResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(AdminInferenceServiceApplyInferencePackageResponse)
-	err := c.cc.Invoke(ctx, AdminInferenceService_ApplyInferencePackage_FullMethodName, in, out, cOpts...)
+	out := new(AdminInferenceCatalogServiceApplyInferencePackageResponse)
+	err := c.cc.Invoke(ctx, AdminInferenceCatalogService_ApplyInferencePackage_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *adminInferenceServiceClient) ListInferencePackages(ctx context.Context, in *AdminInferenceServiceListInferencePackagesRequest, opts ...grpc.CallOption) (*AdminInferenceServiceListInferencePackagesResponse, error) {
+func (c *adminInferenceCatalogServiceClient) ListInferencePackages(ctx context.Context, in *AdminInferenceCatalogServiceListInferencePackagesRequest, opts ...grpc.CallOption) (*AdminInferenceCatalogServiceListInferencePackagesResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(AdminInferenceServiceListInferencePackagesResponse)
-	err := c.cc.Invoke(ctx, AdminInferenceService_ListInferencePackages_FullMethodName, in, out, cOpts...)
+	out := new(AdminInferenceCatalogServiceListInferencePackagesResponse)
+	err := c.cc.Invoke(ctx, AdminInferenceCatalogService_ListInferencePackages_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *adminInferenceServiceClient) ListModelEndpoints(ctx context.Context, in *AdminInferenceServiceListModelEndpointsRequest, opts ...grpc.CallOption) (*AdminInferenceServiceListModelEndpointsResponse, error) {
+func (c *adminInferenceCatalogServiceClient) ListModelEndpoints(ctx context.Context, in *AdminInferenceCatalogServiceListModelEndpointsRequest, opts ...grpc.CallOption) (*AdminInferenceCatalogServiceListModelEndpointsResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(AdminInferenceServiceListModelEndpointsResponse)
-	err := c.cc.Invoke(ctx, AdminInferenceService_ListModelEndpoints_FullMethodName, in, out, cOpts...)
+	out := new(AdminInferenceCatalogServiceListModelEndpointsResponse)
+	err := c.cc.Invoke(ctx, AdminInferenceCatalogService_ListModelEndpoints_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *adminInferenceServiceClient) ListModels(ctx context.Context, in *AdminInferenceServiceListModelsRequest, opts ...grpc.CallOption) (*AdminInferenceServiceListModelsResponse, error) {
+func (c *adminInferenceCatalogServiceClient) ListModels(ctx context.Context, in *AdminInferenceCatalogServiceListModelsRequest, opts ...grpc.CallOption) (*AdminInferenceCatalogServiceListModelsResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(AdminInferenceServiceListModelsResponse)
-	err := c.cc.Invoke(ctx, AdminInferenceService_ListModels_FullMethodName, in, out, cOpts...)
+	out := new(AdminInferenceCatalogServiceListModelsResponse)
+	err := c.cc.Invoke(ctx, AdminInferenceCatalogService_ListModels_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *adminInferenceServiceClient) ListVectorStores(ctx context.Context, in *AdminInferenceServiceListVectorStoresRequest, opts ...grpc.CallOption) (*AdminInferenceServiceListVectorStoresResponse, error) {
+func (c *adminInferenceCatalogServiceClient) ListVectorStores(ctx context.Context, in *AdminInferenceCatalogServiceListVectorStoresRequest, opts ...grpc.CallOption) (*AdminInferenceCatalogServiceListVectorStoresResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(AdminInferenceServiceListVectorStoresResponse)
-	err := c.cc.Invoke(ctx, AdminInferenceService_ListVectorStores_FullMethodName, in, out, cOpts...)
+	out := new(AdminInferenceCatalogServiceListVectorStoresResponse)
+	err := c.cc.Invoke(ctx, AdminInferenceCatalogService_ListVectorStores_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *adminInferenceServiceClient) ListModelEndpointCapabilities(ctx context.Context, in *AdminInferenceServiceListModelEndpointCapabilitiesRequest, opts ...grpc.CallOption) (*AdminInferenceServiceListModelEndpointCapabilitiesResponse, error) {
+func (c *adminInferenceCatalogServiceClient) ListModelEndpointCapabilities(ctx context.Context, in *AdminInferenceCatalogServiceListModelEndpointCapabilitiesRequest, opts ...grpc.CallOption) (*AdminInferenceCatalogServiceListModelEndpointCapabilitiesResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(AdminInferenceServiceListModelEndpointCapabilitiesResponse)
-	err := c.cc.Invoke(ctx, AdminInferenceService_ListModelEndpointCapabilities_FullMethodName, in, out, cOpts...)
+	out := new(AdminInferenceCatalogServiceListModelEndpointCapabilitiesResponse)
+	err := c.cc.Invoke(ctx, AdminInferenceCatalogService_ListModelEndpointCapabilities_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *adminInferenceServiceClient) CreateCredential(ctx context.Context, in *AdminInferenceServiceCreateCredentialRequest, opts ...grpc.CallOption) (*AdminInferenceServiceCreateCredentialResponse, error) {
+func (c *adminInferenceCatalogServiceClient) SetModelEndpointEnabled(ctx context.Context, in *AdminInferenceCatalogServiceSetModelEndpointEnabledRequest, opts ...grpc.CallOption) (*AdminInferenceCatalogServiceSetModelEndpointEnabledResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(AdminInferenceServiceCreateCredentialResponse)
-	err := c.cc.Invoke(ctx, AdminInferenceService_CreateCredential_FullMethodName, in, out, cOpts...)
+	out := new(AdminInferenceCatalogServiceSetModelEndpointEnabledResponse)
+	err := c.cc.Invoke(ctx, AdminInferenceCatalogService_SetModelEndpointEnabled_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *adminInferenceServiceClient) ListCredentials(ctx context.Context, in *AdminInferenceServiceListCredentialsRequest, opts ...grpc.CallOption) (*AdminInferenceServiceListCredentialsResponse, error) {
+func (c *adminInferenceCatalogServiceClient) SetVectorStoreEnabled(ctx context.Context, in *AdminInferenceCatalogServiceSetVectorStoreEnabledRequest, opts ...grpc.CallOption) (*AdminInferenceCatalogServiceSetVectorStoreEnabledResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(AdminInferenceServiceListCredentialsResponse)
-	err := c.cc.Invoke(ctx, AdminInferenceService_ListCredentials_FullMethodName, in, out, cOpts...)
+	out := new(AdminInferenceCatalogServiceSetVectorStoreEnabledResponse)
+	err := c.cc.Invoke(ctx, AdminInferenceCatalogService_SetVectorStoreEnabled_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *adminInferenceServiceClient) CreateCredentialGrant(ctx context.Context, in *AdminInferenceServiceCreateCredentialGrantRequest, opts ...grpc.CallOption) (*AdminInferenceServiceCreateCredentialGrantResponse, error) {
+func (c *adminInferenceCatalogServiceClient) SetModelEndpointCapabilityEnabled(ctx context.Context, in *AdminInferenceCatalogServiceSetModelEndpointCapabilityEnabledRequest, opts ...grpc.CallOption) (*AdminInferenceCatalogServiceSetModelEndpointCapabilityEnabledResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(AdminInferenceServiceCreateCredentialGrantResponse)
-	err := c.cc.Invoke(ctx, AdminInferenceService_CreateCredentialGrant_FullMethodName, in, out, cOpts...)
+	out := new(AdminInferenceCatalogServiceSetModelEndpointCapabilityEnabledResponse)
+	err := c.cc.Invoke(ctx, AdminInferenceCatalogService_SetModelEndpointCapabilityEnabled_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *adminInferenceServiceClient) ListCredentialGrants(ctx context.Context, in *AdminInferenceServiceListCredentialGrantsRequest, opts ...grpc.CallOption) (*AdminInferenceServiceListCredentialGrantsResponse, error) {
+func (c *adminInferenceCatalogServiceClient) DeleteModelEndpoint(ctx context.Context, in *AdminInferenceCatalogServiceDeleteModelEndpointRequest, opts ...grpc.CallOption) (*AdminInferenceCatalogServiceDeleteModelEndpointResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(AdminInferenceServiceListCredentialGrantsResponse)
-	err := c.cc.Invoke(ctx, AdminInferenceService_ListCredentialGrants_FullMethodName, in, out, cOpts...)
+	out := new(AdminInferenceCatalogServiceDeleteModelEndpointResponse)
+	err := c.cc.Invoke(ctx, AdminInferenceCatalogService_DeleteModelEndpoint_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *adminInferenceServiceClient) CreateInferencePolicy(ctx context.Context, in *AdminInferenceServiceCreateInferencePolicyRequest, opts ...grpc.CallOption) (*AdminInferenceServiceCreateInferencePolicyResponse, error) {
+func (c *adminInferenceCatalogServiceClient) DeleteModel(ctx context.Context, in *AdminInferenceCatalogServiceDeleteModelRequest, opts ...grpc.CallOption) (*AdminInferenceCatalogServiceDeleteModelResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(AdminInferenceServiceCreateInferencePolicyResponse)
-	err := c.cc.Invoke(ctx, AdminInferenceService_CreateInferencePolicy_FullMethodName, in, out, cOpts...)
+	out := new(AdminInferenceCatalogServiceDeleteModelResponse)
+	err := c.cc.Invoke(ctx, AdminInferenceCatalogService_DeleteModel_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *adminInferenceServiceClient) ListInferencePolicies(ctx context.Context, in *AdminInferenceServiceListInferencePoliciesRequest, opts ...grpc.CallOption) (*AdminInferenceServiceListInferencePoliciesResponse, error) {
+func (c *adminInferenceCatalogServiceClient) DeleteVectorStore(ctx context.Context, in *AdminInferenceCatalogServiceDeleteVectorStoreRequest, opts ...grpc.CallOption) (*AdminInferenceCatalogServiceDeleteVectorStoreResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(AdminInferenceServiceListInferencePoliciesResponse)
-	err := c.cc.Invoke(ctx, AdminInferenceService_ListInferencePolicies_FullMethodName, in, out, cOpts...)
+	out := new(AdminInferenceCatalogServiceDeleteVectorStoreResponse)
+	err := c.cc.Invoke(ctx, AdminInferenceCatalogService_DeleteVectorStore_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *adminInferenceServiceClient) SetModelEndpointEnabled(ctx context.Context, in *AdminInferenceServiceSetModelEndpointEnabledRequest, opts ...grpc.CallOption) (*AdminInferenceServiceSetModelEndpointEnabledResponse, error) {
+func (c *adminInferenceCatalogServiceClient) DeleteModelEndpointCapability(ctx context.Context, in *AdminInferenceCatalogServiceDeleteModelEndpointCapabilityRequest, opts ...grpc.CallOption) (*AdminInferenceCatalogServiceDeleteModelEndpointCapabilityResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(AdminInferenceServiceSetModelEndpointEnabledResponse)
-	err := c.cc.Invoke(ctx, AdminInferenceService_SetModelEndpointEnabled_FullMethodName, in, out, cOpts...)
+	out := new(AdminInferenceCatalogServiceDeleteModelEndpointCapabilityResponse)
+	err := c.cc.Invoke(ctx, AdminInferenceCatalogService_DeleteModelEndpointCapability_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *adminInferenceServiceClient) SetVectorStoreEnabled(ctx context.Context, in *AdminInferenceServiceSetVectorStoreEnabledRequest, opts ...grpc.CallOption) (*AdminInferenceServiceSetVectorStoreEnabledResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(AdminInferenceServiceSetVectorStoreEnabledResponse)
-	err := c.cc.Invoke(ctx, AdminInferenceService_SetVectorStoreEnabled_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *adminInferenceServiceClient) SetModelEndpointCapabilityEnabled(ctx context.Context, in *AdminInferenceServiceSetModelEndpointCapabilityEnabledRequest, opts ...grpc.CallOption) (*AdminInferenceServiceSetModelEndpointCapabilityEnabledResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(AdminInferenceServiceSetModelEndpointCapabilityEnabledResponse)
-	err := c.cc.Invoke(ctx, AdminInferenceService_SetModelEndpointCapabilityEnabled_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *adminInferenceServiceClient) SetCredentialStatus(ctx context.Context, in *AdminInferenceServiceSetCredentialStatusRequest, opts ...grpc.CallOption) (*AdminInferenceServiceSetCredentialStatusResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(AdminInferenceServiceSetCredentialStatusResponse)
-	err := c.cc.Invoke(ctx, AdminInferenceService_SetCredentialStatus_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *adminInferenceServiceClient) ExpireCredentialGrant(ctx context.Context, in *AdminInferenceServiceExpireCredentialGrantRequest, opts ...grpc.CallOption) (*AdminInferenceServiceExpireCredentialGrantResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(AdminInferenceServiceExpireCredentialGrantResponse)
-	err := c.cc.Invoke(ctx, AdminInferenceService_ExpireCredentialGrant_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *adminInferenceServiceClient) ExpireInferencePolicy(ctx context.Context, in *AdminInferenceServiceExpireInferencePolicyRequest, opts ...grpc.CallOption) (*AdminInferenceServiceExpireInferencePolicyResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(AdminInferenceServiceExpireInferencePolicyResponse)
-	err := c.cc.Invoke(ctx, AdminInferenceService_ExpireInferencePolicy_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *adminInferenceServiceClient) DeleteModelEndpoint(ctx context.Context, in *AdminInferenceServiceDeleteModelEndpointRequest, opts ...grpc.CallOption) (*AdminInferenceServiceDeleteModelEndpointResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(AdminInferenceServiceDeleteModelEndpointResponse)
-	err := c.cc.Invoke(ctx, AdminInferenceService_DeleteModelEndpoint_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *adminInferenceServiceClient) DeleteModel(ctx context.Context, in *AdminInferenceServiceDeleteModelRequest, opts ...grpc.CallOption) (*AdminInferenceServiceDeleteModelResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(AdminInferenceServiceDeleteModelResponse)
-	err := c.cc.Invoke(ctx, AdminInferenceService_DeleteModel_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *adminInferenceServiceClient) DeleteVectorStore(ctx context.Context, in *AdminInferenceServiceDeleteVectorStoreRequest, opts ...grpc.CallOption) (*AdminInferenceServiceDeleteVectorStoreResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(AdminInferenceServiceDeleteVectorStoreResponse)
-	err := c.cc.Invoke(ctx, AdminInferenceService_DeleteVectorStore_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *adminInferenceServiceClient) DeleteModelEndpointCapability(ctx context.Context, in *AdminInferenceServiceDeleteModelEndpointCapabilityRequest, opts ...grpc.CallOption) (*AdminInferenceServiceDeleteModelEndpointCapabilityResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(AdminInferenceServiceDeleteModelEndpointCapabilityResponse)
-	err := c.cc.Invoke(ctx, AdminInferenceService_DeleteModelEndpointCapability_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *adminInferenceServiceClient) DeleteCredential(ctx context.Context, in *AdminInferenceServiceDeleteCredentialRequest, opts ...grpc.CallOption) (*AdminInferenceServiceDeleteCredentialResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(AdminInferenceServiceDeleteCredentialResponse)
-	err := c.cc.Invoke(ctx, AdminInferenceService_DeleteCredential_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *adminInferenceServiceClient) DeleteCredentialGrant(ctx context.Context, in *AdminInferenceServiceDeleteCredentialGrantRequest, opts ...grpc.CallOption) (*AdminInferenceServiceDeleteCredentialGrantResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(AdminInferenceServiceDeleteCredentialGrantResponse)
-	err := c.cc.Invoke(ctx, AdminInferenceService_DeleteCredentialGrant_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *adminInferenceServiceClient) DeleteInferencePolicy(ctx context.Context, in *AdminInferenceServiceDeleteInferencePolicyRequest, opts ...grpc.CallOption) (*AdminInferenceServiceDeleteInferencePolicyResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(AdminInferenceServiceDeleteInferencePolicyResponse)
-	err := c.cc.Invoke(ctx, AdminInferenceService_DeleteInferencePolicy_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-// AdminInferenceServiceServer is the server API for AdminInferenceService service.
-// All implementations must embed UnimplementedAdminInferenceServiceServer
+// AdminInferenceCatalogServiceServer is the server API for AdminInferenceCatalogService service.
+// All implementations must embed UnimplementedAdminInferenceCatalogServiceServer
 // for forward compatibility.
 //
-// AdminInferenceService manages daemon inference catalog/configuration resources
-// used by AdminSemanticService and Client SemanticService.
-type AdminInferenceServiceServer interface {
-	ApplyInferencePackage(context.Context, *AdminInferenceServiceApplyInferencePackageRequest) (*AdminInferenceServiceApplyInferencePackageResponse, error)
-	ListInferencePackages(context.Context, *AdminInferenceServiceListInferencePackagesRequest) (*AdminInferenceServiceListInferencePackagesResponse, error)
-	ListModelEndpoints(context.Context, *AdminInferenceServiceListModelEndpointsRequest) (*AdminInferenceServiceListModelEndpointsResponse, error)
-	ListModels(context.Context, *AdminInferenceServiceListModelsRequest) (*AdminInferenceServiceListModelsResponse, error)
-	ListVectorStores(context.Context, *AdminInferenceServiceListVectorStoresRequest) (*AdminInferenceServiceListVectorStoresResponse, error)
-	ListModelEndpointCapabilities(context.Context, *AdminInferenceServiceListModelEndpointCapabilitiesRequest) (*AdminInferenceServiceListModelEndpointCapabilitiesResponse, error)
-	CreateCredential(context.Context, *AdminInferenceServiceCreateCredentialRequest) (*AdminInferenceServiceCreateCredentialResponse, error)
-	ListCredentials(context.Context, *AdminInferenceServiceListCredentialsRequest) (*AdminInferenceServiceListCredentialsResponse, error)
-	CreateCredentialGrant(context.Context, *AdminInferenceServiceCreateCredentialGrantRequest) (*AdminInferenceServiceCreateCredentialGrantResponse, error)
-	ListCredentialGrants(context.Context, *AdminInferenceServiceListCredentialGrantsRequest) (*AdminInferenceServiceListCredentialGrantsResponse, error)
-	CreateInferencePolicy(context.Context, *AdminInferenceServiceCreateInferencePolicyRequest) (*AdminInferenceServiceCreateInferencePolicyResponse, error)
-	ListInferencePolicies(context.Context, *AdminInferenceServiceListInferencePoliciesRequest) (*AdminInferenceServiceListInferencePoliciesResponse, error)
-	SetModelEndpointEnabled(context.Context, *AdminInferenceServiceSetModelEndpointEnabledRequest) (*AdminInferenceServiceSetModelEndpointEnabledResponse, error)
-	SetVectorStoreEnabled(context.Context, *AdminInferenceServiceSetVectorStoreEnabledRequest) (*AdminInferenceServiceSetVectorStoreEnabledResponse, error)
-	SetModelEndpointCapabilityEnabled(context.Context, *AdminInferenceServiceSetModelEndpointCapabilityEnabledRequest) (*AdminInferenceServiceSetModelEndpointCapabilityEnabledResponse, error)
-	SetCredentialStatus(context.Context, *AdminInferenceServiceSetCredentialStatusRequest) (*AdminInferenceServiceSetCredentialStatusResponse, error)
-	ExpireCredentialGrant(context.Context, *AdminInferenceServiceExpireCredentialGrantRequest) (*AdminInferenceServiceExpireCredentialGrantResponse, error)
-	ExpireInferencePolicy(context.Context, *AdminInferenceServiceExpireInferencePolicyRequest) (*AdminInferenceServiceExpireInferencePolicyResponse, error)
-	DeleteModelEndpoint(context.Context, *AdminInferenceServiceDeleteModelEndpointRequest) (*AdminInferenceServiceDeleteModelEndpointResponse, error)
-	DeleteModel(context.Context, *AdminInferenceServiceDeleteModelRequest) (*AdminInferenceServiceDeleteModelResponse, error)
-	DeleteVectorStore(context.Context, *AdminInferenceServiceDeleteVectorStoreRequest) (*AdminInferenceServiceDeleteVectorStoreResponse, error)
-	DeleteModelEndpointCapability(context.Context, *AdminInferenceServiceDeleteModelEndpointCapabilityRequest) (*AdminInferenceServiceDeleteModelEndpointCapabilityResponse, error)
-	DeleteCredential(context.Context, *AdminInferenceServiceDeleteCredentialRequest) (*AdminInferenceServiceDeleteCredentialResponse, error)
-	DeleteCredentialGrant(context.Context, *AdminInferenceServiceDeleteCredentialGrantRequest) (*AdminInferenceServiceDeleteCredentialGrantResponse, error)
-	DeleteInferencePolicy(context.Context, *AdminInferenceServiceDeleteInferencePolicyRequest) (*AdminInferenceServiceDeleteInferencePolicyResponse, error)
-	mustEmbedUnimplementedAdminInferenceServiceServer()
+// AdminInferenceCatalogService manages system-level inference catalog resources
+// used by semantic indexes, semantic search, and graph automations.
+type AdminInferenceCatalogServiceServer interface {
+	ApplyInferencePackage(context.Context, *AdminInferenceCatalogServiceApplyInferencePackageRequest) (*AdminInferenceCatalogServiceApplyInferencePackageResponse, error)
+	ListInferencePackages(context.Context, *AdminInferenceCatalogServiceListInferencePackagesRequest) (*AdminInferenceCatalogServiceListInferencePackagesResponse, error)
+	ListModelEndpoints(context.Context, *AdminInferenceCatalogServiceListModelEndpointsRequest) (*AdminInferenceCatalogServiceListModelEndpointsResponse, error)
+	ListModels(context.Context, *AdminInferenceCatalogServiceListModelsRequest) (*AdminInferenceCatalogServiceListModelsResponse, error)
+	ListVectorStores(context.Context, *AdminInferenceCatalogServiceListVectorStoresRequest) (*AdminInferenceCatalogServiceListVectorStoresResponse, error)
+	ListModelEndpointCapabilities(context.Context, *AdminInferenceCatalogServiceListModelEndpointCapabilitiesRequest) (*AdminInferenceCatalogServiceListModelEndpointCapabilitiesResponse, error)
+	SetModelEndpointEnabled(context.Context, *AdminInferenceCatalogServiceSetModelEndpointEnabledRequest) (*AdminInferenceCatalogServiceSetModelEndpointEnabledResponse, error)
+	SetVectorStoreEnabled(context.Context, *AdminInferenceCatalogServiceSetVectorStoreEnabledRequest) (*AdminInferenceCatalogServiceSetVectorStoreEnabledResponse, error)
+	SetModelEndpointCapabilityEnabled(context.Context, *AdminInferenceCatalogServiceSetModelEndpointCapabilityEnabledRequest) (*AdminInferenceCatalogServiceSetModelEndpointCapabilityEnabledResponse, error)
+	DeleteModelEndpoint(context.Context, *AdminInferenceCatalogServiceDeleteModelEndpointRequest) (*AdminInferenceCatalogServiceDeleteModelEndpointResponse, error)
+	DeleteModel(context.Context, *AdminInferenceCatalogServiceDeleteModelRequest) (*AdminInferenceCatalogServiceDeleteModelResponse, error)
+	DeleteVectorStore(context.Context, *AdminInferenceCatalogServiceDeleteVectorStoreRequest) (*AdminInferenceCatalogServiceDeleteVectorStoreResponse, error)
+	DeleteModelEndpointCapability(context.Context, *AdminInferenceCatalogServiceDeleteModelEndpointCapabilityRequest) (*AdminInferenceCatalogServiceDeleteModelEndpointCapabilityResponse, error)
+	mustEmbedUnimplementedAdminInferenceCatalogServiceServer()
 }
 
-// UnimplementedAdminInferenceServiceServer must be embedded to have
+// UnimplementedAdminInferenceCatalogServiceServer must be embedded to have
 // forward compatible implementations.
 //
 // NOTE: this should be embedded by value instead of pointer to avoid a nil
 // pointer dereference when methods are called.
-type UnimplementedAdminInferenceServiceServer struct{}
+type UnimplementedAdminInferenceCatalogServiceServer struct{}
 
-func (UnimplementedAdminInferenceServiceServer) ApplyInferencePackage(context.Context, *AdminInferenceServiceApplyInferencePackageRequest) (*AdminInferenceServiceApplyInferencePackageResponse, error) {
+func (UnimplementedAdminInferenceCatalogServiceServer) ApplyInferencePackage(context.Context, *AdminInferenceCatalogServiceApplyInferencePackageRequest) (*AdminInferenceCatalogServiceApplyInferencePackageResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ApplyInferencePackage not implemented")
 }
-func (UnimplementedAdminInferenceServiceServer) ListInferencePackages(context.Context, *AdminInferenceServiceListInferencePackagesRequest) (*AdminInferenceServiceListInferencePackagesResponse, error) {
+func (UnimplementedAdminInferenceCatalogServiceServer) ListInferencePackages(context.Context, *AdminInferenceCatalogServiceListInferencePackagesRequest) (*AdminInferenceCatalogServiceListInferencePackagesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListInferencePackages not implemented")
 }
-func (UnimplementedAdminInferenceServiceServer) ListModelEndpoints(context.Context, *AdminInferenceServiceListModelEndpointsRequest) (*AdminInferenceServiceListModelEndpointsResponse, error) {
+func (UnimplementedAdminInferenceCatalogServiceServer) ListModelEndpoints(context.Context, *AdminInferenceCatalogServiceListModelEndpointsRequest) (*AdminInferenceCatalogServiceListModelEndpointsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListModelEndpoints not implemented")
 }
-func (UnimplementedAdminInferenceServiceServer) ListModels(context.Context, *AdminInferenceServiceListModelsRequest) (*AdminInferenceServiceListModelsResponse, error) {
+func (UnimplementedAdminInferenceCatalogServiceServer) ListModels(context.Context, *AdminInferenceCatalogServiceListModelsRequest) (*AdminInferenceCatalogServiceListModelsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListModels not implemented")
 }
-func (UnimplementedAdminInferenceServiceServer) ListVectorStores(context.Context, *AdminInferenceServiceListVectorStoresRequest) (*AdminInferenceServiceListVectorStoresResponse, error) {
+func (UnimplementedAdminInferenceCatalogServiceServer) ListVectorStores(context.Context, *AdminInferenceCatalogServiceListVectorStoresRequest) (*AdminInferenceCatalogServiceListVectorStoresResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListVectorStores not implemented")
 }
-func (UnimplementedAdminInferenceServiceServer) ListModelEndpointCapabilities(context.Context, *AdminInferenceServiceListModelEndpointCapabilitiesRequest) (*AdminInferenceServiceListModelEndpointCapabilitiesResponse, error) {
+func (UnimplementedAdminInferenceCatalogServiceServer) ListModelEndpointCapabilities(context.Context, *AdminInferenceCatalogServiceListModelEndpointCapabilitiesRequest) (*AdminInferenceCatalogServiceListModelEndpointCapabilitiesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListModelEndpointCapabilities not implemented")
 }
-func (UnimplementedAdminInferenceServiceServer) CreateCredential(context.Context, *AdminInferenceServiceCreateCredentialRequest) (*AdminInferenceServiceCreateCredentialResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method CreateCredential not implemented")
-}
-func (UnimplementedAdminInferenceServiceServer) ListCredentials(context.Context, *AdminInferenceServiceListCredentialsRequest) (*AdminInferenceServiceListCredentialsResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ListCredentials not implemented")
-}
-func (UnimplementedAdminInferenceServiceServer) CreateCredentialGrant(context.Context, *AdminInferenceServiceCreateCredentialGrantRequest) (*AdminInferenceServiceCreateCredentialGrantResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method CreateCredentialGrant not implemented")
-}
-func (UnimplementedAdminInferenceServiceServer) ListCredentialGrants(context.Context, *AdminInferenceServiceListCredentialGrantsRequest) (*AdminInferenceServiceListCredentialGrantsResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ListCredentialGrants not implemented")
-}
-func (UnimplementedAdminInferenceServiceServer) CreateInferencePolicy(context.Context, *AdminInferenceServiceCreateInferencePolicyRequest) (*AdminInferenceServiceCreateInferencePolicyResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method CreateInferencePolicy not implemented")
-}
-func (UnimplementedAdminInferenceServiceServer) ListInferencePolicies(context.Context, *AdminInferenceServiceListInferencePoliciesRequest) (*AdminInferenceServiceListInferencePoliciesResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ListInferencePolicies not implemented")
-}
-func (UnimplementedAdminInferenceServiceServer) SetModelEndpointEnabled(context.Context, *AdminInferenceServiceSetModelEndpointEnabledRequest) (*AdminInferenceServiceSetModelEndpointEnabledResponse, error) {
+func (UnimplementedAdminInferenceCatalogServiceServer) SetModelEndpointEnabled(context.Context, *AdminInferenceCatalogServiceSetModelEndpointEnabledRequest) (*AdminInferenceCatalogServiceSetModelEndpointEnabledResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SetModelEndpointEnabled not implemented")
 }
-func (UnimplementedAdminInferenceServiceServer) SetVectorStoreEnabled(context.Context, *AdminInferenceServiceSetVectorStoreEnabledRequest) (*AdminInferenceServiceSetVectorStoreEnabledResponse, error) {
+func (UnimplementedAdminInferenceCatalogServiceServer) SetVectorStoreEnabled(context.Context, *AdminInferenceCatalogServiceSetVectorStoreEnabledRequest) (*AdminInferenceCatalogServiceSetVectorStoreEnabledResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SetVectorStoreEnabled not implemented")
 }
-func (UnimplementedAdminInferenceServiceServer) SetModelEndpointCapabilityEnabled(context.Context, *AdminInferenceServiceSetModelEndpointCapabilityEnabledRequest) (*AdminInferenceServiceSetModelEndpointCapabilityEnabledResponse, error) {
+func (UnimplementedAdminInferenceCatalogServiceServer) SetModelEndpointCapabilityEnabled(context.Context, *AdminInferenceCatalogServiceSetModelEndpointCapabilityEnabledRequest) (*AdminInferenceCatalogServiceSetModelEndpointCapabilityEnabledResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SetModelEndpointCapabilityEnabled not implemented")
 }
-func (UnimplementedAdminInferenceServiceServer) SetCredentialStatus(context.Context, *AdminInferenceServiceSetCredentialStatusRequest) (*AdminInferenceServiceSetCredentialStatusResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method SetCredentialStatus not implemented")
-}
-func (UnimplementedAdminInferenceServiceServer) ExpireCredentialGrant(context.Context, *AdminInferenceServiceExpireCredentialGrantRequest) (*AdminInferenceServiceExpireCredentialGrantResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ExpireCredentialGrant not implemented")
-}
-func (UnimplementedAdminInferenceServiceServer) ExpireInferencePolicy(context.Context, *AdminInferenceServiceExpireInferencePolicyRequest) (*AdminInferenceServiceExpireInferencePolicyResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ExpireInferencePolicy not implemented")
-}
-func (UnimplementedAdminInferenceServiceServer) DeleteModelEndpoint(context.Context, *AdminInferenceServiceDeleteModelEndpointRequest) (*AdminInferenceServiceDeleteModelEndpointResponse, error) {
+func (UnimplementedAdminInferenceCatalogServiceServer) DeleteModelEndpoint(context.Context, *AdminInferenceCatalogServiceDeleteModelEndpointRequest) (*AdminInferenceCatalogServiceDeleteModelEndpointResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteModelEndpoint not implemented")
 }
-func (UnimplementedAdminInferenceServiceServer) DeleteModel(context.Context, *AdminInferenceServiceDeleteModelRequest) (*AdminInferenceServiceDeleteModelResponse, error) {
+func (UnimplementedAdminInferenceCatalogServiceServer) DeleteModel(context.Context, *AdminInferenceCatalogServiceDeleteModelRequest) (*AdminInferenceCatalogServiceDeleteModelResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteModel not implemented")
 }
-func (UnimplementedAdminInferenceServiceServer) DeleteVectorStore(context.Context, *AdminInferenceServiceDeleteVectorStoreRequest) (*AdminInferenceServiceDeleteVectorStoreResponse, error) {
+func (UnimplementedAdminInferenceCatalogServiceServer) DeleteVectorStore(context.Context, *AdminInferenceCatalogServiceDeleteVectorStoreRequest) (*AdminInferenceCatalogServiceDeleteVectorStoreResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteVectorStore not implemented")
 }
-func (UnimplementedAdminInferenceServiceServer) DeleteModelEndpointCapability(context.Context, *AdminInferenceServiceDeleteModelEndpointCapabilityRequest) (*AdminInferenceServiceDeleteModelEndpointCapabilityResponse, error) {
+func (UnimplementedAdminInferenceCatalogServiceServer) DeleteModelEndpointCapability(context.Context, *AdminInferenceCatalogServiceDeleteModelEndpointCapabilityRequest) (*AdminInferenceCatalogServiceDeleteModelEndpointCapabilityResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteModelEndpointCapability not implemented")
 }
-func (UnimplementedAdminInferenceServiceServer) DeleteCredential(context.Context, *AdminInferenceServiceDeleteCredentialRequest) (*AdminInferenceServiceDeleteCredentialResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method DeleteCredential not implemented")
+func (UnimplementedAdminInferenceCatalogServiceServer) mustEmbedUnimplementedAdminInferenceCatalogServiceServer() {
 }
-func (UnimplementedAdminInferenceServiceServer) DeleteCredentialGrant(context.Context, *AdminInferenceServiceDeleteCredentialGrantRequest) (*AdminInferenceServiceDeleteCredentialGrantResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method DeleteCredentialGrant not implemented")
-}
-func (UnimplementedAdminInferenceServiceServer) DeleteInferencePolicy(context.Context, *AdminInferenceServiceDeleteInferencePolicyRequest) (*AdminInferenceServiceDeleteInferencePolicyResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method DeleteInferencePolicy not implemented")
-}
-func (UnimplementedAdminInferenceServiceServer) mustEmbedUnimplementedAdminInferenceServiceServer() {}
-func (UnimplementedAdminInferenceServiceServer) testEmbeddedByValue()                               {}
+func (UnimplementedAdminInferenceCatalogServiceServer) testEmbeddedByValue() {}
 
-// UnsafeAdminInferenceServiceServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to AdminInferenceServiceServer will
+// UnsafeAdminInferenceCatalogServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to AdminInferenceCatalogServiceServer will
 // result in compilation errors.
-type UnsafeAdminInferenceServiceServer interface {
-	mustEmbedUnimplementedAdminInferenceServiceServer()
+type UnsafeAdminInferenceCatalogServiceServer interface {
+	mustEmbedUnimplementedAdminInferenceCatalogServiceServer()
 }
 
-func RegisterAdminInferenceServiceServer(s grpc.ServiceRegistrar, srv AdminInferenceServiceServer) {
-	// If the following call pancis, it indicates UnimplementedAdminInferenceServiceServer was
+func RegisterAdminInferenceCatalogServiceServer(s grpc.ServiceRegistrar, srv AdminInferenceCatalogServiceServer) {
+	// If the following call pancis, it indicates UnimplementedAdminInferenceCatalogServiceServer was
 	// embedded by pointer and is nil.  This will cause panics if an
 	// unimplemented method is ever invoked, so we test this at initialization
 	// time to prevent it from happening at runtime later due to I/O.
 	if t, ok := srv.(interface{ testEmbeddedByValue() }); ok {
 		t.testEmbeddedByValue()
 	}
-	s.RegisterService(&AdminInferenceService_ServiceDesc, srv)
+	s.RegisterService(&AdminInferenceCatalogService_ServiceDesc, srv)
 }
 
-func _AdminInferenceService_ApplyInferencePackage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(AdminInferenceServiceApplyInferencePackageRequest)
+func _AdminInferenceCatalogService_ApplyInferencePackage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AdminInferenceCatalogServiceApplyInferencePackageRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AdminInferenceServiceServer).ApplyInferencePackage(ctx, in)
+		return srv.(AdminInferenceCatalogServiceServer).ApplyInferencePackage(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: AdminInferenceService_ApplyInferencePackage_FullMethodName,
+		FullMethod: AdminInferenceCatalogService_ApplyInferencePackage_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AdminInferenceServiceServer).ApplyInferencePackage(ctx, req.(*AdminInferenceServiceApplyInferencePackageRequest))
+		return srv.(AdminInferenceCatalogServiceServer).ApplyInferencePackage(ctx, req.(*AdminInferenceCatalogServiceApplyInferencePackageRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _AdminInferenceService_ListInferencePackages_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(AdminInferenceServiceListInferencePackagesRequest)
+func _AdminInferenceCatalogService_ListInferencePackages_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AdminInferenceCatalogServiceListInferencePackagesRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AdminInferenceServiceServer).ListInferencePackages(ctx, in)
+		return srv.(AdminInferenceCatalogServiceServer).ListInferencePackages(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: AdminInferenceService_ListInferencePackages_FullMethodName,
+		FullMethod: AdminInferenceCatalogService_ListInferencePackages_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AdminInferenceServiceServer).ListInferencePackages(ctx, req.(*AdminInferenceServiceListInferencePackagesRequest))
+		return srv.(AdminInferenceCatalogServiceServer).ListInferencePackages(ctx, req.(*AdminInferenceCatalogServiceListInferencePackagesRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _AdminInferenceService_ListModelEndpoints_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(AdminInferenceServiceListModelEndpointsRequest)
+func _AdminInferenceCatalogService_ListModelEndpoints_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AdminInferenceCatalogServiceListModelEndpointsRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AdminInferenceServiceServer).ListModelEndpoints(ctx, in)
+		return srv.(AdminInferenceCatalogServiceServer).ListModelEndpoints(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: AdminInferenceService_ListModelEndpoints_FullMethodName,
+		FullMethod: AdminInferenceCatalogService_ListModelEndpoints_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AdminInferenceServiceServer).ListModelEndpoints(ctx, req.(*AdminInferenceServiceListModelEndpointsRequest))
+		return srv.(AdminInferenceCatalogServiceServer).ListModelEndpoints(ctx, req.(*AdminInferenceCatalogServiceListModelEndpointsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _AdminInferenceService_ListModels_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(AdminInferenceServiceListModelsRequest)
+func _AdminInferenceCatalogService_ListModels_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AdminInferenceCatalogServiceListModelsRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AdminInferenceServiceServer).ListModels(ctx, in)
+		return srv.(AdminInferenceCatalogServiceServer).ListModels(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: AdminInferenceService_ListModels_FullMethodName,
+		FullMethod: AdminInferenceCatalogService_ListModels_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AdminInferenceServiceServer).ListModels(ctx, req.(*AdminInferenceServiceListModelsRequest))
+		return srv.(AdminInferenceCatalogServiceServer).ListModels(ctx, req.(*AdminInferenceCatalogServiceListModelsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _AdminInferenceService_ListVectorStores_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(AdminInferenceServiceListVectorStoresRequest)
+func _AdminInferenceCatalogService_ListVectorStores_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AdminInferenceCatalogServiceListVectorStoresRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AdminInferenceServiceServer).ListVectorStores(ctx, in)
+		return srv.(AdminInferenceCatalogServiceServer).ListVectorStores(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: AdminInferenceService_ListVectorStores_FullMethodName,
+		FullMethod: AdminInferenceCatalogService_ListVectorStores_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AdminInferenceServiceServer).ListVectorStores(ctx, req.(*AdminInferenceServiceListVectorStoresRequest))
+		return srv.(AdminInferenceCatalogServiceServer).ListVectorStores(ctx, req.(*AdminInferenceCatalogServiceListVectorStoresRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _AdminInferenceService_ListModelEndpointCapabilities_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(AdminInferenceServiceListModelEndpointCapabilitiesRequest)
+func _AdminInferenceCatalogService_ListModelEndpointCapabilities_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AdminInferenceCatalogServiceListModelEndpointCapabilitiesRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AdminInferenceServiceServer).ListModelEndpointCapabilities(ctx, in)
+		return srv.(AdminInferenceCatalogServiceServer).ListModelEndpointCapabilities(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: AdminInferenceService_ListModelEndpointCapabilities_FullMethodName,
+		FullMethod: AdminInferenceCatalogService_ListModelEndpointCapabilities_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AdminInferenceServiceServer).ListModelEndpointCapabilities(ctx, req.(*AdminInferenceServiceListModelEndpointCapabilitiesRequest))
+		return srv.(AdminInferenceCatalogServiceServer).ListModelEndpointCapabilities(ctx, req.(*AdminInferenceCatalogServiceListModelEndpointCapabilitiesRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _AdminInferenceService_CreateCredential_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(AdminInferenceServiceCreateCredentialRequest)
+func _AdminInferenceCatalogService_SetModelEndpointEnabled_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AdminInferenceCatalogServiceSetModelEndpointEnabledRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AdminInferenceServiceServer).CreateCredential(ctx, in)
+		return srv.(AdminInferenceCatalogServiceServer).SetModelEndpointEnabled(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: AdminInferenceService_CreateCredential_FullMethodName,
+		FullMethod: AdminInferenceCatalogService_SetModelEndpointEnabled_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AdminInferenceServiceServer).CreateCredential(ctx, req.(*AdminInferenceServiceCreateCredentialRequest))
+		return srv.(AdminInferenceCatalogServiceServer).SetModelEndpointEnabled(ctx, req.(*AdminInferenceCatalogServiceSetModelEndpointEnabledRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _AdminInferenceService_ListCredentials_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(AdminInferenceServiceListCredentialsRequest)
+func _AdminInferenceCatalogService_SetVectorStoreEnabled_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AdminInferenceCatalogServiceSetVectorStoreEnabledRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AdminInferenceServiceServer).ListCredentials(ctx, in)
+		return srv.(AdminInferenceCatalogServiceServer).SetVectorStoreEnabled(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: AdminInferenceService_ListCredentials_FullMethodName,
+		FullMethod: AdminInferenceCatalogService_SetVectorStoreEnabled_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AdminInferenceServiceServer).ListCredentials(ctx, req.(*AdminInferenceServiceListCredentialsRequest))
+		return srv.(AdminInferenceCatalogServiceServer).SetVectorStoreEnabled(ctx, req.(*AdminInferenceCatalogServiceSetVectorStoreEnabledRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _AdminInferenceService_CreateCredentialGrant_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(AdminInferenceServiceCreateCredentialGrantRequest)
+func _AdminInferenceCatalogService_SetModelEndpointCapabilityEnabled_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AdminInferenceCatalogServiceSetModelEndpointCapabilityEnabledRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AdminInferenceServiceServer).CreateCredentialGrant(ctx, in)
+		return srv.(AdminInferenceCatalogServiceServer).SetModelEndpointCapabilityEnabled(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: AdminInferenceService_CreateCredentialGrant_FullMethodName,
+		FullMethod: AdminInferenceCatalogService_SetModelEndpointCapabilityEnabled_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AdminInferenceServiceServer).CreateCredentialGrant(ctx, req.(*AdminInferenceServiceCreateCredentialGrantRequest))
+		return srv.(AdminInferenceCatalogServiceServer).SetModelEndpointCapabilityEnabled(ctx, req.(*AdminInferenceCatalogServiceSetModelEndpointCapabilityEnabledRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _AdminInferenceService_ListCredentialGrants_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(AdminInferenceServiceListCredentialGrantsRequest)
+func _AdminInferenceCatalogService_DeleteModelEndpoint_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AdminInferenceCatalogServiceDeleteModelEndpointRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AdminInferenceServiceServer).ListCredentialGrants(ctx, in)
+		return srv.(AdminInferenceCatalogServiceServer).DeleteModelEndpoint(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: AdminInferenceService_ListCredentialGrants_FullMethodName,
+		FullMethod: AdminInferenceCatalogService_DeleteModelEndpoint_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AdminInferenceServiceServer).ListCredentialGrants(ctx, req.(*AdminInferenceServiceListCredentialGrantsRequest))
+		return srv.(AdminInferenceCatalogServiceServer).DeleteModelEndpoint(ctx, req.(*AdminInferenceCatalogServiceDeleteModelEndpointRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _AdminInferenceService_CreateInferencePolicy_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(AdminInferenceServiceCreateInferencePolicyRequest)
+func _AdminInferenceCatalogService_DeleteModel_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AdminInferenceCatalogServiceDeleteModelRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AdminInferenceServiceServer).CreateInferencePolicy(ctx, in)
+		return srv.(AdminInferenceCatalogServiceServer).DeleteModel(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: AdminInferenceService_CreateInferencePolicy_FullMethodName,
+		FullMethod: AdminInferenceCatalogService_DeleteModel_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AdminInferenceServiceServer).CreateInferencePolicy(ctx, req.(*AdminInferenceServiceCreateInferencePolicyRequest))
+		return srv.(AdminInferenceCatalogServiceServer).DeleteModel(ctx, req.(*AdminInferenceCatalogServiceDeleteModelRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _AdminInferenceService_ListInferencePolicies_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(AdminInferenceServiceListInferencePoliciesRequest)
+func _AdminInferenceCatalogService_DeleteVectorStore_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AdminInferenceCatalogServiceDeleteVectorStoreRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AdminInferenceServiceServer).ListInferencePolicies(ctx, in)
+		return srv.(AdminInferenceCatalogServiceServer).DeleteVectorStore(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: AdminInferenceService_ListInferencePolicies_FullMethodName,
+		FullMethod: AdminInferenceCatalogService_DeleteVectorStore_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AdminInferenceServiceServer).ListInferencePolicies(ctx, req.(*AdminInferenceServiceListInferencePoliciesRequest))
+		return srv.(AdminInferenceCatalogServiceServer).DeleteVectorStore(ctx, req.(*AdminInferenceCatalogServiceDeleteVectorStoreRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _AdminInferenceService_SetModelEndpointEnabled_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(AdminInferenceServiceSetModelEndpointEnabledRequest)
+func _AdminInferenceCatalogService_DeleteModelEndpointCapability_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AdminInferenceCatalogServiceDeleteModelEndpointCapabilityRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AdminInferenceServiceServer).SetModelEndpointEnabled(ctx, in)
+		return srv.(AdminInferenceCatalogServiceServer).DeleteModelEndpointCapability(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: AdminInferenceService_SetModelEndpointEnabled_FullMethodName,
+		FullMethod: AdminInferenceCatalogService_DeleteModelEndpointCapability_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AdminInferenceServiceServer).SetModelEndpointEnabled(ctx, req.(*AdminInferenceServiceSetModelEndpointEnabledRequest))
+		return srv.(AdminInferenceCatalogServiceServer).DeleteModelEndpointCapability(ctx, req.(*AdminInferenceCatalogServiceDeleteModelEndpointCapabilityRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _AdminInferenceService_SetVectorStoreEnabled_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(AdminInferenceServiceSetVectorStoreEnabledRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(AdminInferenceServiceServer).SetVectorStoreEnabled(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: AdminInferenceService_SetVectorStoreEnabled_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AdminInferenceServiceServer).SetVectorStoreEnabled(ctx, req.(*AdminInferenceServiceSetVectorStoreEnabledRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _AdminInferenceService_SetModelEndpointCapabilityEnabled_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(AdminInferenceServiceSetModelEndpointCapabilityEnabledRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(AdminInferenceServiceServer).SetModelEndpointCapabilityEnabled(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: AdminInferenceService_SetModelEndpointCapabilityEnabled_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AdminInferenceServiceServer).SetModelEndpointCapabilityEnabled(ctx, req.(*AdminInferenceServiceSetModelEndpointCapabilityEnabledRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _AdminInferenceService_SetCredentialStatus_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(AdminInferenceServiceSetCredentialStatusRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(AdminInferenceServiceServer).SetCredentialStatus(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: AdminInferenceService_SetCredentialStatus_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AdminInferenceServiceServer).SetCredentialStatus(ctx, req.(*AdminInferenceServiceSetCredentialStatusRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _AdminInferenceService_ExpireCredentialGrant_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(AdminInferenceServiceExpireCredentialGrantRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(AdminInferenceServiceServer).ExpireCredentialGrant(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: AdminInferenceService_ExpireCredentialGrant_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AdminInferenceServiceServer).ExpireCredentialGrant(ctx, req.(*AdminInferenceServiceExpireCredentialGrantRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _AdminInferenceService_ExpireInferencePolicy_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(AdminInferenceServiceExpireInferencePolicyRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(AdminInferenceServiceServer).ExpireInferencePolicy(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: AdminInferenceService_ExpireInferencePolicy_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AdminInferenceServiceServer).ExpireInferencePolicy(ctx, req.(*AdminInferenceServiceExpireInferencePolicyRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _AdminInferenceService_DeleteModelEndpoint_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(AdminInferenceServiceDeleteModelEndpointRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(AdminInferenceServiceServer).DeleteModelEndpoint(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: AdminInferenceService_DeleteModelEndpoint_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AdminInferenceServiceServer).DeleteModelEndpoint(ctx, req.(*AdminInferenceServiceDeleteModelEndpointRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _AdminInferenceService_DeleteModel_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(AdminInferenceServiceDeleteModelRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(AdminInferenceServiceServer).DeleteModel(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: AdminInferenceService_DeleteModel_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AdminInferenceServiceServer).DeleteModel(ctx, req.(*AdminInferenceServiceDeleteModelRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _AdminInferenceService_DeleteVectorStore_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(AdminInferenceServiceDeleteVectorStoreRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(AdminInferenceServiceServer).DeleteVectorStore(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: AdminInferenceService_DeleteVectorStore_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AdminInferenceServiceServer).DeleteVectorStore(ctx, req.(*AdminInferenceServiceDeleteVectorStoreRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _AdminInferenceService_DeleteModelEndpointCapability_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(AdminInferenceServiceDeleteModelEndpointCapabilityRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(AdminInferenceServiceServer).DeleteModelEndpointCapability(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: AdminInferenceService_DeleteModelEndpointCapability_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AdminInferenceServiceServer).DeleteModelEndpointCapability(ctx, req.(*AdminInferenceServiceDeleteModelEndpointCapabilityRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _AdminInferenceService_DeleteCredential_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(AdminInferenceServiceDeleteCredentialRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(AdminInferenceServiceServer).DeleteCredential(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: AdminInferenceService_DeleteCredential_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AdminInferenceServiceServer).DeleteCredential(ctx, req.(*AdminInferenceServiceDeleteCredentialRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _AdminInferenceService_DeleteCredentialGrant_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(AdminInferenceServiceDeleteCredentialGrantRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(AdminInferenceServiceServer).DeleteCredentialGrant(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: AdminInferenceService_DeleteCredentialGrant_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AdminInferenceServiceServer).DeleteCredentialGrant(ctx, req.(*AdminInferenceServiceDeleteCredentialGrantRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _AdminInferenceService_DeleteInferencePolicy_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(AdminInferenceServiceDeleteInferencePolicyRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(AdminInferenceServiceServer).DeleteInferencePolicy(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: AdminInferenceService_DeleteInferencePolicy_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AdminInferenceServiceServer).DeleteInferencePolicy(ctx, req.(*AdminInferenceServiceDeleteInferencePolicyRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-// AdminInferenceService_ServiceDesc is the grpc.ServiceDesc for AdminInferenceService service.
+// AdminInferenceCatalogService_ServiceDesc is the grpc.ServiceDesc for AdminInferenceCatalogService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var AdminInferenceService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "mycel.admin.v1.AdminInferenceService",
-	HandlerType: (*AdminInferenceServiceServer)(nil),
+var AdminInferenceCatalogService_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "mycel.admin.v1.AdminInferenceCatalogService",
+	HandlerType: (*AdminInferenceCatalogServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
 			MethodName: "ApplyInferencePackage",
-			Handler:    _AdminInferenceService_ApplyInferencePackage_Handler,
+			Handler:    _AdminInferenceCatalogService_ApplyInferencePackage_Handler,
 		},
 		{
 			MethodName: "ListInferencePackages",
-			Handler:    _AdminInferenceService_ListInferencePackages_Handler,
+			Handler:    _AdminInferenceCatalogService_ListInferencePackages_Handler,
 		},
 		{
 			MethodName: "ListModelEndpoints",
-			Handler:    _AdminInferenceService_ListModelEndpoints_Handler,
+			Handler:    _AdminInferenceCatalogService_ListModelEndpoints_Handler,
 		},
 		{
 			MethodName: "ListModels",
-			Handler:    _AdminInferenceService_ListModels_Handler,
+			Handler:    _AdminInferenceCatalogService_ListModels_Handler,
 		},
 		{
 			MethodName: "ListVectorStores",
-			Handler:    _AdminInferenceService_ListVectorStores_Handler,
+			Handler:    _AdminInferenceCatalogService_ListVectorStores_Handler,
 		},
 		{
 			MethodName: "ListModelEndpointCapabilities",
-			Handler:    _AdminInferenceService_ListModelEndpointCapabilities_Handler,
-		},
-		{
-			MethodName: "CreateCredential",
-			Handler:    _AdminInferenceService_CreateCredential_Handler,
-		},
-		{
-			MethodName: "ListCredentials",
-			Handler:    _AdminInferenceService_ListCredentials_Handler,
-		},
-		{
-			MethodName: "CreateCredentialGrant",
-			Handler:    _AdminInferenceService_CreateCredentialGrant_Handler,
-		},
-		{
-			MethodName: "ListCredentialGrants",
-			Handler:    _AdminInferenceService_ListCredentialGrants_Handler,
-		},
-		{
-			MethodName: "CreateInferencePolicy",
-			Handler:    _AdminInferenceService_CreateInferencePolicy_Handler,
-		},
-		{
-			MethodName: "ListInferencePolicies",
-			Handler:    _AdminInferenceService_ListInferencePolicies_Handler,
+			Handler:    _AdminInferenceCatalogService_ListModelEndpointCapabilities_Handler,
 		},
 		{
 			MethodName: "SetModelEndpointEnabled",
-			Handler:    _AdminInferenceService_SetModelEndpointEnabled_Handler,
+			Handler:    _AdminInferenceCatalogService_SetModelEndpointEnabled_Handler,
 		},
 		{
 			MethodName: "SetVectorStoreEnabled",
-			Handler:    _AdminInferenceService_SetVectorStoreEnabled_Handler,
+			Handler:    _AdminInferenceCatalogService_SetVectorStoreEnabled_Handler,
 		},
 		{
 			MethodName: "SetModelEndpointCapabilityEnabled",
-			Handler:    _AdminInferenceService_SetModelEndpointCapabilityEnabled_Handler,
-		},
-		{
-			MethodName: "SetCredentialStatus",
-			Handler:    _AdminInferenceService_SetCredentialStatus_Handler,
-		},
-		{
-			MethodName: "ExpireCredentialGrant",
-			Handler:    _AdminInferenceService_ExpireCredentialGrant_Handler,
-		},
-		{
-			MethodName: "ExpireInferencePolicy",
-			Handler:    _AdminInferenceService_ExpireInferencePolicy_Handler,
+			Handler:    _AdminInferenceCatalogService_SetModelEndpointCapabilityEnabled_Handler,
 		},
 		{
 			MethodName: "DeleteModelEndpoint",
-			Handler:    _AdminInferenceService_DeleteModelEndpoint_Handler,
+			Handler:    _AdminInferenceCatalogService_DeleteModelEndpoint_Handler,
 		},
 		{
 			MethodName: "DeleteModel",
-			Handler:    _AdminInferenceService_DeleteModel_Handler,
+			Handler:    _AdminInferenceCatalogService_DeleteModel_Handler,
 		},
 		{
 			MethodName: "DeleteVectorStore",
-			Handler:    _AdminInferenceService_DeleteVectorStore_Handler,
+			Handler:    _AdminInferenceCatalogService_DeleteVectorStore_Handler,
 		},
 		{
 			MethodName: "DeleteModelEndpointCapability",
-			Handler:    _AdminInferenceService_DeleteModelEndpointCapability_Handler,
+			Handler:    _AdminInferenceCatalogService_DeleteModelEndpointCapability_Handler,
+		},
+	},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "mycel/admin/v1/inference.proto",
+}
+
+const (
+	AdminInferenceProfileService_CreateInferenceProfile_FullMethodName     = "/mycel.admin.v1.AdminInferenceProfileService/CreateInferenceProfile"
+	AdminInferenceProfileService_ListInferenceProfiles_FullMethodName      = "/mycel.admin.v1.AdminInferenceProfileService/ListInferenceProfiles"
+	AdminInferenceProfileService_GetInferenceProfile_FullMethodName        = "/mycel.admin.v1.AdminInferenceProfileService/GetInferenceProfile"
+	AdminInferenceProfileService_SetInferenceProfileEnabled_FullMethodName = "/mycel.admin.v1.AdminInferenceProfileService/SetInferenceProfileEnabled"
+	AdminInferenceProfileService_DeleteInferenceProfile_FullMethodName     = "/mycel.admin.v1.AdminInferenceProfileService/DeleteInferenceProfile"
+)
+
+// AdminInferenceProfileServiceClient is the client API for AdminInferenceProfileService service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
+//
+// AdminInferenceProfileService manages space-scoped inference profiles.
+type AdminInferenceProfileServiceClient interface {
+	CreateInferenceProfile(ctx context.Context, in *AdminInferenceProfileServiceCreateInferenceProfileRequest, opts ...grpc.CallOption) (*AdminInferenceProfileServiceCreateInferenceProfileResponse, error)
+	ListInferenceProfiles(ctx context.Context, in *AdminInferenceProfileServiceListInferenceProfilesRequest, opts ...grpc.CallOption) (*AdminInferenceProfileServiceListInferenceProfilesResponse, error)
+	GetInferenceProfile(ctx context.Context, in *AdminInferenceProfileServiceGetInferenceProfileRequest, opts ...grpc.CallOption) (*AdminInferenceProfileServiceGetInferenceProfileResponse, error)
+	SetInferenceProfileEnabled(ctx context.Context, in *AdminInferenceProfileServiceSetInferenceProfileEnabledRequest, opts ...grpc.CallOption) (*AdminInferenceProfileServiceSetInferenceProfileEnabledResponse, error)
+	DeleteInferenceProfile(ctx context.Context, in *AdminInferenceProfileServiceDeleteInferenceProfileRequest, opts ...grpc.CallOption) (*AdminInferenceProfileServiceDeleteInferenceProfileResponse, error)
+}
+
+type adminInferenceProfileServiceClient struct {
+	cc grpc.ClientConnInterface
+}
+
+func NewAdminInferenceProfileServiceClient(cc grpc.ClientConnInterface) AdminInferenceProfileServiceClient {
+	return &adminInferenceProfileServiceClient{cc}
+}
+
+func (c *adminInferenceProfileServiceClient) CreateInferenceProfile(ctx context.Context, in *AdminInferenceProfileServiceCreateInferenceProfileRequest, opts ...grpc.CallOption) (*AdminInferenceProfileServiceCreateInferenceProfileResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(AdminInferenceProfileServiceCreateInferenceProfileResponse)
+	err := c.cc.Invoke(ctx, AdminInferenceProfileService_CreateInferenceProfile_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *adminInferenceProfileServiceClient) ListInferenceProfiles(ctx context.Context, in *AdminInferenceProfileServiceListInferenceProfilesRequest, opts ...grpc.CallOption) (*AdminInferenceProfileServiceListInferenceProfilesResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(AdminInferenceProfileServiceListInferenceProfilesResponse)
+	err := c.cc.Invoke(ctx, AdminInferenceProfileService_ListInferenceProfiles_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *adminInferenceProfileServiceClient) GetInferenceProfile(ctx context.Context, in *AdminInferenceProfileServiceGetInferenceProfileRequest, opts ...grpc.CallOption) (*AdminInferenceProfileServiceGetInferenceProfileResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(AdminInferenceProfileServiceGetInferenceProfileResponse)
+	err := c.cc.Invoke(ctx, AdminInferenceProfileService_GetInferenceProfile_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *adminInferenceProfileServiceClient) SetInferenceProfileEnabled(ctx context.Context, in *AdminInferenceProfileServiceSetInferenceProfileEnabledRequest, opts ...grpc.CallOption) (*AdminInferenceProfileServiceSetInferenceProfileEnabledResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(AdminInferenceProfileServiceSetInferenceProfileEnabledResponse)
+	err := c.cc.Invoke(ctx, AdminInferenceProfileService_SetInferenceProfileEnabled_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *adminInferenceProfileServiceClient) DeleteInferenceProfile(ctx context.Context, in *AdminInferenceProfileServiceDeleteInferenceProfileRequest, opts ...grpc.CallOption) (*AdminInferenceProfileServiceDeleteInferenceProfileResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(AdminInferenceProfileServiceDeleteInferenceProfileResponse)
+	err := c.cc.Invoke(ctx, AdminInferenceProfileService_DeleteInferenceProfile_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// AdminInferenceProfileServiceServer is the server API for AdminInferenceProfileService service.
+// All implementations must embed UnimplementedAdminInferenceProfileServiceServer
+// for forward compatibility.
+//
+// AdminInferenceProfileService manages space-scoped inference profiles.
+type AdminInferenceProfileServiceServer interface {
+	CreateInferenceProfile(context.Context, *AdminInferenceProfileServiceCreateInferenceProfileRequest) (*AdminInferenceProfileServiceCreateInferenceProfileResponse, error)
+	ListInferenceProfiles(context.Context, *AdminInferenceProfileServiceListInferenceProfilesRequest) (*AdminInferenceProfileServiceListInferenceProfilesResponse, error)
+	GetInferenceProfile(context.Context, *AdminInferenceProfileServiceGetInferenceProfileRequest) (*AdminInferenceProfileServiceGetInferenceProfileResponse, error)
+	SetInferenceProfileEnabled(context.Context, *AdminInferenceProfileServiceSetInferenceProfileEnabledRequest) (*AdminInferenceProfileServiceSetInferenceProfileEnabledResponse, error)
+	DeleteInferenceProfile(context.Context, *AdminInferenceProfileServiceDeleteInferenceProfileRequest) (*AdminInferenceProfileServiceDeleteInferenceProfileResponse, error)
+	mustEmbedUnimplementedAdminInferenceProfileServiceServer()
+}
+
+// UnimplementedAdminInferenceProfileServiceServer must be embedded to have
+// forward compatible implementations.
+//
+// NOTE: this should be embedded by value instead of pointer to avoid a nil
+// pointer dereference when methods are called.
+type UnimplementedAdminInferenceProfileServiceServer struct{}
+
+func (UnimplementedAdminInferenceProfileServiceServer) CreateInferenceProfile(context.Context, *AdminInferenceProfileServiceCreateInferenceProfileRequest) (*AdminInferenceProfileServiceCreateInferenceProfileResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateInferenceProfile not implemented")
+}
+func (UnimplementedAdminInferenceProfileServiceServer) ListInferenceProfiles(context.Context, *AdminInferenceProfileServiceListInferenceProfilesRequest) (*AdminInferenceProfileServiceListInferenceProfilesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListInferenceProfiles not implemented")
+}
+func (UnimplementedAdminInferenceProfileServiceServer) GetInferenceProfile(context.Context, *AdminInferenceProfileServiceGetInferenceProfileRequest) (*AdminInferenceProfileServiceGetInferenceProfileResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetInferenceProfile not implemented")
+}
+func (UnimplementedAdminInferenceProfileServiceServer) SetInferenceProfileEnabled(context.Context, *AdminInferenceProfileServiceSetInferenceProfileEnabledRequest) (*AdminInferenceProfileServiceSetInferenceProfileEnabledResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SetInferenceProfileEnabled not implemented")
+}
+func (UnimplementedAdminInferenceProfileServiceServer) DeleteInferenceProfile(context.Context, *AdminInferenceProfileServiceDeleteInferenceProfileRequest) (*AdminInferenceProfileServiceDeleteInferenceProfileResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteInferenceProfile not implemented")
+}
+func (UnimplementedAdminInferenceProfileServiceServer) mustEmbedUnimplementedAdminInferenceProfileServiceServer() {
+}
+func (UnimplementedAdminInferenceProfileServiceServer) testEmbeddedByValue() {}
+
+// UnsafeAdminInferenceProfileServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to AdminInferenceProfileServiceServer will
+// result in compilation errors.
+type UnsafeAdminInferenceProfileServiceServer interface {
+	mustEmbedUnimplementedAdminInferenceProfileServiceServer()
+}
+
+func RegisterAdminInferenceProfileServiceServer(s grpc.ServiceRegistrar, srv AdminInferenceProfileServiceServer) {
+	// If the following call pancis, it indicates UnimplementedAdminInferenceProfileServiceServer was
+	// embedded by pointer and is nil.  This will cause panics if an
+	// unimplemented method is ever invoked, so we test this at initialization
+	// time to prevent it from happening at runtime later due to I/O.
+	if t, ok := srv.(interface{ testEmbeddedByValue() }); ok {
+		t.testEmbeddedByValue()
+	}
+	s.RegisterService(&AdminInferenceProfileService_ServiceDesc, srv)
+}
+
+func _AdminInferenceProfileService_CreateInferenceProfile_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AdminInferenceProfileServiceCreateInferenceProfileRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminInferenceProfileServiceServer).CreateInferenceProfile(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AdminInferenceProfileService_CreateInferenceProfile_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminInferenceProfileServiceServer).CreateInferenceProfile(ctx, req.(*AdminInferenceProfileServiceCreateInferenceProfileRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AdminInferenceProfileService_ListInferenceProfiles_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AdminInferenceProfileServiceListInferenceProfilesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminInferenceProfileServiceServer).ListInferenceProfiles(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AdminInferenceProfileService_ListInferenceProfiles_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminInferenceProfileServiceServer).ListInferenceProfiles(ctx, req.(*AdminInferenceProfileServiceListInferenceProfilesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AdminInferenceProfileService_GetInferenceProfile_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AdminInferenceProfileServiceGetInferenceProfileRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminInferenceProfileServiceServer).GetInferenceProfile(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AdminInferenceProfileService_GetInferenceProfile_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminInferenceProfileServiceServer).GetInferenceProfile(ctx, req.(*AdminInferenceProfileServiceGetInferenceProfileRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AdminInferenceProfileService_SetInferenceProfileEnabled_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AdminInferenceProfileServiceSetInferenceProfileEnabledRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminInferenceProfileServiceServer).SetInferenceProfileEnabled(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AdminInferenceProfileService_SetInferenceProfileEnabled_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminInferenceProfileServiceServer).SetInferenceProfileEnabled(ctx, req.(*AdminInferenceProfileServiceSetInferenceProfileEnabledRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AdminInferenceProfileService_DeleteInferenceProfile_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AdminInferenceProfileServiceDeleteInferenceProfileRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminInferenceProfileServiceServer).DeleteInferenceProfile(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AdminInferenceProfileService_DeleteInferenceProfile_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminInferenceProfileServiceServer).DeleteInferenceProfile(ctx, req.(*AdminInferenceProfileServiceDeleteInferenceProfileRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+// AdminInferenceProfileService_ServiceDesc is the grpc.ServiceDesc for AdminInferenceProfileService service.
+// It's only intended for direct use with grpc.RegisterService,
+// and not to be introspected or modified (even as a copy)
+var AdminInferenceProfileService_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "mycel.admin.v1.AdminInferenceProfileService",
+	HandlerType: (*AdminInferenceProfileServiceServer)(nil),
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "CreateInferenceProfile",
+			Handler:    _AdminInferenceProfileService_CreateInferenceProfile_Handler,
+		},
+		{
+			MethodName: "ListInferenceProfiles",
+			Handler:    _AdminInferenceProfileService_ListInferenceProfiles_Handler,
+		},
+		{
+			MethodName: "GetInferenceProfile",
+			Handler:    _AdminInferenceProfileService_GetInferenceProfile_Handler,
+		},
+		{
+			MethodName: "SetInferenceProfileEnabled",
+			Handler:    _AdminInferenceProfileService_SetInferenceProfileEnabled_Handler,
+		},
+		{
+			MethodName: "DeleteInferenceProfile",
+			Handler:    _AdminInferenceProfileService_DeleteInferenceProfile_Handler,
+		},
+	},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "mycel/admin/v1/inference.proto",
+}
+
+const (
+	AdminInferenceCredentialService_CreateCredential_FullMethodName    = "/mycel.admin.v1.AdminInferenceCredentialService/CreateCredential"
+	AdminInferenceCredentialService_ListCredentials_FullMethodName     = "/mycel.admin.v1.AdminInferenceCredentialService/ListCredentials"
+	AdminInferenceCredentialService_SetCredentialStatus_FullMethodName = "/mycel.admin.v1.AdminInferenceCredentialService/SetCredentialStatus"
+	AdminInferenceCredentialService_RotateCredential_FullMethodName    = "/mycel.admin.v1.AdminInferenceCredentialService/RotateCredential"
+	AdminInferenceCredentialService_DeleteCredential_FullMethodName    = "/mycel.admin.v1.AdminInferenceCredentialService/DeleteCredential"
+)
+
+// AdminInferenceCredentialServiceClient is the client API for AdminInferenceCredentialService service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
+//
+// AdminInferenceCredentialService manages inference credentials and secret refs.
+type AdminInferenceCredentialServiceClient interface {
+	CreateCredential(ctx context.Context, in *AdminInferenceCredentialServiceCreateCredentialRequest, opts ...grpc.CallOption) (*AdminInferenceCredentialServiceCreateCredentialResponse, error)
+	ListCredentials(ctx context.Context, in *AdminInferenceCredentialServiceListCredentialsRequest, opts ...grpc.CallOption) (*AdminInferenceCredentialServiceListCredentialsResponse, error)
+	SetCredentialStatus(ctx context.Context, in *AdminInferenceCredentialServiceSetCredentialStatusRequest, opts ...grpc.CallOption) (*AdminInferenceCredentialServiceSetCredentialStatusResponse, error)
+	RotateCredential(ctx context.Context, in *AdminInferenceCredentialServiceRotateCredentialRequest, opts ...grpc.CallOption) (*AdminInferenceCredentialServiceRotateCredentialResponse, error)
+	DeleteCredential(ctx context.Context, in *AdminInferenceCredentialServiceDeleteCredentialRequest, opts ...grpc.CallOption) (*AdminInferenceCredentialServiceDeleteCredentialResponse, error)
+}
+
+type adminInferenceCredentialServiceClient struct {
+	cc grpc.ClientConnInterface
+}
+
+func NewAdminInferenceCredentialServiceClient(cc grpc.ClientConnInterface) AdminInferenceCredentialServiceClient {
+	return &adminInferenceCredentialServiceClient{cc}
+}
+
+func (c *adminInferenceCredentialServiceClient) CreateCredential(ctx context.Context, in *AdminInferenceCredentialServiceCreateCredentialRequest, opts ...grpc.CallOption) (*AdminInferenceCredentialServiceCreateCredentialResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(AdminInferenceCredentialServiceCreateCredentialResponse)
+	err := c.cc.Invoke(ctx, AdminInferenceCredentialService_CreateCredential_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *adminInferenceCredentialServiceClient) ListCredentials(ctx context.Context, in *AdminInferenceCredentialServiceListCredentialsRequest, opts ...grpc.CallOption) (*AdminInferenceCredentialServiceListCredentialsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(AdminInferenceCredentialServiceListCredentialsResponse)
+	err := c.cc.Invoke(ctx, AdminInferenceCredentialService_ListCredentials_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *adminInferenceCredentialServiceClient) SetCredentialStatus(ctx context.Context, in *AdminInferenceCredentialServiceSetCredentialStatusRequest, opts ...grpc.CallOption) (*AdminInferenceCredentialServiceSetCredentialStatusResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(AdminInferenceCredentialServiceSetCredentialStatusResponse)
+	err := c.cc.Invoke(ctx, AdminInferenceCredentialService_SetCredentialStatus_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *adminInferenceCredentialServiceClient) RotateCredential(ctx context.Context, in *AdminInferenceCredentialServiceRotateCredentialRequest, opts ...grpc.CallOption) (*AdminInferenceCredentialServiceRotateCredentialResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(AdminInferenceCredentialServiceRotateCredentialResponse)
+	err := c.cc.Invoke(ctx, AdminInferenceCredentialService_RotateCredential_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *adminInferenceCredentialServiceClient) DeleteCredential(ctx context.Context, in *AdminInferenceCredentialServiceDeleteCredentialRequest, opts ...grpc.CallOption) (*AdminInferenceCredentialServiceDeleteCredentialResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(AdminInferenceCredentialServiceDeleteCredentialResponse)
+	err := c.cc.Invoke(ctx, AdminInferenceCredentialService_DeleteCredential_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// AdminInferenceCredentialServiceServer is the server API for AdminInferenceCredentialService service.
+// All implementations must embed UnimplementedAdminInferenceCredentialServiceServer
+// for forward compatibility.
+//
+// AdminInferenceCredentialService manages inference credentials and secret refs.
+type AdminInferenceCredentialServiceServer interface {
+	CreateCredential(context.Context, *AdminInferenceCredentialServiceCreateCredentialRequest) (*AdminInferenceCredentialServiceCreateCredentialResponse, error)
+	ListCredentials(context.Context, *AdminInferenceCredentialServiceListCredentialsRequest) (*AdminInferenceCredentialServiceListCredentialsResponse, error)
+	SetCredentialStatus(context.Context, *AdminInferenceCredentialServiceSetCredentialStatusRequest) (*AdminInferenceCredentialServiceSetCredentialStatusResponse, error)
+	RotateCredential(context.Context, *AdminInferenceCredentialServiceRotateCredentialRequest) (*AdminInferenceCredentialServiceRotateCredentialResponse, error)
+	DeleteCredential(context.Context, *AdminInferenceCredentialServiceDeleteCredentialRequest) (*AdminInferenceCredentialServiceDeleteCredentialResponse, error)
+	mustEmbedUnimplementedAdminInferenceCredentialServiceServer()
+}
+
+// UnimplementedAdminInferenceCredentialServiceServer must be embedded to have
+// forward compatible implementations.
+//
+// NOTE: this should be embedded by value instead of pointer to avoid a nil
+// pointer dereference when methods are called.
+type UnimplementedAdminInferenceCredentialServiceServer struct{}
+
+func (UnimplementedAdminInferenceCredentialServiceServer) CreateCredential(context.Context, *AdminInferenceCredentialServiceCreateCredentialRequest) (*AdminInferenceCredentialServiceCreateCredentialResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateCredential not implemented")
+}
+func (UnimplementedAdminInferenceCredentialServiceServer) ListCredentials(context.Context, *AdminInferenceCredentialServiceListCredentialsRequest) (*AdminInferenceCredentialServiceListCredentialsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListCredentials not implemented")
+}
+func (UnimplementedAdminInferenceCredentialServiceServer) SetCredentialStatus(context.Context, *AdminInferenceCredentialServiceSetCredentialStatusRequest) (*AdminInferenceCredentialServiceSetCredentialStatusResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SetCredentialStatus not implemented")
+}
+func (UnimplementedAdminInferenceCredentialServiceServer) RotateCredential(context.Context, *AdminInferenceCredentialServiceRotateCredentialRequest) (*AdminInferenceCredentialServiceRotateCredentialResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RotateCredential not implemented")
+}
+func (UnimplementedAdminInferenceCredentialServiceServer) DeleteCredential(context.Context, *AdminInferenceCredentialServiceDeleteCredentialRequest) (*AdminInferenceCredentialServiceDeleteCredentialResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteCredential not implemented")
+}
+func (UnimplementedAdminInferenceCredentialServiceServer) mustEmbedUnimplementedAdminInferenceCredentialServiceServer() {
+}
+func (UnimplementedAdminInferenceCredentialServiceServer) testEmbeddedByValue() {}
+
+// UnsafeAdminInferenceCredentialServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to AdminInferenceCredentialServiceServer will
+// result in compilation errors.
+type UnsafeAdminInferenceCredentialServiceServer interface {
+	mustEmbedUnimplementedAdminInferenceCredentialServiceServer()
+}
+
+func RegisterAdminInferenceCredentialServiceServer(s grpc.ServiceRegistrar, srv AdminInferenceCredentialServiceServer) {
+	// If the following call pancis, it indicates UnimplementedAdminInferenceCredentialServiceServer was
+	// embedded by pointer and is nil.  This will cause panics if an
+	// unimplemented method is ever invoked, so we test this at initialization
+	// time to prevent it from happening at runtime later due to I/O.
+	if t, ok := srv.(interface{ testEmbeddedByValue() }); ok {
+		t.testEmbeddedByValue()
+	}
+	s.RegisterService(&AdminInferenceCredentialService_ServiceDesc, srv)
+}
+
+func _AdminInferenceCredentialService_CreateCredential_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AdminInferenceCredentialServiceCreateCredentialRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminInferenceCredentialServiceServer).CreateCredential(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AdminInferenceCredentialService_CreateCredential_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminInferenceCredentialServiceServer).CreateCredential(ctx, req.(*AdminInferenceCredentialServiceCreateCredentialRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AdminInferenceCredentialService_ListCredentials_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AdminInferenceCredentialServiceListCredentialsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminInferenceCredentialServiceServer).ListCredentials(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AdminInferenceCredentialService_ListCredentials_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminInferenceCredentialServiceServer).ListCredentials(ctx, req.(*AdminInferenceCredentialServiceListCredentialsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AdminInferenceCredentialService_SetCredentialStatus_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AdminInferenceCredentialServiceSetCredentialStatusRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminInferenceCredentialServiceServer).SetCredentialStatus(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AdminInferenceCredentialService_SetCredentialStatus_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminInferenceCredentialServiceServer).SetCredentialStatus(ctx, req.(*AdminInferenceCredentialServiceSetCredentialStatusRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AdminInferenceCredentialService_RotateCredential_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AdminInferenceCredentialServiceRotateCredentialRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminInferenceCredentialServiceServer).RotateCredential(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AdminInferenceCredentialService_RotateCredential_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminInferenceCredentialServiceServer).RotateCredential(ctx, req.(*AdminInferenceCredentialServiceRotateCredentialRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AdminInferenceCredentialService_DeleteCredential_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AdminInferenceCredentialServiceDeleteCredentialRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminInferenceCredentialServiceServer).DeleteCredential(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AdminInferenceCredentialService_DeleteCredential_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminInferenceCredentialServiceServer).DeleteCredential(ctx, req.(*AdminInferenceCredentialServiceDeleteCredentialRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+// AdminInferenceCredentialService_ServiceDesc is the grpc.ServiceDesc for AdminInferenceCredentialService service.
+// It's only intended for direct use with grpc.RegisterService,
+// and not to be introspected or modified (even as a copy)
+var AdminInferenceCredentialService_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "mycel.admin.v1.AdminInferenceCredentialService",
+	HandlerType: (*AdminInferenceCredentialServiceServer)(nil),
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "CreateCredential",
+			Handler:    _AdminInferenceCredentialService_CreateCredential_Handler,
+		},
+		{
+			MethodName: "ListCredentials",
+			Handler:    _AdminInferenceCredentialService_ListCredentials_Handler,
+		},
+		{
+			MethodName: "SetCredentialStatus",
+			Handler:    _AdminInferenceCredentialService_SetCredentialStatus_Handler,
+		},
+		{
+			MethodName: "RotateCredential",
+			Handler:    _AdminInferenceCredentialService_RotateCredential_Handler,
 		},
 		{
 			MethodName: "DeleteCredential",
-			Handler:    _AdminInferenceService_DeleteCredential_Handler,
+			Handler:    _AdminInferenceCredentialService_DeleteCredential_Handler,
+		},
+	},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "mycel/admin/v1/inference.proto",
+}
+
+const (
+	AdminInferenceGrantService_CreateCredentialGrant_FullMethodName = "/mycel.admin.v1.AdminInferenceGrantService/CreateCredentialGrant"
+	AdminInferenceGrantService_ListCredentialGrants_FullMethodName  = "/mycel.admin.v1.AdminInferenceGrantService/ListCredentialGrants"
+	AdminInferenceGrantService_ExpireCredentialGrant_FullMethodName = "/mycel.admin.v1.AdminInferenceGrantService/ExpireCredentialGrant"
+	AdminInferenceGrantService_DeleteCredentialGrant_FullMethodName = "/mycel.admin.v1.AdminInferenceGrantService/DeleteCredentialGrant"
+)
+
+// AdminInferenceGrantServiceClient is the client API for AdminInferenceGrantService service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
+//
+// AdminInferenceGrantService manages credential grants.
+type AdminInferenceGrantServiceClient interface {
+	CreateCredentialGrant(ctx context.Context, in *AdminInferenceGrantServiceCreateCredentialGrantRequest, opts ...grpc.CallOption) (*AdminInferenceGrantServiceCreateCredentialGrantResponse, error)
+	ListCredentialGrants(ctx context.Context, in *AdminInferenceGrantServiceListCredentialGrantsRequest, opts ...grpc.CallOption) (*AdminInferenceGrantServiceListCredentialGrantsResponse, error)
+	ExpireCredentialGrant(ctx context.Context, in *AdminInferenceGrantServiceExpireCredentialGrantRequest, opts ...grpc.CallOption) (*AdminInferenceGrantServiceExpireCredentialGrantResponse, error)
+	DeleteCredentialGrant(ctx context.Context, in *AdminInferenceGrantServiceDeleteCredentialGrantRequest, opts ...grpc.CallOption) (*AdminInferenceGrantServiceDeleteCredentialGrantResponse, error)
+}
+
+type adminInferenceGrantServiceClient struct {
+	cc grpc.ClientConnInterface
+}
+
+func NewAdminInferenceGrantServiceClient(cc grpc.ClientConnInterface) AdminInferenceGrantServiceClient {
+	return &adminInferenceGrantServiceClient{cc}
+}
+
+func (c *adminInferenceGrantServiceClient) CreateCredentialGrant(ctx context.Context, in *AdminInferenceGrantServiceCreateCredentialGrantRequest, opts ...grpc.CallOption) (*AdminInferenceGrantServiceCreateCredentialGrantResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(AdminInferenceGrantServiceCreateCredentialGrantResponse)
+	err := c.cc.Invoke(ctx, AdminInferenceGrantService_CreateCredentialGrant_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *adminInferenceGrantServiceClient) ListCredentialGrants(ctx context.Context, in *AdminInferenceGrantServiceListCredentialGrantsRequest, opts ...grpc.CallOption) (*AdminInferenceGrantServiceListCredentialGrantsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(AdminInferenceGrantServiceListCredentialGrantsResponse)
+	err := c.cc.Invoke(ctx, AdminInferenceGrantService_ListCredentialGrants_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *adminInferenceGrantServiceClient) ExpireCredentialGrant(ctx context.Context, in *AdminInferenceGrantServiceExpireCredentialGrantRequest, opts ...grpc.CallOption) (*AdminInferenceGrantServiceExpireCredentialGrantResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(AdminInferenceGrantServiceExpireCredentialGrantResponse)
+	err := c.cc.Invoke(ctx, AdminInferenceGrantService_ExpireCredentialGrant_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *adminInferenceGrantServiceClient) DeleteCredentialGrant(ctx context.Context, in *AdminInferenceGrantServiceDeleteCredentialGrantRequest, opts ...grpc.CallOption) (*AdminInferenceGrantServiceDeleteCredentialGrantResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(AdminInferenceGrantServiceDeleteCredentialGrantResponse)
+	err := c.cc.Invoke(ctx, AdminInferenceGrantService_DeleteCredentialGrant_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// AdminInferenceGrantServiceServer is the server API for AdminInferenceGrantService service.
+// All implementations must embed UnimplementedAdminInferenceGrantServiceServer
+// for forward compatibility.
+//
+// AdminInferenceGrantService manages credential grants.
+type AdminInferenceGrantServiceServer interface {
+	CreateCredentialGrant(context.Context, *AdminInferenceGrantServiceCreateCredentialGrantRequest) (*AdminInferenceGrantServiceCreateCredentialGrantResponse, error)
+	ListCredentialGrants(context.Context, *AdminInferenceGrantServiceListCredentialGrantsRequest) (*AdminInferenceGrantServiceListCredentialGrantsResponse, error)
+	ExpireCredentialGrant(context.Context, *AdminInferenceGrantServiceExpireCredentialGrantRequest) (*AdminInferenceGrantServiceExpireCredentialGrantResponse, error)
+	DeleteCredentialGrant(context.Context, *AdminInferenceGrantServiceDeleteCredentialGrantRequest) (*AdminInferenceGrantServiceDeleteCredentialGrantResponse, error)
+	mustEmbedUnimplementedAdminInferenceGrantServiceServer()
+}
+
+// UnimplementedAdminInferenceGrantServiceServer must be embedded to have
+// forward compatible implementations.
+//
+// NOTE: this should be embedded by value instead of pointer to avoid a nil
+// pointer dereference when methods are called.
+type UnimplementedAdminInferenceGrantServiceServer struct{}
+
+func (UnimplementedAdminInferenceGrantServiceServer) CreateCredentialGrant(context.Context, *AdminInferenceGrantServiceCreateCredentialGrantRequest) (*AdminInferenceGrantServiceCreateCredentialGrantResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateCredentialGrant not implemented")
+}
+func (UnimplementedAdminInferenceGrantServiceServer) ListCredentialGrants(context.Context, *AdminInferenceGrantServiceListCredentialGrantsRequest) (*AdminInferenceGrantServiceListCredentialGrantsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListCredentialGrants not implemented")
+}
+func (UnimplementedAdminInferenceGrantServiceServer) ExpireCredentialGrant(context.Context, *AdminInferenceGrantServiceExpireCredentialGrantRequest) (*AdminInferenceGrantServiceExpireCredentialGrantResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ExpireCredentialGrant not implemented")
+}
+func (UnimplementedAdminInferenceGrantServiceServer) DeleteCredentialGrant(context.Context, *AdminInferenceGrantServiceDeleteCredentialGrantRequest) (*AdminInferenceGrantServiceDeleteCredentialGrantResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteCredentialGrant not implemented")
+}
+func (UnimplementedAdminInferenceGrantServiceServer) mustEmbedUnimplementedAdminInferenceGrantServiceServer() {
+}
+func (UnimplementedAdminInferenceGrantServiceServer) testEmbeddedByValue() {}
+
+// UnsafeAdminInferenceGrantServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to AdminInferenceGrantServiceServer will
+// result in compilation errors.
+type UnsafeAdminInferenceGrantServiceServer interface {
+	mustEmbedUnimplementedAdminInferenceGrantServiceServer()
+}
+
+func RegisterAdminInferenceGrantServiceServer(s grpc.ServiceRegistrar, srv AdminInferenceGrantServiceServer) {
+	// If the following call pancis, it indicates UnimplementedAdminInferenceGrantServiceServer was
+	// embedded by pointer and is nil.  This will cause panics if an
+	// unimplemented method is ever invoked, so we test this at initialization
+	// time to prevent it from happening at runtime later due to I/O.
+	if t, ok := srv.(interface{ testEmbeddedByValue() }); ok {
+		t.testEmbeddedByValue()
+	}
+	s.RegisterService(&AdminInferenceGrantService_ServiceDesc, srv)
+}
+
+func _AdminInferenceGrantService_CreateCredentialGrant_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AdminInferenceGrantServiceCreateCredentialGrantRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminInferenceGrantServiceServer).CreateCredentialGrant(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AdminInferenceGrantService_CreateCredentialGrant_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminInferenceGrantServiceServer).CreateCredentialGrant(ctx, req.(*AdminInferenceGrantServiceCreateCredentialGrantRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AdminInferenceGrantService_ListCredentialGrants_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AdminInferenceGrantServiceListCredentialGrantsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminInferenceGrantServiceServer).ListCredentialGrants(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AdminInferenceGrantService_ListCredentialGrants_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminInferenceGrantServiceServer).ListCredentialGrants(ctx, req.(*AdminInferenceGrantServiceListCredentialGrantsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AdminInferenceGrantService_ExpireCredentialGrant_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AdminInferenceGrantServiceExpireCredentialGrantRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminInferenceGrantServiceServer).ExpireCredentialGrant(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AdminInferenceGrantService_ExpireCredentialGrant_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminInferenceGrantServiceServer).ExpireCredentialGrant(ctx, req.(*AdminInferenceGrantServiceExpireCredentialGrantRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AdminInferenceGrantService_DeleteCredentialGrant_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AdminInferenceGrantServiceDeleteCredentialGrantRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminInferenceGrantServiceServer).DeleteCredentialGrant(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AdminInferenceGrantService_DeleteCredentialGrant_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminInferenceGrantServiceServer).DeleteCredentialGrant(ctx, req.(*AdminInferenceGrantServiceDeleteCredentialGrantRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+// AdminInferenceGrantService_ServiceDesc is the grpc.ServiceDesc for AdminInferenceGrantService service.
+// It's only intended for direct use with grpc.RegisterService,
+// and not to be introspected or modified (even as a copy)
+var AdminInferenceGrantService_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "mycel.admin.v1.AdminInferenceGrantService",
+	HandlerType: (*AdminInferenceGrantServiceServer)(nil),
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "CreateCredentialGrant",
+			Handler:    _AdminInferenceGrantService_CreateCredentialGrant_Handler,
+		},
+		{
+			MethodName: "ListCredentialGrants",
+			Handler:    _AdminInferenceGrantService_ListCredentialGrants_Handler,
+		},
+		{
+			MethodName: "ExpireCredentialGrant",
+			Handler:    _AdminInferenceGrantService_ExpireCredentialGrant_Handler,
 		},
 		{
 			MethodName: "DeleteCredentialGrant",
-			Handler:    _AdminInferenceService_DeleteCredentialGrant_Handler,
+			Handler:    _AdminInferenceGrantService_DeleteCredentialGrant_Handler,
+		},
+	},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "mycel/admin/v1/inference.proto",
+}
+
+const (
+	AdminInferencePolicyService_CreateInferencePolicy_FullMethodName = "/mycel.admin.v1.AdminInferencePolicyService/CreateInferencePolicy"
+	AdminInferencePolicyService_ListInferencePolicies_FullMethodName = "/mycel.admin.v1.AdminInferencePolicyService/ListInferencePolicies"
+	AdminInferencePolicyService_ExpireInferencePolicy_FullMethodName = "/mycel.admin.v1.AdminInferencePolicyService/ExpireInferencePolicy"
+	AdminInferencePolicyService_DeleteInferencePolicy_FullMethodName = "/mycel.admin.v1.AdminInferencePolicyService/DeleteInferencePolicy"
+	AdminInferencePolicyService_GetPolicyDecision_FullMethodName     = "/mycel.admin.v1.AdminInferencePolicyService/GetPolicyDecision"
+)
+
+// AdminInferencePolicyServiceClient is the client API for AdminInferencePolicyService service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
+//
+// AdminInferencePolicyService manages inference policies and policy decisions.
+type AdminInferencePolicyServiceClient interface {
+	CreateInferencePolicy(ctx context.Context, in *AdminInferencePolicyServiceCreateInferencePolicyRequest, opts ...grpc.CallOption) (*AdminInferencePolicyServiceCreateInferencePolicyResponse, error)
+	ListInferencePolicies(ctx context.Context, in *AdminInferencePolicyServiceListInferencePoliciesRequest, opts ...grpc.CallOption) (*AdminInferencePolicyServiceListInferencePoliciesResponse, error)
+	ExpireInferencePolicy(ctx context.Context, in *AdminInferencePolicyServiceExpireInferencePolicyRequest, opts ...grpc.CallOption) (*AdminInferencePolicyServiceExpireInferencePolicyResponse, error)
+	DeleteInferencePolicy(ctx context.Context, in *AdminInferencePolicyServiceDeleteInferencePolicyRequest, opts ...grpc.CallOption) (*AdminInferencePolicyServiceDeleteInferencePolicyResponse, error)
+	GetPolicyDecision(ctx context.Context, in *AdminInferencePolicyServiceGetPolicyDecisionRequest, opts ...grpc.CallOption) (*AdminInferencePolicyServiceGetPolicyDecisionResponse, error)
+}
+
+type adminInferencePolicyServiceClient struct {
+	cc grpc.ClientConnInterface
+}
+
+func NewAdminInferencePolicyServiceClient(cc grpc.ClientConnInterface) AdminInferencePolicyServiceClient {
+	return &adminInferencePolicyServiceClient{cc}
+}
+
+func (c *adminInferencePolicyServiceClient) CreateInferencePolicy(ctx context.Context, in *AdminInferencePolicyServiceCreateInferencePolicyRequest, opts ...grpc.CallOption) (*AdminInferencePolicyServiceCreateInferencePolicyResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(AdminInferencePolicyServiceCreateInferencePolicyResponse)
+	err := c.cc.Invoke(ctx, AdminInferencePolicyService_CreateInferencePolicy_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *adminInferencePolicyServiceClient) ListInferencePolicies(ctx context.Context, in *AdminInferencePolicyServiceListInferencePoliciesRequest, opts ...grpc.CallOption) (*AdminInferencePolicyServiceListInferencePoliciesResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(AdminInferencePolicyServiceListInferencePoliciesResponse)
+	err := c.cc.Invoke(ctx, AdminInferencePolicyService_ListInferencePolicies_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *adminInferencePolicyServiceClient) ExpireInferencePolicy(ctx context.Context, in *AdminInferencePolicyServiceExpireInferencePolicyRequest, opts ...grpc.CallOption) (*AdminInferencePolicyServiceExpireInferencePolicyResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(AdminInferencePolicyServiceExpireInferencePolicyResponse)
+	err := c.cc.Invoke(ctx, AdminInferencePolicyService_ExpireInferencePolicy_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *adminInferencePolicyServiceClient) DeleteInferencePolicy(ctx context.Context, in *AdminInferencePolicyServiceDeleteInferencePolicyRequest, opts ...grpc.CallOption) (*AdminInferencePolicyServiceDeleteInferencePolicyResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(AdminInferencePolicyServiceDeleteInferencePolicyResponse)
+	err := c.cc.Invoke(ctx, AdminInferencePolicyService_DeleteInferencePolicy_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *adminInferencePolicyServiceClient) GetPolicyDecision(ctx context.Context, in *AdminInferencePolicyServiceGetPolicyDecisionRequest, opts ...grpc.CallOption) (*AdminInferencePolicyServiceGetPolicyDecisionResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(AdminInferencePolicyServiceGetPolicyDecisionResponse)
+	err := c.cc.Invoke(ctx, AdminInferencePolicyService_GetPolicyDecision_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// AdminInferencePolicyServiceServer is the server API for AdminInferencePolicyService service.
+// All implementations must embed UnimplementedAdminInferencePolicyServiceServer
+// for forward compatibility.
+//
+// AdminInferencePolicyService manages inference policies and policy decisions.
+type AdminInferencePolicyServiceServer interface {
+	CreateInferencePolicy(context.Context, *AdminInferencePolicyServiceCreateInferencePolicyRequest) (*AdminInferencePolicyServiceCreateInferencePolicyResponse, error)
+	ListInferencePolicies(context.Context, *AdminInferencePolicyServiceListInferencePoliciesRequest) (*AdminInferencePolicyServiceListInferencePoliciesResponse, error)
+	ExpireInferencePolicy(context.Context, *AdminInferencePolicyServiceExpireInferencePolicyRequest) (*AdminInferencePolicyServiceExpireInferencePolicyResponse, error)
+	DeleteInferencePolicy(context.Context, *AdminInferencePolicyServiceDeleteInferencePolicyRequest) (*AdminInferencePolicyServiceDeleteInferencePolicyResponse, error)
+	GetPolicyDecision(context.Context, *AdminInferencePolicyServiceGetPolicyDecisionRequest) (*AdminInferencePolicyServiceGetPolicyDecisionResponse, error)
+	mustEmbedUnimplementedAdminInferencePolicyServiceServer()
+}
+
+// UnimplementedAdminInferencePolicyServiceServer must be embedded to have
+// forward compatible implementations.
+//
+// NOTE: this should be embedded by value instead of pointer to avoid a nil
+// pointer dereference when methods are called.
+type UnimplementedAdminInferencePolicyServiceServer struct{}
+
+func (UnimplementedAdminInferencePolicyServiceServer) CreateInferencePolicy(context.Context, *AdminInferencePolicyServiceCreateInferencePolicyRequest) (*AdminInferencePolicyServiceCreateInferencePolicyResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateInferencePolicy not implemented")
+}
+func (UnimplementedAdminInferencePolicyServiceServer) ListInferencePolicies(context.Context, *AdminInferencePolicyServiceListInferencePoliciesRequest) (*AdminInferencePolicyServiceListInferencePoliciesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListInferencePolicies not implemented")
+}
+func (UnimplementedAdminInferencePolicyServiceServer) ExpireInferencePolicy(context.Context, *AdminInferencePolicyServiceExpireInferencePolicyRequest) (*AdminInferencePolicyServiceExpireInferencePolicyResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ExpireInferencePolicy not implemented")
+}
+func (UnimplementedAdminInferencePolicyServiceServer) DeleteInferencePolicy(context.Context, *AdminInferencePolicyServiceDeleteInferencePolicyRequest) (*AdminInferencePolicyServiceDeleteInferencePolicyResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteInferencePolicy not implemented")
+}
+func (UnimplementedAdminInferencePolicyServiceServer) GetPolicyDecision(context.Context, *AdminInferencePolicyServiceGetPolicyDecisionRequest) (*AdminInferencePolicyServiceGetPolicyDecisionResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetPolicyDecision not implemented")
+}
+func (UnimplementedAdminInferencePolicyServiceServer) mustEmbedUnimplementedAdminInferencePolicyServiceServer() {
+}
+func (UnimplementedAdminInferencePolicyServiceServer) testEmbeddedByValue() {}
+
+// UnsafeAdminInferencePolicyServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to AdminInferencePolicyServiceServer will
+// result in compilation errors.
+type UnsafeAdminInferencePolicyServiceServer interface {
+	mustEmbedUnimplementedAdminInferencePolicyServiceServer()
+}
+
+func RegisterAdminInferencePolicyServiceServer(s grpc.ServiceRegistrar, srv AdminInferencePolicyServiceServer) {
+	// If the following call pancis, it indicates UnimplementedAdminInferencePolicyServiceServer was
+	// embedded by pointer and is nil.  This will cause panics if an
+	// unimplemented method is ever invoked, so we test this at initialization
+	// time to prevent it from happening at runtime later due to I/O.
+	if t, ok := srv.(interface{ testEmbeddedByValue() }); ok {
+		t.testEmbeddedByValue()
+	}
+	s.RegisterService(&AdminInferencePolicyService_ServiceDesc, srv)
+}
+
+func _AdminInferencePolicyService_CreateInferencePolicy_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AdminInferencePolicyServiceCreateInferencePolicyRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminInferencePolicyServiceServer).CreateInferencePolicy(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AdminInferencePolicyService_CreateInferencePolicy_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminInferencePolicyServiceServer).CreateInferencePolicy(ctx, req.(*AdminInferencePolicyServiceCreateInferencePolicyRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AdminInferencePolicyService_ListInferencePolicies_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AdminInferencePolicyServiceListInferencePoliciesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminInferencePolicyServiceServer).ListInferencePolicies(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AdminInferencePolicyService_ListInferencePolicies_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminInferencePolicyServiceServer).ListInferencePolicies(ctx, req.(*AdminInferencePolicyServiceListInferencePoliciesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AdminInferencePolicyService_ExpireInferencePolicy_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AdminInferencePolicyServiceExpireInferencePolicyRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminInferencePolicyServiceServer).ExpireInferencePolicy(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AdminInferencePolicyService_ExpireInferencePolicy_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminInferencePolicyServiceServer).ExpireInferencePolicy(ctx, req.(*AdminInferencePolicyServiceExpireInferencePolicyRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AdminInferencePolicyService_DeleteInferencePolicy_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AdminInferencePolicyServiceDeleteInferencePolicyRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminInferencePolicyServiceServer).DeleteInferencePolicy(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AdminInferencePolicyService_DeleteInferencePolicy_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminInferencePolicyServiceServer).DeleteInferencePolicy(ctx, req.(*AdminInferencePolicyServiceDeleteInferencePolicyRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AdminInferencePolicyService_GetPolicyDecision_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AdminInferencePolicyServiceGetPolicyDecisionRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminInferencePolicyServiceServer).GetPolicyDecision(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AdminInferencePolicyService_GetPolicyDecision_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminInferencePolicyServiceServer).GetPolicyDecision(ctx, req.(*AdminInferencePolicyServiceGetPolicyDecisionRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+// AdminInferencePolicyService_ServiceDesc is the grpc.ServiceDesc for AdminInferencePolicyService service.
+// It's only intended for direct use with grpc.RegisterService,
+// and not to be introspected or modified (even as a copy)
+var AdminInferencePolicyService_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "mycel.admin.v1.AdminInferencePolicyService",
+	HandlerType: (*AdminInferencePolicyServiceServer)(nil),
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "CreateInferencePolicy",
+			Handler:    _AdminInferencePolicyService_CreateInferencePolicy_Handler,
+		},
+		{
+			MethodName: "ListInferencePolicies",
+			Handler:    _AdminInferencePolicyService_ListInferencePolicies_Handler,
+		},
+		{
+			MethodName: "ExpireInferencePolicy",
+			Handler:    _AdminInferencePolicyService_ExpireInferencePolicy_Handler,
 		},
 		{
 			MethodName: "DeleteInferencePolicy",
-			Handler:    _AdminInferenceService_DeleteInferencePolicy_Handler,
+			Handler:    _AdminInferencePolicyService_DeleteInferencePolicy_Handler,
+		},
+		{
+			MethodName: "GetPolicyDecision",
+			Handler:    _AdminInferencePolicyService_GetPolicyDecision_Handler,
+		},
+	},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "mycel/admin/v1/inference.proto",
+}
+
+const (
+	AdminInferenceUsageService_ListUsageEvents_FullMethodName = "/mycel.admin.v1.AdminInferenceUsageService/ListUsageEvents"
+	AdminInferenceUsageService_SummarizeUsage_FullMethodName  = "/mycel.admin.v1.AdminInferenceUsageService/SummarizeUsage"
+)
+
+// AdminInferenceUsageServiceClient is the client API for AdminInferenceUsageService service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
+//
+// AdminInferenceUsageService exposes neutral inference usage telemetry.
+type AdminInferenceUsageServiceClient interface {
+	ListUsageEvents(ctx context.Context, in *AdminInferenceUsageServiceListUsageEventsRequest, opts ...grpc.CallOption) (*AdminInferenceUsageServiceListUsageEventsResponse, error)
+	SummarizeUsage(ctx context.Context, in *AdminInferenceUsageServiceSummarizeUsageRequest, opts ...grpc.CallOption) (*AdminInferenceUsageServiceSummarizeUsageResponse, error)
+}
+
+type adminInferenceUsageServiceClient struct {
+	cc grpc.ClientConnInterface
+}
+
+func NewAdminInferenceUsageServiceClient(cc grpc.ClientConnInterface) AdminInferenceUsageServiceClient {
+	return &adminInferenceUsageServiceClient{cc}
+}
+
+func (c *adminInferenceUsageServiceClient) ListUsageEvents(ctx context.Context, in *AdminInferenceUsageServiceListUsageEventsRequest, opts ...grpc.CallOption) (*AdminInferenceUsageServiceListUsageEventsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(AdminInferenceUsageServiceListUsageEventsResponse)
+	err := c.cc.Invoke(ctx, AdminInferenceUsageService_ListUsageEvents_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *adminInferenceUsageServiceClient) SummarizeUsage(ctx context.Context, in *AdminInferenceUsageServiceSummarizeUsageRequest, opts ...grpc.CallOption) (*AdminInferenceUsageServiceSummarizeUsageResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(AdminInferenceUsageServiceSummarizeUsageResponse)
+	err := c.cc.Invoke(ctx, AdminInferenceUsageService_SummarizeUsage_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// AdminInferenceUsageServiceServer is the server API for AdminInferenceUsageService service.
+// All implementations must embed UnimplementedAdminInferenceUsageServiceServer
+// for forward compatibility.
+//
+// AdminInferenceUsageService exposes neutral inference usage telemetry.
+type AdminInferenceUsageServiceServer interface {
+	ListUsageEvents(context.Context, *AdminInferenceUsageServiceListUsageEventsRequest) (*AdminInferenceUsageServiceListUsageEventsResponse, error)
+	SummarizeUsage(context.Context, *AdminInferenceUsageServiceSummarizeUsageRequest) (*AdminInferenceUsageServiceSummarizeUsageResponse, error)
+	mustEmbedUnimplementedAdminInferenceUsageServiceServer()
+}
+
+// UnimplementedAdminInferenceUsageServiceServer must be embedded to have
+// forward compatible implementations.
+//
+// NOTE: this should be embedded by value instead of pointer to avoid a nil
+// pointer dereference when methods are called.
+type UnimplementedAdminInferenceUsageServiceServer struct{}
+
+func (UnimplementedAdminInferenceUsageServiceServer) ListUsageEvents(context.Context, *AdminInferenceUsageServiceListUsageEventsRequest) (*AdminInferenceUsageServiceListUsageEventsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListUsageEvents not implemented")
+}
+func (UnimplementedAdminInferenceUsageServiceServer) SummarizeUsage(context.Context, *AdminInferenceUsageServiceSummarizeUsageRequest) (*AdminInferenceUsageServiceSummarizeUsageResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SummarizeUsage not implemented")
+}
+func (UnimplementedAdminInferenceUsageServiceServer) mustEmbedUnimplementedAdminInferenceUsageServiceServer() {
+}
+func (UnimplementedAdminInferenceUsageServiceServer) testEmbeddedByValue() {}
+
+// UnsafeAdminInferenceUsageServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to AdminInferenceUsageServiceServer will
+// result in compilation errors.
+type UnsafeAdminInferenceUsageServiceServer interface {
+	mustEmbedUnimplementedAdminInferenceUsageServiceServer()
+}
+
+func RegisterAdminInferenceUsageServiceServer(s grpc.ServiceRegistrar, srv AdminInferenceUsageServiceServer) {
+	// If the following call pancis, it indicates UnimplementedAdminInferenceUsageServiceServer was
+	// embedded by pointer and is nil.  This will cause panics if an
+	// unimplemented method is ever invoked, so we test this at initialization
+	// time to prevent it from happening at runtime later due to I/O.
+	if t, ok := srv.(interface{ testEmbeddedByValue() }); ok {
+		t.testEmbeddedByValue()
+	}
+	s.RegisterService(&AdminInferenceUsageService_ServiceDesc, srv)
+}
+
+func _AdminInferenceUsageService_ListUsageEvents_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AdminInferenceUsageServiceListUsageEventsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminInferenceUsageServiceServer).ListUsageEvents(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AdminInferenceUsageService_ListUsageEvents_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminInferenceUsageServiceServer).ListUsageEvents(ctx, req.(*AdminInferenceUsageServiceListUsageEventsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AdminInferenceUsageService_SummarizeUsage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AdminInferenceUsageServiceSummarizeUsageRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminInferenceUsageServiceServer).SummarizeUsage(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AdminInferenceUsageService_SummarizeUsage_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminInferenceUsageServiceServer).SummarizeUsage(ctx, req.(*AdminInferenceUsageServiceSummarizeUsageRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+// AdminInferenceUsageService_ServiceDesc is the grpc.ServiceDesc for AdminInferenceUsageService service.
+// It's only intended for direct use with grpc.RegisterService,
+// and not to be introspected or modified (even as a copy)
+var AdminInferenceUsageService_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "mycel.admin.v1.AdminInferenceUsageService",
+	HandlerType: (*AdminInferenceUsageServiceServer)(nil),
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "ListUsageEvents",
+			Handler:    _AdminInferenceUsageService_ListUsageEvents_Handler,
+		},
+		{
+			MethodName: "SummarizeUsage",
+			Handler:    _AdminInferenceUsageService_SummarizeUsage_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

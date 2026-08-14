@@ -35,17 +35,22 @@ type Client struct {
 type AdminClient struct {
 	Conn *grpc.ClientConn
 
-	Auth                commonv1.AuthServiceClient
-	Principals          adminv1.AdminPrincipalServiceClient
-	Spaces              adminv1.AdminSpaceServiceClient
-	Domains             adminv1.AdminDomainServiceClient
-	Semantic            adminv1.AdminSemanticServiceClient
-	SemanticMaintenance adminv1.AdminSemanticMaintenanceServiceClient
-	SemanticMigration   adminv1.AdminSemanticMigrationServiceClient
-	Inference           adminv1.AdminInferenceServiceClient
-	Backup              adminv1.AdminBackupServiceClient
-	Schema              adminv1.AdminSchemaServiceClient
-	Automation          adminv1.AdminAutomationServiceClient
+	Auth                 commonv1.AuthServiceClient
+	Principals           adminv1.AdminPrincipalServiceClient
+	Spaces               adminv1.AdminSpaceServiceClient
+	Domains              adminv1.AdminDomainServiceClient
+	Semantic             adminv1.AdminSemanticServiceClient
+	SemanticMaintenance  adminv1.AdminSemanticMaintenanceServiceClient
+	SemanticMigration    adminv1.AdminSemanticMigrationServiceClient
+	InferenceCatalog     adminv1.AdminInferenceCatalogServiceClient
+	InferenceProfiles    adminv1.AdminInferenceProfileServiceClient
+	InferenceCredentials adminv1.AdminInferenceCredentialServiceClient
+	InferenceGrants      adminv1.AdminInferenceGrantServiceClient
+	InferencePolicies    adminv1.AdminInferencePolicyServiceClient
+	InferenceUsage       adminv1.AdminInferenceUsageServiceClient
+	Backup               adminv1.AdminBackupServiceClient
+	Schema               adminv1.AdminSchemaServiceClient
+	Automation           adminv1.AdminAutomationServiceClient
 
 	tokens *tokenSource
 	cfg    Config
@@ -97,7 +102,12 @@ func DialAdmin(ctx context.Context, cfg Config, opts ...grpc.DialOption) (*Admin
 	c.Semantic = adminv1.NewAdminSemanticServiceClient(conn)
 	c.SemanticMaintenance = adminv1.NewAdminSemanticMaintenanceServiceClient(conn)
 	c.SemanticMigration = adminv1.NewAdminSemanticMigrationServiceClient(conn)
-	c.Inference = adminv1.NewAdminInferenceServiceClient(conn)
+	c.InferenceCatalog = adminv1.NewAdminInferenceCatalogServiceClient(conn)
+	c.InferenceProfiles = adminv1.NewAdminInferenceProfileServiceClient(conn)
+	c.InferenceCredentials = adminv1.NewAdminInferenceCredentialServiceClient(conn)
+	c.InferenceGrants = adminv1.NewAdminInferenceGrantServiceClient(conn)
+	c.InferencePolicies = adminv1.NewAdminInferencePolicyServiceClient(conn)
+	c.InferenceUsage = adminv1.NewAdminInferenceUsageServiceClient(conn)
 	c.Backup = adminv1.NewAdminBackupServiceClient(conn)
 	c.Schema = adminv1.NewAdminSchemaServiceClient(conn)
 	c.Automation = adminv1.NewAdminAutomationServiceClient(conn)

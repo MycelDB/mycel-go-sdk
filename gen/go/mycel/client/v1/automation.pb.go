@@ -7,6 +7,7 @@
 package clientv1
 
 import (
+	v1 "github.com/myceldb/mycel-go-sdk/gen/go/mycel/common/v1"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -74,10 +75,11 @@ func (x *ValidateAutomationRequest) GetDefinitionJson() string {
 }
 
 type ValidateAutomationResponse struct {
-	state                    protoimpl.MessageState `protogen:"open.v1"`
-	Valid                    bool                   `protobuf:"varint,1,opt,name=valid,proto3" json:"valid,omitempty"`
-	Error                    string                 `protobuf:"bytes,2,opt,name=error,proto3" json:"error,omitempty"`
-	NormalizedDefinitionJson string                 `protobuf:"bytes,3,opt,name=normalized_definition_json,json=normalizedDefinitionJson,proto3" json:"normalized_definition_json,omitempty"`
+	state                    protoimpl.MessageState    `protogen:"open.v1"`
+	Valid                    bool                      `protobuf:"varint,1,opt,name=valid,proto3" json:"valid,omitempty"`
+	Error                    string                    `protobuf:"bytes,2,opt,name=error,proto3" json:"error,omitempty"`
+	NormalizedDefinitionJson string                    `protobuf:"bytes,3,opt,name=normalized_definition_json,json=normalizedDefinitionJson,proto3" json:"normalized_definition_json,omitempty"`
+	InferenceRefs            []*AutomationInferenceRef `protobuf:"bytes,4,rep,name=inference_refs,json=inferenceRefs,proto3" json:"inference_refs,omitempty"`
 	unknownFields            protoimpl.UnknownFields
 	sizeCache                protoimpl.SizeCache
 }
@@ -131,6 +133,13 @@ func (x *ValidateAutomationResponse) GetNormalizedDefinitionJson() string {
 		return x.NormalizedDefinitionJson
 	}
 	return ""
+}
+
+func (x *ValidateAutomationResponse) GetInferenceRefs() []*AutomationInferenceRef {
+	if x != nil {
+		return x.InferenceRefs
+	}
+	return nil
 }
 
 type CreateAutomationRequest struct {
@@ -806,16 +815,17 @@ func (x *DisableAutomationResponse) GetDefinitionJson() string {
 }
 
 type AutomationDefinitionSummary struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
-	Version       int32                  `protobuf:"varint,3,opt,name=version,proto3" json:"version,omitempty"`
-	Status        string                 `protobuf:"bytes,4,opt,name=status,proto3" json:"status,omitempty"`
-	Events        []string               `protobuf:"bytes,5,rep,name=events,proto3" json:"events,omitempty"`
-	Labels        []string               `protobuf:"bytes,6,rep,name=labels,proto3" json:"labels,omitempty"`
-	UpdatedAt     string                 `protobuf:"bytes,7,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state             protoimpl.MessageState `protogen:"open.v1"`
+	Id                string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	Name              string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	Version           int32                  `protobuf:"varint,3,opt,name=version,proto3" json:"version,omitempty"`
+	Status            string                 `protobuf:"bytes,4,opt,name=status,proto3" json:"status,omitempty"`
+	Events            []string               `protobuf:"bytes,5,rep,name=events,proto3" json:"events,omitempty"`
+	Labels            []string               `protobuf:"bytes,6,rep,name=labels,proto3" json:"labels,omitempty"`
+	UpdatedAt         string                 `protobuf:"bytes,7,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
+	InferenceProfiles []string               `protobuf:"bytes,8,rep,name=inference_profiles,json=inferenceProfiles,proto3" json:"inference_profiles,omitempty"`
+	unknownFields     protoimpl.UnknownFields
+	sizeCache         protoimpl.SizeCache
 }
 
 func (x *AutomationDefinitionSummary) Reset() {
@@ -895,6 +905,13 @@ func (x *AutomationDefinitionSummary) GetUpdatedAt() string {
 		return x.UpdatedAt
 	}
 	return ""
+}
+
+func (x *AutomationDefinitionSummary) GetInferenceProfiles() []string {
+	if x != nil {
+		return x.InferenceProfiles
+	}
+	return nil
 }
 
 type ListAutomationInvocationsRequest struct {
@@ -1178,10 +1195,11 @@ func (x *GetAutomationRunRequest) GetRunId() string {
 }
 
 type GetAutomationRunResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	RunJson       string                 `protobuf:"bytes,1,opt,name=run_json,json=runJson,proto3" json:"run_json,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state                  protoimpl.MessageState `protogen:"open.v1"`
+	RunJson                string                 `protobuf:"bytes,1,opt,name=run_json,json=runJson,proto3" json:"run_json,omitempty"`
+	InferenceUsageEventIds []string               `protobuf:"bytes,2,rep,name=inference_usage_event_ids,json=inferenceUsageEventIds,proto3" json:"inference_usage_event_ids,omitempty"`
+	unknownFields          protoimpl.UnknownFields
+	sizeCache              protoimpl.SizeCache
 }
 
 func (x *GetAutomationRunResponse) Reset() {
@@ -1219,6 +1237,13 @@ func (x *GetAutomationRunResponse) GetRunJson() string {
 		return x.RunJson
 	}
 	return ""
+}
+
+func (x *GetAutomationRunResponse) GetInferenceUsageEventIds() []string {
+	if x != nil {
+		return x.InferenceUsageEventIds
+	}
+	return nil
 }
 
 type RetryAutomationInvocationRequest struct {
@@ -1413,18 +1438,71 @@ func (x *CancelAutomationInvocationResponse) GetInvocation() *AutomationInvocati
 	return nil
 }
 
+type AutomationInferenceRef struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	StepId        string                 `protobuf:"bytes,1,opt,name=step_id,json=stepId,proto3" json:"step_id,omitempty"`
+	Inference     *v1.InferenceRef       `protobuf:"bytes,2,opt,name=inference,proto3" json:"inference,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *AutomationInferenceRef) Reset() {
+	*x = AutomationInferenceRef{}
+	mi := &file_mycel_client_v1_automation_proto_msgTypes[26]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *AutomationInferenceRef) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AutomationInferenceRef) ProtoMessage() {}
+
+func (x *AutomationInferenceRef) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_client_v1_automation_proto_msgTypes[26]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use AutomationInferenceRef.ProtoReflect.Descriptor instead.
+func (*AutomationInferenceRef) Descriptor() ([]byte, []int) {
+	return file_mycel_client_v1_automation_proto_rawDescGZIP(), []int{26}
+}
+
+func (x *AutomationInferenceRef) GetStepId() string {
+	if x != nil {
+		return x.StepId
+	}
+	return ""
+}
+
+func (x *AutomationInferenceRef) GetInference() *v1.InferenceRef {
+	if x != nil {
+		return x.Inference
+	}
+	return nil
+}
+
 var File_mycel_client_v1_automation_proto protoreflect.FileDescriptor
 
 const file_mycel_client_v1_automation_proto_rawDesc = "" +
 	"\n" +
-	" mycel/client/v1/automation.proto\x12\x0fmycel.client.v1\"a\n" +
+	" mycel/client/v1/automation.proto\x12\x0fmycel.client.v1\x1a\x1fmycel/common/v1/inference.proto\"a\n" +
 	"\x19ValidateAutomationRequest\x12\x1b\n" +
 	"\tdomain_id\x18\x01 \x01(\tR\bdomainId\x12'\n" +
-	"\x0fdefinition_json\x18\x02 \x01(\tR\x0edefinitionJson\"\x86\x01\n" +
+	"\x0fdefinition_json\x18\x02 \x01(\tR\x0edefinitionJson\"\xd6\x01\n" +
 	"\x1aValidateAutomationResponse\x12\x14\n" +
 	"\x05valid\x18\x01 \x01(\bR\x05valid\x12\x14\n" +
 	"\x05error\x18\x02 \x01(\tR\x05error\x12<\n" +
-	"\x1anormalized_definition_json\x18\x03 \x01(\tR\x18normalizedDefinitionJson\"_\n" +
+	"\x1anormalized_definition_json\x18\x03 \x01(\tR\x18normalizedDefinitionJson\x12N\n" +
+	"\x0einference_refs\x18\x04 \x03(\v2'.mycel.client.v1.AutomationInferenceRefR\rinferenceRefs\"_\n" +
 	"\x17CreateAutomationRequest\x12\x1b\n" +
 	"\tdomain_id\x18\x01 \x01(\tR\bdomainId\x12'\n" +
 	"\x0fdefinition_json\x18\x02 \x01(\tR\x0edefinitionJson\"\x84\x01\n" +
@@ -1459,7 +1537,7 @@ const file_mycel_client_v1_automation_proto_rawDesc = "" +
 	"\x18EnableAutomationResponse\x12'\n" +
 	"\x0fdefinition_json\x18\x01 \x01(\tR\x0edefinitionJson\"D\n" +
 	"\x19DisableAutomationResponse\x12'\n" +
-	"\x0fdefinition_json\x18\x01 \x01(\tR\x0edefinitionJson\"\xc2\x01\n" +
+	"\x0fdefinition_json\x18\x01 \x01(\tR\x0edefinitionJson\"\xf1\x01\n" +
 	"\x1bAutomationDefinitionSummary\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x12\x18\n" +
@@ -1468,7 +1546,8 @@ const file_mycel_client_v1_automation_proto_rawDesc = "" +
 	"\x06events\x18\x05 \x03(\tR\x06events\x12\x16\n" +
 	"\x06labels\x18\x06 \x03(\tR\x06labels\x12\x1d\n" +
 	"\n" +
-	"updated_at\x18\a \x01(\tR\tupdatedAt\"\x92\x01\n" +
+	"updated_at\x18\a \x01(\tR\tupdatedAt\x12-\n" +
+	"\x12inference_profiles\x18\b \x03(\tR\x11inferenceProfiles\"\x92\x01\n" +
 	" ListAutomationInvocationsRequest\x12\x1b\n" +
 	"\tdomain_id\x18\x01 \x01(\tR\bdomainId\x12#\n" +
 	"\rautomation_id\x18\x02 \x01(\tR\fautomationId\x12\x16\n" +
@@ -1494,9 +1573,10 @@ const file_mycel_client_v1_automation_proto_rawDesc = "" +
 	" \x01(\tR\tupdatedAt\"M\n" +
 	"\x17GetAutomationRunRequest\x12\x1b\n" +
 	"\tdomain_id\x18\x01 \x01(\tR\bdomainId\x12\x15\n" +
-	"\x06run_id\x18\x02 \x01(\tR\x05runId\"5\n" +
+	"\x06run_id\x18\x02 \x01(\tR\x05runId\"p\n" +
 	"\x18GetAutomationRunResponse\x12\x19\n" +
-	"\brun_json\x18\x01 \x01(\tR\arunJson\"d\n" +
+	"\brun_json\x18\x01 \x01(\tR\arunJson\x129\n" +
+	"\x19inference_usage_event_ids\x18\x02 \x03(\tR\x16inferenceUsageEventIds\"d\n" +
 	" RetryAutomationInvocationRequest\x12\x1b\n" +
 	"\tdomain_id\x18\x01 \x01(\tR\bdomainId\x12#\n" +
 	"\rinvocation_id\x18\x02 \x01(\tR\finvocationId\"q\n" +
@@ -1510,7 +1590,10 @@ const file_mycel_client_v1_automation_proto_rawDesc = "" +
 	"\"CancelAutomationInvocationResponse\x12L\n" +
 	"\n" +
 	"invocation\x18\x01 \x01(\v2,.mycel.client.v1.AutomationInvocationSummaryR\n" +
-	"invocation2\xd3\n" +
+	"invocation\"n\n" +
+	"\x16AutomationInferenceRef\x12\x17\n" +
+	"\astep_id\x18\x01 \x01(\tR\x06stepId\x12;\n" +
+	"\tinference\x18\x02 \x01(\v2\x1d.mycel.common.v1.InferenceRefR\tinference2\xd3\n" +
 	"\n" +
 	"\x11AutomationService\x12m\n" +
 	"\x12ValidateAutomation\x12*.mycel.client.v1.ValidateAutomationRequest\x1a+.mycel.client.v1.ValidateAutomationResponse\x12g\n" +
@@ -1539,7 +1622,7 @@ func file_mycel_client_v1_automation_proto_rawDescGZIP() []byte {
 	return file_mycel_client_v1_automation_proto_rawDescData
 }
 
-var file_mycel_client_v1_automation_proto_msgTypes = make([]protoimpl.MessageInfo, 26)
+var file_mycel_client_v1_automation_proto_msgTypes = make([]protoimpl.MessageInfo, 27)
 var file_mycel_client_v1_automation_proto_goTypes = []any{
 	(*ValidateAutomationRequest)(nil),          // 0: mycel.client.v1.ValidateAutomationRequest
 	(*ValidateAutomationResponse)(nil),         // 1: mycel.client.v1.ValidateAutomationResponse
@@ -1567,41 +1650,45 @@ var file_mycel_client_v1_automation_proto_goTypes = []any{
 	(*RetryAutomationInvocationResponse)(nil),  // 23: mycel.client.v1.RetryAutomationInvocationResponse
 	(*CancelAutomationInvocationRequest)(nil),  // 24: mycel.client.v1.CancelAutomationInvocationRequest
 	(*CancelAutomationInvocationResponse)(nil), // 25: mycel.client.v1.CancelAutomationInvocationResponse
+	(*AutomationInferenceRef)(nil),             // 26: mycel.client.v1.AutomationInferenceRef
+	(*v1.InferenceRef)(nil),                    // 27: mycel.common.v1.InferenceRef
 }
 var file_mycel_client_v1_automation_proto_depIdxs = []int32{
-	16, // 0: mycel.client.v1.ListAutomationsResponse.automations:type_name -> mycel.client.v1.AutomationDefinitionSummary
-	19, // 1: mycel.client.v1.ListAutomationInvocationsResponse.invocations:type_name -> mycel.client.v1.AutomationInvocationSummary
-	19, // 2: mycel.client.v1.RetryAutomationInvocationResponse.invocation:type_name -> mycel.client.v1.AutomationInvocationSummary
-	19, // 3: mycel.client.v1.CancelAutomationInvocationResponse.invocation:type_name -> mycel.client.v1.AutomationInvocationSummary
-	0,  // 4: mycel.client.v1.AutomationService.ValidateAutomation:input_type -> mycel.client.v1.ValidateAutomationRequest
-	2,  // 5: mycel.client.v1.AutomationService.CreateAutomation:input_type -> mycel.client.v1.CreateAutomationRequest
-	3,  // 6: mycel.client.v1.AutomationService.UpdateAutomation:input_type -> mycel.client.v1.UpdateAutomationRequest
-	4,  // 7: mycel.client.v1.AutomationService.DeleteAutomation:input_type -> mycel.client.v1.DeleteAutomationRequest
-	6,  // 8: mycel.client.v1.AutomationService.GetAutomation:input_type -> mycel.client.v1.GetAutomationRequest
-	7,  // 9: mycel.client.v1.AutomationService.ListAutomations:input_type -> mycel.client.v1.ListAutomationsRequest
-	9,  // 10: mycel.client.v1.AutomationService.EnableAutomation:input_type -> mycel.client.v1.EnableAutomationRequest
-	10, // 11: mycel.client.v1.AutomationService.DisableAutomation:input_type -> mycel.client.v1.DisableAutomationRequest
-	17, // 12: mycel.client.v1.AutomationService.ListAutomationInvocations:input_type -> mycel.client.v1.ListAutomationInvocationsRequest
-	20, // 13: mycel.client.v1.AutomationService.GetAutomationRun:input_type -> mycel.client.v1.GetAutomationRunRequest
-	22, // 14: mycel.client.v1.AutomationService.RetryAutomationInvocation:input_type -> mycel.client.v1.RetryAutomationInvocationRequest
-	24, // 15: mycel.client.v1.AutomationService.CancelAutomationInvocation:input_type -> mycel.client.v1.CancelAutomationInvocationRequest
-	1,  // 16: mycel.client.v1.AutomationService.ValidateAutomation:output_type -> mycel.client.v1.ValidateAutomationResponse
-	11, // 17: mycel.client.v1.AutomationService.CreateAutomation:output_type -> mycel.client.v1.CreateAutomationResponse
-	12, // 18: mycel.client.v1.AutomationService.UpdateAutomation:output_type -> mycel.client.v1.UpdateAutomationResponse
-	5,  // 19: mycel.client.v1.AutomationService.DeleteAutomation:output_type -> mycel.client.v1.DeleteAutomationResponse
-	13, // 20: mycel.client.v1.AutomationService.GetAutomation:output_type -> mycel.client.v1.GetAutomationResponse
-	8,  // 21: mycel.client.v1.AutomationService.ListAutomations:output_type -> mycel.client.v1.ListAutomationsResponse
-	14, // 22: mycel.client.v1.AutomationService.EnableAutomation:output_type -> mycel.client.v1.EnableAutomationResponse
-	15, // 23: mycel.client.v1.AutomationService.DisableAutomation:output_type -> mycel.client.v1.DisableAutomationResponse
-	18, // 24: mycel.client.v1.AutomationService.ListAutomationInvocations:output_type -> mycel.client.v1.ListAutomationInvocationsResponse
-	21, // 25: mycel.client.v1.AutomationService.GetAutomationRun:output_type -> mycel.client.v1.GetAutomationRunResponse
-	23, // 26: mycel.client.v1.AutomationService.RetryAutomationInvocation:output_type -> mycel.client.v1.RetryAutomationInvocationResponse
-	25, // 27: mycel.client.v1.AutomationService.CancelAutomationInvocation:output_type -> mycel.client.v1.CancelAutomationInvocationResponse
-	16, // [16:28] is the sub-list for method output_type
-	4,  // [4:16] is the sub-list for method input_type
-	4,  // [4:4] is the sub-list for extension type_name
-	4,  // [4:4] is the sub-list for extension extendee
-	0,  // [0:4] is the sub-list for field type_name
+	26, // 0: mycel.client.v1.ValidateAutomationResponse.inference_refs:type_name -> mycel.client.v1.AutomationInferenceRef
+	16, // 1: mycel.client.v1.ListAutomationsResponse.automations:type_name -> mycel.client.v1.AutomationDefinitionSummary
+	19, // 2: mycel.client.v1.ListAutomationInvocationsResponse.invocations:type_name -> mycel.client.v1.AutomationInvocationSummary
+	19, // 3: mycel.client.v1.RetryAutomationInvocationResponse.invocation:type_name -> mycel.client.v1.AutomationInvocationSummary
+	19, // 4: mycel.client.v1.CancelAutomationInvocationResponse.invocation:type_name -> mycel.client.v1.AutomationInvocationSummary
+	27, // 5: mycel.client.v1.AutomationInferenceRef.inference:type_name -> mycel.common.v1.InferenceRef
+	0,  // 6: mycel.client.v1.AutomationService.ValidateAutomation:input_type -> mycel.client.v1.ValidateAutomationRequest
+	2,  // 7: mycel.client.v1.AutomationService.CreateAutomation:input_type -> mycel.client.v1.CreateAutomationRequest
+	3,  // 8: mycel.client.v1.AutomationService.UpdateAutomation:input_type -> mycel.client.v1.UpdateAutomationRequest
+	4,  // 9: mycel.client.v1.AutomationService.DeleteAutomation:input_type -> mycel.client.v1.DeleteAutomationRequest
+	6,  // 10: mycel.client.v1.AutomationService.GetAutomation:input_type -> mycel.client.v1.GetAutomationRequest
+	7,  // 11: mycel.client.v1.AutomationService.ListAutomations:input_type -> mycel.client.v1.ListAutomationsRequest
+	9,  // 12: mycel.client.v1.AutomationService.EnableAutomation:input_type -> mycel.client.v1.EnableAutomationRequest
+	10, // 13: mycel.client.v1.AutomationService.DisableAutomation:input_type -> mycel.client.v1.DisableAutomationRequest
+	17, // 14: mycel.client.v1.AutomationService.ListAutomationInvocations:input_type -> mycel.client.v1.ListAutomationInvocationsRequest
+	20, // 15: mycel.client.v1.AutomationService.GetAutomationRun:input_type -> mycel.client.v1.GetAutomationRunRequest
+	22, // 16: mycel.client.v1.AutomationService.RetryAutomationInvocation:input_type -> mycel.client.v1.RetryAutomationInvocationRequest
+	24, // 17: mycel.client.v1.AutomationService.CancelAutomationInvocation:input_type -> mycel.client.v1.CancelAutomationInvocationRequest
+	1,  // 18: mycel.client.v1.AutomationService.ValidateAutomation:output_type -> mycel.client.v1.ValidateAutomationResponse
+	11, // 19: mycel.client.v1.AutomationService.CreateAutomation:output_type -> mycel.client.v1.CreateAutomationResponse
+	12, // 20: mycel.client.v1.AutomationService.UpdateAutomation:output_type -> mycel.client.v1.UpdateAutomationResponse
+	5,  // 21: mycel.client.v1.AutomationService.DeleteAutomation:output_type -> mycel.client.v1.DeleteAutomationResponse
+	13, // 22: mycel.client.v1.AutomationService.GetAutomation:output_type -> mycel.client.v1.GetAutomationResponse
+	8,  // 23: mycel.client.v1.AutomationService.ListAutomations:output_type -> mycel.client.v1.ListAutomationsResponse
+	14, // 24: mycel.client.v1.AutomationService.EnableAutomation:output_type -> mycel.client.v1.EnableAutomationResponse
+	15, // 25: mycel.client.v1.AutomationService.DisableAutomation:output_type -> mycel.client.v1.DisableAutomationResponse
+	18, // 26: mycel.client.v1.AutomationService.ListAutomationInvocations:output_type -> mycel.client.v1.ListAutomationInvocationsResponse
+	21, // 27: mycel.client.v1.AutomationService.GetAutomationRun:output_type -> mycel.client.v1.GetAutomationRunResponse
+	23, // 28: mycel.client.v1.AutomationService.RetryAutomationInvocation:output_type -> mycel.client.v1.RetryAutomationInvocationResponse
+	25, // 29: mycel.client.v1.AutomationService.CancelAutomationInvocation:output_type -> mycel.client.v1.CancelAutomationInvocationResponse
+	18, // [18:30] is the sub-list for method output_type
+	6,  // [6:18] is the sub-list for method input_type
+	6,  // [6:6] is the sub-list for extension type_name
+	6,  // [6:6] is the sub-list for extension extendee
+	0,  // [0:6] is the sub-list for field type_name
 }
 
 func init() { file_mycel_client_v1_automation_proto_init() }
@@ -1615,7 +1702,7 @@ func file_mycel_client_v1_automation_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_mycel_client_v1_automation_proto_rawDesc), len(file_mycel_client_v1_automation_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   26,
+			NumMessages:   27,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
