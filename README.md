@@ -20,6 +20,7 @@ The SDK generates Go protobuf/gRPC stubs from the language-independent `mycel-ap
 - call timeout helpers
 - session/transaction helpers
 - thin graph/query convenience methods
+- structured query builders and explain helpers for common indexed/text/semantic/path/aggregate shapes
 - graph-change watch helpers
 - Admin backup policy/status/list/trigger/delete helpers
 - Admin cluster backup trigger/status/list/validate helpers
@@ -116,6 +117,27 @@ if err != nil {
 }
 _ = commit.GetOperationId() // matches operationID
 ```
+
+Common structured query shapes can be built without hand-assembling every protobuf field:
+
+```go
+query, err := mycel.IndexedNodeLookupQuery("n", "Note", "title", "Roadmap", "note")
+if err != nil {
+    panic(err)
+}
+diag, err := client.ExplainQuery(ctx, txID, query)
+if err != nil {
+    panic(err)
+}
+_ = diag.GetPlan()
+res, err := client.ExecuteQuery(ctx, txID, query, 50)
+if err != nil {
+    panic(err)
+}
+_ = res.GetResult().GetRows()
+```
+
+Other helpers include `OrderedNodeQuery`, `TextPredicateQuery`, `SemanticPredicateQuery`, `PathQuery`, `AggregateCountQuery`, `AggregatePropertyQuery`, and `ExplainGQL`.
 
 Graph changes can be watched with `GraphChangeService.WatchGraphChanges` through the SDK helper. Persist the last processed `event.revision` and use it as `after_revision` when reconnecting:
 

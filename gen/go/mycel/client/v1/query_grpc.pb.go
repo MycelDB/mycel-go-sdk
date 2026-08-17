@@ -21,6 +21,8 @@ const _ = grpc.SupportPackageIsVersion9
 const (
 	QueryService_ExecuteQuery_FullMethodName     = "/mycel.client.v1.QueryService/ExecuteQuery"
 	QueryService_ExecuteGQL_FullMethodName       = "/mycel.client.v1.QueryService/ExecuteGQL"
+	QueryService_ExplainQuery_FullMethodName     = "/mycel.client.v1.QueryService/ExplainQuery"
+	QueryService_ExplainGQL_FullMethodName       = "/mycel.client.v1.QueryService/ExplainGQL"
 	QueryService_ExecuteGQLScript_FullMethodName = "/mycel.client.v1.QueryService/ExecuteGQLScript"
 )
 
@@ -36,6 +38,10 @@ type QueryServiceClient interface {
 	ExecuteQuery(ctx context.Context, in *ExecuteQueryRequest, opts ...grpc.CallOption) (*ExecuteQueryResponse, error)
 	// ExecuteGQL executes textual Mycel GQL inside an existing transaction.
 	ExecuteGQL(ctx context.Context, in *ExecuteGQLRequest, opts ...grpc.CallOption) (*ExecuteGQLResponse, error)
+	// ExplainQuery plans a structured graph query without executing graph reads or mutations.
+	ExplainQuery(ctx context.Context, in *ExplainQueryRequest, opts ...grpc.CallOption) (*ExplainQueryResponse, error)
+	// ExplainGQL plans textual Mycel GQL without executing graph reads or mutations.
+	ExplainGQL(ctx context.Context, in *ExplainGQLRequest, opts ...grpc.CallOption) (*ExplainGQLResponse, error)
 	// ExecuteGQLScript executes multiple semicolon-separated Mycel GQL statements.
 	ExecuteGQLScript(ctx context.Context, in *ExecuteGQLScriptRequest, opts ...grpc.CallOption) (*ExecuteGQLScriptResponse, error)
 }
@@ -68,6 +74,26 @@ func (c *queryServiceClient) ExecuteGQL(ctx context.Context, in *ExecuteGQLReque
 	return out, nil
 }
 
+func (c *queryServiceClient) ExplainQuery(ctx context.Context, in *ExplainQueryRequest, opts ...grpc.CallOption) (*ExplainQueryResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ExplainQueryResponse)
+	err := c.cc.Invoke(ctx, QueryService_ExplainQuery_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *queryServiceClient) ExplainGQL(ctx context.Context, in *ExplainGQLRequest, opts ...grpc.CallOption) (*ExplainGQLResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ExplainGQLResponse)
+	err := c.cc.Invoke(ctx, QueryService_ExplainGQL_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *queryServiceClient) ExecuteGQLScript(ctx context.Context, in *ExecuteGQLScriptRequest, opts ...grpc.CallOption) (*ExecuteGQLScriptResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(ExecuteGQLScriptResponse)
@@ -90,6 +116,10 @@ type QueryServiceServer interface {
 	ExecuteQuery(context.Context, *ExecuteQueryRequest) (*ExecuteQueryResponse, error)
 	// ExecuteGQL executes textual Mycel GQL inside an existing transaction.
 	ExecuteGQL(context.Context, *ExecuteGQLRequest) (*ExecuteGQLResponse, error)
+	// ExplainQuery plans a structured graph query without executing graph reads or mutations.
+	ExplainQuery(context.Context, *ExplainQueryRequest) (*ExplainQueryResponse, error)
+	// ExplainGQL plans textual Mycel GQL without executing graph reads or mutations.
+	ExplainGQL(context.Context, *ExplainGQLRequest) (*ExplainGQLResponse, error)
 	// ExecuteGQLScript executes multiple semicolon-separated Mycel GQL statements.
 	ExecuteGQLScript(context.Context, *ExecuteGQLScriptRequest) (*ExecuteGQLScriptResponse, error)
 	mustEmbedUnimplementedQueryServiceServer()
@@ -107,6 +137,12 @@ func (UnimplementedQueryServiceServer) ExecuteQuery(context.Context, *ExecuteQue
 }
 func (UnimplementedQueryServiceServer) ExecuteGQL(context.Context, *ExecuteGQLRequest) (*ExecuteGQLResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ExecuteGQL not implemented")
+}
+func (UnimplementedQueryServiceServer) ExplainQuery(context.Context, *ExplainQueryRequest) (*ExplainQueryResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ExplainQuery not implemented")
+}
+func (UnimplementedQueryServiceServer) ExplainGQL(context.Context, *ExplainGQLRequest) (*ExplainGQLResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ExplainGQL not implemented")
 }
 func (UnimplementedQueryServiceServer) ExecuteGQLScript(context.Context, *ExecuteGQLScriptRequest) (*ExecuteGQLScriptResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ExecuteGQLScript not implemented")
@@ -168,6 +204,42 @@ func _QueryService_ExecuteGQL_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _QueryService_ExplainQuery_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ExplainQueryRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(QueryServiceServer).ExplainQuery(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: QueryService_ExplainQuery_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(QueryServiceServer).ExplainQuery(ctx, req.(*ExplainQueryRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _QueryService_ExplainGQL_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ExplainGQLRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(QueryServiceServer).ExplainGQL(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: QueryService_ExplainGQL_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(QueryServiceServer).ExplainGQL(ctx, req.(*ExplainGQLRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _QueryService_ExecuteGQLScript_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ExecuteGQLScriptRequest)
 	if err := dec(in); err != nil {
@@ -200,6 +272,14 @@ var QueryService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ExecuteGQL",
 			Handler:    _QueryService_ExecuteGQL_Handler,
+		},
+		{
+			MethodName: "ExplainQuery",
+			Handler:    _QueryService_ExplainQuery_Handler,
+		},
+		{
+			MethodName: "ExplainGQL",
+			Handler:    _QueryService_ExplainGQL_Handler,
 		},
 		{
 			MethodName: "ExecuteGQLScript",

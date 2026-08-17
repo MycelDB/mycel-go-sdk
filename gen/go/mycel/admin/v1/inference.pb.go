@@ -1794,22 +1794,24 @@ func (x *AdminInferenceCredentialServiceListCredentialsResponse) GetNextPageToke
 }
 
 type AdminInferenceGrantServiceCreateCredentialGrantRequest struct {
-	state              protoimpl.MessageState `protogen:"open.v1"`
-	SpaceId            string                 `protobuf:"bytes,1,opt,name=space_id,json=spaceId,proto3" json:"space_id,omitempty"`
-	Credential         string                 `protobuf:"bytes,2,opt,name=credential,proto3" json:"credential,omitempty"`
-	CredentialId       string                 `protobuf:"bytes,3,opt,name=credential_id,json=credentialId,proto3" json:"credential_id,omitempty"`
-	Scope              *ProcessingScope       `protobuf:"bytes,4,opt,name=scope,proto3" json:"scope,omitempty"`
-	Operations         []string               `protobuf:"bytes,5,rep,name=operations,proto3" json:"operations,omitempty"`
-	ModelEndpoint      string                 `protobuf:"bytes,6,opt,name=model_endpoint,json=modelEndpoint,proto3" json:"model_endpoint,omitempty"`
-	ModelEndpointId    string                 `protobuf:"bytes,7,opt,name=model_endpoint_id,json=modelEndpointId,proto3" json:"model_endpoint_id,omitempty"`
-	Model              string                 `protobuf:"bytes,8,opt,name=model,proto3" json:"model,omitempty"`
-	ModelId            string                 `protobuf:"bytes,9,opt,name=model_id,json=modelId,proto3" json:"model_id,omitempty"`
-	Priority           int32                  `protobuf:"varint,10,opt,name=priority,proto3" json:"priority,omitempty"`
-	IsDefault          bool                   `protobuf:"varint,11,opt,name=is_default,json=isDefault,proto3" json:"is_default,omitempty"`
-	AllowBackgroundUse bool                   `protobuf:"varint,12,opt,name=allow_background_use,json=allowBackgroundUse,proto3" json:"allow_background_use,omitempty"`
-	ExpiresAt          *timestamppb.Timestamp `protobuf:"bytes,13,opt,name=expires_at,json=expiresAt,proto3" json:"expires_at,omitempty"`
-	unknownFields      protoimpl.UnknownFields
-	sizeCache          protoimpl.SizeCache
+	state                       protoimpl.MessageState `protogen:"open.v1"`
+	SpaceId                     string                 `protobuf:"bytes,1,opt,name=space_id,json=spaceId,proto3" json:"space_id,omitempty"`
+	Credential                  string                 `protobuf:"bytes,2,opt,name=credential,proto3" json:"credential,omitempty"`
+	CredentialId                string                 `protobuf:"bytes,3,opt,name=credential_id,json=credentialId,proto3" json:"credential_id,omitempty"`
+	Scope                       *ProcessingScope       `protobuf:"bytes,4,opt,name=scope,proto3" json:"scope,omitempty"`
+	Operations                  []string               `protobuf:"bytes,5,rep,name=operations,proto3" json:"operations,omitempty"`
+	ModelEndpoint               string                 `protobuf:"bytes,6,opt,name=model_endpoint,json=modelEndpoint,proto3" json:"model_endpoint,omitempty"`
+	ModelEndpointId             string                 `protobuf:"bytes,7,opt,name=model_endpoint_id,json=modelEndpointId,proto3" json:"model_endpoint_id,omitempty"`
+	Model                       string                 `protobuf:"bytes,8,opt,name=model,proto3" json:"model,omitempty"`
+	ModelId                     string                 `protobuf:"bytes,9,opt,name=model_id,json=modelId,proto3" json:"model_id,omitempty"`
+	Priority                    int32                  `protobuf:"varint,10,opt,name=priority,proto3" json:"priority,omitempty"`
+	IsDefault                   bool                   `protobuf:"varint,11,opt,name=is_default,json=isDefault,proto3" json:"is_default,omitempty"`
+	AllowBackgroundUse          bool                   `protobuf:"varint,12,opt,name=allow_background_use,json=allowBackgroundUse,proto3" json:"allow_background_use,omitempty"`
+	ExpiresAt                   *timestamppb.Timestamp `protobuf:"bytes,13,opt,name=expires_at,json=expiresAt,proto3" json:"expires_at,omitempty"`
+	GranteePrincipalIds         []string               `protobuf:"bytes,14,rep,name=grantee_principal_ids,json=granteePrincipalIds,proto3" json:"grantee_principal_ids,omitempty"`
+	AllowOnBehalfOfPrincipalIds []string               `protobuf:"bytes,15,rep,name=allow_on_behalf_of_principal_ids,json=allowOnBehalfOfPrincipalIds,proto3" json:"allow_on_behalf_of_principal_ids,omitempty"`
+	unknownFields               protoimpl.UnknownFields
+	sizeCache                   protoimpl.SizeCache
 }
 
 func (x *AdminInferenceGrantServiceCreateCredentialGrantRequest) Reset() {
@@ -1929,6 +1931,20 @@ func (x *AdminInferenceGrantServiceCreateCredentialGrantRequest) GetAllowBackgro
 func (x *AdminInferenceGrantServiceCreateCredentialGrantRequest) GetExpiresAt() *timestamppb.Timestamp {
 	if x != nil {
 		return x.ExpiresAt
+	}
+	return nil
+}
+
+func (x *AdminInferenceGrantServiceCreateCredentialGrantRequest) GetGranteePrincipalIds() []string {
+	if x != nil {
+		return x.GranteePrincipalIds
+	}
+	return nil
+}
+
+func (x *AdminInferenceGrantServiceCreateCredentialGrantRequest) GetAllowOnBehalfOfPrincipalIds() []string {
+	if x != nil {
+		return x.AllowOnBehalfOfPrincipalIds
 	}
 	return nil
 }
@@ -6895,7 +6911,7 @@ const file_mycel_admin_v1_inference_proto_rawDesc = "" +
 	"\x12_model_endpoint_id\"\xa7\x01\n" +
 	"6AdminInferenceCredentialServiceListCredentialsResponse\x12E\n" +
 	"\vcredentials\x18\x01 \x03(\v2#.mycel.admin.v1.InferenceCredentialR\vcredentials\x12&\n" +
-	"\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken\"\x9b\x04\n" +
+	"\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken\"\x96\x05\n" +
 	"6AdminInferenceGrantServiceCreateCredentialGrantRequest\x12\x19\n" +
 	"\bspace_id\x18\x01 \x01(\tR\aspaceId\x12\x1e\n" +
 	"\n" +
@@ -6916,7 +6932,9 @@ const file_mycel_admin_v1_inference_proto_rawDesc = "" +
 	"is_default\x18\v \x01(\bR\tisDefault\x120\n" +
 	"\x14allow_background_use\x18\f \x01(\bR\x12allowBackgroundUse\x129\n" +
 	"\n" +
-	"expires_at\x18\r \x01(\v2\x1a.google.protobuf.TimestampR\texpiresAt\"\x85\x01\n" +
+	"expires_at\x18\r \x01(\v2\x1a.google.protobuf.TimestampR\texpiresAt\x122\n" +
+	"\x15grantee_principal_ids\x18\x0e \x03(\tR\x13granteePrincipalIds\x12E\n" +
+	" allow_on_behalf_of_principal_ids\x18\x0f \x03(\tR\x1ballowOnBehalfOfPrincipalIds\"\x85\x01\n" +
 	"7AdminInferenceGrantServiceCreateCredentialGrantResponse\x12J\n" +
 	"\x10credential_grant\x18\x01 \x01(\v2\x1f.mycel.admin.v1.CredentialGrantR\x0fcredentialGrant\"\xf3\x01\n" +
 	"5AdminInferenceGrantServiceListCredentialGrantsRequest\x12\x19\n" +
