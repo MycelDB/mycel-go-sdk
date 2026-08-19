@@ -54,6 +54,12 @@ func (c *Client) Logout(ctx context.Context, authSessionID string) (*commonv1.Lo
 	return res, nil
 }
 
+func (c *Client) GetMyAccess(ctx context.Context, scope *commonv1.AccessScope) (*commonv1.GetMyAccessResponse, error) {
+	callCtx, cancel := c.AuthCallContext(ctx)
+	defer cancel()
+	return c.Auth.GetMyAccess(callCtx, &commonv1.GetMyAccessRequest{Scope: scope})
+}
+
 func (c *Client) refreshWithStoredToken(ctx context.Context) error {
 	_, err := c.Refresh(ctx, "")
 	return err
@@ -160,6 +166,12 @@ func (c *AdminClient) Logout(ctx context.Context, authSessionID string) (*common
 		c.tokens.Clear()
 	}
 	return res, nil
+}
+
+func (c *AdminClient) GetMyAccess(ctx context.Context, scope *commonv1.AccessScope) (*commonv1.GetMyAccessResponse, error) {
+	callCtx, cancel := c.AuthCallContext(ctx)
+	defer cancel()
+	return c.Auth.GetMyAccess(callCtx, &commonv1.GetMyAccessRequest{Scope: scope})
 }
 
 func (c *AdminClient) refreshWithStoredToken(ctx context.Context) error {

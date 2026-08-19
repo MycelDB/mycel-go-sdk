@@ -60,6 +60,24 @@ type DomainInfo struct {
 	System   bool
 }
 
+type PrincipalRoleGrantInfo struct {
+	GrantID     string
+	PrincipalID string
+	Role        string
+	ScopeType   string
+	SpaceID     string
+	DomainID    string
+}
+
+type PrincipalCapabilityGrantInfo struct {
+	GrantID     string
+	PrincipalID string
+	Capability  string
+	ScopeType   string
+	SpaceID     string
+	DomainID    string
+}
+
 func (c *AdminClient) WhoAmI(ctx context.Context) (*OperatorInfo, error) {
 	callCtx, cancel := c.AuthCallContext(ctx)
 	defer cancel()
@@ -210,6 +228,50 @@ func (c *AdminClient) EnsureSpace(ctx context.Context, name, ownerUsername, defa
 	return sp, domain, nil
 }
 
+func (c *AdminClient) SetPrincipalRolesForScope(ctx context.Context, principalID, scopeType, spaceID, domainID string, roles []string, reason string) ([]PrincipalRoleGrantInfo, error) {
+	principalID = strings.TrimSpace(principalID)
+	if principalID == "" {
+		return nil, fmt.Errorf("principal id is required")
+	}
+	callCtx, cancel := c.AuthCallContext(ctx)
+	defer cancel()
+	res, err := c.Principals.SetPrincipalRolesForScope(callCtx, &adminv1.SetPrincipalRolesForScopeRequest{PrincipalId: principalID, Scope: sdkAccessScope(scopeType, spaceID, domainID), Roles: roles, Reason: reason})
+	if err != nil {
+		return nil, err
+	}
+	out := make([]PrincipalRoleGrantInfo, 0, len(res.GetGrants()))
+	for _, grant := range res.GetGrants() {
+		out = append(out, principalRoleGrantInfo(grant))
+	}
+	return out, nil
+}
+
+func (c *AdminClient) SetPrincipalCapabilitiesForScope(ctx context.Context, principalID, scopeType, spaceID, domainID string, capabilities []string, reason string) ([]PrincipalCapabilityGrantInfo, error) {
+	principalID = strings.TrimSpace(principalID)
+	if principalID == "" {
+		return nil, fmt.Errorf("principal id is required")
+	}
+	parsed := make([]commonv1.Capability, 0, len(capabilities))
+	for _, capability := range capabilities {
+		value, err := sdkCapability(capability)
+		if err != nil {
+			return nil, err
+		}
+		parsed = append(parsed, value)
+	}
+	callCtx, cancel := c.AuthCallContext(ctx)
+	defer cancel()
+	res, err := c.Principals.SetPrincipalCapabilitiesForScope(callCtx, &adminv1.SetPrincipalCapabilitiesForScopeRequest{PrincipalId: principalID, Scope: sdkAccessScope(scopeType, spaceID, domainID), Capabilities: parsed, Reason: reason})
+	if err != nil {
+		return nil, err
+	}
+	out := make([]PrincipalCapabilityGrantInfo, 0, len(res.GetGrants()))
+	for _, grant := range res.GetGrants() {
+		out = append(out, principalCapabilityGrantInfo(grant))
+	}
+	return out, nil
+}
+
 func (c *AdminClient) GrantSpaceUser(ctx context.Context, spaceID, userID, role string) (*SpaceGrantInfo, error) {
 	return c.GrantSpacePrincipal(ctx, spaceID, userID, role)
 }
@@ -240,6 +302,40 @@ func (c *AdminClient) GetDomain(ctx context.Context, spaceID, domainRef string) 
 	return &DomainInfo{SpaceID: d.GetSpaceId(), DomainID: d.GetDomainId(), Key: d.GetKey(), Name: d.GetName(), Default: d.GetDefault(), System: d.GetSystem()}, nil
 }
 
+func sdkAccessScope(scopeType, spaceID, domainID string) *commonv1.AccessScope {
+	scopeType = strings.ToLower(strings.TrimSpace(scopeType))
+	spaceID = strings.TrimSpace(spaceID)
+	domainID = strings.TrimSpace(domainID)
+	if scopeType == "" && spaceID == "" && domainID == "" {
+		return &commonv1.AccessScope{Type: commonv1.AccessScopeType_ACCESS_SCOPE_TYPE_SYSTEM}
+	}
+	typ := commonv1.AccessScopeType_ACCESS_SCOPE_TYPE_SYSTEM
+	switch scopeType {
+	case "space":
+		typ = commonv1.AccessScopeType_ACCESS_SCOPE_TYPE_SPACE
+	case "domain":
+		typ = commonv1.AccessScopeType_ACCESS_SCOPE_TYPE_DOMAIN
+	case "", "system":
+		if domainID != "" {
+			typ = commonv1.AccessScopeType_ACCESS_SCOPE_TYPE_DOMAIN
+		} else if spaceID != "" {
+			typ = commonv1.AccessScopeType_ACCESS_SCOPE_TYPE_SPACE
+		}
+	}
+	return &commonv1.AccessScope{Type: typ, SpaceId: optionalStringField(spaceID), DomainId: optionalStringField(domainID)}
+}
+
+func sdkCapability(raw string) (commonv1.Capability, error) {
+	key := strings.ToUpper(strings.ReplaceAll(strings.ReplaceAll(strings.TrimSpace(raw), ".", "_"), "-", "_"))
+	if !strings.HasPrefix(key, "CAPABILITY_") {
+		key = "CAPABILITY_" + key
+	}
+	if value, ok := commonv1.Capability_value[key]; ok && value != int32(commonv1.Capability_CAPABILITY_UNSPECIFIED) {
+		return commonv1.Capability(value), nil
+	}
+	return commonv1.Capability_CAPABILITY_UNSPECIFIED, fmt.Errorf("unknown capability %q", raw)
+}
+
 func sdkSpaceRole(role string) commonv1.SpaceRole {
 	switch strings.ToLower(strings.TrimSpace(role)) {
 	case "admin":
@@ -251,6 +347,30 @@ func sdkSpaceRole(role string) commonv1.SpaceRole {
 	default:
 		return commonv1.SpaceRole_SPACE_ROLE_UNSPECIFIED
 	}
+}
+
+func principalRoleGrantInfo(grant *adminv1.PrincipalRoleGrant) PrincipalRoleGrantInfo {
+	if grant == nil {
+		return PrincipalRoleGrantInfo{}
+	}
+	scope := grant.GetScope()
+	return PrincipalRoleGrantInfo{GrantID: grant.GetRoleGrantId(), PrincipalID: grant.GetPrincipalId(), Role: grant.GetRole(), ScopeType: scope.GetType().String(), SpaceID: scope.GetSpaceId(), DomainID: scope.GetDomainId()}
+}
+
+func principalCapabilityGrantInfo(grant *adminv1.PrincipalCapabilityGrant) PrincipalCapabilityGrantInfo {
+	if grant == nil {
+		return PrincipalCapabilityGrantInfo{}
+	}
+	scope := grant.GetScope()
+	return PrincipalCapabilityGrantInfo{GrantID: grant.GetCapabilityGrantId(), PrincipalID: grant.GetPrincipalId(), Capability: grant.GetCapability().String(), ScopeType: scope.GetType().String(), SpaceID: scope.GetSpaceId(), DomainID: scope.GetDomainId()}
+}
+
+func optionalStringField(value string) *string {
+	value = strings.TrimSpace(value)
+	if value == "" {
+		return nil
+	}
+	return &value
 }
 
 func spaceGrantInfo(grant *commonv1.AccessGrant) *SpaceGrantInfo {

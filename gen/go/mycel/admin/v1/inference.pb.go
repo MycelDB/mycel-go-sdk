@@ -1449,15 +1449,10 @@ type AdminInferenceCredentialServiceCreateCredentialRequest struct {
 	OwnerType       string                 `protobuf:"bytes,5,opt,name=owner_type,json=ownerType,proto3" json:"owner_type,omitempty"`
 	OwnerId         string                 `protobuf:"bytes,6,opt,name=owner_id,json=ownerId,proto3" json:"owner_id,omitempty"`
 	AuthType        string                 `protobuf:"bytes,7,opt,name=auth_type,json=authType,proto3" json:"auth_type,omitempty"`
-	// Types that are valid to be assigned to SecretMaterial:
-	//
-	//	*AdminInferenceCredentialServiceCreateCredentialRequest_InlineSecret
-	//	*AdminInferenceCredentialServiceCreateCredentialRequest_ExternalRef
-	//	*AdminInferenceCredentialServiceCreateCredentialRequest_SecretValue
-	SecretMaterial isAdminInferenceCredentialServiceCreateCredentialRequest_SecretMaterial `protobuf_oneof:"secret_material"`
-	IsDefault      bool                                                                    `protobuf:"varint,10,opt,name=is_default,json=isDefault,proto3" json:"is_default,omitempty"`
-	unknownFields  protoimpl.UnknownFields
-	sizeCache      protoimpl.SizeCache
+	IsDefault       bool                   `protobuf:"varint,10,opt,name=is_default,json=isDefault,proto3" json:"is_default,omitempty"`
+	SecretValue     string                 `protobuf:"bytes,11,opt,name=secret_value,json=secretValue,proto3" json:"secret_value,omitempty"`
+	unknownFields   protoimpl.UnknownFields
+	sizeCache       protoimpl.SizeCache
 }
 
 func (x *AdminInferenceCredentialServiceCreateCredentialRequest) Reset() {
@@ -1539,40 +1534,6 @@ func (x *AdminInferenceCredentialServiceCreateCredentialRequest) GetAuthType() s
 	return ""
 }
 
-func (x *AdminInferenceCredentialServiceCreateCredentialRequest) GetSecretMaterial() isAdminInferenceCredentialServiceCreateCredentialRequest_SecretMaterial {
-	if x != nil {
-		return x.SecretMaterial
-	}
-	return nil
-}
-
-func (x *AdminInferenceCredentialServiceCreateCredentialRequest) GetInlineSecret() *InlineSecret {
-	if x != nil {
-		if x, ok := x.SecretMaterial.(*AdminInferenceCredentialServiceCreateCredentialRequest_InlineSecret); ok {
-			return x.InlineSecret
-		}
-	}
-	return nil
-}
-
-func (x *AdminInferenceCredentialServiceCreateCredentialRequest) GetExternalRef() string {
-	if x != nil {
-		if x, ok := x.SecretMaterial.(*AdminInferenceCredentialServiceCreateCredentialRequest_ExternalRef); ok {
-			return x.ExternalRef
-		}
-	}
-	return ""
-}
-
-func (x *AdminInferenceCredentialServiceCreateCredentialRequest) GetSecretValue() string {
-	if x != nil {
-		if x, ok := x.SecretMaterial.(*AdminInferenceCredentialServiceCreateCredentialRequest_SecretValue); ok {
-			return x.SecretValue
-		}
-	}
-	return ""
-}
-
 func (x *AdminInferenceCredentialServiceCreateCredentialRequest) GetIsDefault() bool {
 	if x != nil {
 		return x.IsDefault
@@ -1580,29 +1541,11 @@ func (x *AdminInferenceCredentialServiceCreateCredentialRequest) GetIsDefault() 
 	return false
 }
 
-type isAdminInferenceCredentialServiceCreateCredentialRequest_SecretMaterial interface {
-	isAdminInferenceCredentialServiceCreateCredentialRequest_SecretMaterial()
-}
-
-type AdminInferenceCredentialServiceCreateCredentialRequest_InlineSecret struct {
-	InlineSecret *InlineSecret `protobuf:"bytes,8,opt,name=inline_secret,json=inlineSecret,proto3,oneof"`
-}
-
-type AdminInferenceCredentialServiceCreateCredentialRequest_ExternalRef struct {
-	ExternalRef string `protobuf:"bytes,9,opt,name=external_ref,json=externalRef,proto3,oneof"`
-}
-
-type AdminInferenceCredentialServiceCreateCredentialRequest_SecretValue struct {
-	SecretValue string `protobuf:"bytes,11,opt,name=secret_value,json=secretValue,proto3,oneof"`
-}
-
-func (*AdminInferenceCredentialServiceCreateCredentialRequest_InlineSecret) isAdminInferenceCredentialServiceCreateCredentialRequest_SecretMaterial() {
-}
-
-func (*AdminInferenceCredentialServiceCreateCredentialRequest_ExternalRef) isAdminInferenceCredentialServiceCreateCredentialRequest_SecretMaterial() {
-}
-
-func (*AdminInferenceCredentialServiceCreateCredentialRequest_SecretValue) isAdminInferenceCredentialServiceCreateCredentialRequest_SecretMaterial() {
+func (x *AdminInferenceCredentialServiceCreateCredentialRequest) GetSecretValue() string {
+	if x != nil {
+		return x.SecretValue
+	}
+	return ""
 }
 
 type AdminInferenceCredentialServiceCreateCredentialResponse struct {
@@ -2858,18 +2801,13 @@ func (x *AdminInferenceCredentialServiceSetCredentialStatusResponse) GetCredenti
 }
 
 type AdminInferenceCredentialServiceRotateCredentialRequest struct {
-	state        protoimpl.MessageState `protogen:"open.v1"`
-	Credential   string                 `protobuf:"bytes,1,opt,name=credential,proto3" json:"credential,omitempty"`
-	CredentialId string                 `protobuf:"bytes,2,opt,name=credential_id,json=credentialId,proto3" json:"credential_id,omitempty"`
-	// Types that are valid to be assigned to SecretMaterial:
-	//
-	//	*AdminInferenceCredentialServiceRotateCredentialRequest_InlineSecret
-	//	*AdminInferenceCredentialServiceRotateCredentialRequest_ExternalRef
-	//	*AdminInferenceCredentialServiceRotateCredentialRequest_SecretValue
-	SecretMaterial isAdminInferenceCredentialServiceRotateCredentialRequest_SecretMaterial `protobuf_oneof:"secret_material"`
-	Reason         string                                                                  `protobuf:"bytes,6,opt,name=reason,proto3" json:"reason,omitempty"`
-	unknownFields  protoimpl.UnknownFields
-	sizeCache      protoimpl.SizeCache
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Credential    string                 `protobuf:"bytes,1,opt,name=credential,proto3" json:"credential,omitempty"`
+	CredentialId  string                 `protobuf:"bytes,2,opt,name=credential_id,json=credentialId,proto3" json:"credential_id,omitempty"`
+	SecretValue   string                 `protobuf:"bytes,5,opt,name=secret_value,json=secretValue,proto3" json:"secret_value,omitempty"`
+	Reason        string                 `protobuf:"bytes,6,opt,name=reason,proto3" json:"reason,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
 func (x *AdminInferenceCredentialServiceRotateCredentialRequest) Reset() {
@@ -2916,36 +2854,9 @@ func (x *AdminInferenceCredentialServiceRotateCredentialRequest) GetCredentialId
 	return ""
 }
 
-func (x *AdminInferenceCredentialServiceRotateCredentialRequest) GetSecretMaterial() isAdminInferenceCredentialServiceRotateCredentialRequest_SecretMaterial {
-	if x != nil {
-		return x.SecretMaterial
-	}
-	return nil
-}
-
-func (x *AdminInferenceCredentialServiceRotateCredentialRequest) GetInlineSecret() *InlineSecret {
-	if x != nil {
-		if x, ok := x.SecretMaterial.(*AdminInferenceCredentialServiceRotateCredentialRequest_InlineSecret); ok {
-			return x.InlineSecret
-		}
-	}
-	return nil
-}
-
-func (x *AdminInferenceCredentialServiceRotateCredentialRequest) GetExternalRef() string {
-	if x != nil {
-		if x, ok := x.SecretMaterial.(*AdminInferenceCredentialServiceRotateCredentialRequest_ExternalRef); ok {
-			return x.ExternalRef
-		}
-	}
-	return ""
-}
-
 func (x *AdminInferenceCredentialServiceRotateCredentialRequest) GetSecretValue() string {
 	if x != nil {
-		if x, ok := x.SecretMaterial.(*AdminInferenceCredentialServiceRotateCredentialRequest_SecretValue); ok {
-			return x.SecretValue
-		}
+		return x.SecretValue
 	}
 	return ""
 }
@@ -2955,31 +2866,6 @@ func (x *AdminInferenceCredentialServiceRotateCredentialRequest) GetReason() str
 		return x.Reason
 	}
 	return ""
-}
-
-type isAdminInferenceCredentialServiceRotateCredentialRequest_SecretMaterial interface {
-	isAdminInferenceCredentialServiceRotateCredentialRequest_SecretMaterial()
-}
-
-type AdminInferenceCredentialServiceRotateCredentialRequest_InlineSecret struct {
-	InlineSecret *InlineSecret `protobuf:"bytes,3,opt,name=inline_secret,json=inlineSecret,proto3,oneof"`
-}
-
-type AdminInferenceCredentialServiceRotateCredentialRequest_ExternalRef struct {
-	ExternalRef string `protobuf:"bytes,4,opt,name=external_ref,json=externalRef,proto3,oneof"`
-}
-
-type AdminInferenceCredentialServiceRotateCredentialRequest_SecretValue struct {
-	SecretValue string `protobuf:"bytes,5,opt,name=secret_value,json=secretValue,proto3,oneof"`
-}
-
-func (*AdminInferenceCredentialServiceRotateCredentialRequest_InlineSecret) isAdminInferenceCredentialServiceRotateCredentialRequest_SecretMaterial() {
-}
-
-func (*AdminInferenceCredentialServiceRotateCredentialRequest_ExternalRef) isAdminInferenceCredentialServiceRotateCredentialRequest_SecretMaterial() {
-}
-
-func (*AdminInferenceCredentialServiceRotateCredentialRequest_SecretValue) isAdminInferenceCredentialServiceRotateCredentialRequest_SecretMaterial() {
 }
 
 type AdminInferenceCredentialServiceRotateCredentialResponse struct {
@@ -5130,83 +5016,22 @@ func (x *ModelEndpointCapabilityDefinition) GetMetadata() *structpb.Struct {
 	return nil
 }
 
-type InlineSecret struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Algorithm     string                 `protobuf:"bytes,1,opt,name=algorithm,proto3" json:"algorithm,omitempty"`
-	NonceB64      string                 `protobuf:"bytes,2,opt,name=nonce_b64,json=nonceB64,proto3" json:"nonce_b64,omitempty"`
-	CipherB64     string                 `protobuf:"bytes,3,opt,name=cipher_b64,json=cipherB64,proto3" json:"cipher_b64,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *InlineSecret) Reset() {
-	*x = InlineSecret{}
-	mi := &file_mycel_admin_v1_inference_proto_msgTypes[74]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *InlineSecret) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*InlineSecret) ProtoMessage() {}
-
-func (x *InlineSecret) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_admin_v1_inference_proto_msgTypes[74]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use InlineSecret.ProtoReflect.Descriptor instead.
-func (*InlineSecret) Descriptor() ([]byte, []int) {
-	return file_mycel_admin_v1_inference_proto_rawDescGZIP(), []int{74}
-}
-
-func (x *InlineSecret) GetAlgorithm() string {
-	if x != nil {
-		return x.Algorithm
-	}
-	return ""
-}
-
-func (x *InlineSecret) GetNonceB64() string {
-	if x != nil {
-		return x.NonceB64
-	}
-	return ""
-}
-
-func (x *InlineSecret) GetCipherB64() string {
-	if x != nil {
-		return x.CipherB64
-	}
-	return ""
-}
-
 type Secret struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	SecretId      string                 `protobuf:"bytes,1,opt,name=secret_id,json=secretId,proto3" json:"secret_id,omitempty"`
 	OwnerType     string                 `protobuf:"bytes,2,opt,name=owner_type,json=ownerType,proto3" json:"owner_type,omitempty"`
 	OwnerId       string                 `protobuf:"bytes,3,opt,name=owner_id,json=ownerId,proto3" json:"owner_id,omitempty"`
 	Kind          string                 `protobuf:"bytes,4,opt,name=kind,proto3" json:"kind,omitempty"`
-	InlineSecret  *InlineSecret          `protobuf:"bytes,5,opt,name=inline_secret,json=inlineSecret,proto3" json:"inline_secret,omitempty"`
-	ExternalRef   string                 `protobuf:"bytes,6,opt,name=external_ref,json=externalRef,proto3" json:"external_ref,omitempty"`
 	CreateTime    *timestamppb.Timestamp `protobuf:"bytes,7,opt,name=create_time,json=createTime,proto3" json:"create_time,omitempty"`
 	UpdateTime    *timestamppb.Timestamp `protobuf:"bytes,8,opt,name=update_time,json=updateTime,proto3" json:"update_time,omitempty"`
+	SecretSuffix  string                 `protobuf:"bytes,9,opt,name=secret_suffix,json=secretSuffix,proto3" json:"secret_suffix,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *Secret) Reset() {
 	*x = Secret{}
-	mi := &file_mycel_admin_v1_inference_proto_msgTypes[75]
+	mi := &file_mycel_admin_v1_inference_proto_msgTypes[74]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5218,7 +5043,7 @@ func (x *Secret) String() string {
 func (*Secret) ProtoMessage() {}
 
 func (x *Secret) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_admin_v1_inference_proto_msgTypes[75]
+	mi := &file_mycel_admin_v1_inference_proto_msgTypes[74]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5231,7 +5056,7 @@ func (x *Secret) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Secret.ProtoReflect.Descriptor instead.
 func (*Secret) Descriptor() ([]byte, []int) {
-	return file_mycel_admin_v1_inference_proto_rawDescGZIP(), []int{75}
+	return file_mycel_admin_v1_inference_proto_rawDescGZIP(), []int{74}
 }
 
 func (x *Secret) GetSecretId() string {
@@ -5262,20 +5087,6 @@ func (x *Secret) GetKind() string {
 	return ""
 }
 
-func (x *Secret) GetInlineSecret() *InlineSecret {
-	if x != nil {
-		return x.InlineSecret
-	}
-	return nil
-}
-
-func (x *Secret) GetExternalRef() string {
-	if x != nil {
-		return x.ExternalRef
-	}
-	return ""
-}
-
 func (x *Secret) GetCreateTime() *timestamppb.Timestamp {
 	if x != nil {
 		return x.CreateTime
@@ -5288,6 +5099,13 @@ func (x *Secret) GetUpdateTime() *timestamppb.Timestamp {
 		return x.UpdateTime
 	}
 	return nil
+}
+
+func (x *Secret) GetSecretSuffix() string {
+	if x != nil {
+		return x.SecretSuffix
+	}
+	return ""
 }
 
 type InferenceCredential struct {
@@ -5310,13 +5128,14 @@ type InferenceCredential struct {
 	StatusValue     v1.InferenceCredentialStatus    `protobuf:"varint,16,opt,name=status_value,json=statusValue,proto3,enum=mycel.common.v1.InferenceCredentialStatus" json:"status_value,omitempty"`
 	SecretVersion   string                          `protobuf:"bytes,17,opt,name=secret_version,json=secretVersion,proto3" json:"secret_version,omitempty"`
 	RotatedAt       *timestamppb.Timestamp          `protobuf:"bytes,18,opt,name=rotated_at,json=rotatedAt,proto3" json:"rotated_at,omitempty"`
+	SecretSuffix    string                          `protobuf:"bytes,19,opt,name=secret_suffix,json=secretSuffix,proto3" json:"secret_suffix,omitempty"`
 	unknownFields   protoimpl.UnknownFields
 	sizeCache       protoimpl.SizeCache
 }
 
 func (x *InferenceCredential) Reset() {
 	*x = InferenceCredential{}
-	mi := &file_mycel_admin_v1_inference_proto_msgTypes[76]
+	mi := &file_mycel_admin_v1_inference_proto_msgTypes[75]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5328,7 +5147,7 @@ func (x *InferenceCredential) String() string {
 func (*InferenceCredential) ProtoMessage() {}
 
 func (x *InferenceCredential) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_admin_v1_inference_proto_msgTypes[76]
+	mi := &file_mycel_admin_v1_inference_proto_msgTypes[75]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5341,7 +5160,7 @@ func (x *InferenceCredential) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use InferenceCredential.ProtoReflect.Descriptor instead.
 func (*InferenceCredential) Descriptor() ([]byte, []int) {
-	return file_mycel_admin_v1_inference_proto_rawDescGZIP(), []int{76}
+	return file_mycel_admin_v1_inference_proto_rawDescGZIP(), []int{75}
 }
 
 func (x *InferenceCredential) GetCredentialId() string {
@@ -5470,6 +5289,13 @@ func (x *InferenceCredential) GetRotatedAt() *timestamppb.Timestamp {
 	return nil
 }
 
+func (x *InferenceCredential) GetSecretSuffix() string {
+	if x != nil {
+		return x.SecretSuffix
+	}
+	return ""
+}
+
 type ProcessingScope struct {
 	state              protoimpl.MessageState `protogen:"open.v1"`
 	SpaceId            string                 `protobuf:"bytes,1,opt,name=space_id,json=spaceId,proto3" json:"space_id,omitempty"`
@@ -5483,7 +5309,7 @@ type ProcessingScope struct {
 
 func (x *ProcessingScope) Reset() {
 	*x = ProcessingScope{}
-	mi := &file_mycel_admin_v1_inference_proto_msgTypes[77]
+	mi := &file_mycel_admin_v1_inference_proto_msgTypes[76]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5495,7 +5321,7 @@ func (x *ProcessingScope) String() string {
 func (*ProcessingScope) ProtoMessage() {}
 
 func (x *ProcessingScope) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_admin_v1_inference_proto_msgTypes[77]
+	mi := &file_mycel_admin_v1_inference_proto_msgTypes[76]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5508,7 +5334,7 @@ func (x *ProcessingScope) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ProcessingScope.ProtoReflect.Descriptor instead.
 func (*ProcessingScope) Descriptor() ([]byte, []int) {
-	return file_mycel_admin_v1_inference_proto_rawDescGZIP(), []int{77}
+	return file_mycel_admin_v1_inference_proto_rawDescGZIP(), []int{76}
 }
 
 func (x *ProcessingScope) GetSpaceId() string {
@@ -5573,7 +5399,7 @@ type InferenceProfile struct {
 
 func (x *InferenceProfile) Reset() {
 	*x = InferenceProfile{}
-	mi := &file_mycel_admin_v1_inference_proto_msgTypes[78]
+	mi := &file_mycel_admin_v1_inference_proto_msgTypes[77]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5585,7 +5411,7 @@ func (x *InferenceProfile) String() string {
 func (*InferenceProfile) ProtoMessage() {}
 
 func (x *InferenceProfile) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_admin_v1_inference_proto_msgTypes[78]
+	mi := &file_mycel_admin_v1_inference_proto_msgTypes[77]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5598,7 +5424,7 @@ func (x *InferenceProfile) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use InferenceProfile.ProtoReflect.Descriptor instead.
 func (*InferenceProfile) Descriptor() ([]byte, []int) {
-	return file_mycel_admin_v1_inference_proto_rawDescGZIP(), []int{78}
+	return file_mycel_admin_v1_inference_proto_rawDescGZIP(), []int{77}
 }
 
 func (x *InferenceProfile) GetInferenceProfileId() string {
@@ -5765,7 +5591,7 @@ type CredentialGrant struct {
 
 func (x *CredentialGrant) Reset() {
 	*x = CredentialGrant{}
-	mi := &file_mycel_admin_v1_inference_proto_msgTypes[79]
+	mi := &file_mycel_admin_v1_inference_proto_msgTypes[78]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5777,7 +5603,7 @@ func (x *CredentialGrant) String() string {
 func (*CredentialGrant) ProtoMessage() {}
 
 func (x *CredentialGrant) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_admin_v1_inference_proto_msgTypes[79]
+	mi := &file_mycel_admin_v1_inference_proto_msgTypes[78]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5790,7 +5616,7 @@ func (x *CredentialGrant) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CredentialGrant.ProtoReflect.Descriptor instead.
 func (*CredentialGrant) Descriptor() ([]byte, []int) {
-	return file_mycel_admin_v1_inference_proto_rawDescGZIP(), []int{79}
+	return file_mycel_admin_v1_inference_proto_rawDescGZIP(), []int{78}
 }
 
 func (x *CredentialGrant) GetCredentialGrantId() string {
@@ -5987,7 +5813,7 @@ type InferencePolicy struct {
 
 func (x *InferencePolicy) Reset() {
 	*x = InferencePolicy{}
-	mi := &file_mycel_admin_v1_inference_proto_msgTypes[80]
+	mi := &file_mycel_admin_v1_inference_proto_msgTypes[79]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5999,7 +5825,7 @@ func (x *InferencePolicy) String() string {
 func (*InferencePolicy) ProtoMessage() {}
 
 func (x *InferencePolicy) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_admin_v1_inference_proto_msgTypes[80]
+	mi := &file_mycel_admin_v1_inference_proto_msgTypes[79]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6012,7 +5838,7 @@ func (x *InferencePolicy) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use InferencePolicy.ProtoReflect.Descriptor instead.
 func (*InferencePolicy) Descriptor() ([]byte, []int) {
-	return file_mycel_admin_v1_inference_proto_rawDescGZIP(), []int{80}
+	return file_mycel_admin_v1_inference_proto_rawDescGZIP(), []int{79}
 }
 
 func (x *InferencePolicy) GetInferencePolicyId() string {
@@ -6217,7 +6043,7 @@ type PolicyDecision struct {
 
 func (x *PolicyDecision) Reset() {
 	*x = PolicyDecision{}
-	mi := &file_mycel_admin_v1_inference_proto_msgTypes[81]
+	mi := &file_mycel_admin_v1_inference_proto_msgTypes[80]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -6229,7 +6055,7 @@ func (x *PolicyDecision) String() string {
 func (*PolicyDecision) ProtoMessage() {}
 
 func (x *PolicyDecision) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_admin_v1_inference_proto_msgTypes[81]
+	mi := &file_mycel_admin_v1_inference_proto_msgTypes[80]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6242,7 +6068,7 @@ func (x *PolicyDecision) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PolicyDecision.ProtoReflect.Descriptor instead.
 func (*PolicyDecision) Descriptor() ([]byte, []int) {
-	return file_mycel_admin_v1_inference_proto_rawDescGZIP(), []int{81}
+	return file_mycel_admin_v1_inference_proto_rawDescGZIP(), []int{80}
 }
 
 func (x *PolicyDecision) GetPolicyDecisionId() string {
@@ -6416,7 +6242,7 @@ type InferenceUsageEvent struct {
 
 func (x *InferenceUsageEvent) Reset() {
 	*x = InferenceUsageEvent{}
-	mi := &file_mycel_admin_v1_inference_proto_msgTypes[82]
+	mi := &file_mycel_admin_v1_inference_proto_msgTypes[81]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -6428,7 +6254,7 @@ func (x *InferenceUsageEvent) String() string {
 func (*InferenceUsageEvent) ProtoMessage() {}
 
 func (x *InferenceUsageEvent) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_admin_v1_inference_proto_msgTypes[82]
+	mi := &file_mycel_admin_v1_inference_proto_msgTypes[81]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6441,7 +6267,7 @@ func (x *InferenceUsageEvent) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use InferenceUsageEvent.ProtoReflect.Descriptor instead.
 func (*InferenceUsageEvent) Descriptor() ([]byte, []int) {
-	return file_mycel_admin_v1_inference_proto_rawDescGZIP(), []int{82}
+	return file_mycel_admin_v1_inference_proto_rawDescGZIP(), []int{81}
 }
 
 func (x *InferenceUsageEvent) GetUsageEventId() string {
@@ -6671,7 +6497,7 @@ type InferenceUsageSummary struct {
 
 func (x *InferenceUsageSummary) Reset() {
 	*x = InferenceUsageSummary{}
-	mi := &file_mycel_admin_v1_inference_proto_msgTypes[83]
+	mi := &file_mycel_admin_v1_inference_proto_msgTypes[82]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -6683,7 +6509,7 @@ func (x *InferenceUsageSummary) String() string {
 func (*InferenceUsageSummary) ProtoMessage() {}
 
 func (x *InferenceUsageSummary) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_admin_v1_inference_proto_msgTypes[83]
+	mi := &file_mycel_admin_v1_inference_proto_msgTypes[82]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6696,7 +6522,7 @@ func (x *InferenceUsageSummary) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use InferenceUsageSummary.ProtoReflect.Descriptor instead.
 func (*InferenceUsageSummary) Descriptor() ([]byte, []int) {
-	return file_mycel_admin_v1_inference_proto_rawDescGZIP(), []int{83}
+	return file_mycel_admin_v1_inference_proto_rawDescGZIP(), []int{82}
 }
 
 func (x *InferenceUsageSummary) GetGroup() map[string]string {
@@ -6877,7 +6703,7 @@ const file_mycel_admin_v1_inference_proto_rawDesc = "" +
 	"\x11inference_profile\x18\x02 \x01(\tR\x10inferenceProfile\x120\n" +
 	"\x14inference_profile_id\x18\x03 \x01(\tR\x12inferenceProfileId\"n\n" +
 	":AdminInferenceProfileServiceDeleteInferenceProfileResponse\x120\n" +
-	"\x14inference_profile_id\x18\x01 \x01(\tR\x12inferenceProfileId\"\xd8\x03\n" +
+	"\x14inference_profile_id\x18\x01 \x01(\tR\x12inferenceProfileId\"\xd9\x02\n" +
 	"6AdminInferenceCredentialServiceCreateCredentialRequest\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12!\n" +
 	"\fdisplay_name\x18\x02 \x01(\tR\vdisplayName\x12%\n" +
@@ -6886,14 +6712,11 @@ const file_mycel_admin_v1_inference_proto_rawDesc = "" +
 	"\n" +
 	"owner_type\x18\x05 \x01(\tR\townerType\x12\x19\n" +
 	"\bowner_id\x18\x06 \x01(\tR\aownerId\x12\x1b\n" +
-	"\tauth_type\x18\a \x01(\tR\bauthType\x12C\n" +
-	"\rinline_secret\x18\b \x01(\v2\x1c.mycel.admin.v1.InlineSecretH\x00R\finlineSecret\x12#\n" +
-	"\fexternal_ref\x18\t \x01(\tH\x00R\vexternalRef\x12#\n" +
-	"\fsecret_value\x18\v \x01(\tH\x00R\vsecretValue\x12\x1d\n" +
+	"\tauth_type\x18\a \x01(\tR\bauthType\x12\x1d\n" +
 	"\n" +
 	"is_default\x18\n" +
-	" \x01(\bR\tisDefaultB\x11\n" +
-	"\x0fsecret_material\"\xae\x01\n" +
+	" \x01(\bR\tisDefault\x12!\n" +
+	"\fsecret_value\x18\v \x01(\tR\vsecretValue\"\xae\x01\n" +
 	"7AdminInferenceCredentialServiceCreateCredentialResponse\x12.\n" +
 	"\x06secret\x18\x01 \x01(\v2\x16.mycel.admin.v1.SecretR\x06secret\x12C\n" +
 	"\n" +
@@ -7006,17 +6829,14 @@ const file_mycel_admin_v1_inference_proto_rawDesc = "" +
 	":AdminInferenceCredentialServiceSetCredentialStatusResponse\x12C\n" +
 	"\n" +
 	"credential\x18\x01 \x01(\v2#.mycel.admin.v1.InferenceCredentialR\n" +
-	"credential\"\xb7\x02\n" +
+	"credential\"\xb8\x01\n" +
 	"6AdminInferenceCredentialServiceRotateCredentialRequest\x12\x1e\n" +
 	"\n" +
 	"credential\x18\x01 \x01(\tR\n" +
 	"credential\x12#\n" +
-	"\rcredential_id\x18\x02 \x01(\tR\fcredentialId\x12C\n" +
-	"\rinline_secret\x18\x03 \x01(\v2\x1c.mycel.admin.v1.InlineSecretH\x00R\finlineSecret\x12#\n" +
-	"\fexternal_ref\x18\x04 \x01(\tH\x00R\vexternalRef\x12#\n" +
-	"\fsecret_value\x18\x05 \x01(\tH\x00R\vsecretValue\x12\x16\n" +
-	"\x06reason\x18\x06 \x01(\tR\x06reasonB\x11\n" +
-	"\x0fsecret_material\"\xae\x01\n" +
+	"\rcredential_id\x18\x02 \x01(\tR\fcredentialId\x12!\n" +
+	"\fsecret_value\x18\x05 \x01(\tR\vsecretValue\x12\x16\n" +
+	"\x06reason\x18\x06 \x01(\tR\x06reason\"\xae\x01\n" +
 	"7AdminInferenceCredentialServiceRotateCredentialResponse\x12.\n" +
 	"\x06secret\x18\x01 \x01(\v2\x16.mycel.admin.v1.SecretR\x06secret\x12C\n" +
 	"\n" +
@@ -7197,24 +7017,18 @@ const file_mycel_admin_v1_inference_proto_rawDesc = "" +
 	"\x13model_name_override\x18\a \x01(\tR\x11modelNameOverride\x123\n" +
 	"\bmetadata\x18\b \x01(\v2\x17.google.protobuf.StructR\bmetadataB\n" +
 	"\n" +
-	"\b_enabled\"h\n" +
-	"\fInlineSecret\x12\x1c\n" +
-	"\talgorithm\x18\x01 \x01(\tR\talgorithm\x12\x1b\n" +
-	"\tnonce_b64\x18\x02 \x01(\tR\bnonceB64\x12\x1d\n" +
-	"\n" +
-	"cipher_b64\x18\x03 \x01(\tR\tcipherB64\"\xd3\x02\n" +
+	"\b_enabled\"\x92\x02\n" +
 	"\x06Secret\x12\x1b\n" +
 	"\tsecret_id\x18\x01 \x01(\tR\bsecretId\x12\x1d\n" +
 	"\n" +
 	"owner_type\x18\x02 \x01(\tR\townerType\x12\x19\n" +
 	"\bowner_id\x18\x03 \x01(\tR\aownerId\x12\x12\n" +
-	"\x04kind\x18\x04 \x01(\tR\x04kind\x12A\n" +
-	"\rinline_secret\x18\x05 \x01(\v2\x1c.mycel.admin.v1.InlineSecretR\finlineSecret\x12!\n" +
-	"\fexternal_ref\x18\x06 \x01(\tR\vexternalRef\x12;\n" +
+	"\x04kind\x18\x04 \x01(\tR\x04kind\x12;\n" +
 	"\vcreate_time\x18\a \x01(\v2\x1a.google.protobuf.TimestampR\n" +
 	"createTime\x12;\n" +
 	"\vupdate_time\x18\b \x01(\v2\x1a.google.protobuf.TimestampR\n" +
-	"updateTime\"\xe2\x06\n" +
+	"updateTime\x12#\n" +
+	"\rsecret_suffix\x18\t \x01(\tR\fsecretSuffix\"\x87\a\n" +
 	"\x13InferenceCredential\x12#\n" +
 	"\rcredential_id\x18\x01 \x01(\tR\fcredentialId\x12\x10\n" +
 	"\x03key\x18\x02 \x01(\tR\x03key\x12!\n" +
@@ -7239,7 +7053,8 @@ const file_mycel_admin_v1_inference_proto_rawDesc = "" +
 	"\fstatus_value\x18\x10 \x01(\x0e2*.mycel.common.v1.InferenceCredentialStatusR\vstatusValue\x12%\n" +
 	"\x0esecret_version\x18\x11 \x01(\tR\rsecretVersion\x129\n" +
 	"\n" +
-	"rotated_at\x18\x12 \x01(\v2\x1a.google.protobuf.TimestampR\trotatedAt\"\xbf\x01\n" +
+	"rotated_at\x18\x12 \x01(\v2\x1a.google.protobuf.TimestampR\trotatedAt\x12#\n" +
+	"\rsecret_suffix\x18\x13 \x01(\tR\fsecretSuffix\"\xbf\x01\n" +
 	"\x0fProcessingScope\x12\x19\n" +
 	"\bspace_id\x18\x01 \x01(\tR\aspaceId\x12\x1b\n" +
 	"\tdomain_id\x18\x02 \x01(\tR\bdomainId\x12*\n" +
@@ -7469,7 +7284,7 @@ func file_mycel_admin_v1_inference_proto_rawDescGZIP() []byte {
 	return file_mycel_admin_v1_inference_proto_rawDescData
 }
 
-var file_mycel_admin_v1_inference_proto_msgTypes = make([]protoimpl.MessageInfo, 86)
+var file_mycel_admin_v1_inference_proto_msgTypes = make([]protoimpl.MessageInfo, 85)
 var file_mycel_admin_v1_inference_proto_goTypes = []any{
 	(*AdminInferenceCatalogServiceApplyInferencePackageRequest)(nil),              // 0: mycel.admin.v1.AdminInferenceCatalogServiceApplyInferencePackageRequest
 	(*AdminInferenceCatalogServiceApplyInferencePackageResponse)(nil),             // 1: mycel.admin.v1.AdminInferenceCatalogServiceApplyInferencePackageResponse
@@ -7545,35 +7360,34 @@ var file_mycel_admin_v1_inference_proto_goTypes = []any{
 	(*VectorStore)(nil),                       // 71: mycel.admin.v1.VectorStore
 	(*ModelEndpointCapability)(nil),           // 72: mycel.admin.v1.ModelEndpointCapability
 	(*ModelEndpointCapabilityDefinition)(nil), // 73: mycel.admin.v1.ModelEndpointCapabilityDefinition
-	(*InlineSecret)(nil),                      // 74: mycel.admin.v1.InlineSecret
-	(*Secret)(nil),                            // 75: mycel.admin.v1.Secret
-	(*InferenceCredential)(nil),               // 76: mycel.admin.v1.InferenceCredential
-	(*ProcessingScope)(nil),                   // 77: mycel.admin.v1.ProcessingScope
-	(*InferenceProfile)(nil),                  // 78: mycel.admin.v1.InferenceProfile
-	(*CredentialGrant)(nil),                   // 79: mycel.admin.v1.CredentialGrant
-	(*InferencePolicy)(nil),                   // 80: mycel.admin.v1.InferencePolicy
-	(*PolicyDecision)(nil),                    // 81: mycel.admin.v1.PolicyDecision
-	(*InferenceUsageEvent)(nil),               // 82: mycel.admin.v1.InferenceUsageEvent
-	(*InferenceUsageSummary)(nil),             // 83: mycel.admin.v1.InferenceUsageSummary
-	nil,                                       // 84: mycel.admin.v1.InferencePackage.DefinitionCountsEntry
-	nil,                                       // 85: mycel.admin.v1.InferenceUsageSummary.GroupEntry
-	(v1.InferenceOperation)(0),                // 86: mycel.common.v1.InferenceOperation
-	(*v1.InferencePrivacyRequirement)(nil),    // 87: mycel.common.v1.InferencePrivacyRequirement
-	(*v1.InferenceParameters)(nil),            // 88: mycel.common.v1.InferenceParameters
-	(*structpb.Struct)(nil),                   // 89: google.protobuf.Struct
-	(*timestamppb.Timestamp)(nil),             // 90: google.protobuf.Timestamp
-	(*v1.InferenceScope)(nil),                 // 91: mycel.common.v1.InferenceScope
-	(v1.InferenceUsageMode)(0),                // 92: mycel.common.v1.InferenceUsageMode
-	(v1.InferenceUsageStatus)(0),              // 93: mycel.common.v1.InferenceUsageStatus
-	(v1.InferenceNetworkClass)(0),             // 94: mycel.common.v1.InferenceNetworkClass
-	(v1.InferencePrivacyClass)(0),             // 95: mycel.common.v1.InferencePrivacyClass
-	(v1.InferenceCredentialAuthType)(0),       // 96: mycel.common.v1.InferenceCredentialAuthType
-	(v1.InferenceCredentialOwnerType)(0),      // 97: mycel.common.v1.InferenceCredentialOwnerType
-	(v1.InferenceCredentialStatus)(0),         // 98: mycel.common.v1.InferenceCredentialStatus
-	(v1.InferenceGrantState)(0),               // 99: mycel.common.v1.InferenceGrantState
-	(v1.InferencePolicyAction)(0),             // 100: mycel.common.v1.InferencePolicyAction
-	(v1.InferencePolicyState)(0),              // 101: mycel.common.v1.InferencePolicyState
-	(v1.InferencePolicyDecisionAction)(0),     // 102: mycel.common.v1.InferencePolicyDecisionAction
+	(*Secret)(nil),                            // 74: mycel.admin.v1.Secret
+	(*InferenceCredential)(nil),               // 75: mycel.admin.v1.InferenceCredential
+	(*ProcessingScope)(nil),                   // 76: mycel.admin.v1.ProcessingScope
+	(*InferenceProfile)(nil),                  // 77: mycel.admin.v1.InferenceProfile
+	(*CredentialGrant)(nil),                   // 78: mycel.admin.v1.CredentialGrant
+	(*InferencePolicy)(nil),                   // 79: mycel.admin.v1.InferencePolicy
+	(*PolicyDecision)(nil),                    // 80: mycel.admin.v1.PolicyDecision
+	(*InferenceUsageEvent)(nil),               // 81: mycel.admin.v1.InferenceUsageEvent
+	(*InferenceUsageSummary)(nil),             // 82: mycel.admin.v1.InferenceUsageSummary
+	nil,                                       // 83: mycel.admin.v1.InferencePackage.DefinitionCountsEntry
+	nil,                                       // 84: mycel.admin.v1.InferenceUsageSummary.GroupEntry
+	(v1.InferenceOperation)(0),                // 85: mycel.common.v1.InferenceOperation
+	(*v1.InferencePrivacyRequirement)(nil),    // 86: mycel.common.v1.InferencePrivacyRequirement
+	(*v1.InferenceParameters)(nil),            // 87: mycel.common.v1.InferenceParameters
+	(*structpb.Struct)(nil),                   // 88: google.protobuf.Struct
+	(*timestamppb.Timestamp)(nil),             // 89: google.protobuf.Timestamp
+	(*v1.InferenceScope)(nil),                 // 90: mycel.common.v1.InferenceScope
+	(v1.InferenceUsageMode)(0),                // 91: mycel.common.v1.InferenceUsageMode
+	(v1.InferenceUsageStatus)(0),              // 92: mycel.common.v1.InferenceUsageStatus
+	(v1.InferenceNetworkClass)(0),             // 93: mycel.common.v1.InferenceNetworkClass
+	(v1.InferencePrivacyClass)(0),             // 94: mycel.common.v1.InferencePrivacyClass
+	(v1.InferenceCredentialAuthType)(0),       // 95: mycel.common.v1.InferenceCredentialAuthType
+	(v1.InferenceCredentialOwnerType)(0),      // 96: mycel.common.v1.InferenceCredentialOwnerType
+	(v1.InferenceCredentialStatus)(0),         // 97: mycel.common.v1.InferenceCredentialStatus
+	(v1.InferenceGrantState)(0),               // 98: mycel.common.v1.InferenceGrantState
+	(v1.InferencePolicyAction)(0),             // 99: mycel.common.v1.InferencePolicyAction
+	(v1.InferencePolicyState)(0),              // 100: mycel.common.v1.InferencePolicyState
+	(v1.InferencePolicyDecisionAction)(0),     // 101: mycel.common.v1.InferencePolicyDecisionAction
 }
 var file_mycel_admin_v1_inference_proto_depIdxs = []int32{
 	69,  // 0: mycel.admin.v1.AdminInferenceCatalogServiceApplyInferencePackageRequest.model_endpoints:type_name -> mycel.admin.v1.ModelEndpoint
@@ -7590,181 +7404,178 @@ var file_mycel_admin_v1_inference_proto_depIdxs = []int32{
 	70,  // 11: mycel.admin.v1.AdminInferenceCatalogServiceListModelsResponse.models:type_name -> mycel.admin.v1.InferenceModel
 	71,  // 12: mycel.admin.v1.AdminInferenceCatalogServiceListVectorStoresResponse.vector_stores:type_name -> mycel.admin.v1.VectorStore
 	72,  // 13: mycel.admin.v1.AdminInferenceCatalogServiceListModelEndpointCapabilitiesResponse.model_endpoint_capabilities:type_name -> mycel.admin.v1.ModelEndpointCapability
-	86,  // 14: mycel.admin.v1.AdminInferenceProfileServiceCreateInferenceProfileRequest.operation:type_name -> mycel.common.v1.InferenceOperation
-	87,  // 15: mycel.admin.v1.AdminInferenceProfileServiceCreateInferenceProfileRequest.privacy_requirement:type_name -> mycel.common.v1.InferencePrivacyRequirement
-	88,  // 16: mycel.admin.v1.AdminInferenceProfileServiceCreateInferenceProfileRequest.default_parameters:type_name -> mycel.common.v1.InferenceParameters
-	89,  // 17: mycel.admin.v1.AdminInferenceProfileServiceCreateInferenceProfileRequest.metadata:type_name -> google.protobuf.Struct
-	78,  // 18: mycel.admin.v1.AdminInferenceProfileServiceCreateInferenceProfileResponse.inference_profile:type_name -> mycel.admin.v1.InferenceProfile
-	86,  // 19: mycel.admin.v1.AdminInferenceProfileServiceListInferenceProfilesRequest.operation:type_name -> mycel.common.v1.InferenceOperation
-	78,  // 20: mycel.admin.v1.AdminInferenceProfileServiceListInferenceProfilesResponse.inference_profiles:type_name -> mycel.admin.v1.InferenceProfile
-	78,  // 21: mycel.admin.v1.AdminInferenceProfileServiceGetInferenceProfileResponse.inference_profile:type_name -> mycel.admin.v1.InferenceProfile
-	78,  // 22: mycel.admin.v1.AdminInferenceProfileServiceSetInferenceProfileEnabledResponse.inference_profile:type_name -> mycel.admin.v1.InferenceProfile
-	74,  // 23: mycel.admin.v1.AdminInferenceCredentialServiceCreateCredentialRequest.inline_secret:type_name -> mycel.admin.v1.InlineSecret
-	75,  // 24: mycel.admin.v1.AdminInferenceCredentialServiceCreateCredentialResponse.secret:type_name -> mycel.admin.v1.Secret
-	76,  // 25: mycel.admin.v1.AdminInferenceCredentialServiceCreateCredentialResponse.credential:type_name -> mycel.admin.v1.InferenceCredential
-	76,  // 26: mycel.admin.v1.AdminInferenceCredentialServiceListCredentialsResponse.credentials:type_name -> mycel.admin.v1.InferenceCredential
-	77,  // 27: mycel.admin.v1.AdminInferenceGrantServiceCreateCredentialGrantRequest.scope:type_name -> mycel.admin.v1.ProcessingScope
-	90,  // 28: mycel.admin.v1.AdminInferenceGrantServiceCreateCredentialGrantRequest.expires_at:type_name -> google.protobuf.Timestamp
-	79,  // 29: mycel.admin.v1.AdminInferenceGrantServiceCreateCredentialGrantResponse.credential_grant:type_name -> mycel.admin.v1.CredentialGrant
-	79,  // 30: mycel.admin.v1.AdminInferenceGrantServiceListCredentialGrantsResponse.credential_grants:type_name -> mycel.admin.v1.CredentialGrant
-	77,  // 31: mycel.admin.v1.AdminInferencePolicyServiceCreateInferencePolicyRequest.scope:type_name -> mycel.admin.v1.ProcessingScope
-	90,  // 32: mycel.admin.v1.AdminInferencePolicyServiceCreateInferencePolicyRequest.expires_at:type_name -> google.protobuf.Timestamp
-	80,  // 33: mycel.admin.v1.AdminInferencePolicyServiceCreateInferencePolicyResponse.inference_policy:type_name -> mycel.admin.v1.InferencePolicy
-	80,  // 34: mycel.admin.v1.AdminInferencePolicyServiceListInferencePoliciesResponse.inference_policies:type_name -> mycel.admin.v1.InferencePolicy
-	69,  // 35: mycel.admin.v1.AdminInferenceCatalogServiceSetModelEndpointEnabledResponse.model_endpoint:type_name -> mycel.admin.v1.ModelEndpoint
-	71,  // 36: mycel.admin.v1.AdminInferenceCatalogServiceSetVectorStoreEnabledResponse.vector_store:type_name -> mycel.admin.v1.VectorStore
-	72,  // 37: mycel.admin.v1.AdminInferenceCatalogServiceSetModelEndpointCapabilityEnabledResponse.model_endpoint_capability:type_name -> mycel.admin.v1.ModelEndpointCapability
-	76,  // 38: mycel.admin.v1.AdminInferenceCredentialServiceSetCredentialStatusResponse.credential:type_name -> mycel.admin.v1.InferenceCredential
-	74,  // 39: mycel.admin.v1.AdminInferenceCredentialServiceRotateCredentialRequest.inline_secret:type_name -> mycel.admin.v1.InlineSecret
-	75,  // 40: mycel.admin.v1.AdminInferenceCredentialServiceRotateCredentialResponse.secret:type_name -> mycel.admin.v1.Secret
-	76,  // 41: mycel.admin.v1.AdminInferenceCredentialServiceRotateCredentialResponse.credential:type_name -> mycel.admin.v1.InferenceCredential
-	79,  // 42: mycel.admin.v1.AdminInferenceGrantServiceExpireCredentialGrantResponse.credential_grant:type_name -> mycel.admin.v1.CredentialGrant
-	80,  // 43: mycel.admin.v1.AdminInferencePolicyServiceExpireInferencePolicyResponse.inference_policy:type_name -> mycel.admin.v1.InferencePolicy
-	81,  // 44: mycel.admin.v1.AdminInferencePolicyServiceGetPolicyDecisionResponse.policy_decision:type_name -> mycel.admin.v1.PolicyDecision
-	91,  // 45: mycel.admin.v1.AdminInferenceUsageServiceListUsageEventsRequest.scope:type_name -> mycel.common.v1.InferenceScope
-	86,  // 46: mycel.admin.v1.AdminInferenceUsageServiceListUsageEventsRequest.operation:type_name -> mycel.common.v1.InferenceOperation
-	92,  // 47: mycel.admin.v1.AdminInferenceUsageServiceListUsageEventsRequest.usage_mode:type_name -> mycel.common.v1.InferenceUsageMode
-	93,  // 48: mycel.admin.v1.AdminInferenceUsageServiceListUsageEventsRequest.status:type_name -> mycel.common.v1.InferenceUsageStatus
-	90,  // 49: mycel.admin.v1.AdminInferenceUsageServiceListUsageEventsRequest.since:type_name -> google.protobuf.Timestamp
-	90,  // 50: mycel.admin.v1.AdminInferenceUsageServiceListUsageEventsRequest.until:type_name -> google.protobuf.Timestamp
-	82,  // 51: mycel.admin.v1.AdminInferenceUsageServiceListUsageEventsResponse.usage_events:type_name -> mycel.admin.v1.InferenceUsageEvent
-	91,  // 52: mycel.admin.v1.AdminInferenceUsageServiceSummarizeUsageRequest.scope:type_name -> mycel.common.v1.InferenceScope
-	90,  // 53: mycel.admin.v1.AdminInferenceUsageServiceSummarizeUsageRequest.since:type_name -> google.protobuf.Timestamp
-	90,  // 54: mycel.admin.v1.AdminInferenceUsageServiceSummarizeUsageRequest.until:type_name -> google.protobuf.Timestamp
-	83,  // 55: mycel.admin.v1.AdminInferenceUsageServiceSummarizeUsageResponse.summaries:type_name -> mycel.admin.v1.InferenceUsageSummary
-	84,  // 56: mycel.admin.v1.InferencePackage.definition_counts:type_name -> mycel.admin.v1.InferencePackage.DefinitionCountsEntry
-	90,  // 57: mycel.admin.v1.InferencePackage.installed_at:type_name -> google.protobuf.Timestamp
-	89,  // 58: mycel.admin.v1.ModelEndpoint.metadata:type_name -> google.protobuf.Struct
-	94,  // 59: mycel.admin.v1.ModelEndpoint.network_class_value:type_name -> mycel.common.v1.InferenceNetworkClass
-	95,  // 60: mycel.admin.v1.ModelEndpoint.privacy_class_value:type_name -> mycel.common.v1.InferencePrivacyClass
-	96,  // 61: mycel.admin.v1.ModelEndpoint.auth_type_values:type_name -> mycel.common.v1.InferenceCredentialAuthType
-	86,  // 62: mycel.admin.v1.ModelEndpoint.operation_values:type_name -> mycel.common.v1.InferenceOperation
-	89,  // 63: mycel.admin.v1.InferenceModel.metadata:type_name -> google.protobuf.Struct
-	86,  // 64: mycel.admin.v1.InferenceModel.operation_value:type_name -> mycel.common.v1.InferenceOperation
-	89,  // 65: mycel.admin.v1.VectorStore.config:type_name -> google.protobuf.Struct
-	95,  // 66: mycel.admin.v1.VectorStore.privacy_class_value:type_name -> mycel.common.v1.InferencePrivacyClass
-	89,  // 67: mycel.admin.v1.ModelEndpointCapability.metadata:type_name -> google.protobuf.Struct
-	86,  // 68: mycel.admin.v1.ModelEndpointCapability.operation_value:type_name -> mycel.common.v1.InferenceOperation
-	89,  // 69: mycel.admin.v1.ModelEndpointCapability.default_parameters:type_name -> google.protobuf.Struct
-	89,  // 70: mycel.admin.v1.ModelEndpointCapabilityDefinition.metadata:type_name -> google.protobuf.Struct
-	74,  // 71: mycel.admin.v1.Secret.inline_secret:type_name -> mycel.admin.v1.InlineSecret
-	90,  // 72: mycel.admin.v1.Secret.create_time:type_name -> google.protobuf.Timestamp
-	90,  // 73: mycel.admin.v1.Secret.update_time:type_name -> google.protobuf.Timestamp
-	90,  // 74: mycel.admin.v1.InferenceCredential.create_time:type_name -> google.protobuf.Timestamp
-	90,  // 75: mycel.admin.v1.InferenceCredential.update_time:type_name -> google.protobuf.Timestamp
-	90,  // 76: mycel.admin.v1.InferenceCredential.last_used_time:type_name -> google.protobuf.Timestamp
-	97,  // 77: mycel.admin.v1.InferenceCredential.owner_type_value:type_name -> mycel.common.v1.InferenceCredentialOwnerType
-	96,  // 78: mycel.admin.v1.InferenceCredential.auth_type_value:type_name -> mycel.common.v1.InferenceCredentialAuthType
-	98,  // 79: mycel.admin.v1.InferenceCredential.status_value:type_name -> mycel.common.v1.InferenceCredentialStatus
-	90,  // 80: mycel.admin.v1.InferenceCredential.rotated_at:type_name -> google.protobuf.Timestamp
-	86,  // 81: mycel.admin.v1.InferenceProfile.operation:type_name -> mycel.common.v1.InferenceOperation
-	87,  // 82: mycel.admin.v1.InferenceProfile.privacy_requirement:type_name -> mycel.common.v1.InferencePrivacyRequirement
-	88,  // 83: mycel.admin.v1.InferenceProfile.default_parameters:type_name -> mycel.common.v1.InferenceParameters
-	90,  // 84: mycel.admin.v1.InferenceProfile.create_time:type_name -> google.protobuf.Timestamp
-	90,  // 85: mycel.admin.v1.InferenceProfile.update_time:type_name -> google.protobuf.Timestamp
-	89,  // 86: mycel.admin.v1.InferenceProfile.metadata:type_name -> google.protobuf.Struct
-	77,  // 87: mycel.admin.v1.CredentialGrant.scope:type_name -> mycel.admin.v1.ProcessingScope
-	90,  // 88: mycel.admin.v1.CredentialGrant.create_time:type_name -> google.protobuf.Timestamp
-	90,  // 89: mycel.admin.v1.CredentialGrant.expire_time:type_name -> google.protobuf.Timestamp
-	91,  // 90: mycel.admin.v1.CredentialGrant.inference_scope:type_name -> mycel.common.v1.InferenceScope
-	86,  // 91: mycel.admin.v1.CredentialGrant.operation_values:type_name -> mycel.common.v1.InferenceOperation
-	92,  // 92: mycel.admin.v1.CredentialGrant.usage_modes:type_name -> mycel.common.v1.InferenceUsageMode
-	99,  // 93: mycel.admin.v1.CredentialGrant.state:type_name -> mycel.common.v1.InferenceGrantState
-	90,  // 94: mycel.admin.v1.CredentialGrant.revoked_at:type_name -> google.protobuf.Timestamp
-	77,  // 95: mycel.admin.v1.InferencePolicy.scope:type_name -> mycel.admin.v1.ProcessingScope
-	90,  // 96: mycel.admin.v1.InferencePolicy.create_time:type_name -> google.protobuf.Timestamp
-	90,  // 97: mycel.admin.v1.InferencePolicy.expire_time:type_name -> google.protobuf.Timestamp
-	91,  // 98: mycel.admin.v1.InferencePolicy.inference_scope:type_name -> mycel.common.v1.InferenceScope
-	100, // 99: mycel.admin.v1.InferencePolicy.action:type_name -> mycel.common.v1.InferencePolicyAction
-	86,  // 100: mycel.admin.v1.InferencePolicy.operation_values:type_name -> mycel.common.v1.InferenceOperation
-	95,  // 101: mycel.admin.v1.InferencePolicy.allowed_privacy_class_values:type_name -> mycel.common.v1.InferencePrivacyClass
-	101, // 102: mycel.admin.v1.InferencePolicy.state:type_name -> mycel.common.v1.InferencePolicyState
-	90,  // 103: mycel.admin.v1.InferencePolicy.revoked_at:type_name -> google.protobuf.Timestamp
-	86,  // 104: mycel.admin.v1.PolicyDecision.operation:type_name -> mycel.common.v1.InferenceOperation
-	92,  // 105: mycel.admin.v1.PolicyDecision.usage_mode:type_name -> mycel.common.v1.InferenceUsageMode
-	102, // 106: mycel.admin.v1.PolicyDecision.action:type_name -> mycel.common.v1.InferencePolicyDecisionAction
-	90,  // 107: mycel.admin.v1.PolicyDecision.decided_at:type_name -> google.protobuf.Timestamp
-	89,  // 108: mycel.admin.v1.PolicyDecision.metadata:type_name -> google.protobuf.Struct
-	86,  // 109: mycel.admin.v1.InferenceUsageEvent.operation:type_name -> mycel.common.v1.InferenceOperation
-	92,  // 110: mycel.admin.v1.InferenceUsageEvent.usage_mode:type_name -> mycel.common.v1.InferenceUsageMode
-	93,  // 111: mycel.admin.v1.InferenceUsageEvent.status:type_name -> mycel.common.v1.InferenceUsageStatus
-	90,  // 112: mycel.admin.v1.InferenceUsageEvent.started_at:type_name -> google.protobuf.Timestamp
-	90,  // 113: mycel.admin.v1.InferenceUsageEvent.completed_at:type_name -> google.protobuf.Timestamp
-	89,  // 114: mycel.admin.v1.InferenceUsageEvent.metadata:type_name -> google.protobuf.Struct
-	85,  // 115: mycel.admin.v1.InferenceUsageSummary.group:type_name -> mycel.admin.v1.InferenceUsageSummary.GroupEntry
-	0,   // 116: mycel.admin.v1.AdminInferenceCatalogService.ApplyInferencePackage:input_type -> mycel.admin.v1.AdminInferenceCatalogServiceApplyInferencePackageRequest
-	2,   // 117: mycel.admin.v1.AdminInferenceCatalogService.ListInferencePackages:input_type -> mycel.admin.v1.AdminInferenceCatalogServiceListInferencePackagesRequest
-	4,   // 118: mycel.admin.v1.AdminInferenceCatalogService.ListModelEndpoints:input_type -> mycel.admin.v1.AdminInferenceCatalogServiceListModelEndpointsRequest
-	6,   // 119: mycel.admin.v1.AdminInferenceCatalogService.ListModels:input_type -> mycel.admin.v1.AdminInferenceCatalogServiceListModelsRequest
-	8,   // 120: mycel.admin.v1.AdminInferenceCatalogService.ListVectorStores:input_type -> mycel.admin.v1.AdminInferenceCatalogServiceListVectorStoresRequest
-	10,  // 121: mycel.admin.v1.AdminInferenceCatalogService.ListModelEndpointCapabilities:input_type -> mycel.admin.v1.AdminInferenceCatalogServiceListModelEndpointCapabilitiesRequest
-	34,  // 122: mycel.admin.v1.AdminInferenceCatalogService.SetModelEndpointEnabled:input_type -> mycel.admin.v1.AdminInferenceCatalogServiceSetModelEndpointEnabledRequest
-	36,  // 123: mycel.admin.v1.AdminInferenceCatalogService.SetVectorStoreEnabled:input_type -> mycel.admin.v1.AdminInferenceCatalogServiceSetVectorStoreEnabledRequest
-	38,  // 124: mycel.admin.v1.AdminInferenceCatalogService.SetModelEndpointCapabilityEnabled:input_type -> mycel.admin.v1.AdminInferenceCatalogServiceSetModelEndpointCapabilityEnabledRequest
-	48,  // 125: mycel.admin.v1.AdminInferenceCatalogService.DeleteModelEndpoint:input_type -> mycel.admin.v1.AdminInferenceCatalogServiceDeleteModelEndpointRequest
-	50,  // 126: mycel.admin.v1.AdminInferenceCatalogService.DeleteModel:input_type -> mycel.admin.v1.AdminInferenceCatalogServiceDeleteModelRequest
-	52,  // 127: mycel.admin.v1.AdminInferenceCatalogService.DeleteVectorStore:input_type -> mycel.admin.v1.AdminInferenceCatalogServiceDeleteVectorStoreRequest
-	54,  // 128: mycel.admin.v1.AdminInferenceCatalogService.DeleteModelEndpointCapability:input_type -> mycel.admin.v1.AdminInferenceCatalogServiceDeleteModelEndpointCapabilityRequest
-	12,  // 129: mycel.admin.v1.AdminInferenceProfileService.CreateInferenceProfile:input_type -> mycel.admin.v1.AdminInferenceProfileServiceCreateInferenceProfileRequest
-	14,  // 130: mycel.admin.v1.AdminInferenceProfileService.ListInferenceProfiles:input_type -> mycel.admin.v1.AdminInferenceProfileServiceListInferenceProfilesRequest
-	16,  // 131: mycel.admin.v1.AdminInferenceProfileService.GetInferenceProfile:input_type -> mycel.admin.v1.AdminInferenceProfileServiceGetInferenceProfileRequest
-	18,  // 132: mycel.admin.v1.AdminInferenceProfileService.SetInferenceProfileEnabled:input_type -> mycel.admin.v1.AdminInferenceProfileServiceSetInferenceProfileEnabledRequest
-	20,  // 133: mycel.admin.v1.AdminInferenceProfileService.DeleteInferenceProfile:input_type -> mycel.admin.v1.AdminInferenceProfileServiceDeleteInferenceProfileRequest
-	22,  // 134: mycel.admin.v1.AdminInferenceCredentialService.CreateCredential:input_type -> mycel.admin.v1.AdminInferenceCredentialServiceCreateCredentialRequest
-	24,  // 135: mycel.admin.v1.AdminInferenceCredentialService.ListCredentials:input_type -> mycel.admin.v1.AdminInferenceCredentialServiceListCredentialsRequest
-	40,  // 136: mycel.admin.v1.AdminInferenceCredentialService.SetCredentialStatus:input_type -> mycel.admin.v1.AdminInferenceCredentialServiceSetCredentialStatusRequest
-	42,  // 137: mycel.admin.v1.AdminInferenceCredentialService.RotateCredential:input_type -> mycel.admin.v1.AdminInferenceCredentialServiceRotateCredentialRequest
-	56,  // 138: mycel.admin.v1.AdminInferenceCredentialService.DeleteCredential:input_type -> mycel.admin.v1.AdminInferenceCredentialServiceDeleteCredentialRequest
-	26,  // 139: mycel.admin.v1.AdminInferenceGrantService.CreateCredentialGrant:input_type -> mycel.admin.v1.AdminInferenceGrantServiceCreateCredentialGrantRequest
-	28,  // 140: mycel.admin.v1.AdminInferenceGrantService.ListCredentialGrants:input_type -> mycel.admin.v1.AdminInferenceGrantServiceListCredentialGrantsRequest
-	44,  // 141: mycel.admin.v1.AdminInferenceGrantService.ExpireCredentialGrant:input_type -> mycel.admin.v1.AdminInferenceGrantServiceExpireCredentialGrantRequest
-	58,  // 142: mycel.admin.v1.AdminInferenceGrantService.DeleteCredentialGrant:input_type -> mycel.admin.v1.AdminInferenceGrantServiceDeleteCredentialGrantRequest
-	30,  // 143: mycel.admin.v1.AdminInferencePolicyService.CreateInferencePolicy:input_type -> mycel.admin.v1.AdminInferencePolicyServiceCreateInferencePolicyRequest
-	32,  // 144: mycel.admin.v1.AdminInferencePolicyService.ListInferencePolicies:input_type -> mycel.admin.v1.AdminInferencePolicyServiceListInferencePoliciesRequest
-	46,  // 145: mycel.admin.v1.AdminInferencePolicyService.ExpireInferencePolicy:input_type -> mycel.admin.v1.AdminInferencePolicyServiceExpireInferencePolicyRequest
-	60,  // 146: mycel.admin.v1.AdminInferencePolicyService.DeleteInferencePolicy:input_type -> mycel.admin.v1.AdminInferencePolicyServiceDeleteInferencePolicyRequest
-	62,  // 147: mycel.admin.v1.AdminInferencePolicyService.GetPolicyDecision:input_type -> mycel.admin.v1.AdminInferencePolicyServiceGetPolicyDecisionRequest
-	64,  // 148: mycel.admin.v1.AdminInferenceUsageService.ListUsageEvents:input_type -> mycel.admin.v1.AdminInferenceUsageServiceListUsageEventsRequest
-	66,  // 149: mycel.admin.v1.AdminInferenceUsageService.SummarizeUsage:input_type -> mycel.admin.v1.AdminInferenceUsageServiceSummarizeUsageRequest
-	1,   // 150: mycel.admin.v1.AdminInferenceCatalogService.ApplyInferencePackage:output_type -> mycel.admin.v1.AdminInferenceCatalogServiceApplyInferencePackageResponse
-	3,   // 151: mycel.admin.v1.AdminInferenceCatalogService.ListInferencePackages:output_type -> mycel.admin.v1.AdminInferenceCatalogServiceListInferencePackagesResponse
-	5,   // 152: mycel.admin.v1.AdminInferenceCatalogService.ListModelEndpoints:output_type -> mycel.admin.v1.AdminInferenceCatalogServiceListModelEndpointsResponse
-	7,   // 153: mycel.admin.v1.AdminInferenceCatalogService.ListModels:output_type -> mycel.admin.v1.AdminInferenceCatalogServiceListModelsResponse
-	9,   // 154: mycel.admin.v1.AdminInferenceCatalogService.ListVectorStores:output_type -> mycel.admin.v1.AdminInferenceCatalogServiceListVectorStoresResponse
-	11,  // 155: mycel.admin.v1.AdminInferenceCatalogService.ListModelEndpointCapabilities:output_type -> mycel.admin.v1.AdminInferenceCatalogServiceListModelEndpointCapabilitiesResponse
-	35,  // 156: mycel.admin.v1.AdminInferenceCatalogService.SetModelEndpointEnabled:output_type -> mycel.admin.v1.AdminInferenceCatalogServiceSetModelEndpointEnabledResponse
-	37,  // 157: mycel.admin.v1.AdminInferenceCatalogService.SetVectorStoreEnabled:output_type -> mycel.admin.v1.AdminInferenceCatalogServiceSetVectorStoreEnabledResponse
-	39,  // 158: mycel.admin.v1.AdminInferenceCatalogService.SetModelEndpointCapabilityEnabled:output_type -> mycel.admin.v1.AdminInferenceCatalogServiceSetModelEndpointCapabilityEnabledResponse
-	49,  // 159: mycel.admin.v1.AdminInferenceCatalogService.DeleteModelEndpoint:output_type -> mycel.admin.v1.AdminInferenceCatalogServiceDeleteModelEndpointResponse
-	51,  // 160: mycel.admin.v1.AdminInferenceCatalogService.DeleteModel:output_type -> mycel.admin.v1.AdminInferenceCatalogServiceDeleteModelResponse
-	53,  // 161: mycel.admin.v1.AdminInferenceCatalogService.DeleteVectorStore:output_type -> mycel.admin.v1.AdminInferenceCatalogServiceDeleteVectorStoreResponse
-	55,  // 162: mycel.admin.v1.AdminInferenceCatalogService.DeleteModelEndpointCapability:output_type -> mycel.admin.v1.AdminInferenceCatalogServiceDeleteModelEndpointCapabilityResponse
-	13,  // 163: mycel.admin.v1.AdminInferenceProfileService.CreateInferenceProfile:output_type -> mycel.admin.v1.AdminInferenceProfileServiceCreateInferenceProfileResponse
-	15,  // 164: mycel.admin.v1.AdminInferenceProfileService.ListInferenceProfiles:output_type -> mycel.admin.v1.AdminInferenceProfileServiceListInferenceProfilesResponse
-	17,  // 165: mycel.admin.v1.AdminInferenceProfileService.GetInferenceProfile:output_type -> mycel.admin.v1.AdminInferenceProfileServiceGetInferenceProfileResponse
-	19,  // 166: mycel.admin.v1.AdminInferenceProfileService.SetInferenceProfileEnabled:output_type -> mycel.admin.v1.AdminInferenceProfileServiceSetInferenceProfileEnabledResponse
-	21,  // 167: mycel.admin.v1.AdminInferenceProfileService.DeleteInferenceProfile:output_type -> mycel.admin.v1.AdminInferenceProfileServiceDeleteInferenceProfileResponse
-	23,  // 168: mycel.admin.v1.AdminInferenceCredentialService.CreateCredential:output_type -> mycel.admin.v1.AdminInferenceCredentialServiceCreateCredentialResponse
-	25,  // 169: mycel.admin.v1.AdminInferenceCredentialService.ListCredentials:output_type -> mycel.admin.v1.AdminInferenceCredentialServiceListCredentialsResponse
-	41,  // 170: mycel.admin.v1.AdminInferenceCredentialService.SetCredentialStatus:output_type -> mycel.admin.v1.AdminInferenceCredentialServiceSetCredentialStatusResponse
-	43,  // 171: mycel.admin.v1.AdminInferenceCredentialService.RotateCredential:output_type -> mycel.admin.v1.AdminInferenceCredentialServiceRotateCredentialResponse
-	57,  // 172: mycel.admin.v1.AdminInferenceCredentialService.DeleteCredential:output_type -> mycel.admin.v1.AdminInferenceCredentialServiceDeleteCredentialResponse
-	27,  // 173: mycel.admin.v1.AdminInferenceGrantService.CreateCredentialGrant:output_type -> mycel.admin.v1.AdminInferenceGrantServiceCreateCredentialGrantResponse
-	29,  // 174: mycel.admin.v1.AdminInferenceGrantService.ListCredentialGrants:output_type -> mycel.admin.v1.AdminInferenceGrantServiceListCredentialGrantsResponse
-	45,  // 175: mycel.admin.v1.AdminInferenceGrantService.ExpireCredentialGrant:output_type -> mycel.admin.v1.AdminInferenceGrantServiceExpireCredentialGrantResponse
-	59,  // 176: mycel.admin.v1.AdminInferenceGrantService.DeleteCredentialGrant:output_type -> mycel.admin.v1.AdminInferenceGrantServiceDeleteCredentialGrantResponse
-	31,  // 177: mycel.admin.v1.AdminInferencePolicyService.CreateInferencePolicy:output_type -> mycel.admin.v1.AdminInferencePolicyServiceCreateInferencePolicyResponse
-	33,  // 178: mycel.admin.v1.AdminInferencePolicyService.ListInferencePolicies:output_type -> mycel.admin.v1.AdminInferencePolicyServiceListInferencePoliciesResponse
-	47,  // 179: mycel.admin.v1.AdminInferencePolicyService.ExpireInferencePolicy:output_type -> mycel.admin.v1.AdminInferencePolicyServiceExpireInferencePolicyResponse
-	61,  // 180: mycel.admin.v1.AdminInferencePolicyService.DeleteInferencePolicy:output_type -> mycel.admin.v1.AdminInferencePolicyServiceDeleteInferencePolicyResponse
-	63,  // 181: mycel.admin.v1.AdminInferencePolicyService.GetPolicyDecision:output_type -> mycel.admin.v1.AdminInferencePolicyServiceGetPolicyDecisionResponse
-	65,  // 182: mycel.admin.v1.AdminInferenceUsageService.ListUsageEvents:output_type -> mycel.admin.v1.AdminInferenceUsageServiceListUsageEventsResponse
-	67,  // 183: mycel.admin.v1.AdminInferenceUsageService.SummarizeUsage:output_type -> mycel.admin.v1.AdminInferenceUsageServiceSummarizeUsageResponse
-	150, // [150:184] is the sub-list for method output_type
-	116, // [116:150] is the sub-list for method input_type
-	116, // [116:116] is the sub-list for extension type_name
-	116, // [116:116] is the sub-list for extension extendee
-	0,   // [0:116] is the sub-list for field type_name
+	85,  // 14: mycel.admin.v1.AdminInferenceProfileServiceCreateInferenceProfileRequest.operation:type_name -> mycel.common.v1.InferenceOperation
+	86,  // 15: mycel.admin.v1.AdminInferenceProfileServiceCreateInferenceProfileRequest.privacy_requirement:type_name -> mycel.common.v1.InferencePrivacyRequirement
+	87,  // 16: mycel.admin.v1.AdminInferenceProfileServiceCreateInferenceProfileRequest.default_parameters:type_name -> mycel.common.v1.InferenceParameters
+	88,  // 17: mycel.admin.v1.AdminInferenceProfileServiceCreateInferenceProfileRequest.metadata:type_name -> google.protobuf.Struct
+	77,  // 18: mycel.admin.v1.AdminInferenceProfileServiceCreateInferenceProfileResponse.inference_profile:type_name -> mycel.admin.v1.InferenceProfile
+	85,  // 19: mycel.admin.v1.AdminInferenceProfileServiceListInferenceProfilesRequest.operation:type_name -> mycel.common.v1.InferenceOperation
+	77,  // 20: mycel.admin.v1.AdminInferenceProfileServiceListInferenceProfilesResponse.inference_profiles:type_name -> mycel.admin.v1.InferenceProfile
+	77,  // 21: mycel.admin.v1.AdminInferenceProfileServiceGetInferenceProfileResponse.inference_profile:type_name -> mycel.admin.v1.InferenceProfile
+	77,  // 22: mycel.admin.v1.AdminInferenceProfileServiceSetInferenceProfileEnabledResponse.inference_profile:type_name -> mycel.admin.v1.InferenceProfile
+	74,  // 23: mycel.admin.v1.AdminInferenceCredentialServiceCreateCredentialResponse.secret:type_name -> mycel.admin.v1.Secret
+	75,  // 24: mycel.admin.v1.AdminInferenceCredentialServiceCreateCredentialResponse.credential:type_name -> mycel.admin.v1.InferenceCredential
+	75,  // 25: mycel.admin.v1.AdminInferenceCredentialServiceListCredentialsResponse.credentials:type_name -> mycel.admin.v1.InferenceCredential
+	76,  // 26: mycel.admin.v1.AdminInferenceGrantServiceCreateCredentialGrantRequest.scope:type_name -> mycel.admin.v1.ProcessingScope
+	89,  // 27: mycel.admin.v1.AdminInferenceGrantServiceCreateCredentialGrantRequest.expires_at:type_name -> google.protobuf.Timestamp
+	78,  // 28: mycel.admin.v1.AdminInferenceGrantServiceCreateCredentialGrantResponse.credential_grant:type_name -> mycel.admin.v1.CredentialGrant
+	78,  // 29: mycel.admin.v1.AdminInferenceGrantServiceListCredentialGrantsResponse.credential_grants:type_name -> mycel.admin.v1.CredentialGrant
+	76,  // 30: mycel.admin.v1.AdminInferencePolicyServiceCreateInferencePolicyRequest.scope:type_name -> mycel.admin.v1.ProcessingScope
+	89,  // 31: mycel.admin.v1.AdminInferencePolicyServiceCreateInferencePolicyRequest.expires_at:type_name -> google.protobuf.Timestamp
+	79,  // 32: mycel.admin.v1.AdminInferencePolicyServiceCreateInferencePolicyResponse.inference_policy:type_name -> mycel.admin.v1.InferencePolicy
+	79,  // 33: mycel.admin.v1.AdminInferencePolicyServiceListInferencePoliciesResponse.inference_policies:type_name -> mycel.admin.v1.InferencePolicy
+	69,  // 34: mycel.admin.v1.AdminInferenceCatalogServiceSetModelEndpointEnabledResponse.model_endpoint:type_name -> mycel.admin.v1.ModelEndpoint
+	71,  // 35: mycel.admin.v1.AdminInferenceCatalogServiceSetVectorStoreEnabledResponse.vector_store:type_name -> mycel.admin.v1.VectorStore
+	72,  // 36: mycel.admin.v1.AdminInferenceCatalogServiceSetModelEndpointCapabilityEnabledResponse.model_endpoint_capability:type_name -> mycel.admin.v1.ModelEndpointCapability
+	75,  // 37: mycel.admin.v1.AdminInferenceCredentialServiceSetCredentialStatusResponse.credential:type_name -> mycel.admin.v1.InferenceCredential
+	74,  // 38: mycel.admin.v1.AdminInferenceCredentialServiceRotateCredentialResponse.secret:type_name -> mycel.admin.v1.Secret
+	75,  // 39: mycel.admin.v1.AdminInferenceCredentialServiceRotateCredentialResponse.credential:type_name -> mycel.admin.v1.InferenceCredential
+	78,  // 40: mycel.admin.v1.AdminInferenceGrantServiceExpireCredentialGrantResponse.credential_grant:type_name -> mycel.admin.v1.CredentialGrant
+	79,  // 41: mycel.admin.v1.AdminInferencePolicyServiceExpireInferencePolicyResponse.inference_policy:type_name -> mycel.admin.v1.InferencePolicy
+	80,  // 42: mycel.admin.v1.AdminInferencePolicyServiceGetPolicyDecisionResponse.policy_decision:type_name -> mycel.admin.v1.PolicyDecision
+	90,  // 43: mycel.admin.v1.AdminInferenceUsageServiceListUsageEventsRequest.scope:type_name -> mycel.common.v1.InferenceScope
+	85,  // 44: mycel.admin.v1.AdminInferenceUsageServiceListUsageEventsRequest.operation:type_name -> mycel.common.v1.InferenceOperation
+	91,  // 45: mycel.admin.v1.AdminInferenceUsageServiceListUsageEventsRequest.usage_mode:type_name -> mycel.common.v1.InferenceUsageMode
+	92,  // 46: mycel.admin.v1.AdminInferenceUsageServiceListUsageEventsRequest.status:type_name -> mycel.common.v1.InferenceUsageStatus
+	89,  // 47: mycel.admin.v1.AdminInferenceUsageServiceListUsageEventsRequest.since:type_name -> google.protobuf.Timestamp
+	89,  // 48: mycel.admin.v1.AdminInferenceUsageServiceListUsageEventsRequest.until:type_name -> google.protobuf.Timestamp
+	81,  // 49: mycel.admin.v1.AdminInferenceUsageServiceListUsageEventsResponse.usage_events:type_name -> mycel.admin.v1.InferenceUsageEvent
+	90,  // 50: mycel.admin.v1.AdminInferenceUsageServiceSummarizeUsageRequest.scope:type_name -> mycel.common.v1.InferenceScope
+	89,  // 51: mycel.admin.v1.AdminInferenceUsageServiceSummarizeUsageRequest.since:type_name -> google.protobuf.Timestamp
+	89,  // 52: mycel.admin.v1.AdminInferenceUsageServiceSummarizeUsageRequest.until:type_name -> google.protobuf.Timestamp
+	82,  // 53: mycel.admin.v1.AdminInferenceUsageServiceSummarizeUsageResponse.summaries:type_name -> mycel.admin.v1.InferenceUsageSummary
+	83,  // 54: mycel.admin.v1.InferencePackage.definition_counts:type_name -> mycel.admin.v1.InferencePackage.DefinitionCountsEntry
+	89,  // 55: mycel.admin.v1.InferencePackage.installed_at:type_name -> google.protobuf.Timestamp
+	88,  // 56: mycel.admin.v1.ModelEndpoint.metadata:type_name -> google.protobuf.Struct
+	93,  // 57: mycel.admin.v1.ModelEndpoint.network_class_value:type_name -> mycel.common.v1.InferenceNetworkClass
+	94,  // 58: mycel.admin.v1.ModelEndpoint.privacy_class_value:type_name -> mycel.common.v1.InferencePrivacyClass
+	95,  // 59: mycel.admin.v1.ModelEndpoint.auth_type_values:type_name -> mycel.common.v1.InferenceCredentialAuthType
+	85,  // 60: mycel.admin.v1.ModelEndpoint.operation_values:type_name -> mycel.common.v1.InferenceOperation
+	88,  // 61: mycel.admin.v1.InferenceModel.metadata:type_name -> google.protobuf.Struct
+	85,  // 62: mycel.admin.v1.InferenceModel.operation_value:type_name -> mycel.common.v1.InferenceOperation
+	88,  // 63: mycel.admin.v1.VectorStore.config:type_name -> google.protobuf.Struct
+	94,  // 64: mycel.admin.v1.VectorStore.privacy_class_value:type_name -> mycel.common.v1.InferencePrivacyClass
+	88,  // 65: mycel.admin.v1.ModelEndpointCapability.metadata:type_name -> google.protobuf.Struct
+	85,  // 66: mycel.admin.v1.ModelEndpointCapability.operation_value:type_name -> mycel.common.v1.InferenceOperation
+	88,  // 67: mycel.admin.v1.ModelEndpointCapability.default_parameters:type_name -> google.protobuf.Struct
+	88,  // 68: mycel.admin.v1.ModelEndpointCapabilityDefinition.metadata:type_name -> google.protobuf.Struct
+	89,  // 69: mycel.admin.v1.Secret.create_time:type_name -> google.protobuf.Timestamp
+	89,  // 70: mycel.admin.v1.Secret.update_time:type_name -> google.protobuf.Timestamp
+	89,  // 71: mycel.admin.v1.InferenceCredential.create_time:type_name -> google.protobuf.Timestamp
+	89,  // 72: mycel.admin.v1.InferenceCredential.update_time:type_name -> google.protobuf.Timestamp
+	89,  // 73: mycel.admin.v1.InferenceCredential.last_used_time:type_name -> google.protobuf.Timestamp
+	96,  // 74: mycel.admin.v1.InferenceCredential.owner_type_value:type_name -> mycel.common.v1.InferenceCredentialOwnerType
+	95,  // 75: mycel.admin.v1.InferenceCredential.auth_type_value:type_name -> mycel.common.v1.InferenceCredentialAuthType
+	97,  // 76: mycel.admin.v1.InferenceCredential.status_value:type_name -> mycel.common.v1.InferenceCredentialStatus
+	89,  // 77: mycel.admin.v1.InferenceCredential.rotated_at:type_name -> google.protobuf.Timestamp
+	85,  // 78: mycel.admin.v1.InferenceProfile.operation:type_name -> mycel.common.v1.InferenceOperation
+	86,  // 79: mycel.admin.v1.InferenceProfile.privacy_requirement:type_name -> mycel.common.v1.InferencePrivacyRequirement
+	87,  // 80: mycel.admin.v1.InferenceProfile.default_parameters:type_name -> mycel.common.v1.InferenceParameters
+	89,  // 81: mycel.admin.v1.InferenceProfile.create_time:type_name -> google.protobuf.Timestamp
+	89,  // 82: mycel.admin.v1.InferenceProfile.update_time:type_name -> google.protobuf.Timestamp
+	88,  // 83: mycel.admin.v1.InferenceProfile.metadata:type_name -> google.protobuf.Struct
+	76,  // 84: mycel.admin.v1.CredentialGrant.scope:type_name -> mycel.admin.v1.ProcessingScope
+	89,  // 85: mycel.admin.v1.CredentialGrant.create_time:type_name -> google.protobuf.Timestamp
+	89,  // 86: mycel.admin.v1.CredentialGrant.expire_time:type_name -> google.protobuf.Timestamp
+	90,  // 87: mycel.admin.v1.CredentialGrant.inference_scope:type_name -> mycel.common.v1.InferenceScope
+	85,  // 88: mycel.admin.v1.CredentialGrant.operation_values:type_name -> mycel.common.v1.InferenceOperation
+	91,  // 89: mycel.admin.v1.CredentialGrant.usage_modes:type_name -> mycel.common.v1.InferenceUsageMode
+	98,  // 90: mycel.admin.v1.CredentialGrant.state:type_name -> mycel.common.v1.InferenceGrantState
+	89,  // 91: mycel.admin.v1.CredentialGrant.revoked_at:type_name -> google.protobuf.Timestamp
+	76,  // 92: mycel.admin.v1.InferencePolicy.scope:type_name -> mycel.admin.v1.ProcessingScope
+	89,  // 93: mycel.admin.v1.InferencePolicy.create_time:type_name -> google.protobuf.Timestamp
+	89,  // 94: mycel.admin.v1.InferencePolicy.expire_time:type_name -> google.protobuf.Timestamp
+	90,  // 95: mycel.admin.v1.InferencePolicy.inference_scope:type_name -> mycel.common.v1.InferenceScope
+	99,  // 96: mycel.admin.v1.InferencePolicy.action:type_name -> mycel.common.v1.InferencePolicyAction
+	85,  // 97: mycel.admin.v1.InferencePolicy.operation_values:type_name -> mycel.common.v1.InferenceOperation
+	94,  // 98: mycel.admin.v1.InferencePolicy.allowed_privacy_class_values:type_name -> mycel.common.v1.InferencePrivacyClass
+	100, // 99: mycel.admin.v1.InferencePolicy.state:type_name -> mycel.common.v1.InferencePolicyState
+	89,  // 100: mycel.admin.v1.InferencePolicy.revoked_at:type_name -> google.protobuf.Timestamp
+	85,  // 101: mycel.admin.v1.PolicyDecision.operation:type_name -> mycel.common.v1.InferenceOperation
+	91,  // 102: mycel.admin.v1.PolicyDecision.usage_mode:type_name -> mycel.common.v1.InferenceUsageMode
+	101, // 103: mycel.admin.v1.PolicyDecision.action:type_name -> mycel.common.v1.InferencePolicyDecisionAction
+	89,  // 104: mycel.admin.v1.PolicyDecision.decided_at:type_name -> google.protobuf.Timestamp
+	88,  // 105: mycel.admin.v1.PolicyDecision.metadata:type_name -> google.protobuf.Struct
+	85,  // 106: mycel.admin.v1.InferenceUsageEvent.operation:type_name -> mycel.common.v1.InferenceOperation
+	91,  // 107: mycel.admin.v1.InferenceUsageEvent.usage_mode:type_name -> mycel.common.v1.InferenceUsageMode
+	92,  // 108: mycel.admin.v1.InferenceUsageEvent.status:type_name -> mycel.common.v1.InferenceUsageStatus
+	89,  // 109: mycel.admin.v1.InferenceUsageEvent.started_at:type_name -> google.protobuf.Timestamp
+	89,  // 110: mycel.admin.v1.InferenceUsageEvent.completed_at:type_name -> google.protobuf.Timestamp
+	88,  // 111: mycel.admin.v1.InferenceUsageEvent.metadata:type_name -> google.protobuf.Struct
+	84,  // 112: mycel.admin.v1.InferenceUsageSummary.group:type_name -> mycel.admin.v1.InferenceUsageSummary.GroupEntry
+	0,   // 113: mycel.admin.v1.AdminInferenceCatalogService.ApplyInferencePackage:input_type -> mycel.admin.v1.AdminInferenceCatalogServiceApplyInferencePackageRequest
+	2,   // 114: mycel.admin.v1.AdminInferenceCatalogService.ListInferencePackages:input_type -> mycel.admin.v1.AdminInferenceCatalogServiceListInferencePackagesRequest
+	4,   // 115: mycel.admin.v1.AdminInferenceCatalogService.ListModelEndpoints:input_type -> mycel.admin.v1.AdminInferenceCatalogServiceListModelEndpointsRequest
+	6,   // 116: mycel.admin.v1.AdminInferenceCatalogService.ListModels:input_type -> mycel.admin.v1.AdminInferenceCatalogServiceListModelsRequest
+	8,   // 117: mycel.admin.v1.AdminInferenceCatalogService.ListVectorStores:input_type -> mycel.admin.v1.AdminInferenceCatalogServiceListVectorStoresRequest
+	10,  // 118: mycel.admin.v1.AdminInferenceCatalogService.ListModelEndpointCapabilities:input_type -> mycel.admin.v1.AdminInferenceCatalogServiceListModelEndpointCapabilitiesRequest
+	34,  // 119: mycel.admin.v1.AdminInferenceCatalogService.SetModelEndpointEnabled:input_type -> mycel.admin.v1.AdminInferenceCatalogServiceSetModelEndpointEnabledRequest
+	36,  // 120: mycel.admin.v1.AdminInferenceCatalogService.SetVectorStoreEnabled:input_type -> mycel.admin.v1.AdminInferenceCatalogServiceSetVectorStoreEnabledRequest
+	38,  // 121: mycel.admin.v1.AdminInferenceCatalogService.SetModelEndpointCapabilityEnabled:input_type -> mycel.admin.v1.AdminInferenceCatalogServiceSetModelEndpointCapabilityEnabledRequest
+	48,  // 122: mycel.admin.v1.AdminInferenceCatalogService.DeleteModelEndpoint:input_type -> mycel.admin.v1.AdminInferenceCatalogServiceDeleteModelEndpointRequest
+	50,  // 123: mycel.admin.v1.AdminInferenceCatalogService.DeleteModel:input_type -> mycel.admin.v1.AdminInferenceCatalogServiceDeleteModelRequest
+	52,  // 124: mycel.admin.v1.AdminInferenceCatalogService.DeleteVectorStore:input_type -> mycel.admin.v1.AdminInferenceCatalogServiceDeleteVectorStoreRequest
+	54,  // 125: mycel.admin.v1.AdminInferenceCatalogService.DeleteModelEndpointCapability:input_type -> mycel.admin.v1.AdminInferenceCatalogServiceDeleteModelEndpointCapabilityRequest
+	12,  // 126: mycel.admin.v1.AdminInferenceProfileService.CreateInferenceProfile:input_type -> mycel.admin.v1.AdminInferenceProfileServiceCreateInferenceProfileRequest
+	14,  // 127: mycel.admin.v1.AdminInferenceProfileService.ListInferenceProfiles:input_type -> mycel.admin.v1.AdminInferenceProfileServiceListInferenceProfilesRequest
+	16,  // 128: mycel.admin.v1.AdminInferenceProfileService.GetInferenceProfile:input_type -> mycel.admin.v1.AdminInferenceProfileServiceGetInferenceProfileRequest
+	18,  // 129: mycel.admin.v1.AdminInferenceProfileService.SetInferenceProfileEnabled:input_type -> mycel.admin.v1.AdminInferenceProfileServiceSetInferenceProfileEnabledRequest
+	20,  // 130: mycel.admin.v1.AdminInferenceProfileService.DeleteInferenceProfile:input_type -> mycel.admin.v1.AdminInferenceProfileServiceDeleteInferenceProfileRequest
+	22,  // 131: mycel.admin.v1.AdminInferenceCredentialService.CreateCredential:input_type -> mycel.admin.v1.AdminInferenceCredentialServiceCreateCredentialRequest
+	24,  // 132: mycel.admin.v1.AdminInferenceCredentialService.ListCredentials:input_type -> mycel.admin.v1.AdminInferenceCredentialServiceListCredentialsRequest
+	40,  // 133: mycel.admin.v1.AdminInferenceCredentialService.SetCredentialStatus:input_type -> mycel.admin.v1.AdminInferenceCredentialServiceSetCredentialStatusRequest
+	42,  // 134: mycel.admin.v1.AdminInferenceCredentialService.RotateCredential:input_type -> mycel.admin.v1.AdminInferenceCredentialServiceRotateCredentialRequest
+	56,  // 135: mycel.admin.v1.AdminInferenceCredentialService.DeleteCredential:input_type -> mycel.admin.v1.AdminInferenceCredentialServiceDeleteCredentialRequest
+	26,  // 136: mycel.admin.v1.AdminInferenceGrantService.CreateCredentialGrant:input_type -> mycel.admin.v1.AdminInferenceGrantServiceCreateCredentialGrantRequest
+	28,  // 137: mycel.admin.v1.AdminInferenceGrantService.ListCredentialGrants:input_type -> mycel.admin.v1.AdminInferenceGrantServiceListCredentialGrantsRequest
+	44,  // 138: mycel.admin.v1.AdminInferenceGrantService.ExpireCredentialGrant:input_type -> mycel.admin.v1.AdminInferenceGrantServiceExpireCredentialGrantRequest
+	58,  // 139: mycel.admin.v1.AdminInferenceGrantService.DeleteCredentialGrant:input_type -> mycel.admin.v1.AdminInferenceGrantServiceDeleteCredentialGrantRequest
+	30,  // 140: mycel.admin.v1.AdminInferencePolicyService.CreateInferencePolicy:input_type -> mycel.admin.v1.AdminInferencePolicyServiceCreateInferencePolicyRequest
+	32,  // 141: mycel.admin.v1.AdminInferencePolicyService.ListInferencePolicies:input_type -> mycel.admin.v1.AdminInferencePolicyServiceListInferencePoliciesRequest
+	46,  // 142: mycel.admin.v1.AdminInferencePolicyService.ExpireInferencePolicy:input_type -> mycel.admin.v1.AdminInferencePolicyServiceExpireInferencePolicyRequest
+	60,  // 143: mycel.admin.v1.AdminInferencePolicyService.DeleteInferencePolicy:input_type -> mycel.admin.v1.AdminInferencePolicyServiceDeleteInferencePolicyRequest
+	62,  // 144: mycel.admin.v1.AdminInferencePolicyService.GetPolicyDecision:input_type -> mycel.admin.v1.AdminInferencePolicyServiceGetPolicyDecisionRequest
+	64,  // 145: mycel.admin.v1.AdminInferenceUsageService.ListUsageEvents:input_type -> mycel.admin.v1.AdminInferenceUsageServiceListUsageEventsRequest
+	66,  // 146: mycel.admin.v1.AdminInferenceUsageService.SummarizeUsage:input_type -> mycel.admin.v1.AdminInferenceUsageServiceSummarizeUsageRequest
+	1,   // 147: mycel.admin.v1.AdminInferenceCatalogService.ApplyInferencePackage:output_type -> mycel.admin.v1.AdminInferenceCatalogServiceApplyInferencePackageResponse
+	3,   // 148: mycel.admin.v1.AdminInferenceCatalogService.ListInferencePackages:output_type -> mycel.admin.v1.AdminInferenceCatalogServiceListInferencePackagesResponse
+	5,   // 149: mycel.admin.v1.AdminInferenceCatalogService.ListModelEndpoints:output_type -> mycel.admin.v1.AdminInferenceCatalogServiceListModelEndpointsResponse
+	7,   // 150: mycel.admin.v1.AdminInferenceCatalogService.ListModels:output_type -> mycel.admin.v1.AdminInferenceCatalogServiceListModelsResponse
+	9,   // 151: mycel.admin.v1.AdminInferenceCatalogService.ListVectorStores:output_type -> mycel.admin.v1.AdminInferenceCatalogServiceListVectorStoresResponse
+	11,  // 152: mycel.admin.v1.AdminInferenceCatalogService.ListModelEndpointCapabilities:output_type -> mycel.admin.v1.AdminInferenceCatalogServiceListModelEndpointCapabilitiesResponse
+	35,  // 153: mycel.admin.v1.AdminInferenceCatalogService.SetModelEndpointEnabled:output_type -> mycel.admin.v1.AdminInferenceCatalogServiceSetModelEndpointEnabledResponse
+	37,  // 154: mycel.admin.v1.AdminInferenceCatalogService.SetVectorStoreEnabled:output_type -> mycel.admin.v1.AdminInferenceCatalogServiceSetVectorStoreEnabledResponse
+	39,  // 155: mycel.admin.v1.AdminInferenceCatalogService.SetModelEndpointCapabilityEnabled:output_type -> mycel.admin.v1.AdminInferenceCatalogServiceSetModelEndpointCapabilityEnabledResponse
+	49,  // 156: mycel.admin.v1.AdminInferenceCatalogService.DeleteModelEndpoint:output_type -> mycel.admin.v1.AdminInferenceCatalogServiceDeleteModelEndpointResponse
+	51,  // 157: mycel.admin.v1.AdminInferenceCatalogService.DeleteModel:output_type -> mycel.admin.v1.AdminInferenceCatalogServiceDeleteModelResponse
+	53,  // 158: mycel.admin.v1.AdminInferenceCatalogService.DeleteVectorStore:output_type -> mycel.admin.v1.AdminInferenceCatalogServiceDeleteVectorStoreResponse
+	55,  // 159: mycel.admin.v1.AdminInferenceCatalogService.DeleteModelEndpointCapability:output_type -> mycel.admin.v1.AdminInferenceCatalogServiceDeleteModelEndpointCapabilityResponse
+	13,  // 160: mycel.admin.v1.AdminInferenceProfileService.CreateInferenceProfile:output_type -> mycel.admin.v1.AdminInferenceProfileServiceCreateInferenceProfileResponse
+	15,  // 161: mycel.admin.v1.AdminInferenceProfileService.ListInferenceProfiles:output_type -> mycel.admin.v1.AdminInferenceProfileServiceListInferenceProfilesResponse
+	17,  // 162: mycel.admin.v1.AdminInferenceProfileService.GetInferenceProfile:output_type -> mycel.admin.v1.AdminInferenceProfileServiceGetInferenceProfileResponse
+	19,  // 163: mycel.admin.v1.AdminInferenceProfileService.SetInferenceProfileEnabled:output_type -> mycel.admin.v1.AdminInferenceProfileServiceSetInferenceProfileEnabledResponse
+	21,  // 164: mycel.admin.v1.AdminInferenceProfileService.DeleteInferenceProfile:output_type -> mycel.admin.v1.AdminInferenceProfileServiceDeleteInferenceProfileResponse
+	23,  // 165: mycel.admin.v1.AdminInferenceCredentialService.CreateCredential:output_type -> mycel.admin.v1.AdminInferenceCredentialServiceCreateCredentialResponse
+	25,  // 166: mycel.admin.v1.AdminInferenceCredentialService.ListCredentials:output_type -> mycel.admin.v1.AdminInferenceCredentialServiceListCredentialsResponse
+	41,  // 167: mycel.admin.v1.AdminInferenceCredentialService.SetCredentialStatus:output_type -> mycel.admin.v1.AdminInferenceCredentialServiceSetCredentialStatusResponse
+	43,  // 168: mycel.admin.v1.AdminInferenceCredentialService.RotateCredential:output_type -> mycel.admin.v1.AdminInferenceCredentialServiceRotateCredentialResponse
+	57,  // 169: mycel.admin.v1.AdminInferenceCredentialService.DeleteCredential:output_type -> mycel.admin.v1.AdminInferenceCredentialServiceDeleteCredentialResponse
+	27,  // 170: mycel.admin.v1.AdminInferenceGrantService.CreateCredentialGrant:output_type -> mycel.admin.v1.AdminInferenceGrantServiceCreateCredentialGrantResponse
+	29,  // 171: mycel.admin.v1.AdminInferenceGrantService.ListCredentialGrants:output_type -> mycel.admin.v1.AdminInferenceGrantServiceListCredentialGrantsResponse
+	45,  // 172: mycel.admin.v1.AdminInferenceGrantService.ExpireCredentialGrant:output_type -> mycel.admin.v1.AdminInferenceGrantServiceExpireCredentialGrantResponse
+	59,  // 173: mycel.admin.v1.AdminInferenceGrantService.DeleteCredentialGrant:output_type -> mycel.admin.v1.AdminInferenceGrantServiceDeleteCredentialGrantResponse
+	31,  // 174: mycel.admin.v1.AdminInferencePolicyService.CreateInferencePolicy:output_type -> mycel.admin.v1.AdminInferencePolicyServiceCreateInferencePolicyResponse
+	33,  // 175: mycel.admin.v1.AdminInferencePolicyService.ListInferencePolicies:output_type -> mycel.admin.v1.AdminInferencePolicyServiceListInferencePoliciesResponse
+	47,  // 176: mycel.admin.v1.AdminInferencePolicyService.ExpireInferencePolicy:output_type -> mycel.admin.v1.AdminInferencePolicyServiceExpireInferencePolicyResponse
+	61,  // 177: mycel.admin.v1.AdminInferencePolicyService.DeleteInferencePolicy:output_type -> mycel.admin.v1.AdminInferencePolicyServiceDeleteInferencePolicyResponse
+	63,  // 178: mycel.admin.v1.AdminInferencePolicyService.GetPolicyDecision:output_type -> mycel.admin.v1.AdminInferencePolicyServiceGetPolicyDecisionResponse
+	65,  // 179: mycel.admin.v1.AdminInferenceUsageService.ListUsageEvents:output_type -> mycel.admin.v1.AdminInferenceUsageServiceListUsageEventsResponse
+	67,  // 180: mycel.admin.v1.AdminInferenceUsageService.SummarizeUsage:output_type -> mycel.admin.v1.AdminInferenceUsageServiceSummarizeUsageResponse
+	147, // [147:181] is the sub-list for method output_type
+	113, // [113:147] is the sub-list for method input_type
+	113, // [113:113] is the sub-list for extension type_name
+	113, // [113:113] is the sub-list for extension extendee
+	0,   // [0:113] is the sub-list for field type_name
 }
 
 func init() { file_mycel_admin_v1_inference_proto_init() }
@@ -7773,18 +7584,8 @@ func file_mycel_admin_v1_inference_proto_init() {
 		return
 	}
 	file_mycel_admin_v1_inference_proto_msgTypes[10].OneofWrappers = []any{}
-	file_mycel_admin_v1_inference_proto_msgTypes[22].OneofWrappers = []any{
-		(*AdminInferenceCredentialServiceCreateCredentialRequest_InlineSecret)(nil),
-		(*AdminInferenceCredentialServiceCreateCredentialRequest_ExternalRef)(nil),
-		(*AdminInferenceCredentialServiceCreateCredentialRequest_SecretValue)(nil),
-	}
 	file_mycel_admin_v1_inference_proto_msgTypes[24].OneofWrappers = []any{}
 	file_mycel_admin_v1_inference_proto_msgTypes[28].OneofWrappers = []any{}
-	file_mycel_admin_v1_inference_proto_msgTypes[42].OneofWrappers = []any{
-		(*AdminInferenceCredentialServiceRotateCredentialRequest_InlineSecret)(nil),
-		(*AdminInferenceCredentialServiceRotateCredentialRequest_ExternalRef)(nil),
-		(*AdminInferenceCredentialServiceRotateCredentialRequest_SecretValue)(nil),
-	}
 	file_mycel_admin_v1_inference_proto_msgTypes[73].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
@@ -7792,7 +7593,7 @@ func file_mycel_admin_v1_inference_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_mycel_admin_v1_inference_proto_rawDesc), len(file_mycel_admin_v1_inference_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   86,
+			NumMessages:   85,
 			NumExtensions: 0,
 			NumServices:   6,
 		},

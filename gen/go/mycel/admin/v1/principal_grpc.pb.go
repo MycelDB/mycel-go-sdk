@@ -19,25 +19,27 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	AdminPrincipalService_ListPrincipals_FullMethodName            = "/mycel.admin.v1.AdminPrincipalService/ListPrincipals"
-	AdminPrincipalService_GetPrincipal_FullMethodName              = "/mycel.admin.v1.AdminPrincipalService/GetPrincipal"
-	AdminPrincipalService_FindPrincipal_FullMethodName             = "/mycel.admin.v1.AdminPrincipalService/FindPrincipal"
-	AdminPrincipalService_CreatePrincipal_FullMethodName           = "/mycel.admin.v1.AdminPrincipalService/CreatePrincipal"
-	AdminPrincipalService_UpdatePrincipal_FullMethodName           = "/mycel.admin.v1.AdminPrincipalService/UpdatePrincipal"
-	AdminPrincipalService_DisablePrincipal_FullMethodName          = "/mycel.admin.v1.AdminPrincipalService/DisablePrincipal"
-	AdminPrincipalService_EnablePrincipal_FullMethodName           = "/mycel.admin.v1.AdminPrincipalService/EnablePrincipal"
-	AdminPrincipalService_DeletePrincipal_FullMethodName           = "/mycel.admin.v1.AdminPrincipalService/DeletePrincipal"
-	AdminPrincipalService_SetPrincipalPassword_FullMethodName      = "/mycel.admin.v1.AdminPrincipalService/SetPrincipalPassword"
-	AdminPrincipalService_CreatePrincipalSession_FullMethodName    = "/mycel.admin.v1.AdminPrincipalService/CreatePrincipalSession"
-	AdminPrincipalService_ListPrincipalSessions_FullMethodName     = "/mycel.admin.v1.AdminPrincipalService/ListPrincipalSessions"
-	AdminPrincipalService_RevokePrincipalSession_FullMethodName    = "/mycel.admin.v1.AdminPrincipalService/RevokePrincipalSession"
-	AdminPrincipalService_RevokePrincipalSessions_FullMethodName   = "/mycel.admin.v1.AdminPrincipalService/RevokePrincipalSessions"
-	AdminPrincipalService_ListPrincipalRoles_FullMethodName        = "/mycel.admin.v1.AdminPrincipalService/ListPrincipalRoles"
-	AdminPrincipalService_GrantPrincipalRole_FullMethodName        = "/mycel.admin.v1.AdminPrincipalService/GrantPrincipalRole"
-	AdminPrincipalService_RevokePrincipalRole_FullMethodName       = "/mycel.admin.v1.AdminPrincipalService/RevokePrincipalRole"
-	AdminPrincipalService_ListPrincipalCapabilities_FullMethodName = "/mycel.admin.v1.AdminPrincipalService/ListPrincipalCapabilities"
-	AdminPrincipalService_GrantPrincipalCapability_FullMethodName  = "/mycel.admin.v1.AdminPrincipalService/GrantPrincipalCapability"
-	AdminPrincipalService_RevokePrincipalCapability_FullMethodName = "/mycel.admin.v1.AdminPrincipalService/RevokePrincipalCapability"
+	AdminPrincipalService_ListPrincipals_FullMethodName                   = "/mycel.admin.v1.AdminPrincipalService/ListPrincipals"
+	AdminPrincipalService_GetPrincipal_FullMethodName                     = "/mycel.admin.v1.AdminPrincipalService/GetPrincipal"
+	AdminPrincipalService_FindPrincipal_FullMethodName                    = "/mycel.admin.v1.AdminPrincipalService/FindPrincipal"
+	AdminPrincipalService_CreatePrincipal_FullMethodName                  = "/mycel.admin.v1.AdminPrincipalService/CreatePrincipal"
+	AdminPrincipalService_UpdatePrincipal_FullMethodName                  = "/mycel.admin.v1.AdminPrincipalService/UpdatePrincipal"
+	AdminPrincipalService_DisablePrincipal_FullMethodName                 = "/mycel.admin.v1.AdminPrincipalService/DisablePrincipal"
+	AdminPrincipalService_EnablePrincipal_FullMethodName                  = "/mycel.admin.v1.AdminPrincipalService/EnablePrincipal"
+	AdminPrincipalService_DeletePrincipal_FullMethodName                  = "/mycel.admin.v1.AdminPrincipalService/DeletePrincipal"
+	AdminPrincipalService_SetPrincipalPassword_FullMethodName             = "/mycel.admin.v1.AdminPrincipalService/SetPrincipalPassword"
+	AdminPrincipalService_CreatePrincipalSession_FullMethodName           = "/mycel.admin.v1.AdminPrincipalService/CreatePrincipalSession"
+	AdminPrincipalService_ListPrincipalSessions_FullMethodName            = "/mycel.admin.v1.AdminPrincipalService/ListPrincipalSessions"
+	AdminPrincipalService_RevokePrincipalSession_FullMethodName           = "/mycel.admin.v1.AdminPrincipalService/RevokePrincipalSession"
+	AdminPrincipalService_RevokePrincipalSessions_FullMethodName          = "/mycel.admin.v1.AdminPrincipalService/RevokePrincipalSessions"
+	AdminPrincipalService_ListPrincipalRoles_FullMethodName               = "/mycel.admin.v1.AdminPrincipalService/ListPrincipalRoles"
+	AdminPrincipalService_GrantPrincipalRole_FullMethodName               = "/mycel.admin.v1.AdminPrincipalService/GrantPrincipalRole"
+	AdminPrincipalService_RevokePrincipalRole_FullMethodName              = "/mycel.admin.v1.AdminPrincipalService/RevokePrincipalRole"
+	AdminPrincipalService_SetPrincipalRolesForScope_FullMethodName        = "/mycel.admin.v1.AdminPrincipalService/SetPrincipalRolesForScope"
+	AdminPrincipalService_ListPrincipalCapabilities_FullMethodName        = "/mycel.admin.v1.AdminPrincipalService/ListPrincipalCapabilities"
+	AdminPrincipalService_GrantPrincipalCapability_FullMethodName         = "/mycel.admin.v1.AdminPrincipalService/GrantPrincipalCapability"
+	AdminPrincipalService_RevokePrincipalCapability_FullMethodName        = "/mycel.admin.v1.AdminPrincipalService/RevokePrincipalCapability"
+	AdminPrincipalService_SetPrincipalCapabilitiesForScope_FullMethodName = "/mycel.admin.v1.AdminPrincipalService/SetPrincipalCapabilitiesForScope"
 )
 
 // AdminPrincipalServiceClient is the client API for AdminPrincipalService service.
@@ -63,9 +65,11 @@ type AdminPrincipalServiceClient interface {
 	ListPrincipalRoles(ctx context.Context, in *ListPrincipalRolesRequest, opts ...grpc.CallOption) (*ListPrincipalRolesResponse, error)
 	GrantPrincipalRole(ctx context.Context, in *GrantPrincipalRoleRequest, opts ...grpc.CallOption) (*GrantPrincipalRoleResponse, error)
 	RevokePrincipalRole(ctx context.Context, in *RevokePrincipalRoleRequest, opts ...grpc.CallOption) (*RevokePrincipalRoleResponse, error)
+	SetPrincipalRolesForScope(ctx context.Context, in *SetPrincipalRolesForScopeRequest, opts ...grpc.CallOption) (*SetPrincipalRolesForScopeResponse, error)
 	ListPrincipalCapabilities(ctx context.Context, in *ListPrincipalCapabilitiesRequest, opts ...grpc.CallOption) (*ListPrincipalCapabilitiesResponse, error)
 	GrantPrincipalCapability(ctx context.Context, in *GrantPrincipalCapabilityRequest, opts ...grpc.CallOption) (*GrantPrincipalCapabilityResponse, error)
 	RevokePrincipalCapability(ctx context.Context, in *RevokePrincipalCapabilityRequest, opts ...grpc.CallOption) (*RevokePrincipalCapabilityResponse, error)
+	SetPrincipalCapabilitiesForScope(ctx context.Context, in *SetPrincipalCapabilitiesForScopeRequest, opts ...grpc.CallOption) (*SetPrincipalCapabilitiesForScopeResponse, error)
 }
 
 type adminPrincipalServiceClient struct {
@@ -236,6 +240,16 @@ func (c *adminPrincipalServiceClient) RevokePrincipalRole(ctx context.Context, i
 	return out, nil
 }
 
+func (c *adminPrincipalServiceClient) SetPrincipalRolesForScope(ctx context.Context, in *SetPrincipalRolesForScopeRequest, opts ...grpc.CallOption) (*SetPrincipalRolesForScopeResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(SetPrincipalRolesForScopeResponse)
+	err := c.cc.Invoke(ctx, AdminPrincipalService_SetPrincipalRolesForScope_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *adminPrincipalServiceClient) ListPrincipalCapabilities(ctx context.Context, in *ListPrincipalCapabilitiesRequest, opts ...grpc.CallOption) (*ListPrincipalCapabilitiesResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(ListPrincipalCapabilitiesResponse)
@@ -266,6 +280,16 @@ func (c *adminPrincipalServiceClient) RevokePrincipalCapability(ctx context.Cont
 	return out, nil
 }
 
+func (c *adminPrincipalServiceClient) SetPrincipalCapabilitiesForScope(ctx context.Context, in *SetPrincipalCapabilitiesForScopeRequest, opts ...grpc.CallOption) (*SetPrincipalCapabilitiesForScopeResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(SetPrincipalCapabilitiesForScopeResponse)
+	err := c.cc.Invoke(ctx, AdminPrincipalService_SetPrincipalCapabilitiesForScope_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // AdminPrincipalServiceServer is the server API for AdminPrincipalService service.
 // All implementations must embed UnimplementedAdminPrincipalServiceServer
 // for forward compatibility.
@@ -289,9 +313,11 @@ type AdminPrincipalServiceServer interface {
 	ListPrincipalRoles(context.Context, *ListPrincipalRolesRequest) (*ListPrincipalRolesResponse, error)
 	GrantPrincipalRole(context.Context, *GrantPrincipalRoleRequest) (*GrantPrincipalRoleResponse, error)
 	RevokePrincipalRole(context.Context, *RevokePrincipalRoleRequest) (*RevokePrincipalRoleResponse, error)
+	SetPrincipalRolesForScope(context.Context, *SetPrincipalRolesForScopeRequest) (*SetPrincipalRolesForScopeResponse, error)
 	ListPrincipalCapabilities(context.Context, *ListPrincipalCapabilitiesRequest) (*ListPrincipalCapabilitiesResponse, error)
 	GrantPrincipalCapability(context.Context, *GrantPrincipalCapabilityRequest) (*GrantPrincipalCapabilityResponse, error)
 	RevokePrincipalCapability(context.Context, *RevokePrincipalCapabilityRequest) (*RevokePrincipalCapabilityResponse, error)
+	SetPrincipalCapabilitiesForScope(context.Context, *SetPrincipalCapabilitiesForScopeRequest) (*SetPrincipalCapabilitiesForScopeResponse, error)
 	mustEmbedUnimplementedAdminPrincipalServiceServer()
 }
 
@@ -350,6 +376,9 @@ func (UnimplementedAdminPrincipalServiceServer) GrantPrincipalRole(context.Conte
 func (UnimplementedAdminPrincipalServiceServer) RevokePrincipalRole(context.Context, *RevokePrincipalRoleRequest) (*RevokePrincipalRoleResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RevokePrincipalRole not implemented")
 }
+func (UnimplementedAdminPrincipalServiceServer) SetPrincipalRolesForScope(context.Context, *SetPrincipalRolesForScopeRequest) (*SetPrincipalRolesForScopeResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SetPrincipalRolesForScope not implemented")
+}
 func (UnimplementedAdminPrincipalServiceServer) ListPrincipalCapabilities(context.Context, *ListPrincipalCapabilitiesRequest) (*ListPrincipalCapabilitiesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListPrincipalCapabilities not implemented")
 }
@@ -358,6 +387,9 @@ func (UnimplementedAdminPrincipalServiceServer) GrantPrincipalCapability(context
 }
 func (UnimplementedAdminPrincipalServiceServer) RevokePrincipalCapability(context.Context, *RevokePrincipalCapabilityRequest) (*RevokePrincipalCapabilityResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RevokePrincipalCapability not implemented")
+}
+func (UnimplementedAdminPrincipalServiceServer) SetPrincipalCapabilitiesForScope(context.Context, *SetPrincipalCapabilitiesForScopeRequest) (*SetPrincipalCapabilitiesForScopeResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SetPrincipalCapabilitiesForScope not implemented")
 }
 func (UnimplementedAdminPrincipalServiceServer) mustEmbedUnimplementedAdminPrincipalServiceServer() {}
 func (UnimplementedAdminPrincipalServiceServer) testEmbeddedByValue()                               {}
@@ -668,6 +700,24 @@ func _AdminPrincipalService_RevokePrincipalRole_Handler(srv interface{}, ctx con
 	return interceptor(ctx, in, info, handler)
 }
 
+func _AdminPrincipalService_SetPrincipalRolesForScope_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SetPrincipalRolesForScopeRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminPrincipalServiceServer).SetPrincipalRolesForScope(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AdminPrincipalService_SetPrincipalRolesForScope_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminPrincipalServiceServer).SetPrincipalRolesForScope(ctx, req.(*SetPrincipalRolesForScopeRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _AdminPrincipalService_ListPrincipalCapabilities_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ListPrincipalCapabilitiesRequest)
 	if err := dec(in); err != nil {
@@ -718,6 +768,24 @@ func _AdminPrincipalService_RevokePrincipalCapability_Handler(srv interface{}, c
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(AdminPrincipalServiceServer).RevokePrincipalCapability(ctx, req.(*RevokePrincipalCapabilityRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AdminPrincipalService_SetPrincipalCapabilitiesForScope_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SetPrincipalCapabilitiesForScopeRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminPrincipalServiceServer).SetPrincipalCapabilitiesForScope(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AdminPrincipalService_SetPrincipalCapabilitiesForScope_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminPrincipalServiceServer).SetPrincipalCapabilitiesForScope(ctx, req.(*SetPrincipalCapabilitiesForScopeRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -794,6 +862,10 @@ var AdminPrincipalService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _AdminPrincipalService_RevokePrincipalRole_Handler,
 		},
 		{
+			MethodName: "SetPrincipalRolesForScope",
+			Handler:    _AdminPrincipalService_SetPrincipalRolesForScope_Handler,
+		},
+		{
 			MethodName: "ListPrincipalCapabilities",
 			Handler:    _AdminPrincipalService_ListPrincipalCapabilities_Handler,
 		},
@@ -804,6 +876,10 @@ var AdminPrincipalService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "RevokePrincipalCapability",
 			Handler:    _AdminPrincipalService_RevokePrincipalCapability_Handler,
+		},
+		{
+			MethodName: "SetPrincipalCapabilitiesForScope",
+			Handler:    _AdminPrincipalService_SetPrincipalCapabilitiesForScope_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

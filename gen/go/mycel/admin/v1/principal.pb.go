@@ -1818,6 +1818,134 @@ func (x *RevokePrincipalRoleResponse) GetEffectiveCapabilities() []v1.Capability
 	return nil
 }
 
+type SetPrincipalRolesForScopeRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	PrincipalId   string                 `protobuf:"bytes,1,opt,name=principal_id,json=principalId,proto3" json:"principal_id,omitempty"`
+	Scope         *v1.AccessScope        `protobuf:"bytes,2,opt,name=scope,proto3" json:"scope,omitempty"`
+	Roles         []string               `protobuf:"bytes,3,rep,name=roles,proto3" json:"roles,omitempty"`
+	Reason        string                 `protobuf:"bytes,4,opt,name=reason,proto3" json:"reason,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SetPrincipalRolesForScopeRequest) Reset() {
+	*x = SetPrincipalRolesForScopeRequest{}
+	mi := &file_mycel_admin_v1_principal_proto_msgTypes[32]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SetPrincipalRolesForScopeRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SetPrincipalRolesForScopeRequest) ProtoMessage() {}
+
+func (x *SetPrincipalRolesForScopeRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_admin_v1_principal_proto_msgTypes[32]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SetPrincipalRolesForScopeRequest.ProtoReflect.Descriptor instead.
+func (*SetPrincipalRolesForScopeRequest) Descriptor() ([]byte, []int) {
+	return file_mycel_admin_v1_principal_proto_rawDescGZIP(), []int{32}
+}
+
+func (x *SetPrincipalRolesForScopeRequest) GetPrincipalId() string {
+	if x != nil {
+		return x.PrincipalId
+	}
+	return ""
+}
+
+func (x *SetPrincipalRolesForScopeRequest) GetScope() *v1.AccessScope {
+	if x != nil {
+		return x.Scope
+	}
+	return nil
+}
+
+func (x *SetPrincipalRolesForScopeRequest) GetRoles() []string {
+	if x != nil {
+		return x.Roles
+	}
+	return nil
+}
+
+func (x *SetPrincipalRolesForScopeRequest) GetReason() string {
+	if x != nil {
+		return x.Reason
+	}
+	return ""
+}
+
+type SetPrincipalRolesForScopeResponse struct {
+	state                 protoimpl.MessageState `protogen:"open.v1"`
+	Grants                []*PrincipalRoleGrant  `protobuf:"bytes,1,rep,name=grants,proto3" json:"grants,omitempty"`
+	EffectiveRoles        []string               `protobuf:"bytes,2,rep,name=effective_roles,json=effectiveRoles,proto3" json:"effective_roles,omitempty"`
+	EffectiveCapabilities []v1.Capability        `protobuf:"varint,3,rep,packed,name=effective_capabilities,json=effectiveCapabilities,proto3,enum=mycel.common.v1.Capability" json:"effective_capabilities,omitempty"`
+	unknownFields         protoimpl.UnknownFields
+	sizeCache             protoimpl.SizeCache
+}
+
+func (x *SetPrincipalRolesForScopeResponse) Reset() {
+	*x = SetPrincipalRolesForScopeResponse{}
+	mi := &file_mycel_admin_v1_principal_proto_msgTypes[33]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SetPrincipalRolesForScopeResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SetPrincipalRolesForScopeResponse) ProtoMessage() {}
+
+func (x *SetPrincipalRolesForScopeResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_admin_v1_principal_proto_msgTypes[33]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SetPrincipalRolesForScopeResponse.ProtoReflect.Descriptor instead.
+func (*SetPrincipalRolesForScopeResponse) Descriptor() ([]byte, []int) {
+	return file_mycel_admin_v1_principal_proto_rawDescGZIP(), []int{33}
+}
+
+func (x *SetPrincipalRolesForScopeResponse) GetGrants() []*PrincipalRoleGrant {
+	if x != nil {
+		return x.Grants
+	}
+	return nil
+}
+
+func (x *SetPrincipalRolesForScopeResponse) GetEffectiveRoles() []string {
+	if x != nil {
+		return x.EffectiveRoles
+	}
+	return nil
+}
+
+func (x *SetPrincipalRolesForScopeResponse) GetEffectiveCapabilities() []v1.Capability {
+	if x != nil {
+		return x.EffectiveCapabilities
+	}
+	return nil
+}
+
 type ListPrincipalCapabilitiesRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	PrincipalId   string                 `protobuf:"bytes,1,opt,name=principal_id,json=principalId,proto3" json:"principal_id,omitempty"`
@@ -1827,7 +1955,7 @@ type ListPrincipalCapabilitiesRequest struct {
 
 func (x *ListPrincipalCapabilitiesRequest) Reset() {
 	*x = ListPrincipalCapabilitiesRequest{}
-	mi := &file_mycel_admin_v1_principal_proto_msgTypes[32]
+	mi := &file_mycel_admin_v1_principal_proto_msgTypes[34]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1839,7 +1967,7 @@ func (x *ListPrincipalCapabilitiesRequest) String() string {
 func (*ListPrincipalCapabilitiesRequest) ProtoMessage() {}
 
 func (x *ListPrincipalCapabilitiesRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_admin_v1_principal_proto_msgTypes[32]
+	mi := &file_mycel_admin_v1_principal_proto_msgTypes[34]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1852,7 +1980,7 @@ func (x *ListPrincipalCapabilitiesRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListPrincipalCapabilitiesRequest.ProtoReflect.Descriptor instead.
 func (*ListPrincipalCapabilitiesRequest) Descriptor() ([]byte, []int) {
-	return file_mycel_admin_v1_principal_proto_rawDescGZIP(), []int{32}
+	return file_mycel_admin_v1_principal_proto_rawDescGZIP(), []int{34}
 }
 
 func (x *ListPrincipalCapabilitiesRequest) GetPrincipalId() string {
@@ -1872,7 +2000,7 @@ type ListPrincipalCapabilitiesResponse struct {
 
 func (x *ListPrincipalCapabilitiesResponse) Reset() {
 	*x = ListPrincipalCapabilitiesResponse{}
-	mi := &file_mycel_admin_v1_principal_proto_msgTypes[33]
+	mi := &file_mycel_admin_v1_principal_proto_msgTypes[35]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1884,7 +2012,7 @@ func (x *ListPrincipalCapabilitiesResponse) String() string {
 func (*ListPrincipalCapabilitiesResponse) ProtoMessage() {}
 
 func (x *ListPrincipalCapabilitiesResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_admin_v1_principal_proto_msgTypes[33]
+	mi := &file_mycel_admin_v1_principal_proto_msgTypes[35]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1897,7 +2025,7 @@ func (x *ListPrincipalCapabilitiesResponse) ProtoReflect() protoreflect.Message 
 
 // Deprecated: Use ListPrincipalCapabilitiesResponse.ProtoReflect.Descriptor instead.
 func (*ListPrincipalCapabilitiesResponse) Descriptor() ([]byte, []int) {
-	return file_mycel_admin_v1_principal_proto_rawDescGZIP(), []int{33}
+	return file_mycel_admin_v1_principal_proto_rawDescGZIP(), []int{35}
 }
 
 func (x *ListPrincipalCapabilitiesResponse) GetGrants() []*PrincipalCapabilityGrant {
@@ -1926,7 +2054,7 @@ type GrantPrincipalCapabilityRequest struct {
 
 func (x *GrantPrincipalCapabilityRequest) Reset() {
 	*x = GrantPrincipalCapabilityRequest{}
-	mi := &file_mycel_admin_v1_principal_proto_msgTypes[34]
+	mi := &file_mycel_admin_v1_principal_proto_msgTypes[36]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1938,7 +2066,7 @@ func (x *GrantPrincipalCapabilityRequest) String() string {
 func (*GrantPrincipalCapabilityRequest) ProtoMessage() {}
 
 func (x *GrantPrincipalCapabilityRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_admin_v1_principal_proto_msgTypes[34]
+	mi := &file_mycel_admin_v1_principal_proto_msgTypes[36]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1951,7 +2079,7 @@ func (x *GrantPrincipalCapabilityRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GrantPrincipalCapabilityRequest.ProtoReflect.Descriptor instead.
 func (*GrantPrincipalCapabilityRequest) Descriptor() ([]byte, []int) {
-	return file_mycel_admin_v1_principal_proto_rawDescGZIP(), []int{34}
+	return file_mycel_admin_v1_principal_proto_rawDescGZIP(), []int{36}
 }
 
 func (x *GrantPrincipalCapabilityRequest) GetPrincipalId() string {
@@ -1992,7 +2120,7 @@ type GrantPrincipalCapabilityResponse struct {
 
 func (x *GrantPrincipalCapabilityResponse) Reset() {
 	*x = GrantPrincipalCapabilityResponse{}
-	mi := &file_mycel_admin_v1_principal_proto_msgTypes[35]
+	mi := &file_mycel_admin_v1_principal_proto_msgTypes[37]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2004,7 +2132,7 @@ func (x *GrantPrincipalCapabilityResponse) String() string {
 func (*GrantPrincipalCapabilityResponse) ProtoMessage() {}
 
 func (x *GrantPrincipalCapabilityResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_admin_v1_principal_proto_msgTypes[35]
+	mi := &file_mycel_admin_v1_principal_proto_msgTypes[37]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2017,7 +2145,7 @@ func (x *GrantPrincipalCapabilityResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GrantPrincipalCapabilityResponse.ProtoReflect.Descriptor instead.
 func (*GrantPrincipalCapabilityResponse) Descriptor() ([]byte, []int) {
-	return file_mycel_admin_v1_principal_proto_rawDescGZIP(), []int{35}
+	return file_mycel_admin_v1_principal_proto_rawDescGZIP(), []int{37}
 }
 
 func (x *GrantPrincipalCapabilityResponse) GetGrant() *PrincipalCapabilityGrant {
@@ -2045,7 +2173,7 @@ type RevokePrincipalCapabilityRequest struct {
 
 func (x *RevokePrincipalCapabilityRequest) Reset() {
 	*x = RevokePrincipalCapabilityRequest{}
-	mi := &file_mycel_admin_v1_principal_proto_msgTypes[36]
+	mi := &file_mycel_admin_v1_principal_proto_msgTypes[38]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2057,7 +2185,7 @@ func (x *RevokePrincipalCapabilityRequest) String() string {
 func (*RevokePrincipalCapabilityRequest) ProtoMessage() {}
 
 func (x *RevokePrincipalCapabilityRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_admin_v1_principal_proto_msgTypes[36]
+	mi := &file_mycel_admin_v1_principal_proto_msgTypes[38]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2070,7 +2198,7 @@ func (x *RevokePrincipalCapabilityRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RevokePrincipalCapabilityRequest.ProtoReflect.Descriptor instead.
 func (*RevokePrincipalCapabilityRequest) Descriptor() ([]byte, []int) {
-	return file_mycel_admin_v1_principal_proto_rawDescGZIP(), []int{36}
+	return file_mycel_admin_v1_principal_proto_rawDescGZIP(), []int{38}
 }
 
 func (x *RevokePrincipalCapabilityRequest) GetPrincipalId() string {
@@ -2103,7 +2231,7 @@ type RevokePrincipalCapabilityResponse struct {
 
 func (x *RevokePrincipalCapabilityResponse) Reset() {
 	*x = RevokePrincipalCapabilityResponse{}
-	mi := &file_mycel_admin_v1_principal_proto_msgTypes[37]
+	mi := &file_mycel_admin_v1_principal_proto_msgTypes[39]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2115,7 +2243,7 @@ func (x *RevokePrincipalCapabilityResponse) String() string {
 func (*RevokePrincipalCapabilityResponse) ProtoMessage() {}
 
 func (x *RevokePrincipalCapabilityResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_admin_v1_principal_proto_msgTypes[37]
+	mi := &file_mycel_admin_v1_principal_proto_msgTypes[39]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2128,10 +2256,130 @@ func (x *RevokePrincipalCapabilityResponse) ProtoReflect() protoreflect.Message 
 
 // Deprecated: Use RevokePrincipalCapabilityResponse.ProtoReflect.Descriptor instead.
 func (*RevokePrincipalCapabilityResponse) Descriptor() ([]byte, []int) {
-	return file_mycel_admin_v1_principal_proto_rawDescGZIP(), []int{37}
+	return file_mycel_admin_v1_principal_proto_rawDescGZIP(), []int{39}
 }
 
 func (x *RevokePrincipalCapabilityResponse) GetEffectiveCapabilities() []v1.Capability {
+	if x != nil {
+		return x.EffectiveCapabilities
+	}
+	return nil
+}
+
+type SetPrincipalCapabilitiesForScopeRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	PrincipalId   string                 `protobuf:"bytes,1,opt,name=principal_id,json=principalId,proto3" json:"principal_id,omitempty"`
+	Scope         *v1.AccessScope        `protobuf:"bytes,2,opt,name=scope,proto3" json:"scope,omitempty"`
+	Capabilities  []v1.Capability        `protobuf:"varint,3,rep,packed,name=capabilities,proto3,enum=mycel.common.v1.Capability" json:"capabilities,omitempty"`
+	Reason        string                 `protobuf:"bytes,4,opt,name=reason,proto3" json:"reason,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SetPrincipalCapabilitiesForScopeRequest) Reset() {
+	*x = SetPrincipalCapabilitiesForScopeRequest{}
+	mi := &file_mycel_admin_v1_principal_proto_msgTypes[40]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SetPrincipalCapabilitiesForScopeRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SetPrincipalCapabilitiesForScopeRequest) ProtoMessage() {}
+
+func (x *SetPrincipalCapabilitiesForScopeRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_admin_v1_principal_proto_msgTypes[40]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SetPrincipalCapabilitiesForScopeRequest.ProtoReflect.Descriptor instead.
+func (*SetPrincipalCapabilitiesForScopeRequest) Descriptor() ([]byte, []int) {
+	return file_mycel_admin_v1_principal_proto_rawDescGZIP(), []int{40}
+}
+
+func (x *SetPrincipalCapabilitiesForScopeRequest) GetPrincipalId() string {
+	if x != nil {
+		return x.PrincipalId
+	}
+	return ""
+}
+
+func (x *SetPrincipalCapabilitiesForScopeRequest) GetScope() *v1.AccessScope {
+	if x != nil {
+		return x.Scope
+	}
+	return nil
+}
+
+func (x *SetPrincipalCapabilitiesForScopeRequest) GetCapabilities() []v1.Capability {
+	if x != nil {
+		return x.Capabilities
+	}
+	return nil
+}
+
+func (x *SetPrincipalCapabilitiesForScopeRequest) GetReason() string {
+	if x != nil {
+		return x.Reason
+	}
+	return ""
+}
+
+type SetPrincipalCapabilitiesForScopeResponse struct {
+	state                 protoimpl.MessageState      `protogen:"open.v1"`
+	Grants                []*PrincipalCapabilityGrant `protobuf:"bytes,1,rep,name=grants,proto3" json:"grants,omitempty"`
+	EffectiveCapabilities []v1.Capability             `protobuf:"varint,2,rep,packed,name=effective_capabilities,json=effectiveCapabilities,proto3,enum=mycel.common.v1.Capability" json:"effective_capabilities,omitempty"`
+	unknownFields         protoimpl.UnknownFields
+	sizeCache             protoimpl.SizeCache
+}
+
+func (x *SetPrincipalCapabilitiesForScopeResponse) Reset() {
+	*x = SetPrincipalCapabilitiesForScopeResponse{}
+	mi := &file_mycel_admin_v1_principal_proto_msgTypes[41]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SetPrincipalCapabilitiesForScopeResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SetPrincipalCapabilitiesForScopeResponse) ProtoMessage() {}
+
+func (x *SetPrincipalCapabilitiesForScopeResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_admin_v1_principal_proto_msgTypes[41]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SetPrincipalCapabilitiesForScopeResponse.ProtoReflect.Descriptor instead.
+func (*SetPrincipalCapabilitiesForScopeResponse) Descriptor() ([]byte, []int) {
+	return file_mycel_admin_v1_principal_proto_rawDescGZIP(), []int{41}
+}
+
+func (x *SetPrincipalCapabilitiesForScopeResponse) GetGrants() []*PrincipalCapabilityGrant {
+	if x != nil {
+		return x.Grants
+	}
+	return nil
+}
+
+func (x *SetPrincipalCapabilitiesForScopeResponse) GetEffectiveCapabilities() []v1.Capability {
 	if x != nil {
 		return x.EffectiveCapabilities
 	}
@@ -2155,7 +2403,7 @@ type Principal struct {
 
 func (x *Principal) Reset() {
 	*x = Principal{}
-	mi := &file_mycel_admin_v1_principal_proto_msgTypes[38]
+	mi := &file_mycel_admin_v1_principal_proto_msgTypes[42]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2167,7 +2415,7 @@ func (x *Principal) String() string {
 func (*Principal) ProtoMessage() {}
 
 func (x *Principal) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_admin_v1_principal_proto_msgTypes[38]
+	mi := &file_mycel_admin_v1_principal_proto_msgTypes[42]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2180,7 +2428,7 @@ func (x *Principal) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Principal.ProtoReflect.Descriptor instead.
 func (*Principal) Descriptor() ([]byte, []int) {
-	return file_mycel_admin_v1_principal_proto_rawDescGZIP(), []int{38}
+	return file_mycel_admin_v1_principal_proto_rawDescGZIP(), []int{42}
 }
 
 func (x *Principal) GetPrincipalId() string {
@@ -2261,7 +2509,7 @@ type PrincipalRoleGrant struct {
 
 func (x *PrincipalRoleGrant) Reset() {
 	*x = PrincipalRoleGrant{}
-	mi := &file_mycel_admin_v1_principal_proto_msgTypes[39]
+	mi := &file_mycel_admin_v1_principal_proto_msgTypes[43]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2273,7 +2521,7 @@ func (x *PrincipalRoleGrant) String() string {
 func (*PrincipalRoleGrant) ProtoMessage() {}
 
 func (x *PrincipalRoleGrant) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_admin_v1_principal_proto_msgTypes[39]
+	mi := &file_mycel_admin_v1_principal_proto_msgTypes[43]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2286,7 +2534,7 @@ func (x *PrincipalRoleGrant) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PrincipalRoleGrant.ProtoReflect.Descriptor instead.
 func (*PrincipalRoleGrant) Descriptor() ([]byte, []int) {
-	return file_mycel_admin_v1_principal_proto_rawDescGZIP(), []int{39}
+	return file_mycel_admin_v1_principal_proto_rawDescGZIP(), []int{43}
 }
 
 func (x *PrincipalRoleGrant) GetRoleGrantId() string {
@@ -2349,7 +2597,7 @@ type InitialPrincipalCapabilityGrant struct {
 
 func (x *InitialPrincipalCapabilityGrant) Reset() {
 	*x = InitialPrincipalCapabilityGrant{}
-	mi := &file_mycel_admin_v1_principal_proto_msgTypes[40]
+	mi := &file_mycel_admin_v1_principal_proto_msgTypes[44]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2361,7 +2609,7 @@ func (x *InitialPrincipalCapabilityGrant) String() string {
 func (*InitialPrincipalCapabilityGrant) ProtoMessage() {}
 
 func (x *InitialPrincipalCapabilityGrant) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_admin_v1_principal_proto_msgTypes[40]
+	mi := &file_mycel_admin_v1_principal_proto_msgTypes[44]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2374,7 +2622,7 @@ func (x *InitialPrincipalCapabilityGrant) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use InitialPrincipalCapabilityGrant.ProtoReflect.Descriptor instead.
 func (*InitialPrincipalCapabilityGrant) Descriptor() ([]byte, []int) {
-	return file_mycel_admin_v1_principal_proto_rawDescGZIP(), []int{40}
+	return file_mycel_admin_v1_principal_proto_rawDescGZIP(), []int{44}
 }
 
 func (x *InitialPrincipalCapabilityGrant) GetCapability() v1.Capability {
@@ -2413,7 +2661,7 @@ type PrincipalCapabilityGrant struct {
 
 func (x *PrincipalCapabilityGrant) Reset() {
 	*x = PrincipalCapabilityGrant{}
-	mi := &file_mycel_admin_v1_principal_proto_msgTypes[41]
+	mi := &file_mycel_admin_v1_principal_proto_msgTypes[45]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2425,7 +2673,7 @@ func (x *PrincipalCapabilityGrant) String() string {
 func (*PrincipalCapabilityGrant) ProtoMessage() {}
 
 func (x *PrincipalCapabilityGrant) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_admin_v1_principal_proto_msgTypes[41]
+	mi := &file_mycel_admin_v1_principal_proto_msgTypes[45]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2438,7 +2686,7 @@ func (x *PrincipalCapabilityGrant) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PrincipalCapabilityGrant.ProtoReflect.Descriptor instead.
 func (*PrincipalCapabilityGrant) Descriptor() ([]byte, []int) {
-	return file_mycel_admin_v1_principal_proto_rawDescGZIP(), []int{41}
+	return file_mycel_admin_v1_principal_proto_rawDescGZIP(), []int{45}
 }
 
 func (x *PrincipalCapabilityGrant) GetCapabilityGrantId() string {
@@ -2605,7 +2853,16 @@ const file_mycel_admin_v1_principal_proto_rawDesc = "" +
 	"\rrole_grant_id\x18\x02 \x01(\tR\vroleGrantId\x12\x16\n" +
 	"\x06reason\x18\x03 \x01(\tR\x06reason\"q\n" +
 	"\x1bRevokePrincipalRoleResponse\x12R\n" +
-	"\x16effective_capabilities\x18\x01 \x03(\x0e2\x1b.mycel.common.v1.CapabilityR\x15effectiveCapabilities\"E\n" +
+	"\x16effective_capabilities\x18\x01 \x03(\x0e2\x1b.mycel.common.v1.CapabilityR\x15effectiveCapabilities\"\xa7\x01\n" +
+	" SetPrincipalRolesForScopeRequest\x12!\n" +
+	"\fprincipal_id\x18\x01 \x01(\tR\vprincipalId\x122\n" +
+	"\x05scope\x18\x02 \x01(\v2\x1c.mycel.common.v1.AccessScopeR\x05scope\x12\x14\n" +
+	"\x05roles\x18\x03 \x03(\tR\x05roles\x12\x16\n" +
+	"\x06reason\x18\x04 \x01(\tR\x06reason\"\xdc\x01\n" +
+	"!SetPrincipalRolesForScopeResponse\x12:\n" +
+	"\x06grants\x18\x01 \x03(\v2\".mycel.admin.v1.PrincipalRoleGrantR\x06grants\x12'\n" +
+	"\x0feffective_roles\x18\x02 \x03(\tR\x0eeffectiveRoles\x12R\n" +
+	"\x16effective_capabilities\x18\x03 \x03(\x0e2\x1b.mycel.common.v1.CapabilityR\x15effectiveCapabilities\"E\n" +
 	" ListPrincipalCapabilitiesRequest\x12!\n" +
 	"\fprincipal_id\x18\x01 \x01(\tR\vprincipalId\"\xb9\x01\n" +
 	"!ListPrincipalCapabilitiesResponse\x12@\n" +
@@ -2626,7 +2883,15 @@ const file_mycel_admin_v1_principal_proto_rawDesc = "" +
 	"\x13capability_grant_id\x18\x02 \x01(\tR\x11capabilityGrantId\x12\x16\n" +
 	"\x06reason\x18\x03 \x01(\tR\x06reason\"w\n" +
 	"!RevokePrincipalCapabilityResponse\x12R\n" +
-	"\x16effective_capabilities\x18\x01 \x03(\x0e2\x1b.mycel.common.v1.CapabilityR\x15effectiveCapabilities\"\x8c\x03\n" +
+	"\x16effective_capabilities\x18\x01 \x03(\x0e2\x1b.mycel.common.v1.CapabilityR\x15effectiveCapabilities\"\xd9\x01\n" +
+	"'SetPrincipalCapabilitiesForScopeRequest\x12!\n" +
+	"\fprincipal_id\x18\x01 \x01(\tR\vprincipalId\x122\n" +
+	"\x05scope\x18\x02 \x01(\v2\x1c.mycel.common.v1.AccessScopeR\x05scope\x12?\n" +
+	"\fcapabilities\x18\x03 \x03(\x0e2\x1b.mycel.common.v1.CapabilityR\fcapabilities\x12\x16\n" +
+	"\x06reason\x18\x04 \x01(\tR\x06reason\"\xc0\x01\n" +
+	"(SetPrincipalCapabilitiesForScopeResponse\x12@\n" +
+	"\x06grants\x18\x01 \x03(\v2(.mycel.admin.v1.PrincipalCapabilityGrantR\x06grants\x12R\n" +
+	"\x16effective_capabilities\x18\x02 \x03(\x0e2\x1b.mycel.common.v1.CapabilityR\x15effectiveCapabilities\"\x8c\x03\n" +
 	"\tPrincipal\x12!\n" +
 	"\fprincipal_id\x18\x01 \x01(\tR\vprincipalId\x12\x1a\n" +
 	"\busername\x18\x02 \x01(\tR\busername\x12!\n" +
@@ -2669,7 +2934,7 @@ const file_mycel_admin_v1_principal_proto_rawDesc = "" +
 	"\x1bPRINCIPAL_STATE_UNSPECIFIED\x10\x00\x12\x1a\n" +
 	"\x16PRINCIPAL_STATE_ACTIVE\x10\x01\x12\x1c\n" +
 	"\x18PRINCIPAL_STATE_DISABLED\x10\x02\x12\x1b\n" +
-	"\x17PRINCIPAL_STATE_DELETED\x10\x032\xce\x10\n" +
+	"\x17PRINCIPAL_STATE_DELETED\x10\x032\xe9\x12\n" +
 	"\x15AdminPrincipalService\x12_\n" +
 	"\x0eListPrincipals\x12%.mycel.admin.v1.ListPrincipalsRequest\x1a&.mycel.admin.v1.ListPrincipalsResponse\x12Y\n" +
 	"\fGetPrincipal\x12#.mycel.admin.v1.GetPrincipalRequest\x1a$.mycel.admin.v1.GetPrincipalResponse\x12\\\n" +
@@ -2687,9 +2952,11 @@ const file_mycel_admin_v1_principal_proto_rawDesc = "" +
 	"\x12ListPrincipalRoles\x12).mycel.admin.v1.ListPrincipalRolesRequest\x1a*.mycel.admin.v1.ListPrincipalRolesResponse\x12k\n" +
 	"\x12GrantPrincipalRole\x12).mycel.admin.v1.GrantPrincipalRoleRequest\x1a*.mycel.admin.v1.GrantPrincipalRoleResponse\x12n\n" +
 	"\x13RevokePrincipalRole\x12*.mycel.admin.v1.RevokePrincipalRoleRequest\x1a+.mycel.admin.v1.RevokePrincipalRoleResponse\x12\x80\x01\n" +
+	"\x19SetPrincipalRolesForScope\x120.mycel.admin.v1.SetPrincipalRolesForScopeRequest\x1a1.mycel.admin.v1.SetPrincipalRolesForScopeResponse\x12\x80\x01\n" +
 	"\x19ListPrincipalCapabilities\x120.mycel.admin.v1.ListPrincipalCapabilitiesRequest\x1a1.mycel.admin.v1.ListPrincipalCapabilitiesResponse\x12}\n" +
 	"\x18GrantPrincipalCapability\x12/.mycel.admin.v1.GrantPrincipalCapabilityRequest\x1a0.mycel.admin.v1.GrantPrincipalCapabilityResponse\x12\x80\x01\n" +
-	"\x19RevokePrincipalCapability\x120.mycel.admin.v1.RevokePrincipalCapabilityRequest\x1a1.mycel.admin.v1.RevokePrincipalCapabilityResponseB\xbd\x01\n" +
+	"\x19RevokePrincipalCapability\x120.mycel.admin.v1.RevokePrincipalCapabilityRequest\x1a1.mycel.admin.v1.RevokePrincipalCapabilityResponse\x12\x95\x01\n" +
+	" SetPrincipalCapabilitiesForScope\x127.mycel.admin.v1.SetPrincipalCapabilitiesForScopeRequest\x1a8.mycel.admin.v1.SetPrincipalCapabilitiesForScopeResponseB\xbd\x01\n" +
 	"\x12com.mycel.admin.v1B\x0ePrincipalProtoP\x01Z=github.com/myceldb/mycel-go-sdk/gen/go/mycel/admin/v1;adminv1\xa2\x02\x03MAX\xaa\x02\x0eMycel.Admin.V1\xca\x02\x0eMycel\\Admin\\V1\xe2\x02\x1aMycel\\Admin\\V1\\GPBMetadata\xea\x02\x10Mycel::Admin::V1b\x06proto3"
 
 var (
@@ -2705,146 +2972,161 @@ func file_mycel_admin_v1_principal_proto_rawDescGZIP() []byte {
 }
 
 var file_mycel_admin_v1_principal_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
-var file_mycel_admin_v1_principal_proto_msgTypes = make([]protoimpl.MessageInfo, 42)
+var file_mycel_admin_v1_principal_proto_msgTypes = make([]protoimpl.MessageInfo, 46)
 var file_mycel_admin_v1_principal_proto_goTypes = []any{
-	(PrincipalState)(0),                       // 0: mycel.admin.v1.PrincipalState
-	(*ListPrincipalsRequest)(nil),             // 1: mycel.admin.v1.ListPrincipalsRequest
-	(*ListPrincipalsResponse)(nil),            // 2: mycel.admin.v1.ListPrincipalsResponse
-	(*GetPrincipalRequest)(nil),               // 3: mycel.admin.v1.GetPrincipalRequest
-	(*GetPrincipalResponse)(nil),              // 4: mycel.admin.v1.GetPrincipalResponse
-	(*FindPrincipalRequest)(nil),              // 5: mycel.admin.v1.FindPrincipalRequest
-	(*FindPrincipalResponse)(nil),             // 6: mycel.admin.v1.FindPrincipalResponse
-	(*CreatePrincipalRequest)(nil),            // 7: mycel.admin.v1.CreatePrincipalRequest
-	(*CreatePrincipalResponse)(nil),           // 8: mycel.admin.v1.CreatePrincipalResponse
-	(*UpdatePrincipalRequest)(nil),            // 9: mycel.admin.v1.UpdatePrincipalRequest
-	(*UpdatePrincipalResponse)(nil),           // 10: mycel.admin.v1.UpdatePrincipalResponse
-	(*DisablePrincipalRequest)(nil),           // 11: mycel.admin.v1.DisablePrincipalRequest
-	(*DisablePrincipalResponse)(nil),          // 12: mycel.admin.v1.DisablePrincipalResponse
-	(*EnablePrincipalRequest)(nil),            // 13: mycel.admin.v1.EnablePrincipalRequest
-	(*EnablePrincipalResponse)(nil),           // 14: mycel.admin.v1.EnablePrincipalResponse
-	(*DeletePrincipalRequest)(nil),            // 15: mycel.admin.v1.DeletePrincipalRequest
-	(*DeletePrincipalResponse)(nil),           // 16: mycel.admin.v1.DeletePrincipalResponse
-	(*SetPrincipalPasswordRequest)(nil),       // 17: mycel.admin.v1.SetPrincipalPasswordRequest
-	(*SetPrincipalPasswordResponse)(nil),      // 18: mycel.admin.v1.SetPrincipalPasswordResponse
-	(*CreatePrincipalSessionRequest)(nil),     // 19: mycel.admin.v1.CreatePrincipalSessionRequest
-	(*CreatePrincipalSessionResponse)(nil),    // 20: mycel.admin.v1.CreatePrincipalSessionResponse
-	(*ListPrincipalSessionsRequest)(nil),      // 21: mycel.admin.v1.ListPrincipalSessionsRequest
-	(*ListPrincipalSessionsResponse)(nil),     // 22: mycel.admin.v1.ListPrincipalSessionsResponse
-	(*RevokePrincipalSessionRequest)(nil),     // 23: mycel.admin.v1.RevokePrincipalSessionRequest
-	(*RevokePrincipalSessionResponse)(nil),    // 24: mycel.admin.v1.RevokePrincipalSessionResponse
-	(*RevokePrincipalSessionsRequest)(nil),    // 25: mycel.admin.v1.RevokePrincipalSessionsRequest
-	(*RevokePrincipalSessionsResponse)(nil),   // 26: mycel.admin.v1.RevokePrincipalSessionsResponse
-	(*ListPrincipalRolesRequest)(nil),         // 27: mycel.admin.v1.ListPrincipalRolesRequest
-	(*ListPrincipalRolesResponse)(nil),        // 28: mycel.admin.v1.ListPrincipalRolesResponse
-	(*GrantPrincipalRoleRequest)(nil),         // 29: mycel.admin.v1.GrantPrincipalRoleRequest
-	(*GrantPrincipalRoleResponse)(nil),        // 30: mycel.admin.v1.GrantPrincipalRoleResponse
-	(*RevokePrincipalRoleRequest)(nil),        // 31: mycel.admin.v1.RevokePrincipalRoleRequest
-	(*RevokePrincipalRoleResponse)(nil),       // 32: mycel.admin.v1.RevokePrincipalRoleResponse
-	(*ListPrincipalCapabilitiesRequest)(nil),  // 33: mycel.admin.v1.ListPrincipalCapabilitiesRequest
-	(*ListPrincipalCapabilitiesResponse)(nil), // 34: mycel.admin.v1.ListPrincipalCapabilitiesResponse
-	(*GrantPrincipalCapabilityRequest)(nil),   // 35: mycel.admin.v1.GrantPrincipalCapabilityRequest
-	(*GrantPrincipalCapabilityResponse)(nil),  // 36: mycel.admin.v1.GrantPrincipalCapabilityResponse
-	(*RevokePrincipalCapabilityRequest)(nil),  // 37: mycel.admin.v1.RevokePrincipalCapabilityRequest
-	(*RevokePrincipalCapabilityResponse)(nil), // 38: mycel.admin.v1.RevokePrincipalCapabilityResponse
-	(*Principal)(nil),                         // 39: mycel.admin.v1.Principal
-	(*PrincipalRoleGrant)(nil),                // 40: mycel.admin.v1.PrincipalRoleGrant
-	(*InitialPrincipalCapabilityGrant)(nil),   // 41: mycel.admin.v1.InitialPrincipalCapabilityGrant
-	(*PrincipalCapabilityGrant)(nil),          // 42: mycel.admin.v1.PrincipalCapabilityGrant
-	(v1.PrincipalType)(0),                     // 43: mycel.common.v1.PrincipalType
-	(v1.Capability)(0),                        // 44: mycel.common.v1.Capability
-	(*fieldmaskpb.FieldMask)(nil),             // 45: google.protobuf.FieldMask
-	(*v1.ClientInfo)(nil),                     // 46: mycel.common.v1.ClientInfo
-	(*timestamppb.Timestamp)(nil),             // 47: google.protobuf.Timestamp
-	(*v1.AuthSessionSummary)(nil),             // 48: mycel.common.v1.AuthSessionSummary
-	(*v1.AccessScope)(nil),                    // 49: mycel.common.v1.AccessScope
+	(PrincipalState)(0),                              // 0: mycel.admin.v1.PrincipalState
+	(*ListPrincipalsRequest)(nil),                    // 1: mycel.admin.v1.ListPrincipalsRequest
+	(*ListPrincipalsResponse)(nil),                   // 2: mycel.admin.v1.ListPrincipalsResponse
+	(*GetPrincipalRequest)(nil),                      // 3: mycel.admin.v1.GetPrincipalRequest
+	(*GetPrincipalResponse)(nil),                     // 4: mycel.admin.v1.GetPrincipalResponse
+	(*FindPrincipalRequest)(nil),                     // 5: mycel.admin.v1.FindPrincipalRequest
+	(*FindPrincipalResponse)(nil),                    // 6: mycel.admin.v1.FindPrincipalResponse
+	(*CreatePrincipalRequest)(nil),                   // 7: mycel.admin.v1.CreatePrincipalRequest
+	(*CreatePrincipalResponse)(nil),                  // 8: mycel.admin.v1.CreatePrincipalResponse
+	(*UpdatePrincipalRequest)(nil),                   // 9: mycel.admin.v1.UpdatePrincipalRequest
+	(*UpdatePrincipalResponse)(nil),                  // 10: mycel.admin.v1.UpdatePrincipalResponse
+	(*DisablePrincipalRequest)(nil),                  // 11: mycel.admin.v1.DisablePrincipalRequest
+	(*DisablePrincipalResponse)(nil),                 // 12: mycel.admin.v1.DisablePrincipalResponse
+	(*EnablePrincipalRequest)(nil),                   // 13: mycel.admin.v1.EnablePrincipalRequest
+	(*EnablePrincipalResponse)(nil),                  // 14: mycel.admin.v1.EnablePrincipalResponse
+	(*DeletePrincipalRequest)(nil),                   // 15: mycel.admin.v1.DeletePrincipalRequest
+	(*DeletePrincipalResponse)(nil),                  // 16: mycel.admin.v1.DeletePrincipalResponse
+	(*SetPrincipalPasswordRequest)(nil),              // 17: mycel.admin.v1.SetPrincipalPasswordRequest
+	(*SetPrincipalPasswordResponse)(nil),             // 18: mycel.admin.v1.SetPrincipalPasswordResponse
+	(*CreatePrincipalSessionRequest)(nil),            // 19: mycel.admin.v1.CreatePrincipalSessionRequest
+	(*CreatePrincipalSessionResponse)(nil),           // 20: mycel.admin.v1.CreatePrincipalSessionResponse
+	(*ListPrincipalSessionsRequest)(nil),             // 21: mycel.admin.v1.ListPrincipalSessionsRequest
+	(*ListPrincipalSessionsResponse)(nil),            // 22: mycel.admin.v1.ListPrincipalSessionsResponse
+	(*RevokePrincipalSessionRequest)(nil),            // 23: mycel.admin.v1.RevokePrincipalSessionRequest
+	(*RevokePrincipalSessionResponse)(nil),           // 24: mycel.admin.v1.RevokePrincipalSessionResponse
+	(*RevokePrincipalSessionsRequest)(nil),           // 25: mycel.admin.v1.RevokePrincipalSessionsRequest
+	(*RevokePrincipalSessionsResponse)(nil),          // 26: mycel.admin.v1.RevokePrincipalSessionsResponse
+	(*ListPrincipalRolesRequest)(nil),                // 27: mycel.admin.v1.ListPrincipalRolesRequest
+	(*ListPrincipalRolesResponse)(nil),               // 28: mycel.admin.v1.ListPrincipalRolesResponse
+	(*GrantPrincipalRoleRequest)(nil),                // 29: mycel.admin.v1.GrantPrincipalRoleRequest
+	(*GrantPrincipalRoleResponse)(nil),               // 30: mycel.admin.v1.GrantPrincipalRoleResponse
+	(*RevokePrincipalRoleRequest)(nil),               // 31: mycel.admin.v1.RevokePrincipalRoleRequest
+	(*RevokePrincipalRoleResponse)(nil),              // 32: mycel.admin.v1.RevokePrincipalRoleResponse
+	(*SetPrincipalRolesForScopeRequest)(nil),         // 33: mycel.admin.v1.SetPrincipalRolesForScopeRequest
+	(*SetPrincipalRolesForScopeResponse)(nil),        // 34: mycel.admin.v1.SetPrincipalRolesForScopeResponse
+	(*ListPrincipalCapabilitiesRequest)(nil),         // 35: mycel.admin.v1.ListPrincipalCapabilitiesRequest
+	(*ListPrincipalCapabilitiesResponse)(nil),        // 36: mycel.admin.v1.ListPrincipalCapabilitiesResponse
+	(*GrantPrincipalCapabilityRequest)(nil),          // 37: mycel.admin.v1.GrantPrincipalCapabilityRequest
+	(*GrantPrincipalCapabilityResponse)(nil),         // 38: mycel.admin.v1.GrantPrincipalCapabilityResponse
+	(*RevokePrincipalCapabilityRequest)(nil),         // 39: mycel.admin.v1.RevokePrincipalCapabilityRequest
+	(*RevokePrincipalCapabilityResponse)(nil),        // 40: mycel.admin.v1.RevokePrincipalCapabilityResponse
+	(*SetPrincipalCapabilitiesForScopeRequest)(nil),  // 41: mycel.admin.v1.SetPrincipalCapabilitiesForScopeRequest
+	(*SetPrincipalCapabilitiesForScopeResponse)(nil), // 42: mycel.admin.v1.SetPrincipalCapabilitiesForScopeResponse
+	(*Principal)(nil),                                // 43: mycel.admin.v1.Principal
+	(*PrincipalRoleGrant)(nil),                       // 44: mycel.admin.v1.PrincipalRoleGrant
+	(*InitialPrincipalCapabilityGrant)(nil),          // 45: mycel.admin.v1.InitialPrincipalCapabilityGrant
+	(*PrincipalCapabilityGrant)(nil),                 // 46: mycel.admin.v1.PrincipalCapabilityGrant
+	(v1.PrincipalType)(0),                            // 47: mycel.common.v1.PrincipalType
+	(v1.Capability)(0),                               // 48: mycel.common.v1.Capability
+	(*fieldmaskpb.FieldMask)(nil),                    // 49: google.protobuf.FieldMask
+	(*v1.ClientInfo)(nil),                            // 50: mycel.common.v1.ClientInfo
+	(*timestamppb.Timestamp)(nil),                    // 51: google.protobuf.Timestamp
+	(*v1.AuthSessionSummary)(nil),                    // 52: mycel.common.v1.AuthSessionSummary
+	(*v1.AccessScope)(nil),                           // 53: mycel.common.v1.AccessScope
 }
 var file_mycel_admin_v1_principal_proto_depIdxs = []int32{
-	39, // 0: mycel.admin.v1.ListPrincipalsResponse.principals:type_name -> mycel.admin.v1.Principal
-	39, // 1: mycel.admin.v1.GetPrincipalResponse.principal:type_name -> mycel.admin.v1.Principal
-	39, // 2: mycel.admin.v1.FindPrincipalResponse.principal:type_name -> mycel.admin.v1.Principal
-	43, // 3: mycel.admin.v1.CreatePrincipalRequest.type:type_name -> mycel.common.v1.PrincipalType
-	41, // 4: mycel.admin.v1.CreatePrincipalRequest.capability_grants:type_name -> mycel.admin.v1.InitialPrincipalCapabilityGrant
-	39, // 5: mycel.admin.v1.CreatePrincipalResponse.principal:type_name -> mycel.admin.v1.Principal
-	40, // 6: mycel.admin.v1.CreatePrincipalResponse.role_grants:type_name -> mycel.admin.v1.PrincipalRoleGrant
-	42, // 7: mycel.admin.v1.CreatePrincipalResponse.capability_grants:type_name -> mycel.admin.v1.PrincipalCapabilityGrant
-	44, // 8: mycel.admin.v1.CreatePrincipalResponse.effective_capabilities:type_name -> mycel.common.v1.Capability
-	39, // 9: mycel.admin.v1.UpdatePrincipalRequest.principal:type_name -> mycel.admin.v1.Principal
-	45, // 10: mycel.admin.v1.UpdatePrincipalRequest.update_mask:type_name -> google.protobuf.FieldMask
-	39, // 11: mycel.admin.v1.UpdatePrincipalResponse.principal:type_name -> mycel.admin.v1.Principal
-	39, // 12: mycel.admin.v1.DisablePrincipalResponse.principal:type_name -> mycel.admin.v1.Principal
-	39, // 13: mycel.admin.v1.EnablePrincipalResponse.principal:type_name -> mycel.admin.v1.Principal
-	39, // 14: mycel.admin.v1.DeletePrincipalResponse.principal:type_name -> mycel.admin.v1.Principal
-	39, // 15: mycel.admin.v1.SetPrincipalPasswordResponse.principal:type_name -> mycel.admin.v1.Principal
-	46, // 16: mycel.admin.v1.CreatePrincipalSessionRequest.client:type_name -> mycel.common.v1.ClientInfo
-	47, // 17: mycel.admin.v1.CreatePrincipalSessionResponse.access_token_expire_time:type_name -> google.protobuf.Timestamp
-	39, // 18: mycel.admin.v1.CreatePrincipalSessionResponse.principal:type_name -> mycel.admin.v1.Principal
-	48, // 19: mycel.admin.v1.ListPrincipalSessionsResponse.sessions:type_name -> mycel.common.v1.AuthSessionSummary
-	40, // 20: mycel.admin.v1.ListPrincipalRolesResponse.grants:type_name -> mycel.admin.v1.PrincipalRoleGrant
-	49, // 21: mycel.admin.v1.GrantPrincipalRoleRequest.scope:type_name -> mycel.common.v1.AccessScope
-	40, // 22: mycel.admin.v1.GrantPrincipalRoleResponse.grant:type_name -> mycel.admin.v1.PrincipalRoleGrant
-	44, // 23: mycel.admin.v1.GrantPrincipalRoleResponse.effective_capabilities:type_name -> mycel.common.v1.Capability
-	44, // 24: mycel.admin.v1.RevokePrincipalRoleResponse.effective_capabilities:type_name -> mycel.common.v1.Capability
-	42, // 25: mycel.admin.v1.ListPrincipalCapabilitiesResponse.grants:type_name -> mycel.admin.v1.PrincipalCapabilityGrant
-	44, // 26: mycel.admin.v1.ListPrincipalCapabilitiesResponse.effective_capabilities:type_name -> mycel.common.v1.Capability
-	44, // 27: mycel.admin.v1.GrantPrincipalCapabilityRequest.capability:type_name -> mycel.common.v1.Capability
-	49, // 28: mycel.admin.v1.GrantPrincipalCapabilityRequest.scope:type_name -> mycel.common.v1.AccessScope
-	42, // 29: mycel.admin.v1.GrantPrincipalCapabilityResponse.grant:type_name -> mycel.admin.v1.PrincipalCapabilityGrant
-	44, // 30: mycel.admin.v1.GrantPrincipalCapabilityResponse.effective_capabilities:type_name -> mycel.common.v1.Capability
-	44, // 31: mycel.admin.v1.RevokePrincipalCapabilityResponse.effective_capabilities:type_name -> mycel.common.v1.Capability
-	43, // 32: mycel.admin.v1.Principal.type:type_name -> mycel.common.v1.PrincipalType
-	0,  // 33: mycel.admin.v1.Principal.state:type_name -> mycel.admin.v1.PrincipalState
-	47, // 34: mycel.admin.v1.Principal.create_time:type_name -> google.protobuf.Timestamp
-	47, // 35: mycel.admin.v1.Principal.update_time:type_name -> google.protobuf.Timestamp
-	49, // 36: mycel.admin.v1.PrincipalRoleGrant.scope:type_name -> mycel.common.v1.AccessScope
-	47, // 37: mycel.admin.v1.PrincipalRoleGrant.create_time:type_name -> google.protobuf.Timestamp
-	44, // 38: mycel.admin.v1.InitialPrincipalCapabilityGrant.capability:type_name -> mycel.common.v1.Capability
-	49, // 39: mycel.admin.v1.InitialPrincipalCapabilityGrant.scope:type_name -> mycel.common.v1.AccessScope
-	44, // 40: mycel.admin.v1.PrincipalCapabilityGrant.capability:type_name -> mycel.common.v1.Capability
-	49, // 41: mycel.admin.v1.PrincipalCapabilityGrant.scope:type_name -> mycel.common.v1.AccessScope
-	47, // 42: mycel.admin.v1.PrincipalCapabilityGrant.create_time:type_name -> google.protobuf.Timestamp
-	1,  // 43: mycel.admin.v1.AdminPrincipalService.ListPrincipals:input_type -> mycel.admin.v1.ListPrincipalsRequest
-	3,  // 44: mycel.admin.v1.AdminPrincipalService.GetPrincipal:input_type -> mycel.admin.v1.GetPrincipalRequest
-	5,  // 45: mycel.admin.v1.AdminPrincipalService.FindPrincipal:input_type -> mycel.admin.v1.FindPrincipalRequest
-	7,  // 46: mycel.admin.v1.AdminPrincipalService.CreatePrincipal:input_type -> mycel.admin.v1.CreatePrincipalRequest
-	9,  // 47: mycel.admin.v1.AdminPrincipalService.UpdatePrincipal:input_type -> mycel.admin.v1.UpdatePrincipalRequest
-	11, // 48: mycel.admin.v1.AdminPrincipalService.DisablePrincipal:input_type -> mycel.admin.v1.DisablePrincipalRequest
-	13, // 49: mycel.admin.v1.AdminPrincipalService.EnablePrincipal:input_type -> mycel.admin.v1.EnablePrincipalRequest
-	15, // 50: mycel.admin.v1.AdminPrincipalService.DeletePrincipal:input_type -> mycel.admin.v1.DeletePrincipalRequest
-	17, // 51: mycel.admin.v1.AdminPrincipalService.SetPrincipalPassword:input_type -> mycel.admin.v1.SetPrincipalPasswordRequest
-	19, // 52: mycel.admin.v1.AdminPrincipalService.CreatePrincipalSession:input_type -> mycel.admin.v1.CreatePrincipalSessionRequest
-	21, // 53: mycel.admin.v1.AdminPrincipalService.ListPrincipalSessions:input_type -> mycel.admin.v1.ListPrincipalSessionsRequest
-	23, // 54: mycel.admin.v1.AdminPrincipalService.RevokePrincipalSession:input_type -> mycel.admin.v1.RevokePrincipalSessionRequest
-	25, // 55: mycel.admin.v1.AdminPrincipalService.RevokePrincipalSessions:input_type -> mycel.admin.v1.RevokePrincipalSessionsRequest
-	27, // 56: mycel.admin.v1.AdminPrincipalService.ListPrincipalRoles:input_type -> mycel.admin.v1.ListPrincipalRolesRequest
-	29, // 57: mycel.admin.v1.AdminPrincipalService.GrantPrincipalRole:input_type -> mycel.admin.v1.GrantPrincipalRoleRequest
-	31, // 58: mycel.admin.v1.AdminPrincipalService.RevokePrincipalRole:input_type -> mycel.admin.v1.RevokePrincipalRoleRequest
-	33, // 59: mycel.admin.v1.AdminPrincipalService.ListPrincipalCapabilities:input_type -> mycel.admin.v1.ListPrincipalCapabilitiesRequest
-	35, // 60: mycel.admin.v1.AdminPrincipalService.GrantPrincipalCapability:input_type -> mycel.admin.v1.GrantPrincipalCapabilityRequest
-	37, // 61: mycel.admin.v1.AdminPrincipalService.RevokePrincipalCapability:input_type -> mycel.admin.v1.RevokePrincipalCapabilityRequest
-	2,  // 62: mycel.admin.v1.AdminPrincipalService.ListPrincipals:output_type -> mycel.admin.v1.ListPrincipalsResponse
-	4,  // 63: mycel.admin.v1.AdminPrincipalService.GetPrincipal:output_type -> mycel.admin.v1.GetPrincipalResponse
-	6,  // 64: mycel.admin.v1.AdminPrincipalService.FindPrincipal:output_type -> mycel.admin.v1.FindPrincipalResponse
-	8,  // 65: mycel.admin.v1.AdminPrincipalService.CreatePrincipal:output_type -> mycel.admin.v1.CreatePrincipalResponse
-	10, // 66: mycel.admin.v1.AdminPrincipalService.UpdatePrincipal:output_type -> mycel.admin.v1.UpdatePrincipalResponse
-	12, // 67: mycel.admin.v1.AdminPrincipalService.DisablePrincipal:output_type -> mycel.admin.v1.DisablePrincipalResponse
-	14, // 68: mycel.admin.v1.AdminPrincipalService.EnablePrincipal:output_type -> mycel.admin.v1.EnablePrincipalResponse
-	16, // 69: mycel.admin.v1.AdminPrincipalService.DeletePrincipal:output_type -> mycel.admin.v1.DeletePrincipalResponse
-	18, // 70: mycel.admin.v1.AdminPrincipalService.SetPrincipalPassword:output_type -> mycel.admin.v1.SetPrincipalPasswordResponse
-	20, // 71: mycel.admin.v1.AdminPrincipalService.CreatePrincipalSession:output_type -> mycel.admin.v1.CreatePrincipalSessionResponse
-	22, // 72: mycel.admin.v1.AdminPrincipalService.ListPrincipalSessions:output_type -> mycel.admin.v1.ListPrincipalSessionsResponse
-	24, // 73: mycel.admin.v1.AdminPrincipalService.RevokePrincipalSession:output_type -> mycel.admin.v1.RevokePrincipalSessionResponse
-	26, // 74: mycel.admin.v1.AdminPrincipalService.RevokePrincipalSessions:output_type -> mycel.admin.v1.RevokePrincipalSessionsResponse
-	28, // 75: mycel.admin.v1.AdminPrincipalService.ListPrincipalRoles:output_type -> mycel.admin.v1.ListPrincipalRolesResponse
-	30, // 76: mycel.admin.v1.AdminPrincipalService.GrantPrincipalRole:output_type -> mycel.admin.v1.GrantPrincipalRoleResponse
-	32, // 77: mycel.admin.v1.AdminPrincipalService.RevokePrincipalRole:output_type -> mycel.admin.v1.RevokePrincipalRoleResponse
-	34, // 78: mycel.admin.v1.AdminPrincipalService.ListPrincipalCapabilities:output_type -> mycel.admin.v1.ListPrincipalCapabilitiesResponse
-	36, // 79: mycel.admin.v1.AdminPrincipalService.GrantPrincipalCapability:output_type -> mycel.admin.v1.GrantPrincipalCapabilityResponse
-	38, // 80: mycel.admin.v1.AdminPrincipalService.RevokePrincipalCapability:output_type -> mycel.admin.v1.RevokePrincipalCapabilityResponse
-	62, // [62:81] is the sub-list for method output_type
-	43, // [43:62] is the sub-list for method input_type
-	43, // [43:43] is the sub-list for extension type_name
-	43, // [43:43] is the sub-list for extension extendee
-	0,  // [0:43] is the sub-list for field type_name
+	43, // 0: mycel.admin.v1.ListPrincipalsResponse.principals:type_name -> mycel.admin.v1.Principal
+	43, // 1: mycel.admin.v1.GetPrincipalResponse.principal:type_name -> mycel.admin.v1.Principal
+	43, // 2: mycel.admin.v1.FindPrincipalResponse.principal:type_name -> mycel.admin.v1.Principal
+	47, // 3: mycel.admin.v1.CreatePrincipalRequest.type:type_name -> mycel.common.v1.PrincipalType
+	45, // 4: mycel.admin.v1.CreatePrincipalRequest.capability_grants:type_name -> mycel.admin.v1.InitialPrincipalCapabilityGrant
+	43, // 5: mycel.admin.v1.CreatePrincipalResponse.principal:type_name -> mycel.admin.v1.Principal
+	44, // 6: mycel.admin.v1.CreatePrincipalResponse.role_grants:type_name -> mycel.admin.v1.PrincipalRoleGrant
+	46, // 7: mycel.admin.v1.CreatePrincipalResponse.capability_grants:type_name -> mycel.admin.v1.PrincipalCapabilityGrant
+	48, // 8: mycel.admin.v1.CreatePrincipalResponse.effective_capabilities:type_name -> mycel.common.v1.Capability
+	43, // 9: mycel.admin.v1.UpdatePrincipalRequest.principal:type_name -> mycel.admin.v1.Principal
+	49, // 10: mycel.admin.v1.UpdatePrincipalRequest.update_mask:type_name -> google.protobuf.FieldMask
+	43, // 11: mycel.admin.v1.UpdatePrincipalResponse.principal:type_name -> mycel.admin.v1.Principal
+	43, // 12: mycel.admin.v1.DisablePrincipalResponse.principal:type_name -> mycel.admin.v1.Principal
+	43, // 13: mycel.admin.v1.EnablePrincipalResponse.principal:type_name -> mycel.admin.v1.Principal
+	43, // 14: mycel.admin.v1.DeletePrincipalResponse.principal:type_name -> mycel.admin.v1.Principal
+	43, // 15: mycel.admin.v1.SetPrincipalPasswordResponse.principal:type_name -> mycel.admin.v1.Principal
+	50, // 16: mycel.admin.v1.CreatePrincipalSessionRequest.client:type_name -> mycel.common.v1.ClientInfo
+	51, // 17: mycel.admin.v1.CreatePrincipalSessionResponse.access_token_expire_time:type_name -> google.protobuf.Timestamp
+	43, // 18: mycel.admin.v1.CreatePrincipalSessionResponse.principal:type_name -> mycel.admin.v1.Principal
+	52, // 19: mycel.admin.v1.ListPrincipalSessionsResponse.sessions:type_name -> mycel.common.v1.AuthSessionSummary
+	44, // 20: mycel.admin.v1.ListPrincipalRolesResponse.grants:type_name -> mycel.admin.v1.PrincipalRoleGrant
+	53, // 21: mycel.admin.v1.GrantPrincipalRoleRequest.scope:type_name -> mycel.common.v1.AccessScope
+	44, // 22: mycel.admin.v1.GrantPrincipalRoleResponse.grant:type_name -> mycel.admin.v1.PrincipalRoleGrant
+	48, // 23: mycel.admin.v1.GrantPrincipalRoleResponse.effective_capabilities:type_name -> mycel.common.v1.Capability
+	48, // 24: mycel.admin.v1.RevokePrincipalRoleResponse.effective_capabilities:type_name -> mycel.common.v1.Capability
+	53, // 25: mycel.admin.v1.SetPrincipalRolesForScopeRequest.scope:type_name -> mycel.common.v1.AccessScope
+	44, // 26: mycel.admin.v1.SetPrincipalRolesForScopeResponse.grants:type_name -> mycel.admin.v1.PrincipalRoleGrant
+	48, // 27: mycel.admin.v1.SetPrincipalRolesForScopeResponse.effective_capabilities:type_name -> mycel.common.v1.Capability
+	46, // 28: mycel.admin.v1.ListPrincipalCapabilitiesResponse.grants:type_name -> mycel.admin.v1.PrincipalCapabilityGrant
+	48, // 29: mycel.admin.v1.ListPrincipalCapabilitiesResponse.effective_capabilities:type_name -> mycel.common.v1.Capability
+	48, // 30: mycel.admin.v1.GrantPrincipalCapabilityRequest.capability:type_name -> mycel.common.v1.Capability
+	53, // 31: mycel.admin.v1.GrantPrincipalCapabilityRequest.scope:type_name -> mycel.common.v1.AccessScope
+	46, // 32: mycel.admin.v1.GrantPrincipalCapabilityResponse.grant:type_name -> mycel.admin.v1.PrincipalCapabilityGrant
+	48, // 33: mycel.admin.v1.GrantPrincipalCapabilityResponse.effective_capabilities:type_name -> mycel.common.v1.Capability
+	48, // 34: mycel.admin.v1.RevokePrincipalCapabilityResponse.effective_capabilities:type_name -> mycel.common.v1.Capability
+	53, // 35: mycel.admin.v1.SetPrincipalCapabilitiesForScopeRequest.scope:type_name -> mycel.common.v1.AccessScope
+	48, // 36: mycel.admin.v1.SetPrincipalCapabilitiesForScopeRequest.capabilities:type_name -> mycel.common.v1.Capability
+	46, // 37: mycel.admin.v1.SetPrincipalCapabilitiesForScopeResponse.grants:type_name -> mycel.admin.v1.PrincipalCapabilityGrant
+	48, // 38: mycel.admin.v1.SetPrincipalCapabilitiesForScopeResponse.effective_capabilities:type_name -> mycel.common.v1.Capability
+	47, // 39: mycel.admin.v1.Principal.type:type_name -> mycel.common.v1.PrincipalType
+	0,  // 40: mycel.admin.v1.Principal.state:type_name -> mycel.admin.v1.PrincipalState
+	51, // 41: mycel.admin.v1.Principal.create_time:type_name -> google.protobuf.Timestamp
+	51, // 42: mycel.admin.v1.Principal.update_time:type_name -> google.protobuf.Timestamp
+	53, // 43: mycel.admin.v1.PrincipalRoleGrant.scope:type_name -> mycel.common.v1.AccessScope
+	51, // 44: mycel.admin.v1.PrincipalRoleGrant.create_time:type_name -> google.protobuf.Timestamp
+	48, // 45: mycel.admin.v1.InitialPrincipalCapabilityGrant.capability:type_name -> mycel.common.v1.Capability
+	53, // 46: mycel.admin.v1.InitialPrincipalCapabilityGrant.scope:type_name -> mycel.common.v1.AccessScope
+	48, // 47: mycel.admin.v1.PrincipalCapabilityGrant.capability:type_name -> mycel.common.v1.Capability
+	53, // 48: mycel.admin.v1.PrincipalCapabilityGrant.scope:type_name -> mycel.common.v1.AccessScope
+	51, // 49: mycel.admin.v1.PrincipalCapabilityGrant.create_time:type_name -> google.protobuf.Timestamp
+	1,  // 50: mycel.admin.v1.AdminPrincipalService.ListPrincipals:input_type -> mycel.admin.v1.ListPrincipalsRequest
+	3,  // 51: mycel.admin.v1.AdminPrincipalService.GetPrincipal:input_type -> mycel.admin.v1.GetPrincipalRequest
+	5,  // 52: mycel.admin.v1.AdminPrincipalService.FindPrincipal:input_type -> mycel.admin.v1.FindPrincipalRequest
+	7,  // 53: mycel.admin.v1.AdminPrincipalService.CreatePrincipal:input_type -> mycel.admin.v1.CreatePrincipalRequest
+	9,  // 54: mycel.admin.v1.AdminPrincipalService.UpdatePrincipal:input_type -> mycel.admin.v1.UpdatePrincipalRequest
+	11, // 55: mycel.admin.v1.AdminPrincipalService.DisablePrincipal:input_type -> mycel.admin.v1.DisablePrincipalRequest
+	13, // 56: mycel.admin.v1.AdminPrincipalService.EnablePrincipal:input_type -> mycel.admin.v1.EnablePrincipalRequest
+	15, // 57: mycel.admin.v1.AdminPrincipalService.DeletePrincipal:input_type -> mycel.admin.v1.DeletePrincipalRequest
+	17, // 58: mycel.admin.v1.AdminPrincipalService.SetPrincipalPassword:input_type -> mycel.admin.v1.SetPrincipalPasswordRequest
+	19, // 59: mycel.admin.v1.AdminPrincipalService.CreatePrincipalSession:input_type -> mycel.admin.v1.CreatePrincipalSessionRequest
+	21, // 60: mycel.admin.v1.AdminPrincipalService.ListPrincipalSessions:input_type -> mycel.admin.v1.ListPrincipalSessionsRequest
+	23, // 61: mycel.admin.v1.AdminPrincipalService.RevokePrincipalSession:input_type -> mycel.admin.v1.RevokePrincipalSessionRequest
+	25, // 62: mycel.admin.v1.AdminPrincipalService.RevokePrincipalSessions:input_type -> mycel.admin.v1.RevokePrincipalSessionsRequest
+	27, // 63: mycel.admin.v1.AdminPrincipalService.ListPrincipalRoles:input_type -> mycel.admin.v1.ListPrincipalRolesRequest
+	29, // 64: mycel.admin.v1.AdminPrincipalService.GrantPrincipalRole:input_type -> mycel.admin.v1.GrantPrincipalRoleRequest
+	31, // 65: mycel.admin.v1.AdminPrincipalService.RevokePrincipalRole:input_type -> mycel.admin.v1.RevokePrincipalRoleRequest
+	33, // 66: mycel.admin.v1.AdminPrincipalService.SetPrincipalRolesForScope:input_type -> mycel.admin.v1.SetPrincipalRolesForScopeRequest
+	35, // 67: mycel.admin.v1.AdminPrincipalService.ListPrincipalCapabilities:input_type -> mycel.admin.v1.ListPrincipalCapabilitiesRequest
+	37, // 68: mycel.admin.v1.AdminPrincipalService.GrantPrincipalCapability:input_type -> mycel.admin.v1.GrantPrincipalCapabilityRequest
+	39, // 69: mycel.admin.v1.AdminPrincipalService.RevokePrincipalCapability:input_type -> mycel.admin.v1.RevokePrincipalCapabilityRequest
+	41, // 70: mycel.admin.v1.AdminPrincipalService.SetPrincipalCapabilitiesForScope:input_type -> mycel.admin.v1.SetPrincipalCapabilitiesForScopeRequest
+	2,  // 71: mycel.admin.v1.AdminPrincipalService.ListPrincipals:output_type -> mycel.admin.v1.ListPrincipalsResponse
+	4,  // 72: mycel.admin.v1.AdminPrincipalService.GetPrincipal:output_type -> mycel.admin.v1.GetPrincipalResponse
+	6,  // 73: mycel.admin.v1.AdminPrincipalService.FindPrincipal:output_type -> mycel.admin.v1.FindPrincipalResponse
+	8,  // 74: mycel.admin.v1.AdminPrincipalService.CreatePrincipal:output_type -> mycel.admin.v1.CreatePrincipalResponse
+	10, // 75: mycel.admin.v1.AdminPrincipalService.UpdatePrincipal:output_type -> mycel.admin.v1.UpdatePrincipalResponse
+	12, // 76: mycel.admin.v1.AdminPrincipalService.DisablePrincipal:output_type -> mycel.admin.v1.DisablePrincipalResponse
+	14, // 77: mycel.admin.v1.AdminPrincipalService.EnablePrincipal:output_type -> mycel.admin.v1.EnablePrincipalResponse
+	16, // 78: mycel.admin.v1.AdminPrincipalService.DeletePrincipal:output_type -> mycel.admin.v1.DeletePrincipalResponse
+	18, // 79: mycel.admin.v1.AdminPrincipalService.SetPrincipalPassword:output_type -> mycel.admin.v1.SetPrincipalPasswordResponse
+	20, // 80: mycel.admin.v1.AdminPrincipalService.CreatePrincipalSession:output_type -> mycel.admin.v1.CreatePrincipalSessionResponse
+	22, // 81: mycel.admin.v1.AdminPrincipalService.ListPrincipalSessions:output_type -> mycel.admin.v1.ListPrincipalSessionsResponse
+	24, // 82: mycel.admin.v1.AdminPrincipalService.RevokePrincipalSession:output_type -> mycel.admin.v1.RevokePrincipalSessionResponse
+	26, // 83: mycel.admin.v1.AdminPrincipalService.RevokePrincipalSessions:output_type -> mycel.admin.v1.RevokePrincipalSessionsResponse
+	28, // 84: mycel.admin.v1.AdminPrincipalService.ListPrincipalRoles:output_type -> mycel.admin.v1.ListPrincipalRolesResponse
+	30, // 85: mycel.admin.v1.AdminPrincipalService.GrantPrincipalRole:output_type -> mycel.admin.v1.GrantPrincipalRoleResponse
+	32, // 86: mycel.admin.v1.AdminPrincipalService.RevokePrincipalRole:output_type -> mycel.admin.v1.RevokePrincipalRoleResponse
+	34, // 87: mycel.admin.v1.AdminPrincipalService.SetPrincipalRolesForScope:output_type -> mycel.admin.v1.SetPrincipalRolesForScopeResponse
+	36, // 88: mycel.admin.v1.AdminPrincipalService.ListPrincipalCapabilities:output_type -> mycel.admin.v1.ListPrincipalCapabilitiesResponse
+	38, // 89: mycel.admin.v1.AdminPrincipalService.GrantPrincipalCapability:output_type -> mycel.admin.v1.GrantPrincipalCapabilityResponse
+	40, // 90: mycel.admin.v1.AdminPrincipalService.RevokePrincipalCapability:output_type -> mycel.admin.v1.RevokePrincipalCapabilityResponse
+	42, // 91: mycel.admin.v1.AdminPrincipalService.SetPrincipalCapabilitiesForScope:output_type -> mycel.admin.v1.SetPrincipalCapabilitiesForScopeResponse
+	71, // [71:92] is the sub-list for method output_type
+	50, // [50:71] is the sub-list for method input_type
+	50, // [50:50] is the sub-list for extension type_name
+	50, // [50:50] is the sub-list for extension extendee
+	0,  // [0:50] is the sub-list for field type_name
 }
 
 func init() { file_mycel_admin_v1_principal_proto_init() }
@@ -2864,7 +3146,7 @@ func file_mycel_admin_v1_principal_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_mycel_admin_v1_principal_proto_rawDesc), len(file_mycel_admin_v1_principal_proto_rawDesc)),
 			NumEnums:      1,
-			NumMessages:   42,
+			NumMessages:   46,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

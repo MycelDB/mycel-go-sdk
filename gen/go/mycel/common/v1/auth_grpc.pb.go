@@ -23,6 +23,7 @@ const (
 	AuthService_Refresh_FullMethodName                 = "/mycel.common.v1.AuthService/Refresh"
 	AuthService_Logout_FullMethodName                  = "/mycel.common.v1.AuthService/Logout"
 	AuthService_WhoAmI_FullMethodName                  = "/mycel.common.v1.AuthService/WhoAmI"
+	AuthService_GetMyAccess_FullMethodName             = "/mycel.common.v1.AuthService/GetMyAccess"
 	AuthService_ListAuthSessions_FullMethodName        = "/mycel.common.v1.AuthService/ListAuthSessions"
 	AuthService_RevokeAuthSession_FullMethodName       = "/mycel.common.v1.AuthService/RevokeAuthSession"
 	AuthService_RevokeOtherAuthSessions_FullMethodName = "/mycel.common.v1.AuthService/RevokeOtherAuthSessions"
@@ -41,6 +42,7 @@ type AuthServiceClient interface {
 	Refresh(ctx context.Context, in *RefreshRequest, opts ...grpc.CallOption) (*RefreshResponse, error)
 	Logout(ctx context.Context, in *LogoutRequest, opts ...grpc.CallOption) (*LogoutResponse, error)
 	WhoAmI(ctx context.Context, in *WhoAmIRequest, opts ...grpc.CallOption) (*WhoAmIResponse, error)
+	GetMyAccess(ctx context.Context, in *GetMyAccessRequest, opts ...grpc.CallOption) (*GetMyAccessResponse, error)
 	ListAuthSessions(ctx context.Context, in *ListAuthSessionsRequest, opts ...grpc.CallOption) (*ListAuthSessionsResponse, error)
 	RevokeAuthSession(ctx context.Context, in *RevokeAuthSessionRequest, opts ...grpc.CallOption) (*RevokeAuthSessionResponse, error)
 	RevokeOtherAuthSessions(ctx context.Context, in *RevokeOtherAuthSessionsRequest, opts ...grpc.CallOption) (*RevokeOtherAuthSessionsResponse, error)
@@ -94,6 +96,16 @@ func (c *authServiceClient) WhoAmI(ctx context.Context, in *WhoAmIRequest, opts 
 	return out, nil
 }
 
+func (c *authServiceClient) GetMyAccess(ctx context.Context, in *GetMyAccessRequest, opts ...grpc.CallOption) (*GetMyAccessResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetMyAccessResponse)
+	err := c.cc.Invoke(ctx, AuthService_GetMyAccess_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *authServiceClient) ListAuthSessions(ctx context.Context, in *ListAuthSessionsRequest, opts ...grpc.CallOption) (*ListAuthSessionsResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(ListAuthSessionsResponse)
@@ -137,6 +149,7 @@ type AuthServiceServer interface {
 	Refresh(context.Context, *RefreshRequest) (*RefreshResponse, error)
 	Logout(context.Context, *LogoutRequest) (*LogoutResponse, error)
 	WhoAmI(context.Context, *WhoAmIRequest) (*WhoAmIResponse, error)
+	GetMyAccess(context.Context, *GetMyAccessRequest) (*GetMyAccessResponse, error)
 	ListAuthSessions(context.Context, *ListAuthSessionsRequest) (*ListAuthSessionsResponse, error)
 	RevokeAuthSession(context.Context, *RevokeAuthSessionRequest) (*RevokeAuthSessionResponse, error)
 	RevokeOtherAuthSessions(context.Context, *RevokeOtherAuthSessionsRequest) (*RevokeOtherAuthSessionsResponse, error)
@@ -161,6 +174,9 @@ func (UnimplementedAuthServiceServer) Logout(context.Context, *LogoutRequest) (*
 }
 func (UnimplementedAuthServiceServer) WhoAmI(context.Context, *WhoAmIRequest) (*WhoAmIResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method WhoAmI not implemented")
+}
+func (UnimplementedAuthServiceServer) GetMyAccess(context.Context, *GetMyAccessRequest) (*GetMyAccessResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetMyAccess not implemented")
 }
 func (UnimplementedAuthServiceServer) ListAuthSessions(context.Context, *ListAuthSessionsRequest) (*ListAuthSessionsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListAuthSessions not implemented")
@@ -264,6 +280,24 @@ func _AuthService_WhoAmI_Handler(srv interface{}, ctx context.Context, dec func(
 	return interceptor(ctx, in, info, handler)
 }
 
+func _AuthService_GetMyAccess_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetMyAccessRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AuthServiceServer).GetMyAccess(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AuthService_GetMyAccess_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AuthServiceServer).GetMyAccess(ctx, req.(*GetMyAccessRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _AuthService_ListAuthSessions_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ListAuthSessionsRequest)
 	if err := dec(in); err != nil {
@@ -340,6 +374,10 @@ var AuthService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "WhoAmI",
 			Handler:    _AuthService_WhoAmI_Handler,
+		},
+		{
+			MethodName: "GetMyAccess",
+			Handler:    _AuthService_GetMyAccess_Handler,
 		},
 		{
 			MethodName: "ListAuthSessions",

@@ -281,6 +281,10 @@ func (f *fakeClientAuth) WhoAmI(context.Context, *commonv1.WhoAmIRequest, ...grp
 	return &commonv1.WhoAmIResponse{}, nil
 }
 
+func (f *fakeClientAuth) GetMyAccess(context.Context, *commonv1.GetMyAccessRequest, ...grpc.CallOption) (*commonv1.GetMyAccessResponse, error) {
+	return &commonv1.GetMyAccessResponse{}, nil
+}
+
 func (f *fakeClientAuth) ListAuthSessions(context.Context, *commonv1.ListAuthSessionsRequest, ...grpc.CallOption) (*commonv1.ListAuthSessionsResponse, error) {
 	return &commonv1.ListAuthSessionsResponse{}, nil
 }

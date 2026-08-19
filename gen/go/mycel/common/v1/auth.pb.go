@@ -661,6 +661,281 @@ func (x *WhoAmIResponse) GetPrincipal() *AuthPrincipal {
 	return nil
 }
 
+// GetMyAccessRequest asks the daemon for access effective for the current
+// authenticated principal. This is a self-service endpoint: callers may inspect
+// their own access without principal-management capabilities.
+type GetMyAccessRequest struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Optional scope filter. When empty, the daemon returns all active grants it
+	// can resolve for the current principal.
+	Scope         *AccessScope `protobuf:"bytes,1,opt,name=scope,proto3" json:"scope,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetMyAccessRequest) Reset() {
+	*x = GetMyAccessRequest{}
+	mi := &file_mycel_common_v1_auth_proto_msgTypes[10]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetMyAccessRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetMyAccessRequest) ProtoMessage() {}
+
+func (x *GetMyAccessRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_common_v1_auth_proto_msgTypes[10]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetMyAccessRequest.ProtoReflect.Descriptor instead.
+func (*GetMyAccessRequest) Descriptor() ([]byte, []int) {
+	return file_mycel_common_v1_auth_proto_rawDescGZIP(), []int{10}
+}
+
+func (x *GetMyAccessRequest) GetScope() *AccessScope {
+	if x != nil {
+		return x.Scope
+	}
+	return nil
+}
+
+// GetMyAccessResponse reports current-principal access for diagnostics and UX.
+// Clients may use this for navigation hints, but daemon authorization remains
+// authoritative for every request.
+type GetMyAccessResponse struct {
+	state     protoimpl.MessageState `protogen:"open.v1"`
+	Principal *AuthPrincipal         `protobuf:"bytes,1,opt,name=principal,proto3" json:"principal,omitempty"`
+	// Compact effective labels for simple clients and navigation gates. Values are
+	// canonical strings such as "space.owner", "query.run", or "automation.read".
+	EffectiveRoles        []string `protobuf:"bytes,2,rep,name=effective_roles,json=effectiveRoles,proto3" json:"effective_roles,omitempty"`
+	EffectiveCapabilities []string `protobuf:"bytes,3,rep,name=effective_capabilities,json=effectiveCapabilities,proto3" json:"effective_capabilities,omitempty"`
+	// Scoped details for diagnostics and explainable UX.
+	Roles         []*EffectiveRole       `protobuf:"bytes,4,rep,name=roles,proto3" json:"roles,omitempty"`
+	Capabilities  []*EffectiveCapability `protobuf:"bytes,5,rep,name=capabilities,proto3" json:"capabilities,omitempty"`
+	Warnings      []string               `protobuf:"bytes,6,rep,name=warnings,proto3" json:"warnings,omitempty"`
+	Complete      bool                   `protobuf:"varint,7,opt,name=complete,proto3" json:"complete,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetMyAccessResponse) Reset() {
+	*x = GetMyAccessResponse{}
+	mi := &file_mycel_common_v1_auth_proto_msgTypes[11]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetMyAccessResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetMyAccessResponse) ProtoMessage() {}
+
+func (x *GetMyAccessResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_common_v1_auth_proto_msgTypes[11]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetMyAccessResponse.ProtoReflect.Descriptor instead.
+func (*GetMyAccessResponse) Descriptor() ([]byte, []int) {
+	return file_mycel_common_v1_auth_proto_rawDescGZIP(), []int{11}
+}
+
+func (x *GetMyAccessResponse) GetPrincipal() *AuthPrincipal {
+	if x != nil {
+		return x.Principal
+	}
+	return nil
+}
+
+func (x *GetMyAccessResponse) GetEffectiveRoles() []string {
+	if x != nil {
+		return x.EffectiveRoles
+	}
+	return nil
+}
+
+func (x *GetMyAccessResponse) GetEffectiveCapabilities() []string {
+	if x != nil {
+		return x.EffectiveCapabilities
+	}
+	return nil
+}
+
+func (x *GetMyAccessResponse) GetRoles() []*EffectiveRole {
+	if x != nil {
+		return x.Roles
+	}
+	return nil
+}
+
+func (x *GetMyAccessResponse) GetCapabilities() []*EffectiveCapability {
+	if x != nil {
+		return x.Capabilities
+	}
+	return nil
+}
+
+func (x *GetMyAccessResponse) GetWarnings() []string {
+	if x != nil {
+		return x.Warnings
+	}
+	return nil
+}
+
+func (x *GetMyAccessResponse) GetComplete() bool {
+	if x != nil {
+		return x.Complete
+	}
+	return false
+}
+
+type EffectiveRole struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Role          string                 `protobuf:"bytes,1,opt,name=role,proto3" json:"role,omitempty"`
+	Scope         *AccessScope           `protobuf:"bytes,2,opt,name=scope,proto3" json:"scope,omitempty"`
+	Source        string                 `protobuf:"bytes,3,opt,name=source,proto3" json:"source,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *EffectiveRole) Reset() {
+	*x = EffectiveRole{}
+	mi := &file_mycel_common_v1_auth_proto_msgTypes[12]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *EffectiveRole) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*EffectiveRole) ProtoMessage() {}
+
+func (x *EffectiveRole) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_common_v1_auth_proto_msgTypes[12]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use EffectiveRole.ProtoReflect.Descriptor instead.
+func (*EffectiveRole) Descriptor() ([]byte, []int) {
+	return file_mycel_common_v1_auth_proto_rawDescGZIP(), []int{12}
+}
+
+func (x *EffectiveRole) GetRole() string {
+	if x != nil {
+		return x.Role
+	}
+	return ""
+}
+
+func (x *EffectiveRole) GetScope() *AccessScope {
+	if x != nil {
+		return x.Scope
+	}
+	return nil
+}
+
+func (x *EffectiveRole) GetSource() string {
+	if x != nil {
+		return x.Source
+	}
+	return ""
+}
+
+type EffectiveCapability struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Capability    string                 `protobuf:"bytes,1,opt,name=capability,proto3" json:"capability,omitempty"`
+	Scope         *AccessScope           `protobuf:"bytes,2,opt,name=scope,proto3" json:"scope,omitempty"`
+	Source        string                 `protobuf:"bytes,3,opt,name=source,proto3" json:"source,omitempty"`
+	Role          string                 `protobuf:"bytes,4,opt,name=role,proto3" json:"role,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *EffectiveCapability) Reset() {
+	*x = EffectiveCapability{}
+	mi := &file_mycel_common_v1_auth_proto_msgTypes[13]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *EffectiveCapability) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*EffectiveCapability) ProtoMessage() {}
+
+func (x *EffectiveCapability) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_common_v1_auth_proto_msgTypes[13]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use EffectiveCapability.ProtoReflect.Descriptor instead.
+func (*EffectiveCapability) Descriptor() ([]byte, []int) {
+	return file_mycel_common_v1_auth_proto_rawDescGZIP(), []int{13}
+}
+
+func (x *EffectiveCapability) GetCapability() string {
+	if x != nil {
+		return x.Capability
+	}
+	return ""
+}
+
+func (x *EffectiveCapability) GetScope() *AccessScope {
+	if x != nil {
+		return x.Scope
+	}
+	return nil
+}
+
+func (x *EffectiveCapability) GetSource() string {
+	if x != nil {
+		return x.Source
+	}
+	return ""
+}
+
+func (x *EffectiveCapability) GetRole() string {
+	if x != nil {
+		return x.Role
+	}
+	return ""
+}
+
 // ListAuthSessionsRequest lists durable auth sessions for the selected view.
 // Client APIs use this as a self-service request; admin APIs scope it through
 // principal-management requests.
@@ -679,7 +954,7 @@ type ListAuthSessionsRequest struct {
 
 func (x *ListAuthSessionsRequest) Reset() {
 	*x = ListAuthSessionsRequest{}
-	mi := &file_mycel_common_v1_auth_proto_msgTypes[10]
+	mi := &file_mycel_common_v1_auth_proto_msgTypes[14]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -691,7 +966,7 @@ func (x *ListAuthSessionsRequest) String() string {
 func (*ListAuthSessionsRequest) ProtoMessage() {}
 
 func (x *ListAuthSessionsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_common_v1_auth_proto_msgTypes[10]
+	mi := &file_mycel_common_v1_auth_proto_msgTypes[14]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -704,7 +979,7 @@ func (x *ListAuthSessionsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListAuthSessionsRequest.ProtoReflect.Descriptor instead.
 func (*ListAuthSessionsRequest) Descriptor() ([]byte, []int) {
-	return file_mycel_common_v1_auth_proto_rawDescGZIP(), []int{10}
+	return file_mycel_common_v1_auth_proto_rawDescGZIP(), []int{14}
 }
 
 func (x *ListAuthSessionsRequest) GetPageSize() int32 {
@@ -739,7 +1014,7 @@ type ListAuthSessionsResponse struct {
 
 func (x *ListAuthSessionsResponse) Reset() {
 	*x = ListAuthSessionsResponse{}
-	mi := &file_mycel_common_v1_auth_proto_msgTypes[11]
+	mi := &file_mycel_common_v1_auth_proto_msgTypes[15]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -751,7 +1026,7 @@ func (x *ListAuthSessionsResponse) String() string {
 func (*ListAuthSessionsResponse) ProtoMessage() {}
 
 func (x *ListAuthSessionsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_common_v1_auth_proto_msgTypes[11]
+	mi := &file_mycel_common_v1_auth_proto_msgTypes[15]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -764,7 +1039,7 @@ func (x *ListAuthSessionsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListAuthSessionsResponse.ProtoReflect.Descriptor instead.
 func (*ListAuthSessionsResponse) Descriptor() ([]byte, []int) {
-	return file_mycel_common_v1_auth_proto_rawDescGZIP(), []int{11}
+	return file_mycel_common_v1_auth_proto_rawDescGZIP(), []int{15}
 }
 
 func (x *ListAuthSessionsResponse) GetSessions() []*AuthSessionSummary {
@@ -791,7 +1066,7 @@ type RevokeAuthSessionRequest struct {
 
 func (x *RevokeAuthSessionRequest) Reset() {
 	*x = RevokeAuthSessionRequest{}
-	mi := &file_mycel_common_v1_auth_proto_msgTypes[12]
+	mi := &file_mycel_common_v1_auth_proto_msgTypes[16]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -803,7 +1078,7 @@ func (x *RevokeAuthSessionRequest) String() string {
 func (*RevokeAuthSessionRequest) ProtoMessage() {}
 
 func (x *RevokeAuthSessionRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_common_v1_auth_proto_msgTypes[12]
+	mi := &file_mycel_common_v1_auth_proto_msgTypes[16]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -816,7 +1091,7 @@ func (x *RevokeAuthSessionRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RevokeAuthSessionRequest.ProtoReflect.Descriptor instead.
 func (*RevokeAuthSessionRequest) Descriptor() ([]byte, []int) {
-	return file_mycel_common_v1_auth_proto_rawDescGZIP(), []int{12}
+	return file_mycel_common_v1_auth_proto_rawDescGZIP(), []int{16}
 }
 
 func (x *RevokeAuthSessionRequest) GetAuthSessionId() string {
@@ -835,7 +1110,7 @@ type RevokeAuthSessionResponse struct {
 
 func (x *RevokeAuthSessionResponse) Reset() {
 	*x = RevokeAuthSessionResponse{}
-	mi := &file_mycel_common_v1_auth_proto_msgTypes[13]
+	mi := &file_mycel_common_v1_auth_proto_msgTypes[17]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -847,7 +1122,7 @@ func (x *RevokeAuthSessionResponse) String() string {
 func (*RevokeAuthSessionResponse) ProtoMessage() {}
 
 func (x *RevokeAuthSessionResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_common_v1_auth_proto_msgTypes[13]
+	mi := &file_mycel_common_v1_auth_proto_msgTypes[17]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -860,7 +1135,7 @@ func (x *RevokeAuthSessionResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RevokeAuthSessionResponse.ProtoReflect.Descriptor instead.
 func (*RevokeAuthSessionResponse) Descriptor() ([]byte, []int) {
-	return file_mycel_common_v1_auth_proto_rawDescGZIP(), []int{13}
+	return file_mycel_common_v1_auth_proto_rawDescGZIP(), []int{17}
 }
 
 // RevokeOtherAuthSessionsRequest revokes all caller sessions except the current
@@ -873,7 +1148,7 @@ type RevokeOtherAuthSessionsRequest struct {
 
 func (x *RevokeOtherAuthSessionsRequest) Reset() {
 	*x = RevokeOtherAuthSessionsRequest{}
-	mi := &file_mycel_common_v1_auth_proto_msgTypes[14]
+	mi := &file_mycel_common_v1_auth_proto_msgTypes[18]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -885,7 +1160,7 @@ func (x *RevokeOtherAuthSessionsRequest) String() string {
 func (*RevokeOtherAuthSessionsRequest) ProtoMessage() {}
 
 func (x *RevokeOtherAuthSessionsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_common_v1_auth_proto_msgTypes[14]
+	mi := &file_mycel_common_v1_auth_proto_msgTypes[18]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -898,7 +1173,7 @@ func (x *RevokeOtherAuthSessionsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RevokeOtherAuthSessionsRequest.ProtoReflect.Descriptor instead.
 func (*RevokeOtherAuthSessionsRequest) Descriptor() ([]byte, []int) {
-	return file_mycel_common_v1_auth_proto_rawDescGZIP(), []int{14}
+	return file_mycel_common_v1_auth_proto_rawDescGZIP(), []int{18}
 }
 
 // RevokeOtherAuthSessionsResponse reports how many sessions were revoked.
@@ -911,7 +1186,7 @@ type RevokeOtherAuthSessionsResponse struct {
 
 func (x *RevokeOtherAuthSessionsResponse) Reset() {
 	*x = RevokeOtherAuthSessionsResponse{}
-	mi := &file_mycel_common_v1_auth_proto_msgTypes[15]
+	mi := &file_mycel_common_v1_auth_proto_msgTypes[19]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -923,7 +1198,7 @@ func (x *RevokeOtherAuthSessionsResponse) String() string {
 func (*RevokeOtherAuthSessionsResponse) ProtoMessage() {}
 
 func (x *RevokeOtherAuthSessionsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_common_v1_auth_proto_msgTypes[15]
+	mi := &file_mycel_common_v1_auth_proto_msgTypes[19]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -936,7 +1211,7 @@ func (x *RevokeOtherAuthSessionsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RevokeOtherAuthSessionsResponse.ProtoReflect.Descriptor instead.
 func (*RevokeOtherAuthSessionsResponse) Descriptor() ([]byte, []int) {
-	return file_mycel_common_v1_auth_proto_rawDescGZIP(), []int{15}
+	return file_mycel_common_v1_auth_proto_rawDescGZIP(), []int{19}
 }
 
 func (x *RevokeOtherAuthSessionsResponse) GetRevokedCount() int32 {
@@ -962,7 +1237,7 @@ type AuthSessionSummary struct {
 
 func (x *AuthSessionSummary) Reset() {
 	*x = AuthSessionSummary{}
-	mi := &file_mycel_common_v1_auth_proto_msgTypes[16]
+	mi := &file_mycel_common_v1_auth_proto_msgTypes[20]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -974,7 +1249,7 @@ func (x *AuthSessionSummary) String() string {
 func (*AuthSessionSummary) ProtoMessage() {}
 
 func (x *AuthSessionSummary) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_common_v1_auth_proto_msgTypes[16]
+	mi := &file_mycel_common_v1_auth_proto_msgTypes[20]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -987,7 +1262,7 @@ func (x *AuthSessionSummary) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AuthSessionSummary.ProtoReflect.Descriptor instead.
 func (*AuthSessionSummary) Descriptor() ([]byte, []int) {
-	return file_mycel_common_v1_auth_proto_rawDescGZIP(), []int{16}
+	return file_mycel_common_v1_auth_proto_rawDescGZIP(), []int{20}
 }
 
 func (x *AuthSessionSummary) GetAuthSessionId() string {
@@ -1082,7 +1357,28 @@ const file_mycel_common_v1_auth_proto_rawDesc = "" +
 	"\x0eLogoutResponse\"\x0f\n" +
 	"\rWhoAmIRequest\"N\n" +
 	"\x0eWhoAmIResponse\x12<\n" +
-	"\tprincipal\x18\x01 \x01(\v2\x1e.mycel.common.v1.AuthPrincipalR\tprincipal\"\x80\x01\n" +
+	"\tprincipal\x18\x01 \x01(\v2\x1e.mycel.common.v1.AuthPrincipalR\tprincipal\"H\n" +
+	"\x12GetMyAccessRequest\x122\n" +
+	"\x05scope\x18\x01 \x01(\v2\x1c.mycel.common.v1.AccessScopeR\x05scope\"\xeb\x02\n" +
+	"\x13GetMyAccessResponse\x12<\n" +
+	"\tprincipal\x18\x01 \x01(\v2\x1e.mycel.common.v1.AuthPrincipalR\tprincipal\x12'\n" +
+	"\x0feffective_roles\x18\x02 \x03(\tR\x0eeffectiveRoles\x125\n" +
+	"\x16effective_capabilities\x18\x03 \x03(\tR\x15effectiveCapabilities\x124\n" +
+	"\x05roles\x18\x04 \x03(\v2\x1e.mycel.common.v1.EffectiveRoleR\x05roles\x12H\n" +
+	"\fcapabilities\x18\x05 \x03(\v2$.mycel.common.v1.EffectiveCapabilityR\fcapabilities\x12\x1a\n" +
+	"\bwarnings\x18\x06 \x03(\tR\bwarnings\x12\x1a\n" +
+	"\bcomplete\x18\a \x01(\bR\bcomplete\"o\n" +
+	"\rEffectiveRole\x12\x12\n" +
+	"\x04role\x18\x01 \x01(\tR\x04role\x122\n" +
+	"\x05scope\x18\x02 \x01(\v2\x1c.mycel.common.v1.AccessScopeR\x05scope\x12\x16\n" +
+	"\x06source\x18\x03 \x01(\tR\x06source\"\x95\x01\n" +
+	"\x13EffectiveCapability\x12\x1e\n" +
+	"\n" +
+	"capability\x18\x01 \x01(\tR\n" +
+	"capability\x122\n" +
+	"\x05scope\x18\x02 \x01(\v2\x1c.mycel.common.v1.AccessScopeR\x05scope\x12\x16\n" +
+	"\x06source\x18\x03 \x01(\tR\x06source\x12\x12\n" +
+	"\x04role\x18\x04 \x01(\tR\x04role\"\x80\x01\n" +
 	"\x17ListAuthSessionsRequest\x12\x1b\n" +
 	"\tpage_size\x18\x01 \x01(\x05R\bpageSize\x12\x1d\n" +
 	"\n" +
@@ -1111,12 +1407,13 @@ const file_mycel_common_v1_auth_proto_rawDesc = "" +
 	"\x1eAUTH_SESSION_STATE_UNSPECIFIED\x10\x00\x12\x1d\n" +
 	"\x19AUTH_SESSION_STATE_ACTIVE\x10\x01\x12\x1e\n" +
 	"\x1aAUTH_SESSION_STATE_EXPIRED\x10\x02\x12\x1e\n" +
-	"\x1aAUTH_SESSION_STATE_REVOKED\x10\x032\x8c\x05\n" +
+	"\x1aAUTH_SESSION_STATE_REVOKED\x10\x032\xe6\x05\n" +
 	"\vAuthService\x12F\n" +
 	"\x05Login\x12\x1d.mycel.common.v1.LoginRequest\x1a\x1e.mycel.common.v1.LoginResponse\x12L\n" +
 	"\aRefresh\x12\x1f.mycel.common.v1.RefreshRequest\x1a .mycel.common.v1.RefreshResponse\x12I\n" +
 	"\x06Logout\x12\x1e.mycel.common.v1.LogoutRequest\x1a\x1f.mycel.common.v1.LogoutResponse\x12I\n" +
-	"\x06WhoAmI\x12\x1e.mycel.common.v1.WhoAmIRequest\x1a\x1f.mycel.common.v1.WhoAmIResponse\x12g\n" +
+	"\x06WhoAmI\x12\x1e.mycel.common.v1.WhoAmIRequest\x1a\x1f.mycel.common.v1.WhoAmIResponse\x12X\n" +
+	"\vGetMyAccess\x12#.mycel.common.v1.GetMyAccessRequest\x1a$.mycel.common.v1.GetMyAccessResponse\x12g\n" +
 	"\x10ListAuthSessions\x12(.mycel.common.v1.ListAuthSessionsRequest\x1a).mycel.common.v1.ListAuthSessionsResponse\x12j\n" +
 	"\x11RevokeAuthSession\x12).mycel.common.v1.RevokeAuthSessionRequest\x1a*.mycel.common.v1.RevokeAuthSessionResponse\x12|\n" +
 	"\x17RevokeOtherAuthSessions\x12/.mycel.common.v1.RevokeOtherAuthSessionsRequest\x1a0.mycel.common.v1.RevokeOtherAuthSessionsResponseB\xbf\x01\n" +
@@ -1135,7 +1432,7 @@ func file_mycel_common_v1_auth_proto_rawDescGZIP() []byte {
 }
 
 var file_mycel_common_v1_auth_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
-var file_mycel_common_v1_auth_proto_msgTypes = make([]protoimpl.MessageInfo, 17)
+var file_mycel_common_v1_auth_proto_msgTypes = make([]protoimpl.MessageInfo, 21)
 var file_mycel_common_v1_auth_proto_goTypes = []any{
 	(AuthSessionState)(0),                   // 0: mycel.common.v1.AuthSessionState
 	(*AuthPrincipal)(nil),                   // 1: mycel.common.v1.AuthPrincipal
@@ -1148,50 +1445,63 @@ var file_mycel_common_v1_auth_proto_goTypes = []any{
 	(*LogoutResponse)(nil),                  // 8: mycel.common.v1.LogoutResponse
 	(*WhoAmIRequest)(nil),                   // 9: mycel.common.v1.WhoAmIRequest
 	(*WhoAmIResponse)(nil),                  // 10: mycel.common.v1.WhoAmIResponse
-	(*ListAuthSessionsRequest)(nil),         // 11: mycel.common.v1.ListAuthSessionsRequest
-	(*ListAuthSessionsResponse)(nil),        // 12: mycel.common.v1.ListAuthSessionsResponse
-	(*RevokeAuthSessionRequest)(nil),        // 13: mycel.common.v1.RevokeAuthSessionRequest
-	(*RevokeAuthSessionResponse)(nil),       // 14: mycel.common.v1.RevokeAuthSessionResponse
-	(*RevokeOtherAuthSessionsRequest)(nil),  // 15: mycel.common.v1.RevokeOtherAuthSessionsRequest
-	(*RevokeOtherAuthSessionsResponse)(nil), // 16: mycel.common.v1.RevokeOtherAuthSessionsResponse
-	(*AuthSessionSummary)(nil),              // 17: mycel.common.v1.AuthSessionSummary
-	(PrincipalType)(0),                      // 18: mycel.common.v1.PrincipalType
-	(*timestamppb.Timestamp)(nil),           // 19: google.protobuf.Timestamp
+	(*GetMyAccessRequest)(nil),              // 11: mycel.common.v1.GetMyAccessRequest
+	(*GetMyAccessResponse)(nil),             // 12: mycel.common.v1.GetMyAccessResponse
+	(*EffectiveRole)(nil),                   // 13: mycel.common.v1.EffectiveRole
+	(*EffectiveCapability)(nil),             // 14: mycel.common.v1.EffectiveCapability
+	(*ListAuthSessionsRequest)(nil),         // 15: mycel.common.v1.ListAuthSessionsRequest
+	(*ListAuthSessionsResponse)(nil),        // 16: mycel.common.v1.ListAuthSessionsResponse
+	(*RevokeAuthSessionRequest)(nil),        // 17: mycel.common.v1.RevokeAuthSessionRequest
+	(*RevokeAuthSessionResponse)(nil),       // 18: mycel.common.v1.RevokeAuthSessionResponse
+	(*RevokeOtherAuthSessionsRequest)(nil),  // 19: mycel.common.v1.RevokeOtherAuthSessionsRequest
+	(*RevokeOtherAuthSessionsResponse)(nil), // 20: mycel.common.v1.RevokeOtherAuthSessionsResponse
+	(*AuthSessionSummary)(nil),              // 21: mycel.common.v1.AuthSessionSummary
+	(PrincipalType)(0),                      // 22: mycel.common.v1.PrincipalType
+	(*timestamppb.Timestamp)(nil),           // 23: google.protobuf.Timestamp
+	(*AccessScope)(nil),                     // 24: mycel.common.v1.AccessScope
 }
 var file_mycel_common_v1_auth_proto_depIdxs = []int32{
-	18, // 0: mycel.common.v1.AuthPrincipal.type:type_name -> mycel.common.v1.PrincipalType
+	22, // 0: mycel.common.v1.AuthPrincipal.type:type_name -> mycel.common.v1.PrincipalType
 	2,  // 1: mycel.common.v1.LoginRequest.client:type_name -> mycel.common.v1.ClientInfo
-	19, // 2: mycel.common.v1.LoginResponse.access_token_expire_time:type_name -> google.protobuf.Timestamp
+	23, // 2: mycel.common.v1.LoginResponse.access_token_expire_time:type_name -> google.protobuf.Timestamp
 	1,  // 3: mycel.common.v1.LoginResponse.principal:type_name -> mycel.common.v1.AuthPrincipal
 	2,  // 4: mycel.common.v1.RefreshRequest.client:type_name -> mycel.common.v1.ClientInfo
-	19, // 5: mycel.common.v1.RefreshResponse.access_token_expire_time:type_name -> google.protobuf.Timestamp
+	23, // 5: mycel.common.v1.RefreshResponse.access_token_expire_time:type_name -> google.protobuf.Timestamp
 	1,  // 6: mycel.common.v1.RefreshResponse.principal:type_name -> mycel.common.v1.AuthPrincipal
 	1,  // 7: mycel.common.v1.WhoAmIResponse.principal:type_name -> mycel.common.v1.AuthPrincipal
-	17, // 8: mycel.common.v1.ListAuthSessionsResponse.sessions:type_name -> mycel.common.v1.AuthSessionSummary
-	19, // 9: mycel.common.v1.AuthSessionSummary.create_time:type_name -> google.protobuf.Timestamp
-	19, // 10: mycel.common.v1.AuthSessionSummary.last_seen_time:type_name -> google.protobuf.Timestamp
-	19, // 11: mycel.common.v1.AuthSessionSummary.expire_time:type_name -> google.protobuf.Timestamp
-	2,  // 12: mycel.common.v1.AuthSessionSummary.client:type_name -> mycel.common.v1.ClientInfo
-	0,  // 13: mycel.common.v1.AuthSessionSummary.state:type_name -> mycel.common.v1.AuthSessionState
-	3,  // 14: mycel.common.v1.AuthService.Login:input_type -> mycel.common.v1.LoginRequest
-	5,  // 15: mycel.common.v1.AuthService.Refresh:input_type -> mycel.common.v1.RefreshRequest
-	7,  // 16: mycel.common.v1.AuthService.Logout:input_type -> mycel.common.v1.LogoutRequest
-	9,  // 17: mycel.common.v1.AuthService.WhoAmI:input_type -> mycel.common.v1.WhoAmIRequest
-	11, // 18: mycel.common.v1.AuthService.ListAuthSessions:input_type -> mycel.common.v1.ListAuthSessionsRequest
-	13, // 19: mycel.common.v1.AuthService.RevokeAuthSession:input_type -> mycel.common.v1.RevokeAuthSessionRequest
-	15, // 20: mycel.common.v1.AuthService.RevokeOtherAuthSessions:input_type -> mycel.common.v1.RevokeOtherAuthSessionsRequest
-	4,  // 21: mycel.common.v1.AuthService.Login:output_type -> mycel.common.v1.LoginResponse
-	6,  // 22: mycel.common.v1.AuthService.Refresh:output_type -> mycel.common.v1.RefreshResponse
-	8,  // 23: mycel.common.v1.AuthService.Logout:output_type -> mycel.common.v1.LogoutResponse
-	10, // 24: mycel.common.v1.AuthService.WhoAmI:output_type -> mycel.common.v1.WhoAmIResponse
-	12, // 25: mycel.common.v1.AuthService.ListAuthSessions:output_type -> mycel.common.v1.ListAuthSessionsResponse
-	14, // 26: mycel.common.v1.AuthService.RevokeAuthSession:output_type -> mycel.common.v1.RevokeAuthSessionResponse
-	16, // 27: mycel.common.v1.AuthService.RevokeOtherAuthSessions:output_type -> mycel.common.v1.RevokeOtherAuthSessionsResponse
-	21, // [21:28] is the sub-list for method output_type
-	14, // [14:21] is the sub-list for method input_type
-	14, // [14:14] is the sub-list for extension type_name
-	14, // [14:14] is the sub-list for extension extendee
-	0,  // [0:14] is the sub-list for field type_name
+	24, // 8: mycel.common.v1.GetMyAccessRequest.scope:type_name -> mycel.common.v1.AccessScope
+	1,  // 9: mycel.common.v1.GetMyAccessResponse.principal:type_name -> mycel.common.v1.AuthPrincipal
+	13, // 10: mycel.common.v1.GetMyAccessResponse.roles:type_name -> mycel.common.v1.EffectiveRole
+	14, // 11: mycel.common.v1.GetMyAccessResponse.capabilities:type_name -> mycel.common.v1.EffectiveCapability
+	24, // 12: mycel.common.v1.EffectiveRole.scope:type_name -> mycel.common.v1.AccessScope
+	24, // 13: mycel.common.v1.EffectiveCapability.scope:type_name -> mycel.common.v1.AccessScope
+	21, // 14: mycel.common.v1.ListAuthSessionsResponse.sessions:type_name -> mycel.common.v1.AuthSessionSummary
+	23, // 15: mycel.common.v1.AuthSessionSummary.create_time:type_name -> google.protobuf.Timestamp
+	23, // 16: mycel.common.v1.AuthSessionSummary.last_seen_time:type_name -> google.protobuf.Timestamp
+	23, // 17: mycel.common.v1.AuthSessionSummary.expire_time:type_name -> google.protobuf.Timestamp
+	2,  // 18: mycel.common.v1.AuthSessionSummary.client:type_name -> mycel.common.v1.ClientInfo
+	0,  // 19: mycel.common.v1.AuthSessionSummary.state:type_name -> mycel.common.v1.AuthSessionState
+	3,  // 20: mycel.common.v1.AuthService.Login:input_type -> mycel.common.v1.LoginRequest
+	5,  // 21: mycel.common.v1.AuthService.Refresh:input_type -> mycel.common.v1.RefreshRequest
+	7,  // 22: mycel.common.v1.AuthService.Logout:input_type -> mycel.common.v1.LogoutRequest
+	9,  // 23: mycel.common.v1.AuthService.WhoAmI:input_type -> mycel.common.v1.WhoAmIRequest
+	11, // 24: mycel.common.v1.AuthService.GetMyAccess:input_type -> mycel.common.v1.GetMyAccessRequest
+	15, // 25: mycel.common.v1.AuthService.ListAuthSessions:input_type -> mycel.common.v1.ListAuthSessionsRequest
+	17, // 26: mycel.common.v1.AuthService.RevokeAuthSession:input_type -> mycel.common.v1.RevokeAuthSessionRequest
+	19, // 27: mycel.common.v1.AuthService.RevokeOtherAuthSessions:input_type -> mycel.common.v1.RevokeOtherAuthSessionsRequest
+	4,  // 28: mycel.common.v1.AuthService.Login:output_type -> mycel.common.v1.LoginResponse
+	6,  // 29: mycel.common.v1.AuthService.Refresh:output_type -> mycel.common.v1.RefreshResponse
+	8,  // 30: mycel.common.v1.AuthService.Logout:output_type -> mycel.common.v1.LogoutResponse
+	10, // 31: mycel.common.v1.AuthService.WhoAmI:output_type -> mycel.common.v1.WhoAmIResponse
+	12, // 32: mycel.common.v1.AuthService.GetMyAccess:output_type -> mycel.common.v1.GetMyAccessResponse
+	16, // 33: mycel.common.v1.AuthService.ListAuthSessions:output_type -> mycel.common.v1.ListAuthSessionsResponse
+	18, // 34: mycel.common.v1.AuthService.RevokeAuthSession:output_type -> mycel.common.v1.RevokeAuthSessionResponse
+	20, // 35: mycel.common.v1.AuthService.RevokeOtherAuthSessions:output_type -> mycel.common.v1.RevokeOtherAuthSessionsResponse
+	28, // [28:36] is the sub-list for method output_type
+	20, // [20:28] is the sub-list for method input_type
+	20, // [20:20] is the sub-list for extension type_name
+	20, // [20:20] is the sub-list for extension extendee
+	0,  // [0:20] is the sub-list for field type_name
 }
 
 func init() { file_mycel_common_v1_auth_proto_init() }
@@ -1210,7 +1520,7 @@ func file_mycel_common_v1_auth_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_mycel_common_v1_auth_proto_rawDesc), len(file_mycel_common_v1_auth_proto_rawDesc)),
 			NumEnums:      1,
-			NumMessages:   17,
+			NumMessages:   21,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
