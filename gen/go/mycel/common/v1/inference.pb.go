@@ -22,16 +22,18 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-// InferenceOperation identifies the kind of model operation requested.
+// InferenceOperation identifies the workload operation requested and governed
+// by Intelligence Access grants, policies, decisions, and usage telemetry.
 type InferenceOperation int32
 
 const (
-	InferenceOperation_INFERENCE_OPERATION_UNSPECIFIED InferenceOperation = 0
-	InferenceOperation_INFERENCE_OPERATION_EMBEDDINGS  InferenceOperation = 1
-	InferenceOperation_INFERENCE_OPERATION_CHAT        InferenceOperation = 2
-	InferenceOperation_INFERENCE_OPERATION_RERANK      InferenceOperation = 3
-	InferenceOperation_INFERENCE_OPERATION_SUMMARIZE   InferenceOperation = 4
-	InferenceOperation_INFERENCE_OPERATION_CLASSIFY    InferenceOperation = 5
+	InferenceOperation_INFERENCE_OPERATION_UNSPECIFIED    InferenceOperation = 0
+	InferenceOperation_INFERENCE_OPERATION_EMBEDDINGS     InferenceOperation = 1
+	InferenceOperation_INFERENCE_OPERATION_CHAT           InferenceOperation = 2
+	InferenceOperation_INFERENCE_OPERATION_RERANK         InferenceOperation = 3
+	InferenceOperation_INFERENCE_OPERATION_SUMMARIZE      InferenceOperation = 4
+	InferenceOperation_INFERENCE_OPERATION_CLASSIFY       InferenceOperation = 5
+	InferenceOperation_INFERENCE_OPERATION_IMAGE_ANALYSIS InferenceOperation = 6
 )
 
 // Enum value maps for InferenceOperation.
@@ -43,14 +45,16 @@ var (
 		3: "INFERENCE_OPERATION_RERANK",
 		4: "INFERENCE_OPERATION_SUMMARIZE",
 		5: "INFERENCE_OPERATION_CLASSIFY",
+		6: "INFERENCE_OPERATION_IMAGE_ANALYSIS",
 	}
 	InferenceOperation_value = map[string]int32{
-		"INFERENCE_OPERATION_UNSPECIFIED": 0,
-		"INFERENCE_OPERATION_EMBEDDINGS":  1,
-		"INFERENCE_OPERATION_CHAT":        2,
-		"INFERENCE_OPERATION_RERANK":      3,
-		"INFERENCE_OPERATION_SUMMARIZE":   4,
-		"INFERENCE_OPERATION_CLASSIFY":    5,
+		"INFERENCE_OPERATION_UNSPECIFIED":    0,
+		"INFERENCE_OPERATION_EMBEDDINGS":     1,
+		"INFERENCE_OPERATION_CHAT":           2,
+		"INFERENCE_OPERATION_RERANK":         3,
+		"INFERENCE_OPERATION_SUMMARIZE":      4,
+		"INFERENCE_OPERATION_CLASSIFY":       5,
+		"INFERENCE_OPERATION_IMAGE_ANALYSIS": 6,
 	}
 )
 
@@ -81,59 +85,57 @@ func (InferenceOperation) EnumDescriptor() ([]byte, []int) {
 	return file_mycel_common_v1_inference_proto_rawDescGZIP(), []int{0}
 }
 
-// InferenceUsageMode describes why mycel is invoking inference.
-type InferenceUsageMode int32
+// InferenceModelKind identifies the broad category of a model independent of
+// the workload operations exposed by endpoint capabilities.
+type InferenceModelKind int32
 
 const (
-	InferenceUsageMode_INFERENCE_USAGE_MODE_UNSPECIFIED InferenceUsageMode = 0
-	InferenceUsageMode_INFERENCE_USAGE_MODE_INTERACTIVE InferenceUsageMode = 1
-	InferenceUsageMode_INFERENCE_USAGE_MODE_AUTOMATION  InferenceUsageMode = 2
-	InferenceUsageMode_INFERENCE_USAGE_MODE_BACKGROUND  InferenceUsageMode = 3
-	InferenceUsageMode_INFERENCE_USAGE_MODE_SEMANTIC    InferenceUsageMode = 4
+	InferenceModelKind_INFERENCE_MODEL_KIND_UNSPECIFIED InferenceModelKind = 0
+	InferenceModelKind_INFERENCE_MODEL_KIND_GENERATIVE  InferenceModelKind = 1
+	InferenceModelKind_INFERENCE_MODEL_KIND_EMBEDDING   InferenceModelKind = 2
+	InferenceModelKind_INFERENCE_MODEL_KIND_RERANKER    InferenceModelKind = 3
 )
 
-// Enum value maps for InferenceUsageMode.
+// Enum value maps for InferenceModelKind.
 var (
-	InferenceUsageMode_name = map[int32]string{
-		0: "INFERENCE_USAGE_MODE_UNSPECIFIED",
-		1: "INFERENCE_USAGE_MODE_INTERACTIVE",
-		2: "INFERENCE_USAGE_MODE_AUTOMATION",
-		3: "INFERENCE_USAGE_MODE_BACKGROUND",
-		4: "INFERENCE_USAGE_MODE_SEMANTIC",
+	InferenceModelKind_name = map[int32]string{
+		0: "INFERENCE_MODEL_KIND_UNSPECIFIED",
+		1: "INFERENCE_MODEL_KIND_GENERATIVE",
+		2: "INFERENCE_MODEL_KIND_EMBEDDING",
+		3: "INFERENCE_MODEL_KIND_RERANKER",
 	}
-	InferenceUsageMode_value = map[string]int32{
-		"INFERENCE_USAGE_MODE_UNSPECIFIED": 0,
-		"INFERENCE_USAGE_MODE_INTERACTIVE": 1,
-		"INFERENCE_USAGE_MODE_AUTOMATION":  2,
-		"INFERENCE_USAGE_MODE_BACKGROUND":  3,
-		"INFERENCE_USAGE_MODE_SEMANTIC":    4,
+	InferenceModelKind_value = map[string]int32{
+		"INFERENCE_MODEL_KIND_UNSPECIFIED": 0,
+		"INFERENCE_MODEL_KIND_GENERATIVE":  1,
+		"INFERENCE_MODEL_KIND_EMBEDDING":   2,
+		"INFERENCE_MODEL_KIND_RERANKER":    3,
 	}
 )
 
-func (x InferenceUsageMode) Enum() *InferenceUsageMode {
-	p := new(InferenceUsageMode)
+func (x InferenceModelKind) Enum() *InferenceModelKind {
+	p := new(InferenceModelKind)
 	*p = x
 	return p
 }
 
-func (x InferenceUsageMode) String() string {
+func (x InferenceModelKind) String() string {
 	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
 }
 
-func (InferenceUsageMode) Descriptor() protoreflect.EnumDescriptor {
+func (InferenceModelKind) Descriptor() protoreflect.EnumDescriptor {
 	return file_mycel_common_v1_inference_proto_enumTypes[1].Descriptor()
 }
 
-func (InferenceUsageMode) Type() protoreflect.EnumType {
+func (InferenceModelKind) Type() protoreflect.EnumType {
 	return &file_mycel_common_v1_inference_proto_enumTypes[1]
 }
 
-func (x InferenceUsageMode) Number() protoreflect.EnumNumber {
+func (x InferenceModelKind) Number() protoreflect.EnumNumber {
 	return protoreflect.EnumNumber(x)
 }
 
-// Deprecated: Use InferenceUsageMode.Descriptor instead.
-func (InferenceUsageMode) EnumDescriptor() ([]byte, []int) {
+// Deprecated: Use InferenceModelKind.Descriptor instead.
+func (InferenceModelKind) EnumDescriptor() ([]byte, []int) {
 	return file_mycel_common_v1_inference_proto_rawDescGZIP(), []int{1}
 }
 
@@ -243,510 +245,6 @@ func (InferenceNetworkClass) EnumDescriptor() ([]byte, []int) {
 	return file_mycel_common_v1_inference_proto_rawDescGZIP(), []int{3}
 }
 
-// InferenceCredentialOwnerType identifies the owner of an inference credential.
-type InferenceCredentialOwnerType int32
-
-const (
-	InferenceCredentialOwnerType_INFERENCE_CREDENTIAL_OWNER_TYPE_UNSPECIFIED InferenceCredentialOwnerType = 0
-	InferenceCredentialOwnerType_INFERENCE_CREDENTIAL_OWNER_TYPE_PRINCIPAL   InferenceCredentialOwnerType = 1
-	InferenceCredentialOwnerType_INFERENCE_CREDENTIAL_OWNER_TYPE_SPACE       InferenceCredentialOwnerType = 2
-	InferenceCredentialOwnerType_INFERENCE_CREDENTIAL_OWNER_TYPE_SYSTEM      InferenceCredentialOwnerType = 3
-)
-
-// Enum value maps for InferenceCredentialOwnerType.
-var (
-	InferenceCredentialOwnerType_name = map[int32]string{
-		0: "INFERENCE_CREDENTIAL_OWNER_TYPE_UNSPECIFIED",
-		1: "INFERENCE_CREDENTIAL_OWNER_TYPE_PRINCIPAL",
-		2: "INFERENCE_CREDENTIAL_OWNER_TYPE_SPACE",
-		3: "INFERENCE_CREDENTIAL_OWNER_TYPE_SYSTEM",
-	}
-	InferenceCredentialOwnerType_value = map[string]int32{
-		"INFERENCE_CREDENTIAL_OWNER_TYPE_UNSPECIFIED": 0,
-		"INFERENCE_CREDENTIAL_OWNER_TYPE_PRINCIPAL":   1,
-		"INFERENCE_CREDENTIAL_OWNER_TYPE_SPACE":       2,
-		"INFERENCE_CREDENTIAL_OWNER_TYPE_SYSTEM":      3,
-	}
-)
-
-func (x InferenceCredentialOwnerType) Enum() *InferenceCredentialOwnerType {
-	p := new(InferenceCredentialOwnerType)
-	*p = x
-	return p
-}
-
-func (x InferenceCredentialOwnerType) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (InferenceCredentialOwnerType) Descriptor() protoreflect.EnumDescriptor {
-	return file_mycel_common_v1_inference_proto_enumTypes[4].Descriptor()
-}
-
-func (InferenceCredentialOwnerType) Type() protoreflect.EnumType {
-	return &file_mycel_common_v1_inference_proto_enumTypes[4]
-}
-
-func (x InferenceCredentialOwnerType) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use InferenceCredentialOwnerType.Descriptor instead.
-func (InferenceCredentialOwnerType) EnumDescriptor() ([]byte, []int) {
-	return file_mycel_common_v1_inference_proto_rawDescGZIP(), []int{4}
-}
-
-// InferenceCredentialAuthType identifies the authentication scheme for a credential.
-type InferenceCredentialAuthType int32
-
-const (
-	InferenceCredentialAuthType_INFERENCE_CREDENTIAL_AUTH_TYPE_UNSPECIFIED InferenceCredentialAuthType = 0
-	InferenceCredentialAuthType_INFERENCE_CREDENTIAL_AUTH_TYPE_NONE        InferenceCredentialAuthType = 1
-	InferenceCredentialAuthType_INFERENCE_CREDENTIAL_AUTH_TYPE_API_KEY     InferenceCredentialAuthType = 2
-	InferenceCredentialAuthType_INFERENCE_CREDENTIAL_AUTH_TYPE_BEARER      InferenceCredentialAuthType = 3
-	InferenceCredentialAuthType_INFERENCE_CREDENTIAL_AUTH_TYPE_BASIC       InferenceCredentialAuthType = 4
-)
-
-// Enum value maps for InferenceCredentialAuthType.
-var (
-	InferenceCredentialAuthType_name = map[int32]string{
-		0: "INFERENCE_CREDENTIAL_AUTH_TYPE_UNSPECIFIED",
-		1: "INFERENCE_CREDENTIAL_AUTH_TYPE_NONE",
-		2: "INFERENCE_CREDENTIAL_AUTH_TYPE_API_KEY",
-		3: "INFERENCE_CREDENTIAL_AUTH_TYPE_BEARER",
-		4: "INFERENCE_CREDENTIAL_AUTH_TYPE_BASIC",
-	}
-	InferenceCredentialAuthType_value = map[string]int32{
-		"INFERENCE_CREDENTIAL_AUTH_TYPE_UNSPECIFIED": 0,
-		"INFERENCE_CREDENTIAL_AUTH_TYPE_NONE":        1,
-		"INFERENCE_CREDENTIAL_AUTH_TYPE_API_KEY":     2,
-		"INFERENCE_CREDENTIAL_AUTH_TYPE_BEARER":      3,
-		"INFERENCE_CREDENTIAL_AUTH_TYPE_BASIC":       4,
-	}
-)
-
-func (x InferenceCredentialAuthType) Enum() *InferenceCredentialAuthType {
-	p := new(InferenceCredentialAuthType)
-	*p = x
-	return p
-}
-
-func (x InferenceCredentialAuthType) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (InferenceCredentialAuthType) Descriptor() protoreflect.EnumDescriptor {
-	return file_mycel_common_v1_inference_proto_enumTypes[5].Descriptor()
-}
-
-func (InferenceCredentialAuthType) Type() protoreflect.EnumType {
-	return &file_mycel_common_v1_inference_proto_enumTypes[5]
-}
-
-func (x InferenceCredentialAuthType) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use InferenceCredentialAuthType.Descriptor instead.
-func (InferenceCredentialAuthType) EnumDescriptor() ([]byte, []int) {
-	return file_mycel_common_v1_inference_proto_rawDescGZIP(), []int{5}
-}
-
-// InferenceCredentialStatus is the lifecycle state of a credential.
-type InferenceCredentialStatus int32
-
-const (
-	InferenceCredentialStatus_INFERENCE_CREDENTIAL_STATUS_UNSPECIFIED InferenceCredentialStatus = 0
-	InferenceCredentialStatus_INFERENCE_CREDENTIAL_STATUS_ACTIVE      InferenceCredentialStatus = 1
-	InferenceCredentialStatus_INFERENCE_CREDENTIAL_STATUS_DISABLED    InferenceCredentialStatus = 2
-	InferenceCredentialStatus_INFERENCE_CREDENTIAL_STATUS_REVOKED     InferenceCredentialStatus = 3
-)
-
-// Enum value maps for InferenceCredentialStatus.
-var (
-	InferenceCredentialStatus_name = map[int32]string{
-		0: "INFERENCE_CREDENTIAL_STATUS_UNSPECIFIED",
-		1: "INFERENCE_CREDENTIAL_STATUS_ACTIVE",
-		2: "INFERENCE_CREDENTIAL_STATUS_DISABLED",
-		3: "INFERENCE_CREDENTIAL_STATUS_REVOKED",
-	}
-	InferenceCredentialStatus_value = map[string]int32{
-		"INFERENCE_CREDENTIAL_STATUS_UNSPECIFIED": 0,
-		"INFERENCE_CREDENTIAL_STATUS_ACTIVE":      1,
-		"INFERENCE_CREDENTIAL_STATUS_DISABLED":    2,
-		"INFERENCE_CREDENTIAL_STATUS_REVOKED":     3,
-	}
-)
-
-func (x InferenceCredentialStatus) Enum() *InferenceCredentialStatus {
-	p := new(InferenceCredentialStatus)
-	*p = x
-	return p
-}
-
-func (x InferenceCredentialStatus) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (InferenceCredentialStatus) Descriptor() protoreflect.EnumDescriptor {
-	return file_mycel_common_v1_inference_proto_enumTypes[6].Descriptor()
-}
-
-func (InferenceCredentialStatus) Type() protoreflect.EnumType {
-	return &file_mycel_common_v1_inference_proto_enumTypes[6]
-}
-
-func (x InferenceCredentialStatus) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use InferenceCredentialStatus.Descriptor instead.
-func (InferenceCredentialStatus) EnumDescriptor() ([]byte, []int) {
-	return file_mycel_common_v1_inference_proto_rawDescGZIP(), []int{6}
-}
-
-// InferencePolicyAction is the effective policy action.
-type InferencePolicyAction int32
-
-const (
-	InferencePolicyAction_INFERENCE_POLICY_ACTION_UNSPECIFIED InferencePolicyAction = 0
-	InferencePolicyAction_INFERENCE_POLICY_ACTION_ALLOW       InferencePolicyAction = 1
-	InferencePolicyAction_INFERENCE_POLICY_ACTION_RESTRICT    InferencePolicyAction = 2
-	InferencePolicyAction_INFERENCE_POLICY_ACTION_DENY        InferencePolicyAction = 3
-)
-
-// Enum value maps for InferencePolicyAction.
-var (
-	InferencePolicyAction_name = map[int32]string{
-		0: "INFERENCE_POLICY_ACTION_UNSPECIFIED",
-		1: "INFERENCE_POLICY_ACTION_ALLOW",
-		2: "INFERENCE_POLICY_ACTION_RESTRICT",
-		3: "INFERENCE_POLICY_ACTION_DENY",
-	}
-	InferencePolicyAction_value = map[string]int32{
-		"INFERENCE_POLICY_ACTION_UNSPECIFIED": 0,
-		"INFERENCE_POLICY_ACTION_ALLOW":       1,
-		"INFERENCE_POLICY_ACTION_RESTRICT":    2,
-		"INFERENCE_POLICY_ACTION_DENY":        3,
-	}
-)
-
-func (x InferencePolicyAction) Enum() *InferencePolicyAction {
-	p := new(InferencePolicyAction)
-	*p = x
-	return p
-}
-
-func (x InferencePolicyAction) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (InferencePolicyAction) Descriptor() protoreflect.EnumDescriptor {
-	return file_mycel_common_v1_inference_proto_enumTypes[7].Descriptor()
-}
-
-func (InferencePolicyAction) Type() protoreflect.EnumType {
-	return &file_mycel_common_v1_inference_proto_enumTypes[7]
-}
-
-func (x InferencePolicyAction) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use InferencePolicyAction.Descriptor instead.
-func (InferencePolicyAction) EnumDescriptor() ([]byte, []int) {
-	return file_mycel_common_v1_inference_proto_rawDescGZIP(), []int{7}
-}
-
-// InferencePolicyDecisionAction is the result of policy evaluation.
-type InferencePolicyDecisionAction int32
-
-const (
-	InferencePolicyDecisionAction_INFERENCE_POLICY_DECISION_ACTION_UNSPECIFIED InferencePolicyDecisionAction = 0
-	InferencePolicyDecisionAction_INFERENCE_POLICY_DECISION_ACTION_ALLOWED     InferencePolicyDecisionAction = 1
-	InferencePolicyDecisionAction_INFERENCE_POLICY_DECISION_ACTION_DENIED      InferencePolicyDecisionAction = 2
-)
-
-// Enum value maps for InferencePolicyDecisionAction.
-var (
-	InferencePolicyDecisionAction_name = map[int32]string{
-		0: "INFERENCE_POLICY_DECISION_ACTION_UNSPECIFIED",
-		1: "INFERENCE_POLICY_DECISION_ACTION_ALLOWED",
-		2: "INFERENCE_POLICY_DECISION_ACTION_DENIED",
-	}
-	InferencePolicyDecisionAction_value = map[string]int32{
-		"INFERENCE_POLICY_DECISION_ACTION_UNSPECIFIED": 0,
-		"INFERENCE_POLICY_DECISION_ACTION_ALLOWED":     1,
-		"INFERENCE_POLICY_DECISION_ACTION_DENIED":      2,
-	}
-)
-
-func (x InferencePolicyDecisionAction) Enum() *InferencePolicyDecisionAction {
-	p := new(InferencePolicyDecisionAction)
-	*p = x
-	return p
-}
-
-func (x InferencePolicyDecisionAction) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (InferencePolicyDecisionAction) Descriptor() protoreflect.EnumDescriptor {
-	return file_mycel_common_v1_inference_proto_enumTypes[8].Descriptor()
-}
-
-func (InferencePolicyDecisionAction) Type() protoreflect.EnumType {
-	return &file_mycel_common_v1_inference_proto_enumTypes[8]
-}
-
-func (x InferencePolicyDecisionAction) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use InferencePolicyDecisionAction.Descriptor instead.
-func (InferencePolicyDecisionAction) EnumDescriptor() ([]byte, []int) {
-	return file_mycel_common_v1_inference_proto_rawDescGZIP(), []int{8}
-}
-
-// InferenceGrantState is the lifecycle state of a credential grant.
-type InferenceGrantState int32
-
-const (
-	InferenceGrantState_INFERENCE_GRANT_STATE_UNSPECIFIED InferenceGrantState = 0
-	InferenceGrantState_INFERENCE_GRANT_STATE_ACTIVE      InferenceGrantState = 1
-	InferenceGrantState_INFERENCE_GRANT_STATE_EXPIRED     InferenceGrantState = 2
-	InferenceGrantState_INFERENCE_GRANT_STATE_REVOKED     InferenceGrantState = 3
-)
-
-// Enum value maps for InferenceGrantState.
-var (
-	InferenceGrantState_name = map[int32]string{
-		0: "INFERENCE_GRANT_STATE_UNSPECIFIED",
-		1: "INFERENCE_GRANT_STATE_ACTIVE",
-		2: "INFERENCE_GRANT_STATE_EXPIRED",
-		3: "INFERENCE_GRANT_STATE_REVOKED",
-	}
-	InferenceGrantState_value = map[string]int32{
-		"INFERENCE_GRANT_STATE_UNSPECIFIED": 0,
-		"INFERENCE_GRANT_STATE_ACTIVE":      1,
-		"INFERENCE_GRANT_STATE_EXPIRED":     2,
-		"INFERENCE_GRANT_STATE_REVOKED":     3,
-	}
-)
-
-func (x InferenceGrantState) Enum() *InferenceGrantState {
-	p := new(InferenceGrantState)
-	*p = x
-	return p
-}
-
-func (x InferenceGrantState) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (InferenceGrantState) Descriptor() protoreflect.EnumDescriptor {
-	return file_mycel_common_v1_inference_proto_enumTypes[9].Descriptor()
-}
-
-func (InferenceGrantState) Type() protoreflect.EnumType {
-	return &file_mycel_common_v1_inference_proto_enumTypes[9]
-}
-
-func (x InferenceGrantState) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use InferenceGrantState.Descriptor instead.
-func (InferenceGrantState) EnumDescriptor() ([]byte, []int) {
-	return file_mycel_common_v1_inference_proto_rawDescGZIP(), []int{9}
-}
-
-// InferencePolicyState is the lifecycle state of an inference policy.
-type InferencePolicyState int32
-
-const (
-	InferencePolicyState_INFERENCE_POLICY_STATE_UNSPECIFIED InferencePolicyState = 0
-	InferencePolicyState_INFERENCE_POLICY_STATE_ACTIVE      InferencePolicyState = 1
-	InferencePolicyState_INFERENCE_POLICY_STATE_EXPIRED     InferencePolicyState = 2
-	InferencePolicyState_INFERENCE_POLICY_STATE_REVOKED     InferencePolicyState = 3
-)
-
-// Enum value maps for InferencePolicyState.
-var (
-	InferencePolicyState_name = map[int32]string{
-		0: "INFERENCE_POLICY_STATE_UNSPECIFIED",
-		1: "INFERENCE_POLICY_STATE_ACTIVE",
-		2: "INFERENCE_POLICY_STATE_EXPIRED",
-		3: "INFERENCE_POLICY_STATE_REVOKED",
-	}
-	InferencePolicyState_value = map[string]int32{
-		"INFERENCE_POLICY_STATE_UNSPECIFIED": 0,
-		"INFERENCE_POLICY_STATE_ACTIVE":      1,
-		"INFERENCE_POLICY_STATE_EXPIRED":     2,
-		"INFERENCE_POLICY_STATE_REVOKED":     3,
-	}
-)
-
-func (x InferencePolicyState) Enum() *InferencePolicyState {
-	p := new(InferencePolicyState)
-	*p = x
-	return p
-}
-
-func (x InferencePolicyState) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (InferencePolicyState) Descriptor() protoreflect.EnumDescriptor {
-	return file_mycel_common_v1_inference_proto_enumTypes[10].Descriptor()
-}
-
-func (InferencePolicyState) Type() protoreflect.EnumType {
-	return &file_mycel_common_v1_inference_proto_enumTypes[10]
-}
-
-func (x InferencePolicyState) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use InferencePolicyState.Descriptor instead.
-func (InferencePolicyState) EnumDescriptor() ([]byte, []int) {
-	return file_mycel_common_v1_inference_proto_rawDescGZIP(), []int{10}
-}
-
-// InferenceUsageStatus is the terminal status of an inference attempt.
-type InferenceUsageStatus int32
-
-const (
-	InferenceUsageStatus_INFERENCE_USAGE_STATUS_UNSPECIFIED InferenceUsageStatus = 0
-	InferenceUsageStatus_INFERENCE_USAGE_STATUS_SUCCEEDED   InferenceUsageStatus = 1
-	InferenceUsageStatus_INFERENCE_USAGE_STATUS_FAILED      InferenceUsageStatus = 2
-	InferenceUsageStatus_INFERENCE_USAGE_STATUS_DENIED      InferenceUsageStatus = 3
-	InferenceUsageStatus_INFERENCE_USAGE_STATUS_CANCELED    InferenceUsageStatus = 4
-)
-
-// Enum value maps for InferenceUsageStatus.
-var (
-	InferenceUsageStatus_name = map[int32]string{
-		0: "INFERENCE_USAGE_STATUS_UNSPECIFIED",
-		1: "INFERENCE_USAGE_STATUS_SUCCEEDED",
-		2: "INFERENCE_USAGE_STATUS_FAILED",
-		3: "INFERENCE_USAGE_STATUS_DENIED",
-		4: "INFERENCE_USAGE_STATUS_CANCELED",
-	}
-	InferenceUsageStatus_value = map[string]int32{
-		"INFERENCE_USAGE_STATUS_UNSPECIFIED": 0,
-		"INFERENCE_USAGE_STATUS_SUCCEEDED":   1,
-		"INFERENCE_USAGE_STATUS_FAILED":      2,
-		"INFERENCE_USAGE_STATUS_DENIED":      3,
-		"INFERENCE_USAGE_STATUS_CANCELED":    4,
-	}
-)
-
-func (x InferenceUsageStatus) Enum() *InferenceUsageStatus {
-	p := new(InferenceUsageStatus)
-	*p = x
-	return p
-}
-
-func (x InferenceUsageStatus) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (InferenceUsageStatus) Descriptor() protoreflect.EnumDescriptor {
-	return file_mycel_common_v1_inference_proto_enumTypes[11].Descriptor()
-}
-
-func (InferenceUsageStatus) Type() protoreflect.EnumType {
-	return &file_mycel_common_v1_inference_proto_enumTypes[11]
-}
-
-func (x InferenceUsageStatus) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use InferenceUsageStatus.Descriptor instead.
-func (InferenceUsageStatus) EnumDescriptor() ([]byte, []int) {
-	return file_mycel_common_v1_inference_proto_rawDescGZIP(), []int{11}
-}
-
-// InferenceScope scopes grants, policies, decisions, and usage telemetry.
-type InferenceScope struct {
-	state              protoimpl.MessageState `protogen:"open.v1"`
-	SpaceId            string                 `protobuf:"bytes,1,opt,name=space_id,json=spaceId,proto3" json:"space_id,omitempty"`
-	DomainId           string                 `protobuf:"bytes,2,opt,name=domain_id,json=domainId,proto3" json:"domain_id,omitempty"`
-	SemanticIndexId    string                 `protobuf:"bytes,3,opt,name=semantic_index_id,json=semanticIndexId,proto3" json:"semantic_index_id,omitempty"`
-	NodeId             string                 `protobuf:"bytes,4,opt,name=node_id,json=nodeId,proto3" json:"node_id,omitempty"`
-	IncludeDescendants bool                   `protobuf:"varint,5,opt,name=include_descendants,json=includeDescendants,proto3" json:"include_descendants,omitempty"`
-	unknownFields      protoimpl.UnknownFields
-	sizeCache          protoimpl.SizeCache
-}
-
-func (x *InferenceScope) Reset() {
-	*x = InferenceScope{}
-	mi := &file_mycel_common_v1_inference_proto_msgTypes[0]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *InferenceScope) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*InferenceScope) ProtoMessage() {}
-
-func (x *InferenceScope) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_common_v1_inference_proto_msgTypes[0]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use InferenceScope.ProtoReflect.Descriptor instead.
-func (*InferenceScope) Descriptor() ([]byte, []int) {
-	return file_mycel_common_v1_inference_proto_rawDescGZIP(), []int{0}
-}
-
-func (x *InferenceScope) GetSpaceId() string {
-	if x != nil {
-		return x.SpaceId
-	}
-	return ""
-}
-
-func (x *InferenceScope) GetDomainId() string {
-	if x != nil {
-		return x.DomainId
-	}
-	return ""
-}
-
-func (x *InferenceScope) GetSemanticIndexId() string {
-	if x != nil {
-		return x.SemanticIndexId
-	}
-	return ""
-}
-
-func (x *InferenceScope) GetNodeId() string {
-	if x != nil {
-		return x.NodeId
-	}
-	return ""
-}
-
-func (x *InferenceScope) GetIncludeDescendants() bool {
-	if x != nil {
-		return x.IncludeDescendants
-	}
-	return false
-}
-
 // InferenceParameters contains provider-neutral runtime parameters.
 type InferenceParameters struct {
 	state           protoimpl.MessageState `protogen:"open.v1"`
@@ -761,7 +259,7 @@ type InferenceParameters struct {
 
 func (x *InferenceParameters) Reset() {
 	*x = InferenceParameters{}
-	mi := &file_mycel_common_v1_inference_proto_msgTypes[1]
+	mi := &file_mycel_common_v1_inference_proto_msgTypes[0]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -773,7 +271,7 @@ func (x *InferenceParameters) String() string {
 func (*InferenceParameters) ProtoMessage() {}
 
 func (x *InferenceParameters) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_common_v1_inference_proto_msgTypes[1]
+	mi := &file_mycel_common_v1_inference_proto_msgTypes[0]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -786,7 +284,7 @@ func (x *InferenceParameters) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use InferenceParameters.ProtoReflect.Descriptor instead.
 func (*InferenceParameters) Descriptor() ([]byte, []int) {
-	return file_mycel_common_v1_inference_proto_rawDescGZIP(), []int{1}
+	return file_mycel_common_v1_inference_proto_rawDescGZIP(), []int{0}
 }
 
 func (x *InferenceParameters) GetTemperature() float64 {
@@ -836,7 +334,7 @@ type InferencePrivacyRequirement struct {
 
 func (x *InferencePrivacyRequirement) Reset() {
 	*x = InferencePrivacyRequirement{}
-	mi := &file_mycel_common_v1_inference_proto_msgTypes[2]
+	mi := &file_mycel_common_v1_inference_proto_msgTypes[1]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -848,7 +346,7 @@ func (x *InferencePrivacyRequirement) String() string {
 func (*InferencePrivacyRequirement) ProtoMessage() {}
 
 func (x *InferencePrivacyRequirement) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_common_v1_inference_proto_msgTypes[2]
+	mi := &file_mycel_common_v1_inference_proto_msgTypes[1]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -861,7 +359,7 @@ func (x *InferencePrivacyRequirement) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use InferencePrivacyRequirement.ProtoReflect.Descriptor instead.
 func (*InferencePrivacyRequirement) Descriptor() ([]byte, []int) {
-	return file_mycel_common_v1_inference_proto_rawDescGZIP(), []int{2}
+	return file_mycel_common_v1_inference_proto_rawDescGZIP(), []int{1}
 }
 
 func (x *InferencePrivacyRequirement) GetAllowedPrivacyClasses() []InferencePrivacyClass {
@@ -904,7 +402,7 @@ type InferenceRef struct {
 
 func (x *InferenceRef) Reset() {
 	*x = InferenceRef{}
-	mi := &file_mycel_common_v1_inference_proto_msgTypes[3]
+	mi := &file_mycel_common_v1_inference_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -916,7 +414,7 @@ func (x *InferenceRef) String() string {
 func (*InferenceRef) ProtoMessage() {}
 
 func (x *InferenceRef) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_common_v1_inference_proto_msgTypes[3]
+	mi := &file_mycel_common_v1_inference_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -929,7 +427,7 @@ func (x *InferenceRef) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use InferenceRef.ProtoReflect.Descriptor instead.
 func (*InferenceRef) Descriptor() ([]byte, []int) {
-	return file_mycel_common_v1_inference_proto_rawDescGZIP(), []int{3}
+	return file_mycel_common_v1_inference_proto_rawDescGZIP(), []int{2}
 }
 
 func (x *InferenceRef) GetOperation() InferenceOperation {
@@ -1006,13 +504,7 @@ var File_mycel_common_v1_inference_proto protoreflect.FileDescriptor
 
 const file_mycel_common_v1_inference_proto_rawDesc = "" +
 	"\n" +
-	"\x1fmycel/common/v1/inference.proto\x12\x0fmycel.common.v1\x1a\x1cgoogle/protobuf/struct.proto\"\xbe\x01\n" +
-	"\x0eInferenceScope\x12\x19\n" +
-	"\bspace_id\x18\x01 \x01(\tR\aspaceId\x12\x1b\n" +
-	"\tdomain_id\x18\x02 \x01(\tR\bdomainId\x12*\n" +
-	"\x11semantic_index_id\x18\x03 \x01(\tR\x0fsemanticIndexId\x12\x17\n" +
-	"\anode_id\x18\x04 \x01(\tR\x06nodeId\x12/\n" +
-	"\x13include_descendants\x18\x05 \x01(\bR\x12includeDescendants\"\x80\x02\n" +
+	"\x1fmycel/common/v1/inference.proto\x12\x0fmycel.common.v1\x1a\x1cgoogle/protobuf/struct.proto\"\x80\x02\n" +
 	"\x13InferenceParameters\x12%\n" +
 	"\vtemperature\x18\x01 \x01(\x01H\x00R\vtemperature\x88\x01\x01\x12(\n" +
 	"\x10max_input_tokens\x18\x02 \x01(\x05R\x0emaxInputTokens\x12*\n" +
@@ -1041,20 +533,20 @@ const file_mycel_common_v1_inference_proto_rawDesc = "" +
 	"\n" +
 	"parameters\x18\n" +
 	" \x01(\v2$.mycel.common.v1.InferenceParametersR\n" +
-	"parameters*\xe0\x01\n" +
+	"parameters*\x88\x02\n" +
 	"\x12InferenceOperation\x12#\n" +
 	"\x1fINFERENCE_OPERATION_UNSPECIFIED\x10\x00\x12\"\n" +
 	"\x1eINFERENCE_OPERATION_EMBEDDINGS\x10\x01\x12\x1c\n" +
 	"\x18INFERENCE_OPERATION_CHAT\x10\x02\x12\x1e\n" +
 	"\x1aINFERENCE_OPERATION_RERANK\x10\x03\x12!\n" +
 	"\x1dINFERENCE_OPERATION_SUMMARIZE\x10\x04\x12 \n" +
-	"\x1cINFERENCE_OPERATION_CLASSIFY\x10\x05*\xcd\x01\n" +
-	"\x12InferenceUsageMode\x12$\n" +
-	" INFERENCE_USAGE_MODE_UNSPECIFIED\x10\x00\x12$\n" +
-	" INFERENCE_USAGE_MODE_INTERACTIVE\x10\x01\x12#\n" +
-	"\x1fINFERENCE_USAGE_MODE_AUTOMATION\x10\x02\x12#\n" +
-	"\x1fINFERENCE_USAGE_MODE_BACKGROUND\x10\x03\x12!\n" +
-	"\x1dINFERENCE_USAGE_MODE_SEMANTIC\x10\x04*\xb6\x01\n" +
+	"\x1cINFERENCE_OPERATION_CLASSIFY\x10\x05\x12&\n" +
+	"\"INFERENCE_OPERATION_IMAGE_ANALYSIS\x10\x06*\xa6\x01\n" +
+	"\x12InferenceModelKind\x12$\n" +
+	" INFERENCE_MODEL_KIND_UNSPECIFIED\x10\x00\x12#\n" +
+	"\x1fINFERENCE_MODEL_KIND_GENERATIVE\x10\x01\x12\"\n" +
+	"\x1eINFERENCE_MODEL_KIND_EMBEDDING\x10\x02\x12!\n" +
+	"\x1dINFERENCE_MODEL_KIND_RERANKER\x10\x03*\xb6\x01\n" +
 	"\x15InferencePrivacyClass\x12'\n" +
 	"#INFERENCE_PRIVACY_CLASS_UNSPECIFIED\x10\x00\x12&\n" +
 	"\"INFERENCE_PRIVACY_CLASS_LOCAL_ONLY\x10\x01\x12#\n" +
@@ -1064,48 +556,7 @@ const file_mycel_common_v1_inference_proto_rawDesc = "" +
 	"#INFERENCE_NETWORK_CLASS_UNSPECIFIED\x10\x00\x12!\n" +
 	"\x1dINFERENCE_NETWORK_CLASS_LOCAL\x10\x01\x12+\n" +
 	"'INFERENCE_NETWORK_CLASS_PRIVATE_NETWORK\x10\x02\x12+\n" +
-	"'INFERENCE_NETWORK_CLASS_PUBLIC_INTERNET\x10\x03*\xd5\x01\n" +
-	"\x1cInferenceCredentialOwnerType\x12/\n" +
-	"+INFERENCE_CREDENTIAL_OWNER_TYPE_UNSPECIFIED\x10\x00\x12-\n" +
-	")INFERENCE_CREDENTIAL_OWNER_TYPE_PRINCIPAL\x10\x01\x12)\n" +
-	"%INFERENCE_CREDENTIAL_OWNER_TYPE_SPACE\x10\x02\x12*\n" +
-	"&INFERENCE_CREDENTIAL_OWNER_TYPE_SYSTEM\x10\x03*\xf7\x01\n" +
-	"\x1bInferenceCredentialAuthType\x12.\n" +
-	"*INFERENCE_CREDENTIAL_AUTH_TYPE_UNSPECIFIED\x10\x00\x12'\n" +
-	"#INFERENCE_CREDENTIAL_AUTH_TYPE_NONE\x10\x01\x12*\n" +
-	"&INFERENCE_CREDENTIAL_AUTH_TYPE_API_KEY\x10\x02\x12)\n" +
-	"%INFERENCE_CREDENTIAL_AUTH_TYPE_BEARER\x10\x03\x12(\n" +
-	"$INFERENCE_CREDENTIAL_AUTH_TYPE_BASIC\x10\x04*\xc3\x01\n" +
-	"\x19InferenceCredentialStatus\x12+\n" +
-	"'INFERENCE_CREDENTIAL_STATUS_UNSPECIFIED\x10\x00\x12&\n" +
-	"\"INFERENCE_CREDENTIAL_STATUS_ACTIVE\x10\x01\x12(\n" +
-	"$INFERENCE_CREDENTIAL_STATUS_DISABLED\x10\x02\x12'\n" +
-	"#INFERENCE_CREDENTIAL_STATUS_REVOKED\x10\x03*\xab\x01\n" +
-	"\x15InferencePolicyAction\x12'\n" +
-	"#INFERENCE_POLICY_ACTION_UNSPECIFIED\x10\x00\x12!\n" +
-	"\x1dINFERENCE_POLICY_ACTION_ALLOW\x10\x01\x12$\n" +
-	" INFERENCE_POLICY_ACTION_RESTRICT\x10\x02\x12 \n" +
-	"\x1cINFERENCE_POLICY_ACTION_DENY\x10\x03*\xac\x01\n" +
-	"\x1dInferencePolicyDecisionAction\x120\n" +
-	",INFERENCE_POLICY_DECISION_ACTION_UNSPECIFIED\x10\x00\x12,\n" +
-	"(INFERENCE_POLICY_DECISION_ACTION_ALLOWED\x10\x01\x12+\n" +
-	"'INFERENCE_POLICY_DECISION_ACTION_DENIED\x10\x02*\xa4\x01\n" +
-	"\x13InferenceGrantState\x12%\n" +
-	"!INFERENCE_GRANT_STATE_UNSPECIFIED\x10\x00\x12 \n" +
-	"\x1cINFERENCE_GRANT_STATE_ACTIVE\x10\x01\x12!\n" +
-	"\x1dINFERENCE_GRANT_STATE_EXPIRED\x10\x02\x12!\n" +
-	"\x1dINFERENCE_GRANT_STATE_REVOKED\x10\x03*\xa9\x01\n" +
-	"\x14InferencePolicyState\x12&\n" +
-	"\"INFERENCE_POLICY_STATE_UNSPECIFIED\x10\x00\x12!\n" +
-	"\x1dINFERENCE_POLICY_STATE_ACTIVE\x10\x01\x12\"\n" +
-	"\x1eINFERENCE_POLICY_STATE_EXPIRED\x10\x02\x12\"\n" +
-	"\x1eINFERENCE_POLICY_STATE_REVOKED\x10\x03*\xcf\x01\n" +
-	"\x14InferenceUsageStatus\x12&\n" +
-	"\"INFERENCE_USAGE_STATUS_UNSPECIFIED\x10\x00\x12$\n" +
-	" INFERENCE_USAGE_STATUS_SUCCEEDED\x10\x01\x12!\n" +
-	"\x1dINFERENCE_USAGE_STATUS_FAILED\x10\x02\x12!\n" +
-	"\x1dINFERENCE_USAGE_STATUS_DENIED\x10\x03\x12#\n" +
-	"\x1fINFERENCE_USAGE_STATUS_CANCELED\x10\x04B\xc4\x01\n" +
+	"'INFERENCE_NETWORK_CLASS_PUBLIC_INTERNET\x10\x03B\xc4\x01\n" +
 	"\x13com.mycel.common.v1B\x0eInferenceProtoP\x01Z?github.com/myceldb/mycel-go-sdk/gen/go/mycel/common/v1;commonv1\xa2\x02\x03MCX\xaa\x02\x0fMycel.Common.V1\xca\x02\x0fMycel\\Common\\V1\xe2\x02\x1bMycel\\Common\\V1\\GPBMetadata\xea\x02\x11Mycel::Common::V1b\x06proto3"
 
 var (
@@ -1120,37 +571,28 @@ func file_mycel_common_v1_inference_proto_rawDescGZIP() []byte {
 	return file_mycel_common_v1_inference_proto_rawDescData
 }
 
-var file_mycel_common_v1_inference_proto_enumTypes = make([]protoimpl.EnumInfo, 12)
-var file_mycel_common_v1_inference_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
+var file_mycel_common_v1_inference_proto_enumTypes = make([]protoimpl.EnumInfo, 4)
+var file_mycel_common_v1_inference_proto_msgTypes = make([]protoimpl.MessageInfo, 3)
 var file_mycel_common_v1_inference_proto_goTypes = []any{
 	(InferenceOperation)(0),             // 0: mycel.common.v1.InferenceOperation
-	(InferenceUsageMode)(0),             // 1: mycel.common.v1.InferenceUsageMode
+	(InferenceModelKind)(0),             // 1: mycel.common.v1.InferenceModelKind
 	(InferencePrivacyClass)(0),          // 2: mycel.common.v1.InferencePrivacyClass
 	(InferenceNetworkClass)(0),          // 3: mycel.common.v1.InferenceNetworkClass
-	(InferenceCredentialOwnerType)(0),   // 4: mycel.common.v1.InferenceCredentialOwnerType
-	(InferenceCredentialAuthType)(0),    // 5: mycel.common.v1.InferenceCredentialAuthType
-	(InferenceCredentialStatus)(0),      // 6: mycel.common.v1.InferenceCredentialStatus
-	(InferencePolicyAction)(0),          // 7: mycel.common.v1.InferencePolicyAction
-	(InferencePolicyDecisionAction)(0),  // 8: mycel.common.v1.InferencePolicyDecisionAction
-	(InferenceGrantState)(0),            // 9: mycel.common.v1.InferenceGrantState
-	(InferencePolicyState)(0),           // 10: mycel.common.v1.InferencePolicyState
-	(InferenceUsageStatus)(0),           // 11: mycel.common.v1.InferenceUsageStatus
-	(*InferenceScope)(nil),              // 12: mycel.common.v1.InferenceScope
-	(*InferenceParameters)(nil),         // 13: mycel.common.v1.InferenceParameters
-	(*InferencePrivacyRequirement)(nil), // 14: mycel.common.v1.InferencePrivacyRequirement
-	(*InferenceRef)(nil),                // 15: mycel.common.v1.InferenceRef
-	(*structpb.Struct)(nil),             // 16: google.protobuf.Struct
+	(*InferenceParameters)(nil),         // 4: mycel.common.v1.InferenceParameters
+	(*InferencePrivacyRequirement)(nil), // 5: mycel.common.v1.InferencePrivacyRequirement
+	(*InferenceRef)(nil),                // 6: mycel.common.v1.InferenceRef
+	(*structpb.Struct)(nil),             // 7: google.protobuf.Struct
 }
 var file_mycel_common_v1_inference_proto_depIdxs = []int32{
-	16, // 0: mycel.common.v1.InferenceParameters.metadata:type_name -> google.protobuf.Struct
-	2,  // 1: mycel.common.v1.InferencePrivacyRequirement.allowed_privacy_classes:type_name -> mycel.common.v1.InferencePrivacyClass
-	0,  // 2: mycel.common.v1.InferenceRef.operation:type_name -> mycel.common.v1.InferenceOperation
-	13, // 3: mycel.common.v1.InferenceRef.parameters:type_name -> mycel.common.v1.InferenceParameters
-	4,  // [4:4] is the sub-list for method output_type
-	4,  // [4:4] is the sub-list for method input_type
-	4,  // [4:4] is the sub-list for extension type_name
-	4,  // [4:4] is the sub-list for extension extendee
-	0,  // [0:4] is the sub-list for field type_name
+	7, // 0: mycel.common.v1.InferenceParameters.metadata:type_name -> google.protobuf.Struct
+	2, // 1: mycel.common.v1.InferencePrivacyRequirement.allowed_privacy_classes:type_name -> mycel.common.v1.InferencePrivacyClass
+	0, // 2: mycel.common.v1.InferenceRef.operation:type_name -> mycel.common.v1.InferenceOperation
+	4, // 3: mycel.common.v1.InferenceRef.parameters:type_name -> mycel.common.v1.InferenceParameters
+	4, // [4:4] is the sub-list for method output_type
+	4, // [4:4] is the sub-list for method input_type
+	4, // [4:4] is the sub-list for extension type_name
+	4, // [4:4] is the sub-list for extension extendee
+	0, // [0:4] is the sub-list for field type_name
 }
 
 func init() { file_mycel_common_v1_inference_proto_init() }
@@ -1158,14 +600,14 @@ func file_mycel_common_v1_inference_proto_init() {
 	if File_mycel_common_v1_inference_proto != nil {
 		return
 	}
-	file_mycel_common_v1_inference_proto_msgTypes[1].OneofWrappers = []any{}
+	file_mycel_common_v1_inference_proto_msgTypes[0].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_mycel_common_v1_inference_proto_rawDesc), len(file_mycel_common_v1_inference_proto_rawDesc)),
-			NumEnums:      12,
-			NumMessages:   4,
+			NumEnums:      4,
+			NumMessages:   3,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

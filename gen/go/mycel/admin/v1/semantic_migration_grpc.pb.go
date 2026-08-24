@@ -26,8 +26,8 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 //
-// AdminSemanticMigrationService migrates legacy semantic/embedding resources to
-// the daemon semantic/inference control plane.
+// AdminSemanticMigrationService migrates legacy embedding resources to the
+// daemon semantic generation rule/inference control plane.
 type AdminSemanticMigrationServiceClient interface {
 	MigrateLegacyEmbeddings(ctx context.Context, in *MigrateLegacyEmbeddingsRequest, opts ...grpc.CallOption) (*MigrateLegacyEmbeddingsResponse, error)
 }
@@ -54,8 +54,8 @@ func (c *adminSemanticMigrationServiceClient) MigrateLegacyEmbeddings(ctx contex
 // All implementations must embed UnimplementedAdminSemanticMigrationServiceServer
 // for forward compatibility.
 //
-// AdminSemanticMigrationService migrates legacy semantic/embedding resources to
-// the daemon semantic/inference control plane.
+// AdminSemanticMigrationService migrates legacy embedding resources to the
+// daemon semantic generation rule/inference control plane.
 type AdminSemanticMigrationServiceServer interface {
 	MigrateLegacyEmbeddings(context.Context, *MigrateLegacyEmbeddingsRequest) (*MigrateLegacyEmbeddingsResponse, error)
 	mustEmbedUnimplementedAdminSemanticMigrationServiceServer()

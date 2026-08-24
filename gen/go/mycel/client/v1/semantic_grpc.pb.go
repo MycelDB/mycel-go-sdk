@@ -19,22 +19,23 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	SemanticService_ListSemanticIndexes_FullMethodName = "/mycel.client.v1.SemanticService/ListSemanticIndexes"
-	SemanticService_SemanticSearch_FullMethodName      = "/mycel.client.v1.SemanticService/SemanticSearch"
+	SemanticService_ListSemanticRules_FullMethodName = "/mycel.client.v1.SemanticService/ListSemanticRules"
+	SemanticService_SemanticSearch_FullMethodName    = "/mycel.client.v1.SemanticService/SemanticSearch"
 )
 
 // SemanticServiceClient is the client API for SemanticService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 //
-// SemanticService exposes client-facing semantic search. Semantic index
-// creation/configuration, provider credentials, policies, maintenance, and
-// backfill controls belong to the Admin API.
+// SemanticService exposes client-facing semantic generation rule discovery and
+// semantic search. Rule authoring, provider credentials, policies, maintenance,
+// and backfill controls belong to the Admin API.
 type SemanticServiceClient interface {
-	// ListSemanticIndexes lists searchable semantic indexes available to the
-	// authenticated caller for a space/domain.
-	ListSemanticIndexes(ctx context.Context, in *ListSemanticIndexesRequest, opts ...grpc.CallOption) (*ListSemanticIndexesResponse, error)
-	// SemanticSearch searches committed semantic index state for a space/domain.
+	// ListSemanticRules lists searchable semantic generation rules available to
+	// the authenticated caller for a space/domain.
+	ListSemanticRules(ctx context.Context, in *ListSemanticRulesRequest, opts ...grpc.CallOption) (*ListSemanticRulesResponse, error)
+	// SemanticSearch searches committed semantic rule binding state for a
+	// space/domain.
 	SemanticSearch(ctx context.Context, in *SemanticSearchRequest, opts ...grpc.CallOption) (*SemanticSearchResponse, error)
 }
 
@@ -46,10 +47,10 @@ func NewSemanticServiceClient(cc grpc.ClientConnInterface) SemanticServiceClient
 	return &semanticServiceClient{cc}
 }
 
-func (c *semanticServiceClient) ListSemanticIndexes(ctx context.Context, in *ListSemanticIndexesRequest, opts ...grpc.CallOption) (*ListSemanticIndexesResponse, error) {
+func (c *semanticServiceClient) ListSemanticRules(ctx context.Context, in *ListSemanticRulesRequest, opts ...grpc.CallOption) (*ListSemanticRulesResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(ListSemanticIndexesResponse)
-	err := c.cc.Invoke(ctx, SemanticService_ListSemanticIndexes_FullMethodName, in, out, cOpts...)
+	out := new(ListSemanticRulesResponse)
+	err := c.cc.Invoke(ctx, SemanticService_ListSemanticRules_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -70,14 +71,15 @@ func (c *semanticServiceClient) SemanticSearch(ctx context.Context, in *Semantic
 // All implementations must embed UnimplementedSemanticServiceServer
 // for forward compatibility.
 //
-// SemanticService exposes client-facing semantic search. Semantic index
-// creation/configuration, provider credentials, policies, maintenance, and
-// backfill controls belong to the Admin API.
+// SemanticService exposes client-facing semantic generation rule discovery and
+// semantic search. Rule authoring, provider credentials, policies, maintenance,
+// and backfill controls belong to the Admin API.
 type SemanticServiceServer interface {
-	// ListSemanticIndexes lists searchable semantic indexes available to the
-	// authenticated caller for a space/domain.
-	ListSemanticIndexes(context.Context, *ListSemanticIndexesRequest) (*ListSemanticIndexesResponse, error)
-	// SemanticSearch searches committed semantic index state for a space/domain.
+	// ListSemanticRules lists searchable semantic generation rules available to
+	// the authenticated caller for a space/domain.
+	ListSemanticRules(context.Context, *ListSemanticRulesRequest) (*ListSemanticRulesResponse, error)
+	// SemanticSearch searches committed semantic rule binding state for a
+	// space/domain.
 	SemanticSearch(context.Context, *SemanticSearchRequest) (*SemanticSearchResponse, error)
 	mustEmbedUnimplementedSemanticServiceServer()
 }
@@ -89,8 +91,8 @@ type SemanticServiceServer interface {
 // pointer dereference when methods are called.
 type UnimplementedSemanticServiceServer struct{}
 
-func (UnimplementedSemanticServiceServer) ListSemanticIndexes(context.Context, *ListSemanticIndexesRequest) (*ListSemanticIndexesResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ListSemanticIndexes not implemented")
+func (UnimplementedSemanticServiceServer) ListSemanticRules(context.Context, *ListSemanticRulesRequest) (*ListSemanticRulesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListSemanticRules not implemented")
 }
 func (UnimplementedSemanticServiceServer) SemanticSearch(context.Context, *SemanticSearchRequest) (*SemanticSearchResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SemanticSearch not implemented")
@@ -116,20 +118,20 @@ func RegisterSemanticServiceServer(s grpc.ServiceRegistrar, srv SemanticServiceS
 	s.RegisterService(&SemanticService_ServiceDesc, srv)
 }
 
-func _SemanticService_ListSemanticIndexes_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ListSemanticIndexesRequest)
+func _SemanticService_ListSemanticRules_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListSemanticRulesRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(SemanticServiceServer).ListSemanticIndexes(ctx, in)
+		return srv.(SemanticServiceServer).ListSemanticRules(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: SemanticService_ListSemanticIndexes_FullMethodName,
+		FullMethod: SemanticService_ListSemanticRules_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SemanticServiceServer).ListSemanticIndexes(ctx, req.(*ListSemanticIndexesRequest))
+		return srv.(SemanticServiceServer).ListSemanticRules(ctx, req.(*ListSemanticRulesRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -160,8 +162,8 @@ var SemanticService_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*SemanticServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "ListSemanticIndexes",
-			Handler:    _SemanticService_ListSemanticIndexes_Handler,
+			MethodName: "ListSemanticRules",
+			Handler:    _SemanticService_ListSemanticRules_Handler,
 		},
 		{
 			MethodName: "SemanticSearch",

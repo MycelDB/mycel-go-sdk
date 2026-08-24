@@ -19,22 +19,31 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	AdminSemanticService_ListSemanticIndexes_FullMethodName = "/mycel.admin.v1.AdminSemanticService/ListSemanticIndexes"
-	AdminSemanticService_UpsertSemanticIndex_FullMethodName = "/mycel.admin.v1.AdminSemanticService/UpsertSemanticIndex"
-	AdminSemanticService_DeleteSemanticIndex_FullMethodName = "/mycel.admin.v1.AdminSemanticService/DeleteSemanticIndex"
+	AdminSemanticService_ListSemanticRules_FullMethodName      = "/mycel.admin.v1.AdminSemanticService/ListSemanticRules"
+	AdminSemanticService_GetSemanticRule_FullMethodName        = "/mycel.admin.v1.AdminSemanticService/GetSemanticRule"
+	AdminSemanticService_ValidateSemanticRule_FullMethodName   = "/mycel.admin.v1.AdminSemanticService/ValidateSemanticRule"
+	AdminSemanticService_CreateSemanticRule_FullMethodName     = "/mycel.admin.v1.AdminSemanticService/CreateSemanticRule"
+	AdminSemanticService_UpdateSemanticRule_FullMethodName     = "/mycel.admin.v1.AdminSemanticService/UpdateSemanticRule"
+	AdminSemanticService_SetSemanticRuleEnabled_FullMethodName = "/mycel.admin.v1.AdminSemanticService/SetSemanticRuleEnabled"
+	AdminSemanticService_DeleteSemanticRule_FullMethodName     = "/mycel.admin.v1.AdminSemanticService/DeleteSemanticRule"
 )
 
 // AdminSemanticServiceClient is the client API for AdminSemanticService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 //
-// AdminSemanticService manages semantic index configuration through the
-// operator-facing Admin API. Provider credentials/policies and maintenance are
-// handled by separate Admin Inference and Admin Semantic Maintenance services.
+// AdminSemanticService manages semantic generation rule configuration through
+// the operator-facing Admin API. Provider credentials/policies and maintenance
+// are handled by separate Admin Inference and Admin Semantic Maintenance
+// services.
 type AdminSemanticServiceClient interface {
-	ListSemanticIndexes(ctx context.Context, in *AdminSemanticServiceListSemanticIndexesRequest, opts ...grpc.CallOption) (*AdminSemanticServiceListSemanticIndexesResponse, error)
-	UpsertSemanticIndex(ctx context.Context, in *UpsertSemanticIndexRequest, opts ...grpc.CallOption) (*UpsertSemanticIndexResponse, error)
-	DeleteSemanticIndex(ctx context.Context, in *DeleteSemanticIndexRequest, opts ...grpc.CallOption) (*DeleteSemanticIndexResponse, error)
+	ListSemanticRules(ctx context.Context, in *ListSemanticRulesRequest, opts ...grpc.CallOption) (*ListSemanticRulesResponse, error)
+	GetSemanticRule(ctx context.Context, in *GetSemanticRuleRequest, opts ...grpc.CallOption) (*GetSemanticRuleResponse, error)
+	ValidateSemanticRule(ctx context.Context, in *ValidateSemanticRuleRequest, opts ...grpc.CallOption) (*ValidateSemanticRuleResponse, error)
+	CreateSemanticRule(ctx context.Context, in *CreateSemanticRuleRequest, opts ...grpc.CallOption) (*CreateSemanticRuleResponse, error)
+	UpdateSemanticRule(ctx context.Context, in *UpdateSemanticRuleRequest, opts ...grpc.CallOption) (*UpdateSemanticRuleResponse, error)
+	SetSemanticRuleEnabled(ctx context.Context, in *SetSemanticRuleEnabledRequest, opts ...grpc.CallOption) (*SetSemanticRuleEnabledResponse, error)
+	DeleteSemanticRule(ctx context.Context, in *DeleteSemanticRuleRequest, opts ...grpc.CallOption) (*DeleteSemanticRuleResponse, error)
 }
 
 type adminSemanticServiceClient struct {
@@ -45,30 +54,70 @@ func NewAdminSemanticServiceClient(cc grpc.ClientConnInterface) AdminSemanticSer
 	return &adminSemanticServiceClient{cc}
 }
 
-func (c *adminSemanticServiceClient) ListSemanticIndexes(ctx context.Context, in *AdminSemanticServiceListSemanticIndexesRequest, opts ...grpc.CallOption) (*AdminSemanticServiceListSemanticIndexesResponse, error) {
+func (c *adminSemanticServiceClient) ListSemanticRules(ctx context.Context, in *ListSemanticRulesRequest, opts ...grpc.CallOption) (*ListSemanticRulesResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(AdminSemanticServiceListSemanticIndexesResponse)
-	err := c.cc.Invoke(ctx, AdminSemanticService_ListSemanticIndexes_FullMethodName, in, out, cOpts...)
+	out := new(ListSemanticRulesResponse)
+	err := c.cc.Invoke(ctx, AdminSemanticService_ListSemanticRules_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *adminSemanticServiceClient) UpsertSemanticIndex(ctx context.Context, in *UpsertSemanticIndexRequest, opts ...grpc.CallOption) (*UpsertSemanticIndexResponse, error) {
+func (c *adminSemanticServiceClient) GetSemanticRule(ctx context.Context, in *GetSemanticRuleRequest, opts ...grpc.CallOption) (*GetSemanticRuleResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(UpsertSemanticIndexResponse)
-	err := c.cc.Invoke(ctx, AdminSemanticService_UpsertSemanticIndex_FullMethodName, in, out, cOpts...)
+	out := new(GetSemanticRuleResponse)
+	err := c.cc.Invoke(ctx, AdminSemanticService_GetSemanticRule_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *adminSemanticServiceClient) DeleteSemanticIndex(ctx context.Context, in *DeleteSemanticIndexRequest, opts ...grpc.CallOption) (*DeleteSemanticIndexResponse, error) {
+func (c *adminSemanticServiceClient) ValidateSemanticRule(ctx context.Context, in *ValidateSemanticRuleRequest, opts ...grpc.CallOption) (*ValidateSemanticRuleResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(DeleteSemanticIndexResponse)
-	err := c.cc.Invoke(ctx, AdminSemanticService_DeleteSemanticIndex_FullMethodName, in, out, cOpts...)
+	out := new(ValidateSemanticRuleResponse)
+	err := c.cc.Invoke(ctx, AdminSemanticService_ValidateSemanticRule_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *adminSemanticServiceClient) CreateSemanticRule(ctx context.Context, in *CreateSemanticRuleRequest, opts ...grpc.CallOption) (*CreateSemanticRuleResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CreateSemanticRuleResponse)
+	err := c.cc.Invoke(ctx, AdminSemanticService_CreateSemanticRule_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *adminSemanticServiceClient) UpdateSemanticRule(ctx context.Context, in *UpdateSemanticRuleRequest, opts ...grpc.CallOption) (*UpdateSemanticRuleResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(UpdateSemanticRuleResponse)
+	err := c.cc.Invoke(ctx, AdminSemanticService_UpdateSemanticRule_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *adminSemanticServiceClient) SetSemanticRuleEnabled(ctx context.Context, in *SetSemanticRuleEnabledRequest, opts ...grpc.CallOption) (*SetSemanticRuleEnabledResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(SetSemanticRuleEnabledResponse)
+	err := c.cc.Invoke(ctx, AdminSemanticService_SetSemanticRuleEnabled_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *adminSemanticServiceClient) DeleteSemanticRule(ctx context.Context, in *DeleteSemanticRuleRequest, opts ...grpc.CallOption) (*DeleteSemanticRuleResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(DeleteSemanticRuleResponse)
+	err := c.cc.Invoke(ctx, AdminSemanticService_DeleteSemanticRule_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -79,13 +128,18 @@ func (c *adminSemanticServiceClient) DeleteSemanticIndex(ctx context.Context, in
 // All implementations must embed UnimplementedAdminSemanticServiceServer
 // for forward compatibility.
 //
-// AdminSemanticService manages semantic index configuration through the
-// operator-facing Admin API. Provider credentials/policies and maintenance are
-// handled by separate Admin Inference and Admin Semantic Maintenance services.
+// AdminSemanticService manages semantic generation rule configuration through
+// the operator-facing Admin API. Provider credentials/policies and maintenance
+// are handled by separate Admin Inference and Admin Semantic Maintenance
+// services.
 type AdminSemanticServiceServer interface {
-	ListSemanticIndexes(context.Context, *AdminSemanticServiceListSemanticIndexesRequest) (*AdminSemanticServiceListSemanticIndexesResponse, error)
-	UpsertSemanticIndex(context.Context, *UpsertSemanticIndexRequest) (*UpsertSemanticIndexResponse, error)
-	DeleteSemanticIndex(context.Context, *DeleteSemanticIndexRequest) (*DeleteSemanticIndexResponse, error)
+	ListSemanticRules(context.Context, *ListSemanticRulesRequest) (*ListSemanticRulesResponse, error)
+	GetSemanticRule(context.Context, *GetSemanticRuleRequest) (*GetSemanticRuleResponse, error)
+	ValidateSemanticRule(context.Context, *ValidateSemanticRuleRequest) (*ValidateSemanticRuleResponse, error)
+	CreateSemanticRule(context.Context, *CreateSemanticRuleRequest) (*CreateSemanticRuleResponse, error)
+	UpdateSemanticRule(context.Context, *UpdateSemanticRuleRequest) (*UpdateSemanticRuleResponse, error)
+	SetSemanticRuleEnabled(context.Context, *SetSemanticRuleEnabledRequest) (*SetSemanticRuleEnabledResponse, error)
+	DeleteSemanticRule(context.Context, *DeleteSemanticRuleRequest) (*DeleteSemanticRuleResponse, error)
 	mustEmbedUnimplementedAdminSemanticServiceServer()
 }
 
@@ -96,14 +150,26 @@ type AdminSemanticServiceServer interface {
 // pointer dereference when methods are called.
 type UnimplementedAdminSemanticServiceServer struct{}
 
-func (UnimplementedAdminSemanticServiceServer) ListSemanticIndexes(context.Context, *AdminSemanticServiceListSemanticIndexesRequest) (*AdminSemanticServiceListSemanticIndexesResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ListSemanticIndexes not implemented")
+func (UnimplementedAdminSemanticServiceServer) ListSemanticRules(context.Context, *ListSemanticRulesRequest) (*ListSemanticRulesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListSemanticRules not implemented")
 }
-func (UnimplementedAdminSemanticServiceServer) UpsertSemanticIndex(context.Context, *UpsertSemanticIndexRequest) (*UpsertSemanticIndexResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method UpsertSemanticIndex not implemented")
+func (UnimplementedAdminSemanticServiceServer) GetSemanticRule(context.Context, *GetSemanticRuleRequest) (*GetSemanticRuleResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetSemanticRule not implemented")
 }
-func (UnimplementedAdminSemanticServiceServer) DeleteSemanticIndex(context.Context, *DeleteSemanticIndexRequest) (*DeleteSemanticIndexResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method DeleteSemanticIndex not implemented")
+func (UnimplementedAdminSemanticServiceServer) ValidateSemanticRule(context.Context, *ValidateSemanticRuleRequest) (*ValidateSemanticRuleResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ValidateSemanticRule not implemented")
+}
+func (UnimplementedAdminSemanticServiceServer) CreateSemanticRule(context.Context, *CreateSemanticRuleRequest) (*CreateSemanticRuleResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateSemanticRule not implemented")
+}
+func (UnimplementedAdminSemanticServiceServer) UpdateSemanticRule(context.Context, *UpdateSemanticRuleRequest) (*UpdateSemanticRuleResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateSemanticRule not implemented")
+}
+func (UnimplementedAdminSemanticServiceServer) SetSemanticRuleEnabled(context.Context, *SetSemanticRuleEnabledRequest) (*SetSemanticRuleEnabledResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SetSemanticRuleEnabled not implemented")
+}
+func (UnimplementedAdminSemanticServiceServer) DeleteSemanticRule(context.Context, *DeleteSemanticRuleRequest) (*DeleteSemanticRuleResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteSemanticRule not implemented")
 }
 func (UnimplementedAdminSemanticServiceServer) mustEmbedUnimplementedAdminSemanticServiceServer() {}
 func (UnimplementedAdminSemanticServiceServer) testEmbeddedByValue()                              {}
@@ -126,56 +192,128 @@ func RegisterAdminSemanticServiceServer(s grpc.ServiceRegistrar, srv AdminSemant
 	s.RegisterService(&AdminSemanticService_ServiceDesc, srv)
 }
 
-func _AdminSemanticService_ListSemanticIndexes_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(AdminSemanticServiceListSemanticIndexesRequest)
+func _AdminSemanticService_ListSemanticRules_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListSemanticRulesRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AdminSemanticServiceServer).ListSemanticIndexes(ctx, in)
+		return srv.(AdminSemanticServiceServer).ListSemanticRules(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: AdminSemanticService_ListSemanticIndexes_FullMethodName,
+		FullMethod: AdminSemanticService_ListSemanticRules_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AdminSemanticServiceServer).ListSemanticIndexes(ctx, req.(*AdminSemanticServiceListSemanticIndexesRequest))
+		return srv.(AdminSemanticServiceServer).ListSemanticRules(ctx, req.(*ListSemanticRulesRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _AdminSemanticService_UpsertSemanticIndex_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UpsertSemanticIndexRequest)
+func _AdminSemanticService_GetSemanticRule_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetSemanticRuleRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AdminSemanticServiceServer).UpsertSemanticIndex(ctx, in)
+		return srv.(AdminSemanticServiceServer).GetSemanticRule(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: AdminSemanticService_UpsertSemanticIndex_FullMethodName,
+		FullMethod: AdminSemanticService_GetSemanticRule_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AdminSemanticServiceServer).UpsertSemanticIndex(ctx, req.(*UpsertSemanticIndexRequest))
+		return srv.(AdminSemanticServiceServer).GetSemanticRule(ctx, req.(*GetSemanticRuleRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _AdminSemanticService_DeleteSemanticIndex_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(DeleteSemanticIndexRequest)
+func _AdminSemanticService_ValidateSemanticRule_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ValidateSemanticRuleRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AdminSemanticServiceServer).DeleteSemanticIndex(ctx, in)
+		return srv.(AdminSemanticServiceServer).ValidateSemanticRule(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: AdminSemanticService_DeleteSemanticIndex_FullMethodName,
+		FullMethod: AdminSemanticService_ValidateSemanticRule_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AdminSemanticServiceServer).DeleteSemanticIndex(ctx, req.(*DeleteSemanticIndexRequest))
+		return srv.(AdminSemanticServiceServer).ValidateSemanticRule(ctx, req.(*ValidateSemanticRuleRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AdminSemanticService_CreateSemanticRule_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateSemanticRuleRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminSemanticServiceServer).CreateSemanticRule(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AdminSemanticService_CreateSemanticRule_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminSemanticServiceServer).CreateSemanticRule(ctx, req.(*CreateSemanticRuleRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AdminSemanticService_UpdateSemanticRule_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateSemanticRuleRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminSemanticServiceServer).UpdateSemanticRule(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AdminSemanticService_UpdateSemanticRule_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminSemanticServiceServer).UpdateSemanticRule(ctx, req.(*UpdateSemanticRuleRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AdminSemanticService_SetSemanticRuleEnabled_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SetSemanticRuleEnabledRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminSemanticServiceServer).SetSemanticRuleEnabled(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AdminSemanticService_SetSemanticRuleEnabled_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminSemanticServiceServer).SetSemanticRuleEnabled(ctx, req.(*SetSemanticRuleEnabledRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AdminSemanticService_DeleteSemanticRule_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteSemanticRuleRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminSemanticServiceServer).DeleteSemanticRule(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AdminSemanticService_DeleteSemanticRule_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminSemanticServiceServer).DeleteSemanticRule(ctx, req.(*DeleteSemanticRuleRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -188,16 +326,32 @@ var AdminSemanticService_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*AdminSemanticServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "ListSemanticIndexes",
-			Handler:    _AdminSemanticService_ListSemanticIndexes_Handler,
+			MethodName: "ListSemanticRules",
+			Handler:    _AdminSemanticService_ListSemanticRules_Handler,
 		},
 		{
-			MethodName: "UpsertSemanticIndex",
-			Handler:    _AdminSemanticService_UpsertSemanticIndex_Handler,
+			MethodName: "GetSemanticRule",
+			Handler:    _AdminSemanticService_GetSemanticRule_Handler,
 		},
 		{
-			MethodName: "DeleteSemanticIndex",
-			Handler:    _AdminSemanticService_DeleteSemanticIndex_Handler,
+			MethodName: "ValidateSemanticRule",
+			Handler:    _AdminSemanticService_ValidateSemanticRule_Handler,
+		},
+		{
+			MethodName: "CreateSemanticRule",
+			Handler:    _AdminSemanticService_CreateSemanticRule_Handler,
+		},
+		{
+			MethodName: "UpdateSemanticRule",
+			Handler:    _AdminSemanticService_UpdateSemanticRule_Handler,
+		},
+		{
+			MethodName: "SetSemanticRuleEnabled",
+			Handler:    _AdminSemanticService_SetSemanticRuleEnabled_Handler,
+		},
+		{
+			MethodName: "DeleteSemanticRule",
+			Handler:    _AdminSemanticService_DeleteSemanticRule_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

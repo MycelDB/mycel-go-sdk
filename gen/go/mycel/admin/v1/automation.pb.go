@@ -1206,6 +1206,1382 @@ func (x *CancelAutomationInvocationResponse) GetInvocation() *v1.AutomationInvoc
 	return nil
 }
 
+type ValidateGraphProcedureRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	DomainId      string                 `protobuf:"bytes,1,opt,name=domain_id,json=domainId,proto3" json:"domain_id,omitempty"`
+	ProcedureJson string                 `protobuf:"bytes,2,opt,name=procedure_json,json=procedureJson,proto3" json:"procedure_json,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ValidateGraphProcedureRequest) Reset() {
+	*x = ValidateGraphProcedureRequest{}
+	mi := &file_mycel_admin_v1_automation_proto_msgTypes[24]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ValidateGraphProcedureRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ValidateGraphProcedureRequest) ProtoMessage() {}
+
+func (x *ValidateGraphProcedureRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_admin_v1_automation_proto_msgTypes[24]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ValidateGraphProcedureRequest.ProtoReflect.Descriptor instead.
+func (*ValidateGraphProcedureRequest) Descriptor() ([]byte, []int) {
+	return file_mycel_admin_v1_automation_proto_rawDescGZIP(), []int{24}
+}
+
+func (x *ValidateGraphProcedureRequest) GetDomainId() string {
+	if x != nil {
+		return x.DomainId
+	}
+	return ""
+}
+
+func (x *ValidateGraphProcedureRequest) GetProcedureJson() string {
+	if x != nil {
+		return x.ProcedureJson
+	}
+	return ""
+}
+
+type ValidateGraphProcedureResponse struct {
+	state                   protoimpl.MessageState `protogen:"open.v1"`
+	Valid                   bool                   `protobuf:"varint,1,opt,name=valid,proto3" json:"valid,omitempty"`
+	Error                   string                 `protobuf:"bytes,2,opt,name=error,proto3" json:"error,omitempty"`
+	NormalizedProcedureJson string                 `protobuf:"bytes,3,opt,name=normalized_procedure_json,json=normalizedProcedureJson,proto3" json:"normalized_procedure_json,omitempty"`
+	unknownFields           protoimpl.UnknownFields
+	sizeCache               protoimpl.SizeCache
+}
+
+func (x *ValidateGraphProcedureResponse) Reset() {
+	*x = ValidateGraphProcedureResponse{}
+	mi := &file_mycel_admin_v1_automation_proto_msgTypes[25]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ValidateGraphProcedureResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ValidateGraphProcedureResponse) ProtoMessage() {}
+
+func (x *ValidateGraphProcedureResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_admin_v1_automation_proto_msgTypes[25]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ValidateGraphProcedureResponse.ProtoReflect.Descriptor instead.
+func (*ValidateGraphProcedureResponse) Descriptor() ([]byte, []int) {
+	return file_mycel_admin_v1_automation_proto_rawDescGZIP(), []int{25}
+}
+
+func (x *ValidateGraphProcedureResponse) GetValid() bool {
+	if x != nil {
+		return x.Valid
+	}
+	return false
+}
+
+func (x *ValidateGraphProcedureResponse) GetError() string {
+	if x != nil {
+		return x.Error
+	}
+	return ""
+}
+
+func (x *ValidateGraphProcedureResponse) GetNormalizedProcedureJson() string {
+	if x != nil {
+		return x.NormalizedProcedureJson
+	}
+	return ""
+}
+
+type CreateGraphProcedureRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	DomainId      string                 `protobuf:"bytes,1,opt,name=domain_id,json=domainId,proto3" json:"domain_id,omitempty"`
+	ProcedureJson string                 `protobuf:"bytes,2,opt,name=procedure_json,json=procedureJson,proto3" json:"procedure_json,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CreateGraphProcedureRequest) Reset() {
+	*x = CreateGraphProcedureRequest{}
+	mi := &file_mycel_admin_v1_automation_proto_msgTypes[26]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CreateGraphProcedureRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateGraphProcedureRequest) ProtoMessage() {}
+
+func (x *CreateGraphProcedureRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_admin_v1_automation_proto_msgTypes[26]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateGraphProcedureRequest.ProtoReflect.Descriptor instead.
+func (*CreateGraphProcedureRequest) Descriptor() ([]byte, []int) {
+	return file_mycel_admin_v1_automation_proto_rawDescGZIP(), []int{26}
+}
+
+func (x *CreateGraphProcedureRequest) GetDomainId() string {
+	if x != nil {
+		return x.DomainId
+	}
+	return ""
+}
+
+func (x *CreateGraphProcedureRequest) GetProcedureJson() string {
+	if x != nil {
+		return x.ProcedureJson
+	}
+	return ""
+}
+
+type UpdateGraphProcedureRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	DomainId      string                 `protobuf:"bytes,1,opt,name=domain_id,json=domainId,proto3" json:"domain_id,omitempty"`
+	ProcedureId   string                 `protobuf:"bytes,2,opt,name=procedure_id,json=procedureId,proto3" json:"procedure_id,omitempty"`
+	ProcedureJson string                 `protobuf:"bytes,3,opt,name=procedure_json,json=procedureJson,proto3" json:"procedure_json,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *UpdateGraphProcedureRequest) Reset() {
+	*x = UpdateGraphProcedureRequest{}
+	mi := &file_mycel_admin_v1_automation_proto_msgTypes[27]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UpdateGraphProcedureRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateGraphProcedureRequest) ProtoMessage() {}
+
+func (x *UpdateGraphProcedureRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_admin_v1_automation_proto_msgTypes[27]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateGraphProcedureRequest.ProtoReflect.Descriptor instead.
+func (*UpdateGraphProcedureRequest) Descriptor() ([]byte, []int) {
+	return file_mycel_admin_v1_automation_proto_rawDescGZIP(), []int{27}
+}
+
+func (x *UpdateGraphProcedureRequest) GetDomainId() string {
+	if x != nil {
+		return x.DomainId
+	}
+	return ""
+}
+
+func (x *UpdateGraphProcedureRequest) GetProcedureId() string {
+	if x != nil {
+		return x.ProcedureId
+	}
+	return ""
+}
+
+func (x *UpdateGraphProcedureRequest) GetProcedureJson() string {
+	if x != nil {
+		return x.ProcedureJson
+	}
+	return ""
+}
+
+type DeleteGraphProcedureRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	DomainId      string                 `protobuf:"bytes,1,opt,name=domain_id,json=domainId,proto3" json:"domain_id,omitempty"`
+	ProcedureId   string                 `protobuf:"bytes,2,opt,name=procedure_id,json=procedureId,proto3" json:"procedure_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DeleteGraphProcedureRequest) Reset() {
+	*x = DeleteGraphProcedureRequest{}
+	mi := &file_mycel_admin_v1_automation_proto_msgTypes[28]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DeleteGraphProcedureRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteGraphProcedureRequest) ProtoMessage() {}
+
+func (x *DeleteGraphProcedureRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_admin_v1_automation_proto_msgTypes[28]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteGraphProcedureRequest.ProtoReflect.Descriptor instead.
+func (*DeleteGraphProcedureRequest) Descriptor() ([]byte, []int) {
+	return file_mycel_admin_v1_automation_proto_rawDescGZIP(), []int{28}
+}
+
+func (x *DeleteGraphProcedureRequest) GetDomainId() string {
+	if x != nil {
+		return x.DomainId
+	}
+	return ""
+}
+
+func (x *DeleteGraphProcedureRequest) GetProcedureId() string {
+	if x != nil {
+		return x.ProcedureId
+	}
+	return ""
+}
+
+type DeleteGraphProcedureResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DeleteGraphProcedureResponse) Reset() {
+	*x = DeleteGraphProcedureResponse{}
+	mi := &file_mycel_admin_v1_automation_proto_msgTypes[29]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DeleteGraphProcedureResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteGraphProcedureResponse) ProtoMessage() {}
+
+func (x *DeleteGraphProcedureResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_admin_v1_automation_proto_msgTypes[29]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteGraphProcedureResponse.ProtoReflect.Descriptor instead.
+func (*DeleteGraphProcedureResponse) Descriptor() ([]byte, []int) {
+	return file_mycel_admin_v1_automation_proto_rawDescGZIP(), []int{29}
+}
+
+type GetGraphProcedureRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	DomainId      string                 `protobuf:"bytes,1,opt,name=domain_id,json=domainId,proto3" json:"domain_id,omitempty"`
+	ProcedureId   string                 `protobuf:"bytes,2,opt,name=procedure_id,json=procedureId,proto3" json:"procedure_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetGraphProcedureRequest) Reset() {
+	*x = GetGraphProcedureRequest{}
+	mi := &file_mycel_admin_v1_automation_proto_msgTypes[30]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetGraphProcedureRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetGraphProcedureRequest) ProtoMessage() {}
+
+func (x *GetGraphProcedureRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_admin_v1_automation_proto_msgTypes[30]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetGraphProcedureRequest.ProtoReflect.Descriptor instead.
+func (*GetGraphProcedureRequest) Descriptor() ([]byte, []int) {
+	return file_mycel_admin_v1_automation_proto_rawDescGZIP(), []int{30}
+}
+
+func (x *GetGraphProcedureRequest) GetDomainId() string {
+	if x != nil {
+		return x.DomainId
+	}
+	return ""
+}
+
+func (x *GetGraphProcedureRequest) GetProcedureId() string {
+	if x != nil {
+		return x.ProcedureId
+	}
+	return ""
+}
+
+type ListGraphProceduresRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	DomainId      string                 `protobuf:"bytes,1,opt,name=domain_id,json=domainId,proto3" json:"domain_id,omitempty"`
+	Status        string                 `protobuf:"bytes,2,opt,name=status,proto3" json:"status,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListGraphProceduresRequest) Reset() {
+	*x = ListGraphProceduresRequest{}
+	mi := &file_mycel_admin_v1_automation_proto_msgTypes[31]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListGraphProceduresRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListGraphProceduresRequest) ProtoMessage() {}
+
+func (x *ListGraphProceduresRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_admin_v1_automation_proto_msgTypes[31]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListGraphProceduresRequest.ProtoReflect.Descriptor instead.
+func (*ListGraphProceduresRequest) Descriptor() ([]byte, []int) {
+	return file_mycel_admin_v1_automation_proto_rawDescGZIP(), []int{31}
+}
+
+func (x *ListGraphProceduresRequest) GetDomainId() string {
+	if x != nil {
+		return x.DomainId
+	}
+	return ""
+}
+
+func (x *ListGraphProceduresRequest) GetStatus() string {
+	if x != nil {
+		return x.Status
+	}
+	return ""
+}
+
+type ListGraphProceduresResponse struct {
+	state         protoimpl.MessageState      `protogen:"open.v1"`
+	Procedures    []*v1.GraphProcedureSummary `protobuf:"bytes,1,rep,name=procedures,proto3" json:"procedures,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListGraphProceduresResponse) Reset() {
+	*x = ListGraphProceduresResponse{}
+	mi := &file_mycel_admin_v1_automation_proto_msgTypes[32]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListGraphProceduresResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListGraphProceduresResponse) ProtoMessage() {}
+
+func (x *ListGraphProceduresResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_admin_v1_automation_proto_msgTypes[32]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListGraphProceduresResponse.ProtoReflect.Descriptor instead.
+func (*ListGraphProceduresResponse) Descriptor() ([]byte, []int) {
+	return file_mycel_admin_v1_automation_proto_rawDescGZIP(), []int{32}
+}
+
+func (x *ListGraphProceduresResponse) GetProcedures() []*v1.GraphProcedureSummary {
+	if x != nil {
+		return x.Procedures
+	}
+	return nil
+}
+
+type CreateGraphProcedureResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	ProcedureJson string                 `protobuf:"bytes,1,opt,name=procedure_json,json=procedureJson,proto3" json:"procedure_json,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CreateGraphProcedureResponse) Reset() {
+	*x = CreateGraphProcedureResponse{}
+	mi := &file_mycel_admin_v1_automation_proto_msgTypes[33]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CreateGraphProcedureResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateGraphProcedureResponse) ProtoMessage() {}
+
+func (x *CreateGraphProcedureResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_admin_v1_automation_proto_msgTypes[33]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateGraphProcedureResponse.ProtoReflect.Descriptor instead.
+func (*CreateGraphProcedureResponse) Descriptor() ([]byte, []int) {
+	return file_mycel_admin_v1_automation_proto_rawDescGZIP(), []int{33}
+}
+
+func (x *CreateGraphProcedureResponse) GetProcedureJson() string {
+	if x != nil {
+		return x.ProcedureJson
+	}
+	return ""
+}
+
+type UpdateGraphProcedureResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	ProcedureJson string                 `protobuf:"bytes,1,opt,name=procedure_json,json=procedureJson,proto3" json:"procedure_json,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *UpdateGraphProcedureResponse) Reset() {
+	*x = UpdateGraphProcedureResponse{}
+	mi := &file_mycel_admin_v1_automation_proto_msgTypes[34]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UpdateGraphProcedureResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateGraphProcedureResponse) ProtoMessage() {}
+
+func (x *UpdateGraphProcedureResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_admin_v1_automation_proto_msgTypes[34]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateGraphProcedureResponse.ProtoReflect.Descriptor instead.
+func (*UpdateGraphProcedureResponse) Descriptor() ([]byte, []int) {
+	return file_mycel_admin_v1_automation_proto_rawDescGZIP(), []int{34}
+}
+
+func (x *UpdateGraphProcedureResponse) GetProcedureJson() string {
+	if x != nil {
+		return x.ProcedureJson
+	}
+	return ""
+}
+
+type GetGraphProcedureResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	ProcedureJson string                 `protobuf:"bytes,1,opt,name=procedure_json,json=procedureJson,proto3" json:"procedure_json,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetGraphProcedureResponse) Reset() {
+	*x = GetGraphProcedureResponse{}
+	mi := &file_mycel_admin_v1_automation_proto_msgTypes[35]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetGraphProcedureResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetGraphProcedureResponse) ProtoMessage() {}
+
+func (x *GetGraphProcedureResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_admin_v1_automation_proto_msgTypes[35]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetGraphProcedureResponse.ProtoReflect.Descriptor instead.
+func (*GetGraphProcedureResponse) Descriptor() ([]byte, []int) {
+	return file_mycel_admin_v1_automation_proto_rawDescGZIP(), []int{35}
+}
+
+func (x *GetGraphProcedureResponse) GetProcedureJson() string {
+	if x != nil {
+		return x.ProcedureJson
+	}
+	return ""
+}
+
+type ValidateGraphAutomationBindingRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	DomainId      string                 `protobuf:"bytes,1,opt,name=domain_id,json=domainId,proto3" json:"domain_id,omitempty"`
+	BindingJson   string                 `protobuf:"bytes,2,opt,name=binding_json,json=bindingJson,proto3" json:"binding_json,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ValidateGraphAutomationBindingRequest) Reset() {
+	*x = ValidateGraphAutomationBindingRequest{}
+	mi := &file_mycel_admin_v1_automation_proto_msgTypes[36]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ValidateGraphAutomationBindingRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ValidateGraphAutomationBindingRequest) ProtoMessage() {}
+
+func (x *ValidateGraphAutomationBindingRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_admin_v1_automation_proto_msgTypes[36]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ValidateGraphAutomationBindingRequest.ProtoReflect.Descriptor instead.
+func (*ValidateGraphAutomationBindingRequest) Descriptor() ([]byte, []int) {
+	return file_mycel_admin_v1_automation_proto_rawDescGZIP(), []int{36}
+}
+
+func (x *ValidateGraphAutomationBindingRequest) GetDomainId() string {
+	if x != nil {
+		return x.DomainId
+	}
+	return ""
+}
+
+func (x *ValidateGraphAutomationBindingRequest) GetBindingJson() string {
+	if x != nil {
+		return x.BindingJson
+	}
+	return ""
+}
+
+type ValidateGraphAutomationBindingResponse struct {
+	state                 protoimpl.MessageState `protogen:"open.v1"`
+	Valid                 bool                   `protobuf:"varint,1,opt,name=valid,proto3" json:"valid,omitempty"`
+	Error                 string                 `protobuf:"bytes,2,opt,name=error,proto3" json:"error,omitempty"`
+	NormalizedBindingJson string                 `protobuf:"bytes,3,opt,name=normalized_binding_json,json=normalizedBindingJson,proto3" json:"normalized_binding_json,omitempty"`
+	unknownFields         protoimpl.UnknownFields
+	sizeCache             protoimpl.SizeCache
+}
+
+func (x *ValidateGraphAutomationBindingResponse) Reset() {
+	*x = ValidateGraphAutomationBindingResponse{}
+	mi := &file_mycel_admin_v1_automation_proto_msgTypes[37]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ValidateGraphAutomationBindingResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ValidateGraphAutomationBindingResponse) ProtoMessage() {}
+
+func (x *ValidateGraphAutomationBindingResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_admin_v1_automation_proto_msgTypes[37]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ValidateGraphAutomationBindingResponse.ProtoReflect.Descriptor instead.
+func (*ValidateGraphAutomationBindingResponse) Descriptor() ([]byte, []int) {
+	return file_mycel_admin_v1_automation_proto_rawDescGZIP(), []int{37}
+}
+
+func (x *ValidateGraphAutomationBindingResponse) GetValid() bool {
+	if x != nil {
+		return x.Valid
+	}
+	return false
+}
+
+func (x *ValidateGraphAutomationBindingResponse) GetError() string {
+	if x != nil {
+		return x.Error
+	}
+	return ""
+}
+
+func (x *ValidateGraphAutomationBindingResponse) GetNormalizedBindingJson() string {
+	if x != nil {
+		return x.NormalizedBindingJson
+	}
+	return ""
+}
+
+type CreateGraphAutomationBindingRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	DomainId      string                 `protobuf:"bytes,1,opt,name=domain_id,json=domainId,proto3" json:"domain_id,omitempty"`
+	BindingJson   string                 `protobuf:"bytes,2,opt,name=binding_json,json=bindingJson,proto3" json:"binding_json,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CreateGraphAutomationBindingRequest) Reset() {
+	*x = CreateGraphAutomationBindingRequest{}
+	mi := &file_mycel_admin_v1_automation_proto_msgTypes[38]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CreateGraphAutomationBindingRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateGraphAutomationBindingRequest) ProtoMessage() {}
+
+func (x *CreateGraphAutomationBindingRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_admin_v1_automation_proto_msgTypes[38]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateGraphAutomationBindingRequest.ProtoReflect.Descriptor instead.
+func (*CreateGraphAutomationBindingRequest) Descriptor() ([]byte, []int) {
+	return file_mycel_admin_v1_automation_proto_rawDescGZIP(), []int{38}
+}
+
+func (x *CreateGraphAutomationBindingRequest) GetDomainId() string {
+	if x != nil {
+		return x.DomainId
+	}
+	return ""
+}
+
+func (x *CreateGraphAutomationBindingRequest) GetBindingJson() string {
+	if x != nil {
+		return x.BindingJson
+	}
+	return ""
+}
+
+type UpdateGraphAutomationBindingRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	DomainId      string                 `protobuf:"bytes,1,opt,name=domain_id,json=domainId,proto3" json:"domain_id,omitempty"`
+	BindingId     string                 `protobuf:"bytes,2,opt,name=binding_id,json=bindingId,proto3" json:"binding_id,omitempty"`
+	BindingJson   string                 `protobuf:"bytes,3,opt,name=binding_json,json=bindingJson,proto3" json:"binding_json,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *UpdateGraphAutomationBindingRequest) Reset() {
+	*x = UpdateGraphAutomationBindingRequest{}
+	mi := &file_mycel_admin_v1_automation_proto_msgTypes[39]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UpdateGraphAutomationBindingRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateGraphAutomationBindingRequest) ProtoMessage() {}
+
+func (x *UpdateGraphAutomationBindingRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_admin_v1_automation_proto_msgTypes[39]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateGraphAutomationBindingRequest.ProtoReflect.Descriptor instead.
+func (*UpdateGraphAutomationBindingRequest) Descriptor() ([]byte, []int) {
+	return file_mycel_admin_v1_automation_proto_rawDescGZIP(), []int{39}
+}
+
+func (x *UpdateGraphAutomationBindingRequest) GetDomainId() string {
+	if x != nil {
+		return x.DomainId
+	}
+	return ""
+}
+
+func (x *UpdateGraphAutomationBindingRequest) GetBindingId() string {
+	if x != nil {
+		return x.BindingId
+	}
+	return ""
+}
+
+func (x *UpdateGraphAutomationBindingRequest) GetBindingJson() string {
+	if x != nil {
+		return x.BindingJson
+	}
+	return ""
+}
+
+type DeleteGraphAutomationBindingRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	DomainId      string                 `protobuf:"bytes,1,opt,name=domain_id,json=domainId,proto3" json:"domain_id,omitempty"`
+	BindingId     string                 `protobuf:"bytes,2,opt,name=binding_id,json=bindingId,proto3" json:"binding_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DeleteGraphAutomationBindingRequest) Reset() {
+	*x = DeleteGraphAutomationBindingRequest{}
+	mi := &file_mycel_admin_v1_automation_proto_msgTypes[40]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DeleteGraphAutomationBindingRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteGraphAutomationBindingRequest) ProtoMessage() {}
+
+func (x *DeleteGraphAutomationBindingRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_admin_v1_automation_proto_msgTypes[40]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteGraphAutomationBindingRequest.ProtoReflect.Descriptor instead.
+func (*DeleteGraphAutomationBindingRequest) Descriptor() ([]byte, []int) {
+	return file_mycel_admin_v1_automation_proto_rawDescGZIP(), []int{40}
+}
+
+func (x *DeleteGraphAutomationBindingRequest) GetDomainId() string {
+	if x != nil {
+		return x.DomainId
+	}
+	return ""
+}
+
+func (x *DeleteGraphAutomationBindingRequest) GetBindingId() string {
+	if x != nil {
+		return x.BindingId
+	}
+	return ""
+}
+
+type DeleteGraphAutomationBindingResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DeleteGraphAutomationBindingResponse) Reset() {
+	*x = DeleteGraphAutomationBindingResponse{}
+	mi := &file_mycel_admin_v1_automation_proto_msgTypes[41]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DeleteGraphAutomationBindingResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteGraphAutomationBindingResponse) ProtoMessage() {}
+
+func (x *DeleteGraphAutomationBindingResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_admin_v1_automation_proto_msgTypes[41]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteGraphAutomationBindingResponse.ProtoReflect.Descriptor instead.
+func (*DeleteGraphAutomationBindingResponse) Descriptor() ([]byte, []int) {
+	return file_mycel_admin_v1_automation_proto_rawDescGZIP(), []int{41}
+}
+
+type GetGraphAutomationBindingRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	DomainId      string                 `protobuf:"bytes,1,opt,name=domain_id,json=domainId,proto3" json:"domain_id,omitempty"`
+	BindingId     string                 `protobuf:"bytes,2,opt,name=binding_id,json=bindingId,proto3" json:"binding_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetGraphAutomationBindingRequest) Reset() {
+	*x = GetGraphAutomationBindingRequest{}
+	mi := &file_mycel_admin_v1_automation_proto_msgTypes[42]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetGraphAutomationBindingRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetGraphAutomationBindingRequest) ProtoMessage() {}
+
+func (x *GetGraphAutomationBindingRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_admin_v1_automation_proto_msgTypes[42]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetGraphAutomationBindingRequest.ProtoReflect.Descriptor instead.
+func (*GetGraphAutomationBindingRequest) Descriptor() ([]byte, []int) {
+	return file_mycel_admin_v1_automation_proto_rawDescGZIP(), []int{42}
+}
+
+func (x *GetGraphAutomationBindingRequest) GetDomainId() string {
+	if x != nil {
+		return x.DomainId
+	}
+	return ""
+}
+
+func (x *GetGraphAutomationBindingRequest) GetBindingId() string {
+	if x != nil {
+		return x.BindingId
+	}
+	return ""
+}
+
+type ListGraphAutomationBindingsRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	DomainId      string                 `protobuf:"bytes,1,opt,name=domain_id,json=domainId,proto3" json:"domain_id,omitempty"`
+	Status        string                 `protobuf:"bytes,2,opt,name=status,proto3" json:"status,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListGraphAutomationBindingsRequest) Reset() {
+	*x = ListGraphAutomationBindingsRequest{}
+	mi := &file_mycel_admin_v1_automation_proto_msgTypes[43]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListGraphAutomationBindingsRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListGraphAutomationBindingsRequest) ProtoMessage() {}
+
+func (x *ListGraphAutomationBindingsRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_admin_v1_automation_proto_msgTypes[43]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListGraphAutomationBindingsRequest.ProtoReflect.Descriptor instead.
+func (*ListGraphAutomationBindingsRequest) Descriptor() ([]byte, []int) {
+	return file_mycel_admin_v1_automation_proto_rawDescGZIP(), []int{43}
+}
+
+func (x *ListGraphAutomationBindingsRequest) GetDomainId() string {
+	if x != nil {
+		return x.DomainId
+	}
+	return ""
+}
+
+func (x *ListGraphAutomationBindingsRequest) GetStatus() string {
+	if x != nil {
+		return x.Status
+	}
+	return ""
+}
+
+type ListGraphAutomationBindingsResponse struct {
+	state         protoimpl.MessageState              `protogen:"open.v1"`
+	Bindings      []*v1.GraphAutomationBindingSummary `protobuf:"bytes,1,rep,name=bindings,proto3" json:"bindings,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListGraphAutomationBindingsResponse) Reset() {
+	*x = ListGraphAutomationBindingsResponse{}
+	mi := &file_mycel_admin_v1_automation_proto_msgTypes[44]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListGraphAutomationBindingsResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListGraphAutomationBindingsResponse) ProtoMessage() {}
+
+func (x *ListGraphAutomationBindingsResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_admin_v1_automation_proto_msgTypes[44]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListGraphAutomationBindingsResponse.ProtoReflect.Descriptor instead.
+func (*ListGraphAutomationBindingsResponse) Descriptor() ([]byte, []int) {
+	return file_mycel_admin_v1_automation_proto_rawDescGZIP(), []int{44}
+}
+
+func (x *ListGraphAutomationBindingsResponse) GetBindings() []*v1.GraphAutomationBindingSummary {
+	if x != nil {
+		return x.Bindings
+	}
+	return nil
+}
+
+type EnableGraphAutomationBindingRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	DomainId      string                 `protobuf:"bytes,1,opt,name=domain_id,json=domainId,proto3" json:"domain_id,omitempty"`
+	BindingId     string                 `protobuf:"bytes,2,opt,name=binding_id,json=bindingId,proto3" json:"binding_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *EnableGraphAutomationBindingRequest) Reset() {
+	*x = EnableGraphAutomationBindingRequest{}
+	mi := &file_mycel_admin_v1_automation_proto_msgTypes[45]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *EnableGraphAutomationBindingRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*EnableGraphAutomationBindingRequest) ProtoMessage() {}
+
+func (x *EnableGraphAutomationBindingRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_admin_v1_automation_proto_msgTypes[45]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use EnableGraphAutomationBindingRequest.ProtoReflect.Descriptor instead.
+func (*EnableGraphAutomationBindingRequest) Descriptor() ([]byte, []int) {
+	return file_mycel_admin_v1_automation_proto_rawDescGZIP(), []int{45}
+}
+
+func (x *EnableGraphAutomationBindingRequest) GetDomainId() string {
+	if x != nil {
+		return x.DomainId
+	}
+	return ""
+}
+
+func (x *EnableGraphAutomationBindingRequest) GetBindingId() string {
+	if x != nil {
+		return x.BindingId
+	}
+	return ""
+}
+
+type DisableGraphAutomationBindingRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	DomainId      string                 `protobuf:"bytes,1,opt,name=domain_id,json=domainId,proto3" json:"domain_id,omitempty"`
+	BindingId     string                 `protobuf:"bytes,2,opt,name=binding_id,json=bindingId,proto3" json:"binding_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DisableGraphAutomationBindingRequest) Reset() {
+	*x = DisableGraphAutomationBindingRequest{}
+	mi := &file_mycel_admin_v1_automation_proto_msgTypes[46]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DisableGraphAutomationBindingRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DisableGraphAutomationBindingRequest) ProtoMessage() {}
+
+func (x *DisableGraphAutomationBindingRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_admin_v1_automation_proto_msgTypes[46]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DisableGraphAutomationBindingRequest.ProtoReflect.Descriptor instead.
+func (*DisableGraphAutomationBindingRequest) Descriptor() ([]byte, []int) {
+	return file_mycel_admin_v1_automation_proto_rawDescGZIP(), []int{46}
+}
+
+func (x *DisableGraphAutomationBindingRequest) GetDomainId() string {
+	if x != nil {
+		return x.DomainId
+	}
+	return ""
+}
+
+func (x *DisableGraphAutomationBindingRequest) GetBindingId() string {
+	if x != nil {
+		return x.BindingId
+	}
+	return ""
+}
+
+type CreateGraphAutomationBindingResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	BindingJson   string                 `protobuf:"bytes,1,opt,name=binding_json,json=bindingJson,proto3" json:"binding_json,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CreateGraphAutomationBindingResponse) Reset() {
+	*x = CreateGraphAutomationBindingResponse{}
+	mi := &file_mycel_admin_v1_automation_proto_msgTypes[47]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CreateGraphAutomationBindingResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateGraphAutomationBindingResponse) ProtoMessage() {}
+
+func (x *CreateGraphAutomationBindingResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_admin_v1_automation_proto_msgTypes[47]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateGraphAutomationBindingResponse.ProtoReflect.Descriptor instead.
+func (*CreateGraphAutomationBindingResponse) Descriptor() ([]byte, []int) {
+	return file_mycel_admin_v1_automation_proto_rawDescGZIP(), []int{47}
+}
+
+func (x *CreateGraphAutomationBindingResponse) GetBindingJson() string {
+	if x != nil {
+		return x.BindingJson
+	}
+	return ""
+}
+
+type UpdateGraphAutomationBindingResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	BindingJson   string                 `protobuf:"bytes,1,opt,name=binding_json,json=bindingJson,proto3" json:"binding_json,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *UpdateGraphAutomationBindingResponse) Reset() {
+	*x = UpdateGraphAutomationBindingResponse{}
+	mi := &file_mycel_admin_v1_automation_proto_msgTypes[48]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UpdateGraphAutomationBindingResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateGraphAutomationBindingResponse) ProtoMessage() {}
+
+func (x *UpdateGraphAutomationBindingResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_admin_v1_automation_proto_msgTypes[48]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateGraphAutomationBindingResponse.ProtoReflect.Descriptor instead.
+func (*UpdateGraphAutomationBindingResponse) Descriptor() ([]byte, []int) {
+	return file_mycel_admin_v1_automation_proto_rawDescGZIP(), []int{48}
+}
+
+func (x *UpdateGraphAutomationBindingResponse) GetBindingJson() string {
+	if x != nil {
+		return x.BindingJson
+	}
+	return ""
+}
+
+type GetGraphAutomationBindingResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	BindingJson   string                 `protobuf:"bytes,1,opt,name=binding_json,json=bindingJson,proto3" json:"binding_json,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetGraphAutomationBindingResponse) Reset() {
+	*x = GetGraphAutomationBindingResponse{}
+	mi := &file_mycel_admin_v1_automation_proto_msgTypes[49]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetGraphAutomationBindingResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetGraphAutomationBindingResponse) ProtoMessage() {}
+
+func (x *GetGraphAutomationBindingResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_admin_v1_automation_proto_msgTypes[49]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetGraphAutomationBindingResponse.ProtoReflect.Descriptor instead.
+func (*GetGraphAutomationBindingResponse) Descriptor() ([]byte, []int) {
+	return file_mycel_admin_v1_automation_proto_rawDescGZIP(), []int{49}
+}
+
+func (x *GetGraphAutomationBindingResponse) GetBindingJson() string {
+	if x != nil {
+		return x.BindingJson
+	}
+	return ""
+}
+
+type EnableGraphAutomationBindingResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	BindingJson   string                 `protobuf:"bytes,1,opt,name=binding_json,json=bindingJson,proto3" json:"binding_json,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *EnableGraphAutomationBindingResponse) Reset() {
+	*x = EnableGraphAutomationBindingResponse{}
+	mi := &file_mycel_admin_v1_automation_proto_msgTypes[50]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *EnableGraphAutomationBindingResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*EnableGraphAutomationBindingResponse) ProtoMessage() {}
+
+func (x *EnableGraphAutomationBindingResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_admin_v1_automation_proto_msgTypes[50]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use EnableGraphAutomationBindingResponse.ProtoReflect.Descriptor instead.
+func (*EnableGraphAutomationBindingResponse) Descriptor() ([]byte, []int) {
+	return file_mycel_admin_v1_automation_proto_rawDescGZIP(), []int{50}
+}
+
+func (x *EnableGraphAutomationBindingResponse) GetBindingJson() string {
+	if x != nil {
+		return x.BindingJson
+	}
+	return ""
+}
+
+type DisableGraphAutomationBindingResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	BindingJson   string                 `protobuf:"bytes,1,opt,name=binding_json,json=bindingJson,proto3" json:"binding_json,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DisableGraphAutomationBindingResponse) Reset() {
+	*x = DisableGraphAutomationBindingResponse{}
+	mi := &file_mycel_admin_v1_automation_proto_msgTypes[51]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DisableGraphAutomationBindingResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DisableGraphAutomationBindingResponse) ProtoMessage() {}
+
+func (x *DisableGraphAutomationBindingResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_admin_v1_automation_proto_msgTypes[51]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DisableGraphAutomationBindingResponse.ProtoReflect.Descriptor instead.
+func (*DisableGraphAutomationBindingResponse) Descriptor() ([]byte, []int) {
+	return file_mycel_admin_v1_automation_proto_rawDescGZIP(), []int{51}
+}
+
+func (x *DisableGraphAutomationBindingResponse) GetBindingJson() string {
+	if x != nil {
+		return x.BindingJson
+	}
+	return ""
+}
+
 var File_mycel_admin_v1_automation_proto protoreflect.FileDescriptor
 
 const file_mycel_admin_v1_automation_proto_rawDesc = "" +
@@ -1278,8 +2654,88 @@ const file_mycel_admin_v1_automation_proto_rawDesc = "" +
 	"\"CancelAutomationInvocationResponse\x12L\n" +
 	"\n" +
 	"invocation\x18\x01 \x01(\v2,.mycel.client.v1.AutomationInvocationSummaryR\n" +
-	"invocation2\xc0\n" +
+	"invocation\"c\n" +
+	"\x1dValidateGraphProcedureRequest\x12\x1b\n" +
+	"\tdomain_id\x18\x01 \x01(\tR\bdomainId\x12%\n" +
+	"\x0eprocedure_json\x18\x02 \x01(\tR\rprocedureJson\"\x88\x01\n" +
+	"\x1eValidateGraphProcedureResponse\x12\x14\n" +
+	"\x05valid\x18\x01 \x01(\bR\x05valid\x12\x14\n" +
+	"\x05error\x18\x02 \x01(\tR\x05error\x12:\n" +
+	"\x19normalized_procedure_json\x18\x03 \x01(\tR\x17normalizedProcedureJson\"a\n" +
+	"\x1bCreateGraphProcedureRequest\x12\x1b\n" +
+	"\tdomain_id\x18\x01 \x01(\tR\bdomainId\x12%\n" +
+	"\x0eprocedure_json\x18\x02 \x01(\tR\rprocedureJson\"\x84\x01\n" +
+	"\x1bUpdateGraphProcedureRequest\x12\x1b\n" +
+	"\tdomain_id\x18\x01 \x01(\tR\bdomainId\x12!\n" +
+	"\fprocedure_id\x18\x02 \x01(\tR\vprocedureId\x12%\n" +
+	"\x0eprocedure_json\x18\x03 \x01(\tR\rprocedureJson\"]\n" +
+	"\x1bDeleteGraphProcedureRequest\x12\x1b\n" +
+	"\tdomain_id\x18\x01 \x01(\tR\bdomainId\x12!\n" +
+	"\fprocedure_id\x18\x02 \x01(\tR\vprocedureId\"\x1e\n" +
+	"\x1cDeleteGraphProcedureResponse\"Z\n" +
+	"\x18GetGraphProcedureRequest\x12\x1b\n" +
+	"\tdomain_id\x18\x01 \x01(\tR\bdomainId\x12!\n" +
+	"\fprocedure_id\x18\x02 \x01(\tR\vprocedureId\"Q\n" +
+	"\x1aListGraphProceduresRequest\x12\x1b\n" +
+	"\tdomain_id\x18\x01 \x01(\tR\bdomainId\x12\x16\n" +
+	"\x06status\x18\x02 \x01(\tR\x06status\"e\n" +
+	"\x1bListGraphProceduresResponse\x12F\n" +
 	"\n" +
+	"procedures\x18\x01 \x03(\v2&.mycel.client.v1.GraphProcedureSummaryR\n" +
+	"procedures\"E\n" +
+	"\x1cCreateGraphProcedureResponse\x12%\n" +
+	"\x0eprocedure_json\x18\x01 \x01(\tR\rprocedureJson\"E\n" +
+	"\x1cUpdateGraphProcedureResponse\x12%\n" +
+	"\x0eprocedure_json\x18\x01 \x01(\tR\rprocedureJson\"B\n" +
+	"\x19GetGraphProcedureResponse\x12%\n" +
+	"\x0eprocedure_json\x18\x01 \x01(\tR\rprocedureJson\"g\n" +
+	"%ValidateGraphAutomationBindingRequest\x12\x1b\n" +
+	"\tdomain_id\x18\x01 \x01(\tR\bdomainId\x12!\n" +
+	"\fbinding_json\x18\x02 \x01(\tR\vbindingJson\"\x8c\x01\n" +
+	"&ValidateGraphAutomationBindingResponse\x12\x14\n" +
+	"\x05valid\x18\x01 \x01(\bR\x05valid\x12\x14\n" +
+	"\x05error\x18\x02 \x01(\tR\x05error\x126\n" +
+	"\x17normalized_binding_json\x18\x03 \x01(\tR\x15normalizedBindingJson\"e\n" +
+	"#CreateGraphAutomationBindingRequest\x12\x1b\n" +
+	"\tdomain_id\x18\x01 \x01(\tR\bdomainId\x12!\n" +
+	"\fbinding_json\x18\x02 \x01(\tR\vbindingJson\"\x84\x01\n" +
+	"#UpdateGraphAutomationBindingRequest\x12\x1b\n" +
+	"\tdomain_id\x18\x01 \x01(\tR\bdomainId\x12\x1d\n" +
+	"\n" +
+	"binding_id\x18\x02 \x01(\tR\tbindingId\x12!\n" +
+	"\fbinding_json\x18\x03 \x01(\tR\vbindingJson\"a\n" +
+	"#DeleteGraphAutomationBindingRequest\x12\x1b\n" +
+	"\tdomain_id\x18\x01 \x01(\tR\bdomainId\x12\x1d\n" +
+	"\n" +
+	"binding_id\x18\x02 \x01(\tR\tbindingId\"&\n" +
+	"$DeleteGraphAutomationBindingResponse\"^\n" +
+	" GetGraphAutomationBindingRequest\x12\x1b\n" +
+	"\tdomain_id\x18\x01 \x01(\tR\bdomainId\x12\x1d\n" +
+	"\n" +
+	"binding_id\x18\x02 \x01(\tR\tbindingId\"Y\n" +
+	"\"ListGraphAutomationBindingsRequest\x12\x1b\n" +
+	"\tdomain_id\x18\x01 \x01(\tR\bdomainId\x12\x16\n" +
+	"\x06status\x18\x02 \x01(\tR\x06status\"q\n" +
+	"#ListGraphAutomationBindingsResponse\x12J\n" +
+	"\bbindings\x18\x01 \x03(\v2..mycel.client.v1.GraphAutomationBindingSummaryR\bbindings\"a\n" +
+	"#EnableGraphAutomationBindingRequest\x12\x1b\n" +
+	"\tdomain_id\x18\x01 \x01(\tR\bdomainId\x12\x1d\n" +
+	"\n" +
+	"binding_id\x18\x02 \x01(\tR\tbindingId\"b\n" +
+	"$DisableGraphAutomationBindingRequest\x12\x1b\n" +
+	"\tdomain_id\x18\x01 \x01(\tR\bdomainId\x12\x1d\n" +
+	"\n" +
+	"binding_id\x18\x02 \x01(\tR\tbindingId\"I\n" +
+	"$CreateGraphAutomationBindingResponse\x12!\n" +
+	"\fbinding_json\x18\x01 \x01(\tR\vbindingJson\"I\n" +
+	"$UpdateGraphAutomationBindingResponse\x12!\n" +
+	"\fbinding_json\x18\x01 \x01(\tR\vbindingJson\"F\n" +
+	"!GetGraphAutomationBindingResponse\x12!\n" +
+	"\fbinding_json\x18\x01 \x01(\tR\vbindingJson\"I\n" +
+	"$EnableGraphAutomationBindingResponse\x12!\n" +
+	"\fbinding_json\x18\x01 \x01(\tR\vbindingJson\"J\n" +
+	"%DisableGraphAutomationBindingResponse\x12!\n" +
+	"\fbinding_json\x18\x01 \x01(\tR\vbindingJson2\xc9\x18\n" +
 	"\x16AdminAutomationService\x12k\n" +
 	"\x12ValidateAutomation\x12).mycel.admin.v1.ValidateAutomationRequest\x1a*.mycel.admin.v1.ValidateAutomationResponse\x12e\n" +
 	"\x10CreateAutomation\x12'.mycel.admin.v1.CreateAutomationRequest\x1a(.mycel.admin.v1.CreateAutomationResponse\x12e\n" +
@@ -1292,7 +2748,21 @@ const file_mycel_admin_v1_automation_proto_rawDesc = "" +
 	"\x19ListAutomationInvocations\x120.mycel.admin.v1.ListAutomationInvocationsRequest\x1a1.mycel.admin.v1.ListAutomationInvocationsResponse\x12e\n" +
 	"\x10GetAutomationRun\x12'.mycel.admin.v1.GetAutomationRunRequest\x1a(.mycel.admin.v1.GetAutomationRunResponse\x12\x80\x01\n" +
 	"\x19RetryAutomationInvocation\x120.mycel.admin.v1.RetryAutomationInvocationRequest\x1a1.mycel.admin.v1.RetryAutomationInvocationResponse\x12\x83\x01\n" +
-	"\x1aCancelAutomationInvocation\x121.mycel.admin.v1.CancelAutomationInvocationRequest\x1a2.mycel.admin.v1.CancelAutomationInvocationResponseB\xbe\x01\n" +
+	"\x1aCancelAutomationInvocation\x121.mycel.admin.v1.CancelAutomationInvocationRequest\x1a2.mycel.admin.v1.CancelAutomationInvocationResponse\x12w\n" +
+	"\x16ValidateGraphProcedure\x12-.mycel.admin.v1.ValidateGraphProcedureRequest\x1a..mycel.admin.v1.ValidateGraphProcedureResponse\x12q\n" +
+	"\x14CreateGraphProcedure\x12+.mycel.admin.v1.CreateGraphProcedureRequest\x1a,.mycel.admin.v1.CreateGraphProcedureResponse\x12q\n" +
+	"\x14UpdateGraphProcedure\x12+.mycel.admin.v1.UpdateGraphProcedureRequest\x1a,.mycel.admin.v1.UpdateGraphProcedureResponse\x12q\n" +
+	"\x14DeleteGraphProcedure\x12+.mycel.admin.v1.DeleteGraphProcedureRequest\x1a,.mycel.admin.v1.DeleteGraphProcedureResponse\x12h\n" +
+	"\x11GetGraphProcedure\x12(.mycel.admin.v1.GetGraphProcedureRequest\x1a).mycel.admin.v1.GetGraphProcedureResponse\x12n\n" +
+	"\x13ListGraphProcedures\x12*.mycel.admin.v1.ListGraphProceduresRequest\x1a+.mycel.admin.v1.ListGraphProceduresResponse\x12\x8f\x01\n" +
+	"\x1eValidateGraphAutomationBinding\x125.mycel.admin.v1.ValidateGraphAutomationBindingRequest\x1a6.mycel.admin.v1.ValidateGraphAutomationBindingResponse\x12\x89\x01\n" +
+	"\x1cCreateGraphAutomationBinding\x123.mycel.admin.v1.CreateGraphAutomationBindingRequest\x1a4.mycel.admin.v1.CreateGraphAutomationBindingResponse\x12\x89\x01\n" +
+	"\x1cUpdateGraphAutomationBinding\x123.mycel.admin.v1.UpdateGraphAutomationBindingRequest\x1a4.mycel.admin.v1.UpdateGraphAutomationBindingResponse\x12\x89\x01\n" +
+	"\x1cDeleteGraphAutomationBinding\x123.mycel.admin.v1.DeleteGraphAutomationBindingRequest\x1a4.mycel.admin.v1.DeleteGraphAutomationBindingResponse\x12\x80\x01\n" +
+	"\x19GetGraphAutomationBinding\x120.mycel.admin.v1.GetGraphAutomationBindingRequest\x1a1.mycel.admin.v1.GetGraphAutomationBindingResponse\x12\x86\x01\n" +
+	"\x1bListGraphAutomationBindings\x122.mycel.admin.v1.ListGraphAutomationBindingsRequest\x1a3.mycel.admin.v1.ListGraphAutomationBindingsResponse\x12\x89\x01\n" +
+	"\x1cEnableGraphAutomationBinding\x123.mycel.admin.v1.EnableGraphAutomationBindingRequest\x1a4.mycel.admin.v1.EnableGraphAutomationBindingResponse\x12\x8c\x01\n" +
+	"\x1dDisableGraphAutomationBinding\x124.mycel.admin.v1.DisableGraphAutomationBindingRequest\x1a5.mycel.admin.v1.DisableGraphAutomationBindingResponseB\xbe\x01\n" +
 	"\x12com.mycel.admin.v1B\x0fAutomationProtoP\x01Z=github.com/myceldb/mycel-go-sdk/gen/go/mycel/admin/v1;adminv1\xa2\x02\x03MAX\xaa\x02\x0eMycel.Admin.V1\xca\x02\x0eMycel\\Admin\\V1\xe2\x02\x1aMycel\\Admin\\V1\\GPBMetadata\xea\x02\x10Mycel::Admin::V1b\x06proto3"
 
 var (
@@ -1307,69 +2777,129 @@ func file_mycel_admin_v1_automation_proto_rawDescGZIP() []byte {
 	return file_mycel_admin_v1_automation_proto_rawDescData
 }
 
-var file_mycel_admin_v1_automation_proto_msgTypes = make([]protoimpl.MessageInfo, 24)
+var file_mycel_admin_v1_automation_proto_msgTypes = make([]protoimpl.MessageInfo, 52)
 var file_mycel_admin_v1_automation_proto_goTypes = []any{
-	(*ValidateAutomationRequest)(nil),          // 0: mycel.admin.v1.ValidateAutomationRequest
-	(*ValidateAutomationResponse)(nil),         // 1: mycel.admin.v1.ValidateAutomationResponse
-	(*CreateAutomationRequest)(nil),            // 2: mycel.admin.v1.CreateAutomationRequest
-	(*UpdateAutomationRequest)(nil),            // 3: mycel.admin.v1.UpdateAutomationRequest
-	(*DeleteAutomationRequest)(nil),            // 4: mycel.admin.v1.DeleteAutomationRequest
-	(*DeleteAutomationResponse)(nil),           // 5: mycel.admin.v1.DeleteAutomationResponse
-	(*GetAutomationRequest)(nil),               // 6: mycel.admin.v1.GetAutomationRequest
-	(*ListAutomationsRequest)(nil),             // 7: mycel.admin.v1.ListAutomationsRequest
-	(*ListAutomationsResponse)(nil),            // 8: mycel.admin.v1.ListAutomationsResponse
-	(*EnableAutomationRequest)(nil),            // 9: mycel.admin.v1.EnableAutomationRequest
-	(*DisableAutomationRequest)(nil),           // 10: mycel.admin.v1.DisableAutomationRequest
-	(*CreateAutomationResponse)(nil),           // 11: mycel.admin.v1.CreateAutomationResponse
-	(*UpdateAutomationResponse)(nil),           // 12: mycel.admin.v1.UpdateAutomationResponse
-	(*GetAutomationResponse)(nil),              // 13: mycel.admin.v1.GetAutomationResponse
-	(*EnableAutomationResponse)(nil),           // 14: mycel.admin.v1.EnableAutomationResponse
-	(*DisableAutomationResponse)(nil),          // 15: mycel.admin.v1.DisableAutomationResponse
-	(*ListAutomationInvocationsRequest)(nil),   // 16: mycel.admin.v1.ListAutomationInvocationsRequest
-	(*ListAutomationInvocationsResponse)(nil),  // 17: mycel.admin.v1.ListAutomationInvocationsResponse
-	(*GetAutomationRunRequest)(nil),            // 18: mycel.admin.v1.GetAutomationRunRequest
-	(*GetAutomationRunResponse)(nil),           // 19: mycel.admin.v1.GetAutomationRunResponse
-	(*RetryAutomationInvocationRequest)(nil),   // 20: mycel.admin.v1.RetryAutomationInvocationRequest
-	(*RetryAutomationInvocationResponse)(nil),  // 21: mycel.admin.v1.RetryAutomationInvocationResponse
-	(*CancelAutomationInvocationRequest)(nil),  // 22: mycel.admin.v1.CancelAutomationInvocationRequest
-	(*CancelAutomationInvocationResponse)(nil), // 23: mycel.admin.v1.CancelAutomationInvocationResponse
-	(*v1.AutomationDefinitionSummary)(nil),     // 24: mycel.client.v1.AutomationDefinitionSummary
-	(*v1.AutomationInvocationSummary)(nil),     // 25: mycel.client.v1.AutomationInvocationSummary
+	(*ValidateAutomationRequest)(nil),              // 0: mycel.admin.v1.ValidateAutomationRequest
+	(*ValidateAutomationResponse)(nil),             // 1: mycel.admin.v1.ValidateAutomationResponse
+	(*CreateAutomationRequest)(nil),                // 2: mycel.admin.v1.CreateAutomationRequest
+	(*UpdateAutomationRequest)(nil),                // 3: mycel.admin.v1.UpdateAutomationRequest
+	(*DeleteAutomationRequest)(nil),                // 4: mycel.admin.v1.DeleteAutomationRequest
+	(*DeleteAutomationResponse)(nil),               // 5: mycel.admin.v1.DeleteAutomationResponse
+	(*GetAutomationRequest)(nil),                   // 6: mycel.admin.v1.GetAutomationRequest
+	(*ListAutomationsRequest)(nil),                 // 7: mycel.admin.v1.ListAutomationsRequest
+	(*ListAutomationsResponse)(nil),                // 8: mycel.admin.v1.ListAutomationsResponse
+	(*EnableAutomationRequest)(nil),                // 9: mycel.admin.v1.EnableAutomationRequest
+	(*DisableAutomationRequest)(nil),               // 10: mycel.admin.v1.DisableAutomationRequest
+	(*CreateAutomationResponse)(nil),               // 11: mycel.admin.v1.CreateAutomationResponse
+	(*UpdateAutomationResponse)(nil),               // 12: mycel.admin.v1.UpdateAutomationResponse
+	(*GetAutomationResponse)(nil),                  // 13: mycel.admin.v1.GetAutomationResponse
+	(*EnableAutomationResponse)(nil),               // 14: mycel.admin.v1.EnableAutomationResponse
+	(*DisableAutomationResponse)(nil),              // 15: mycel.admin.v1.DisableAutomationResponse
+	(*ListAutomationInvocationsRequest)(nil),       // 16: mycel.admin.v1.ListAutomationInvocationsRequest
+	(*ListAutomationInvocationsResponse)(nil),      // 17: mycel.admin.v1.ListAutomationInvocationsResponse
+	(*GetAutomationRunRequest)(nil),                // 18: mycel.admin.v1.GetAutomationRunRequest
+	(*GetAutomationRunResponse)(nil),               // 19: mycel.admin.v1.GetAutomationRunResponse
+	(*RetryAutomationInvocationRequest)(nil),       // 20: mycel.admin.v1.RetryAutomationInvocationRequest
+	(*RetryAutomationInvocationResponse)(nil),      // 21: mycel.admin.v1.RetryAutomationInvocationResponse
+	(*CancelAutomationInvocationRequest)(nil),      // 22: mycel.admin.v1.CancelAutomationInvocationRequest
+	(*CancelAutomationInvocationResponse)(nil),     // 23: mycel.admin.v1.CancelAutomationInvocationResponse
+	(*ValidateGraphProcedureRequest)(nil),          // 24: mycel.admin.v1.ValidateGraphProcedureRequest
+	(*ValidateGraphProcedureResponse)(nil),         // 25: mycel.admin.v1.ValidateGraphProcedureResponse
+	(*CreateGraphProcedureRequest)(nil),            // 26: mycel.admin.v1.CreateGraphProcedureRequest
+	(*UpdateGraphProcedureRequest)(nil),            // 27: mycel.admin.v1.UpdateGraphProcedureRequest
+	(*DeleteGraphProcedureRequest)(nil),            // 28: mycel.admin.v1.DeleteGraphProcedureRequest
+	(*DeleteGraphProcedureResponse)(nil),           // 29: mycel.admin.v1.DeleteGraphProcedureResponse
+	(*GetGraphProcedureRequest)(nil),               // 30: mycel.admin.v1.GetGraphProcedureRequest
+	(*ListGraphProceduresRequest)(nil),             // 31: mycel.admin.v1.ListGraphProceduresRequest
+	(*ListGraphProceduresResponse)(nil),            // 32: mycel.admin.v1.ListGraphProceduresResponse
+	(*CreateGraphProcedureResponse)(nil),           // 33: mycel.admin.v1.CreateGraphProcedureResponse
+	(*UpdateGraphProcedureResponse)(nil),           // 34: mycel.admin.v1.UpdateGraphProcedureResponse
+	(*GetGraphProcedureResponse)(nil),              // 35: mycel.admin.v1.GetGraphProcedureResponse
+	(*ValidateGraphAutomationBindingRequest)(nil),  // 36: mycel.admin.v1.ValidateGraphAutomationBindingRequest
+	(*ValidateGraphAutomationBindingResponse)(nil), // 37: mycel.admin.v1.ValidateGraphAutomationBindingResponse
+	(*CreateGraphAutomationBindingRequest)(nil),    // 38: mycel.admin.v1.CreateGraphAutomationBindingRequest
+	(*UpdateGraphAutomationBindingRequest)(nil),    // 39: mycel.admin.v1.UpdateGraphAutomationBindingRequest
+	(*DeleteGraphAutomationBindingRequest)(nil),    // 40: mycel.admin.v1.DeleteGraphAutomationBindingRequest
+	(*DeleteGraphAutomationBindingResponse)(nil),   // 41: mycel.admin.v1.DeleteGraphAutomationBindingResponse
+	(*GetGraphAutomationBindingRequest)(nil),       // 42: mycel.admin.v1.GetGraphAutomationBindingRequest
+	(*ListGraphAutomationBindingsRequest)(nil),     // 43: mycel.admin.v1.ListGraphAutomationBindingsRequest
+	(*ListGraphAutomationBindingsResponse)(nil),    // 44: mycel.admin.v1.ListGraphAutomationBindingsResponse
+	(*EnableGraphAutomationBindingRequest)(nil),    // 45: mycel.admin.v1.EnableGraphAutomationBindingRequest
+	(*DisableGraphAutomationBindingRequest)(nil),   // 46: mycel.admin.v1.DisableGraphAutomationBindingRequest
+	(*CreateGraphAutomationBindingResponse)(nil),   // 47: mycel.admin.v1.CreateGraphAutomationBindingResponse
+	(*UpdateGraphAutomationBindingResponse)(nil),   // 48: mycel.admin.v1.UpdateGraphAutomationBindingResponse
+	(*GetGraphAutomationBindingResponse)(nil),      // 49: mycel.admin.v1.GetGraphAutomationBindingResponse
+	(*EnableGraphAutomationBindingResponse)(nil),   // 50: mycel.admin.v1.EnableGraphAutomationBindingResponse
+	(*DisableGraphAutomationBindingResponse)(nil),  // 51: mycel.admin.v1.DisableGraphAutomationBindingResponse
+	(*v1.AutomationDefinitionSummary)(nil),         // 52: mycel.client.v1.AutomationDefinitionSummary
+	(*v1.AutomationInvocationSummary)(nil),         // 53: mycel.client.v1.AutomationInvocationSummary
+	(*v1.GraphProcedureSummary)(nil),               // 54: mycel.client.v1.GraphProcedureSummary
+	(*v1.GraphAutomationBindingSummary)(nil),       // 55: mycel.client.v1.GraphAutomationBindingSummary
 }
 var file_mycel_admin_v1_automation_proto_depIdxs = []int32{
-	24, // 0: mycel.admin.v1.ListAutomationsResponse.automations:type_name -> mycel.client.v1.AutomationDefinitionSummary
-	25, // 1: mycel.admin.v1.ListAutomationInvocationsResponse.invocations:type_name -> mycel.client.v1.AutomationInvocationSummary
-	25, // 2: mycel.admin.v1.RetryAutomationInvocationResponse.invocation:type_name -> mycel.client.v1.AutomationInvocationSummary
-	25, // 3: mycel.admin.v1.CancelAutomationInvocationResponse.invocation:type_name -> mycel.client.v1.AutomationInvocationSummary
-	0,  // 4: mycel.admin.v1.AdminAutomationService.ValidateAutomation:input_type -> mycel.admin.v1.ValidateAutomationRequest
-	2,  // 5: mycel.admin.v1.AdminAutomationService.CreateAutomation:input_type -> mycel.admin.v1.CreateAutomationRequest
-	3,  // 6: mycel.admin.v1.AdminAutomationService.UpdateAutomation:input_type -> mycel.admin.v1.UpdateAutomationRequest
-	4,  // 7: mycel.admin.v1.AdminAutomationService.DeleteAutomation:input_type -> mycel.admin.v1.DeleteAutomationRequest
-	6,  // 8: mycel.admin.v1.AdminAutomationService.GetAutomation:input_type -> mycel.admin.v1.GetAutomationRequest
-	7,  // 9: mycel.admin.v1.AdminAutomationService.ListAutomations:input_type -> mycel.admin.v1.ListAutomationsRequest
-	9,  // 10: mycel.admin.v1.AdminAutomationService.EnableAutomation:input_type -> mycel.admin.v1.EnableAutomationRequest
-	10, // 11: mycel.admin.v1.AdminAutomationService.DisableAutomation:input_type -> mycel.admin.v1.DisableAutomationRequest
-	16, // 12: mycel.admin.v1.AdminAutomationService.ListAutomationInvocations:input_type -> mycel.admin.v1.ListAutomationInvocationsRequest
-	18, // 13: mycel.admin.v1.AdminAutomationService.GetAutomationRun:input_type -> mycel.admin.v1.GetAutomationRunRequest
-	20, // 14: mycel.admin.v1.AdminAutomationService.RetryAutomationInvocation:input_type -> mycel.admin.v1.RetryAutomationInvocationRequest
-	22, // 15: mycel.admin.v1.AdminAutomationService.CancelAutomationInvocation:input_type -> mycel.admin.v1.CancelAutomationInvocationRequest
-	1,  // 16: mycel.admin.v1.AdminAutomationService.ValidateAutomation:output_type -> mycel.admin.v1.ValidateAutomationResponse
-	11, // 17: mycel.admin.v1.AdminAutomationService.CreateAutomation:output_type -> mycel.admin.v1.CreateAutomationResponse
-	12, // 18: mycel.admin.v1.AdminAutomationService.UpdateAutomation:output_type -> mycel.admin.v1.UpdateAutomationResponse
-	5,  // 19: mycel.admin.v1.AdminAutomationService.DeleteAutomation:output_type -> mycel.admin.v1.DeleteAutomationResponse
-	13, // 20: mycel.admin.v1.AdminAutomationService.GetAutomation:output_type -> mycel.admin.v1.GetAutomationResponse
-	8,  // 21: mycel.admin.v1.AdminAutomationService.ListAutomations:output_type -> mycel.admin.v1.ListAutomationsResponse
-	14, // 22: mycel.admin.v1.AdminAutomationService.EnableAutomation:output_type -> mycel.admin.v1.EnableAutomationResponse
-	15, // 23: mycel.admin.v1.AdminAutomationService.DisableAutomation:output_type -> mycel.admin.v1.DisableAutomationResponse
-	17, // 24: mycel.admin.v1.AdminAutomationService.ListAutomationInvocations:output_type -> mycel.admin.v1.ListAutomationInvocationsResponse
-	19, // 25: mycel.admin.v1.AdminAutomationService.GetAutomationRun:output_type -> mycel.admin.v1.GetAutomationRunResponse
-	21, // 26: mycel.admin.v1.AdminAutomationService.RetryAutomationInvocation:output_type -> mycel.admin.v1.RetryAutomationInvocationResponse
-	23, // 27: mycel.admin.v1.AdminAutomationService.CancelAutomationInvocation:output_type -> mycel.admin.v1.CancelAutomationInvocationResponse
-	16, // [16:28] is the sub-list for method output_type
-	4,  // [4:16] is the sub-list for method input_type
-	4,  // [4:4] is the sub-list for extension type_name
-	4,  // [4:4] is the sub-list for extension extendee
-	0,  // [0:4] is the sub-list for field type_name
+	52, // 0: mycel.admin.v1.ListAutomationsResponse.automations:type_name -> mycel.client.v1.AutomationDefinitionSummary
+	53, // 1: mycel.admin.v1.ListAutomationInvocationsResponse.invocations:type_name -> mycel.client.v1.AutomationInvocationSummary
+	53, // 2: mycel.admin.v1.RetryAutomationInvocationResponse.invocation:type_name -> mycel.client.v1.AutomationInvocationSummary
+	53, // 3: mycel.admin.v1.CancelAutomationInvocationResponse.invocation:type_name -> mycel.client.v1.AutomationInvocationSummary
+	54, // 4: mycel.admin.v1.ListGraphProceduresResponse.procedures:type_name -> mycel.client.v1.GraphProcedureSummary
+	55, // 5: mycel.admin.v1.ListGraphAutomationBindingsResponse.bindings:type_name -> mycel.client.v1.GraphAutomationBindingSummary
+	0,  // 6: mycel.admin.v1.AdminAutomationService.ValidateAutomation:input_type -> mycel.admin.v1.ValidateAutomationRequest
+	2,  // 7: mycel.admin.v1.AdminAutomationService.CreateAutomation:input_type -> mycel.admin.v1.CreateAutomationRequest
+	3,  // 8: mycel.admin.v1.AdminAutomationService.UpdateAutomation:input_type -> mycel.admin.v1.UpdateAutomationRequest
+	4,  // 9: mycel.admin.v1.AdminAutomationService.DeleteAutomation:input_type -> mycel.admin.v1.DeleteAutomationRequest
+	6,  // 10: mycel.admin.v1.AdminAutomationService.GetAutomation:input_type -> mycel.admin.v1.GetAutomationRequest
+	7,  // 11: mycel.admin.v1.AdminAutomationService.ListAutomations:input_type -> mycel.admin.v1.ListAutomationsRequest
+	9,  // 12: mycel.admin.v1.AdminAutomationService.EnableAutomation:input_type -> mycel.admin.v1.EnableAutomationRequest
+	10, // 13: mycel.admin.v1.AdminAutomationService.DisableAutomation:input_type -> mycel.admin.v1.DisableAutomationRequest
+	16, // 14: mycel.admin.v1.AdminAutomationService.ListAutomationInvocations:input_type -> mycel.admin.v1.ListAutomationInvocationsRequest
+	18, // 15: mycel.admin.v1.AdminAutomationService.GetAutomationRun:input_type -> mycel.admin.v1.GetAutomationRunRequest
+	20, // 16: mycel.admin.v1.AdminAutomationService.RetryAutomationInvocation:input_type -> mycel.admin.v1.RetryAutomationInvocationRequest
+	22, // 17: mycel.admin.v1.AdminAutomationService.CancelAutomationInvocation:input_type -> mycel.admin.v1.CancelAutomationInvocationRequest
+	24, // 18: mycel.admin.v1.AdminAutomationService.ValidateGraphProcedure:input_type -> mycel.admin.v1.ValidateGraphProcedureRequest
+	26, // 19: mycel.admin.v1.AdminAutomationService.CreateGraphProcedure:input_type -> mycel.admin.v1.CreateGraphProcedureRequest
+	27, // 20: mycel.admin.v1.AdminAutomationService.UpdateGraphProcedure:input_type -> mycel.admin.v1.UpdateGraphProcedureRequest
+	28, // 21: mycel.admin.v1.AdminAutomationService.DeleteGraphProcedure:input_type -> mycel.admin.v1.DeleteGraphProcedureRequest
+	30, // 22: mycel.admin.v1.AdminAutomationService.GetGraphProcedure:input_type -> mycel.admin.v1.GetGraphProcedureRequest
+	31, // 23: mycel.admin.v1.AdminAutomationService.ListGraphProcedures:input_type -> mycel.admin.v1.ListGraphProceduresRequest
+	36, // 24: mycel.admin.v1.AdminAutomationService.ValidateGraphAutomationBinding:input_type -> mycel.admin.v1.ValidateGraphAutomationBindingRequest
+	38, // 25: mycel.admin.v1.AdminAutomationService.CreateGraphAutomationBinding:input_type -> mycel.admin.v1.CreateGraphAutomationBindingRequest
+	39, // 26: mycel.admin.v1.AdminAutomationService.UpdateGraphAutomationBinding:input_type -> mycel.admin.v1.UpdateGraphAutomationBindingRequest
+	40, // 27: mycel.admin.v1.AdminAutomationService.DeleteGraphAutomationBinding:input_type -> mycel.admin.v1.DeleteGraphAutomationBindingRequest
+	42, // 28: mycel.admin.v1.AdminAutomationService.GetGraphAutomationBinding:input_type -> mycel.admin.v1.GetGraphAutomationBindingRequest
+	43, // 29: mycel.admin.v1.AdminAutomationService.ListGraphAutomationBindings:input_type -> mycel.admin.v1.ListGraphAutomationBindingsRequest
+	45, // 30: mycel.admin.v1.AdminAutomationService.EnableGraphAutomationBinding:input_type -> mycel.admin.v1.EnableGraphAutomationBindingRequest
+	46, // 31: mycel.admin.v1.AdminAutomationService.DisableGraphAutomationBinding:input_type -> mycel.admin.v1.DisableGraphAutomationBindingRequest
+	1,  // 32: mycel.admin.v1.AdminAutomationService.ValidateAutomation:output_type -> mycel.admin.v1.ValidateAutomationResponse
+	11, // 33: mycel.admin.v1.AdminAutomationService.CreateAutomation:output_type -> mycel.admin.v1.CreateAutomationResponse
+	12, // 34: mycel.admin.v1.AdminAutomationService.UpdateAutomation:output_type -> mycel.admin.v1.UpdateAutomationResponse
+	5,  // 35: mycel.admin.v1.AdminAutomationService.DeleteAutomation:output_type -> mycel.admin.v1.DeleteAutomationResponse
+	13, // 36: mycel.admin.v1.AdminAutomationService.GetAutomation:output_type -> mycel.admin.v1.GetAutomationResponse
+	8,  // 37: mycel.admin.v1.AdminAutomationService.ListAutomations:output_type -> mycel.admin.v1.ListAutomationsResponse
+	14, // 38: mycel.admin.v1.AdminAutomationService.EnableAutomation:output_type -> mycel.admin.v1.EnableAutomationResponse
+	15, // 39: mycel.admin.v1.AdminAutomationService.DisableAutomation:output_type -> mycel.admin.v1.DisableAutomationResponse
+	17, // 40: mycel.admin.v1.AdminAutomationService.ListAutomationInvocations:output_type -> mycel.admin.v1.ListAutomationInvocationsResponse
+	19, // 41: mycel.admin.v1.AdminAutomationService.GetAutomationRun:output_type -> mycel.admin.v1.GetAutomationRunResponse
+	21, // 42: mycel.admin.v1.AdminAutomationService.RetryAutomationInvocation:output_type -> mycel.admin.v1.RetryAutomationInvocationResponse
+	23, // 43: mycel.admin.v1.AdminAutomationService.CancelAutomationInvocation:output_type -> mycel.admin.v1.CancelAutomationInvocationResponse
+	25, // 44: mycel.admin.v1.AdminAutomationService.ValidateGraphProcedure:output_type -> mycel.admin.v1.ValidateGraphProcedureResponse
+	33, // 45: mycel.admin.v1.AdminAutomationService.CreateGraphProcedure:output_type -> mycel.admin.v1.CreateGraphProcedureResponse
+	34, // 46: mycel.admin.v1.AdminAutomationService.UpdateGraphProcedure:output_type -> mycel.admin.v1.UpdateGraphProcedureResponse
+	29, // 47: mycel.admin.v1.AdminAutomationService.DeleteGraphProcedure:output_type -> mycel.admin.v1.DeleteGraphProcedureResponse
+	35, // 48: mycel.admin.v1.AdminAutomationService.GetGraphProcedure:output_type -> mycel.admin.v1.GetGraphProcedureResponse
+	32, // 49: mycel.admin.v1.AdminAutomationService.ListGraphProcedures:output_type -> mycel.admin.v1.ListGraphProceduresResponse
+	37, // 50: mycel.admin.v1.AdminAutomationService.ValidateGraphAutomationBinding:output_type -> mycel.admin.v1.ValidateGraphAutomationBindingResponse
+	47, // 51: mycel.admin.v1.AdminAutomationService.CreateGraphAutomationBinding:output_type -> mycel.admin.v1.CreateGraphAutomationBindingResponse
+	48, // 52: mycel.admin.v1.AdminAutomationService.UpdateGraphAutomationBinding:output_type -> mycel.admin.v1.UpdateGraphAutomationBindingResponse
+	41, // 53: mycel.admin.v1.AdminAutomationService.DeleteGraphAutomationBinding:output_type -> mycel.admin.v1.DeleteGraphAutomationBindingResponse
+	49, // 54: mycel.admin.v1.AdminAutomationService.GetGraphAutomationBinding:output_type -> mycel.admin.v1.GetGraphAutomationBindingResponse
+	44, // 55: mycel.admin.v1.AdminAutomationService.ListGraphAutomationBindings:output_type -> mycel.admin.v1.ListGraphAutomationBindingsResponse
+	50, // 56: mycel.admin.v1.AdminAutomationService.EnableGraphAutomationBinding:output_type -> mycel.admin.v1.EnableGraphAutomationBindingResponse
+	51, // 57: mycel.admin.v1.AdminAutomationService.DisableGraphAutomationBinding:output_type -> mycel.admin.v1.DisableGraphAutomationBindingResponse
+	32, // [32:58] is the sub-list for method output_type
+	6,  // [6:32] is the sub-list for method input_type
+	6,  // [6:6] is the sub-list for extension type_name
+	6,  // [6:6] is the sub-list for extension extendee
+	0,  // [0:6] is the sub-list for field type_name
 }
 
 func init() { file_mycel_admin_v1_automation_proto_init() }
@@ -1383,7 +2913,7 @@ func file_mycel_admin_v1_automation_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_mycel_admin_v1_automation_proto_rawDesc), len(file_mycel_admin_v1_automation_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   24,
+			NumMessages:   52,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

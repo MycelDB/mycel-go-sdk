@@ -28,14 +28,14 @@ type MigrateLegacyEmbeddingsRequest struct {
 	// Optional. Defaults to the space owner when omitted.
 	OwnerPrincipalId string `protobuf:"bytes,3,opt,name=owner_principal_id,json=ownerPrincipalId,proto3" json:"owner_principal_id,omitempty"`
 	// Optional legacy profile UUID or name.
-	ProfileRef         string `protobuf:"bytes,4,opt,name=profile_ref,json=profileRef,proto3" json:"profile_ref,omitempty"`
-	AllowBackgroundUse bool   `protobuf:"varint,5,opt,name=allow_background_use,json=allowBackgroundUse,proto3" json:"allow_background_use,omitempty"`
-	AddAllowPolicy     bool   `protobuf:"varint,6,opt,name=add_allow_policy,json=addAllowPolicy,proto3" json:"add_allow_policy,omitempty"`
-	Strict             bool   `protobuf:"varint,7,opt,name=strict,proto3" json:"strict,omitempty"`
-	DryRun             bool   `protobuf:"varint,8,opt,name=dry_run,json=dryRun,proto3" json:"dry_run,omitempty"`
-	Limit              int32  `protobuf:"varint,9,opt,name=limit,proto3" json:"limit,omitempty"`
-	unknownFields      protoimpl.UnknownFields
-	sizeCache          protoimpl.SizeCache
+	IntelligenceProfileRef string `protobuf:"bytes,4,opt,name=intelligence_profile_ref,json=intelligenceProfileRef,proto3" json:"intelligence_profile_ref,omitempty"`
+	AllowBackgroundUse     bool   `protobuf:"varint,5,opt,name=allow_background_use,json=allowBackgroundUse,proto3" json:"allow_background_use,omitempty"`
+	AddAllowPolicy         bool   `protobuf:"varint,6,opt,name=add_allow_policy,json=addAllowPolicy,proto3" json:"add_allow_policy,omitempty"`
+	Strict                 bool   `protobuf:"varint,7,opt,name=strict,proto3" json:"strict,omitempty"`
+	DryRun                 bool   `protobuf:"varint,8,opt,name=dry_run,json=dryRun,proto3" json:"dry_run,omitempty"`
+	Limit                  int32  `protobuf:"varint,9,opt,name=limit,proto3" json:"limit,omitempty"`
+	unknownFields          protoimpl.UnknownFields
+	sizeCache              protoimpl.SizeCache
 }
 
 func (x *MigrateLegacyEmbeddingsRequest) Reset() {
@@ -89,9 +89,9 @@ func (x *MigrateLegacyEmbeddingsRequest) GetOwnerPrincipalId() string {
 	return ""
 }
 
-func (x *MigrateLegacyEmbeddingsRequest) GetProfileRef() string {
+func (x *MigrateLegacyEmbeddingsRequest) GetIntelligenceProfileRef() string {
 	if x != nil {
-		return x.ProfileRef
+		return x.IntelligenceProfileRef
 	}
 	return ""
 }
@@ -140,9 +140,9 @@ type MigrateLegacyEmbeddingsResponse struct {
 	EndpointIds        []string               `protobuf:"bytes,5,rep,name=endpoint_ids,json=endpointIds,proto3" json:"endpoint_ids,omitempty"`
 	ModelIds           []string               `protobuf:"bytes,6,rep,name=model_ids,json=modelIds,proto3" json:"model_ids,omitempty"`
 	CredentialIds      []string               `protobuf:"bytes,7,rep,name=credential_ids,json=credentialIds,proto3" json:"credential_ids,omitempty"`
-	SemanticIndexIds   []string               `protobuf:"bytes,8,rep,name=semantic_index_ids,json=semanticIndexIds,proto3" json:"semantic_index_ids,omitempty"`
+	SemanticRuleIds    []string               `protobuf:"bytes,8,rep,name=semantic_rule_ids,json=semanticRuleIds,proto3" json:"semantic_rule_ids,omitempty"`
 	CredentialGrantIds []string               `protobuf:"bytes,9,rep,name=credential_grant_ids,json=credentialGrantIds,proto3" json:"credential_grant_ids,omitempty"`
-	PolicyIds          []string               `protobuf:"bytes,10,rep,name=policy_ids,json=policyIds,proto3" json:"policy_ids,omitempty"`
+	AccessPolicyIds    []string               `protobuf:"bytes,10,rep,name=access_policy_ids,json=accessPolicyIds,proto3" json:"access_policy_ids,omitempty"`
 	Warnings           []string               `protobuf:"bytes,11,rep,name=warnings,proto3" json:"warnings,omitempty"`
 	unknownFields      protoimpl.UnknownFields
 	sizeCache          protoimpl.SizeCache
@@ -227,9 +227,9 @@ func (x *MigrateLegacyEmbeddingsResponse) GetCredentialIds() []string {
 	return nil
 }
 
-func (x *MigrateLegacyEmbeddingsResponse) GetSemanticIndexIds() []string {
+func (x *MigrateLegacyEmbeddingsResponse) GetSemanticRuleIds() []string {
 	if x != nil {
-		return x.SemanticIndexIds
+		return x.SemanticRuleIds
 	}
 	return nil
 }
@@ -241,9 +241,9 @@ func (x *MigrateLegacyEmbeddingsResponse) GetCredentialGrantIds() []string {
 	return nil
 }
 
-func (x *MigrateLegacyEmbeddingsResponse) GetPolicyIds() []string {
+func (x *MigrateLegacyEmbeddingsResponse) GetAccessPolicyIds() []string {
 	if x != nil {
-		return x.PolicyIds
+		return x.AccessPolicyIds
 	}
 	return nil
 }
@@ -259,18 +259,17 @@ var File_mycel_admin_v1_semantic_migration_proto protoreflect.FileDescriptor
 
 const file_mycel_admin_v1_semantic_migration_proto_rawDesc = "" +
 	"\n" +
-	"'mycel/admin/v1/semantic_migration.proto\x12\x0emycel.admin.v1\"\xca\x02\n" +
+	"'mycel/admin/v1/semantic_migration.proto\x12\x0emycel.admin.v1\"\xe3\x02\n" +
 	"\x1eMigrateLegacyEmbeddingsRequest\x12\x19\n" +
 	"\bspace_id\x18\x01 \x01(\tR\aspaceId\x12\x1b\n" +
 	"\tdomain_id\x18\x02 \x01(\tR\bdomainId\x12,\n" +
-	"\x12owner_principal_id\x18\x03 \x01(\tR\x10ownerPrincipalId\x12\x1f\n" +
-	"\vprofile_ref\x18\x04 \x01(\tR\n" +
-	"profileRef\x120\n" +
+	"\x12owner_principal_id\x18\x03 \x01(\tR\x10ownerPrincipalId\x128\n" +
+	"\x18intelligence_profile_ref\x18\x04 \x01(\tR\x16intelligenceProfileRef\x120\n" +
 	"\x14allow_background_use\x18\x05 \x01(\bR\x12allowBackgroundUse\x12(\n" +
 	"\x10add_allow_policy\x18\x06 \x01(\bR\x0eaddAllowPolicy\x12\x16\n" +
 	"\x06strict\x18\a \x01(\bR\x06strict\x12\x17\n" +
 	"\adry_run\x18\b \x01(\bR\x06dryRun\x12\x14\n" +
-	"\x05limit\x18\t \x01(\x05R\x05limit\"\xb9\x03\n" +
+	"\x05limit\x18\t \x01(\x05R\x05limit\"\xc4\x03\n" +
 	"\x1fMigrateLegacyEmbeddingsResponse\x12#\n" +
 	"\rprofiles_seen\x18\x01 \x01(\x05R\fprofilesSeen\x12+\n" +
 	"\x11profiles_migrated\x18\x02 \x01(\x05R\x10profilesMigrated\x12)\n" +
@@ -278,12 +277,11 @@ const file_mycel_admin_v1_semantic_migration_proto_rawDesc = "" +
 	"\adry_run\x18\x04 \x01(\bR\x06dryRun\x12!\n" +
 	"\fendpoint_ids\x18\x05 \x03(\tR\vendpointIds\x12\x1b\n" +
 	"\tmodel_ids\x18\x06 \x03(\tR\bmodelIds\x12%\n" +
-	"\x0ecredential_ids\x18\a \x03(\tR\rcredentialIds\x12,\n" +
-	"\x12semantic_index_ids\x18\b \x03(\tR\x10semanticIndexIds\x120\n" +
-	"\x14credential_grant_ids\x18\t \x03(\tR\x12credentialGrantIds\x12\x1d\n" +
-	"\n" +
-	"policy_ids\x18\n" +
-	" \x03(\tR\tpolicyIds\x12\x1a\n" +
+	"\x0ecredential_ids\x18\a \x03(\tR\rcredentialIds\x12*\n" +
+	"\x11semantic_rule_ids\x18\b \x03(\tR\x0fsemanticRuleIds\x120\n" +
+	"\x14credential_grant_ids\x18\t \x03(\tR\x12credentialGrantIds\x12*\n" +
+	"\x11access_policy_ids\x18\n" +
+	" \x03(\tR\x0faccessPolicyIds\x12\x1a\n" +
 	"\bwarnings\x18\v \x03(\tR\bwarnings2\x9b\x01\n" +
 	"\x1dAdminSemanticMigrationService\x12z\n" +
 	"\x17MigrateLegacyEmbeddings\x12..mycel.admin.v1.MigrateLegacyEmbeddingsRequest\x1a/.mycel.admin.v1.MigrateLegacyEmbeddingsResponseB\xc5\x01\n" +

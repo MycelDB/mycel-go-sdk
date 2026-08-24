@@ -19,18 +19,32 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	AutomationService_ValidateAutomation_FullMethodName         = "/mycel.client.v1.AutomationService/ValidateAutomation"
-	AutomationService_CreateAutomation_FullMethodName           = "/mycel.client.v1.AutomationService/CreateAutomation"
-	AutomationService_UpdateAutomation_FullMethodName           = "/mycel.client.v1.AutomationService/UpdateAutomation"
-	AutomationService_DeleteAutomation_FullMethodName           = "/mycel.client.v1.AutomationService/DeleteAutomation"
-	AutomationService_GetAutomation_FullMethodName              = "/mycel.client.v1.AutomationService/GetAutomation"
-	AutomationService_ListAutomations_FullMethodName            = "/mycel.client.v1.AutomationService/ListAutomations"
-	AutomationService_EnableAutomation_FullMethodName           = "/mycel.client.v1.AutomationService/EnableAutomation"
-	AutomationService_DisableAutomation_FullMethodName          = "/mycel.client.v1.AutomationService/DisableAutomation"
-	AutomationService_ListAutomationInvocations_FullMethodName  = "/mycel.client.v1.AutomationService/ListAutomationInvocations"
-	AutomationService_GetAutomationRun_FullMethodName           = "/mycel.client.v1.AutomationService/GetAutomationRun"
-	AutomationService_RetryAutomationInvocation_FullMethodName  = "/mycel.client.v1.AutomationService/RetryAutomationInvocation"
-	AutomationService_CancelAutomationInvocation_FullMethodName = "/mycel.client.v1.AutomationService/CancelAutomationInvocation"
+	AutomationService_ValidateAutomation_FullMethodName             = "/mycel.client.v1.AutomationService/ValidateAutomation"
+	AutomationService_CreateAutomation_FullMethodName               = "/mycel.client.v1.AutomationService/CreateAutomation"
+	AutomationService_UpdateAutomation_FullMethodName               = "/mycel.client.v1.AutomationService/UpdateAutomation"
+	AutomationService_DeleteAutomation_FullMethodName               = "/mycel.client.v1.AutomationService/DeleteAutomation"
+	AutomationService_GetAutomation_FullMethodName                  = "/mycel.client.v1.AutomationService/GetAutomation"
+	AutomationService_ListAutomations_FullMethodName                = "/mycel.client.v1.AutomationService/ListAutomations"
+	AutomationService_EnableAutomation_FullMethodName               = "/mycel.client.v1.AutomationService/EnableAutomation"
+	AutomationService_DisableAutomation_FullMethodName              = "/mycel.client.v1.AutomationService/DisableAutomation"
+	AutomationService_ListAutomationInvocations_FullMethodName      = "/mycel.client.v1.AutomationService/ListAutomationInvocations"
+	AutomationService_GetAutomationRun_FullMethodName               = "/mycel.client.v1.AutomationService/GetAutomationRun"
+	AutomationService_RetryAutomationInvocation_FullMethodName      = "/mycel.client.v1.AutomationService/RetryAutomationInvocation"
+	AutomationService_CancelAutomationInvocation_FullMethodName     = "/mycel.client.v1.AutomationService/CancelAutomationInvocation"
+	AutomationService_ValidateGraphProcedure_FullMethodName         = "/mycel.client.v1.AutomationService/ValidateGraphProcedure"
+	AutomationService_CreateGraphProcedure_FullMethodName           = "/mycel.client.v1.AutomationService/CreateGraphProcedure"
+	AutomationService_UpdateGraphProcedure_FullMethodName           = "/mycel.client.v1.AutomationService/UpdateGraphProcedure"
+	AutomationService_DeleteGraphProcedure_FullMethodName           = "/mycel.client.v1.AutomationService/DeleteGraphProcedure"
+	AutomationService_GetGraphProcedure_FullMethodName              = "/mycel.client.v1.AutomationService/GetGraphProcedure"
+	AutomationService_ListGraphProcedures_FullMethodName            = "/mycel.client.v1.AutomationService/ListGraphProcedures"
+	AutomationService_ValidateGraphAutomationBinding_FullMethodName = "/mycel.client.v1.AutomationService/ValidateGraphAutomationBinding"
+	AutomationService_CreateGraphAutomationBinding_FullMethodName   = "/mycel.client.v1.AutomationService/CreateGraphAutomationBinding"
+	AutomationService_UpdateGraphAutomationBinding_FullMethodName   = "/mycel.client.v1.AutomationService/UpdateGraphAutomationBinding"
+	AutomationService_DeleteGraphAutomationBinding_FullMethodName   = "/mycel.client.v1.AutomationService/DeleteGraphAutomationBinding"
+	AutomationService_GetGraphAutomationBinding_FullMethodName      = "/mycel.client.v1.AutomationService/GetGraphAutomationBinding"
+	AutomationService_ListGraphAutomationBindings_FullMethodName    = "/mycel.client.v1.AutomationService/ListGraphAutomationBindings"
+	AutomationService_EnableGraphAutomationBinding_FullMethodName   = "/mycel.client.v1.AutomationService/EnableGraphAutomationBinding"
+	AutomationService_DisableGraphAutomationBinding_FullMethodName  = "/mycel.client.v1.AutomationService/DisableGraphAutomationBinding"
 )
 
 // AutomationServiceClient is the client API for AutomationService service.
@@ -51,6 +65,20 @@ type AutomationServiceClient interface {
 	GetAutomationRun(ctx context.Context, in *GetAutomationRunRequest, opts ...grpc.CallOption) (*GetAutomationRunResponse, error)
 	RetryAutomationInvocation(ctx context.Context, in *RetryAutomationInvocationRequest, opts ...grpc.CallOption) (*RetryAutomationInvocationResponse, error)
 	CancelAutomationInvocation(ctx context.Context, in *CancelAutomationInvocationRequest, opts ...grpc.CallOption) (*CancelAutomationInvocationResponse, error)
+	ValidateGraphProcedure(ctx context.Context, in *ValidateGraphProcedureRequest, opts ...grpc.CallOption) (*ValidateGraphProcedureResponse, error)
+	CreateGraphProcedure(ctx context.Context, in *CreateGraphProcedureRequest, opts ...grpc.CallOption) (*CreateGraphProcedureResponse, error)
+	UpdateGraphProcedure(ctx context.Context, in *UpdateGraphProcedureRequest, opts ...grpc.CallOption) (*UpdateGraphProcedureResponse, error)
+	DeleteGraphProcedure(ctx context.Context, in *DeleteGraphProcedureRequest, opts ...grpc.CallOption) (*DeleteGraphProcedureResponse, error)
+	GetGraphProcedure(ctx context.Context, in *GetGraphProcedureRequest, opts ...grpc.CallOption) (*GetGraphProcedureResponse, error)
+	ListGraphProcedures(ctx context.Context, in *ListGraphProceduresRequest, opts ...grpc.CallOption) (*ListGraphProceduresResponse, error)
+	ValidateGraphAutomationBinding(ctx context.Context, in *ValidateGraphAutomationBindingRequest, opts ...grpc.CallOption) (*ValidateGraphAutomationBindingResponse, error)
+	CreateGraphAutomationBinding(ctx context.Context, in *CreateGraphAutomationBindingRequest, opts ...grpc.CallOption) (*CreateGraphAutomationBindingResponse, error)
+	UpdateGraphAutomationBinding(ctx context.Context, in *UpdateGraphAutomationBindingRequest, opts ...grpc.CallOption) (*UpdateGraphAutomationBindingResponse, error)
+	DeleteGraphAutomationBinding(ctx context.Context, in *DeleteGraphAutomationBindingRequest, opts ...grpc.CallOption) (*DeleteGraphAutomationBindingResponse, error)
+	GetGraphAutomationBinding(ctx context.Context, in *GetGraphAutomationBindingRequest, opts ...grpc.CallOption) (*GetGraphAutomationBindingResponse, error)
+	ListGraphAutomationBindings(ctx context.Context, in *ListGraphAutomationBindingsRequest, opts ...grpc.CallOption) (*ListGraphAutomationBindingsResponse, error)
+	EnableGraphAutomationBinding(ctx context.Context, in *EnableGraphAutomationBindingRequest, opts ...grpc.CallOption) (*EnableGraphAutomationBindingResponse, error)
+	DisableGraphAutomationBinding(ctx context.Context, in *DisableGraphAutomationBindingRequest, opts ...grpc.CallOption) (*DisableGraphAutomationBindingResponse, error)
 }
 
 type automationServiceClient struct {
@@ -181,6 +209,146 @@ func (c *automationServiceClient) CancelAutomationInvocation(ctx context.Context
 	return out, nil
 }
 
+func (c *automationServiceClient) ValidateGraphProcedure(ctx context.Context, in *ValidateGraphProcedureRequest, opts ...grpc.CallOption) (*ValidateGraphProcedureResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ValidateGraphProcedureResponse)
+	err := c.cc.Invoke(ctx, AutomationService_ValidateGraphProcedure_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *automationServiceClient) CreateGraphProcedure(ctx context.Context, in *CreateGraphProcedureRequest, opts ...grpc.CallOption) (*CreateGraphProcedureResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CreateGraphProcedureResponse)
+	err := c.cc.Invoke(ctx, AutomationService_CreateGraphProcedure_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *automationServiceClient) UpdateGraphProcedure(ctx context.Context, in *UpdateGraphProcedureRequest, opts ...grpc.CallOption) (*UpdateGraphProcedureResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(UpdateGraphProcedureResponse)
+	err := c.cc.Invoke(ctx, AutomationService_UpdateGraphProcedure_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *automationServiceClient) DeleteGraphProcedure(ctx context.Context, in *DeleteGraphProcedureRequest, opts ...grpc.CallOption) (*DeleteGraphProcedureResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(DeleteGraphProcedureResponse)
+	err := c.cc.Invoke(ctx, AutomationService_DeleteGraphProcedure_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *automationServiceClient) GetGraphProcedure(ctx context.Context, in *GetGraphProcedureRequest, opts ...grpc.CallOption) (*GetGraphProcedureResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetGraphProcedureResponse)
+	err := c.cc.Invoke(ctx, AutomationService_GetGraphProcedure_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *automationServiceClient) ListGraphProcedures(ctx context.Context, in *ListGraphProceduresRequest, opts ...grpc.CallOption) (*ListGraphProceduresResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListGraphProceduresResponse)
+	err := c.cc.Invoke(ctx, AutomationService_ListGraphProcedures_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *automationServiceClient) ValidateGraphAutomationBinding(ctx context.Context, in *ValidateGraphAutomationBindingRequest, opts ...grpc.CallOption) (*ValidateGraphAutomationBindingResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ValidateGraphAutomationBindingResponse)
+	err := c.cc.Invoke(ctx, AutomationService_ValidateGraphAutomationBinding_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *automationServiceClient) CreateGraphAutomationBinding(ctx context.Context, in *CreateGraphAutomationBindingRequest, opts ...grpc.CallOption) (*CreateGraphAutomationBindingResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CreateGraphAutomationBindingResponse)
+	err := c.cc.Invoke(ctx, AutomationService_CreateGraphAutomationBinding_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *automationServiceClient) UpdateGraphAutomationBinding(ctx context.Context, in *UpdateGraphAutomationBindingRequest, opts ...grpc.CallOption) (*UpdateGraphAutomationBindingResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(UpdateGraphAutomationBindingResponse)
+	err := c.cc.Invoke(ctx, AutomationService_UpdateGraphAutomationBinding_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *automationServiceClient) DeleteGraphAutomationBinding(ctx context.Context, in *DeleteGraphAutomationBindingRequest, opts ...grpc.CallOption) (*DeleteGraphAutomationBindingResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(DeleteGraphAutomationBindingResponse)
+	err := c.cc.Invoke(ctx, AutomationService_DeleteGraphAutomationBinding_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *automationServiceClient) GetGraphAutomationBinding(ctx context.Context, in *GetGraphAutomationBindingRequest, opts ...grpc.CallOption) (*GetGraphAutomationBindingResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetGraphAutomationBindingResponse)
+	err := c.cc.Invoke(ctx, AutomationService_GetGraphAutomationBinding_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *automationServiceClient) ListGraphAutomationBindings(ctx context.Context, in *ListGraphAutomationBindingsRequest, opts ...grpc.CallOption) (*ListGraphAutomationBindingsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListGraphAutomationBindingsResponse)
+	err := c.cc.Invoke(ctx, AutomationService_ListGraphAutomationBindings_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *automationServiceClient) EnableGraphAutomationBinding(ctx context.Context, in *EnableGraphAutomationBindingRequest, opts ...grpc.CallOption) (*EnableGraphAutomationBindingResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(EnableGraphAutomationBindingResponse)
+	err := c.cc.Invoke(ctx, AutomationService_EnableGraphAutomationBinding_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *automationServiceClient) DisableGraphAutomationBinding(ctx context.Context, in *DisableGraphAutomationBindingRequest, opts ...grpc.CallOption) (*DisableGraphAutomationBindingResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(DisableGraphAutomationBindingResponse)
+	err := c.cc.Invoke(ctx, AutomationService_DisableGraphAutomationBinding_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // AutomationServiceServer is the server API for AutomationService service.
 // All implementations must embed UnimplementedAutomationServiceServer
 // for forward compatibility.
@@ -199,6 +367,20 @@ type AutomationServiceServer interface {
 	GetAutomationRun(context.Context, *GetAutomationRunRequest) (*GetAutomationRunResponse, error)
 	RetryAutomationInvocation(context.Context, *RetryAutomationInvocationRequest) (*RetryAutomationInvocationResponse, error)
 	CancelAutomationInvocation(context.Context, *CancelAutomationInvocationRequest) (*CancelAutomationInvocationResponse, error)
+	ValidateGraphProcedure(context.Context, *ValidateGraphProcedureRequest) (*ValidateGraphProcedureResponse, error)
+	CreateGraphProcedure(context.Context, *CreateGraphProcedureRequest) (*CreateGraphProcedureResponse, error)
+	UpdateGraphProcedure(context.Context, *UpdateGraphProcedureRequest) (*UpdateGraphProcedureResponse, error)
+	DeleteGraphProcedure(context.Context, *DeleteGraphProcedureRequest) (*DeleteGraphProcedureResponse, error)
+	GetGraphProcedure(context.Context, *GetGraphProcedureRequest) (*GetGraphProcedureResponse, error)
+	ListGraphProcedures(context.Context, *ListGraphProceduresRequest) (*ListGraphProceduresResponse, error)
+	ValidateGraphAutomationBinding(context.Context, *ValidateGraphAutomationBindingRequest) (*ValidateGraphAutomationBindingResponse, error)
+	CreateGraphAutomationBinding(context.Context, *CreateGraphAutomationBindingRequest) (*CreateGraphAutomationBindingResponse, error)
+	UpdateGraphAutomationBinding(context.Context, *UpdateGraphAutomationBindingRequest) (*UpdateGraphAutomationBindingResponse, error)
+	DeleteGraphAutomationBinding(context.Context, *DeleteGraphAutomationBindingRequest) (*DeleteGraphAutomationBindingResponse, error)
+	GetGraphAutomationBinding(context.Context, *GetGraphAutomationBindingRequest) (*GetGraphAutomationBindingResponse, error)
+	ListGraphAutomationBindings(context.Context, *ListGraphAutomationBindingsRequest) (*ListGraphAutomationBindingsResponse, error)
+	EnableGraphAutomationBinding(context.Context, *EnableGraphAutomationBindingRequest) (*EnableGraphAutomationBindingResponse, error)
+	DisableGraphAutomationBinding(context.Context, *DisableGraphAutomationBindingRequest) (*DisableGraphAutomationBindingResponse, error)
 	mustEmbedUnimplementedAutomationServiceServer()
 }
 
@@ -244,6 +426,48 @@ func (UnimplementedAutomationServiceServer) RetryAutomationInvocation(context.Co
 }
 func (UnimplementedAutomationServiceServer) CancelAutomationInvocation(context.Context, *CancelAutomationInvocationRequest) (*CancelAutomationInvocationResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CancelAutomationInvocation not implemented")
+}
+func (UnimplementedAutomationServiceServer) ValidateGraphProcedure(context.Context, *ValidateGraphProcedureRequest) (*ValidateGraphProcedureResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ValidateGraphProcedure not implemented")
+}
+func (UnimplementedAutomationServiceServer) CreateGraphProcedure(context.Context, *CreateGraphProcedureRequest) (*CreateGraphProcedureResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateGraphProcedure not implemented")
+}
+func (UnimplementedAutomationServiceServer) UpdateGraphProcedure(context.Context, *UpdateGraphProcedureRequest) (*UpdateGraphProcedureResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateGraphProcedure not implemented")
+}
+func (UnimplementedAutomationServiceServer) DeleteGraphProcedure(context.Context, *DeleteGraphProcedureRequest) (*DeleteGraphProcedureResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteGraphProcedure not implemented")
+}
+func (UnimplementedAutomationServiceServer) GetGraphProcedure(context.Context, *GetGraphProcedureRequest) (*GetGraphProcedureResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetGraphProcedure not implemented")
+}
+func (UnimplementedAutomationServiceServer) ListGraphProcedures(context.Context, *ListGraphProceduresRequest) (*ListGraphProceduresResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListGraphProcedures not implemented")
+}
+func (UnimplementedAutomationServiceServer) ValidateGraphAutomationBinding(context.Context, *ValidateGraphAutomationBindingRequest) (*ValidateGraphAutomationBindingResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ValidateGraphAutomationBinding not implemented")
+}
+func (UnimplementedAutomationServiceServer) CreateGraphAutomationBinding(context.Context, *CreateGraphAutomationBindingRequest) (*CreateGraphAutomationBindingResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateGraphAutomationBinding not implemented")
+}
+func (UnimplementedAutomationServiceServer) UpdateGraphAutomationBinding(context.Context, *UpdateGraphAutomationBindingRequest) (*UpdateGraphAutomationBindingResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateGraphAutomationBinding not implemented")
+}
+func (UnimplementedAutomationServiceServer) DeleteGraphAutomationBinding(context.Context, *DeleteGraphAutomationBindingRequest) (*DeleteGraphAutomationBindingResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteGraphAutomationBinding not implemented")
+}
+func (UnimplementedAutomationServiceServer) GetGraphAutomationBinding(context.Context, *GetGraphAutomationBindingRequest) (*GetGraphAutomationBindingResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetGraphAutomationBinding not implemented")
+}
+func (UnimplementedAutomationServiceServer) ListGraphAutomationBindings(context.Context, *ListGraphAutomationBindingsRequest) (*ListGraphAutomationBindingsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListGraphAutomationBindings not implemented")
+}
+func (UnimplementedAutomationServiceServer) EnableGraphAutomationBinding(context.Context, *EnableGraphAutomationBindingRequest) (*EnableGraphAutomationBindingResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method EnableGraphAutomationBinding not implemented")
+}
+func (UnimplementedAutomationServiceServer) DisableGraphAutomationBinding(context.Context, *DisableGraphAutomationBindingRequest) (*DisableGraphAutomationBindingResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DisableGraphAutomationBinding not implemented")
 }
 func (UnimplementedAutomationServiceServer) mustEmbedUnimplementedAutomationServiceServer() {}
 func (UnimplementedAutomationServiceServer) testEmbeddedByValue()                           {}
@@ -482,6 +706,258 @@ func _AutomationService_CancelAutomationInvocation_Handler(srv interface{}, ctx 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _AutomationService_ValidateGraphProcedure_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ValidateGraphProcedureRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AutomationServiceServer).ValidateGraphProcedure(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AutomationService_ValidateGraphProcedure_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AutomationServiceServer).ValidateGraphProcedure(ctx, req.(*ValidateGraphProcedureRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AutomationService_CreateGraphProcedure_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateGraphProcedureRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AutomationServiceServer).CreateGraphProcedure(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AutomationService_CreateGraphProcedure_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AutomationServiceServer).CreateGraphProcedure(ctx, req.(*CreateGraphProcedureRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AutomationService_UpdateGraphProcedure_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateGraphProcedureRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AutomationServiceServer).UpdateGraphProcedure(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AutomationService_UpdateGraphProcedure_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AutomationServiceServer).UpdateGraphProcedure(ctx, req.(*UpdateGraphProcedureRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AutomationService_DeleteGraphProcedure_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteGraphProcedureRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AutomationServiceServer).DeleteGraphProcedure(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AutomationService_DeleteGraphProcedure_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AutomationServiceServer).DeleteGraphProcedure(ctx, req.(*DeleteGraphProcedureRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AutomationService_GetGraphProcedure_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetGraphProcedureRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AutomationServiceServer).GetGraphProcedure(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AutomationService_GetGraphProcedure_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AutomationServiceServer).GetGraphProcedure(ctx, req.(*GetGraphProcedureRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AutomationService_ListGraphProcedures_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListGraphProceduresRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AutomationServiceServer).ListGraphProcedures(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AutomationService_ListGraphProcedures_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AutomationServiceServer).ListGraphProcedures(ctx, req.(*ListGraphProceduresRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AutomationService_ValidateGraphAutomationBinding_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ValidateGraphAutomationBindingRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AutomationServiceServer).ValidateGraphAutomationBinding(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AutomationService_ValidateGraphAutomationBinding_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AutomationServiceServer).ValidateGraphAutomationBinding(ctx, req.(*ValidateGraphAutomationBindingRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AutomationService_CreateGraphAutomationBinding_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateGraphAutomationBindingRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AutomationServiceServer).CreateGraphAutomationBinding(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AutomationService_CreateGraphAutomationBinding_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AutomationServiceServer).CreateGraphAutomationBinding(ctx, req.(*CreateGraphAutomationBindingRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AutomationService_UpdateGraphAutomationBinding_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateGraphAutomationBindingRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AutomationServiceServer).UpdateGraphAutomationBinding(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AutomationService_UpdateGraphAutomationBinding_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AutomationServiceServer).UpdateGraphAutomationBinding(ctx, req.(*UpdateGraphAutomationBindingRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AutomationService_DeleteGraphAutomationBinding_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteGraphAutomationBindingRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AutomationServiceServer).DeleteGraphAutomationBinding(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AutomationService_DeleteGraphAutomationBinding_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AutomationServiceServer).DeleteGraphAutomationBinding(ctx, req.(*DeleteGraphAutomationBindingRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AutomationService_GetGraphAutomationBinding_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetGraphAutomationBindingRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AutomationServiceServer).GetGraphAutomationBinding(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AutomationService_GetGraphAutomationBinding_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AutomationServiceServer).GetGraphAutomationBinding(ctx, req.(*GetGraphAutomationBindingRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AutomationService_ListGraphAutomationBindings_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListGraphAutomationBindingsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AutomationServiceServer).ListGraphAutomationBindings(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AutomationService_ListGraphAutomationBindings_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AutomationServiceServer).ListGraphAutomationBindings(ctx, req.(*ListGraphAutomationBindingsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AutomationService_EnableGraphAutomationBinding_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(EnableGraphAutomationBindingRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AutomationServiceServer).EnableGraphAutomationBinding(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AutomationService_EnableGraphAutomationBinding_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AutomationServiceServer).EnableGraphAutomationBinding(ctx, req.(*EnableGraphAutomationBindingRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AutomationService_DisableGraphAutomationBinding_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DisableGraphAutomationBindingRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AutomationServiceServer).DisableGraphAutomationBinding(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AutomationService_DisableGraphAutomationBinding_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AutomationServiceServer).DisableGraphAutomationBinding(ctx, req.(*DisableGraphAutomationBindingRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // AutomationService_ServiceDesc is the grpc.ServiceDesc for AutomationService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -536,6 +1012,62 @@ var AutomationService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CancelAutomationInvocation",
 			Handler:    _AutomationService_CancelAutomationInvocation_Handler,
+		},
+		{
+			MethodName: "ValidateGraphProcedure",
+			Handler:    _AutomationService_ValidateGraphProcedure_Handler,
+		},
+		{
+			MethodName: "CreateGraphProcedure",
+			Handler:    _AutomationService_CreateGraphProcedure_Handler,
+		},
+		{
+			MethodName: "UpdateGraphProcedure",
+			Handler:    _AutomationService_UpdateGraphProcedure_Handler,
+		},
+		{
+			MethodName: "DeleteGraphProcedure",
+			Handler:    _AutomationService_DeleteGraphProcedure_Handler,
+		},
+		{
+			MethodName: "GetGraphProcedure",
+			Handler:    _AutomationService_GetGraphProcedure_Handler,
+		},
+		{
+			MethodName: "ListGraphProcedures",
+			Handler:    _AutomationService_ListGraphProcedures_Handler,
+		},
+		{
+			MethodName: "ValidateGraphAutomationBinding",
+			Handler:    _AutomationService_ValidateGraphAutomationBinding_Handler,
+		},
+		{
+			MethodName: "CreateGraphAutomationBinding",
+			Handler:    _AutomationService_CreateGraphAutomationBinding_Handler,
+		},
+		{
+			MethodName: "UpdateGraphAutomationBinding",
+			Handler:    _AutomationService_UpdateGraphAutomationBinding_Handler,
+		},
+		{
+			MethodName: "DeleteGraphAutomationBinding",
+			Handler:    _AutomationService_DeleteGraphAutomationBinding_Handler,
+		},
+		{
+			MethodName: "GetGraphAutomationBinding",
+			Handler:    _AutomationService_GetGraphAutomationBinding_Handler,
+		},
+		{
+			MethodName: "ListGraphAutomationBindings",
+			Handler:    _AutomationService_ListGraphAutomationBindings_Handler,
+		},
+		{
+			MethodName: "EnableGraphAutomationBinding",
+			Handler:    _AutomationService_EnableGraphAutomationBinding_Handler,
+		},
+		{
+			MethodName: "DisableGraphAutomationBinding",
+			Handler:    _AutomationService_DisableGraphAutomationBinding_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

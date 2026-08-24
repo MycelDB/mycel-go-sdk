@@ -21,88 +21,147 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-type SemanticIndexState int32
+type SemanticRuleState int32
 
 const (
-	SemanticIndexState_SEMANTIC_INDEX_STATE_UNSPECIFIED SemanticIndexState = 0
-	SemanticIndexState_SEMANTIC_INDEX_STATE_ACTIVE      SemanticIndexState = 1
-	SemanticIndexState_SEMANTIC_INDEX_STATE_BUILDING    SemanticIndexState = 2
-	SemanticIndexState_SEMANTIC_INDEX_STATE_STALE       SemanticIndexState = 3
-	SemanticIndexState_SEMANTIC_INDEX_STATE_DISABLED    SemanticIndexState = 4
-	SemanticIndexState_SEMANTIC_INDEX_STATE_ERROR       SemanticIndexState = 5
+	SemanticRuleState_SEMANTIC_RULE_STATE_UNSPECIFIED SemanticRuleState = 0
+	SemanticRuleState_SEMANTIC_RULE_STATE_ACTIVE      SemanticRuleState = 1
+	SemanticRuleState_SEMANTIC_RULE_STATE_BUILDING    SemanticRuleState = 2
+	SemanticRuleState_SEMANTIC_RULE_STATE_STALE       SemanticRuleState = 3
+	SemanticRuleState_SEMANTIC_RULE_STATE_DISABLED    SemanticRuleState = 4
+	SemanticRuleState_SEMANTIC_RULE_STATE_ERROR       SemanticRuleState = 5
 )
 
-// Enum value maps for SemanticIndexState.
+// Enum value maps for SemanticRuleState.
 var (
-	SemanticIndexState_name = map[int32]string{
-		0: "SEMANTIC_INDEX_STATE_UNSPECIFIED",
-		1: "SEMANTIC_INDEX_STATE_ACTIVE",
-		2: "SEMANTIC_INDEX_STATE_BUILDING",
-		3: "SEMANTIC_INDEX_STATE_STALE",
-		4: "SEMANTIC_INDEX_STATE_DISABLED",
-		5: "SEMANTIC_INDEX_STATE_ERROR",
+	SemanticRuleState_name = map[int32]string{
+		0: "SEMANTIC_RULE_STATE_UNSPECIFIED",
+		1: "SEMANTIC_RULE_STATE_ACTIVE",
+		2: "SEMANTIC_RULE_STATE_BUILDING",
+		3: "SEMANTIC_RULE_STATE_STALE",
+		4: "SEMANTIC_RULE_STATE_DISABLED",
+		5: "SEMANTIC_RULE_STATE_ERROR",
 	}
-	SemanticIndexState_value = map[string]int32{
-		"SEMANTIC_INDEX_STATE_UNSPECIFIED": 0,
-		"SEMANTIC_INDEX_STATE_ACTIVE":      1,
-		"SEMANTIC_INDEX_STATE_BUILDING":    2,
-		"SEMANTIC_INDEX_STATE_STALE":       3,
-		"SEMANTIC_INDEX_STATE_DISABLED":    4,
-		"SEMANTIC_INDEX_STATE_ERROR":       5,
+	SemanticRuleState_value = map[string]int32{
+		"SEMANTIC_RULE_STATE_UNSPECIFIED": 0,
+		"SEMANTIC_RULE_STATE_ACTIVE":      1,
+		"SEMANTIC_RULE_STATE_BUILDING":    2,
+		"SEMANTIC_RULE_STATE_STALE":       3,
+		"SEMANTIC_RULE_STATE_DISABLED":    4,
+		"SEMANTIC_RULE_STATE_ERROR":       5,
 	}
 )
 
-func (x SemanticIndexState) Enum() *SemanticIndexState {
-	p := new(SemanticIndexState)
+func (x SemanticRuleState) Enum() *SemanticRuleState {
+	p := new(SemanticRuleState)
 	*p = x
 	return p
 }
 
-func (x SemanticIndexState) String() string {
+func (x SemanticRuleState) String() string {
 	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
 }
 
-func (SemanticIndexState) Descriptor() protoreflect.EnumDescriptor {
+func (SemanticRuleState) Descriptor() protoreflect.EnumDescriptor {
 	return file_mycel_client_v1_semantic_proto_enumTypes[0].Descriptor()
 }
 
-func (SemanticIndexState) Type() protoreflect.EnumType {
+func (SemanticRuleState) Type() protoreflect.EnumType {
 	return &file_mycel_client_v1_semantic_proto_enumTypes[0]
 }
 
-func (x SemanticIndexState) Number() protoreflect.EnumNumber {
+func (x SemanticRuleState) Number() protoreflect.EnumNumber {
 	return protoreflect.EnumNumber(x)
 }
 
-// Deprecated: Use SemanticIndexState.Descriptor instead.
-func (SemanticIndexState) EnumDescriptor() ([]byte, []int) {
+// Deprecated: Use SemanticRuleState.Descriptor instead.
+func (SemanticRuleState) EnumDescriptor() ([]byte, []int) {
 	return file_mycel_client_v1_semantic_proto_rawDescGZIP(), []int{0}
 }
 
-type ListSemanticIndexesRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	SpaceId       string                 `protobuf:"bytes,1,opt,name=space_id,json=spaceId,proto3" json:"space_id,omitempty"`
-	DomainId      string                 `protobuf:"bytes,2,opt,name=domain_id,json=domainId,proto3" json:"domain_id,omitempty"`
-	PageSize      int32                  `protobuf:"varint,3,opt,name=page_size,json=pageSize,proto3" json:"page_size,omitempty"`
-	PageToken     string                 `protobuf:"bytes,4,opt,name=page_token,json=pageToken,proto3" json:"page_token,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+type SearchIndexState int32
+
+const (
+	SearchIndexState_SEARCH_INDEX_STATE_UNSPECIFIED SearchIndexState = 0
+	SearchIndexState_SEARCH_INDEX_STATE_READY       SearchIndexState = 1
+	SearchIndexState_SEARCH_INDEX_STATE_BUILDING    SearchIndexState = 2
+	SearchIndexState_SEARCH_INDEX_STATE_DEGRADED    SearchIndexState = 3
+	SearchIndexState_SEARCH_INDEX_STATE_MISSING     SearchIndexState = 4
+	SearchIndexState_SEARCH_INDEX_STATE_ERROR       SearchIndexState = 5
+)
+
+// Enum value maps for SearchIndexState.
+var (
+	SearchIndexState_name = map[int32]string{
+		0: "SEARCH_INDEX_STATE_UNSPECIFIED",
+		1: "SEARCH_INDEX_STATE_READY",
+		2: "SEARCH_INDEX_STATE_BUILDING",
+		3: "SEARCH_INDEX_STATE_DEGRADED",
+		4: "SEARCH_INDEX_STATE_MISSING",
+		5: "SEARCH_INDEX_STATE_ERROR",
+	}
+	SearchIndexState_value = map[string]int32{
+		"SEARCH_INDEX_STATE_UNSPECIFIED": 0,
+		"SEARCH_INDEX_STATE_READY":       1,
+		"SEARCH_INDEX_STATE_BUILDING":    2,
+		"SEARCH_INDEX_STATE_DEGRADED":    3,
+		"SEARCH_INDEX_STATE_MISSING":     4,
+		"SEARCH_INDEX_STATE_ERROR":       5,
+	}
+)
+
+func (x SearchIndexState) Enum() *SearchIndexState {
+	p := new(SearchIndexState)
+	*p = x
+	return p
 }
 
-func (x *ListSemanticIndexesRequest) Reset() {
-	*x = ListSemanticIndexesRequest{}
+func (x SearchIndexState) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (SearchIndexState) Descriptor() protoreflect.EnumDescriptor {
+	return file_mycel_client_v1_semantic_proto_enumTypes[1].Descriptor()
+}
+
+func (SearchIndexState) Type() protoreflect.EnumType {
+	return &file_mycel_client_v1_semantic_proto_enumTypes[1]
+}
+
+func (x SearchIndexState) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use SearchIndexState.Descriptor instead.
+func (SearchIndexState) EnumDescriptor() ([]byte, []int) {
+	return file_mycel_client_v1_semantic_proto_rawDescGZIP(), []int{1}
+}
+
+type ListSemanticRulesRequest struct {
+	state           protoimpl.MessageState `protogen:"open.v1"`
+	SpaceId         string                 `protobuf:"bytes,1,opt,name=space_id,json=spaceId,proto3" json:"space_id,omitempty"`
+	DomainId        string                 `protobuf:"bytes,2,opt,name=domain_id,json=domainId,proto3" json:"domain_id,omitempty"`
+	PageSize        int32                  `protobuf:"varint,3,opt,name=page_size,json=pageSize,proto3" json:"page_size,omitempty"`
+	PageToken       string                 `protobuf:"bytes,4,opt,name=page_token,json=pageToken,proto3" json:"page_token,omitempty"`
+	IncludeDisabled bool                   `protobuf:"varint,5,opt,name=include_disabled,json=includeDisabled,proto3" json:"include_disabled,omitempty"`
+	unknownFields   protoimpl.UnknownFields
+	sizeCache       protoimpl.SizeCache
+}
+
+func (x *ListSemanticRulesRequest) Reset() {
+	*x = ListSemanticRulesRequest{}
 	mi := &file_mycel_client_v1_semantic_proto_msgTypes[0]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *ListSemanticIndexesRequest) String() string {
+func (x *ListSemanticRulesRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*ListSemanticIndexesRequest) ProtoMessage() {}
+func (*ListSemanticRulesRequest) ProtoMessage() {}
 
-func (x *ListSemanticIndexesRequest) ProtoReflect() protoreflect.Message {
+func (x *ListSemanticRulesRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_mycel_client_v1_semantic_proto_msgTypes[0]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -114,61 +173,68 @@ func (x *ListSemanticIndexesRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use ListSemanticIndexesRequest.ProtoReflect.Descriptor instead.
-func (*ListSemanticIndexesRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use ListSemanticRulesRequest.ProtoReflect.Descriptor instead.
+func (*ListSemanticRulesRequest) Descriptor() ([]byte, []int) {
 	return file_mycel_client_v1_semantic_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *ListSemanticIndexesRequest) GetSpaceId() string {
+func (x *ListSemanticRulesRequest) GetSpaceId() string {
 	if x != nil {
 		return x.SpaceId
 	}
 	return ""
 }
 
-func (x *ListSemanticIndexesRequest) GetDomainId() string {
+func (x *ListSemanticRulesRequest) GetDomainId() string {
 	if x != nil {
 		return x.DomainId
 	}
 	return ""
 }
 
-func (x *ListSemanticIndexesRequest) GetPageSize() int32 {
+func (x *ListSemanticRulesRequest) GetPageSize() int32 {
 	if x != nil {
 		return x.PageSize
 	}
 	return 0
 }
 
-func (x *ListSemanticIndexesRequest) GetPageToken() string {
+func (x *ListSemanticRulesRequest) GetPageToken() string {
 	if x != nil {
 		return x.PageToken
 	}
 	return ""
 }
 
-type ListSemanticIndexesResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Indexes       []*SemanticIndex       `protobuf:"bytes,1,rep,name=indexes,proto3" json:"indexes,omitempty"`
-	NextPageToken string                 `protobuf:"bytes,2,opt,name=next_page_token,json=nextPageToken,proto3" json:"next_page_token,omitempty"`
+func (x *ListSemanticRulesRequest) GetIncludeDisabled() bool {
+	if x != nil {
+		return x.IncludeDisabled
+	}
+	return false
+}
+
+type ListSemanticRulesResponse struct {
+	state         protoimpl.MessageState           `protogen:"open.v1"`
+	Rules         []*SemanticGenerationRuleSummary `protobuf:"bytes,1,rep,name=rules,proto3" json:"rules,omitempty"`
+	NextPageToken string                           `protobuf:"bytes,2,opt,name=next_page_token,json=nextPageToken,proto3" json:"next_page_token,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *ListSemanticIndexesResponse) Reset() {
-	*x = ListSemanticIndexesResponse{}
+func (x *ListSemanticRulesResponse) Reset() {
+	*x = ListSemanticRulesResponse{}
 	mi := &file_mycel_client_v1_semantic_proto_msgTypes[1]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *ListSemanticIndexesResponse) String() string {
+func (x *ListSemanticRulesResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*ListSemanticIndexesResponse) ProtoMessage() {}
+func (*ListSemanticRulesResponse) ProtoMessage() {}
 
-func (x *ListSemanticIndexesResponse) ProtoReflect() protoreflect.Message {
+func (x *ListSemanticRulesResponse) ProtoReflect() protoreflect.Message {
 	mi := &file_mycel_client_v1_semantic_proto_msgTypes[1]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -180,19 +246,19 @@ func (x *ListSemanticIndexesResponse) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use ListSemanticIndexesResponse.ProtoReflect.Descriptor instead.
-func (*ListSemanticIndexesResponse) Descriptor() ([]byte, []int) {
+// Deprecated: Use ListSemanticRulesResponse.ProtoReflect.Descriptor instead.
+func (*ListSemanticRulesResponse) Descriptor() ([]byte, []int) {
 	return file_mycel_client_v1_semantic_proto_rawDescGZIP(), []int{1}
 }
 
-func (x *ListSemanticIndexesResponse) GetIndexes() []*SemanticIndex {
+func (x *ListSemanticRulesResponse) GetRules() []*SemanticGenerationRuleSummary {
 	if x != nil {
-		return x.Indexes
+		return x.Rules
 	}
 	return nil
 }
 
-func (x *ListSemanticIndexesResponse) GetNextPageToken() string {
+func (x *ListSemanticRulesResponse) GetNextPageToken() string {
 	if x != nil {
 		return x.NextPageToken
 	}
@@ -203,14 +269,16 @@ type SemanticSearchRequest struct {
 	state    protoimpl.MessageState `protogen:"open.v1"`
 	SpaceId  string                 `protobuf:"bytes,1,opt,name=space_id,json=spaceId,proto3" json:"space_id,omitempty"`
 	DomainId string                 `protobuf:"bytes,2,opt,name=domain_id,json=domainId,proto3" json:"domain_id,omitempty"`
-	// Optional. If omitted, the daemon uses the default searchable semantic index
-	// for the domain when one is available.
-	SemanticIndexId *string `protobuf:"bytes,3,opt,name=semantic_index_id,json=semanticIndexId,proto3,oneof" json:"semantic_index_id,omitempty"`
-	Query           string  `protobuf:"bytes,4,opt,name=query,proto3" json:"query,omitempty"`
-	Limit           int32   `protobuf:"varint,5,opt,name=limit,proto3" json:"limit,omitempty"`
-	// Optional minimum score threshold. Score meaning is index/model dependent but
+	// Optional. If omitted, the daemon searches all enabled searchable semantic
+	// rule bindings for the domain that the caller can read.
+	SemanticRuleId *string `protobuf:"bytes,3,opt,name=semantic_rule_id,json=semanticRuleId,proto3,oneof" json:"semantic_rule_id,omitempty"`
+	// Optional. Requires semantic_rule_id when set.
+	EmbeddingBindingKey *string `protobuf:"bytes,4,opt,name=embedding_binding_key,json=embeddingBindingKey,proto3,oneof" json:"embedding_binding_key,omitempty"`
+	Query               string  `protobuf:"bytes,5,opt,name=query,proto3" json:"query,omitempty"`
+	Limit               int32   `protobuf:"varint,6,opt,name=limit,proto3" json:"limit,omitempty"`
+	// Optional minimum score threshold. Score meaning is model dependent but
 	// higher scores should represent more relevant results.
-	MinScore      *float64 `protobuf:"fixed64,6,opt,name=min_score,json=minScore,proto3,oneof" json:"min_score,omitempty"`
+	MinScore      *float64 `protobuf:"fixed64,7,opt,name=min_score,json=minScore,proto3,oneof" json:"min_score,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -259,9 +327,16 @@ func (x *SemanticSearchRequest) GetDomainId() string {
 	return ""
 }
 
-func (x *SemanticSearchRequest) GetSemanticIndexId() string {
-	if x != nil && x.SemanticIndexId != nil {
-		return *x.SemanticIndexId
+func (x *SemanticSearchRequest) GetSemanticRuleId() string {
+	if x != nil && x.SemanticRuleId != nil {
+		return *x.SemanticRuleId
+	}
+	return ""
+}
+
+func (x *SemanticSearchRequest) GetEmbeddingBindingKey() string {
+	if x != nil && x.EmbeddingBindingKey != nil {
+		return *x.EmbeddingBindingKey
 	}
 	return ""
 }
@@ -290,8 +365,9 @@ func (x *SemanticSearchRequest) GetMinScore() float64 {
 type SemanticSearchResponse struct {
 	state   protoimpl.MessageState  `protogen:"open.v1"`
 	Results []*SemanticSearchResult `protobuf:"bytes,1,rep,name=results,proto3" json:"results,omitempty"`
-	// Non-fatal search warnings such as stale index state, unavailable vector
-	// spaces, or skipped providers. Warnings must not include secrets.
+	// Non-fatal search warnings such as stale rule state, degraded physical
+	// search indexes, unavailable vector spaces, or skipped providers. Warnings
+	// must not include secrets.
 	Warnings      []string `protobuf:"bytes,2,rep,name=warnings,proto3" json:"warnings,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -342,14 +418,17 @@ func (x *SemanticSearchResponse) GetWarnings() []string {
 }
 
 type SemanticSearchResult struct {
-	state  protoimpl.MessageState `protogen:"open.v1"`
-	NodeId string                 `protobuf:"bytes,1,opt,name=node_id,json=nodeId,proto3" json:"node_id,omitempty"`
-	Score  float64                `protobuf:"fixed64,2,opt,name=score,proto3" json:"score,omitempty"`
+	state               protoimpl.MessageState `protogen:"open.v1"`
+	SemanticRuleId      string                 `protobuf:"bytes,1,opt,name=semantic_rule_id,json=semanticRuleId,proto3" json:"semantic_rule_id,omitempty"`
+	EmbeddingBindingKey string                 `protobuf:"bytes,2,opt,name=embedding_binding_key,json=embeddingBindingKey,proto3" json:"embedding_binding_key,omitempty"`
+	RecordId            string                 `protobuf:"bytes,3,opt,name=record_id,json=recordId,proto3" json:"record_id,omitempty"`
+	NodeId              string                 `protobuf:"bytes,4,opt,name=node_id,json=nodeId,proto3" json:"node_id,omitempty"`
+	Score               float64                `protobuf:"fixed64,5,opt,name=score,proto3" json:"score,omitempty"`
 	// Included for client convenience. Result visibility still requires graph.read
 	// and semantic.search authorization.
-	Node            *Node    `protobuf:"bytes,3,opt,name=node,proto3" json:"node,omitempty"`
-	MatchedChunkIds []string `protobuf:"bytes,4,rep,name=matched_chunk_ids,json=matchedChunkIds,proto3" json:"matched_chunk_ids,omitempty"`
-	Snippet         string   `protobuf:"bytes,5,opt,name=snippet,proto3" json:"snippet,omitempty"`
+	Node            *Node    `protobuf:"bytes,6,opt,name=node,proto3" json:"node,omitempty"`
+	MatchedChunkIds []string `protobuf:"bytes,7,rep,name=matched_chunk_ids,json=matchedChunkIds,proto3" json:"matched_chunk_ids,omitempty"`
+	Snippet         string   `protobuf:"bytes,8,opt,name=snippet,proto3" json:"snippet,omitempty"`
 	unknownFields   protoimpl.UnknownFields
 	sizeCache       protoimpl.SizeCache
 }
@@ -382,6 +461,27 @@ func (x *SemanticSearchResult) ProtoReflect() protoreflect.Message {
 // Deprecated: Use SemanticSearchResult.ProtoReflect.Descriptor instead.
 func (*SemanticSearchResult) Descriptor() ([]byte, []int) {
 	return file_mycel_client_v1_semantic_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *SemanticSearchResult) GetSemanticRuleId() string {
+	if x != nil {
+		return x.SemanticRuleId
+	}
+	return ""
+}
+
+func (x *SemanticSearchResult) GetEmbeddingBindingKey() string {
+	if x != nil {
+		return x.EmbeddingBindingKey
+	}
+	return ""
+}
+
+func (x *SemanticSearchResult) GetRecordId() string {
+	if x != nil {
+		return x.RecordId
+	}
+	return ""
 }
 
 func (x *SemanticSearchResult) GetNodeId() string {
@@ -419,37 +519,36 @@ func (x *SemanticSearchResult) GetSnippet() string {
 	return ""
 }
 
-type SemanticIndex struct {
-	state           protoimpl.MessageState `protogen:"open.v1"`
-	SemanticIndexId string                 `protobuf:"bytes,1,opt,name=semantic_index_id,json=semanticIndexId,proto3" json:"semantic_index_id,omitempty"`
-	Key             string                 `protobuf:"bytes,2,opt,name=key,proto3" json:"key,omitempty"`
-	DisplayName     string                 `protobuf:"bytes,3,opt,name=display_name,json=displayName,proto3" json:"display_name,omitempty"`
-	Description     string                 `protobuf:"bytes,4,opt,name=description,proto3" json:"description,omitempty"`
-	SpaceId         string                 `protobuf:"bytes,5,opt,name=space_id,json=spaceId,proto3" json:"space_id,omitempty"`
-	DomainId        string                 `protobuf:"bytes,6,opt,name=domain_id,json=domainId,proto3" json:"domain_id,omitempty"`
-	// Safe display labels only. Provider secrets, credential ids, and raw policy
-	// internals are intentionally not exposed through the Client API.
-	ModelLabel       string             `protobuf:"bytes,7,opt,name=model_label,json=modelLabel,proto3" json:"model_label,omitempty"`
-	VectorStoreLabel string             `protobuf:"bytes,8,opt,name=vector_store_label,json=vectorStoreLabel,proto3" json:"vector_store_label,omitempty"`
-	State            SemanticIndexState `protobuf:"varint,9,opt,name=state,proto3,enum=mycel.client.v1.SemanticIndexState" json:"state,omitempty"`
-	unknownFields    protoimpl.UnknownFields
-	sizeCache        protoimpl.SizeCache
+type SemanticGenerationRuleSummary struct {
+	state          protoimpl.MessageState             `protogen:"open.v1"`
+	SemanticRuleId string                             `protobuf:"bytes,1,opt,name=semantic_rule_id,json=semanticRuleId,proto3" json:"semantic_rule_id,omitempty"`
+	Key            string                             `protobuf:"bytes,2,opt,name=key,proto3" json:"key,omitempty"`
+	DisplayName    string                             `protobuf:"bytes,3,opt,name=display_name,json=displayName,proto3" json:"display_name,omitempty"`
+	Description    string                             `protobuf:"bytes,4,opt,name=description,proto3" json:"description,omitempty"`
+	SpaceId        string                             `protobuf:"bytes,5,opt,name=space_id,json=spaceId,proto3" json:"space_id,omitempty"`
+	DomainId       string                             `protobuf:"bytes,6,opt,name=domain_id,json=domainId,proto3" json:"domain_id,omitempty"`
+	Enabled        bool                               `protobuf:"varint,7,opt,name=enabled,proto3" json:"enabled,omitempty"`
+	State          SemanticRuleState                  `protobuf:"varint,8,opt,name=state,proto3,enum=mycel.client.v1.SemanticRuleState" json:"state,omitempty"`
+	Bindings       []*SemanticEmbeddingBindingSummary `protobuf:"bytes,9,rep,name=bindings,proto3" json:"bindings,omitempty"`
+	Status         *SemanticRuleStatus                `protobuf:"bytes,10,opt,name=status,proto3" json:"status,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
 }
 
-func (x *SemanticIndex) Reset() {
-	*x = SemanticIndex{}
+func (x *SemanticGenerationRuleSummary) Reset() {
+	*x = SemanticGenerationRuleSummary{}
 	mi := &file_mycel_client_v1_semantic_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *SemanticIndex) String() string {
+func (x *SemanticGenerationRuleSummary) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*SemanticIndex) ProtoMessage() {}
+func (*SemanticGenerationRuleSummary) ProtoMessage() {}
 
-func (x *SemanticIndex) ProtoReflect() protoreflect.Message {
+func (x *SemanticGenerationRuleSummary) ProtoReflect() protoreflect.Message {
 	mi := &file_mycel_client_v1_semantic_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -461,127 +560,432 @@ func (x *SemanticIndex) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use SemanticIndex.ProtoReflect.Descriptor instead.
-func (*SemanticIndex) Descriptor() ([]byte, []int) {
+// Deprecated: Use SemanticGenerationRuleSummary.ProtoReflect.Descriptor instead.
+func (*SemanticGenerationRuleSummary) Descriptor() ([]byte, []int) {
 	return file_mycel_client_v1_semantic_proto_rawDescGZIP(), []int{5}
 }
 
-func (x *SemanticIndex) GetSemanticIndexId() string {
+func (x *SemanticGenerationRuleSummary) GetSemanticRuleId() string {
 	if x != nil {
-		return x.SemanticIndexId
+		return x.SemanticRuleId
 	}
 	return ""
 }
 
-func (x *SemanticIndex) GetKey() string {
+func (x *SemanticGenerationRuleSummary) GetKey() string {
 	if x != nil {
 		return x.Key
 	}
 	return ""
 }
 
-func (x *SemanticIndex) GetDisplayName() string {
+func (x *SemanticGenerationRuleSummary) GetDisplayName() string {
 	if x != nil {
 		return x.DisplayName
 	}
 	return ""
 }
 
-func (x *SemanticIndex) GetDescription() string {
+func (x *SemanticGenerationRuleSummary) GetDescription() string {
 	if x != nil {
 		return x.Description
 	}
 	return ""
 }
 
-func (x *SemanticIndex) GetSpaceId() string {
+func (x *SemanticGenerationRuleSummary) GetSpaceId() string {
 	if x != nil {
 		return x.SpaceId
 	}
 	return ""
 }
 
-func (x *SemanticIndex) GetDomainId() string {
+func (x *SemanticGenerationRuleSummary) GetDomainId() string {
 	if x != nil {
 		return x.DomainId
 	}
 	return ""
 }
 
-func (x *SemanticIndex) GetModelLabel() string {
+func (x *SemanticGenerationRuleSummary) GetEnabled() bool {
 	if x != nil {
-		return x.ModelLabel
+		return x.Enabled
 	}
-	return ""
+	return false
 }
 
-func (x *SemanticIndex) GetVectorStoreLabel() string {
-	if x != nil {
-		return x.VectorStoreLabel
-	}
-	return ""
-}
-
-func (x *SemanticIndex) GetState() SemanticIndexState {
+func (x *SemanticGenerationRuleSummary) GetState() SemanticRuleState {
 	if x != nil {
 		return x.State
 	}
-	return SemanticIndexState_SEMANTIC_INDEX_STATE_UNSPECIFIED
+	return SemanticRuleState_SEMANTIC_RULE_STATE_UNSPECIFIED
+}
+
+func (x *SemanticGenerationRuleSummary) GetBindings() []*SemanticEmbeddingBindingSummary {
+	if x != nil {
+		return x.Bindings
+	}
+	return nil
+}
+
+func (x *SemanticGenerationRuleSummary) GetStatus() *SemanticRuleStatus {
+	if x != nil {
+		return x.Status
+	}
+	return nil
+}
+
+type SemanticEmbeddingBindingSummary struct {
+	state                  protoimpl.MessageState `protogen:"open.v1"`
+	Key                    string                 `protobuf:"bytes,1,opt,name=key,proto3" json:"key,omitempty"`
+	Purpose                string                 `protobuf:"bytes,2,opt,name=purpose,proto3" json:"purpose,omitempty"`
+	IntelligenceProfileId  string                 `protobuf:"bytes,3,opt,name=intelligence_profile_id,json=intelligenceProfileId,proto3" json:"intelligence_profile_id,omitempty"`
+	IntelligenceProfileKey string                 `protobuf:"bytes,4,opt,name=intelligence_profile_key,json=intelligenceProfileKey,proto3" json:"intelligence_profile_key,omitempty"`
+	VectorStoreId          string                 `protobuf:"bytes,5,opt,name=vector_store_id,json=vectorStoreId,proto3" json:"vector_store_id,omitempty"`
+	VectorStoreKey         string                 `protobuf:"bytes,6,opt,name=vector_store_key,json=vectorStoreKey,proto3" json:"vector_store_key,omitempty"`
+	Enabled                bool                   `protobuf:"varint,7,opt,name=enabled,proto3" json:"enabled,omitempty"`
+	SearchIndex            *SearchIndexStatus     `protobuf:"bytes,8,opt,name=search_index,json=searchIndex,proto3" json:"search_index,omitempty"`
+	unknownFields          protoimpl.UnknownFields
+	sizeCache              protoimpl.SizeCache
+}
+
+func (x *SemanticEmbeddingBindingSummary) Reset() {
+	*x = SemanticEmbeddingBindingSummary{}
+	mi := &file_mycel_client_v1_semantic_proto_msgTypes[6]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SemanticEmbeddingBindingSummary) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SemanticEmbeddingBindingSummary) ProtoMessage() {}
+
+func (x *SemanticEmbeddingBindingSummary) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_client_v1_semantic_proto_msgTypes[6]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SemanticEmbeddingBindingSummary.ProtoReflect.Descriptor instead.
+func (*SemanticEmbeddingBindingSummary) Descriptor() ([]byte, []int) {
+	return file_mycel_client_v1_semantic_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *SemanticEmbeddingBindingSummary) GetKey() string {
+	if x != nil {
+		return x.Key
+	}
+	return ""
+}
+
+func (x *SemanticEmbeddingBindingSummary) GetPurpose() string {
+	if x != nil {
+		return x.Purpose
+	}
+	return ""
+}
+
+func (x *SemanticEmbeddingBindingSummary) GetIntelligenceProfileId() string {
+	if x != nil {
+		return x.IntelligenceProfileId
+	}
+	return ""
+}
+
+func (x *SemanticEmbeddingBindingSummary) GetIntelligenceProfileKey() string {
+	if x != nil {
+		return x.IntelligenceProfileKey
+	}
+	return ""
+}
+
+func (x *SemanticEmbeddingBindingSummary) GetVectorStoreId() string {
+	if x != nil {
+		return x.VectorStoreId
+	}
+	return ""
+}
+
+func (x *SemanticEmbeddingBindingSummary) GetVectorStoreKey() string {
+	if x != nil {
+		return x.VectorStoreKey
+	}
+	return ""
+}
+
+func (x *SemanticEmbeddingBindingSummary) GetEnabled() bool {
+	if x != nil {
+		return x.Enabled
+	}
+	return false
+}
+
+func (x *SemanticEmbeddingBindingSummary) GetSearchIndex() *SearchIndexStatus {
+	if x != nil {
+		return x.SearchIndex
+	}
+	return nil
+}
+
+type SearchIndexStatus struct {
+	state           protoimpl.MessageState `protogen:"open.v1"`
+	State           SearchIndexState       `protobuf:"varint,1,opt,name=state,proto3,enum=mycel.client.v1.SearchIndexState" json:"state,omitempty"`
+	LiveRecordCount int64                  `protobuf:"varint,2,opt,name=live_record_count,json=liveRecordCount,proto3" json:"live_record_count,omitempty"`
+	LastRebuildAt   string                 `protobuf:"bytes,3,opt,name=last_rebuild_at,json=lastRebuildAt,proto3" json:"last_rebuild_at,omitempty"`
+	LastError       string                 `protobuf:"bytes,4,opt,name=last_error,json=lastError,proto3" json:"last_error,omitempty"`
+	unknownFields   protoimpl.UnknownFields
+	sizeCache       protoimpl.SizeCache
+}
+
+func (x *SearchIndexStatus) Reset() {
+	*x = SearchIndexStatus{}
+	mi := &file_mycel_client_v1_semantic_proto_msgTypes[7]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SearchIndexStatus) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SearchIndexStatus) ProtoMessage() {}
+
+func (x *SearchIndexStatus) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_client_v1_semantic_proto_msgTypes[7]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SearchIndexStatus.ProtoReflect.Descriptor instead.
+func (*SearchIndexStatus) Descriptor() ([]byte, []int) {
+	return file_mycel_client_v1_semantic_proto_rawDescGZIP(), []int{7}
+}
+
+func (x *SearchIndexStatus) GetState() SearchIndexState {
+	if x != nil {
+		return x.State
+	}
+	return SearchIndexState_SEARCH_INDEX_STATE_UNSPECIFIED
+}
+
+func (x *SearchIndexStatus) GetLiveRecordCount() int64 {
+	if x != nil {
+		return x.LiveRecordCount
+	}
+	return 0
+}
+
+func (x *SearchIndexStatus) GetLastRebuildAt() string {
+	if x != nil {
+		return x.LastRebuildAt
+	}
+	return ""
+}
+
+func (x *SearchIndexStatus) GetLastError() string {
+	if x != nil {
+		return x.LastError
+	}
+	return ""
+}
+
+type SemanticRuleStatus struct {
+	state                     protoimpl.MessageState `protogen:"open.v1"`
+	QueueDepthPending         int32                  `protobuf:"varint,1,opt,name=queue_depth_pending,json=queueDepthPending,proto3" json:"queue_depth_pending,omitempty"`
+	QueueDepthRunning         int32                  `protobuf:"varint,2,opt,name=queue_depth_running,json=queueDepthRunning,proto3" json:"queue_depth_running,omitempty"`
+	QueueDepthFailedRetryable int32                  `protobuf:"varint,3,opt,name=queue_depth_failed_retryable,json=queueDepthFailedRetryable,proto3" json:"queue_depth_failed_retryable,omitempty"`
+	QueueDepthFailedPermanent int32                  `protobuf:"varint,4,opt,name=queue_depth_failed_permanent,json=queueDepthFailedPermanent,proto3" json:"queue_depth_failed_permanent,omitempty"`
+	LastRefreshAt             string                 `protobuf:"bytes,5,opt,name=last_refresh_at,json=lastRefreshAt,proto3" json:"last_refresh_at,omitempty"`
+	LastBackfillAt            string                 `protobuf:"bytes,6,opt,name=last_backfill_at,json=lastBackfillAt,proto3" json:"last_backfill_at,omitempty"`
+	LastError                 string                 `protobuf:"bytes,7,opt,name=last_error,json=lastError,proto3" json:"last_error,omitempty"`
+	unknownFields             protoimpl.UnknownFields
+	sizeCache                 protoimpl.SizeCache
+}
+
+func (x *SemanticRuleStatus) Reset() {
+	*x = SemanticRuleStatus{}
+	mi := &file_mycel_client_v1_semantic_proto_msgTypes[8]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SemanticRuleStatus) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SemanticRuleStatus) ProtoMessage() {}
+
+func (x *SemanticRuleStatus) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_client_v1_semantic_proto_msgTypes[8]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SemanticRuleStatus.ProtoReflect.Descriptor instead.
+func (*SemanticRuleStatus) Descriptor() ([]byte, []int) {
+	return file_mycel_client_v1_semantic_proto_rawDescGZIP(), []int{8}
+}
+
+func (x *SemanticRuleStatus) GetQueueDepthPending() int32 {
+	if x != nil {
+		return x.QueueDepthPending
+	}
+	return 0
+}
+
+func (x *SemanticRuleStatus) GetQueueDepthRunning() int32 {
+	if x != nil {
+		return x.QueueDepthRunning
+	}
+	return 0
+}
+
+func (x *SemanticRuleStatus) GetQueueDepthFailedRetryable() int32 {
+	if x != nil {
+		return x.QueueDepthFailedRetryable
+	}
+	return 0
+}
+
+func (x *SemanticRuleStatus) GetQueueDepthFailedPermanent() int32 {
+	if x != nil {
+		return x.QueueDepthFailedPermanent
+	}
+	return 0
+}
+
+func (x *SemanticRuleStatus) GetLastRefreshAt() string {
+	if x != nil {
+		return x.LastRefreshAt
+	}
+	return ""
+}
+
+func (x *SemanticRuleStatus) GetLastBackfillAt() string {
+	if x != nil {
+		return x.LastBackfillAt
+	}
+	return ""
+}
+
+func (x *SemanticRuleStatus) GetLastError() string {
+	if x != nil {
+		return x.LastError
+	}
+	return ""
 }
 
 var File_mycel_client_v1_semantic_proto protoreflect.FileDescriptor
 
 const file_mycel_client_v1_semantic_proto_rawDesc = "" +
 	"\n" +
-	"\x1emycel/client/v1/semantic.proto\x12\x0fmycel.client.v1\x1a\x1bmycel/client/v1/graph.proto\"\x90\x01\n" +
-	"\x1aListSemanticIndexesRequest\x12\x19\n" +
+	"\x1emycel/client/v1/semantic.proto\x12\x0fmycel.client.v1\x1a\x1bmycel/client/v1/graph.proto\"\xb9\x01\n" +
+	"\x18ListSemanticRulesRequest\x12\x19\n" +
 	"\bspace_id\x18\x01 \x01(\tR\aspaceId\x12\x1b\n" +
 	"\tdomain_id\x18\x02 \x01(\tR\bdomainId\x12\x1b\n" +
 	"\tpage_size\x18\x03 \x01(\x05R\bpageSize\x12\x1d\n" +
 	"\n" +
-	"page_token\x18\x04 \x01(\tR\tpageToken\"\x7f\n" +
-	"\x1bListSemanticIndexesResponse\x128\n" +
-	"\aindexes\x18\x01 \x03(\v2\x1e.mycel.client.v1.SemanticIndexR\aindexes\x12&\n" +
-	"\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken\"\xf2\x01\n" +
+	"page_token\x18\x04 \x01(\tR\tpageToken\x12)\n" +
+	"\x10include_disabled\x18\x05 \x01(\bR\x0fincludeDisabled\"\x89\x01\n" +
+	"\x19ListSemanticRulesResponse\x12D\n" +
+	"\x05rules\x18\x01 \x03(\v2..mycel.client.v1.SemanticGenerationRuleSummaryR\x05rules\x12&\n" +
+	"\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken\"\xc2\x02\n" +
 	"\x15SemanticSearchRequest\x12\x19\n" +
 	"\bspace_id\x18\x01 \x01(\tR\aspaceId\x12\x1b\n" +
-	"\tdomain_id\x18\x02 \x01(\tR\bdomainId\x12/\n" +
-	"\x11semantic_index_id\x18\x03 \x01(\tH\x00R\x0fsemanticIndexId\x88\x01\x01\x12\x14\n" +
-	"\x05query\x18\x04 \x01(\tR\x05query\x12\x14\n" +
-	"\x05limit\x18\x05 \x01(\x05R\x05limit\x12 \n" +
-	"\tmin_score\x18\x06 \x01(\x01H\x01R\bminScore\x88\x01\x01B\x14\n" +
-	"\x12_semantic_index_idB\f\n" +
+	"\tdomain_id\x18\x02 \x01(\tR\bdomainId\x12-\n" +
+	"\x10semantic_rule_id\x18\x03 \x01(\tH\x00R\x0esemanticRuleId\x88\x01\x01\x127\n" +
+	"\x15embedding_binding_key\x18\x04 \x01(\tH\x01R\x13embeddingBindingKey\x88\x01\x01\x12\x14\n" +
+	"\x05query\x18\x05 \x01(\tR\x05query\x12\x14\n" +
+	"\x05limit\x18\x06 \x01(\x05R\x05limit\x12 \n" +
+	"\tmin_score\x18\a \x01(\x01H\x02R\bminScore\x88\x01\x01B\x13\n" +
+	"\x11_semantic_rule_idB\x18\n" +
+	"\x16_embedding_binding_keyB\f\n" +
 	"\n" +
 	"_min_score\"u\n" +
 	"\x16SemanticSearchResponse\x12?\n" +
 	"\aresults\x18\x01 \x03(\v2%.mycel.client.v1.SemanticSearchResultR\aresults\x12\x1a\n" +
-	"\bwarnings\x18\x02 \x03(\tR\bwarnings\"\xb6\x01\n" +
-	"\x14SemanticSearchResult\x12\x17\n" +
-	"\anode_id\x18\x01 \x01(\tR\x06nodeId\x12\x14\n" +
-	"\x05score\x18\x02 \x01(\x01R\x05score\x12)\n" +
-	"\x04node\x18\x03 \x01(\v2\x15.mycel.client.v1.NodeR\x04node\x12*\n" +
-	"\x11matched_chunk_ids\x18\x04 \x03(\tR\x0fmatchedChunkIds\x12\x18\n" +
-	"\asnippet\x18\x05 \x01(\tR\asnippet\"\xd4\x02\n" +
-	"\rSemanticIndex\x12*\n" +
-	"\x11semantic_index_id\x18\x01 \x01(\tR\x0fsemanticIndexId\x12\x10\n" +
+	"\bwarnings\x18\x02 \x03(\tR\bwarnings\"\xb1\x02\n" +
+	"\x14SemanticSearchResult\x12(\n" +
+	"\x10semantic_rule_id\x18\x01 \x01(\tR\x0esemanticRuleId\x122\n" +
+	"\x15embedding_binding_key\x18\x02 \x01(\tR\x13embeddingBindingKey\x12\x1b\n" +
+	"\trecord_id\x18\x03 \x01(\tR\brecordId\x12\x17\n" +
+	"\anode_id\x18\x04 \x01(\tR\x06nodeId\x12\x14\n" +
+	"\x05score\x18\x05 \x01(\x01R\x05score\x12)\n" +
+	"\x04node\x18\x06 \x01(\v2\x15.mycel.client.v1.NodeR\x04node\x12*\n" +
+	"\x11matched_chunk_ids\x18\a \x03(\tR\x0fmatchedChunkIds\x12\x18\n" +
+	"\asnippet\x18\b \x01(\tR\asnippet\"\xb7\x03\n" +
+	"\x1dSemanticGenerationRuleSummary\x12(\n" +
+	"\x10semantic_rule_id\x18\x01 \x01(\tR\x0esemanticRuleId\x12\x10\n" +
 	"\x03key\x18\x02 \x01(\tR\x03key\x12!\n" +
 	"\fdisplay_name\x18\x03 \x01(\tR\vdisplayName\x12 \n" +
 	"\vdescription\x18\x04 \x01(\tR\vdescription\x12\x19\n" +
 	"\bspace_id\x18\x05 \x01(\tR\aspaceId\x12\x1b\n" +
-	"\tdomain_id\x18\x06 \x01(\tR\bdomainId\x12\x1f\n" +
-	"\vmodel_label\x18\a \x01(\tR\n" +
-	"modelLabel\x12,\n" +
-	"\x12vector_store_label\x18\b \x01(\tR\x10vectorStoreLabel\x129\n" +
-	"\x05state\x18\t \x01(\x0e2#.mycel.client.v1.SemanticIndexStateR\x05state*\xe1\x01\n" +
-	"\x12SemanticIndexState\x12$\n" +
-	" SEMANTIC_INDEX_STATE_UNSPECIFIED\x10\x00\x12\x1f\n" +
-	"\x1bSEMANTIC_INDEX_STATE_ACTIVE\x10\x01\x12!\n" +
-	"\x1dSEMANTIC_INDEX_STATE_BUILDING\x10\x02\x12\x1e\n" +
-	"\x1aSEMANTIC_INDEX_STATE_STALE\x10\x03\x12!\n" +
-	"\x1dSEMANTIC_INDEX_STATE_DISABLED\x10\x04\x12\x1e\n" +
-	"\x1aSEMANTIC_INDEX_STATE_ERROR\x10\x052\xe6\x01\n" +
-	"\x0fSemanticService\x12p\n" +
-	"\x13ListSemanticIndexes\x12+.mycel.client.v1.ListSemanticIndexesRequest\x1a,.mycel.client.v1.ListSemanticIndexesResponse\x12a\n" +
+	"\tdomain_id\x18\x06 \x01(\tR\bdomainId\x12\x18\n" +
+	"\aenabled\x18\a \x01(\bR\aenabled\x128\n" +
+	"\x05state\x18\b \x01(\x0e2\".mycel.client.v1.SemanticRuleStateR\x05state\x12L\n" +
+	"\bbindings\x18\t \x03(\v20.mycel.client.v1.SemanticEmbeddingBindingSummaryR\bbindings\x12;\n" +
+	"\x06status\x18\n" +
+	" \x01(\v2#.mycel.client.v1.SemanticRuleStatusR\x06status\"\xf2\x02\n" +
+	"\x1fSemanticEmbeddingBindingSummary\x12\x10\n" +
+	"\x03key\x18\x01 \x01(\tR\x03key\x12\x18\n" +
+	"\apurpose\x18\x02 \x01(\tR\apurpose\x126\n" +
+	"\x17intelligence_profile_id\x18\x03 \x01(\tR\x15intelligenceProfileId\x128\n" +
+	"\x18intelligence_profile_key\x18\x04 \x01(\tR\x16intelligenceProfileKey\x12&\n" +
+	"\x0fvector_store_id\x18\x05 \x01(\tR\rvectorStoreId\x12(\n" +
+	"\x10vector_store_key\x18\x06 \x01(\tR\x0evectorStoreKey\x12\x18\n" +
+	"\aenabled\x18\a \x01(\bR\aenabled\x12E\n" +
+	"\fsearch_index\x18\b \x01(\v2\".mycel.client.v1.SearchIndexStatusR\vsearchIndex\"\xbf\x01\n" +
+	"\x11SearchIndexStatus\x127\n" +
+	"\x05state\x18\x01 \x01(\x0e2!.mycel.client.v1.SearchIndexStateR\x05state\x12*\n" +
+	"\x11live_record_count\x18\x02 \x01(\x03R\x0fliveRecordCount\x12&\n" +
+	"\x0flast_rebuild_at\x18\x03 \x01(\tR\rlastRebuildAt\x12\x1d\n" +
+	"\n" +
+	"last_error\x18\x04 \x01(\tR\tlastError\"\xe7\x02\n" +
+	"\x12SemanticRuleStatus\x12.\n" +
+	"\x13queue_depth_pending\x18\x01 \x01(\x05R\x11queueDepthPending\x12.\n" +
+	"\x13queue_depth_running\x18\x02 \x01(\x05R\x11queueDepthRunning\x12?\n" +
+	"\x1cqueue_depth_failed_retryable\x18\x03 \x01(\x05R\x19queueDepthFailedRetryable\x12?\n" +
+	"\x1cqueue_depth_failed_permanent\x18\x04 \x01(\x05R\x19queueDepthFailedPermanent\x12&\n" +
+	"\x0flast_refresh_at\x18\x05 \x01(\tR\rlastRefreshAt\x12(\n" +
+	"\x10last_backfill_at\x18\x06 \x01(\tR\x0elastBackfillAt\x12\x1d\n" +
+	"\n" +
+	"last_error\x18\a \x01(\tR\tlastError*\xda\x01\n" +
+	"\x11SemanticRuleState\x12#\n" +
+	"\x1fSEMANTIC_RULE_STATE_UNSPECIFIED\x10\x00\x12\x1e\n" +
+	"\x1aSEMANTIC_RULE_STATE_ACTIVE\x10\x01\x12 \n" +
+	"\x1cSEMANTIC_RULE_STATE_BUILDING\x10\x02\x12\x1d\n" +
+	"\x19SEMANTIC_RULE_STATE_STALE\x10\x03\x12 \n" +
+	"\x1cSEMANTIC_RULE_STATE_DISABLED\x10\x04\x12\x1d\n" +
+	"\x19SEMANTIC_RULE_STATE_ERROR\x10\x05*\xd4\x01\n" +
+	"\x10SearchIndexState\x12\"\n" +
+	"\x1eSEARCH_INDEX_STATE_UNSPECIFIED\x10\x00\x12\x1c\n" +
+	"\x18SEARCH_INDEX_STATE_READY\x10\x01\x12\x1f\n" +
+	"\x1bSEARCH_INDEX_STATE_BUILDING\x10\x02\x12\x1f\n" +
+	"\x1bSEARCH_INDEX_STATE_DEGRADED\x10\x03\x12\x1e\n" +
+	"\x1aSEARCH_INDEX_STATE_MISSING\x10\x04\x12\x1c\n" +
+	"\x18SEARCH_INDEX_STATE_ERROR\x10\x052\xe0\x01\n" +
+	"\x0fSemanticService\x12j\n" +
+	"\x11ListSemanticRules\x12).mycel.client.v1.ListSemanticRulesRequest\x1a*.mycel.client.v1.ListSemanticRulesResponse\x12a\n" +
 	"\x0eSemanticSearch\x12&.mycel.client.v1.SemanticSearchRequest\x1a'.mycel.client.v1.SemanticSearchResponseB\xc3\x01\n" +
 	"\x13com.mycel.client.v1B\rSemanticProtoP\x01Z?github.com/myceldb/mycel-go-sdk/gen/go/mycel/client/v1;clientv1\xa2\x02\x03MCX\xaa\x02\x0fMycel.Client.V1\xca\x02\x0fMycel\\Client\\V1\xe2\x02\x1bMycel\\Client\\V1\\GPBMetadata\xea\x02\x11Mycel::Client::V1b\x06proto3"
 
@@ -597,32 +1001,40 @@ func file_mycel_client_v1_semantic_proto_rawDescGZIP() []byte {
 	return file_mycel_client_v1_semantic_proto_rawDescData
 }
 
-var file_mycel_client_v1_semantic_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
-var file_mycel_client_v1_semantic_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
+var file_mycel_client_v1_semantic_proto_enumTypes = make([]protoimpl.EnumInfo, 2)
+var file_mycel_client_v1_semantic_proto_msgTypes = make([]protoimpl.MessageInfo, 9)
 var file_mycel_client_v1_semantic_proto_goTypes = []any{
-	(SemanticIndexState)(0),             // 0: mycel.client.v1.SemanticIndexState
-	(*ListSemanticIndexesRequest)(nil),  // 1: mycel.client.v1.ListSemanticIndexesRequest
-	(*ListSemanticIndexesResponse)(nil), // 2: mycel.client.v1.ListSemanticIndexesResponse
-	(*SemanticSearchRequest)(nil),       // 3: mycel.client.v1.SemanticSearchRequest
-	(*SemanticSearchResponse)(nil),      // 4: mycel.client.v1.SemanticSearchResponse
-	(*SemanticSearchResult)(nil),        // 5: mycel.client.v1.SemanticSearchResult
-	(*SemanticIndex)(nil),               // 6: mycel.client.v1.SemanticIndex
-	(*Node)(nil),                        // 7: mycel.client.v1.Node
+	(SemanticRuleState)(0),                  // 0: mycel.client.v1.SemanticRuleState
+	(SearchIndexState)(0),                   // 1: mycel.client.v1.SearchIndexState
+	(*ListSemanticRulesRequest)(nil),        // 2: mycel.client.v1.ListSemanticRulesRequest
+	(*ListSemanticRulesResponse)(nil),       // 3: mycel.client.v1.ListSemanticRulesResponse
+	(*SemanticSearchRequest)(nil),           // 4: mycel.client.v1.SemanticSearchRequest
+	(*SemanticSearchResponse)(nil),          // 5: mycel.client.v1.SemanticSearchResponse
+	(*SemanticSearchResult)(nil),            // 6: mycel.client.v1.SemanticSearchResult
+	(*SemanticGenerationRuleSummary)(nil),   // 7: mycel.client.v1.SemanticGenerationRuleSummary
+	(*SemanticEmbeddingBindingSummary)(nil), // 8: mycel.client.v1.SemanticEmbeddingBindingSummary
+	(*SearchIndexStatus)(nil),               // 9: mycel.client.v1.SearchIndexStatus
+	(*SemanticRuleStatus)(nil),              // 10: mycel.client.v1.SemanticRuleStatus
+	(*Node)(nil),                            // 11: mycel.client.v1.Node
 }
 var file_mycel_client_v1_semantic_proto_depIdxs = []int32{
-	6, // 0: mycel.client.v1.ListSemanticIndexesResponse.indexes:type_name -> mycel.client.v1.SemanticIndex
-	5, // 1: mycel.client.v1.SemanticSearchResponse.results:type_name -> mycel.client.v1.SemanticSearchResult
-	7, // 2: mycel.client.v1.SemanticSearchResult.node:type_name -> mycel.client.v1.Node
-	0, // 3: mycel.client.v1.SemanticIndex.state:type_name -> mycel.client.v1.SemanticIndexState
-	1, // 4: mycel.client.v1.SemanticService.ListSemanticIndexes:input_type -> mycel.client.v1.ListSemanticIndexesRequest
-	3, // 5: mycel.client.v1.SemanticService.SemanticSearch:input_type -> mycel.client.v1.SemanticSearchRequest
-	2, // 6: mycel.client.v1.SemanticService.ListSemanticIndexes:output_type -> mycel.client.v1.ListSemanticIndexesResponse
-	4, // 7: mycel.client.v1.SemanticService.SemanticSearch:output_type -> mycel.client.v1.SemanticSearchResponse
-	6, // [6:8] is the sub-list for method output_type
-	4, // [4:6] is the sub-list for method input_type
-	4, // [4:4] is the sub-list for extension type_name
-	4, // [4:4] is the sub-list for extension extendee
-	0, // [0:4] is the sub-list for field type_name
+	7,  // 0: mycel.client.v1.ListSemanticRulesResponse.rules:type_name -> mycel.client.v1.SemanticGenerationRuleSummary
+	6,  // 1: mycel.client.v1.SemanticSearchResponse.results:type_name -> mycel.client.v1.SemanticSearchResult
+	11, // 2: mycel.client.v1.SemanticSearchResult.node:type_name -> mycel.client.v1.Node
+	0,  // 3: mycel.client.v1.SemanticGenerationRuleSummary.state:type_name -> mycel.client.v1.SemanticRuleState
+	8,  // 4: mycel.client.v1.SemanticGenerationRuleSummary.bindings:type_name -> mycel.client.v1.SemanticEmbeddingBindingSummary
+	10, // 5: mycel.client.v1.SemanticGenerationRuleSummary.status:type_name -> mycel.client.v1.SemanticRuleStatus
+	9,  // 6: mycel.client.v1.SemanticEmbeddingBindingSummary.search_index:type_name -> mycel.client.v1.SearchIndexStatus
+	1,  // 7: mycel.client.v1.SearchIndexStatus.state:type_name -> mycel.client.v1.SearchIndexState
+	2,  // 8: mycel.client.v1.SemanticService.ListSemanticRules:input_type -> mycel.client.v1.ListSemanticRulesRequest
+	4,  // 9: mycel.client.v1.SemanticService.SemanticSearch:input_type -> mycel.client.v1.SemanticSearchRequest
+	3,  // 10: mycel.client.v1.SemanticService.ListSemanticRules:output_type -> mycel.client.v1.ListSemanticRulesResponse
+	5,  // 11: mycel.client.v1.SemanticService.SemanticSearch:output_type -> mycel.client.v1.SemanticSearchResponse
+	10, // [10:12] is the sub-list for method output_type
+	8,  // [8:10] is the sub-list for method input_type
+	8,  // [8:8] is the sub-list for extension type_name
+	8,  // [8:8] is the sub-list for extension extendee
+	0,  // [0:8] is the sub-list for field type_name
 }
 
 func init() { file_mycel_client_v1_semantic_proto_init() }
@@ -637,8 +1049,8 @@ func file_mycel_client_v1_semantic_proto_init() {
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_mycel_client_v1_semantic_proto_rawDesc), len(file_mycel_client_v1_semantic_proto_rawDesc)),
-			NumEnums:      1,
-			NumMessages:   6,
+			NumEnums:      2,
+			NumMessages:   9,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

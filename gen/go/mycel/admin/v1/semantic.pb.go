@@ -10,6 +10,7 @@ import (
 	v1 "github.com/myceldb/mycel-go-sdk/gen/go/mycel/client/v1"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
+	structpb "google.golang.org/protobuf/types/known/structpb"
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
@@ -22,7 +23,7 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-type AdminSemanticServiceListSemanticIndexesRequest struct {
+type ListSemanticRulesRequest struct {
 	state           protoimpl.MessageState `protogen:"open.v1"`
 	SpaceId         string                 `protobuf:"bytes,1,opt,name=space_id,json=spaceId,proto3" json:"space_id,omitempty"`
 	DomainId        string                 `protobuf:"bytes,2,opt,name=domain_id,json=domainId,proto3" json:"domain_id,omitempty"`
@@ -33,20 +34,20 @@ type AdminSemanticServiceListSemanticIndexesRequest struct {
 	sizeCache       protoimpl.SizeCache
 }
 
-func (x *AdminSemanticServiceListSemanticIndexesRequest) Reset() {
-	*x = AdminSemanticServiceListSemanticIndexesRequest{}
+func (x *ListSemanticRulesRequest) Reset() {
+	*x = ListSemanticRulesRequest{}
 	mi := &file_mycel_admin_v1_semantic_proto_msgTypes[0]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *AdminSemanticServiceListSemanticIndexesRequest) String() string {
+func (x *ListSemanticRulesRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*AdminSemanticServiceListSemanticIndexesRequest) ProtoMessage() {}
+func (*ListSemanticRulesRequest) ProtoMessage() {}
 
-func (x *AdminSemanticServiceListSemanticIndexesRequest) ProtoReflect() protoreflect.Message {
+func (x *ListSemanticRulesRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_mycel_admin_v1_semantic_proto_msgTypes[0]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -58,68 +59,68 @@ func (x *AdminSemanticServiceListSemanticIndexesRequest) ProtoReflect() protoref
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use AdminSemanticServiceListSemanticIndexesRequest.ProtoReflect.Descriptor instead.
-func (*AdminSemanticServiceListSemanticIndexesRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use ListSemanticRulesRequest.ProtoReflect.Descriptor instead.
+func (*ListSemanticRulesRequest) Descriptor() ([]byte, []int) {
 	return file_mycel_admin_v1_semantic_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *AdminSemanticServiceListSemanticIndexesRequest) GetSpaceId() string {
+func (x *ListSemanticRulesRequest) GetSpaceId() string {
 	if x != nil {
 		return x.SpaceId
 	}
 	return ""
 }
 
-func (x *AdminSemanticServiceListSemanticIndexesRequest) GetDomainId() string {
+func (x *ListSemanticRulesRequest) GetDomainId() string {
 	if x != nil {
 		return x.DomainId
 	}
 	return ""
 }
 
-func (x *AdminSemanticServiceListSemanticIndexesRequest) GetPageSize() int32 {
+func (x *ListSemanticRulesRequest) GetPageSize() int32 {
 	if x != nil {
 		return x.PageSize
 	}
 	return 0
 }
 
-func (x *AdminSemanticServiceListSemanticIndexesRequest) GetPageToken() string {
+func (x *ListSemanticRulesRequest) GetPageToken() string {
 	if x != nil {
 		return x.PageToken
 	}
 	return ""
 }
 
-func (x *AdminSemanticServiceListSemanticIndexesRequest) GetIncludeDisabled() bool {
+func (x *ListSemanticRulesRequest) GetIncludeDisabled() bool {
 	if x != nil {
 		return x.IncludeDisabled
 	}
 	return false
 }
 
-type AdminSemanticServiceListSemanticIndexesResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Indexes       []*v1.SemanticIndex    `protobuf:"bytes,1,rep,name=indexes,proto3" json:"indexes,omitempty"`
-	NextPageToken string                 `protobuf:"bytes,2,opt,name=next_page_token,json=nextPageToken,proto3" json:"next_page_token,omitempty"`
+type ListSemanticRulesResponse struct {
+	state         protoimpl.MessageState              `protogen:"open.v1"`
+	Rules         []*v1.SemanticGenerationRuleSummary `protobuf:"bytes,1,rep,name=rules,proto3" json:"rules,omitempty"`
+	NextPageToken string                              `protobuf:"bytes,2,opt,name=next_page_token,json=nextPageToken,proto3" json:"next_page_token,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *AdminSemanticServiceListSemanticIndexesResponse) Reset() {
-	*x = AdminSemanticServiceListSemanticIndexesResponse{}
+func (x *ListSemanticRulesResponse) Reset() {
+	*x = ListSemanticRulesResponse{}
 	mi := &file_mycel_admin_v1_semantic_proto_msgTypes[1]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *AdminSemanticServiceListSemanticIndexesResponse) String() string {
+func (x *ListSemanticRulesResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*AdminSemanticServiceListSemanticIndexesResponse) ProtoMessage() {}
+func (*ListSemanticRulesResponse) ProtoMessage() {}
 
-func (x *AdminSemanticServiceListSemanticIndexesResponse) ProtoReflect() protoreflect.Message {
+func (x *ListSemanticRulesResponse) ProtoReflect() protoreflect.Message {
 	mi := &file_mycel_admin_v1_semantic_proto_msgTypes[1]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -131,58 +132,47 @@ func (x *AdminSemanticServiceListSemanticIndexesResponse) ProtoReflect() protore
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use AdminSemanticServiceListSemanticIndexesResponse.ProtoReflect.Descriptor instead.
-func (*AdminSemanticServiceListSemanticIndexesResponse) Descriptor() ([]byte, []int) {
+// Deprecated: Use ListSemanticRulesResponse.ProtoReflect.Descriptor instead.
+func (*ListSemanticRulesResponse) Descriptor() ([]byte, []int) {
 	return file_mycel_admin_v1_semantic_proto_rawDescGZIP(), []int{1}
 }
 
-func (x *AdminSemanticServiceListSemanticIndexesResponse) GetIndexes() []*v1.SemanticIndex {
+func (x *ListSemanticRulesResponse) GetRules() []*v1.SemanticGenerationRuleSummary {
 	if x != nil {
-		return x.Indexes
+		return x.Rules
 	}
 	return nil
 }
 
-func (x *AdminSemanticServiceListSemanticIndexesResponse) GetNextPageToken() string {
+func (x *ListSemanticRulesResponse) GetNextPageToken() string {
 	if x != nil {
 		return x.NextPageToken
 	}
 	return ""
 }
 
-type UpsertSemanticIndexRequest struct {
-	state protoimpl.MessageState `protogen:"open.v1"`
-	// Optional. If set, updates the existing index with this id. If omitted,
-	// key+space+domain determine idempotent upsert behavior.
-	SemanticIndexId string                `protobuf:"bytes,1,opt,name=semantic_index_id,json=semanticIndexId,proto3" json:"semantic_index_id,omitempty"`
-	SpaceId         string                `protobuf:"bytes,2,opt,name=space_id,json=spaceId,proto3" json:"space_id,omitempty"`
-	DomainId        string                `protobuf:"bytes,3,opt,name=domain_id,json=domainId,proto3" json:"domain_id,omitempty"`
-	Key             string                `protobuf:"bytes,4,opt,name=key,proto3" json:"key,omitempty"`
-	DisplayName     string                `protobuf:"bytes,5,opt,name=display_name,json=displayName,proto3" json:"display_name,omitempty"`
-	Purpose         string                `protobuf:"bytes,6,opt,name=purpose,proto3" json:"purpose,omitempty"`
-	SourcePolicy    *SemanticSourcePolicy `protobuf:"bytes,7,opt,name=source_policy,json=sourcePolicy,proto3" json:"source_policy,omitempty"`
-	ModelEndpointId string                `protobuf:"bytes,8,opt,name=model_endpoint_id,json=modelEndpointId,proto3" json:"model_endpoint_id,omitempty"`
-	ModelId         string                `protobuf:"bytes,9,opt,name=model_id,json=modelId,proto3" json:"model_id,omitempty"`
-	VectorStoreId   string                `protobuf:"bytes,10,opt,name=vector_store_id,json=vectorStoreId,proto3" json:"vector_store_id,omitempty"`
-	Enabled         bool                  `protobuf:"varint,11,opt,name=enabled,proto3" json:"enabled,omitempty"`
-	unknownFields   protoimpl.UnknownFields
-	sizeCache       protoimpl.SizeCache
+type GetSemanticRuleRequest struct {
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	SpaceId        string                 `protobuf:"bytes,1,opt,name=space_id,json=spaceId,proto3" json:"space_id,omitempty"`
+	SemanticRuleId string                 `protobuf:"bytes,2,opt,name=semantic_rule_id,json=semanticRuleId,proto3" json:"semantic_rule_id,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
 }
 
-func (x *UpsertSemanticIndexRequest) Reset() {
-	*x = UpsertSemanticIndexRequest{}
+func (x *GetSemanticRuleRequest) Reset() {
+	*x = GetSemanticRuleRequest{}
 	mi := &file_mycel_admin_v1_semantic_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *UpsertSemanticIndexRequest) String() string {
+func (x *GetSemanticRuleRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*UpsertSemanticIndexRequest) ProtoMessage() {}
+func (*GetSemanticRuleRequest) ProtoMessage() {}
 
-func (x *UpsertSemanticIndexRequest) ProtoReflect() protoreflect.Message {
+func (x *GetSemanticRuleRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_mycel_admin_v1_semantic_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -194,110 +184,472 @@ func (x *UpsertSemanticIndexRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use UpsertSemanticIndexRequest.ProtoReflect.Descriptor instead.
-func (*UpsertSemanticIndexRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use GetSemanticRuleRequest.ProtoReflect.Descriptor instead.
+func (*GetSemanticRuleRequest) Descriptor() ([]byte, []int) {
 	return file_mycel_admin_v1_semantic_proto_rawDescGZIP(), []int{2}
 }
 
-func (x *UpsertSemanticIndexRequest) GetSemanticIndexId() string {
-	if x != nil {
-		return x.SemanticIndexId
-	}
-	return ""
-}
-
-func (x *UpsertSemanticIndexRequest) GetSpaceId() string {
+func (x *GetSemanticRuleRequest) GetSpaceId() string {
 	if x != nil {
 		return x.SpaceId
 	}
 	return ""
 }
 
-func (x *UpsertSemanticIndexRequest) GetDomainId() string {
+func (x *GetSemanticRuleRequest) GetSemanticRuleId() string {
 	if x != nil {
-		return x.DomainId
+		return x.SemanticRuleId
 	}
 	return ""
 }
 
-func (x *UpsertSemanticIndexRequest) GetKey() string {
-	if x != nil {
-		return x.Key
-	}
-	return ""
+type GetSemanticRuleResponse struct {
+	state         protoimpl.MessageState            `protogen:"open.v1"`
+	Rule          *SemanticGenerationRule           `protobuf:"bytes,1,opt,name=rule,proto3" json:"rule,omitempty"`
+	Summary       *v1.SemanticGenerationRuleSummary `protobuf:"bytes,2,opt,name=summary,proto3" json:"summary,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
-func (x *UpsertSemanticIndexRequest) GetDisplayName() string {
-	if x != nil {
-		return x.DisplayName
-	}
-	return ""
+func (x *GetSemanticRuleResponse) Reset() {
+	*x = GetSemanticRuleResponse{}
+	mi := &file_mycel_admin_v1_semantic_proto_msgTypes[3]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
 }
 
-func (x *UpsertSemanticIndexRequest) GetPurpose() string {
-	if x != nil {
-		return x.Purpose
-	}
-	return ""
+func (x *GetSemanticRuleResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
 }
 
-func (x *UpsertSemanticIndexRequest) GetSourcePolicy() *SemanticSourcePolicy {
+func (*GetSemanticRuleResponse) ProtoMessage() {}
+
+func (x *GetSemanticRuleResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_admin_v1_semantic_proto_msgTypes[3]
 	if x != nil {
-		return x.SourcePolicy
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetSemanticRuleResponse.ProtoReflect.Descriptor instead.
+func (*GetSemanticRuleResponse) Descriptor() ([]byte, []int) {
+	return file_mycel_admin_v1_semantic_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *GetSemanticRuleResponse) GetRule() *SemanticGenerationRule {
+	if x != nil {
+		return x.Rule
 	}
 	return nil
 }
 
-func (x *UpsertSemanticIndexRequest) GetModelEndpointId() string {
+func (x *GetSemanticRuleResponse) GetSummary() *v1.SemanticGenerationRuleSummary {
 	if x != nil {
-		return x.ModelEndpointId
+		return x.Summary
+	}
+	return nil
+}
+
+type ValidateSemanticRuleRequest struct {
+	state         protoimpl.MessageState  `protogen:"open.v1"`
+	Rule          *SemanticGenerationRule `protobuf:"bytes,1,opt,name=rule,proto3" json:"rule,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ValidateSemanticRuleRequest) Reset() {
+	*x = ValidateSemanticRuleRequest{}
+	mi := &file_mycel_admin_v1_semantic_proto_msgTypes[4]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ValidateSemanticRuleRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ValidateSemanticRuleRequest) ProtoMessage() {}
+
+func (x *ValidateSemanticRuleRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_admin_v1_semantic_proto_msgTypes[4]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ValidateSemanticRuleRequest.ProtoReflect.Descriptor instead.
+func (*ValidateSemanticRuleRequest) Descriptor() ([]byte, []int) {
+	return file_mycel_admin_v1_semantic_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *ValidateSemanticRuleRequest) GetRule() *SemanticGenerationRule {
+	if x != nil {
+		return x.Rule
+	}
+	return nil
+}
+
+type ValidateSemanticRuleResponse struct {
+	state          protoimpl.MessageState              `protogen:"open.v1"`
+	Valid          bool                                `protobuf:"varint,1,opt,name=valid,proto3" json:"valid,omitempty"`
+	Diagnostics    []*SemanticRuleValidationDiagnostic `protobuf:"bytes,2,rep,name=diagnostics,proto3" json:"diagnostics,omitempty"`
+	NormalizedRule *SemanticGenerationRule             `protobuf:"bytes,3,opt,name=normalized_rule,json=normalizedRule,proto3" json:"normalized_rule,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
+}
+
+func (x *ValidateSemanticRuleResponse) Reset() {
+	*x = ValidateSemanticRuleResponse{}
+	mi := &file_mycel_admin_v1_semantic_proto_msgTypes[5]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ValidateSemanticRuleResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ValidateSemanticRuleResponse) ProtoMessage() {}
+
+func (x *ValidateSemanticRuleResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_admin_v1_semantic_proto_msgTypes[5]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ValidateSemanticRuleResponse.ProtoReflect.Descriptor instead.
+func (*ValidateSemanticRuleResponse) Descriptor() ([]byte, []int) {
+	return file_mycel_admin_v1_semantic_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *ValidateSemanticRuleResponse) GetValid() bool {
+	if x != nil {
+		return x.Valid
+	}
+	return false
+}
+
+func (x *ValidateSemanticRuleResponse) GetDiagnostics() []*SemanticRuleValidationDiagnostic {
+	if x != nil {
+		return x.Diagnostics
+	}
+	return nil
+}
+
+func (x *ValidateSemanticRuleResponse) GetNormalizedRule() *SemanticGenerationRule {
+	if x != nil {
+		return x.NormalizedRule
+	}
+	return nil
+}
+
+type CreateSemanticRuleRequest struct {
+	state         protoimpl.MessageState  `protogen:"open.v1"`
+	Rule          *SemanticGenerationRule `protobuf:"bytes,1,opt,name=rule,proto3" json:"rule,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CreateSemanticRuleRequest) Reset() {
+	*x = CreateSemanticRuleRequest{}
+	mi := &file_mycel_admin_v1_semantic_proto_msgTypes[6]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CreateSemanticRuleRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateSemanticRuleRequest) ProtoMessage() {}
+
+func (x *CreateSemanticRuleRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_admin_v1_semantic_proto_msgTypes[6]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateSemanticRuleRequest.ProtoReflect.Descriptor instead.
+func (*CreateSemanticRuleRequest) Descriptor() ([]byte, []int) {
+	return file_mycel_admin_v1_semantic_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *CreateSemanticRuleRequest) GetRule() *SemanticGenerationRule {
+	if x != nil {
+		return x.Rule
+	}
+	return nil
+}
+
+type CreateSemanticRuleResponse struct {
+	state         protoimpl.MessageState            `protogen:"open.v1"`
+	Rule          *SemanticGenerationRule           `protobuf:"bytes,1,opt,name=rule,proto3" json:"rule,omitempty"`
+	Summary       *v1.SemanticGenerationRuleSummary `protobuf:"bytes,2,opt,name=summary,proto3" json:"summary,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CreateSemanticRuleResponse) Reset() {
+	*x = CreateSemanticRuleResponse{}
+	mi := &file_mycel_admin_v1_semantic_proto_msgTypes[7]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CreateSemanticRuleResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateSemanticRuleResponse) ProtoMessage() {}
+
+func (x *CreateSemanticRuleResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_admin_v1_semantic_proto_msgTypes[7]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateSemanticRuleResponse.ProtoReflect.Descriptor instead.
+func (*CreateSemanticRuleResponse) Descriptor() ([]byte, []int) {
+	return file_mycel_admin_v1_semantic_proto_rawDescGZIP(), []int{7}
+}
+
+func (x *CreateSemanticRuleResponse) GetRule() *SemanticGenerationRule {
+	if x != nil {
+		return x.Rule
+	}
+	return nil
+}
+
+func (x *CreateSemanticRuleResponse) GetSummary() *v1.SemanticGenerationRuleSummary {
+	if x != nil {
+		return x.Summary
+	}
+	return nil
+}
+
+type UpdateSemanticRuleRequest struct {
+	state          protoimpl.MessageState  `protogen:"open.v1"`
+	SpaceId        string                  `protobuf:"bytes,1,opt,name=space_id,json=spaceId,proto3" json:"space_id,omitempty"`
+	SemanticRuleId string                  `protobuf:"bytes,2,opt,name=semantic_rule_id,json=semanticRuleId,proto3" json:"semantic_rule_id,omitempty"`
+	Rule           *SemanticGenerationRule `protobuf:"bytes,3,opt,name=rule,proto3" json:"rule,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
+}
+
+func (x *UpdateSemanticRuleRequest) Reset() {
+	*x = UpdateSemanticRuleRequest{}
+	mi := &file_mycel_admin_v1_semantic_proto_msgTypes[8]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UpdateSemanticRuleRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateSemanticRuleRequest) ProtoMessage() {}
+
+func (x *UpdateSemanticRuleRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_admin_v1_semantic_proto_msgTypes[8]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateSemanticRuleRequest.ProtoReflect.Descriptor instead.
+func (*UpdateSemanticRuleRequest) Descriptor() ([]byte, []int) {
+	return file_mycel_admin_v1_semantic_proto_rawDescGZIP(), []int{8}
+}
+
+func (x *UpdateSemanticRuleRequest) GetSpaceId() string {
+	if x != nil {
+		return x.SpaceId
 	}
 	return ""
 }
 
-func (x *UpsertSemanticIndexRequest) GetModelId() string {
+func (x *UpdateSemanticRuleRequest) GetSemanticRuleId() string {
 	if x != nil {
-		return x.ModelId
+		return x.SemanticRuleId
 	}
 	return ""
 }
 
-func (x *UpsertSemanticIndexRequest) GetVectorStoreId() string {
+func (x *UpdateSemanticRuleRequest) GetRule() *SemanticGenerationRule {
 	if x != nil {
-		return x.VectorStoreId
+		return x.Rule
+	}
+	return nil
+}
+
+type UpdateSemanticRuleResponse struct {
+	state         protoimpl.MessageState            `protogen:"open.v1"`
+	Rule          *SemanticGenerationRule           `protobuf:"bytes,1,opt,name=rule,proto3" json:"rule,omitempty"`
+	Summary       *v1.SemanticGenerationRuleSummary `protobuf:"bytes,2,opt,name=summary,proto3" json:"summary,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *UpdateSemanticRuleResponse) Reset() {
+	*x = UpdateSemanticRuleResponse{}
+	mi := &file_mycel_admin_v1_semantic_proto_msgTypes[9]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UpdateSemanticRuleResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateSemanticRuleResponse) ProtoMessage() {}
+
+func (x *UpdateSemanticRuleResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_admin_v1_semantic_proto_msgTypes[9]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateSemanticRuleResponse.ProtoReflect.Descriptor instead.
+func (*UpdateSemanticRuleResponse) Descriptor() ([]byte, []int) {
+	return file_mycel_admin_v1_semantic_proto_rawDescGZIP(), []int{9}
+}
+
+func (x *UpdateSemanticRuleResponse) GetRule() *SemanticGenerationRule {
+	if x != nil {
+		return x.Rule
+	}
+	return nil
+}
+
+func (x *UpdateSemanticRuleResponse) GetSummary() *v1.SemanticGenerationRuleSummary {
+	if x != nil {
+		return x.Summary
+	}
+	return nil
+}
+
+type SetSemanticRuleEnabledRequest struct {
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	SpaceId        string                 `protobuf:"bytes,1,opt,name=space_id,json=spaceId,proto3" json:"space_id,omitempty"`
+	SemanticRuleId string                 `protobuf:"bytes,2,opt,name=semantic_rule_id,json=semanticRuleId,proto3" json:"semantic_rule_id,omitempty"`
+	Enabled        bool                   `protobuf:"varint,3,opt,name=enabled,proto3" json:"enabled,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
+}
+
+func (x *SetSemanticRuleEnabledRequest) Reset() {
+	*x = SetSemanticRuleEnabledRequest{}
+	mi := &file_mycel_admin_v1_semantic_proto_msgTypes[10]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SetSemanticRuleEnabledRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SetSemanticRuleEnabledRequest) ProtoMessage() {}
+
+func (x *SetSemanticRuleEnabledRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_admin_v1_semantic_proto_msgTypes[10]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SetSemanticRuleEnabledRequest.ProtoReflect.Descriptor instead.
+func (*SetSemanticRuleEnabledRequest) Descriptor() ([]byte, []int) {
+	return file_mycel_admin_v1_semantic_proto_rawDescGZIP(), []int{10}
+}
+
+func (x *SetSemanticRuleEnabledRequest) GetSpaceId() string {
+	if x != nil {
+		return x.SpaceId
 	}
 	return ""
 }
 
-func (x *UpsertSemanticIndexRequest) GetEnabled() bool {
+func (x *SetSemanticRuleEnabledRequest) GetSemanticRuleId() string {
+	if x != nil {
+		return x.SemanticRuleId
+	}
+	return ""
+}
+
+func (x *SetSemanticRuleEnabledRequest) GetEnabled() bool {
 	if x != nil {
 		return x.Enabled
 	}
 	return false
 }
 
-type UpsertSemanticIndexResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Index         *v1.SemanticIndex      `protobuf:"bytes,1,opt,name=index,proto3" json:"index,omitempty"`
+type SetSemanticRuleEnabledResponse struct {
+	state         protoimpl.MessageState            `protogen:"open.v1"`
+	Rule          *SemanticGenerationRule           `protobuf:"bytes,1,opt,name=rule,proto3" json:"rule,omitempty"`
+	Summary       *v1.SemanticGenerationRuleSummary `protobuf:"bytes,2,opt,name=summary,proto3" json:"summary,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *UpsertSemanticIndexResponse) Reset() {
-	*x = UpsertSemanticIndexResponse{}
-	mi := &file_mycel_admin_v1_semantic_proto_msgTypes[3]
+func (x *SetSemanticRuleEnabledResponse) Reset() {
+	*x = SetSemanticRuleEnabledResponse{}
+	mi := &file_mycel_admin_v1_semantic_proto_msgTypes[11]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *UpsertSemanticIndexResponse) String() string {
+func (x *SetSemanticRuleEnabledResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*UpsertSemanticIndexResponse) ProtoMessage() {}
+func (*SetSemanticRuleEnabledResponse) ProtoMessage() {}
 
-func (x *UpsertSemanticIndexResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_admin_v1_semantic_proto_msgTypes[3]
+func (x *SetSemanticRuleEnabledResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_admin_v1_semantic_proto_msgTypes[11]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -308,43 +660,49 @@ func (x *UpsertSemanticIndexResponse) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use UpsertSemanticIndexResponse.ProtoReflect.Descriptor instead.
-func (*UpsertSemanticIndexResponse) Descriptor() ([]byte, []int) {
-	return file_mycel_admin_v1_semantic_proto_rawDescGZIP(), []int{3}
+// Deprecated: Use SetSemanticRuleEnabledResponse.ProtoReflect.Descriptor instead.
+func (*SetSemanticRuleEnabledResponse) Descriptor() ([]byte, []int) {
+	return file_mycel_admin_v1_semantic_proto_rawDescGZIP(), []int{11}
 }
 
-func (x *UpsertSemanticIndexResponse) GetIndex() *v1.SemanticIndex {
+func (x *SetSemanticRuleEnabledResponse) GetRule() *SemanticGenerationRule {
 	if x != nil {
-		return x.Index
+		return x.Rule
 	}
 	return nil
 }
 
-type DeleteSemanticIndexRequest struct {
-	state           protoimpl.MessageState `protogen:"open.v1"`
-	SpaceId         string                 `protobuf:"bytes,1,opt,name=space_id,json=spaceId,proto3" json:"space_id,omitempty"`
-	SemanticIndexId string                 `protobuf:"bytes,2,opt,name=semantic_index_id,json=semanticIndexId,proto3" json:"semantic_index_id,omitempty"`
-	PurgeVectors    bool                   `protobuf:"varint,3,opt,name=purge_vectors,json=purgeVectors,proto3" json:"purge_vectors,omitempty"`
-	PurgeReferences bool                   `protobuf:"varint,4,opt,name=purge_references,json=purgeReferences,proto3" json:"purge_references,omitempty"`
-	unknownFields   protoimpl.UnknownFields
-	sizeCache       protoimpl.SizeCache
+func (x *SetSemanticRuleEnabledResponse) GetSummary() *v1.SemanticGenerationRuleSummary {
+	if x != nil {
+		return x.Summary
+	}
+	return nil
 }
 
-func (x *DeleteSemanticIndexRequest) Reset() {
-	*x = DeleteSemanticIndexRequest{}
-	mi := &file_mycel_admin_v1_semantic_proto_msgTypes[4]
+type DeleteSemanticRuleRequest struct {
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	SpaceId        string                 `protobuf:"bytes,1,opt,name=space_id,json=spaceId,proto3" json:"space_id,omitempty"`
+	SemanticRuleId string                 `protobuf:"bytes,2,opt,name=semantic_rule_id,json=semanticRuleId,proto3" json:"semantic_rule_id,omitempty"`
+	PurgeVectors   bool                   `protobuf:"varint,3,opt,name=purge_vectors,json=purgeVectors,proto3" json:"purge_vectors,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
+}
+
+func (x *DeleteSemanticRuleRequest) Reset() {
+	*x = DeleteSemanticRuleRequest{}
+	mi := &file_mycel_admin_v1_semantic_proto_msgTypes[12]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *DeleteSemanticIndexRequest) String() string {
+func (x *DeleteSemanticRuleRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*DeleteSemanticIndexRequest) ProtoMessage() {}
+func (*DeleteSemanticRuleRequest) ProtoMessage() {}
 
-func (x *DeleteSemanticIndexRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_admin_v1_semantic_proto_msgTypes[4]
+func (x *DeleteSemanticRuleRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_admin_v1_semantic_proto_msgTypes[12]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -355,65 +713,57 @@ func (x *DeleteSemanticIndexRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use DeleteSemanticIndexRequest.ProtoReflect.Descriptor instead.
-func (*DeleteSemanticIndexRequest) Descriptor() ([]byte, []int) {
-	return file_mycel_admin_v1_semantic_proto_rawDescGZIP(), []int{4}
+// Deprecated: Use DeleteSemanticRuleRequest.ProtoReflect.Descriptor instead.
+func (*DeleteSemanticRuleRequest) Descriptor() ([]byte, []int) {
+	return file_mycel_admin_v1_semantic_proto_rawDescGZIP(), []int{12}
 }
 
-func (x *DeleteSemanticIndexRequest) GetSpaceId() string {
+func (x *DeleteSemanticRuleRequest) GetSpaceId() string {
 	if x != nil {
 		return x.SpaceId
 	}
 	return ""
 }
 
-func (x *DeleteSemanticIndexRequest) GetSemanticIndexId() string {
+func (x *DeleteSemanticRuleRequest) GetSemanticRuleId() string {
 	if x != nil {
-		return x.SemanticIndexId
+		return x.SemanticRuleId
 	}
 	return ""
 }
 
-func (x *DeleteSemanticIndexRequest) GetPurgeVectors() bool {
+func (x *DeleteSemanticRuleRequest) GetPurgeVectors() bool {
 	if x != nil {
 		return x.PurgeVectors
 	}
 	return false
 }
 
-func (x *DeleteSemanticIndexRequest) GetPurgeReferences() bool {
-	if x != nil {
-		return x.PurgeReferences
-	}
-	return false
+type DeleteSemanticRuleResponse struct {
+	state                  protoimpl.MessageState `protogen:"open.v1"`
+	SemanticRuleId         string                 `protobuf:"bytes,1,opt,name=semantic_rule_id,json=semanticRuleId,proto3" json:"semantic_rule_id,omitempty"`
+	VectorsPurged          bool                   `protobuf:"varint,2,opt,name=vectors_purged,json=vectorsPurged,proto3" json:"vectors_purged,omitempty"`
+	WorkItemsDeleted       int32                  `protobuf:"varint,3,opt,name=work_items_deleted,json=workItemsDeleted,proto3" json:"work_items_deleted,omitempty"`
+	PolicyDecisionsDeleted int32                  `protobuf:"varint,4,opt,name=policy_decisions_deleted,json=policyDecisionsDeleted,proto3" json:"policy_decisions_deleted,omitempty"`
+	unknownFields          protoimpl.UnknownFields
+	sizeCache              protoimpl.SizeCache
 }
 
-type DeleteSemanticIndexResponse struct {
-	state                    protoimpl.MessageState `protogen:"open.v1"`
-	SemanticIndexId          string                 `protobuf:"bytes,1,opt,name=semantic_index_id,json=semanticIndexId,proto3" json:"semantic_index_id,omitempty"`
-	CredentialGrantsDeleted  int32                  `protobuf:"varint,2,opt,name=credential_grants_deleted,json=credentialGrantsDeleted,proto3" json:"credential_grants_deleted,omitempty"`
-	InferencePoliciesDeleted int32                  `protobuf:"varint,3,opt,name=inference_policies_deleted,json=inferencePoliciesDeleted,proto3" json:"inference_policies_deleted,omitempty"`
-	VectorsPurged            bool                   `protobuf:"varint,4,opt,name=vectors_purged,json=vectorsPurged,proto3" json:"vectors_purged,omitempty"`
-	PolicyDecisionsDeleted   int32                  `protobuf:"varint,5,opt,name=policy_decisions_deleted,json=policyDecisionsDeleted,proto3" json:"policy_decisions_deleted,omitempty"`
-	unknownFields            protoimpl.UnknownFields
-	sizeCache                protoimpl.SizeCache
-}
-
-func (x *DeleteSemanticIndexResponse) Reset() {
-	*x = DeleteSemanticIndexResponse{}
-	mi := &file_mycel_admin_v1_semantic_proto_msgTypes[5]
+func (x *DeleteSemanticRuleResponse) Reset() {
+	*x = DeleteSemanticRuleResponse{}
+	mi := &file_mycel_admin_v1_semantic_proto_msgTypes[13]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *DeleteSemanticIndexResponse) String() string {
+func (x *DeleteSemanticRuleResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*DeleteSemanticIndexResponse) ProtoMessage() {}
+func (*DeleteSemanticRuleResponse) ProtoMessage() {}
 
-func (x *DeleteSemanticIndexResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_admin_v1_semantic_proto_msgTypes[5]
+func (x *DeleteSemanticRuleResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_admin_v1_semantic_proto_msgTypes[13]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -424,71 +774,78 @@ func (x *DeleteSemanticIndexResponse) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use DeleteSemanticIndexResponse.ProtoReflect.Descriptor instead.
-func (*DeleteSemanticIndexResponse) Descriptor() ([]byte, []int) {
-	return file_mycel_admin_v1_semantic_proto_rawDescGZIP(), []int{5}
+// Deprecated: Use DeleteSemanticRuleResponse.ProtoReflect.Descriptor instead.
+func (*DeleteSemanticRuleResponse) Descriptor() ([]byte, []int) {
+	return file_mycel_admin_v1_semantic_proto_rawDescGZIP(), []int{13}
 }
 
-func (x *DeleteSemanticIndexResponse) GetSemanticIndexId() string {
+func (x *DeleteSemanticRuleResponse) GetSemanticRuleId() string {
 	if x != nil {
-		return x.SemanticIndexId
+		return x.SemanticRuleId
 	}
 	return ""
 }
 
-func (x *DeleteSemanticIndexResponse) GetCredentialGrantsDeleted() int32 {
-	if x != nil {
-		return x.CredentialGrantsDeleted
-	}
-	return 0
-}
-
-func (x *DeleteSemanticIndexResponse) GetInferencePoliciesDeleted() int32 {
-	if x != nil {
-		return x.InferencePoliciesDeleted
-	}
-	return 0
-}
-
-func (x *DeleteSemanticIndexResponse) GetVectorsPurged() bool {
+func (x *DeleteSemanticRuleResponse) GetVectorsPurged() bool {
 	if x != nil {
 		return x.VectorsPurged
 	}
 	return false
 }
 
-func (x *DeleteSemanticIndexResponse) GetPolicyDecisionsDeleted() int32 {
+func (x *DeleteSemanticRuleResponse) GetWorkItemsDeleted() int32 {
+	if x != nil {
+		return x.WorkItemsDeleted
+	}
+	return 0
+}
+
+func (x *DeleteSemanticRuleResponse) GetPolicyDecisionsDeleted() int32 {
 	if x != nil {
 		return x.PolicyDecisionsDeleted
 	}
 	return 0
 }
 
-type SemanticSourcePolicy struct {
-	state             protoimpl.MessageState `protogen:"open.v1"`
-	Extraction        string                 `protobuf:"bytes,1,opt,name=extraction,proto3" json:"extraction,omitempty"`
-	IncludeProps      []string               `protobuf:"bytes,3,rep,name=include_props,json=includeProps,proto3" json:"include_props,omitempty"`
-	MaxDepth          *int32                 `protobuf:"varint,4,opt,name=max_depth,json=maxDepth,proto3,oneof" json:"max_depth,omitempty"`
-	MinimumTextLength int32                  `protobuf:"varint,5,opt,name=minimum_text_length,json=minimumTextLength,proto3" json:"minimum_text_length,omitempty"`
-	unknownFields     protoimpl.UnknownFields
-	sizeCache         protoimpl.SizeCache
+type SemanticGenerationRule struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Optional on create. If set on update, must match the target rule id.
+	SemanticRuleId       string                        `protobuf:"bytes,1,opt,name=semantic_rule_id,json=semanticRuleId,proto3" json:"semantic_rule_id,omitempty"`
+	SpaceId              string                        `protobuf:"bytes,2,opt,name=space_id,json=spaceId,proto3" json:"space_id,omitempty"`
+	DomainId             string                        `protobuf:"bytes,3,opt,name=domain_id,json=domainId,proto3" json:"domain_id,omitempty"`
+	Key                  string                        `protobuf:"bytes,4,opt,name=key,proto3" json:"key,omitempty"`
+	DisplayName          string                        `protobuf:"bytes,5,opt,name=display_name,json=displayName,proto3" json:"display_name,omitempty"`
+	Description          string                        `protobuf:"bytes,6,opt,name=description,proto3" json:"description,omitempty"`
+	Enabled              bool                          `protobuf:"varint,7,opt,name=enabled,proto3" json:"enabled,omitempty"`
+	Trigger              *SemanticTriggerPolicy        `protobuf:"bytes,8,opt,name=trigger,proto3" json:"trigger,omitempty"`
+	Selector             *SemanticTargetSelector       `protobuf:"bytes,9,opt,name=selector,proto3" json:"selector,omitempty"`
+	Source               *SemanticSourceAssemblyPolicy `protobuf:"bytes,10,opt,name=source,proto3" json:"source,omitempty"`
+	Embeddings           []*SemanticEmbeddingBinding   `protobuf:"bytes,11,rep,name=embeddings,proto3" json:"embeddings,omitempty"`
+	Maintenance          *SemanticMaintenancePolicy    `protobuf:"bytes,12,opt,name=maintenance,proto3" json:"maintenance,omitempty"`
+	Storage              *SemanticStoragePolicy        `protobuf:"bytes,13,opt,name=storage,proto3" json:"storage,omitempty"`
+	OwnerPrincipalId     string                        `protobuf:"bytes,14,opt,name=owner_principal_id,json=ownerPrincipalId,proto3" json:"owner_principal_id,omitempty"`
+	CreatedByPrincipalId string                        `protobuf:"bytes,15,opt,name=created_by_principal_id,json=createdByPrincipalId,proto3" json:"created_by_principal_id,omitempty"`
+	CreatedAt            string                        `protobuf:"bytes,16,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
+	UpdatedAt            string                        `protobuf:"bytes,17,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
+	unknownFields        protoimpl.UnknownFields
+	sizeCache            protoimpl.SizeCache
 }
 
-func (x *SemanticSourcePolicy) Reset() {
-	*x = SemanticSourcePolicy{}
-	mi := &file_mycel_admin_v1_semantic_proto_msgTypes[6]
+func (x *SemanticGenerationRule) Reset() {
+	*x = SemanticGenerationRule{}
+	mi := &file_mycel_admin_v1_semantic_proto_msgTypes[14]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *SemanticSourcePolicy) String() string {
+func (x *SemanticGenerationRule) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*SemanticSourcePolicy) ProtoMessage() {}
+func (*SemanticGenerationRule) ProtoMessage() {}
 
-func (x *SemanticSourcePolicy) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_admin_v1_semantic_proto_msgTypes[6]
+func (x *SemanticGenerationRule) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_admin_v1_semantic_proto_msgTypes[14]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -499,93 +856,767 @@ func (x *SemanticSourcePolicy) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use SemanticSourcePolicy.ProtoReflect.Descriptor instead.
-func (*SemanticSourcePolicy) Descriptor() ([]byte, []int) {
-	return file_mycel_admin_v1_semantic_proto_rawDescGZIP(), []int{6}
+// Deprecated: Use SemanticGenerationRule.ProtoReflect.Descriptor instead.
+func (*SemanticGenerationRule) Descriptor() ([]byte, []int) {
+	return file_mycel_admin_v1_semantic_proto_rawDescGZIP(), []int{14}
 }
 
-func (x *SemanticSourcePolicy) GetExtraction() string {
+func (x *SemanticGenerationRule) GetSemanticRuleId() string {
 	if x != nil {
-		return x.Extraction
+		return x.SemanticRuleId
 	}
 	return ""
 }
 
-func (x *SemanticSourcePolicy) GetIncludeProps() []string {
+func (x *SemanticGenerationRule) GetSpaceId() string {
 	if x != nil {
-		return x.IncludeProps
+		return x.SpaceId
+	}
+	return ""
+}
+
+func (x *SemanticGenerationRule) GetDomainId() string {
+	if x != nil {
+		return x.DomainId
+	}
+	return ""
+}
+
+func (x *SemanticGenerationRule) GetKey() string {
+	if x != nil {
+		return x.Key
+	}
+	return ""
+}
+
+func (x *SemanticGenerationRule) GetDisplayName() string {
+	if x != nil {
+		return x.DisplayName
+	}
+	return ""
+}
+
+func (x *SemanticGenerationRule) GetDescription() string {
+	if x != nil {
+		return x.Description
+	}
+	return ""
+}
+
+func (x *SemanticGenerationRule) GetEnabled() bool {
+	if x != nil {
+		return x.Enabled
+	}
+	return false
+}
+
+func (x *SemanticGenerationRule) GetTrigger() *SemanticTriggerPolicy {
+	if x != nil {
+		return x.Trigger
 	}
 	return nil
 }
 
-func (x *SemanticSourcePolicy) GetMaxDepth() int32 {
+func (x *SemanticGenerationRule) GetSelector() *SemanticTargetSelector {
+	if x != nil {
+		return x.Selector
+	}
+	return nil
+}
+
+func (x *SemanticGenerationRule) GetSource() *SemanticSourceAssemblyPolicy {
+	if x != nil {
+		return x.Source
+	}
+	return nil
+}
+
+func (x *SemanticGenerationRule) GetEmbeddings() []*SemanticEmbeddingBinding {
+	if x != nil {
+		return x.Embeddings
+	}
+	return nil
+}
+
+func (x *SemanticGenerationRule) GetMaintenance() *SemanticMaintenancePolicy {
+	if x != nil {
+		return x.Maintenance
+	}
+	return nil
+}
+
+func (x *SemanticGenerationRule) GetStorage() *SemanticStoragePolicy {
+	if x != nil {
+		return x.Storage
+	}
+	return nil
+}
+
+func (x *SemanticGenerationRule) GetOwnerPrincipalId() string {
+	if x != nil {
+		return x.OwnerPrincipalId
+	}
+	return ""
+}
+
+func (x *SemanticGenerationRule) GetCreatedByPrincipalId() string {
+	if x != nil {
+		return x.CreatedByPrincipalId
+	}
+	return ""
+}
+
+func (x *SemanticGenerationRule) GetCreatedAt() string {
+	if x != nil {
+		return x.CreatedAt
+	}
+	return ""
+}
+
+func (x *SemanticGenerationRule) GetUpdatedAt() string {
+	if x != nil {
+		return x.UpdatedAt
+	}
+	return ""
+}
+
+type SemanticTriggerPolicy struct {
+	state  protoimpl.MessageState `protogen:"open.v1"`
+	Events []string               `protobuf:"bytes,1,rep,name=events,proto3" json:"events,omitempty"`
+	Labels []string               `protobuf:"bytes,2,rep,name=labels,proto3" json:"labels,omitempty"`
+	// Go duration string such as "120s". Empty uses daemon default.
+	Debounce      string `protobuf:"bytes,3,opt,name=debounce,proto3" json:"debounce,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SemanticTriggerPolicy) Reset() {
+	*x = SemanticTriggerPolicy{}
+	mi := &file_mycel_admin_v1_semantic_proto_msgTypes[15]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SemanticTriggerPolicy) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SemanticTriggerPolicy) ProtoMessage() {}
+
+func (x *SemanticTriggerPolicy) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_admin_v1_semantic_proto_msgTypes[15]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SemanticTriggerPolicy.ProtoReflect.Descriptor instead.
+func (*SemanticTriggerPolicy) Descriptor() ([]byte, []int) {
+	return file_mycel_admin_v1_semantic_proto_rawDescGZIP(), []int{15}
+}
+
+func (x *SemanticTriggerPolicy) GetEvents() []string {
+	if x != nil {
+		return x.Events
+	}
+	return nil
+}
+
+func (x *SemanticTriggerPolicy) GetLabels() []string {
+	if x != nil {
+		return x.Labels
+	}
+	return nil
+}
+
+func (x *SemanticTriggerPolicy) GetDebounce() string {
+	if x != nil {
+		return x.Debounce
+	}
+	return ""
+}
+
+type SemanticTargetSelector struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// node_type | gql | explicit_nodes
+	Mode          string   `protobuf:"bytes,1,opt,name=mode,proto3" json:"mode,omitempty"`
+	Labels        []string `protobuf:"bytes,2,rep,name=labels,proto3" json:"labels,omitempty"`
+	Gql           string   `protobuf:"bytes,3,opt,name=gql,proto3" json:"gql,omitempty"`
+	TargetAlias   string   `protobuf:"bytes,4,opt,name=target_alias,json=targetAlias,proto3" json:"target_alias,omitempty"`
+	MaxResults    int32    `protobuf:"varint,5,opt,name=max_results,json=maxResults,proto3" json:"max_results,omitempty"`
+	NodeIds       []string `protobuf:"bytes,6,rep,name=node_ids,json=nodeIds,proto3" json:"node_ids,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SemanticTargetSelector) Reset() {
+	*x = SemanticTargetSelector{}
+	mi := &file_mycel_admin_v1_semantic_proto_msgTypes[16]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SemanticTargetSelector) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SemanticTargetSelector) ProtoMessage() {}
+
+func (x *SemanticTargetSelector) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_admin_v1_semantic_proto_msgTypes[16]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SemanticTargetSelector.ProtoReflect.Descriptor instead.
+func (*SemanticTargetSelector) Descriptor() ([]byte, []int) {
+	return file_mycel_admin_v1_semantic_proto_rawDescGZIP(), []int{16}
+}
+
+func (x *SemanticTargetSelector) GetMode() string {
+	if x != nil {
+		return x.Mode
+	}
+	return ""
+}
+
+func (x *SemanticTargetSelector) GetLabels() []string {
+	if x != nil {
+		return x.Labels
+	}
+	return nil
+}
+
+func (x *SemanticTargetSelector) GetGql() string {
+	if x != nil {
+		return x.Gql
+	}
+	return ""
+}
+
+func (x *SemanticTargetSelector) GetTargetAlias() string {
+	if x != nil {
+		return x.TargetAlias
+	}
+	return ""
+}
+
+func (x *SemanticTargetSelector) GetMaxResults() int32 {
+	if x != nil {
+		return x.MaxResults
+	}
+	return 0
+}
+
+func (x *SemanticTargetSelector) GetNodeIds() []string {
+	if x != nil {
+		return x.NodeIds
+	}
+	return nil
+}
+
+type SemanticSourceAssemblyPolicy struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// self | subtree | context_query
+	Mode              string   `protobuf:"bytes,1,opt,name=mode,proto3" json:"mode,omitempty"`
+	IncludeProperties []string `protobuf:"bytes,2,rep,name=include_properties,json=includeProperties,proto3" json:"include_properties,omitempty"`
+	ExcludeProperties []string `protobuf:"bytes,3,rep,name=exclude_properties,json=excludeProperties,proto3" json:"exclude_properties,omitempty"`
+	MaxDepth          *int32   `protobuf:"varint,4,opt,name=max_depth,json=maxDepth,proto3,oneof" json:"max_depth,omitempty"`
+	MinimumTextLength int32    `protobuf:"varint,5,opt,name=minimum_text_length,json=minimumTextLength,proto3" json:"minimum_text_length,omitempty"`
+	ContextGql        string   `protobuf:"bytes,6,opt,name=context_gql,json=contextGql,proto3" json:"context_gql,omitempty"`
+	unknownFields     protoimpl.UnknownFields
+	sizeCache         protoimpl.SizeCache
+}
+
+func (x *SemanticSourceAssemblyPolicy) Reset() {
+	*x = SemanticSourceAssemblyPolicy{}
+	mi := &file_mycel_admin_v1_semantic_proto_msgTypes[17]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SemanticSourceAssemblyPolicy) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SemanticSourceAssemblyPolicy) ProtoMessage() {}
+
+func (x *SemanticSourceAssemblyPolicy) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_admin_v1_semantic_proto_msgTypes[17]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SemanticSourceAssemblyPolicy.ProtoReflect.Descriptor instead.
+func (*SemanticSourceAssemblyPolicy) Descriptor() ([]byte, []int) {
+	return file_mycel_admin_v1_semantic_proto_rawDescGZIP(), []int{17}
+}
+
+func (x *SemanticSourceAssemblyPolicy) GetMode() string {
+	if x != nil {
+		return x.Mode
+	}
+	return ""
+}
+
+func (x *SemanticSourceAssemblyPolicy) GetIncludeProperties() []string {
+	if x != nil {
+		return x.IncludeProperties
+	}
+	return nil
+}
+
+func (x *SemanticSourceAssemblyPolicy) GetExcludeProperties() []string {
+	if x != nil {
+		return x.ExcludeProperties
+	}
+	return nil
+}
+
+func (x *SemanticSourceAssemblyPolicy) GetMaxDepth() int32 {
 	if x != nil && x.MaxDepth != nil {
 		return *x.MaxDepth
 	}
 	return 0
 }
 
-func (x *SemanticSourcePolicy) GetMinimumTextLength() int32 {
+func (x *SemanticSourceAssemblyPolicy) GetMinimumTextLength() int32 {
 	if x != nil {
 		return x.MinimumTextLength
 	}
 	return 0
 }
 
+func (x *SemanticSourceAssemblyPolicy) GetContextGql() string {
+	if x != nil {
+		return x.ContextGql
+	}
+	return ""
+}
+
+type SemanticEmbeddingBinding struct {
+	state                 protoimpl.MessageState `protogen:"open.v1"`
+	Key                   string                 `protobuf:"bytes,1,opt,name=key,proto3" json:"key,omitempty"`
+	Purpose               string                 `protobuf:"bytes,2,opt,name=purpose,proto3" json:"purpose,omitempty"`
+	IntelligenceProfile   string                 `protobuf:"bytes,3,opt,name=intelligence_profile,json=intelligenceProfile,proto3" json:"intelligence_profile,omitempty"`
+	IntelligenceProfileId string                 `protobuf:"bytes,4,opt,name=intelligence_profile_id,json=intelligenceProfileId,proto3" json:"intelligence_profile_id,omitempty"`
+	VectorStore           string                 `protobuf:"bytes,5,opt,name=vector_store,json=vectorStore,proto3" json:"vector_store,omitempty"`
+	VectorStoreId         string                 `protobuf:"bytes,6,opt,name=vector_store_id,json=vectorStoreId,proto3" json:"vector_store_id,omitempty"`
+	Enabled               bool                   `protobuf:"varint,7,opt,name=enabled,proto3" json:"enabled,omitempty"`
+	Metadata              *structpb.Struct       `protobuf:"bytes,8,opt,name=metadata,proto3" json:"metadata,omitempty"`
+	unknownFields         protoimpl.UnknownFields
+	sizeCache             protoimpl.SizeCache
+}
+
+func (x *SemanticEmbeddingBinding) Reset() {
+	*x = SemanticEmbeddingBinding{}
+	mi := &file_mycel_admin_v1_semantic_proto_msgTypes[18]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SemanticEmbeddingBinding) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SemanticEmbeddingBinding) ProtoMessage() {}
+
+func (x *SemanticEmbeddingBinding) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_admin_v1_semantic_proto_msgTypes[18]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SemanticEmbeddingBinding.ProtoReflect.Descriptor instead.
+func (*SemanticEmbeddingBinding) Descriptor() ([]byte, []int) {
+	return file_mycel_admin_v1_semantic_proto_rawDescGZIP(), []int{18}
+}
+
+func (x *SemanticEmbeddingBinding) GetKey() string {
+	if x != nil {
+		return x.Key
+	}
+	return ""
+}
+
+func (x *SemanticEmbeddingBinding) GetPurpose() string {
+	if x != nil {
+		return x.Purpose
+	}
+	return ""
+}
+
+func (x *SemanticEmbeddingBinding) GetIntelligenceProfile() string {
+	if x != nil {
+		return x.IntelligenceProfile
+	}
+	return ""
+}
+
+func (x *SemanticEmbeddingBinding) GetIntelligenceProfileId() string {
+	if x != nil {
+		return x.IntelligenceProfileId
+	}
+	return ""
+}
+
+func (x *SemanticEmbeddingBinding) GetVectorStore() string {
+	if x != nil {
+		return x.VectorStore
+	}
+	return ""
+}
+
+func (x *SemanticEmbeddingBinding) GetVectorStoreId() string {
+	if x != nil {
+		return x.VectorStoreId
+	}
+	return ""
+}
+
+func (x *SemanticEmbeddingBinding) GetEnabled() bool {
+	if x != nil {
+		return x.Enabled
+	}
+	return false
+}
+
+func (x *SemanticEmbeddingBinding) GetMetadata() *structpb.Struct {
+	if x != nil {
+		return x.Metadata
+	}
+	return nil
+}
+
+type SemanticMaintenancePolicy struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Go duration string such as "120s". Empty uses daemon default.
+	DirtyCooldown     string `protobuf:"bytes,1,opt,name=dirty_cooldown,json=dirtyCooldown,proto3" json:"dirty_cooldown,omitempty"`
+	MaxBatchSize      int32  `protobuf:"varint,2,opt,name=max_batch_size,json=maxBatchSize,proto3" json:"max_batch_size,omitempty"`
+	WorkerConcurrency int32  `protobuf:"varint,3,opt,name=worker_concurrency,json=workerConcurrency,proto3" json:"worker_concurrency,omitempty"`
+	unknownFields     protoimpl.UnknownFields
+	sizeCache         protoimpl.SizeCache
+}
+
+func (x *SemanticMaintenancePolicy) Reset() {
+	*x = SemanticMaintenancePolicy{}
+	mi := &file_mycel_admin_v1_semantic_proto_msgTypes[19]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SemanticMaintenancePolicy) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SemanticMaintenancePolicy) ProtoMessage() {}
+
+func (x *SemanticMaintenancePolicy) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_admin_v1_semantic_proto_msgTypes[19]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SemanticMaintenancePolicy.ProtoReflect.Descriptor instead.
+func (*SemanticMaintenancePolicy) Descriptor() ([]byte, []int) {
+	return file_mycel_admin_v1_semantic_proto_rawDescGZIP(), []int{19}
+}
+
+func (x *SemanticMaintenancePolicy) GetDirtyCooldown() string {
+	if x != nil {
+		return x.DirtyCooldown
+	}
+	return ""
+}
+
+func (x *SemanticMaintenancePolicy) GetMaxBatchSize() int32 {
+	if x != nil {
+		return x.MaxBatchSize
+	}
+	return 0
+}
+
+func (x *SemanticMaintenancePolicy) GetWorkerConcurrency() int32 {
+	if x != nil {
+		return x.WorkerConcurrency
+	}
+	return 0
+}
+
+type SemanticStoragePolicy struct {
+	state      protoimpl.MessageState `protogen:"open.v1"`
+	Searchable bool                   `protobuf:"varint,1,opt,name=searchable,proto3" json:"searchable,omitempty"`
+	// exact for the first physical search-index implementation; future values may
+	// include ANN variants.
+	PhysicalIndex string `protobuf:"bytes,2,opt,name=physical_index,json=physicalIndex,proto3" json:"physical_index,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SemanticStoragePolicy) Reset() {
+	*x = SemanticStoragePolicy{}
+	mi := &file_mycel_admin_v1_semantic_proto_msgTypes[20]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SemanticStoragePolicy) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SemanticStoragePolicy) ProtoMessage() {}
+
+func (x *SemanticStoragePolicy) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_admin_v1_semantic_proto_msgTypes[20]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SemanticStoragePolicy.ProtoReflect.Descriptor instead.
+func (*SemanticStoragePolicy) Descriptor() ([]byte, []int) {
+	return file_mycel_admin_v1_semantic_proto_rawDescGZIP(), []int{20}
+}
+
+func (x *SemanticStoragePolicy) GetSearchable() bool {
+	if x != nil {
+		return x.Searchable
+	}
+	return false
+}
+
+func (x *SemanticStoragePolicy) GetPhysicalIndex() string {
+	if x != nil {
+		return x.PhysicalIndex
+	}
+	return ""
+}
+
+type SemanticRuleValidationDiagnostic struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// error | warning | info
+	Severity      string `protobuf:"bytes,1,opt,name=severity,proto3" json:"severity,omitempty"`
+	Path          string `protobuf:"bytes,2,opt,name=path,proto3" json:"path,omitempty"`
+	Message       string `protobuf:"bytes,3,opt,name=message,proto3" json:"message,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SemanticRuleValidationDiagnostic) Reset() {
+	*x = SemanticRuleValidationDiagnostic{}
+	mi := &file_mycel_admin_v1_semantic_proto_msgTypes[21]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SemanticRuleValidationDiagnostic) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SemanticRuleValidationDiagnostic) ProtoMessage() {}
+
+func (x *SemanticRuleValidationDiagnostic) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_admin_v1_semantic_proto_msgTypes[21]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SemanticRuleValidationDiagnostic.ProtoReflect.Descriptor instead.
+func (*SemanticRuleValidationDiagnostic) Descriptor() ([]byte, []int) {
+	return file_mycel_admin_v1_semantic_proto_rawDescGZIP(), []int{21}
+}
+
+func (x *SemanticRuleValidationDiagnostic) GetSeverity() string {
+	if x != nil {
+		return x.Severity
+	}
+	return ""
+}
+
+func (x *SemanticRuleValidationDiagnostic) GetPath() string {
+	if x != nil {
+		return x.Path
+	}
+	return ""
+}
+
+func (x *SemanticRuleValidationDiagnostic) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
 var File_mycel_admin_v1_semantic_proto protoreflect.FileDescriptor
 
 const file_mycel_admin_v1_semantic_proto_rawDesc = "" +
 	"\n" +
-	"\x1dmycel/admin/v1/semantic.proto\x12\x0emycel.admin.v1\x1a\x1emycel/client/v1/semantic.proto\"\xcf\x01\n" +
-	".AdminSemanticServiceListSemanticIndexesRequest\x12\x19\n" +
+	"\x1dmycel/admin/v1/semantic.proto\x12\x0emycel.admin.v1\x1a\x1cgoogle/protobuf/struct.proto\x1a\x1emycel/client/v1/semantic.proto\"\xb9\x01\n" +
+	"\x18ListSemanticRulesRequest\x12\x19\n" +
 	"\bspace_id\x18\x01 \x01(\tR\aspaceId\x12\x1b\n" +
 	"\tdomain_id\x18\x02 \x01(\tR\bdomainId\x12\x1b\n" +
 	"\tpage_size\x18\x03 \x01(\x05R\bpageSize\x12\x1d\n" +
 	"\n" +
 	"page_token\x18\x04 \x01(\tR\tpageToken\x12)\n" +
-	"\x10include_disabled\x18\x05 \x01(\bR\x0fincludeDisabled\"\x93\x01\n" +
-	"/AdminSemanticServiceListSemanticIndexesResponse\x128\n" +
-	"\aindexes\x18\x01 \x03(\v2\x1e.mycel.client.v1.SemanticIndexR\aindexes\x12&\n" +
-	"\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken\"\xa3\x03\n" +
-	"\x1aUpsertSemanticIndexRequest\x12*\n" +
-	"\x11semantic_index_id\x18\x01 \x01(\tR\x0fsemanticIndexId\x12\x19\n" +
+	"\x10include_disabled\x18\x05 \x01(\bR\x0fincludeDisabled\"\x89\x01\n" +
+	"\x19ListSemanticRulesResponse\x12D\n" +
+	"\x05rules\x18\x01 \x03(\v2..mycel.client.v1.SemanticGenerationRuleSummaryR\x05rules\x12&\n" +
+	"\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken\"]\n" +
+	"\x16GetSemanticRuleRequest\x12\x19\n" +
+	"\bspace_id\x18\x01 \x01(\tR\aspaceId\x12(\n" +
+	"\x10semantic_rule_id\x18\x02 \x01(\tR\x0esemanticRuleId\"\x9f\x01\n" +
+	"\x17GetSemanticRuleResponse\x12:\n" +
+	"\x04rule\x18\x01 \x01(\v2&.mycel.admin.v1.SemanticGenerationRuleR\x04rule\x12H\n" +
+	"\asummary\x18\x02 \x01(\v2..mycel.client.v1.SemanticGenerationRuleSummaryR\asummary\"Y\n" +
+	"\x1bValidateSemanticRuleRequest\x12:\n" +
+	"\x04rule\x18\x01 \x01(\v2&.mycel.admin.v1.SemanticGenerationRuleR\x04rule\"\xd9\x01\n" +
+	"\x1cValidateSemanticRuleResponse\x12\x14\n" +
+	"\x05valid\x18\x01 \x01(\bR\x05valid\x12R\n" +
+	"\vdiagnostics\x18\x02 \x03(\v20.mycel.admin.v1.SemanticRuleValidationDiagnosticR\vdiagnostics\x12O\n" +
+	"\x0fnormalized_rule\x18\x03 \x01(\v2&.mycel.admin.v1.SemanticGenerationRuleR\x0enormalizedRule\"W\n" +
+	"\x19CreateSemanticRuleRequest\x12:\n" +
+	"\x04rule\x18\x01 \x01(\v2&.mycel.admin.v1.SemanticGenerationRuleR\x04rule\"\xa2\x01\n" +
+	"\x1aCreateSemanticRuleResponse\x12:\n" +
+	"\x04rule\x18\x01 \x01(\v2&.mycel.admin.v1.SemanticGenerationRuleR\x04rule\x12H\n" +
+	"\asummary\x18\x02 \x01(\v2..mycel.client.v1.SemanticGenerationRuleSummaryR\asummary\"\x9c\x01\n" +
+	"\x19UpdateSemanticRuleRequest\x12\x19\n" +
+	"\bspace_id\x18\x01 \x01(\tR\aspaceId\x12(\n" +
+	"\x10semantic_rule_id\x18\x02 \x01(\tR\x0esemanticRuleId\x12:\n" +
+	"\x04rule\x18\x03 \x01(\v2&.mycel.admin.v1.SemanticGenerationRuleR\x04rule\"\xa2\x01\n" +
+	"\x1aUpdateSemanticRuleResponse\x12:\n" +
+	"\x04rule\x18\x01 \x01(\v2&.mycel.admin.v1.SemanticGenerationRuleR\x04rule\x12H\n" +
+	"\asummary\x18\x02 \x01(\v2..mycel.client.v1.SemanticGenerationRuleSummaryR\asummary\"~\n" +
+	"\x1dSetSemanticRuleEnabledRequest\x12\x19\n" +
+	"\bspace_id\x18\x01 \x01(\tR\aspaceId\x12(\n" +
+	"\x10semantic_rule_id\x18\x02 \x01(\tR\x0esemanticRuleId\x12\x18\n" +
+	"\aenabled\x18\x03 \x01(\bR\aenabled\"\xa6\x01\n" +
+	"\x1eSetSemanticRuleEnabledResponse\x12:\n" +
+	"\x04rule\x18\x01 \x01(\v2&.mycel.admin.v1.SemanticGenerationRuleR\x04rule\x12H\n" +
+	"\asummary\x18\x02 \x01(\v2..mycel.client.v1.SemanticGenerationRuleSummaryR\asummary\"\x85\x01\n" +
+	"\x19DeleteSemanticRuleRequest\x12\x19\n" +
+	"\bspace_id\x18\x01 \x01(\tR\aspaceId\x12(\n" +
+	"\x10semantic_rule_id\x18\x02 \x01(\tR\x0esemanticRuleId\x12#\n" +
+	"\rpurge_vectors\x18\x03 \x01(\bR\fpurgeVectors\"\xd5\x01\n" +
+	"\x1aDeleteSemanticRuleResponse\x12(\n" +
+	"\x10semantic_rule_id\x18\x01 \x01(\tR\x0esemanticRuleId\x12%\n" +
+	"\x0evectors_purged\x18\x02 \x01(\bR\rvectorsPurged\x12,\n" +
+	"\x12work_items_deleted\x18\x03 \x01(\x05R\x10workItemsDeleted\x128\n" +
+	"\x18policy_decisions_deleted\x18\x04 \x01(\x05R\x16policyDecisionsDeleted\"\xb1\x06\n" +
+	"\x16SemanticGenerationRule\x12(\n" +
+	"\x10semantic_rule_id\x18\x01 \x01(\tR\x0esemanticRuleId\x12\x19\n" +
 	"\bspace_id\x18\x02 \x01(\tR\aspaceId\x12\x1b\n" +
 	"\tdomain_id\x18\x03 \x01(\tR\bdomainId\x12\x10\n" +
 	"\x03key\x18\x04 \x01(\tR\x03key\x12!\n" +
-	"\fdisplay_name\x18\x05 \x01(\tR\vdisplayName\x12\x18\n" +
-	"\apurpose\x18\x06 \x01(\tR\apurpose\x12I\n" +
-	"\rsource_policy\x18\a \x01(\v2$.mycel.admin.v1.SemanticSourcePolicyR\fsourcePolicy\x12*\n" +
-	"\x11model_endpoint_id\x18\b \x01(\tR\x0fmodelEndpointId\x12\x19\n" +
-	"\bmodel_id\x18\t \x01(\tR\amodelId\x12&\n" +
-	"\x0fvector_store_id\x18\n" +
-	" \x01(\tR\rvectorStoreId\x12\x18\n" +
-	"\aenabled\x18\v \x01(\bR\aenabled\"S\n" +
-	"\x1bUpsertSemanticIndexResponse\x124\n" +
-	"\x05index\x18\x01 \x01(\v2\x1e.mycel.client.v1.SemanticIndexR\x05index\"\xb3\x01\n" +
-	"\x1aDeleteSemanticIndexRequest\x12\x19\n" +
-	"\bspace_id\x18\x01 \x01(\tR\aspaceId\x12*\n" +
-	"\x11semantic_index_id\x18\x02 \x01(\tR\x0fsemanticIndexId\x12#\n" +
-	"\rpurge_vectors\x18\x03 \x01(\bR\fpurgeVectors\x12)\n" +
-	"\x10purge_references\x18\x04 \x01(\bR\x0fpurgeReferences\"\xa4\x02\n" +
-	"\x1bDeleteSemanticIndexResponse\x12*\n" +
-	"\x11semantic_index_id\x18\x01 \x01(\tR\x0fsemanticIndexId\x12:\n" +
-	"\x19credential_grants_deleted\x18\x02 \x01(\x05R\x17credentialGrantsDeleted\x12<\n" +
-	"\x1ainference_policies_deleted\x18\x03 \x01(\x05R\x18inferencePoliciesDeleted\x12%\n" +
-	"\x0evectors_purged\x18\x04 \x01(\bR\rvectorsPurged\x128\n" +
-	"\x18policy_decisions_deleted\x18\x05 \x01(\x05R\x16policyDecisionsDeleted\"\xbb\x01\n" +
-	"\x14SemanticSourcePolicy\x12\x1e\n" +
+	"\fdisplay_name\x18\x05 \x01(\tR\vdisplayName\x12 \n" +
+	"\vdescription\x18\x06 \x01(\tR\vdescription\x12\x18\n" +
+	"\aenabled\x18\a \x01(\bR\aenabled\x12?\n" +
+	"\atrigger\x18\b \x01(\v2%.mycel.admin.v1.SemanticTriggerPolicyR\atrigger\x12B\n" +
+	"\bselector\x18\t \x01(\v2&.mycel.admin.v1.SemanticTargetSelectorR\bselector\x12D\n" +
+	"\x06source\x18\n" +
+	" \x01(\v2,.mycel.admin.v1.SemanticSourceAssemblyPolicyR\x06source\x12H\n" +
 	"\n" +
-	"extraction\x18\x01 \x01(\tR\n" +
-	"extraction\x12#\n" +
-	"\rinclude_props\x18\x03 \x03(\tR\fincludeProps\x12 \n" +
+	"embeddings\x18\v \x03(\v2(.mycel.admin.v1.SemanticEmbeddingBindingR\n" +
+	"embeddings\x12K\n" +
+	"\vmaintenance\x18\f \x01(\v2).mycel.admin.v1.SemanticMaintenancePolicyR\vmaintenance\x12?\n" +
+	"\astorage\x18\r \x01(\v2%.mycel.admin.v1.SemanticStoragePolicyR\astorage\x12,\n" +
+	"\x12owner_principal_id\x18\x0e \x01(\tR\x10ownerPrincipalId\x125\n" +
+	"\x17created_by_principal_id\x18\x0f \x01(\tR\x14createdByPrincipalId\x12\x1d\n" +
+	"\n" +
+	"created_at\x18\x10 \x01(\tR\tcreatedAt\x12\x1d\n" +
+	"\n" +
+	"updated_at\x18\x11 \x01(\tR\tupdatedAt\"c\n" +
+	"\x15SemanticTriggerPolicy\x12\x16\n" +
+	"\x06events\x18\x01 \x03(\tR\x06events\x12\x16\n" +
+	"\x06labels\x18\x02 \x03(\tR\x06labels\x12\x1a\n" +
+	"\bdebounce\x18\x03 \x01(\tR\bdebounce\"\xb5\x01\n" +
+	"\x16SemanticTargetSelector\x12\x12\n" +
+	"\x04mode\x18\x01 \x01(\tR\x04mode\x12\x16\n" +
+	"\x06labels\x18\x02 \x03(\tR\x06labels\x12\x10\n" +
+	"\x03gql\x18\x03 \x01(\tR\x03gql\x12!\n" +
+	"\ftarget_alias\x18\x04 \x01(\tR\vtargetAlias\x12\x1f\n" +
+	"\vmax_results\x18\x05 \x01(\x05R\n" +
+	"maxResults\x12\x19\n" +
+	"\bnode_ids\x18\x06 \x03(\tR\anodeIds\"\x91\x02\n" +
+	"\x1cSemanticSourceAssemblyPolicy\x12\x12\n" +
+	"\x04mode\x18\x01 \x01(\tR\x04mode\x12-\n" +
+	"\x12include_properties\x18\x02 \x03(\tR\x11includeProperties\x12-\n" +
+	"\x12exclude_properties\x18\x03 \x03(\tR\x11excludeProperties\x12 \n" +
 	"\tmax_depth\x18\x04 \x01(\x05H\x00R\bmaxDepth\x88\x01\x01\x12.\n" +
-	"\x13minimum_text_length\x18\x05 \x01(\x05R\x11minimumTextLengthB\f\n" +
+	"\x13minimum_text_length\x18\x05 \x01(\x05R\x11minimumTextLength\x12\x1f\n" +
+	"\vcontext_gql\x18\x06 \x01(\tR\n" +
+	"contextGqlB\f\n" +
 	"\n" +
-	"_max_depth2\x8f\x03\n" +
-	"\x14AdminSemanticService\x12\x96\x01\n" +
-	"\x13ListSemanticIndexes\x12>.mycel.admin.v1.AdminSemanticServiceListSemanticIndexesRequest\x1a?.mycel.admin.v1.AdminSemanticServiceListSemanticIndexesResponse\x12n\n" +
-	"\x13UpsertSemanticIndex\x12*.mycel.admin.v1.UpsertSemanticIndexRequest\x1a+.mycel.admin.v1.UpsertSemanticIndexResponse\x12n\n" +
-	"\x13DeleteSemanticIndex\x12*.mycel.admin.v1.DeleteSemanticIndexRequest\x1a+.mycel.admin.v1.DeleteSemanticIndexResponseB\xbc\x01\n" +
+	"_max_depth\"\xcb\x02\n" +
+	"\x18SemanticEmbeddingBinding\x12\x10\n" +
+	"\x03key\x18\x01 \x01(\tR\x03key\x12\x18\n" +
+	"\apurpose\x18\x02 \x01(\tR\apurpose\x121\n" +
+	"\x14intelligence_profile\x18\x03 \x01(\tR\x13intelligenceProfile\x126\n" +
+	"\x17intelligence_profile_id\x18\x04 \x01(\tR\x15intelligenceProfileId\x12!\n" +
+	"\fvector_store\x18\x05 \x01(\tR\vvectorStore\x12&\n" +
+	"\x0fvector_store_id\x18\x06 \x01(\tR\rvectorStoreId\x12\x18\n" +
+	"\aenabled\x18\a \x01(\bR\aenabled\x123\n" +
+	"\bmetadata\x18\b \x01(\v2\x17.google.protobuf.StructR\bmetadata\"\x97\x01\n" +
+	"\x19SemanticMaintenancePolicy\x12%\n" +
+	"\x0edirty_cooldown\x18\x01 \x01(\tR\rdirtyCooldown\x12$\n" +
+	"\x0emax_batch_size\x18\x02 \x01(\x05R\fmaxBatchSize\x12-\n" +
+	"\x12worker_concurrency\x18\x03 \x01(\x05R\x11workerConcurrency\"^\n" +
+	"\x15SemanticStoragePolicy\x12\x1e\n" +
+	"\n" +
+	"searchable\x18\x01 \x01(\bR\n" +
+	"searchable\x12%\n" +
+	"\x0ephysical_index\x18\x02 \x01(\tR\rphysicalIndex\"l\n" +
+	" SemanticRuleValidationDiagnostic\x12\x1a\n" +
+	"\bseverity\x18\x01 \x01(\tR\bseverity\x12\x12\n" +
+	"\x04path\x18\x02 \x01(\tR\x04path\x12\x18\n" +
+	"\amessage\x18\x03 \x01(\tR\amessage2\x97\x06\n" +
+	"\x14AdminSemanticService\x12h\n" +
+	"\x11ListSemanticRules\x12(.mycel.admin.v1.ListSemanticRulesRequest\x1a).mycel.admin.v1.ListSemanticRulesResponse\x12b\n" +
+	"\x0fGetSemanticRule\x12&.mycel.admin.v1.GetSemanticRuleRequest\x1a'.mycel.admin.v1.GetSemanticRuleResponse\x12q\n" +
+	"\x14ValidateSemanticRule\x12+.mycel.admin.v1.ValidateSemanticRuleRequest\x1a,.mycel.admin.v1.ValidateSemanticRuleResponse\x12k\n" +
+	"\x12CreateSemanticRule\x12).mycel.admin.v1.CreateSemanticRuleRequest\x1a*.mycel.admin.v1.CreateSemanticRuleResponse\x12k\n" +
+	"\x12UpdateSemanticRule\x12).mycel.admin.v1.UpdateSemanticRuleRequest\x1a*.mycel.admin.v1.UpdateSemanticRuleResponse\x12w\n" +
+	"\x16SetSemanticRuleEnabled\x12-.mycel.admin.v1.SetSemanticRuleEnabledRequest\x1a..mycel.admin.v1.SetSemanticRuleEnabledResponse\x12k\n" +
+	"\x12DeleteSemanticRule\x12).mycel.admin.v1.DeleteSemanticRuleRequest\x1a*.mycel.admin.v1.DeleteSemanticRuleResponseB\xbc\x01\n" +
 	"\x12com.mycel.admin.v1B\rSemanticProtoP\x01Z=github.com/myceldb/mycel-go-sdk/gen/go/mycel/admin/v1;adminv1\xa2\x02\x03MAX\xaa\x02\x0eMycel.Admin.V1\xca\x02\x0eMycel\\Admin\\V1\xe2\x02\x1aMycel\\Admin\\V1\\GPBMetadata\xea\x02\x10Mycel::Admin::V1b\x06proto3"
 
 var (
@@ -600,32 +1631,74 @@ func file_mycel_admin_v1_semantic_proto_rawDescGZIP() []byte {
 	return file_mycel_admin_v1_semantic_proto_rawDescData
 }
 
-var file_mycel_admin_v1_semantic_proto_msgTypes = make([]protoimpl.MessageInfo, 7)
+var file_mycel_admin_v1_semantic_proto_msgTypes = make([]protoimpl.MessageInfo, 22)
 var file_mycel_admin_v1_semantic_proto_goTypes = []any{
-	(*AdminSemanticServiceListSemanticIndexesRequest)(nil),  // 0: mycel.admin.v1.AdminSemanticServiceListSemanticIndexesRequest
-	(*AdminSemanticServiceListSemanticIndexesResponse)(nil), // 1: mycel.admin.v1.AdminSemanticServiceListSemanticIndexesResponse
-	(*UpsertSemanticIndexRequest)(nil),                      // 2: mycel.admin.v1.UpsertSemanticIndexRequest
-	(*UpsertSemanticIndexResponse)(nil),                     // 3: mycel.admin.v1.UpsertSemanticIndexResponse
-	(*DeleteSemanticIndexRequest)(nil),                      // 4: mycel.admin.v1.DeleteSemanticIndexRequest
-	(*DeleteSemanticIndexResponse)(nil),                     // 5: mycel.admin.v1.DeleteSemanticIndexResponse
-	(*SemanticSourcePolicy)(nil),                            // 6: mycel.admin.v1.SemanticSourcePolicy
-	(*v1.SemanticIndex)(nil),                                // 7: mycel.client.v1.SemanticIndex
+	(*ListSemanticRulesRequest)(nil),         // 0: mycel.admin.v1.ListSemanticRulesRequest
+	(*ListSemanticRulesResponse)(nil),        // 1: mycel.admin.v1.ListSemanticRulesResponse
+	(*GetSemanticRuleRequest)(nil),           // 2: mycel.admin.v1.GetSemanticRuleRequest
+	(*GetSemanticRuleResponse)(nil),          // 3: mycel.admin.v1.GetSemanticRuleResponse
+	(*ValidateSemanticRuleRequest)(nil),      // 4: mycel.admin.v1.ValidateSemanticRuleRequest
+	(*ValidateSemanticRuleResponse)(nil),     // 5: mycel.admin.v1.ValidateSemanticRuleResponse
+	(*CreateSemanticRuleRequest)(nil),        // 6: mycel.admin.v1.CreateSemanticRuleRequest
+	(*CreateSemanticRuleResponse)(nil),       // 7: mycel.admin.v1.CreateSemanticRuleResponse
+	(*UpdateSemanticRuleRequest)(nil),        // 8: mycel.admin.v1.UpdateSemanticRuleRequest
+	(*UpdateSemanticRuleResponse)(nil),       // 9: mycel.admin.v1.UpdateSemanticRuleResponse
+	(*SetSemanticRuleEnabledRequest)(nil),    // 10: mycel.admin.v1.SetSemanticRuleEnabledRequest
+	(*SetSemanticRuleEnabledResponse)(nil),   // 11: mycel.admin.v1.SetSemanticRuleEnabledResponse
+	(*DeleteSemanticRuleRequest)(nil),        // 12: mycel.admin.v1.DeleteSemanticRuleRequest
+	(*DeleteSemanticRuleResponse)(nil),       // 13: mycel.admin.v1.DeleteSemanticRuleResponse
+	(*SemanticGenerationRule)(nil),           // 14: mycel.admin.v1.SemanticGenerationRule
+	(*SemanticTriggerPolicy)(nil),            // 15: mycel.admin.v1.SemanticTriggerPolicy
+	(*SemanticTargetSelector)(nil),           // 16: mycel.admin.v1.SemanticTargetSelector
+	(*SemanticSourceAssemblyPolicy)(nil),     // 17: mycel.admin.v1.SemanticSourceAssemblyPolicy
+	(*SemanticEmbeddingBinding)(nil),         // 18: mycel.admin.v1.SemanticEmbeddingBinding
+	(*SemanticMaintenancePolicy)(nil),        // 19: mycel.admin.v1.SemanticMaintenancePolicy
+	(*SemanticStoragePolicy)(nil),            // 20: mycel.admin.v1.SemanticStoragePolicy
+	(*SemanticRuleValidationDiagnostic)(nil), // 21: mycel.admin.v1.SemanticRuleValidationDiagnostic
+	(*v1.SemanticGenerationRuleSummary)(nil), // 22: mycel.client.v1.SemanticGenerationRuleSummary
+	(*structpb.Struct)(nil),                  // 23: google.protobuf.Struct
 }
 var file_mycel_admin_v1_semantic_proto_depIdxs = []int32{
-	7, // 0: mycel.admin.v1.AdminSemanticServiceListSemanticIndexesResponse.indexes:type_name -> mycel.client.v1.SemanticIndex
-	6, // 1: mycel.admin.v1.UpsertSemanticIndexRequest.source_policy:type_name -> mycel.admin.v1.SemanticSourcePolicy
-	7, // 2: mycel.admin.v1.UpsertSemanticIndexResponse.index:type_name -> mycel.client.v1.SemanticIndex
-	0, // 3: mycel.admin.v1.AdminSemanticService.ListSemanticIndexes:input_type -> mycel.admin.v1.AdminSemanticServiceListSemanticIndexesRequest
-	2, // 4: mycel.admin.v1.AdminSemanticService.UpsertSemanticIndex:input_type -> mycel.admin.v1.UpsertSemanticIndexRequest
-	4, // 5: mycel.admin.v1.AdminSemanticService.DeleteSemanticIndex:input_type -> mycel.admin.v1.DeleteSemanticIndexRequest
-	1, // 6: mycel.admin.v1.AdminSemanticService.ListSemanticIndexes:output_type -> mycel.admin.v1.AdminSemanticServiceListSemanticIndexesResponse
-	3, // 7: mycel.admin.v1.AdminSemanticService.UpsertSemanticIndex:output_type -> mycel.admin.v1.UpsertSemanticIndexResponse
-	5, // 8: mycel.admin.v1.AdminSemanticService.DeleteSemanticIndex:output_type -> mycel.admin.v1.DeleteSemanticIndexResponse
-	6, // [6:9] is the sub-list for method output_type
-	3, // [3:6] is the sub-list for method input_type
-	3, // [3:3] is the sub-list for extension type_name
-	3, // [3:3] is the sub-list for extension extendee
-	0, // [0:3] is the sub-list for field type_name
+	22, // 0: mycel.admin.v1.ListSemanticRulesResponse.rules:type_name -> mycel.client.v1.SemanticGenerationRuleSummary
+	14, // 1: mycel.admin.v1.GetSemanticRuleResponse.rule:type_name -> mycel.admin.v1.SemanticGenerationRule
+	22, // 2: mycel.admin.v1.GetSemanticRuleResponse.summary:type_name -> mycel.client.v1.SemanticGenerationRuleSummary
+	14, // 3: mycel.admin.v1.ValidateSemanticRuleRequest.rule:type_name -> mycel.admin.v1.SemanticGenerationRule
+	21, // 4: mycel.admin.v1.ValidateSemanticRuleResponse.diagnostics:type_name -> mycel.admin.v1.SemanticRuleValidationDiagnostic
+	14, // 5: mycel.admin.v1.ValidateSemanticRuleResponse.normalized_rule:type_name -> mycel.admin.v1.SemanticGenerationRule
+	14, // 6: mycel.admin.v1.CreateSemanticRuleRequest.rule:type_name -> mycel.admin.v1.SemanticGenerationRule
+	14, // 7: mycel.admin.v1.CreateSemanticRuleResponse.rule:type_name -> mycel.admin.v1.SemanticGenerationRule
+	22, // 8: mycel.admin.v1.CreateSemanticRuleResponse.summary:type_name -> mycel.client.v1.SemanticGenerationRuleSummary
+	14, // 9: mycel.admin.v1.UpdateSemanticRuleRequest.rule:type_name -> mycel.admin.v1.SemanticGenerationRule
+	14, // 10: mycel.admin.v1.UpdateSemanticRuleResponse.rule:type_name -> mycel.admin.v1.SemanticGenerationRule
+	22, // 11: mycel.admin.v1.UpdateSemanticRuleResponse.summary:type_name -> mycel.client.v1.SemanticGenerationRuleSummary
+	14, // 12: mycel.admin.v1.SetSemanticRuleEnabledResponse.rule:type_name -> mycel.admin.v1.SemanticGenerationRule
+	22, // 13: mycel.admin.v1.SetSemanticRuleEnabledResponse.summary:type_name -> mycel.client.v1.SemanticGenerationRuleSummary
+	15, // 14: mycel.admin.v1.SemanticGenerationRule.trigger:type_name -> mycel.admin.v1.SemanticTriggerPolicy
+	16, // 15: mycel.admin.v1.SemanticGenerationRule.selector:type_name -> mycel.admin.v1.SemanticTargetSelector
+	17, // 16: mycel.admin.v1.SemanticGenerationRule.source:type_name -> mycel.admin.v1.SemanticSourceAssemblyPolicy
+	18, // 17: mycel.admin.v1.SemanticGenerationRule.embeddings:type_name -> mycel.admin.v1.SemanticEmbeddingBinding
+	19, // 18: mycel.admin.v1.SemanticGenerationRule.maintenance:type_name -> mycel.admin.v1.SemanticMaintenancePolicy
+	20, // 19: mycel.admin.v1.SemanticGenerationRule.storage:type_name -> mycel.admin.v1.SemanticStoragePolicy
+	23, // 20: mycel.admin.v1.SemanticEmbeddingBinding.metadata:type_name -> google.protobuf.Struct
+	0,  // 21: mycel.admin.v1.AdminSemanticService.ListSemanticRules:input_type -> mycel.admin.v1.ListSemanticRulesRequest
+	2,  // 22: mycel.admin.v1.AdminSemanticService.GetSemanticRule:input_type -> mycel.admin.v1.GetSemanticRuleRequest
+	4,  // 23: mycel.admin.v1.AdminSemanticService.ValidateSemanticRule:input_type -> mycel.admin.v1.ValidateSemanticRuleRequest
+	6,  // 24: mycel.admin.v1.AdminSemanticService.CreateSemanticRule:input_type -> mycel.admin.v1.CreateSemanticRuleRequest
+	8,  // 25: mycel.admin.v1.AdminSemanticService.UpdateSemanticRule:input_type -> mycel.admin.v1.UpdateSemanticRuleRequest
+	10, // 26: mycel.admin.v1.AdminSemanticService.SetSemanticRuleEnabled:input_type -> mycel.admin.v1.SetSemanticRuleEnabledRequest
+	12, // 27: mycel.admin.v1.AdminSemanticService.DeleteSemanticRule:input_type -> mycel.admin.v1.DeleteSemanticRuleRequest
+	1,  // 28: mycel.admin.v1.AdminSemanticService.ListSemanticRules:output_type -> mycel.admin.v1.ListSemanticRulesResponse
+	3,  // 29: mycel.admin.v1.AdminSemanticService.GetSemanticRule:output_type -> mycel.admin.v1.GetSemanticRuleResponse
+	5,  // 30: mycel.admin.v1.AdminSemanticService.ValidateSemanticRule:output_type -> mycel.admin.v1.ValidateSemanticRuleResponse
+	7,  // 31: mycel.admin.v1.AdminSemanticService.CreateSemanticRule:output_type -> mycel.admin.v1.CreateSemanticRuleResponse
+	9,  // 32: mycel.admin.v1.AdminSemanticService.UpdateSemanticRule:output_type -> mycel.admin.v1.UpdateSemanticRuleResponse
+	11, // 33: mycel.admin.v1.AdminSemanticService.SetSemanticRuleEnabled:output_type -> mycel.admin.v1.SetSemanticRuleEnabledResponse
+	13, // 34: mycel.admin.v1.AdminSemanticService.DeleteSemanticRule:output_type -> mycel.admin.v1.DeleteSemanticRuleResponse
+	28, // [28:35] is the sub-list for method output_type
+	21, // [21:28] is the sub-list for method input_type
+	21, // [21:21] is the sub-list for extension type_name
+	21, // [21:21] is the sub-list for extension extendee
+	0,  // [0:21] is the sub-list for field type_name
 }
 
 func init() { file_mycel_admin_v1_semantic_proto_init() }
@@ -633,14 +1706,14 @@ func file_mycel_admin_v1_semantic_proto_init() {
 	if File_mycel_admin_v1_semantic_proto != nil {
 		return
 	}
-	file_mycel_admin_v1_semantic_proto_msgTypes[6].OneofWrappers = []any{}
+	file_mycel_admin_v1_semantic_proto_msgTypes[17].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_mycel_admin_v1_semantic_proto_rawDesc), len(file_mycel_admin_v1_semantic_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   7,
+			NumMessages:   22,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

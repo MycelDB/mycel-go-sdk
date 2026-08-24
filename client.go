@@ -43,11 +43,11 @@ type AdminClient struct {
 	SemanticMaintenance  adminv1.AdminSemanticMaintenanceServiceClient
 	SemanticMigration    adminv1.AdminSemanticMigrationServiceClient
 	InferenceCatalog     adminv1.AdminInferenceCatalogServiceClient
-	InferenceProfiles    adminv1.AdminInferenceProfileServiceClient
-	InferenceCredentials adminv1.AdminInferenceCredentialServiceClient
-	InferenceGrants      adminv1.AdminInferenceGrantServiceClient
-	InferencePolicies    adminv1.AdminInferencePolicyServiceClient
-	InferenceUsage       adminv1.AdminInferenceUsageServiceClient
+	InferenceProfiles    adminv1.AdminIntelligenceAccessProfileServiceClient
+	InferenceCredentials adminv1.AdminIntelligenceAccessCredentialServiceClient
+	InferenceGrants      adminv1.AdminIntelligenceAccessGrantServiceClient
+	InferencePolicies    adminv1.AdminIntelligenceAccessPolicyServiceClient
+	InferenceUsage       adminv1.AdminIntelligenceAccessUsageServiceClient
 	Backup               adminv1.AdminBackupServiceClient
 	Schema               adminv1.AdminSchemaServiceClient
 	Automation           adminv1.AdminAutomationServiceClient
@@ -103,11 +103,11 @@ func DialAdmin(ctx context.Context, cfg Config, opts ...grpc.DialOption) (*Admin
 	c.SemanticMaintenance = adminv1.NewAdminSemanticMaintenanceServiceClient(conn)
 	c.SemanticMigration = adminv1.NewAdminSemanticMigrationServiceClient(conn)
 	c.InferenceCatalog = adminv1.NewAdminInferenceCatalogServiceClient(conn)
-	c.InferenceProfiles = adminv1.NewAdminInferenceProfileServiceClient(conn)
-	c.InferenceCredentials = adminv1.NewAdminInferenceCredentialServiceClient(conn)
-	c.InferenceGrants = adminv1.NewAdminInferenceGrantServiceClient(conn)
-	c.InferencePolicies = adminv1.NewAdminInferencePolicyServiceClient(conn)
-	c.InferenceUsage = adminv1.NewAdminInferenceUsageServiceClient(conn)
+	c.InferenceProfiles = adminv1.NewAdminIntelligenceAccessProfileServiceClient(conn)
+	c.InferenceCredentials = adminv1.NewAdminIntelligenceAccessCredentialServiceClient(conn)
+	c.InferenceGrants = adminv1.NewAdminIntelligenceAccessGrantServiceClient(conn)
+	c.InferencePolicies = adminv1.NewAdminIntelligenceAccessPolicyServiceClient(conn)
+	c.InferenceUsage = adminv1.NewAdminIntelligenceAccessUsageServiceClient(conn)
 	c.Backup = adminv1.NewAdminBackupServiceClient(conn)
 	c.Schema = adminv1.NewAdminSchemaServiceClient(conn)
 	c.Automation = adminv1.NewAdminAutomationServiceClient(conn)

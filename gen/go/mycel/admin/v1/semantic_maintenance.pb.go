@@ -222,12 +222,14 @@ func (x *GetSemanticMaintenanceStatusResponse) GetWorkerRuns() int32 {
 }
 
 type ListSemanticMaintenanceWorkRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	SpaceId       string                 `protobuf:"bytes,1,opt,name=space_id,json=spaceId,proto3" json:"space_id,omitempty"`
-	Status        string                 `protobuf:"bytes,2,opt,name=status,proto3" json:"status,omitempty"`
-	Limit         int32                  `protobuf:"varint,3,opt,name=limit,proto3" json:"limit,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state               protoimpl.MessageState `protogen:"open.v1"`
+	SpaceId             string                 `protobuf:"bytes,1,opt,name=space_id,json=spaceId,proto3" json:"space_id,omitempty"`
+	Status              string                 `protobuf:"bytes,2,opt,name=status,proto3" json:"status,omitempty"`
+	Limit               int32                  `protobuf:"varint,3,opt,name=limit,proto3" json:"limit,omitempty"`
+	SemanticRuleId      string                 `protobuf:"bytes,4,opt,name=semantic_rule_id,json=semanticRuleId,proto3" json:"semantic_rule_id,omitempty"`
+	EmbeddingBindingKey string                 `protobuf:"bytes,5,opt,name=embedding_binding_key,json=embeddingBindingKey,proto3" json:"embedding_binding_key,omitempty"`
+	unknownFields       protoimpl.UnknownFields
+	sizeCache           protoimpl.SizeCache
 }
 
 func (x *ListSemanticMaintenanceWorkRequest) Reset() {
@@ -281,6 +283,20 @@ func (x *ListSemanticMaintenanceWorkRequest) GetLimit() int32 {
 	return 0
 }
 
+func (x *ListSemanticMaintenanceWorkRequest) GetSemanticRuleId() string {
+	if x != nil {
+		return x.SemanticRuleId
+	}
+	return ""
+}
+
+func (x *ListSemanticMaintenanceWorkRequest) GetEmbeddingBindingKey() string {
+	if x != nil {
+		return x.EmbeddingBindingKey
+	}
+	return ""
+}
+
 type ListSemanticMaintenanceWorkResponse struct {
 	state         protoimpl.MessageState         `protogen:"open.v1"`
 	Items         []*SemanticMaintenanceWorkItem `protobuf:"bytes,1,rep,name=items,proto3" json:"items,omitempty"`
@@ -330,17 +346,18 @@ type SemanticMaintenanceWorkItem struct {
 	WorkItemId                string                 `protobuf:"bytes,1,opt,name=work_item_id,json=workItemId,proto3" json:"work_item_id,omitempty"`
 	SpaceId                   string                 `protobuf:"bytes,2,opt,name=space_id,json=spaceId,proto3" json:"space_id,omitempty"`
 	DomainId                  string                 `protobuf:"bytes,3,opt,name=domain_id,json=domainId,proto3" json:"domain_id,omitempty"`
-	SemanticIndexId           string                 `protobuf:"bytes,4,opt,name=semantic_index_id,json=semanticIndexId,proto3" json:"semantic_index_id,omitempty"`
-	TargetNodeId              string                 `protobuf:"bytes,5,opt,name=target_node_id,json=targetNodeId,proto3" json:"target_node_id,omitempty"`
-	Action                    string                 `protobuf:"bytes,6,opt,name=action,proto3" json:"action,omitempty"`
-	Status                    string                 `protobuf:"bytes,7,opt,name=status,proto3" json:"status,omitempty"`
-	AttemptCount              int32                  `protobuf:"varint,8,opt,name=attempt_count,json=attemptCount,proto3" json:"attempt_count,omitempty"`
-	NotBefore                 string                 `protobuf:"bytes,9,opt,name=not_before,json=notBefore,proto3" json:"not_before,omitempty"`
-	ClaimedUntil              string                 `protobuf:"bytes,10,opt,name=claimed_until,json=claimedUntil,proto3" json:"claimed_until,omitempty"`
-	LastErrorCategory         string                 `protobuf:"bytes,11,opt,name=last_error_category,json=lastErrorCategory,proto3" json:"last_error_category,omitempty"`
-	LastErrorMessageSanitized string                 `protobuf:"bytes,12,opt,name=last_error_message_sanitized,json=lastErrorMessageSanitized,proto3" json:"last_error_message_sanitized,omitempty"`
-	CreatedAt                 string                 `protobuf:"bytes,13,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
-	UpdatedAt                 string                 `protobuf:"bytes,14,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
+	SemanticRuleId            string                 `protobuf:"bytes,4,opt,name=semantic_rule_id,json=semanticRuleId,proto3" json:"semantic_rule_id,omitempty"`
+	EmbeddingBindingKey       string                 `protobuf:"bytes,5,opt,name=embedding_binding_key,json=embeddingBindingKey,proto3" json:"embedding_binding_key,omitempty"`
+	TargetNodeId              string                 `protobuf:"bytes,6,opt,name=target_node_id,json=targetNodeId,proto3" json:"target_node_id,omitempty"`
+	Action                    string                 `protobuf:"bytes,7,opt,name=action,proto3" json:"action,omitempty"`
+	Status                    string                 `protobuf:"bytes,8,opt,name=status,proto3" json:"status,omitempty"`
+	AttemptCount              int32                  `protobuf:"varint,9,opt,name=attempt_count,json=attemptCount,proto3" json:"attempt_count,omitempty"`
+	NotBefore                 string                 `protobuf:"bytes,10,opt,name=not_before,json=notBefore,proto3" json:"not_before,omitempty"`
+	ClaimedUntil              string                 `protobuf:"bytes,11,opt,name=claimed_until,json=claimedUntil,proto3" json:"claimed_until,omitempty"`
+	LastErrorCategory         string                 `protobuf:"bytes,12,opt,name=last_error_category,json=lastErrorCategory,proto3" json:"last_error_category,omitempty"`
+	LastErrorMessageSanitized string                 `protobuf:"bytes,13,opt,name=last_error_message_sanitized,json=lastErrorMessageSanitized,proto3" json:"last_error_message_sanitized,omitempty"`
+	CreatedAt                 string                 `protobuf:"bytes,14,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
+	UpdatedAt                 string                 `protobuf:"bytes,15,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
 	unknownFields             protoimpl.UnknownFields
 	sizeCache                 protoimpl.SizeCache
 }
@@ -396,9 +413,16 @@ func (x *SemanticMaintenanceWorkItem) GetDomainId() string {
 	return ""
 }
 
-func (x *SemanticMaintenanceWorkItem) GetSemanticIndexId() string {
+func (x *SemanticMaintenanceWorkItem) GetSemanticRuleId() string {
 	if x != nil {
-		return x.SemanticIndexId
+		return x.SemanticRuleId
+	}
+	return ""
+}
+
+func (x *SemanticMaintenanceWorkItem) GetEmbeddingBindingKey() string {
+	if x != nil {
+		return x.EmbeddingBindingKey
 	}
 	return ""
 }
@@ -666,12 +690,13 @@ func (x *CancelSemanticMaintenanceWorkResponse) GetItem() *SemanticMaintenanceWo
 }
 
 type AnalyzeSemanticDirtyWorkRequest struct {
-	state           protoimpl.MessageState `protogen:"open.v1"`
-	SpaceId         string                 `protobuf:"bytes,1,opt,name=space_id,json=spaceId,proto3" json:"space_id,omitempty"`
-	SemanticIndexId string                 `protobuf:"bytes,2,opt,name=semantic_index_id,json=semanticIndexId,proto3" json:"semantic_index_id,omitempty"`
-	Limit           int32                  `protobuf:"varint,3,opt,name=limit,proto3" json:"limit,omitempty"`
-	unknownFields   protoimpl.UnknownFields
-	sizeCache       protoimpl.SizeCache
+	state               protoimpl.MessageState `protogen:"open.v1"`
+	SpaceId             string                 `protobuf:"bytes,1,opt,name=space_id,json=spaceId,proto3" json:"space_id,omitempty"`
+	SemanticRuleId      string                 `protobuf:"bytes,2,opt,name=semantic_rule_id,json=semanticRuleId,proto3" json:"semantic_rule_id,omitempty"`
+	EmbeddingBindingKey string                 `protobuf:"bytes,3,opt,name=embedding_binding_key,json=embeddingBindingKey,proto3" json:"embedding_binding_key,omitempty"`
+	Limit               int32                  `protobuf:"varint,4,opt,name=limit,proto3" json:"limit,omitempty"`
+	unknownFields       protoimpl.UnknownFields
+	sizeCache           protoimpl.SizeCache
 }
 
 func (x *AnalyzeSemanticDirtyWorkRequest) Reset() {
@@ -711,9 +736,16 @@ func (x *AnalyzeSemanticDirtyWorkRequest) GetSpaceId() string {
 	return ""
 }
 
-func (x *AnalyzeSemanticDirtyWorkRequest) GetSemanticIndexId() string {
+func (x *AnalyzeSemanticDirtyWorkRequest) GetSemanticRuleId() string {
 	if x != nil {
-		return x.SemanticIndexId
+		return x.SemanticRuleId
+	}
+	return ""
+}
+
+func (x *AnalyzeSemanticDirtyWorkRequest) GetEmbeddingBindingKey() string {
+	if x != nil {
+		return x.EmbeddingBindingKey
 	}
 	return ""
 }
@@ -889,32 +921,33 @@ func (x *ProcessSemanticDirtyWorkResponse) GetFailedItems() int32 {
 	return 0
 }
 
-type BackfillSemanticIndexRequest struct {
-	state           protoimpl.MessageState `protogen:"open.v1"`
-	SpaceId         string                 `protobuf:"bytes,1,opt,name=space_id,json=spaceId,proto3" json:"space_id,omitempty"`
-	SemanticIndexId string                 `protobuf:"bytes,2,opt,name=semantic_index_id,json=semanticIndexId,proto3" json:"semantic_index_id,omitempty"`
-	NodeIds         []string               `protobuf:"bytes,3,rep,name=node_ids,json=nodeIds,proto3" json:"node_ids,omitempty"`
-	Force           bool                   `protobuf:"varint,4,opt,name=force,proto3" json:"force,omitempty"`
-	Limit           int32                  `protobuf:"varint,5,opt,name=limit,proto3" json:"limit,omitempty"`
-	ContinueOnError bool                   `protobuf:"varint,6,opt,name=continue_on_error,json=continueOnError,proto3" json:"continue_on_error,omitempty"`
-	unknownFields   protoimpl.UnknownFields
-	sizeCache       protoimpl.SizeCache
+type BackfillSemanticRuleRequest struct {
+	state               protoimpl.MessageState `protogen:"open.v1"`
+	SpaceId             string                 `protobuf:"bytes,1,opt,name=space_id,json=spaceId,proto3" json:"space_id,omitempty"`
+	SemanticRuleId      string                 `protobuf:"bytes,2,opt,name=semantic_rule_id,json=semanticRuleId,proto3" json:"semantic_rule_id,omitempty"`
+	EmbeddingBindingKey string                 `protobuf:"bytes,3,opt,name=embedding_binding_key,json=embeddingBindingKey,proto3" json:"embedding_binding_key,omitempty"`
+	NodeIds             []string               `protobuf:"bytes,4,rep,name=node_ids,json=nodeIds,proto3" json:"node_ids,omitempty"`
+	Force               bool                   `protobuf:"varint,5,opt,name=force,proto3" json:"force,omitempty"`
+	Limit               int32                  `protobuf:"varint,6,opt,name=limit,proto3" json:"limit,omitempty"`
+	ContinueOnError     bool                   `protobuf:"varint,7,opt,name=continue_on_error,json=continueOnError,proto3" json:"continue_on_error,omitempty"`
+	unknownFields       protoimpl.UnknownFields
+	sizeCache           protoimpl.SizeCache
 }
 
-func (x *BackfillSemanticIndexRequest) Reset() {
-	*x = BackfillSemanticIndexRequest{}
+func (x *BackfillSemanticRuleRequest) Reset() {
+	*x = BackfillSemanticRuleRequest{}
 	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[13]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *BackfillSemanticIndexRequest) String() string {
+func (x *BackfillSemanticRuleRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*BackfillSemanticIndexRequest) ProtoMessage() {}
+func (*BackfillSemanticRuleRequest) ProtoMessage() {}
 
-func (x *BackfillSemanticIndexRequest) ProtoReflect() protoreflect.Message {
+func (x *BackfillSemanticRuleRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[13]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -926,80 +959,88 @@ func (x *BackfillSemanticIndexRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use BackfillSemanticIndexRequest.ProtoReflect.Descriptor instead.
-func (*BackfillSemanticIndexRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use BackfillSemanticRuleRequest.ProtoReflect.Descriptor instead.
+func (*BackfillSemanticRuleRequest) Descriptor() ([]byte, []int) {
 	return file_mycel_admin_v1_semantic_maintenance_proto_rawDescGZIP(), []int{13}
 }
 
-func (x *BackfillSemanticIndexRequest) GetSpaceId() string {
+func (x *BackfillSemanticRuleRequest) GetSpaceId() string {
 	if x != nil {
 		return x.SpaceId
 	}
 	return ""
 }
 
-func (x *BackfillSemanticIndexRequest) GetSemanticIndexId() string {
+func (x *BackfillSemanticRuleRequest) GetSemanticRuleId() string {
 	if x != nil {
-		return x.SemanticIndexId
+		return x.SemanticRuleId
 	}
 	return ""
 }
 
-func (x *BackfillSemanticIndexRequest) GetNodeIds() []string {
+func (x *BackfillSemanticRuleRequest) GetEmbeddingBindingKey() string {
+	if x != nil {
+		return x.EmbeddingBindingKey
+	}
+	return ""
+}
+
+func (x *BackfillSemanticRuleRequest) GetNodeIds() []string {
 	if x != nil {
 		return x.NodeIds
 	}
 	return nil
 }
 
-func (x *BackfillSemanticIndexRequest) GetForce() bool {
+func (x *BackfillSemanticRuleRequest) GetForce() bool {
 	if x != nil {
 		return x.Force
 	}
 	return false
 }
 
-func (x *BackfillSemanticIndexRequest) GetLimit() int32 {
+func (x *BackfillSemanticRuleRequest) GetLimit() int32 {
 	if x != nil {
 		return x.Limit
 	}
 	return 0
 }
 
-func (x *BackfillSemanticIndexRequest) GetContinueOnError() bool {
+func (x *BackfillSemanticRuleRequest) GetContinueOnError() bool {
 	if x != nil {
 		return x.ContinueOnError
 	}
 	return false
 }
 
-type BackfillSemanticIndexResponse struct {
-	state           protoimpl.MessageState `protogen:"open.v1"`
-	SemanticIndexId string                 `protobuf:"bytes,1,opt,name=semantic_index_id,json=semanticIndexId,proto3" json:"semantic_index_id,omitempty"`
-	SelectedCount   int32                  `protobuf:"varint,2,opt,name=selected_count,json=selectedCount,proto3" json:"selected_count,omitempty"`
-	GeneratedCount  int32                  `protobuf:"varint,3,opt,name=generated_count,json=generatedCount,proto3" json:"generated_count,omitempty"`
-	SkippedCount    int32                  `protobuf:"varint,4,opt,name=skipped_count,json=skippedCount,proto3" json:"skipped_count,omitempty"`
-	FailedCount     int32                  `protobuf:"varint,5,opt,name=failed_count,json=failedCount,proto3" json:"failed_count,omitempty"`
-	Skipped         []*BackfillSkipped     `protobuf:"bytes,6,rep,name=skipped,proto3" json:"skipped,omitempty"`
-	Failures        []*BackfillFailure     `protobuf:"bytes,7,rep,name=failures,proto3" json:"failures,omitempty"`
-	unknownFields   protoimpl.UnknownFields
-	sizeCache       protoimpl.SizeCache
+type BackfillSemanticRuleResponse struct {
+	state               protoimpl.MessageState `protogen:"open.v1"`
+	SemanticRuleId      string                 `protobuf:"bytes,1,opt,name=semantic_rule_id,json=semanticRuleId,proto3" json:"semantic_rule_id,omitempty"`
+	EmbeddingBindingKey string                 `protobuf:"bytes,2,opt,name=embedding_binding_key,json=embeddingBindingKey,proto3" json:"embedding_binding_key,omitempty"`
+	SelectedCount       int32                  `protobuf:"varint,3,opt,name=selected_count,json=selectedCount,proto3" json:"selected_count,omitempty"`
+	GeneratedCount      int32                  `protobuf:"varint,4,opt,name=generated_count,json=generatedCount,proto3" json:"generated_count,omitempty"`
+	SkippedCount        int32                  `protobuf:"varint,5,opt,name=skipped_count,json=skippedCount,proto3" json:"skipped_count,omitempty"`
+	FailedCount         int32                  `protobuf:"varint,6,opt,name=failed_count,json=failedCount,proto3" json:"failed_count,omitempty"`
+	Skipped             []*BackfillSkipped     `protobuf:"bytes,7,rep,name=skipped,proto3" json:"skipped,omitempty"`
+	Failures            []*BackfillFailure     `protobuf:"bytes,8,rep,name=failures,proto3" json:"failures,omitempty"`
+	unknownFields       protoimpl.UnknownFields
+	sizeCache           protoimpl.SizeCache
 }
 
-func (x *BackfillSemanticIndexResponse) Reset() {
-	*x = BackfillSemanticIndexResponse{}
+func (x *BackfillSemanticRuleResponse) Reset() {
+	*x = BackfillSemanticRuleResponse{}
 	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[14]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *BackfillSemanticIndexResponse) String() string {
+func (x *BackfillSemanticRuleResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*BackfillSemanticIndexResponse) ProtoMessage() {}
+func (*BackfillSemanticRuleResponse) ProtoMessage() {}
 
-func (x *BackfillSemanticIndexResponse) ProtoReflect() protoreflect.Message {
+func (x *BackfillSemanticRuleResponse) ProtoReflect() protoreflect.Message {
 	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[14]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -1011,54 +1052,61 @@ func (x *BackfillSemanticIndexResponse) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use BackfillSemanticIndexResponse.ProtoReflect.Descriptor instead.
-func (*BackfillSemanticIndexResponse) Descriptor() ([]byte, []int) {
+// Deprecated: Use BackfillSemanticRuleResponse.ProtoReflect.Descriptor instead.
+func (*BackfillSemanticRuleResponse) Descriptor() ([]byte, []int) {
 	return file_mycel_admin_v1_semantic_maintenance_proto_rawDescGZIP(), []int{14}
 }
 
-func (x *BackfillSemanticIndexResponse) GetSemanticIndexId() string {
+func (x *BackfillSemanticRuleResponse) GetSemanticRuleId() string {
 	if x != nil {
-		return x.SemanticIndexId
+		return x.SemanticRuleId
 	}
 	return ""
 }
 
-func (x *BackfillSemanticIndexResponse) GetSelectedCount() int32 {
+func (x *BackfillSemanticRuleResponse) GetEmbeddingBindingKey() string {
+	if x != nil {
+		return x.EmbeddingBindingKey
+	}
+	return ""
+}
+
+func (x *BackfillSemanticRuleResponse) GetSelectedCount() int32 {
 	if x != nil {
 		return x.SelectedCount
 	}
 	return 0
 }
 
-func (x *BackfillSemanticIndexResponse) GetGeneratedCount() int32 {
+func (x *BackfillSemanticRuleResponse) GetGeneratedCount() int32 {
 	if x != nil {
 		return x.GeneratedCount
 	}
 	return 0
 }
 
-func (x *BackfillSemanticIndexResponse) GetSkippedCount() int32 {
+func (x *BackfillSemanticRuleResponse) GetSkippedCount() int32 {
 	if x != nil {
 		return x.SkippedCount
 	}
 	return 0
 }
 
-func (x *BackfillSemanticIndexResponse) GetFailedCount() int32 {
+func (x *BackfillSemanticRuleResponse) GetFailedCount() int32 {
 	if x != nil {
 		return x.FailedCount
 	}
 	return 0
 }
 
-func (x *BackfillSemanticIndexResponse) GetSkipped() []*BackfillSkipped {
+func (x *BackfillSemanticRuleResponse) GetSkipped() []*BackfillSkipped {
 	if x != nil {
 		return x.Skipped
 	}
 	return nil
 }
 
-func (x *BackfillSemanticIndexResponse) GetFailures() []*BackfillFailure {
+func (x *BackfillSemanticRuleResponse) GetFailures() []*BackfillFailure {
 	if x != nil {
 		return x.Failures
 	}
@@ -1193,33 +1241,36 @@ const file_mycel_admin_v1_semantic_maintenance_proto_rawDesc = "" +
 	"\x0ethrottle_state\x18\r \x01(\tR\rthrottleState\x12#\n" +
 	"\ranalyzer_runs\x18\x0e \x01(\x05R\fanalyzerRuns\x12\x1f\n" +
 	"\vworker_runs\x18\x0f \x01(\x05R\n" +
-	"workerRuns\"m\n" +
+	"workerRuns\"\xcb\x01\n" +
 	"\"ListSemanticMaintenanceWorkRequest\x12\x19\n" +
 	"\bspace_id\x18\x01 \x01(\tR\aspaceId\x12\x16\n" +
 	"\x06status\x18\x02 \x01(\tR\x06status\x12\x14\n" +
-	"\x05limit\x18\x03 \x01(\x05R\x05limit\"h\n" +
+	"\x05limit\x18\x03 \x01(\x05R\x05limit\x12(\n" +
+	"\x10semantic_rule_id\x18\x04 \x01(\tR\x0esemanticRuleId\x122\n" +
+	"\x15embedding_binding_key\x18\x05 \x01(\tR\x13embeddingBindingKey\"h\n" +
 	"#ListSemanticMaintenanceWorkResponse\x12A\n" +
-	"\x05items\x18\x01 \x03(\v2+.mycel.admin.v1.SemanticMaintenanceWorkItemR\x05items\"\x91\x04\n" +
+	"\x05items\x18\x01 \x03(\v2+.mycel.admin.v1.SemanticMaintenanceWorkItemR\x05items\"\xc3\x04\n" +
 	"\x1bSemanticMaintenanceWorkItem\x12 \n" +
 	"\fwork_item_id\x18\x01 \x01(\tR\n" +
 	"workItemId\x12\x19\n" +
 	"\bspace_id\x18\x02 \x01(\tR\aspaceId\x12\x1b\n" +
-	"\tdomain_id\x18\x03 \x01(\tR\bdomainId\x12*\n" +
-	"\x11semantic_index_id\x18\x04 \x01(\tR\x0fsemanticIndexId\x12$\n" +
-	"\x0etarget_node_id\x18\x05 \x01(\tR\ftargetNodeId\x12\x16\n" +
-	"\x06action\x18\x06 \x01(\tR\x06action\x12\x16\n" +
-	"\x06status\x18\a \x01(\tR\x06status\x12#\n" +
-	"\rattempt_count\x18\b \x01(\x05R\fattemptCount\x12\x1d\n" +
+	"\tdomain_id\x18\x03 \x01(\tR\bdomainId\x12(\n" +
+	"\x10semantic_rule_id\x18\x04 \x01(\tR\x0esemanticRuleId\x122\n" +
+	"\x15embedding_binding_key\x18\x05 \x01(\tR\x13embeddingBindingKey\x12$\n" +
+	"\x0etarget_node_id\x18\x06 \x01(\tR\ftargetNodeId\x12\x16\n" +
+	"\x06action\x18\a \x01(\tR\x06action\x12\x16\n" +
+	"\x06status\x18\b \x01(\tR\x06status\x12#\n" +
+	"\rattempt_count\x18\t \x01(\x05R\fattemptCount\x12\x1d\n" +
 	"\n" +
-	"not_before\x18\t \x01(\tR\tnotBefore\x12#\n" +
-	"\rclaimed_until\x18\n" +
-	" \x01(\tR\fclaimedUntil\x12.\n" +
-	"\x13last_error_category\x18\v \x01(\tR\x11lastErrorCategory\x12?\n" +
-	"\x1clast_error_message_sanitized\x18\f \x01(\tR\x19lastErrorMessageSanitized\x12\x1d\n" +
+	"not_before\x18\n" +
+	" \x01(\tR\tnotBefore\x12#\n" +
+	"\rclaimed_until\x18\v \x01(\tR\fclaimedUntil\x12.\n" +
+	"\x13last_error_category\x18\f \x01(\tR\x11lastErrorCategory\x12?\n" +
+	"\x1clast_error_message_sanitized\x18\r \x01(\tR\x19lastErrorMessageSanitized\x12\x1d\n" +
 	"\n" +
-	"created_at\x18\r \x01(\tR\tcreatedAt\x12\x1d\n" +
+	"created_at\x18\x0e \x01(\tR\tcreatedAt\x12\x1d\n" +
 	"\n" +
-	"updated_at\x18\x0e \x01(\tR\tupdatedAt\"b\n" +
+	"updated_at\x18\x0f \x01(\tR\tupdatedAt\"b\n" +
 	"#RetrySemanticMaintenanceWorkRequest\x12\x19\n" +
 	"\bspace_id\x18\x01 \x01(\tR\aspaceId\x12 \n" +
 	"\fwork_item_id\x18\x02 \x01(\tR\n" +
@@ -1231,11 +1282,12 @@ const file_mycel_admin_v1_semantic_maintenance_proto_rawDesc = "" +
 	"\fwork_item_id\x18\x02 \x01(\tR\n" +
 	"workItemId\"h\n" +
 	"%CancelSemanticMaintenanceWorkResponse\x12?\n" +
-	"\x04item\x18\x01 \x01(\v2+.mycel.admin.v1.SemanticMaintenanceWorkItemR\x04item\"~\n" +
+	"\x04item\x18\x01 \x01(\v2+.mycel.admin.v1.SemanticMaintenanceWorkItemR\x04item\"\xb0\x01\n" +
 	"\x1fAnalyzeSemanticDirtyWorkRequest\x12\x19\n" +
-	"\bspace_id\x18\x01 \x01(\tR\aspaceId\x12*\n" +
-	"\x11semantic_index_id\x18\x02 \x01(\tR\x0fsemanticIndexId\x12\x14\n" +
-	"\x05limit\x18\x03 \x01(\x05R\x05limit\"t\n" +
+	"\bspace_id\x18\x01 \x01(\tR\aspaceId\x12(\n" +
+	"\x10semantic_rule_id\x18\x02 \x01(\tR\x0esemanticRuleId\x122\n" +
+	"\x15embedding_binding_key\x18\x03 \x01(\tR\x13embeddingBindingKey\x12\x14\n" +
+	"\x05limit\x18\x04 \x01(\x05R\x05limit\"t\n" +
 	" AnalyzeSemanticDirtyWorkResponse\x12)\n" +
 	"\x10processed_events\x18\x01 \x01(\x05R\x0fprocessedEvents\x12%\n" +
 	"\x0eenqueued_items\x18\x02 \x01(\x05R\renqueuedItems\"R\n" +
@@ -1245,36 +1297,38 @@ const file_mycel_admin_v1_semantic_maintenance_proto_rawDesc = "" +
 	" ProcessSemanticDirtyWorkResponse\x12'\n" +
 	"\x0fprocessed_items\x18\x01 \x01(\x05R\x0eprocessedItems\x12'\n" +
 	"\x0fcompleted_items\x18\x02 \x01(\x05R\x0ecompletedItems\x12!\n" +
-	"\ffailed_items\x18\x03 \x01(\x05R\vfailedItems\"\xd8\x01\n" +
-	"\x1cBackfillSemanticIndexRequest\x12\x19\n" +
-	"\bspace_id\x18\x01 \x01(\tR\aspaceId\x12*\n" +
-	"\x11semantic_index_id\x18\x02 \x01(\tR\x0fsemanticIndexId\x12\x19\n" +
-	"\bnode_ids\x18\x03 \x03(\tR\anodeIds\x12\x14\n" +
-	"\x05force\x18\x04 \x01(\bR\x05force\x12\x14\n" +
-	"\x05limit\x18\x05 \x01(\x05R\x05limit\x12*\n" +
-	"\x11continue_on_error\x18\x06 \x01(\bR\x0fcontinueOnError\"\xdb\x02\n" +
-	"\x1dBackfillSemanticIndexResponse\x12*\n" +
-	"\x11semantic_index_id\x18\x01 \x01(\tR\x0fsemanticIndexId\x12%\n" +
-	"\x0eselected_count\x18\x02 \x01(\x05R\rselectedCount\x12'\n" +
-	"\x0fgenerated_count\x18\x03 \x01(\x05R\x0egeneratedCount\x12#\n" +
-	"\rskipped_count\x18\x04 \x01(\x05R\fskippedCount\x12!\n" +
-	"\ffailed_count\x18\x05 \x01(\x05R\vfailedCount\x129\n" +
-	"\askipped\x18\x06 \x03(\v2\x1f.mycel.admin.v1.BackfillSkippedR\askipped\x12;\n" +
-	"\bfailures\x18\a \x03(\v2\x1f.mycel.admin.v1.BackfillFailureR\bfailures\"B\n" +
+	"\ffailed_items\x18\x03 \x01(\x05R\vfailedItems\"\x89\x02\n" +
+	"\x1bBackfillSemanticRuleRequest\x12\x19\n" +
+	"\bspace_id\x18\x01 \x01(\tR\aspaceId\x12(\n" +
+	"\x10semantic_rule_id\x18\x02 \x01(\tR\x0esemanticRuleId\x122\n" +
+	"\x15embedding_binding_key\x18\x03 \x01(\tR\x13embeddingBindingKey\x12\x19\n" +
+	"\bnode_ids\x18\x04 \x03(\tR\anodeIds\x12\x14\n" +
+	"\x05force\x18\x05 \x01(\bR\x05force\x12\x14\n" +
+	"\x05limit\x18\x06 \x01(\x05R\x05limit\x12*\n" +
+	"\x11continue_on_error\x18\a \x01(\bR\x0fcontinueOnError\"\x8c\x03\n" +
+	"\x1cBackfillSemanticRuleResponse\x12(\n" +
+	"\x10semantic_rule_id\x18\x01 \x01(\tR\x0esemanticRuleId\x122\n" +
+	"\x15embedding_binding_key\x18\x02 \x01(\tR\x13embeddingBindingKey\x12%\n" +
+	"\x0eselected_count\x18\x03 \x01(\x05R\rselectedCount\x12'\n" +
+	"\x0fgenerated_count\x18\x04 \x01(\x05R\x0egeneratedCount\x12#\n" +
+	"\rskipped_count\x18\x05 \x01(\x05R\fskippedCount\x12!\n" +
+	"\ffailed_count\x18\x06 \x01(\x05R\vfailedCount\x129\n" +
+	"\askipped\x18\a \x03(\v2\x1f.mycel.admin.v1.BackfillSkippedR\askipped\x12;\n" +
+	"\bfailures\x18\b \x03(\v2\x1f.mycel.admin.v1.BackfillFailureR\bfailures\"B\n" +
 	"\x0fBackfillSkipped\x12\x17\n" +
 	"\anode_id\x18\x01 \x01(\tR\x06nodeId\x12\x16\n" +
 	"\x06reason\x18\x02 \x01(\tR\x06reason\"@\n" +
 	"\x0fBackfillFailure\x12\x17\n" +
 	"\anode_id\x18\x01 \x01(\tR\x06nodeId\x12\x14\n" +
-	"\x05error\x18\x02 \x01(\tR\x05error2\xc5\a\n" +
+	"\x05error\x18\x02 \x01(\tR\x05error2\xc2\a\n" +
 	"\x1fAdminSemanticMaintenanceService\x12\x89\x01\n" +
 	"\x1cGetSemanticMaintenanceStatus\x123.mycel.admin.v1.GetSemanticMaintenanceStatusRequest\x1a4.mycel.admin.v1.GetSemanticMaintenanceStatusResponse\x12\x86\x01\n" +
 	"\x1bListSemanticMaintenanceWork\x122.mycel.admin.v1.ListSemanticMaintenanceWorkRequest\x1a3.mycel.admin.v1.ListSemanticMaintenanceWorkResponse\x12\x89\x01\n" +
 	"\x1cRetrySemanticMaintenanceWork\x123.mycel.admin.v1.RetrySemanticMaintenanceWorkRequest\x1a4.mycel.admin.v1.RetrySemanticMaintenanceWorkResponse\x12\x8c\x01\n" +
 	"\x1dCancelSemanticMaintenanceWork\x124.mycel.admin.v1.CancelSemanticMaintenanceWorkRequest\x1a5.mycel.admin.v1.CancelSemanticMaintenanceWorkResponse\x12}\n" +
 	"\x18AnalyzeSemanticDirtyWork\x12/.mycel.admin.v1.AnalyzeSemanticDirtyWorkRequest\x1a0.mycel.admin.v1.AnalyzeSemanticDirtyWorkResponse\x12}\n" +
-	"\x18ProcessSemanticDirtyWork\x12/.mycel.admin.v1.ProcessSemanticDirtyWorkRequest\x1a0.mycel.admin.v1.ProcessSemanticDirtyWorkResponse\x12t\n" +
-	"\x15BackfillSemanticIndex\x12,.mycel.admin.v1.BackfillSemanticIndexRequest\x1a-.mycel.admin.v1.BackfillSemanticIndexResponseB\xc7\x01\n" +
+	"\x18ProcessSemanticDirtyWork\x12/.mycel.admin.v1.ProcessSemanticDirtyWorkRequest\x1a0.mycel.admin.v1.ProcessSemanticDirtyWorkResponse\x12q\n" +
+	"\x14BackfillSemanticRule\x12+.mycel.admin.v1.BackfillSemanticRuleRequest\x1a,.mycel.admin.v1.BackfillSemanticRuleResponseB\xc7\x01\n" +
 	"\x12com.mycel.admin.v1B\x18SemanticMaintenanceProtoP\x01Z=github.com/myceldb/mycel-go-sdk/gen/go/mycel/admin/v1;adminv1\xa2\x02\x03MAX\xaa\x02\x0eMycel.Admin.V1\xca\x02\x0eMycel\\Admin\\V1\xe2\x02\x1aMycel\\Admin\\V1\\GPBMetadata\xea\x02\x10Mycel::Admin::V1b\x06proto3"
 
 var (
@@ -1304,8 +1358,8 @@ var file_mycel_admin_v1_semantic_maintenance_proto_goTypes = []any{
 	(*AnalyzeSemanticDirtyWorkResponse)(nil),      // 10: mycel.admin.v1.AnalyzeSemanticDirtyWorkResponse
 	(*ProcessSemanticDirtyWorkRequest)(nil),       // 11: mycel.admin.v1.ProcessSemanticDirtyWorkRequest
 	(*ProcessSemanticDirtyWorkResponse)(nil),      // 12: mycel.admin.v1.ProcessSemanticDirtyWorkResponse
-	(*BackfillSemanticIndexRequest)(nil),          // 13: mycel.admin.v1.BackfillSemanticIndexRequest
-	(*BackfillSemanticIndexResponse)(nil),         // 14: mycel.admin.v1.BackfillSemanticIndexResponse
+	(*BackfillSemanticRuleRequest)(nil),           // 13: mycel.admin.v1.BackfillSemanticRuleRequest
+	(*BackfillSemanticRuleResponse)(nil),          // 14: mycel.admin.v1.BackfillSemanticRuleResponse
 	(*BackfillSkipped)(nil),                       // 15: mycel.admin.v1.BackfillSkipped
 	(*BackfillFailure)(nil),                       // 16: mycel.admin.v1.BackfillFailure
 }
@@ -1313,22 +1367,22 @@ var file_mycel_admin_v1_semantic_maintenance_proto_depIdxs = []int32{
 	4,  // 0: mycel.admin.v1.ListSemanticMaintenanceWorkResponse.items:type_name -> mycel.admin.v1.SemanticMaintenanceWorkItem
 	4,  // 1: mycel.admin.v1.RetrySemanticMaintenanceWorkResponse.item:type_name -> mycel.admin.v1.SemanticMaintenanceWorkItem
 	4,  // 2: mycel.admin.v1.CancelSemanticMaintenanceWorkResponse.item:type_name -> mycel.admin.v1.SemanticMaintenanceWorkItem
-	15, // 3: mycel.admin.v1.BackfillSemanticIndexResponse.skipped:type_name -> mycel.admin.v1.BackfillSkipped
-	16, // 4: mycel.admin.v1.BackfillSemanticIndexResponse.failures:type_name -> mycel.admin.v1.BackfillFailure
+	15, // 3: mycel.admin.v1.BackfillSemanticRuleResponse.skipped:type_name -> mycel.admin.v1.BackfillSkipped
+	16, // 4: mycel.admin.v1.BackfillSemanticRuleResponse.failures:type_name -> mycel.admin.v1.BackfillFailure
 	0,  // 5: mycel.admin.v1.AdminSemanticMaintenanceService.GetSemanticMaintenanceStatus:input_type -> mycel.admin.v1.GetSemanticMaintenanceStatusRequest
 	2,  // 6: mycel.admin.v1.AdminSemanticMaintenanceService.ListSemanticMaintenanceWork:input_type -> mycel.admin.v1.ListSemanticMaintenanceWorkRequest
 	5,  // 7: mycel.admin.v1.AdminSemanticMaintenanceService.RetrySemanticMaintenanceWork:input_type -> mycel.admin.v1.RetrySemanticMaintenanceWorkRequest
 	7,  // 8: mycel.admin.v1.AdminSemanticMaintenanceService.CancelSemanticMaintenanceWork:input_type -> mycel.admin.v1.CancelSemanticMaintenanceWorkRequest
 	9,  // 9: mycel.admin.v1.AdminSemanticMaintenanceService.AnalyzeSemanticDirtyWork:input_type -> mycel.admin.v1.AnalyzeSemanticDirtyWorkRequest
 	11, // 10: mycel.admin.v1.AdminSemanticMaintenanceService.ProcessSemanticDirtyWork:input_type -> mycel.admin.v1.ProcessSemanticDirtyWorkRequest
-	13, // 11: mycel.admin.v1.AdminSemanticMaintenanceService.BackfillSemanticIndex:input_type -> mycel.admin.v1.BackfillSemanticIndexRequest
+	13, // 11: mycel.admin.v1.AdminSemanticMaintenanceService.BackfillSemanticRule:input_type -> mycel.admin.v1.BackfillSemanticRuleRequest
 	1,  // 12: mycel.admin.v1.AdminSemanticMaintenanceService.GetSemanticMaintenanceStatus:output_type -> mycel.admin.v1.GetSemanticMaintenanceStatusResponse
 	3,  // 13: mycel.admin.v1.AdminSemanticMaintenanceService.ListSemanticMaintenanceWork:output_type -> mycel.admin.v1.ListSemanticMaintenanceWorkResponse
 	6,  // 14: mycel.admin.v1.AdminSemanticMaintenanceService.RetrySemanticMaintenanceWork:output_type -> mycel.admin.v1.RetrySemanticMaintenanceWorkResponse
 	8,  // 15: mycel.admin.v1.AdminSemanticMaintenanceService.CancelSemanticMaintenanceWork:output_type -> mycel.admin.v1.CancelSemanticMaintenanceWorkResponse
 	10, // 16: mycel.admin.v1.AdminSemanticMaintenanceService.AnalyzeSemanticDirtyWork:output_type -> mycel.admin.v1.AnalyzeSemanticDirtyWorkResponse
 	12, // 17: mycel.admin.v1.AdminSemanticMaintenanceService.ProcessSemanticDirtyWork:output_type -> mycel.admin.v1.ProcessSemanticDirtyWorkResponse
-	14, // 18: mycel.admin.v1.AdminSemanticMaintenanceService.BackfillSemanticIndex:output_type -> mycel.admin.v1.BackfillSemanticIndexResponse
+	14, // 18: mycel.admin.v1.AdminSemanticMaintenanceService.BackfillSemanticRule:output_type -> mycel.admin.v1.BackfillSemanticRuleResponse
 	12, // [12:19] is the sub-list for method output_type
 	5,  // [5:12] is the sub-list for method input_type
 	5,  // [5:5] is the sub-list for extension type_name

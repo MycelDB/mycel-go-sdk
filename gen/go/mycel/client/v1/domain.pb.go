@@ -828,7 +828,7 @@ type Domain struct {
 	DiscoveryMode DomainDiscoveryMode `protobuf:"varint,12,opt,name=discovery_mode,json=discoveryMode,proto3,enum=mycel.client.v1.DomainDiscoveryMode" json:"discovery_mode,omitempty"`
 	// Controls whether the domain participates in graph query/search operations.
 	SearchMode DomainSearchMode `protobuf:"varint,13,opt,name=search_mode,json=searchMode,proto3,enum=mycel.client.v1.DomainSearchMode" json:"search_mode,omitempty"`
-	// Controls whether the domain participates in semantic indexing and search.
+	// Controls whether the domain participates in semantic generation and search.
 	SemanticMode DomainSemanticMode `protobuf:"varint,14,opt,name=semantic_mode,json=semanticMode,proto3,enum=mycel.client.v1.DomainSemanticMode" json:"semantic_mode,omitempty"`
 	// Read-only domains reject normal client/user graph mutations. Admin/import
 	// paths may still replace or update read-only domains.

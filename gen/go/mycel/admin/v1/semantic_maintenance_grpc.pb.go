@@ -25,14 +25,15 @@ const (
 	AdminSemanticMaintenanceService_CancelSemanticMaintenanceWork_FullMethodName = "/mycel.admin.v1.AdminSemanticMaintenanceService/CancelSemanticMaintenanceWork"
 	AdminSemanticMaintenanceService_AnalyzeSemanticDirtyWork_FullMethodName      = "/mycel.admin.v1.AdminSemanticMaintenanceService/AnalyzeSemanticDirtyWork"
 	AdminSemanticMaintenanceService_ProcessSemanticDirtyWork_FullMethodName      = "/mycel.admin.v1.AdminSemanticMaintenanceService/ProcessSemanticDirtyWork"
-	AdminSemanticMaintenanceService_BackfillSemanticIndex_FullMethodName         = "/mycel.admin.v1.AdminSemanticMaintenanceService/BackfillSemanticIndex"
+	AdminSemanticMaintenanceService_BackfillSemanticRule_FullMethodName          = "/mycel.admin.v1.AdminSemanticMaintenanceService/BackfillSemanticRule"
 )
 
 // AdminSemanticMaintenanceServiceClient is the client API for AdminSemanticMaintenanceService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 //
-// AdminSemanticMaintenanceService runs daemon-owned semantic maintenance work.
+// AdminSemanticMaintenanceService runs daemon-owned semantic generation rule
+// maintenance work.
 type AdminSemanticMaintenanceServiceClient interface {
 	GetSemanticMaintenanceStatus(ctx context.Context, in *GetSemanticMaintenanceStatusRequest, opts ...grpc.CallOption) (*GetSemanticMaintenanceStatusResponse, error)
 	ListSemanticMaintenanceWork(ctx context.Context, in *ListSemanticMaintenanceWorkRequest, opts ...grpc.CallOption) (*ListSemanticMaintenanceWorkResponse, error)
@@ -40,7 +41,7 @@ type AdminSemanticMaintenanceServiceClient interface {
 	CancelSemanticMaintenanceWork(ctx context.Context, in *CancelSemanticMaintenanceWorkRequest, opts ...grpc.CallOption) (*CancelSemanticMaintenanceWorkResponse, error)
 	AnalyzeSemanticDirtyWork(ctx context.Context, in *AnalyzeSemanticDirtyWorkRequest, opts ...grpc.CallOption) (*AnalyzeSemanticDirtyWorkResponse, error)
 	ProcessSemanticDirtyWork(ctx context.Context, in *ProcessSemanticDirtyWorkRequest, opts ...grpc.CallOption) (*ProcessSemanticDirtyWorkResponse, error)
-	BackfillSemanticIndex(ctx context.Context, in *BackfillSemanticIndexRequest, opts ...grpc.CallOption) (*BackfillSemanticIndexResponse, error)
+	BackfillSemanticRule(ctx context.Context, in *BackfillSemanticRuleRequest, opts ...grpc.CallOption) (*BackfillSemanticRuleResponse, error)
 }
 
 type adminSemanticMaintenanceServiceClient struct {
@@ -111,10 +112,10 @@ func (c *adminSemanticMaintenanceServiceClient) ProcessSemanticDirtyWork(ctx con
 	return out, nil
 }
 
-func (c *adminSemanticMaintenanceServiceClient) BackfillSemanticIndex(ctx context.Context, in *BackfillSemanticIndexRequest, opts ...grpc.CallOption) (*BackfillSemanticIndexResponse, error) {
+func (c *adminSemanticMaintenanceServiceClient) BackfillSemanticRule(ctx context.Context, in *BackfillSemanticRuleRequest, opts ...grpc.CallOption) (*BackfillSemanticRuleResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(BackfillSemanticIndexResponse)
-	err := c.cc.Invoke(ctx, AdminSemanticMaintenanceService_BackfillSemanticIndex_FullMethodName, in, out, cOpts...)
+	out := new(BackfillSemanticRuleResponse)
+	err := c.cc.Invoke(ctx, AdminSemanticMaintenanceService_BackfillSemanticRule_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -125,7 +126,8 @@ func (c *adminSemanticMaintenanceServiceClient) BackfillSemanticIndex(ctx contex
 // All implementations must embed UnimplementedAdminSemanticMaintenanceServiceServer
 // for forward compatibility.
 //
-// AdminSemanticMaintenanceService runs daemon-owned semantic maintenance work.
+// AdminSemanticMaintenanceService runs daemon-owned semantic generation rule
+// maintenance work.
 type AdminSemanticMaintenanceServiceServer interface {
 	GetSemanticMaintenanceStatus(context.Context, *GetSemanticMaintenanceStatusRequest) (*GetSemanticMaintenanceStatusResponse, error)
 	ListSemanticMaintenanceWork(context.Context, *ListSemanticMaintenanceWorkRequest) (*ListSemanticMaintenanceWorkResponse, error)
@@ -133,7 +135,7 @@ type AdminSemanticMaintenanceServiceServer interface {
 	CancelSemanticMaintenanceWork(context.Context, *CancelSemanticMaintenanceWorkRequest) (*CancelSemanticMaintenanceWorkResponse, error)
 	AnalyzeSemanticDirtyWork(context.Context, *AnalyzeSemanticDirtyWorkRequest) (*AnalyzeSemanticDirtyWorkResponse, error)
 	ProcessSemanticDirtyWork(context.Context, *ProcessSemanticDirtyWorkRequest) (*ProcessSemanticDirtyWorkResponse, error)
-	BackfillSemanticIndex(context.Context, *BackfillSemanticIndexRequest) (*BackfillSemanticIndexResponse, error)
+	BackfillSemanticRule(context.Context, *BackfillSemanticRuleRequest) (*BackfillSemanticRuleResponse, error)
 	mustEmbedUnimplementedAdminSemanticMaintenanceServiceServer()
 }
 
@@ -162,8 +164,8 @@ func (UnimplementedAdminSemanticMaintenanceServiceServer) AnalyzeSemanticDirtyWo
 func (UnimplementedAdminSemanticMaintenanceServiceServer) ProcessSemanticDirtyWork(context.Context, *ProcessSemanticDirtyWorkRequest) (*ProcessSemanticDirtyWorkResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ProcessSemanticDirtyWork not implemented")
 }
-func (UnimplementedAdminSemanticMaintenanceServiceServer) BackfillSemanticIndex(context.Context, *BackfillSemanticIndexRequest) (*BackfillSemanticIndexResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method BackfillSemanticIndex not implemented")
+func (UnimplementedAdminSemanticMaintenanceServiceServer) BackfillSemanticRule(context.Context, *BackfillSemanticRuleRequest) (*BackfillSemanticRuleResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method BackfillSemanticRule not implemented")
 }
 func (UnimplementedAdminSemanticMaintenanceServiceServer) mustEmbedUnimplementedAdminSemanticMaintenanceServiceServer() {
 }
@@ -295,20 +297,20 @@ func _AdminSemanticMaintenanceService_ProcessSemanticDirtyWork_Handler(srv inter
 	return interceptor(ctx, in, info, handler)
 }
 
-func _AdminSemanticMaintenanceService_BackfillSemanticIndex_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(BackfillSemanticIndexRequest)
+func _AdminSemanticMaintenanceService_BackfillSemanticRule_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(BackfillSemanticRuleRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AdminSemanticMaintenanceServiceServer).BackfillSemanticIndex(ctx, in)
+		return srv.(AdminSemanticMaintenanceServiceServer).BackfillSemanticRule(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: AdminSemanticMaintenanceService_BackfillSemanticIndex_FullMethodName,
+		FullMethod: AdminSemanticMaintenanceService_BackfillSemanticRule_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AdminSemanticMaintenanceServiceServer).BackfillSemanticIndex(ctx, req.(*BackfillSemanticIndexRequest))
+		return srv.(AdminSemanticMaintenanceServiceServer).BackfillSemanticRule(ctx, req.(*BackfillSemanticRuleRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -345,8 +347,8 @@ var AdminSemanticMaintenanceService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _AdminSemanticMaintenanceService_ProcessSemanticDirtyWork_Handler,
 		},
 		{
-			MethodName: "BackfillSemanticIndex",
-			Handler:    _AdminSemanticMaintenanceService_BackfillSemanticIndex_Handler,
+			MethodName: "BackfillSemanticRule",
+			Handler:    _AdminSemanticMaintenanceService_BackfillSemanticRule_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

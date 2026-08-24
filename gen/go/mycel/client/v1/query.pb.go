@@ -2676,14 +2676,15 @@ func (x *TextSearchExpr) GetQuery() string {
 }
 
 type SemanticSearchExpr struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Alias         string                 `protobuf:"bytes,1,opt,name=alias,proto3" json:"alias,omitempty"`
-	Field         string                 `protobuf:"bytes,2,opt,name=field,proto3" json:"field,omitempty"`
-	Query         string                 `protobuf:"bytes,3,opt,name=query,proto3" json:"query,omitempty"`
-	IndexRef      string                 `protobuf:"bytes,4,opt,name=index_ref,json=indexRef,proto3" json:"index_ref,omitempty"`
-	Limit         int32                  `protobuf:"varint,5,opt,name=limit,proto3" json:"limit,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state               protoimpl.MessageState `protogen:"open.v1"`
+	Alias               string                 `protobuf:"bytes,1,opt,name=alias,proto3" json:"alias,omitempty"`
+	Field               string                 `protobuf:"bytes,2,opt,name=field,proto3" json:"field,omitempty"`
+	Query               string                 `protobuf:"bytes,3,opt,name=query,proto3" json:"query,omitempty"`
+	RuleRef             string                 `protobuf:"bytes,4,opt,name=rule_ref,json=ruleRef,proto3" json:"rule_ref,omitempty"`
+	Limit               int32                  `protobuf:"varint,5,opt,name=limit,proto3" json:"limit,omitempty"`
+	EmbeddingBindingKey string                 `protobuf:"bytes,6,opt,name=embedding_binding_key,json=embeddingBindingKey,proto3" json:"embedding_binding_key,omitempty"`
+	unknownFields       protoimpl.UnknownFields
+	sizeCache           protoimpl.SizeCache
 }
 
 func (x *SemanticSearchExpr) Reset() {
@@ -2737,9 +2738,9 @@ func (x *SemanticSearchExpr) GetQuery() string {
 	return ""
 }
 
-func (x *SemanticSearchExpr) GetIndexRef() string {
+func (x *SemanticSearchExpr) GetRuleRef() string {
 	if x != nil {
-		return x.IndexRef
+		return x.RuleRef
 	}
 	return ""
 }
@@ -2749,6 +2750,13 @@ func (x *SemanticSearchExpr) GetLimit() int32 {
 		return x.Limit
 	}
 	return 0
+}
+
+func (x *SemanticSearchExpr) GetEmbeddingBindingKey() string {
+	if x != nil {
+		return x.EmbeddingBindingKey
+	}
+	return ""
 }
 
 type ValueExpr struct {
@@ -3852,13 +3860,14 @@ const file_mycel_client_v1_query_proto_rawDesc = "" +
 	"\x0eTextSearchExpr\x12\x14\n" +
 	"\x05alias\x18\x01 \x01(\tR\x05alias\x12\x14\n" +
 	"\x05field\x18\x02 \x01(\tR\x05field\x12\x14\n" +
-	"\x05query\x18\x03 \x01(\tR\x05query\"\x89\x01\n" +
+	"\x05query\x18\x03 \x01(\tR\x05query\"\xbb\x01\n" +
 	"\x12SemanticSearchExpr\x12\x14\n" +
 	"\x05alias\x18\x01 \x01(\tR\x05alias\x12\x14\n" +
 	"\x05field\x18\x02 \x01(\tR\x05field\x12\x14\n" +
-	"\x05query\x18\x03 \x01(\tR\x05query\x12\x1b\n" +
-	"\tindex_ref\x18\x04 \x01(\tR\bindexRef\x12\x14\n" +
-	"\x05limit\x18\x05 \x01(\x05R\x05limit\"\xf6\x01\n" +
+	"\x05query\x18\x03 \x01(\tR\x05query\x12\x19\n" +
+	"\brule_ref\x18\x04 \x01(\tR\aruleRef\x12\x14\n" +
+	"\x05limit\x18\x05 \x01(\x05R\x05limit\x122\n" +
+	"\x15embedding_binding_key\x18\x06 \x01(\tR\x13embeddingBindingKey\"\xf6\x01\n" +
 	"\tValueExpr\x12/\n" +
 	"\x04prop\x18\x01 \x01(\v2\x19.mycel.client.v1.PropExprH\x00R\x04prop\x128\n" +
 	"\aliteral\x18\x02 \x01(\v2\x1c.mycel.client.v1.LiteralExprH\x00R\aliteral\x12/\n" +

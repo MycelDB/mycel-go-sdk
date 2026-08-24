@@ -578,12 +578,12 @@ func (x *ImportDomainMetadata) GetSourceLabel() string {
 type DomainExportOptions struct {
 	state        protoimpl.MessageState `protogen:"open.v1"`
 	IncludeBlobs bool                   `protobuf:"varint,2,opt,name=include_blobs,json=includeBlobs,proto3" json:"include_blobs,omitempty"`
-	// Semantic index configuration/content is not exported by the Client API in
-	// v1. This field is reserved as an explicit, currently unsupported request
-	// flag so clients can receive a clear error if they ask for it.
-	IncludeSemanticIndexes bool `protobuf:"varint,3,opt,name=include_semantic_indexes,json=includeSemanticIndexes,proto3" json:"include_semantic_indexes,omitempty"`
-	unknownFields          protoimpl.UnknownFields
-	sizeCache              protoimpl.SizeCache
+	// Semantic generation rule configuration/content is not exported by the Client
+	// API in v1. This field is reserved as an explicit, currently unsupported
+	// request flag so clients can receive a clear error if they ask for it.
+	IncludeSemanticRules bool `protobuf:"varint,3,opt,name=include_semantic_rules,json=includeSemanticRules,proto3" json:"include_semantic_rules,omitempty"`
+	unknownFields        protoimpl.UnknownFields
+	sizeCache            protoimpl.SizeCache
 }
 
 func (x *DomainExportOptions) Reset() {
@@ -623,9 +623,9 @@ func (x *DomainExportOptions) GetIncludeBlobs() bool {
 	return false
 }
 
-func (x *DomainExportOptions) GetIncludeSemanticIndexes() bool {
+func (x *DomainExportOptions) GetIncludeSemanticRules() bool {
 	if x != nil {
-		return x.IncludeSemanticIndexes
+		return x.IncludeSemanticRules
 	}
 	return false
 }
@@ -1207,10 +1207,10 @@ const file_mycel_client_v1_import_export_proto_rawDesc = "" +
 	"\x04mode\x18\x03 \x01(\x0e2!.mycel.client.v1.DomainImportModeR\x04mode\x12>\n" +
 	"\aoptions\x18\x04 \x01(\v2$.mycel.client.v1.DomainImportOptionsR\aoptions\x12#\n" +
 	"\rsource_system\x18\x05 \x01(\tR\fsourceSystem\x12!\n" +
-	"\fsource_label\x18\x06 \x01(\tR\vsourceLabel\"t\n" +
+	"\fsource_label\x18\x06 \x01(\tR\vsourceLabel\"p\n" +
 	"\x13DomainExportOptions\x12#\n" +
-	"\rinclude_blobs\x18\x02 \x01(\bR\fincludeBlobs\x128\n" +
-	"\x18include_semantic_indexes\x18\x03 \x01(\bR\x16includeSemanticIndexes\"v\n" +
+	"\rinclude_blobs\x18\x02 \x01(\bR\fincludeBlobs\x124\n" +
+	"\x16include_semantic_rules\x18\x03 \x01(\bR\x14includeSemanticRules\"v\n" +
 	"\x13DomainImportOptions\x12#\n" +
 	"\rinclude_blobs\x18\x02 \x01(\bR\fincludeBlobs\x12!\n" +
 	"\fpreserve_ids\x18\x03 \x01(\bR\vpreserveIds\x12\x17\n" +
