@@ -39,6 +39,7 @@ type AdminClient struct {
 	Principals           adminv1.AdminPrincipalServiceClient
 	Spaces               adminv1.AdminSpaceServiceClient
 	Domains              adminv1.AdminDomainServiceClient
+	Activity             adminv1.AdminActivityServiceClient
 	Semantic             adminv1.AdminSemanticServiceClient
 	SemanticMaintenance  adminv1.AdminSemanticMaintenanceServiceClient
 	SemanticMigration    adminv1.AdminSemanticMigrationServiceClient
@@ -99,6 +100,7 @@ func DialAdmin(ctx context.Context, cfg Config, opts ...grpc.DialOption) (*Admin
 	c.Principals = adminv1.NewAdminPrincipalServiceClient(conn)
 	c.Spaces = adminv1.NewAdminSpaceServiceClient(conn)
 	c.Domains = adminv1.NewAdminDomainServiceClient(conn)
+	c.Activity = adminv1.NewAdminActivityServiceClient(conn)
 	c.Semantic = adminv1.NewAdminSemanticServiceClient(conn)
 	c.SemanticMaintenance = adminv1.NewAdminSemanticMaintenanceServiceClient(conn)
 	c.SemanticMigration = adminv1.NewAdminSemanticMigrationServiceClient(conn)
