@@ -1,5 +1,9 @@
 # Mycel Go SDK
 
+[![CI](https://github.com/MycelDB/mycel-go-sdk/actions/workflows/ci.yml/badge.svg?branch=develop)](https://github.com/MycelDB/mycel-go-sdk/actions/workflows/ci.yml)
+[![Go Reference](https://pkg.go.dev/badge/github.com/myceldb/mycel-go-sdk.svg)](https://pkg.go.dev/github.com/myceldb/mycel-go-sdk)
+[![License](https://img.shields.io/github/license/MycelDB/mycel-go-sdk)](LICENSE)
+
 Go connector for MycelDB daemon APIs.
 
 Module path:
@@ -218,7 +222,7 @@ _ = cluster
 
 ## Contributing
 
-See [`CONTRIBUTING.md`](CONTRIBUTING.md) for SDK contribution guidelines, generated binding policy, and compatibility expectations.
+See [`CONTRIBUTING.md`](CONTRIBUTING.md) for SDK contribution guidelines, generated binding policy, and compatibility expectations. See [`CODE_OF_CONDUCT.md`](CODE_OF_CONDUCT.md) for community standards and [`CHANGELOG.md`](CHANGELOG.md) for release notes.
 
 ## Security
 
