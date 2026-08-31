@@ -195,21 +195,23 @@ _ = cluster
 
 `ConfigFromEnv` reads:
 
-- `MYCELD_GRPC_ADDR`
-- `MYCEL_USERNAME`
-- `MYCEL_PASSWORD`
-- `MYCEL_ACCESS_TOKEN`
-- `MYCEL_ACCESS_TOKEN_EXPIRE_TIME` (RFC3339)
-- `MYCEL_REFRESH_TOKEN`
-- `MYCEL_REFRESH_BEFORE` (duration, default `30s`)
-- `MYCEL_CALL_TIMEOUT`
-- `MYCELD_TLS`
-- `MYCELD_TLS_CA_FILE`
-- `MYCELD_TLS_SERVER_NAME`
-- `MYCELD_TLS_INSECURE_SKIP_VERIFY`
-- `MYCELD_TLS_CLIENT_CERT_FILE`
-- `MYCELD_TLS_CLIENT_KEY_FILE`
-- `MYCEL_CLIENT_NAME`
-- `MYCEL_CLIENT_VERSION`
-- `MYCEL_CLIENT_PLATFORM`
-- `MYCEL_CLIENT_DEVICE_LABEL`
+| Variable | Default | Description |
+| --- | --- | --- |
+| `MYCELD_GRPC_ADDR` | `127.0.0.1:9091` | MycelDB daemon gRPC address to dial. |
+| `MYCEL_USERNAME` | Empty | Username used for SDK login. |
+| `MYCEL_PASSWORD` | Empty | Password used for SDK login. |
+| `MYCEL_ACCESS_TOKEN` | Empty | Existing bearer access token to use instead of starting unauthenticated. |
+| `MYCEL_ACCESS_TOKEN_EXPIRE_TIME` | Zero time | RFC3339 access-token expiry timestamp used to decide when refresh is needed. |
+| `MYCEL_REFRESH_TOKEN` | Empty | Refresh token used to renew access tokens. |
+| `MYCEL_REFRESH_BEFORE` | `30s` effective default | Go duration before access-token expiry when the SDK should proactively refresh. |
+| `MYCEL_CALL_TIMEOUT` | No timeout | Go duration applied as a per-RPC timeout when set. |
+| `MYCELD_TLS` | `false` | Enables TLS transport when set to a truthy value. |
+| `MYCELD_TLS_CA_FILE` | Empty | Path to a PEM CA bundle used to verify the daemon TLS certificate. |
+| `MYCELD_TLS_SERVER_NAME` | Empty | TLS server name override for certificate verification. |
+| `MYCELD_TLS_INSECURE_SKIP_VERIFY` | `false` | Skips TLS certificate verification when set to a truthy value; for local/testing use only. |
+| `MYCELD_TLS_CLIENT_CERT_FILE` | Empty | Path to the client certificate PEM file for mTLS. |
+| `MYCELD_TLS_CLIENT_KEY_FILE` | Empty | Path to the client private key PEM file for mTLS. |
+| `MYCEL_CLIENT_NAME` | `mycel-go-sdk` | Client application name sent in login metadata. |
+| `MYCEL_CLIENT_VERSION` | Empty | Client application version sent in login metadata. |
+| `MYCEL_CLIENT_PLATFORM` | `go` | Client platform identifier sent in login metadata. |
+| `MYCEL_CLIENT_DEVICE_LABEL` | Empty | Optional device label sent in login metadata. |
