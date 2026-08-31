@@ -215,3 +215,15 @@ _ = cluster
 | `MYCEL_CLIENT_VERSION` | Empty | Client application version sent in login metadata. |
 | `MYCEL_CLIENT_PLATFORM` | `go` | Client platform identifier sent in login metadata. |
 | `MYCEL_CLIENT_DEVICE_LABEL` | Empty | Optional device label sent in login metadata. |
+
+## Contributing
+
+See [`CONTRIBUTING.md`](CONTRIBUTING.md) for SDK contribution guidelines, generated binding policy, and compatibility expectations.
+
+## Security
+
+Please report suspected vulnerabilities privately through GitHub Security Advisories / private vulnerability reporting. See [`SECURITY.md`](SECURITY.md).
+
+## License
+
+Licensed under the Apache License, Version 2.0. See [`LICENSE`](LICENSE).
