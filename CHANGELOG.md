@@ -6,21 +6,25 @@ This project follows the spirit of [Keep a Changelog](https://keepachangelog.com
 
 ## [Unreleased]
 
+## [v0.9.0] - 2026-08-31
+
 ### Added
 
-- Open-source project documentation: contributing guide, security policy, code of conduct, pull request template, and issue templates.
+- First public-release baseline for the MycelDB Go SDK.
+- Open-source project documentation: contributing guide, security policy, code of conduct, changelog, pull request template, issue templates, and README badges.
 - README environment configuration table with variable defaults and descriptions.
 
 ### Changed
 
-- Regenerated Go protobuf/gRPC bindings from the matching `mycel-api` API contract when API changes are pulled into this repository.
+- Regenerated committed Go protobuf/gRPC bindings from the matching `mycel-api` API contract so tagged Go module releases are self-contained.
+- Documented generated-binding policy, SDK compatibility expectations, and repository boundaries.
 
 ## Release notes policy
 
 For each release, add a dated section such as:
 
 ```md
-## [v0.8.0] - YYYY-MM-DD
+## [v0.9.0] - YYYY-MM-DD
 
 ### Added
 ### Changed
