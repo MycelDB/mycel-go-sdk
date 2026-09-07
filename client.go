@@ -25,6 +25,7 @@ type Client struct {
 	Automation   clientv1.AutomationServiceClient
 	ImportExport clientv1.ImportExportServiceClient
 	Metadata     clientv1.MetadataCatalogServiceClient
+	Search       clientv1.SearchServiceClient
 	Semantic     clientv1.SemanticServiceClient
 	GraphChange  clientv1.GraphChangeServiceClient
 
@@ -40,6 +41,7 @@ type AdminClient struct {
 	Spaces               adminv1.AdminSpaceServiceClient
 	Domains              adminv1.AdminDomainServiceClient
 	Activity             adminv1.AdminActivityServiceClient
+	LexicalMaintenance   adminv1.AdminLexicalMaintenanceServiceClient
 	Semantic             adminv1.AdminSemanticServiceClient
 	SemanticMaintenance  adminv1.AdminSemanticMaintenanceServiceClient
 	SemanticMigration    adminv1.AdminSemanticMigrationServiceClient
@@ -77,6 +79,7 @@ func Dial(ctx context.Context, cfg Config, opts ...grpc.DialOption) (*Client, er
 	c.Automation = clientv1.NewAutomationServiceClient(conn)
 	c.ImportExport = clientv1.NewImportExportServiceClient(conn)
 	c.Metadata = clientv1.NewMetadataCatalogServiceClient(conn)
+	c.Search = clientv1.NewSearchServiceClient(conn)
 	c.Semantic = clientv1.NewSemanticServiceClient(conn)
 	c.GraphChange = clientv1.NewGraphChangeServiceClient(conn)
 	if cfg.Username != "" || cfg.Password != "" {
@@ -101,6 +104,7 @@ func DialAdmin(ctx context.Context, cfg Config, opts ...grpc.DialOption) (*Admin
 	c.Spaces = adminv1.NewAdminSpaceServiceClient(conn)
 	c.Domains = adminv1.NewAdminDomainServiceClient(conn)
 	c.Activity = adminv1.NewAdminActivityServiceClient(conn)
+	c.LexicalMaintenance = adminv1.NewAdminLexicalMaintenanceServiceClient(conn)
 	c.Semantic = adminv1.NewAdminSemanticServiceClient(conn)
 	c.SemanticMaintenance = adminv1.NewAdminSemanticMaintenanceServiceClient(conn)
 	c.SemanticMigration = adminv1.NewAdminSemanticMigrationServiceClient(conn)
