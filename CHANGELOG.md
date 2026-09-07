@@ -6,6 +6,8 @@ This project follows the spirit of [Keep a Changelog](https://keepachangelog.com
 
 ## [Unreleased]
 
+## [v0.11.0] - 2026-09-07
+
 ### Added
 
 - Regenerated Go protobuf/gRPC bindings for the lexical search APIs and exposed thin `Client.Search` and `AdminClient.LexicalMaintenance` service clients.
