@@ -20,7 +20,7 @@ The SDK generates Go protobuf/gRPC stubs from the language-independent `mycel-ap
 - operator/admin login, refresh, and logout helpers
 - automatic access-token refresh with one retry on expired-token `Unauthenticated`
 - bearer-token metadata injection
-- generated Admin and Client service clients under `gen/go/` after generation
+- generated Admin and Client service clients under `gen/go/` after generation, including lexical Search and admin lexical maintenance clients
 - call timeout helpers
 - session/transaction helpers
 - thin graph/query convenience methods
