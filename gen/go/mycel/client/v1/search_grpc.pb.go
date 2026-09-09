@@ -30,8 +30,8 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 //
 // SearchService exposes first-class search over graph content. V1 supports
-// lexical search for one space/domain. Future modes may add semantic, metadata,
-// or hybrid orchestration without changing the existing lexical contract.
+// lexical search for one space/domain and hybrid lexical + semantic search.
+// Metadata filters are hard eligibility constraints, not scoring signals.
 type SearchServiceClient interface {
 	// Search runs a search request for the authenticated caller within the target
 	// space/domain. Results are discovery candidates from an eventually
@@ -77,8 +77,8 @@ func (c *searchServiceClient) GetLexicalIndexStatus(ctx context.Context, in *Get
 // for forward compatibility.
 //
 // SearchService exposes first-class search over graph content. V1 supports
-// lexical search for one space/domain. Future modes may add semantic, metadata,
-// or hybrid orchestration without changing the existing lexical contract.
+// lexical search for one space/domain and hybrid lexical + semantic search.
+// Metadata filters are hard eligibility constraints, not scoring signals.
 type SearchServiceServer interface {
 	// Search runs a search request for the authenticated caller within the target
 	// space/domain. Results are discovery candidates from an eventually

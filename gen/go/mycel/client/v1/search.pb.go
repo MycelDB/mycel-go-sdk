@@ -28,6 +28,7 @@ type SearchMode int32
 const (
 	SearchMode_SEARCH_MODE_UNSPECIFIED SearchMode = 0
 	SearchMode_SEARCH_MODE_LEXICAL     SearchMode = 1
+	SearchMode_SEARCH_MODE_HYBRID      SearchMode = 2
 )
 
 // Enum value maps for SearchMode.
@@ -35,10 +36,12 @@ var (
 	SearchMode_name = map[int32]string{
 		0: "SEARCH_MODE_UNSPECIFIED",
 		1: "SEARCH_MODE_LEXICAL",
+		2: "SEARCH_MODE_HYBRID",
 	}
 	SearchMode_value = map[string]int32{
 		"SEARCH_MODE_UNSPECIFIED": 0,
 		"SEARCH_MODE_LEXICAL":     1,
+		"SEARCH_MODE_HYBRID":      2,
 	}
 )
 
@@ -72,8 +75,9 @@ func (SearchMode) EnumDescriptor() ([]byte, []int) {
 type SearchScoreKind int32
 
 const (
-	SearchScoreKind_SEARCH_SCORE_KIND_UNSPECIFIED SearchScoreKind = 0
-	SearchScoreKind_SEARCH_SCORE_KIND_BM25        SearchScoreKind = 1
+	SearchScoreKind_SEARCH_SCORE_KIND_UNSPECIFIED  SearchScoreKind = 0
+	SearchScoreKind_SEARCH_SCORE_KIND_BM25         SearchScoreKind = 1
+	SearchScoreKind_SEARCH_SCORE_KIND_HYBRID_FUSED SearchScoreKind = 2
 )
 
 // Enum value maps for SearchScoreKind.
@@ -81,10 +85,12 @@ var (
 	SearchScoreKind_name = map[int32]string{
 		0: "SEARCH_SCORE_KIND_UNSPECIFIED",
 		1: "SEARCH_SCORE_KIND_BM25",
+		2: "SEARCH_SCORE_KIND_HYBRID_FUSED",
 	}
 	SearchScoreKind_value = map[string]int32{
-		"SEARCH_SCORE_KIND_UNSPECIFIED": 0,
-		"SEARCH_SCORE_KIND_BM25":        1,
+		"SEARCH_SCORE_KIND_UNSPECIFIED":  0,
+		"SEARCH_SCORE_KIND_BM25":         1,
+		"SEARCH_SCORE_KIND_HYBRID_FUSED": 2,
 	}
 )
 
@@ -113,6 +119,161 @@ func (x SearchScoreKind) Number() protoreflect.EnumNumber {
 // Deprecated: Use SearchScoreKind.Descriptor instead.
 func (SearchScoreKind) EnumDescriptor() ([]byte, []int) {
 	return file_mycel_client_v1_search_proto_rawDescGZIP(), []int{1}
+}
+
+// HybridFusionStrategy controls how independently ranked candidate sets are
+// merged. V1 supports weighted reciprocal-rank fusion.
+type HybridFusionStrategy int32
+
+const (
+	HybridFusionStrategy_HYBRID_FUSION_STRATEGY_UNSPECIFIED              HybridFusionStrategy = 0
+	HybridFusionStrategy_HYBRID_FUSION_STRATEGY_WEIGHTED_RECIPROCAL_RANK HybridFusionStrategy = 1
+)
+
+// Enum value maps for HybridFusionStrategy.
+var (
+	HybridFusionStrategy_name = map[int32]string{
+		0: "HYBRID_FUSION_STRATEGY_UNSPECIFIED",
+		1: "HYBRID_FUSION_STRATEGY_WEIGHTED_RECIPROCAL_RANK",
+	}
+	HybridFusionStrategy_value = map[string]int32{
+		"HYBRID_FUSION_STRATEGY_UNSPECIFIED":              0,
+		"HYBRID_FUSION_STRATEGY_WEIGHTED_RECIPROCAL_RANK": 1,
+	}
+)
+
+func (x HybridFusionStrategy) Enum() *HybridFusionStrategy {
+	p := new(HybridFusionStrategy)
+	*p = x
+	return p
+}
+
+func (x HybridFusionStrategy) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (HybridFusionStrategy) Descriptor() protoreflect.EnumDescriptor {
+	return file_mycel_client_v1_search_proto_enumTypes[2].Descriptor()
+}
+
+func (HybridFusionStrategy) Type() protoreflect.EnumType {
+	return &file_mycel_client_v1_search_proto_enumTypes[2]
+}
+
+func (x HybridFusionStrategy) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use HybridFusionStrategy.Descriptor instead.
+func (HybridFusionStrategy) EnumDescriptor() ([]byte, []int) {
+	return file_mycel_client_v1_search_proto_rawDescGZIP(), []int{2}
+}
+
+type FilterOperator int32
+
+const (
+	FilterOperator_FILTER_OPERATOR_UNSPECIFIED FilterOperator = 0
+	FilterOperator_FILTER_OPERATOR_EQUALS      FilterOperator = 1
+	FilterOperator_FILTER_OPERATOR_NOT_EQUALS  FilterOperator = 2
+	FilterOperator_FILTER_OPERATOR_IN          FilterOperator = 3
+	FilterOperator_FILTER_OPERATOR_CONTAINS    FilterOperator = 4
+	FilterOperator_FILTER_OPERATOR_EXISTS      FilterOperator = 5
+)
+
+// Enum value maps for FilterOperator.
+var (
+	FilterOperator_name = map[int32]string{
+		0: "FILTER_OPERATOR_UNSPECIFIED",
+		1: "FILTER_OPERATOR_EQUALS",
+		2: "FILTER_OPERATOR_NOT_EQUALS",
+		3: "FILTER_OPERATOR_IN",
+		4: "FILTER_OPERATOR_CONTAINS",
+		5: "FILTER_OPERATOR_EXISTS",
+	}
+	FilterOperator_value = map[string]int32{
+		"FILTER_OPERATOR_UNSPECIFIED": 0,
+		"FILTER_OPERATOR_EQUALS":      1,
+		"FILTER_OPERATOR_NOT_EQUALS":  2,
+		"FILTER_OPERATOR_IN":          3,
+		"FILTER_OPERATOR_CONTAINS":    4,
+		"FILTER_OPERATOR_EXISTS":      5,
+	}
+)
+
+func (x FilterOperator) Enum() *FilterOperator {
+	p := new(FilterOperator)
+	*p = x
+	return p
+}
+
+func (x FilterOperator) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (FilterOperator) Descriptor() protoreflect.EnumDescriptor {
+	return file_mycel_client_v1_search_proto_enumTypes[3].Descriptor()
+}
+
+func (FilterOperator) Type() protoreflect.EnumType {
+	return &file_mycel_client_v1_search_proto_enumTypes[3]
+}
+
+func (x FilterOperator) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use FilterOperator.Descriptor instead.
+func (FilterOperator) EnumDescriptor() ([]byte, []int) {
+	return file_mycel_client_v1_search_proto_rawDescGZIP(), []int{3}
+}
+
+type SearchResultSourceKind int32
+
+const (
+	SearchResultSourceKind_SEARCH_RESULT_SOURCE_KIND_UNSPECIFIED SearchResultSourceKind = 0
+	SearchResultSourceKind_SEARCH_RESULT_SOURCE_KIND_LEXICAL     SearchResultSourceKind = 1
+	SearchResultSourceKind_SEARCH_RESULT_SOURCE_KIND_SEMANTIC    SearchResultSourceKind = 2
+)
+
+// Enum value maps for SearchResultSourceKind.
+var (
+	SearchResultSourceKind_name = map[int32]string{
+		0: "SEARCH_RESULT_SOURCE_KIND_UNSPECIFIED",
+		1: "SEARCH_RESULT_SOURCE_KIND_LEXICAL",
+		2: "SEARCH_RESULT_SOURCE_KIND_SEMANTIC",
+	}
+	SearchResultSourceKind_value = map[string]int32{
+		"SEARCH_RESULT_SOURCE_KIND_UNSPECIFIED": 0,
+		"SEARCH_RESULT_SOURCE_KIND_LEXICAL":     1,
+		"SEARCH_RESULT_SOURCE_KIND_SEMANTIC":    2,
+	}
+)
+
+func (x SearchResultSourceKind) Enum() *SearchResultSourceKind {
+	p := new(SearchResultSourceKind)
+	*p = x
+	return p
+}
+
+func (x SearchResultSourceKind) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (SearchResultSourceKind) Descriptor() protoreflect.EnumDescriptor {
+	return file_mycel_client_v1_search_proto_enumTypes[4].Descriptor()
+}
+
+func (SearchResultSourceKind) Type() protoreflect.EnumType {
+	return &file_mycel_client_v1_search_proto_enumTypes[4]
+}
+
+func (x SearchResultSourceKind) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use SearchResultSourceKind.Descriptor instead.
+func (SearchResultSourceKind) EnumDescriptor() ([]byte, []int) {
+	return file_mycel_client_v1_search_proto_rawDescGZIP(), []int{4}
 }
 
 type SearchFreshnessState int32
@@ -157,11 +318,11 @@ func (x SearchFreshnessState) String() string {
 }
 
 func (SearchFreshnessState) Descriptor() protoreflect.EnumDescriptor {
-	return file_mycel_client_v1_search_proto_enumTypes[2].Descriptor()
+	return file_mycel_client_v1_search_proto_enumTypes[5].Descriptor()
 }
 
 func (SearchFreshnessState) Type() protoreflect.EnumType {
-	return &file_mycel_client_v1_search_proto_enumTypes[2]
+	return &file_mycel_client_v1_search_proto_enumTypes[5]
 }
 
 func (x SearchFreshnessState) Number() protoreflect.EnumNumber {
@@ -170,22 +331,23 @@ func (x SearchFreshnessState) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use SearchFreshnessState.Descriptor instead.
 func (SearchFreshnessState) EnumDescriptor() ([]byte, []int) {
-	return file_mycel_client_v1_search_proto_rawDescGZIP(), []int{2}
+	return file_mycel_client_v1_search_proto_rawDescGZIP(), []int{5}
 }
 
 type SearchRequest struct {
 	state    protoimpl.MessageState `protogen:"open.v1"`
 	SpaceId  string                 `protobuf:"bytes,1,opt,name=space_id,json=spaceId,proto3" json:"space_id,omitempty"`
 	DomainId string                 `protobuf:"bytes,2,opt,name=domain_id,json=domainId,proto3" json:"domain_id,omitempty"`
-	// V1 supports SEARCH_MODE_LEXICAL. Unspecified mode defaults to lexical while
-	// lexical search is the only implemented mode.
+	// Unspecified mode defaults to lexical for backward compatibility. Hybrid mode
+	// combines lexical and semantic candidate retrieval into one fused ranking.
 	Mode SearchMode `protobuf:"varint,3,opt,name=mode,proto3,enum=mycel.client.v1.SearchMode" json:"mode,omitempty"`
 	// Lucene-style v1 query string. Supported syntax includes terms, quoted
 	// phrases, AND, OR, NOT, unary '-', and parentheses. The implicit operator is
 	// AND. Wildcard, fuzzy, range, and fielded lexical syntax are reserved and
 	// should return structured diagnostics rather than partial matches.
 	Query string `protobuf:"bytes,4,opt,name=query,proto3" json:"query,omitempty"`
-	// Optional filters reserved for future metadata/hybrid search composition.
+	// Optional hard eligibility filters. Filters constrain which candidate nodes
+	// may be returned and do not contribute to score.
 	Filters *SearchFilters `protobuf:"bytes,5,opt,name=filters,proto3" json:"filters,omitempty"`
 	// Maximum number of results to return. The daemon may cap this value.
 	PageSize int32 `protobuf:"varint,6,opt,name=page_size,json=pageSize,proto3" json:"page_size,omitempty"`
@@ -201,8 +363,14 @@ type SearchRequest struct {
 	// Optional maximum acceptable revision lag when latest graph revision is
 	// known. A value of 0 leaves the limit unset.
 	MaxRevisionLag int64 `protobuf:"varint,10,opt,name=max_revision_lag,json=maxRevisionLag,proto3" json:"max_revision_lag,omitempty"`
-	unknownFields  protoimpl.UnknownFields
-	sizeCache      protoimpl.SizeCache
+	// Hybrid-specific options. Used when mode is SEARCH_MODE_HYBRID.
+	Hybrid *HybridSearchOptions `protobuf:"bytes,11,opt,name=hybrid,proto3" json:"hybrid,omitempty"`
+	// Semantic candidate retrieval options used by hybrid mode.
+	Semantic *SemanticSearchOptions `protobuf:"bytes,12,opt,name=semantic,proto3" json:"semantic,omitempty"`
+	// Lexical candidate retrieval options used by lexical and hybrid modes.
+	Lexical       *LexicalSearchOptions `protobuf:"bytes,13,opt,name=lexical,proto3" json:"lexical,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
 func (x *SearchRequest) Reset() {
@@ -305,6 +473,27 @@ func (x *SearchRequest) GetMaxRevisionLag() int64 {
 	return 0
 }
 
+func (x *SearchRequest) GetHybrid() *HybridSearchOptions {
+	if x != nil {
+		return x.Hybrid
+	}
+	return nil
+}
+
+func (x *SearchRequest) GetSemantic() *SemanticSearchOptions {
+	if x != nil {
+		return x.Semantic
+	}
+	return nil
+}
+
+func (x *SearchRequest) GetLexical() *LexicalSearchOptions {
+	if x != nil {
+		return x.Lexical
+	}
+	return nil
+}
+
 type SearchResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Results       []*SearchResult        `protobuf:"bytes,1,rep,name=results,proto3" json:"results,omitempty"`
@@ -399,8 +588,10 @@ type SearchResult struct {
 	MatchedTerms      []string                `protobuf:"bytes,7,rep,name=matched_terms,json=matchedTerms,proto3" json:"matched_terms,omitempty"`
 	MatchedFieldPaths []string                `protobuf:"bytes,8,rep,name=matched_field_paths,json=matchedFieldPaths,proto3" json:"matched_field_paths,omitempty"`
 	ScoreComponents   []*SearchScoreComponent `protobuf:"bytes,9,rep,name=score_components,json=scoreComponents,proto3" json:"score_components,omitempty"`
-	unknownFields     protoimpl.UnknownFields
-	sizeCache         protoimpl.SizeCache
+	// Machine-readable source diagnostics for fused/hybrid results.
+	Sources       []*SearchResultSource `protobuf:"bytes,10,rep,name=sources,proto3" json:"sources,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
 func (x *SearchResult) Reset() {
@@ -496,15 +687,224 @@ func (x *SearchResult) GetScoreComponents() []*SearchScoreComponent {
 	return nil
 }
 
+func (x *SearchResult) GetSources() []*SearchResultSource {
+	if x != nil {
+		return x.Sources
+	}
+	return nil
+}
+
+type HybridSearchOptions struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Defaults to 0.5. The server normalizes non-zero weights, so 2/1 is
+	// equivalent to 0.6667/0.3333.
+	LexicalWeight float64 `protobuf:"fixed64,1,opt,name=lexical_weight,json=lexicalWeight,proto3" json:"lexical_weight,omitempty"`
+	// Defaults to 0.5. The server normalizes non-zero weights.
+	SemanticWeight float64 `protobuf:"fixed64,2,opt,name=semantic_weight,json=semanticWeight,proto3" json:"semantic_weight,omitempty"`
+	// Defaults to weighted reciprocal-rank fusion.
+	FusionStrategy HybridFusionStrategy `protobuf:"varint,3,opt,name=fusion_strategy,json=fusionStrategy,proto3,enum=mycel.client.v1.HybridFusionStrategy" json:"fusion_strategy,omitempty"`
+	// When false, a node may match either lexical or semantic retrieval. When
+	// true, only nodes present in both result sets are returned.
+	RequireBoth   bool `protobuf:"varint,4,opt,name=require_both,json=requireBoth,proto3" json:"require_both,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *HybridSearchOptions) Reset() {
+	*x = HybridSearchOptions{}
+	mi := &file_mycel_client_v1_search_proto_msgTypes[3]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *HybridSearchOptions) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*HybridSearchOptions) ProtoMessage() {}
+
+func (x *HybridSearchOptions) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_client_v1_search_proto_msgTypes[3]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use HybridSearchOptions.ProtoReflect.Descriptor instead.
+func (*HybridSearchOptions) Descriptor() ([]byte, []int) {
+	return file_mycel_client_v1_search_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *HybridSearchOptions) GetLexicalWeight() float64 {
+	if x != nil {
+		return x.LexicalWeight
+	}
+	return 0
+}
+
+func (x *HybridSearchOptions) GetSemanticWeight() float64 {
+	if x != nil {
+		return x.SemanticWeight
+	}
+	return 0
+}
+
+func (x *HybridSearchOptions) GetFusionStrategy() HybridFusionStrategy {
+	if x != nil {
+		return x.FusionStrategy
+	}
+	return HybridFusionStrategy_HYBRID_FUSION_STRATEGY_UNSPECIFIED
+}
+
+func (x *HybridSearchOptions) GetRequireBoth() bool {
+	if x != nil {
+		return x.RequireBoth
+	}
+	return false
+}
+
+type LexicalSearchOptions struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Number of lexical candidates to retrieve before filtering/fusion. If unset,
+	// the daemon chooses a bounded default.
+	CandidateCount int32 `protobuf:"varint,1,opt,name=candidate_count,json=candidateCount,proto3" json:"candidate_count,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
+}
+
+func (x *LexicalSearchOptions) Reset() {
+	*x = LexicalSearchOptions{}
+	mi := &file_mycel_client_v1_search_proto_msgTypes[4]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *LexicalSearchOptions) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*LexicalSearchOptions) ProtoMessage() {}
+
+func (x *LexicalSearchOptions) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_client_v1_search_proto_msgTypes[4]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use LexicalSearchOptions.ProtoReflect.Descriptor instead.
+func (*LexicalSearchOptions) Descriptor() ([]byte, []int) {
+	return file_mycel_client_v1_search_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *LexicalSearchOptions) GetCandidateCount() int32 {
+	if x != nil {
+		return x.CandidateCount
+	}
+	return 0
+}
+
+type SemanticSearchOptions struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Optional. If omitted, the daemon searches all enabled searchable semantic
+	// rule bindings for the domain that the caller can read.
+	SemanticRuleId *string `protobuf:"bytes,1,opt,name=semantic_rule_id,json=semanticRuleId,proto3,oneof" json:"semantic_rule_id,omitempty"`
+	// Optional. Requires semantic_rule_id when set.
+	EmbeddingBindingKey *string `protobuf:"bytes,2,opt,name=embedding_binding_key,json=embeddingBindingKey,proto3,oneof" json:"embedding_binding_key,omitempty"`
+	// Optional minimum score threshold. Score meaning is model dependent but
+	// higher scores should represent more relevant results.
+	MinScore *float64 `protobuf:"fixed64,3,opt,name=min_score,json=minScore,proto3,oneof" json:"min_score,omitempty"`
+	// Number of semantic candidates to retrieve before filtering/fusion. If unset,
+	// the daemon chooses a bounded default.
+	CandidateCount int32 `protobuf:"varint,4,opt,name=candidate_count,json=candidateCount,proto3" json:"candidate_count,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
+}
+
+func (x *SemanticSearchOptions) Reset() {
+	*x = SemanticSearchOptions{}
+	mi := &file_mycel_client_v1_search_proto_msgTypes[5]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SemanticSearchOptions) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SemanticSearchOptions) ProtoMessage() {}
+
+func (x *SemanticSearchOptions) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_client_v1_search_proto_msgTypes[5]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SemanticSearchOptions.ProtoReflect.Descriptor instead.
+func (*SemanticSearchOptions) Descriptor() ([]byte, []int) {
+	return file_mycel_client_v1_search_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *SemanticSearchOptions) GetSemanticRuleId() string {
+	if x != nil && x.SemanticRuleId != nil {
+		return *x.SemanticRuleId
+	}
+	return ""
+}
+
+func (x *SemanticSearchOptions) GetEmbeddingBindingKey() string {
+	if x != nil && x.EmbeddingBindingKey != nil {
+		return *x.EmbeddingBindingKey
+	}
+	return ""
+}
+
+func (x *SemanticSearchOptions) GetMinScore() float64 {
+	if x != nil && x.MinScore != nil {
+		return *x.MinScore
+	}
+	return 0
+}
+
+func (x *SemanticSearchOptions) GetCandidateCount() int32 {
+	if x != nil {
+		return x.CandidateCount
+	}
+	return 0
+}
+
 type SearchFilters struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// All listed labels must be present on a candidate node.
+	NodeLabels []string `protobuf:"bytes,1,rep,name=node_labels,json=nodeLabels,proto3" json:"node_labels,omitempty"`
+	// All listed property filters must match a candidate node.
+	Properties []*PropertyFilter `protobuf:"bytes,2,rep,name=properties,proto3" json:"properties,omitempty"`
+	// Optional candidate node allow-list. If set, only these node IDs may be
+	// returned.
+	NodeIds       []string `protobuf:"bytes,3,rep,name=node_ids,json=nodeIds,proto3" json:"node_ids,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *SearchFilters) Reset() {
 	*x = SearchFilters{}
-	mi := &file_mycel_client_v1_search_proto_msgTypes[3]
+	mi := &file_mycel_client_v1_search_proto_msgTypes[6]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -516,7 +916,7 @@ func (x *SearchFilters) String() string {
 func (*SearchFilters) ProtoMessage() {}
 
 func (x *SearchFilters) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_client_v1_search_proto_msgTypes[3]
+	mi := &file_mycel_client_v1_search_proto_msgTypes[6]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -529,7 +929,157 @@ func (x *SearchFilters) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SearchFilters.ProtoReflect.Descriptor instead.
 func (*SearchFilters) Descriptor() ([]byte, []int) {
-	return file_mycel_client_v1_search_proto_rawDescGZIP(), []int{3}
+	return file_mycel_client_v1_search_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *SearchFilters) GetNodeLabels() []string {
+	if x != nil {
+		return x.NodeLabels
+	}
+	return nil
+}
+
+func (x *SearchFilters) GetProperties() []*PropertyFilter {
+	if x != nil {
+		return x.Properties
+	}
+	return nil
+}
+
+func (x *SearchFilters) GetNodeIds() []string {
+	if x != nil {
+		return x.NodeIds
+	}
+	return nil
+}
+
+type PropertyFilter struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Dot-separated property path, for example "status" or "metadata.tags".
+	Path          string         `protobuf:"bytes,1,opt,name=path,proto3" json:"path,omitempty"`
+	Operator      FilterOperator `protobuf:"varint,2,opt,name=operator,proto3,enum=mycel.client.v1.FilterOperator" json:"operator,omitempty"`
+	Values        []string       `protobuf:"bytes,3,rep,name=values,proto3" json:"values,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *PropertyFilter) Reset() {
+	*x = PropertyFilter{}
+	mi := &file_mycel_client_v1_search_proto_msgTypes[7]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *PropertyFilter) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*PropertyFilter) ProtoMessage() {}
+
+func (x *PropertyFilter) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_client_v1_search_proto_msgTypes[7]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use PropertyFilter.ProtoReflect.Descriptor instead.
+func (*PropertyFilter) Descriptor() ([]byte, []int) {
+	return file_mycel_client_v1_search_proto_rawDescGZIP(), []int{7}
+}
+
+func (x *PropertyFilter) GetPath() string {
+	if x != nil {
+		return x.Path
+	}
+	return ""
+}
+
+func (x *PropertyFilter) GetOperator() FilterOperator {
+	if x != nil {
+		return x.Operator
+	}
+	return FilterOperator_FILTER_OPERATOR_UNSPECIFIED
+}
+
+func (x *PropertyFilter) GetValues() []string {
+	if x != nil {
+		return x.Values
+	}
+	return nil
+}
+
+type SearchResultSource struct {
+	state           protoimpl.MessageState `protogen:"open.v1"`
+	Kind            SearchResultSourceKind `protobuf:"varint,1,opt,name=kind,proto3,enum=mycel.client.v1.SearchResultSourceKind" json:"kind,omitempty"`
+	RawScore        float64                `protobuf:"fixed64,2,opt,name=raw_score,json=rawScore,proto3" json:"raw_score,omitempty"`
+	Rank            int32                  `protobuf:"varint,3,opt,name=rank,proto3" json:"rank,omitempty"`
+	NormalizedScore float64                `protobuf:"fixed64,4,opt,name=normalized_score,json=normalizedScore,proto3" json:"normalized_score,omitempty"`
+	unknownFields   protoimpl.UnknownFields
+	sizeCache       protoimpl.SizeCache
+}
+
+func (x *SearchResultSource) Reset() {
+	*x = SearchResultSource{}
+	mi := &file_mycel_client_v1_search_proto_msgTypes[8]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SearchResultSource) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SearchResultSource) ProtoMessage() {}
+
+func (x *SearchResultSource) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_client_v1_search_proto_msgTypes[8]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SearchResultSource.ProtoReflect.Descriptor instead.
+func (*SearchResultSource) Descriptor() ([]byte, []int) {
+	return file_mycel_client_v1_search_proto_rawDescGZIP(), []int{8}
+}
+
+func (x *SearchResultSource) GetKind() SearchResultSourceKind {
+	if x != nil {
+		return x.Kind
+	}
+	return SearchResultSourceKind_SEARCH_RESULT_SOURCE_KIND_UNSPECIFIED
+}
+
+func (x *SearchResultSource) GetRawScore() float64 {
+	if x != nil {
+		return x.RawScore
+	}
+	return 0
+}
+
+func (x *SearchResultSource) GetRank() int32 {
+	if x != nil {
+		return x.Rank
+	}
+	return 0
+}
+
+func (x *SearchResultSource) GetNormalizedScore() float64 {
+	if x != nil {
+		return x.NormalizedScore
+	}
+	return 0
 }
 
 type SearchFreshness struct {
@@ -546,7 +1096,7 @@ type SearchFreshness struct {
 
 func (x *SearchFreshness) Reset() {
 	*x = SearchFreshness{}
-	mi := &file_mycel_client_v1_search_proto_msgTypes[4]
+	mi := &file_mycel_client_v1_search_proto_msgTypes[9]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -558,7 +1108,7 @@ func (x *SearchFreshness) String() string {
 func (*SearchFreshness) ProtoMessage() {}
 
 func (x *SearchFreshness) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_client_v1_search_proto_msgTypes[4]
+	mi := &file_mycel_client_v1_search_proto_msgTypes[9]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -571,7 +1121,7 @@ func (x *SearchFreshness) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SearchFreshness.ProtoReflect.Descriptor instead.
 func (*SearchFreshness) Descriptor() ([]byte, []int) {
-	return file_mycel_client_v1_search_proto_rawDescGZIP(), []int{4}
+	return file_mycel_client_v1_search_proto_rawDescGZIP(), []int{9}
 }
 
 func (x *SearchFreshness) GetState() SearchFreshnessState {
@@ -634,7 +1184,7 @@ type SearchDiagnostics struct {
 
 func (x *SearchDiagnostics) Reset() {
 	*x = SearchDiagnostics{}
-	mi := &file_mycel_client_v1_search_proto_msgTypes[5]
+	mi := &file_mycel_client_v1_search_proto_msgTypes[10]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -646,7 +1196,7 @@ func (x *SearchDiagnostics) String() string {
 func (*SearchDiagnostics) ProtoMessage() {}
 
 func (x *SearchDiagnostics) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_client_v1_search_proto_msgTypes[5]
+	mi := &file_mycel_client_v1_search_proto_msgTypes[10]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -659,7 +1209,7 @@ func (x *SearchDiagnostics) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SearchDiagnostics.ProtoReflect.Descriptor instead.
 func (*SearchDiagnostics) Descriptor() ([]byte, []int) {
-	return file_mycel_client_v1_search_proto_rawDescGZIP(), []int{5}
+	return file_mycel_client_v1_search_proto_rawDescGZIP(), []int{10}
 }
 
 func (x *SearchDiagnostics) GetAnalyzerVersion() string {
@@ -743,7 +1293,7 @@ type SearchScoreComponent struct {
 
 func (x *SearchScoreComponent) Reset() {
 	*x = SearchScoreComponent{}
-	mi := &file_mycel_client_v1_search_proto_msgTypes[6]
+	mi := &file_mycel_client_v1_search_proto_msgTypes[11]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -755,7 +1305,7 @@ func (x *SearchScoreComponent) String() string {
 func (*SearchScoreComponent) ProtoMessage() {}
 
 func (x *SearchScoreComponent) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_client_v1_search_proto_msgTypes[6]
+	mi := &file_mycel_client_v1_search_proto_msgTypes[11]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -768,7 +1318,7 @@ func (x *SearchScoreComponent) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SearchScoreComponent.ProtoReflect.Descriptor instead.
 func (*SearchScoreComponent) Descriptor() ([]byte, []int) {
-	return file_mycel_client_v1_search_proto_rawDescGZIP(), []int{6}
+	return file_mycel_client_v1_search_proto_rawDescGZIP(), []int{11}
 }
 
 func (x *SearchScoreComponent) GetName() string {
@@ -802,7 +1352,7 @@ type GetLexicalIndexStatusRequest struct {
 
 func (x *GetLexicalIndexStatusRequest) Reset() {
 	*x = GetLexicalIndexStatusRequest{}
-	mi := &file_mycel_client_v1_search_proto_msgTypes[7]
+	mi := &file_mycel_client_v1_search_proto_msgTypes[12]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -814,7 +1364,7 @@ func (x *GetLexicalIndexStatusRequest) String() string {
 func (*GetLexicalIndexStatusRequest) ProtoMessage() {}
 
 func (x *GetLexicalIndexStatusRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_client_v1_search_proto_msgTypes[7]
+	mi := &file_mycel_client_v1_search_proto_msgTypes[12]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -827,7 +1377,7 @@ func (x *GetLexicalIndexStatusRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetLexicalIndexStatusRequest.ProtoReflect.Descriptor instead.
 func (*GetLexicalIndexStatusRequest) Descriptor() ([]byte, []int) {
-	return file_mycel_client_v1_search_proto_rawDescGZIP(), []int{7}
+	return file_mycel_client_v1_search_proto_rawDescGZIP(), []int{12}
 }
 
 func (x *GetLexicalIndexStatusRequest) GetSpaceId() string {
@@ -853,7 +1403,7 @@ type GetLexicalIndexStatusResponse struct {
 
 func (x *GetLexicalIndexStatusResponse) Reset() {
 	*x = GetLexicalIndexStatusResponse{}
-	mi := &file_mycel_client_v1_search_proto_msgTypes[8]
+	mi := &file_mycel_client_v1_search_proto_msgTypes[13]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -865,7 +1415,7 @@ func (x *GetLexicalIndexStatusResponse) String() string {
 func (*GetLexicalIndexStatusResponse) ProtoMessage() {}
 
 func (x *GetLexicalIndexStatusResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_client_v1_search_proto_msgTypes[8]
+	mi := &file_mycel_client_v1_search_proto_msgTypes[13]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -878,7 +1428,7 @@ func (x *GetLexicalIndexStatusResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetLexicalIndexStatusResponse.ProtoReflect.Descriptor instead.
 func (*GetLexicalIndexStatusResponse) Descriptor() ([]byte, []int) {
-	return file_mycel_client_v1_search_proto_rawDescGZIP(), []int{8}
+	return file_mycel_client_v1_search_proto_rawDescGZIP(), []int{13}
 }
 
 func (x *GetLexicalIndexStatusResponse) GetStatus() *LexicalIndexStatus {
@@ -910,7 +1460,7 @@ type LexicalIndexStatus struct {
 
 func (x *LexicalIndexStatus) Reset() {
 	*x = LexicalIndexStatus{}
-	mi := &file_mycel_client_v1_search_proto_msgTypes[9]
+	mi := &file_mycel_client_v1_search_proto_msgTypes[14]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -922,7 +1472,7 @@ func (x *LexicalIndexStatus) String() string {
 func (*LexicalIndexStatus) ProtoMessage() {}
 
 func (x *LexicalIndexStatus) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_client_v1_search_proto_msgTypes[9]
+	mi := &file_mycel_client_v1_search_proto_msgTypes[14]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -935,7 +1485,7 @@ func (x *LexicalIndexStatus) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use LexicalIndexStatus.ProtoReflect.Descriptor instead.
 func (*LexicalIndexStatus) Descriptor() ([]byte, []int) {
-	return file_mycel_client_v1_search_proto_rawDescGZIP(), []int{9}
+	return file_mycel_client_v1_search_proto_rawDescGZIP(), []int{14}
 }
 
 func (x *LexicalIndexStatus) GetSpaceId() string {
@@ -1040,7 +1590,7 @@ var File_mycel_client_v1_search_proto protoreflect.FileDescriptor
 
 const file_mycel_client_v1_search_proto_rawDesc = "" +
 	"\n" +
-	"\x1cmycel/client/v1/search.proto\x12\x0fmycel.client.v1\"\x80\x03\n" +
+	"\x1cmycel/client/v1/search.proto\x12\x0fmycel.client.v1\"\xc3\x04\n" +
 	"\rSearchRequest\x12\x19\n" +
 	"\bspace_id\x18\x01 \x01(\tR\aspaceId\x12\x1b\n" +
 	"\tdomain_id\x18\x02 \x01(\tR\bdomainId\x12/\n" +
@@ -1054,13 +1604,16 @@ const file_mycel_client_v1_search_proto_rawDesc = "" +
 	"\vallow_stale\x18\t \x01(\bR\n" +
 	"allowStale\x12(\n" +
 	"\x10max_revision_lag\x18\n" +
-	" \x01(\x03R\x0emaxRevisionLag\"\x93\x02\n" +
+	" \x01(\x03R\x0emaxRevisionLag\x12<\n" +
+	"\x06hybrid\x18\v \x01(\v2$.mycel.client.v1.HybridSearchOptionsR\x06hybrid\x12B\n" +
+	"\bsemantic\x18\f \x01(\v2&.mycel.client.v1.SemanticSearchOptionsR\bsemantic\x12?\n" +
+	"\alexical\x18\r \x01(\v2%.mycel.client.v1.LexicalSearchOptionsR\alexical\"\x93\x02\n" +
 	"\x0eSearchResponse\x127\n" +
 	"\aresults\x18\x01 \x03(\v2\x1d.mycel.client.v1.SearchResultR\aresults\x12&\n" +
 	"\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken\x12>\n" +
 	"\tfreshness\x18\x03 \x01(\v2 .mycel.client.v1.SearchFreshnessR\tfreshness\x12\x1a\n" +
 	"\bwarnings\x18\x04 \x03(\tR\bwarnings\x12D\n" +
-	"\vdiagnostics\x18\x05 \x01(\v2\".mycel.client.v1.SearchDiagnosticsR\vdiagnostics\"\x93\x03\n" +
+	"\vdiagnostics\x18\x05 \x01(\v2\".mycel.client.v1.SearchDiagnosticsR\vdiagnostics\"\xd2\x03\n" +
 	"\fSearchResult\x12\x19\n" +
 	"\bspace_id\x18\x01 \x01(\tR\aspaceId\x12\x1b\n" +
 	"\tdomain_id\x18\x02 \x01(\tR\bdomainId\x12\x17\n" +
@@ -1071,8 +1624,41 @@ const file_mycel_client_v1_search_proto_rawDesc = "" +
 	"\x16indexed_graph_revision\x18\x06 \x01(\x03R\x14indexedGraphRevision\x12#\n" +
 	"\rmatched_terms\x18\a \x03(\tR\fmatchedTerms\x12.\n" +
 	"\x13matched_field_paths\x18\b \x03(\tR\x11matchedFieldPaths\x12P\n" +
-	"\x10score_components\x18\t \x03(\v2%.mycel.client.v1.SearchScoreComponentR\x0fscoreComponents\"\x0f\n" +
-	"\rSearchFilters\"\xa4\x02\n" +
+	"\x10score_components\x18\t \x03(\v2%.mycel.client.v1.SearchScoreComponentR\x0fscoreComponents\x12=\n" +
+	"\asources\x18\n" +
+	" \x03(\v2#.mycel.client.v1.SearchResultSourceR\asources\"\xd8\x01\n" +
+	"\x13HybridSearchOptions\x12%\n" +
+	"\x0elexical_weight\x18\x01 \x01(\x01R\rlexicalWeight\x12'\n" +
+	"\x0fsemantic_weight\x18\x02 \x01(\x01R\x0esemanticWeight\x12N\n" +
+	"\x0ffusion_strategy\x18\x03 \x01(\x0e2%.mycel.client.v1.HybridFusionStrategyR\x0efusionStrategy\x12!\n" +
+	"\frequire_both\x18\x04 \x01(\bR\vrequireBoth\"?\n" +
+	"\x14LexicalSearchOptions\x12'\n" +
+	"\x0fcandidate_count\x18\x01 \x01(\x05R\x0ecandidateCount\"\x87\x02\n" +
+	"\x15SemanticSearchOptions\x12-\n" +
+	"\x10semantic_rule_id\x18\x01 \x01(\tH\x00R\x0esemanticRuleId\x88\x01\x01\x127\n" +
+	"\x15embedding_binding_key\x18\x02 \x01(\tH\x01R\x13embeddingBindingKey\x88\x01\x01\x12 \n" +
+	"\tmin_score\x18\x03 \x01(\x01H\x02R\bminScore\x88\x01\x01\x12'\n" +
+	"\x0fcandidate_count\x18\x04 \x01(\x05R\x0ecandidateCountB\x13\n" +
+	"\x11_semantic_rule_idB\x18\n" +
+	"\x16_embedding_binding_keyB\f\n" +
+	"\n" +
+	"_min_score\"\x8c\x01\n" +
+	"\rSearchFilters\x12\x1f\n" +
+	"\vnode_labels\x18\x01 \x03(\tR\n" +
+	"nodeLabels\x12?\n" +
+	"\n" +
+	"properties\x18\x02 \x03(\v2\x1f.mycel.client.v1.PropertyFilterR\n" +
+	"properties\x12\x19\n" +
+	"\bnode_ids\x18\x03 \x03(\tR\anodeIds\"y\n" +
+	"\x0ePropertyFilter\x12\x12\n" +
+	"\x04path\x18\x01 \x01(\tR\x04path\x12;\n" +
+	"\boperator\x18\x02 \x01(\x0e2\x1f.mycel.client.v1.FilterOperatorR\boperator\x12\x16\n" +
+	"\x06values\x18\x03 \x03(\tR\x06values\"\xad\x01\n" +
+	"\x12SearchResultSource\x12;\n" +
+	"\x04kind\x18\x01 \x01(\x0e2'.mycel.client.v1.SearchResultSourceKindR\x04kind\x12\x1b\n" +
+	"\traw_score\x18\x02 \x01(\x01R\brawScore\x12\x12\n" +
+	"\x04rank\x18\x03 \x01(\x05R\x04rank\x12)\n" +
+	"\x10normalized_score\x18\x04 \x01(\x01R\x0fnormalizedScore\"\xa4\x02\n" +
 	"\x0fSearchFreshness\x12;\n" +
 	"\x05state\x18\x01 \x01(\x0e2%.mycel.client.v1.SearchFreshnessStateR\x05state\x124\n" +
 	"\x16indexed_graph_revision\x18\x02 \x01(\x03R\x14indexedGraphRevision\x12=\n" +
@@ -1121,14 +1707,30 @@ const file_mycel_client_v1_search_proto_rawDesc = "" +
 	"updated_at\x18\f \x01(\tR\tupdatedAt\x12&\n" +
 	"\x0flast_rebuild_at\x18\r \x01(\tR\rlastRebuildAt\x12\x1d\n" +
 	"\n" +
-	"last_error\x18\x0e \x01(\tR\tlastError*B\n" +
+	"last_error\x18\x0e \x01(\tR\tlastError*Z\n" +
 	"\n" +
 	"SearchMode\x12\x1b\n" +
 	"\x17SEARCH_MODE_UNSPECIFIED\x10\x00\x12\x17\n" +
-	"\x13SEARCH_MODE_LEXICAL\x10\x01*P\n" +
+	"\x13SEARCH_MODE_LEXICAL\x10\x01\x12\x16\n" +
+	"\x12SEARCH_MODE_HYBRID\x10\x02*t\n" +
 	"\x0fSearchScoreKind\x12!\n" +
 	"\x1dSEARCH_SCORE_KIND_UNSPECIFIED\x10\x00\x12\x1a\n" +
-	"\x16SEARCH_SCORE_KIND_BM25\x10\x01*\xf3\x01\n" +
+	"\x16SEARCH_SCORE_KIND_BM25\x10\x01\x12\"\n" +
+	"\x1eSEARCH_SCORE_KIND_HYBRID_FUSED\x10\x02*s\n" +
+	"\x14HybridFusionStrategy\x12&\n" +
+	"\"HYBRID_FUSION_STRATEGY_UNSPECIFIED\x10\x00\x123\n" +
+	"/HYBRID_FUSION_STRATEGY_WEIGHTED_RECIPROCAL_RANK\x10\x01*\xbf\x01\n" +
+	"\x0eFilterOperator\x12\x1f\n" +
+	"\x1bFILTER_OPERATOR_UNSPECIFIED\x10\x00\x12\x1a\n" +
+	"\x16FILTER_OPERATOR_EQUALS\x10\x01\x12\x1e\n" +
+	"\x1aFILTER_OPERATOR_NOT_EQUALS\x10\x02\x12\x16\n" +
+	"\x12FILTER_OPERATOR_IN\x10\x03\x12\x1c\n" +
+	"\x18FILTER_OPERATOR_CONTAINS\x10\x04\x12\x1a\n" +
+	"\x16FILTER_OPERATOR_EXISTS\x10\x05*\x92\x01\n" +
+	"\x16SearchResultSourceKind\x12)\n" +
+	"%SEARCH_RESULT_SOURCE_KIND_UNSPECIFIED\x10\x00\x12%\n" +
+	"!SEARCH_RESULT_SOURCE_KIND_LEXICAL\x10\x01\x12&\n" +
+	"\"SEARCH_RESULT_SOURCE_KIND_SEMANTIC\x10\x02*\xf3\x01\n" +
 	"\x14SearchFreshnessState\x12&\n" +
 	"\"SEARCH_FRESHNESS_STATE_UNSPECIFIED\x10\x00\x12 \n" +
 	"\x1cSEARCH_FRESHNESS_STATE_FRESH\x10\x01\x12 \n" +
@@ -1153,43 +1755,59 @@ func file_mycel_client_v1_search_proto_rawDescGZIP() []byte {
 	return file_mycel_client_v1_search_proto_rawDescData
 }
 
-var file_mycel_client_v1_search_proto_enumTypes = make([]protoimpl.EnumInfo, 3)
-var file_mycel_client_v1_search_proto_msgTypes = make([]protoimpl.MessageInfo, 10)
+var file_mycel_client_v1_search_proto_enumTypes = make([]protoimpl.EnumInfo, 6)
+var file_mycel_client_v1_search_proto_msgTypes = make([]protoimpl.MessageInfo, 15)
 var file_mycel_client_v1_search_proto_goTypes = []any{
 	(SearchMode)(0),                       // 0: mycel.client.v1.SearchMode
 	(SearchScoreKind)(0),                  // 1: mycel.client.v1.SearchScoreKind
-	(SearchFreshnessState)(0),             // 2: mycel.client.v1.SearchFreshnessState
-	(*SearchRequest)(nil),                 // 3: mycel.client.v1.SearchRequest
-	(*SearchResponse)(nil),                // 4: mycel.client.v1.SearchResponse
-	(*SearchResult)(nil),                  // 5: mycel.client.v1.SearchResult
-	(*SearchFilters)(nil),                 // 6: mycel.client.v1.SearchFilters
-	(*SearchFreshness)(nil),               // 7: mycel.client.v1.SearchFreshness
-	(*SearchDiagnostics)(nil),             // 8: mycel.client.v1.SearchDiagnostics
-	(*SearchScoreComponent)(nil),          // 9: mycel.client.v1.SearchScoreComponent
-	(*GetLexicalIndexStatusRequest)(nil),  // 10: mycel.client.v1.GetLexicalIndexStatusRequest
-	(*GetLexicalIndexStatusResponse)(nil), // 11: mycel.client.v1.GetLexicalIndexStatusResponse
-	(*LexicalIndexStatus)(nil),            // 12: mycel.client.v1.LexicalIndexStatus
+	(HybridFusionStrategy)(0),             // 2: mycel.client.v1.HybridFusionStrategy
+	(FilterOperator)(0),                   // 3: mycel.client.v1.FilterOperator
+	(SearchResultSourceKind)(0),           // 4: mycel.client.v1.SearchResultSourceKind
+	(SearchFreshnessState)(0),             // 5: mycel.client.v1.SearchFreshnessState
+	(*SearchRequest)(nil),                 // 6: mycel.client.v1.SearchRequest
+	(*SearchResponse)(nil),                // 7: mycel.client.v1.SearchResponse
+	(*SearchResult)(nil),                  // 8: mycel.client.v1.SearchResult
+	(*HybridSearchOptions)(nil),           // 9: mycel.client.v1.HybridSearchOptions
+	(*LexicalSearchOptions)(nil),          // 10: mycel.client.v1.LexicalSearchOptions
+	(*SemanticSearchOptions)(nil),         // 11: mycel.client.v1.SemanticSearchOptions
+	(*SearchFilters)(nil),                 // 12: mycel.client.v1.SearchFilters
+	(*PropertyFilter)(nil),                // 13: mycel.client.v1.PropertyFilter
+	(*SearchResultSource)(nil),            // 14: mycel.client.v1.SearchResultSource
+	(*SearchFreshness)(nil),               // 15: mycel.client.v1.SearchFreshness
+	(*SearchDiagnostics)(nil),             // 16: mycel.client.v1.SearchDiagnostics
+	(*SearchScoreComponent)(nil),          // 17: mycel.client.v1.SearchScoreComponent
+	(*GetLexicalIndexStatusRequest)(nil),  // 18: mycel.client.v1.GetLexicalIndexStatusRequest
+	(*GetLexicalIndexStatusResponse)(nil), // 19: mycel.client.v1.GetLexicalIndexStatusResponse
+	(*LexicalIndexStatus)(nil),            // 20: mycel.client.v1.LexicalIndexStatus
 }
 var file_mycel_client_v1_search_proto_depIdxs = []int32{
 	0,  // 0: mycel.client.v1.SearchRequest.mode:type_name -> mycel.client.v1.SearchMode
-	6,  // 1: mycel.client.v1.SearchRequest.filters:type_name -> mycel.client.v1.SearchFilters
-	5,  // 2: mycel.client.v1.SearchResponse.results:type_name -> mycel.client.v1.SearchResult
-	7,  // 3: mycel.client.v1.SearchResponse.freshness:type_name -> mycel.client.v1.SearchFreshness
-	8,  // 4: mycel.client.v1.SearchResponse.diagnostics:type_name -> mycel.client.v1.SearchDiagnostics
-	1,  // 5: mycel.client.v1.SearchResult.score_kind:type_name -> mycel.client.v1.SearchScoreKind
-	9,  // 6: mycel.client.v1.SearchResult.score_components:type_name -> mycel.client.v1.SearchScoreComponent
-	2,  // 7: mycel.client.v1.SearchFreshness.state:type_name -> mycel.client.v1.SearchFreshnessState
-	12, // 8: mycel.client.v1.GetLexicalIndexStatusResponse.status:type_name -> mycel.client.v1.LexicalIndexStatus
-	2,  // 9: mycel.client.v1.LexicalIndexStatus.state:type_name -> mycel.client.v1.SearchFreshnessState
-	3,  // 10: mycel.client.v1.SearchService.Search:input_type -> mycel.client.v1.SearchRequest
-	10, // 11: mycel.client.v1.SearchService.GetLexicalIndexStatus:input_type -> mycel.client.v1.GetLexicalIndexStatusRequest
-	4,  // 12: mycel.client.v1.SearchService.Search:output_type -> mycel.client.v1.SearchResponse
-	11, // 13: mycel.client.v1.SearchService.GetLexicalIndexStatus:output_type -> mycel.client.v1.GetLexicalIndexStatusResponse
-	12, // [12:14] is the sub-list for method output_type
-	10, // [10:12] is the sub-list for method input_type
-	10, // [10:10] is the sub-list for extension type_name
-	10, // [10:10] is the sub-list for extension extendee
-	0,  // [0:10] is the sub-list for field type_name
+	12, // 1: mycel.client.v1.SearchRequest.filters:type_name -> mycel.client.v1.SearchFilters
+	9,  // 2: mycel.client.v1.SearchRequest.hybrid:type_name -> mycel.client.v1.HybridSearchOptions
+	11, // 3: mycel.client.v1.SearchRequest.semantic:type_name -> mycel.client.v1.SemanticSearchOptions
+	10, // 4: mycel.client.v1.SearchRequest.lexical:type_name -> mycel.client.v1.LexicalSearchOptions
+	8,  // 5: mycel.client.v1.SearchResponse.results:type_name -> mycel.client.v1.SearchResult
+	15, // 6: mycel.client.v1.SearchResponse.freshness:type_name -> mycel.client.v1.SearchFreshness
+	16, // 7: mycel.client.v1.SearchResponse.diagnostics:type_name -> mycel.client.v1.SearchDiagnostics
+	1,  // 8: mycel.client.v1.SearchResult.score_kind:type_name -> mycel.client.v1.SearchScoreKind
+	17, // 9: mycel.client.v1.SearchResult.score_components:type_name -> mycel.client.v1.SearchScoreComponent
+	14, // 10: mycel.client.v1.SearchResult.sources:type_name -> mycel.client.v1.SearchResultSource
+	2,  // 11: mycel.client.v1.HybridSearchOptions.fusion_strategy:type_name -> mycel.client.v1.HybridFusionStrategy
+	13, // 12: mycel.client.v1.SearchFilters.properties:type_name -> mycel.client.v1.PropertyFilter
+	3,  // 13: mycel.client.v1.PropertyFilter.operator:type_name -> mycel.client.v1.FilterOperator
+	4,  // 14: mycel.client.v1.SearchResultSource.kind:type_name -> mycel.client.v1.SearchResultSourceKind
+	5,  // 15: mycel.client.v1.SearchFreshness.state:type_name -> mycel.client.v1.SearchFreshnessState
+	20, // 16: mycel.client.v1.GetLexicalIndexStatusResponse.status:type_name -> mycel.client.v1.LexicalIndexStatus
+	5,  // 17: mycel.client.v1.LexicalIndexStatus.state:type_name -> mycel.client.v1.SearchFreshnessState
+	6,  // 18: mycel.client.v1.SearchService.Search:input_type -> mycel.client.v1.SearchRequest
+	18, // 19: mycel.client.v1.SearchService.GetLexicalIndexStatus:input_type -> mycel.client.v1.GetLexicalIndexStatusRequest
+	7,  // 20: mycel.client.v1.SearchService.Search:output_type -> mycel.client.v1.SearchResponse
+	19, // 21: mycel.client.v1.SearchService.GetLexicalIndexStatus:output_type -> mycel.client.v1.GetLexicalIndexStatusResponse
+	20, // [20:22] is the sub-list for method output_type
+	18, // [18:20] is the sub-list for method input_type
+	18, // [18:18] is the sub-list for extension type_name
+	18, // [18:18] is the sub-list for extension extendee
+	0,  // [0:18] is the sub-list for field type_name
 }
 
 func init() { file_mycel_client_v1_search_proto_init() }
@@ -1197,13 +1815,14 @@ func file_mycel_client_v1_search_proto_init() {
 	if File_mycel_client_v1_search_proto != nil {
 		return
 	}
+	file_mycel_client_v1_search_proto_msgTypes[5].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_mycel_client_v1_search_proto_rawDesc), len(file_mycel_client_v1_search_proto_rawDesc)),
-			NumEnums:      3,
-			NumMessages:   10,
+			NumEnums:      6,
+			NumMessages:   15,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
