@@ -109,8 +109,9 @@ func (*UploadBlobRequest_Chunk) isUploadBlobRequest_Part() {}
 type UploadBlobMetadata struct {
 	state            protoimpl.MessageState `protogen:"open.v1"`
 	SpaceId          string                 `protobuf:"bytes,1,opt,name=space_id,json=spaceId,proto3" json:"space_id,omitempty"`
-	DeclaredMimeType string                 `protobuf:"bytes,2,opt,name=declared_mime_type,json=declaredMimeType,proto3" json:"declared_mime_type,omitempty"`
-	OriginalFilename string                 `protobuf:"bytes,3,opt,name=original_filename,json=originalFilename,proto3" json:"original_filename,omitempty"`
+	DomainId         string                 `protobuf:"bytes,2,opt,name=domain_id,json=domainId,proto3" json:"domain_id,omitempty"`
+	DeclaredMimeType string                 `protobuf:"bytes,3,opt,name=declared_mime_type,json=declaredMimeType,proto3" json:"declared_mime_type,omitempty"`
+	OriginalFilename string                 `protobuf:"bytes,4,opt,name=original_filename,json=originalFilename,proto3" json:"original_filename,omitempty"`
 	unknownFields    protoimpl.UnknownFields
 	sizeCache        protoimpl.SizeCache
 }
@@ -148,6 +149,13 @@ func (*UploadBlobMetadata) Descriptor() ([]byte, []int) {
 func (x *UploadBlobMetadata) GetSpaceId() string {
 	if x != nil {
 		return x.SpaceId
+	}
+	return ""
+}
+
+func (x *UploadBlobMetadata) GetDomainId() string {
+	if x != nil {
+		return x.DomainId
 	}
 	return ""
 }
@@ -213,7 +221,8 @@ func (x *UploadBlobResponse) GetBlob() *Blob {
 type DownloadBlobRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	SpaceId       string                 `protobuf:"bytes,1,opt,name=space_id,json=spaceId,proto3" json:"space_id,omitempty"`
-	BlobId        string                 `protobuf:"bytes,2,opt,name=blob_id,json=blobId,proto3" json:"blob_id,omitempty"`
+	DomainId      string                 `protobuf:"bytes,2,opt,name=domain_id,json=domainId,proto3" json:"domain_id,omitempty"`
+	BlobId        string                 `protobuf:"bytes,3,opt,name=blob_id,json=blobId,proto3" json:"blob_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -251,6 +260,13 @@ func (*DownloadBlobRequest) Descriptor() ([]byte, []int) {
 func (x *DownloadBlobRequest) GetSpaceId() string {
 	if x != nil {
 		return x.SpaceId
+	}
+	return ""
+}
+
+func (x *DownloadBlobRequest) GetDomainId() string {
+	if x != nil {
+		return x.DomainId
 	}
 	return ""
 }
@@ -347,7 +363,8 @@ func (*DownloadBlobResponse_Chunk) isDownloadBlobResponse_Part() {}
 type GetBlobRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	SpaceId       string                 `protobuf:"bytes,1,opt,name=space_id,json=spaceId,proto3" json:"space_id,omitempty"`
-	BlobId        string                 `protobuf:"bytes,2,opt,name=blob_id,json=blobId,proto3" json:"blob_id,omitempty"`
+	DomainId      string                 `protobuf:"bytes,2,opt,name=domain_id,json=domainId,proto3" json:"domain_id,omitempty"`
+	BlobId        string                 `protobuf:"bytes,3,opt,name=blob_id,json=blobId,proto3" json:"blob_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -385,6 +402,13 @@ func (*GetBlobRequest) Descriptor() ([]byte, []int) {
 func (x *GetBlobRequest) GetSpaceId() string {
 	if x != nil {
 		return x.SpaceId
+	}
+	return ""
+}
+
+func (x *GetBlobRequest) GetDomainId() string {
+	if x != nil {
+		return x.DomainId
 	}
 	return ""
 }
@@ -443,7 +467,8 @@ func (x *GetBlobResponse) GetBlob() *Blob {
 type DeleteBlobRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	SpaceId       string                 `protobuf:"bytes,1,opt,name=space_id,json=spaceId,proto3" json:"space_id,omitempty"`
-	BlobId        string                 `protobuf:"bytes,2,opt,name=blob_id,json=blobId,proto3" json:"blob_id,omitempty"`
+	DomainId      string                 `protobuf:"bytes,2,opt,name=domain_id,json=domainId,proto3" json:"domain_id,omitempty"`
+	BlobId        string                 `protobuf:"bytes,3,opt,name=blob_id,json=blobId,proto3" json:"blob_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -481,6 +506,13 @@ func (*DeleteBlobRequest) Descriptor() ([]byte, []int) {
 func (x *DeleteBlobRequest) GetSpaceId() string {
 	if x != nil {
 		return x.SpaceId
+	}
+	return ""
+}
+
+func (x *DeleteBlobRequest) GetDomainId() string {
+	if x != nil {
+		return x.DomainId
 	}
 	return ""
 }
@@ -538,20 +570,21 @@ func (x *DeleteBlobResponse) GetDeletedBlobId() string {
 
 // Blob is the client-visible metadata for content-addressed blob data.
 type Blob struct {
-	state   protoimpl.MessageState `protogen:"open.v1"`
-	BlobId  string                 `protobuf:"bytes,1,opt,name=blob_id,json=blobId,proto3" json:"blob_id,omitempty"`
-	SpaceId string                 `protobuf:"bytes,2,opt,name=space_id,json=spaceId,proto3" json:"space_id,omitempty"`
+	state    protoimpl.MessageState `protogen:"open.v1"`
+	BlobId   string                 `protobuf:"bytes,1,opt,name=blob_id,json=blobId,proto3" json:"blob_id,omitempty"`
+	SpaceId  string                 `protobuf:"bytes,2,opt,name=space_id,json=spaceId,proto3" json:"space_id,omitempty"`
+	DomainId string                 `protobuf:"bytes,3,opt,name=domain_id,json=domainId,proto3" json:"domain_id,omitempty"`
 	// Content digest, for example sha256:<hex>. The exact digest algorithm is
 	// daemon-defined but should be stable enough for deduplication and integrity
 	// checks.
-	Digest    string `protobuf:"bytes,3,opt,name=digest,proto3" json:"digest,omitempty"`
-	SizeBytes int64  `protobuf:"varint,4,opt,name=size_bytes,json=sizeBytes,proto3" json:"size_bytes,omitempty"`
+	Digest    string `protobuf:"bytes,4,opt,name=digest,proto3" json:"digest,omitempty"`
+	SizeBytes int64  `protobuf:"varint,5,opt,name=size_bytes,json=sizeBytes,proto3" json:"size_bytes,omitempty"`
 	// Authoritative MIME type determined by the daemon when possible.
-	MimeType string `protobuf:"bytes,5,opt,name=mime_type,json=mimeType,proto3" json:"mime_type,omitempty"`
+	MimeType string `protobuf:"bytes,6,opt,name=mime_type,json=mimeType,proto3" json:"mime_type,omitempty"`
 	// Client-declared MIME type, if supplied.
-	DeclaredMimeType string                 `protobuf:"bytes,6,opt,name=declared_mime_type,json=declaredMimeType,proto3" json:"declared_mime_type,omitempty"`
-	OriginalFilename string                 `protobuf:"bytes,7,opt,name=original_filename,json=originalFilename,proto3" json:"original_filename,omitempty"`
-	CreateTime       *timestamppb.Timestamp `protobuf:"bytes,8,opt,name=create_time,json=createTime,proto3" json:"create_time,omitempty"`
+	DeclaredMimeType string                 `protobuf:"bytes,7,opt,name=declared_mime_type,json=declaredMimeType,proto3" json:"declared_mime_type,omitempty"`
+	OriginalFilename string                 `protobuf:"bytes,8,opt,name=original_filename,json=originalFilename,proto3" json:"original_filename,omitempty"`
+	CreateTime       *timestamppb.Timestamp `protobuf:"bytes,9,opt,name=create_time,json=createTime,proto3" json:"create_time,omitempty"`
 	unknownFields    protoimpl.UnknownFields
 	sizeCache        protoimpl.SizeCache
 }
@@ -596,6 +629,13 @@ func (x *Blob) GetBlobId() string {
 func (x *Blob) GetSpaceId() string {
 	if x != nil {
 		return x.SpaceId
+	}
+	return ""
+}
+
+func (x *Blob) GetDomainId() string {
+	if x != nil {
+		return x.DomainId
 	}
 	return ""
 }
@@ -650,40 +690,45 @@ const file_mycel_client_v1_blob_proto_rawDesc = "" +
 	"\x11UploadBlobRequest\x12A\n" +
 	"\bmetadata\x18\x01 \x01(\v2#.mycel.client.v1.UploadBlobMetadataH\x00R\bmetadata\x12\x16\n" +
 	"\x05chunk\x18\x02 \x01(\fH\x00R\x05chunkB\x06\n" +
-	"\x04part\"\x8a\x01\n" +
+	"\x04part\"\xa7\x01\n" +
 	"\x12UploadBlobMetadata\x12\x19\n" +
-	"\bspace_id\x18\x01 \x01(\tR\aspaceId\x12,\n" +
-	"\x12declared_mime_type\x18\x02 \x01(\tR\x10declaredMimeType\x12+\n" +
-	"\x11original_filename\x18\x03 \x01(\tR\x10originalFilename\"?\n" +
+	"\bspace_id\x18\x01 \x01(\tR\aspaceId\x12\x1b\n" +
+	"\tdomain_id\x18\x02 \x01(\tR\bdomainId\x12,\n" +
+	"\x12declared_mime_type\x18\x03 \x01(\tR\x10declaredMimeType\x12+\n" +
+	"\x11original_filename\x18\x04 \x01(\tR\x10originalFilename\"?\n" +
 	"\x12UploadBlobResponse\x12)\n" +
-	"\x04blob\x18\x01 \x01(\v2\x15.mycel.client.v1.BlobR\x04blob\"I\n" +
+	"\x04blob\x18\x01 \x01(\v2\x15.mycel.client.v1.BlobR\x04blob\"f\n" +
 	"\x13DownloadBlobRequest\x12\x19\n" +
-	"\bspace_id\x18\x01 \x01(\tR\aspaceId\x12\x17\n" +
-	"\ablob_id\x18\x02 \x01(\tR\x06blobId\"c\n" +
+	"\bspace_id\x18\x01 \x01(\tR\aspaceId\x12\x1b\n" +
+	"\tdomain_id\x18\x02 \x01(\tR\bdomainId\x12\x17\n" +
+	"\ablob_id\x18\x03 \x01(\tR\x06blobId\"c\n" +
 	"\x14DownloadBlobResponse\x12+\n" +
 	"\x04blob\x18\x01 \x01(\v2\x15.mycel.client.v1.BlobH\x00R\x04blob\x12\x16\n" +
 	"\x05chunk\x18\x02 \x01(\fH\x00R\x05chunkB\x06\n" +
-	"\x04part\"D\n" +
+	"\x04part\"a\n" +
 	"\x0eGetBlobRequest\x12\x19\n" +
-	"\bspace_id\x18\x01 \x01(\tR\aspaceId\x12\x17\n" +
-	"\ablob_id\x18\x02 \x01(\tR\x06blobId\"<\n" +
+	"\bspace_id\x18\x01 \x01(\tR\aspaceId\x12\x1b\n" +
+	"\tdomain_id\x18\x02 \x01(\tR\bdomainId\x12\x17\n" +
+	"\ablob_id\x18\x03 \x01(\tR\x06blobId\"<\n" +
 	"\x0fGetBlobResponse\x12)\n" +
-	"\x04blob\x18\x01 \x01(\v2\x15.mycel.client.v1.BlobR\x04blob\"G\n" +
+	"\x04blob\x18\x01 \x01(\v2\x15.mycel.client.v1.BlobR\x04blob\"d\n" +
 	"\x11DeleteBlobRequest\x12\x19\n" +
-	"\bspace_id\x18\x01 \x01(\tR\aspaceId\x12\x17\n" +
-	"\ablob_id\x18\x02 \x01(\tR\x06blobId\"<\n" +
+	"\bspace_id\x18\x01 \x01(\tR\aspaceId\x12\x1b\n" +
+	"\tdomain_id\x18\x02 \x01(\tR\bdomainId\x12\x17\n" +
+	"\ablob_id\x18\x03 \x01(\tR\x06blobId\"<\n" +
 	"\x12DeleteBlobResponse\x12&\n" +
-	"\x0fdeleted_blob_id\x18\x01 \x01(\tR\rdeletedBlobId\"\xa6\x02\n" +
+	"\x0fdeleted_blob_id\x18\x01 \x01(\tR\rdeletedBlobId\"\xc3\x02\n" +
 	"\x04Blob\x12\x17\n" +
 	"\ablob_id\x18\x01 \x01(\tR\x06blobId\x12\x19\n" +
-	"\bspace_id\x18\x02 \x01(\tR\aspaceId\x12\x16\n" +
-	"\x06digest\x18\x03 \x01(\tR\x06digest\x12\x1d\n" +
+	"\bspace_id\x18\x02 \x01(\tR\aspaceId\x12\x1b\n" +
+	"\tdomain_id\x18\x03 \x01(\tR\bdomainId\x12\x16\n" +
+	"\x06digest\x18\x04 \x01(\tR\x06digest\x12\x1d\n" +
 	"\n" +
-	"size_bytes\x18\x04 \x01(\x03R\tsizeBytes\x12\x1b\n" +
-	"\tmime_type\x18\x05 \x01(\tR\bmimeType\x12,\n" +
-	"\x12declared_mime_type\x18\x06 \x01(\tR\x10declaredMimeType\x12+\n" +
-	"\x11original_filename\x18\a \x01(\tR\x10originalFilename\x12;\n" +
-	"\vcreate_time\x18\b \x01(\v2\x1a.google.protobuf.TimestampR\n" +
+	"size_bytes\x18\x05 \x01(\x03R\tsizeBytes\x12\x1b\n" +
+	"\tmime_type\x18\x06 \x01(\tR\bmimeType\x12,\n" +
+	"\x12declared_mime_type\x18\a \x01(\tR\x10declaredMimeType\x12+\n" +
+	"\x11original_filename\x18\b \x01(\tR\x10originalFilename\x12;\n" +
+	"\vcreate_time\x18\t \x01(\v2\x1a.google.protobuf.TimestampR\n" +
 	"createTime2\xea\x02\n" +
 	"\vBlobService\x12W\n" +
 	"\n" +
