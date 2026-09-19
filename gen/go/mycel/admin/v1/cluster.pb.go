@@ -2808,17 +2808,35 @@ func (x *ClusterPeer) GetLastSeenAt() string {
 }
 
 type ClusterReadiness struct {
-	state                  protoimpl.MessageState `protogen:"open.v1"`
-	ClientReady            bool                   `protobuf:"varint,1,opt,name=client_ready,json=clientReady,proto3" json:"client_ready,omitempty"`
-	MetadataApplied        bool                   `protobuf:"varint,2,opt,name=metadata_applied,json=metadataApplied,proto3" json:"metadata_applied,omitempty"`
-	MetadataValidated      bool                   `protobuf:"varint,3,opt,name=metadata_validated,json=metadataValidated,proto3" json:"metadata_validated,omitempty"`
-	PartitionGroupsStarted bool                   `protobuf:"varint,4,opt,name=partition_groups_started,json=partitionGroupsStarted,proto3" json:"partition_groups_started,omitempty"`
-	AuthoritativeClusterId string                 `protobuf:"bytes,5,opt,name=authoritative_cluster_id,json=authoritativeClusterId,proto3" json:"authoritative_cluster_id,omitempty"`
-	LocalClusterId         string                 `protobuf:"bytes,6,opt,name=local_cluster_id,json=localClusterId,proto3" json:"local_cluster_id,omitempty"`
-	ExpectedMemberCount    int32                  `protobuf:"varint,7,opt,name=expected_member_count,json=expectedMemberCount,proto3" json:"expected_member_count,omitempty"`
-	ReadinessBlockers      []string               `protobuf:"bytes,8,rep,name=readiness_blockers,json=readinessBlockers,proto3" json:"readiness_blockers,omitempty"`
-	unknownFields          protoimpl.UnknownFields
-	sizeCache              protoimpl.SizeCache
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// client_ready is the top-level readiness signal intended for service
+	// readiness probes. In clustered Raft mode it is true only when write_ready is
+	// true, so write-heavy dependents do not start before Raft leaders exist.
+	ClientReady            bool     `protobuf:"varint,1,opt,name=client_ready,json=clientReady,proto3" json:"client_ready,omitempty"`
+	MetadataApplied        bool     `protobuf:"varint,2,opt,name=metadata_applied,json=metadataApplied,proto3" json:"metadata_applied,omitempty"`
+	MetadataValidated      bool     `protobuf:"varint,3,opt,name=metadata_validated,json=metadataValidated,proto3" json:"metadata_validated,omitempty"`
+	PartitionGroupsStarted bool     `protobuf:"varint,4,opt,name=partition_groups_started,json=partitionGroupsStarted,proto3" json:"partition_groups_started,omitempty"`
+	AuthoritativeClusterId string   `protobuf:"bytes,5,opt,name=authoritative_cluster_id,json=authoritativeClusterId,proto3" json:"authoritative_cluster_id,omitempty"`
+	LocalClusterId         string   `protobuf:"bytes,6,opt,name=local_cluster_id,json=localClusterId,proto3" json:"local_cluster_id,omitempty"`
+	ExpectedMemberCount    int32    `protobuf:"varint,7,opt,name=expected_member_count,json=expectedMemberCount,proto3" json:"expected_member_count,omitempty"`
+	ReadinessBlockers      []string `protobuf:"bytes,8,rep,name=readiness_blockers,json=readinessBlockers,proto3" json:"readiness_blockers,omitempty"`
+	// process_ready means the daemon process is serving authenticated admin API
+	// requests. It does not imply cluster metadata, Raft, read, or write safety.
+	ProcessReady bool `protobuf:"varint,9,opt,name=process_ready,json=processReady,proto3" json:"process_ready,omitempty"`
+	// metadata_ready means authoritative cluster metadata is applied and
+	// validated for this node.
+	MetadataReady bool `protobuf:"varint,10,opt,name=metadata_ready,json=metadataReady,proto3" json:"metadata_ready,omitempty"`
+	// raft_ready means local Raft groups needed by this node are started and have
+	// elected/known leaders.
+	RaftReady bool `protobuf:"varint,11,opt,name=raft_ready,json=raftReady,proto3" json:"raft_ready,omitempty"`
+	// read_ready means client reads can safely route through the current cluster
+	// authority/read paths.
+	ReadReady bool `protobuf:"varint,12,opt,name=read_ready,json=readReady,proto3" json:"read_ready,omitempty"`
+	// write_ready means schema and graph-partition writes can route to known Raft
+	// leaders. In clustered mode this is stronger than partition_groups_started.
+	WriteReady    bool `protobuf:"varint,13,opt,name=write_ready,json=writeReady,proto3" json:"write_ready,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
 func (x *ClusterReadiness) Reset() {
@@ -2905,6 +2923,41 @@ func (x *ClusterReadiness) GetReadinessBlockers() []string {
 		return x.ReadinessBlockers
 	}
 	return nil
+}
+
+func (x *ClusterReadiness) GetProcessReady() bool {
+	if x != nil {
+		return x.ProcessReady
+	}
+	return false
+}
+
+func (x *ClusterReadiness) GetMetadataReady() bool {
+	if x != nil {
+		return x.MetadataReady
+	}
+	return false
+}
+
+func (x *ClusterReadiness) GetRaftReady() bool {
+	if x != nil {
+		return x.RaftReady
+	}
+	return false
+}
+
+func (x *ClusterReadiness) GetReadReady() bool {
+	if x != nil {
+		return x.ReadReady
+	}
+	return false
+}
+
+func (x *ClusterReadiness) GetWriteReady() bool {
+	if x != nil {
+		return x.WriteReady
+	}
+	return false
 }
 
 type ListClusterMembersRequest struct {
@@ -3475,7 +3528,7 @@ const file_mycel_admin_v1_cluster_proto_rawDesc = "" +
 	"\x05state\x18\x06 \x01(\x0e2 .mycel.admin.v1.ClusterPeerStateR\x05state\x129\n" +
 	"\x06source\x18\a \x01(\x0e2!.mycel.admin.v1.ClusterPeerSourceR\x06source\x12 \n" +
 	"\flast_seen_at\x18\b \x01(\tR\n" +
-	"lastSeenAt\"\x90\x03\n" +
+	"lastSeenAt\"\xbb\x04\n" +
 	"\x10ClusterReadiness\x12!\n" +
 	"\fclient_ready\x18\x01 \x01(\bR\vclientReady\x12)\n" +
 	"\x10metadata_applied\x18\x02 \x01(\bR\x0fmetadataApplied\x12-\n" +
@@ -3484,7 +3537,16 @@ const file_mycel_admin_v1_cluster_proto_rawDesc = "" +
 	"\x18authoritative_cluster_id\x18\x05 \x01(\tR\x16authoritativeClusterId\x12(\n" +
 	"\x10local_cluster_id\x18\x06 \x01(\tR\x0elocalClusterId\x122\n" +
 	"\x15expected_member_count\x18\a \x01(\x05R\x13expectedMemberCount\x12-\n" +
-	"\x12readiness_blockers\x18\b \x03(\tR\x11readinessBlockers\"\x1b\n" +
+	"\x12readiness_blockers\x18\b \x03(\tR\x11readinessBlockers\x12#\n" +
+	"\rprocess_ready\x18\t \x01(\bR\fprocessReady\x12%\n" +
+	"\x0emetadata_ready\x18\n" +
+	" \x01(\bR\rmetadataReady\x12\x1d\n" +
+	"\n" +
+	"raft_ready\x18\v \x01(\bR\traftReady\x12\x1d\n" +
+	"\n" +
+	"read_ready\x18\f \x01(\bR\treadReady\x12\x1f\n" +
+	"\vwrite_ready\x18\r \x01(\bR\n" +
+	"writeReady\"\x1b\n" +
 	"\x19ListClusterMembersRequest\"\x97\x01\n" +
 	"\x1aListClusterMembersResponse\x12\x1d\n" +
 	"\n" +

@@ -6,6 +6,12 @@ This project follows the spirit of [Keep a Changelog](https://keepachangelog.com
 
 ## [Unreleased]
 
+## [v0.15.0] - 2026-09-18
+
+### Added
+
+- Regenerated Go protobuf/gRPC bindings for `mycel-api` v0.15.0, including dimensioned cluster readiness fields.
+
 ## [v0.12.0] - 2026-09-09
 
 ### Added
