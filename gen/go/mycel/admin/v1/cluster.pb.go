@@ -1119,6 +1119,188 @@ func (x *ListRaftGroupsResponse) GetGroups() []*RaftGroupStatus {
 	return nil
 }
 
+type CreateRaftSnapshotRequest struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Optional local group IDs to snapshot. When empty, all local raft groups are snapshotted.
+	GroupIds []string `protobuf:"bytes,1,rep,name=group_ids,json=groupIds,proto3" json:"group_ids,omitempty"`
+	// Compact raft logs through the snapshot index after successful snapshot creation.
+	Compact       bool `protobuf:"varint,2,opt,name=compact,proto3" json:"compact,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CreateRaftSnapshotRequest) Reset() {
+	*x = CreateRaftSnapshotRequest{}
+	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[6]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CreateRaftSnapshotRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateRaftSnapshotRequest) ProtoMessage() {}
+
+func (x *CreateRaftSnapshotRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[6]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateRaftSnapshotRequest.ProtoReflect.Descriptor instead.
+func (*CreateRaftSnapshotRequest) Descriptor() ([]byte, []int) {
+	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *CreateRaftSnapshotRequest) GetGroupIds() []string {
+	if x != nil {
+		return x.GroupIds
+	}
+	return nil
+}
+
+func (x *CreateRaftSnapshotRequest) GetCompact() bool {
+	if x != nil {
+		return x.Compact
+	}
+	return false
+}
+
+type CreateRaftSnapshotResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Results       []*RaftSnapshotResult  `protobuf:"bytes,1,rep,name=results,proto3" json:"results,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CreateRaftSnapshotResponse) Reset() {
+	*x = CreateRaftSnapshotResponse{}
+	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[7]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CreateRaftSnapshotResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateRaftSnapshotResponse) ProtoMessage() {}
+
+func (x *CreateRaftSnapshotResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[7]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateRaftSnapshotResponse.ProtoReflect.Descriptor instead.
+func (*CreateRaftSnapshotResponse) Descriptor() ([]byte, []int) {
+	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{7}
+}
+
+func (x *CreateRaftSnapshotResponse) GetResults() []*RaftSnapshotResult {
+	if x != nil {
+		return x.Results
+	}
+	return nil
+}
+
+type RaftSnapshotResult struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	GroupId       string                 `protobuf:"bytes,1,opt,name=group_id,json=groupId,proto3" json:"group_id,omitempty"`
+	SnapshotIndex uint64                 `protobuf:"varint,2,opt,name=snapshot_index,json=snapshotIndex,proto3" json:"snapshot_index,omitempty"`
+	Compacted     bool                   `protobuf:"varint,3,opt,name=compacted,proto3" json:"compacted,omitempty"`
+	Error         string                 `protobuf:"bytes,4,opt,name=error,proto3" json:"error,omitempty"`
+	Before        *RaftGroupStatus       `protobuf:"bytes,5,opt,name=before,proto3" json:"before,omitempty"`
+	After         *RaftGroupStatus       `protobuf:"bytes,6,opt,name=after,proto3" json:"after,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *RaftSnapshotResult) Reset() {
+	*x = RaftSnapshotResult{}
+	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[8]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *RaftSnapshotResult) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RaftSnapshotResult) ProtoMessage() {}
+
+func (x *RaftSnapshotResult) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[8]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RaftSnapshotResult.ProtoReflect.Descriptor instead.
+func (*RaftSnapshotResult) Descriptor() ([]byte, []int) {
+	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{8}
+}
+
+func (x *RaftSnapshotResult) GetGroupId() string {
+	if x != nil {
+		return x.GroupId
+	}
+	return ""
+}
+
+func (x *RaftSnapshotResult) GetSnapshotIndex() uint64 {
+	if x != nil {
+		return x.SnapshotIndex
+	}
+	return 0
+}
+
+func (x *RaftSnapshotResult) GetCompacted() bool {
+	if x != nil {
+		return x.Compacted
+	}
+	return false
+}
+
+func (x *RaftSnapshotResult) GetError() string {
+	if x != nil {
+		return x.Error
+	}
+	return ""
+}
+
+func (x *RaftSnapshotResult) GetBefore() *RaftGroupStatus {
+	if x != nil {
+		return x.Before
+	}
+	return nil
+}
+
+func (x *RaftSnapshotResult) GetAfter() *RaftGroupStatus {
+	if x != nil {
+		return x.After
+	}
+	return nil
+}
+
 type RaftGroupStatus struct {
 	state                 protoimpl.MessageState `protogen:"open.v1"`
 	GroupId               string                 `protobuf:"bytes,1,opt,name=group_id,json=groupId,proto3" json:"group_id,omitempty"`
@@ -1143,7 +1325,7 @@ type RaftGroupStatus struct {
 
 func (x *RaftGroupStatus) Reset() {
 	*x = RaftGroupStatus{}
-	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[6]
+	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[9]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1155,7 +1337,7 @@ func (x *RaftGroupStatus) String() string {
 func (*RaftGroupStatus) ProtoMessage() {}
 
 func (x *RaftGroupStatus) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[6]
+	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[9]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1168,7 +1350,7 @@ func (x *RaftGroupStatus) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RaftGroupStatus.ProtoReflect.Descriptor instead.
 func (*RaftGroupStatus) Descriptor() ([]byte, []int) {
-	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{6}
+	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{9}
 }
 
 func (x *RaftGroupStatus) GetGroupId() string {
@@ -1304,7 +1486,7 @@ type RaftReadDiagnostics struct {
 
 func (x *RaftReadDiagnostics) Reset() {
 	*x = RaftReadDiagnostics{}
-	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[7]
+	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[10]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1316,7 +1498,7 @@ func (x *RaftReadDiagnostics) String() string {
 func (*RaftReadDiagnostics) ProtoMessage() {}
 
 func (x *RaftReadDiagnostics) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[7]
+	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[10]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1329,7 +1511,7 @@ func (x *RaftReadDiagnostics) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RaftReadDiagnostics.ProtoReflect.Descriptor instead.
 func (*RaftReadDiagnostics) Descriptor() ([]byte, []int) {
-	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{7}
+	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{10}
 }
 
 func (x *RaftReadDiagnostics) GetReadIndexAttempts() uint64 {
@@ -1432,7 +1614,7 @@ type LookupSpaceRouteRequest struct {
 
 func (x *LookupSpaceRouteRequest) Reset() {
 	*x = LookupSpaceRouteRequest{}
-	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[8]
+	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[11]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1444,7 +1626,7 @@ func (x *LookupSpaceRouteRequest) String() string {
 func (*LookupSpaceRouteRequest) ProtoMessage() {}
 
 func (x *LookupSpaceRouteRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[8]
+	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[11]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1457,7 +1639,7 @@ func (x *LookupSpaceRouteRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use LookupSpaceRouteRequest.ProtoReflect.Descriptor instead.
 func (*LookupSpaceRouteRequest) Descriptor() ([]byte, []int) {
-	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{8}
+	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{11}
 }
 
 func (x *LookupSpaceRouteRequest) GetSpaceId() string {
@@ -1479,7 +1661,7 @@ type LookupSpaceRouteResponse struct {
 
 func (x *LookupSpaceRouteResponse) Reset() {
 	*x = LookupSpaceRouteResponse{}
-	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[9]
+	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[12]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1491,7 +1673,7 @@ func (x *LookupSpaceRouteResponse) String() string {
 func (*LookupSpaceRouteResponse) ProtoMessage() {}
 
 func (x *LookupSpaceRouteResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[9]
+	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[12]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1504,7 +1686,7 @@ func (x *LookupSpaceRouteResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use LookupSpaceRouteResponse.ProtoReflect.Descriptor instead.
 func (*LookupSpaceRouteResponse) Descriptor() ([]byte, []int) {
-	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{9}
+	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{12}
 }
 
 func (x *LookupSpaceRouteResponse) GetSpaceId() string {
@@ -1545,7 +1727,7 @@ type GetLocalGraphConsistencyRequest struct {
 
 func (x *GetLocalGraphConsistencyRequest) Reset() {
 	*x = GetLocalGraphConsistencyRequest{}
-	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[10]
+	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[13]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1557,7 +1739,7 @@ func (x *GetLocalGraphConsistencyRequest) String() string {
 func (*GetLocalGraphConsistencyRequest) ProtoMessage() {}
 
 func (x *GetLocalGraphConsistencyRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[10]
+	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[13]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1570,7 +1752,7 @@ func (x *GetLocalGraphConsistencyRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetLocalGraphConsistencyRequest.ProtoReflect.Descriptor instead.
 func (*GetLocalGraphConsistencyRequest) Descriptor() ([]byte, []int) {
-	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{10}
+	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{13}
 }
 
 func (x *GetLocalGraphConsistencyRequest) GetSpaceId() string {
@@ -1598,7 +1780,7 @@ type GetLocalGraphConsistencyResponse struct {
 
 func (x *GetLocalGraphConsistencyResponse) Reset() {
 	*x = GetLocalGraphConsistencyResponse{}
-	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[11]
+	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[14]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1610,7 +1792,7 @@ func (x *GetLocalGraphConsistencyResponse) String() string {
 func (*GetLocalGraphConsistencyResponse) ProtoMessage() {}
 
 func (x *GetLocalGraphConsistencyResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[11]
+	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[14]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1623,7 +1805,7 @@ func (x *GetLocalGraphConsistencyResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetLocalGraphConsistencyResponse.ProtoReflect.Descriptor instead.
 func (*GetLocalGraphConsistencyResponse) Descriptor() ([]byte, []int) {
-	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{11}
+	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{14}
 }
 
 func (x *GetLocalGraphConsistencyResponse) GetStats() *LocalGraphConsistencyStats {
@@ -1657,7 +1839,7 @@ type GetGraphConsistencyReportRequest struct {
 
 func (x *GetGraphConsistencyReportRequest) Reset() {
 	*x = GetGraphConsistencyReportRequest{}
-	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[12]
+	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[15]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1669,7 +1851,7 @@ func (x *GetGraphConsistencyReportRequest) String() string {
 func (*GetGraphConsistencyReportRequest) ProtoMessage() {}
 
 func (x *GetGraphConsistencyReportRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[12]
+	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[15]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1682,7 +1864,7 @@ func (x *GetGraphConsistencyReportRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetGraphConsistencyReportRequest.ProtoReflect.Descriptor instead.
 func (*GetGraphConsistencyReportRequest) Descriptor() ([]byte, []int) {
-	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{12}
+	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{15}
 }
 
 func (x *GetGraphConsistencyReportRequest) GetSpaceId() string {
@@ -1718,7 +1900,7 @@ type GetGraphConsistencyReportResponse struct {
 
 func (x *GetGraphConsistencyReportResponse) Reset() {
 	*x = GetGraphConsistencyReportResponse{}
-	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[13]
+	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[16]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1730,7 +1912,7 @@ func (x *GetGraphConsistencyReportResponse) String() string {
 func (*GetGraphConsistencyReportResponse) ProtoMessage() {}
 
 func (x *GetGraphConsistencyReportResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[13]
+	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[16]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1743,7 +1925,7 @@ func (x *GetGraphConsistencyReportResponse) ProtoReflect() protoreflect.Message 
 
 // Deprecated: Use GetGraphConsistencyReportResponse.ProtoReflect.Descriptor instead.
 func (*GetGraphConsistencyReportResponse) Descriptor() ([]byte, []int) {
-	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{13}
+	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{16}
 }
 
 func (x *GetGraphConsistencyReportResponse) GetStatus() GraphConsistencyStatus {
@@ -1839,7 +2021,7 @@ type GraphConsistencyReplica struct {
 
 func (x *GraphConsistencyReplica) Reset() {
 	*x = GraphConsistencyReplica{}
-	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[14]
+	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[17]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1851,7 +2033,7 @@ func (x *GraphConsistencyReplica) String() string {
 func (*GraphConsistencyReplica) ProtoMessage() {}
 
 func (x *GraphConsistencyReplica) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[14]
+	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[17]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1864,7 +2046,7 @@ func (x *GraphConsistencyReplica) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GraphConsistencyReplica.ProtoReflect.Descriptor instead.
 func (*GraphConsistencyReplica) Descriptor() ([]byte, []int) {
-	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{14}
+	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{17}
 }
 
 func (x *GraphConsistencyReplica) GetRaftNodeId() uint64 {
@@ -1935,7 +2117,7 @@ type GraphConsistencyWarning struct {
 
 func (x *GraphConsistencyWarning) Reset() {
 	*x = GraphConsistencyWarning{}
-	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[15]
+	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[18]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1947,7 +2129,7 @@ func (x *GraphConsistencyWarning) String() string {
 func (*GraphConsistencyWarning) ProtoMessage() {}
 
 func (x *GraphConsistencyWarning) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[15]
+	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[18]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1960,7 +2142,7 @@ func (x *GraphConsistencyWarning) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GraphConsistencyWarning.ProtoReflect.Descriptor instead.
 func (*GraphConsistencyWarning) Descriptor() ([]byte, []int) {
-	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{15}
+	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{18}
 }
 
 func (x *GraphConsistencyWarning) GetCode() string {
@@ -2004,7 +2186,7 @@ type GetLocalGraphForensicExportRequest struct {
 
 func (x *GetLocalGraphForensicExportRequest) Reset() {
 	*x = GetLocalGraphForensicExportRequest{}
-	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[16]
+	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[19]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2016,7 +2198,7 @@ func (x *GetLocalGraphForensicExportRequest) String() string {
 func (*GetLocalGraphForensicExportRequest) ProtoMessage() {}
 
 func (x *GetLocalGraphForensicExportRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[16]
+	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[19]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2029,7 +2211,7 @@ func (x *GetLocalGraphForensicExportRequest) ProtoReflect() protoreflect.Message
 
 // Deprecated: Use GetLocalGraphForensicExportRequest.ProtoReflect.Descriptor instead.
 func (*GetLocalGraphForensicExportRequest) Descriptor() ([]byte, []int) {
-	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{16}
+	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{19}
 }
 
 func (x *GetLocalGraphForensicExportRequest) GetSpaceId() string {
@@ -2082,7 +2264,7 @@ type GetLocalGraphForensicExportResponse struct {
 
 func (x *GetLocalGraphForensicExportResponse) Reset() {
 	*x = GetLocalGraphForensicExportResponse{}
-	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[17]
+	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[20]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2094,7 +2276,7 @@ func (x *GetLocalGraphForensicExportResponse) String() string {
 func (*GetLocalGraphForensicExportResponse) ProtoMessage() {}
 
 func (x *GetLocalGraphForensicExportResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[17]
+	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[20]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2107,7 +2289,7 @@ func (x *GetLocalGraphForensicExportResponse) ProtoReflect() protoreflect.Messag
 
 // Deprecated: Use GetLocalGraphForensicExportResponse.ProtoReflect.Descriptor instead.
 func (*GetLocalGraphForensicExportResponse) Descriptor() ([]byte, []int) {
-	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{17}
+	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{20}
 }
 
 func (x *GetLocalGraphForensicExportResponse) GetManifest() *GraphForensicExportManifest {
@@ -2175,7 +2357,7 @@ type GraphForensicExportManifest struct {
 
 func (x *GraphForensicExportManifest) Reset() {
 	*x = GraphForensicExportManifest{}
-	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[18]
+	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[21]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2187,7 +2369,7 @@ func (x *GraphForensicExportManifest) String() string {
 func (*GraphForensicExportManifest) ProtoMessage() {}
 
 func (x *GraphForensicExportManifest) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[18]
+	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[21]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2200,7 +2382,7 @@ func (x *GraphForensicExportManifest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GraphForensicExportManifest.ProtoReflect.Descriptor instead.
 func (*GraphForensicExportManifest) Descriptor() ([]byte, []int) {
-	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{18}
+	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{21}
 }
 
 func (x *GraphForensicExportManifest) GetReportId() string {
@@ -2270,7 +2452,7 @@ type GraphForensicEntity struct {
 
 func (x *GraphForensicEntity) Reset() {
 	*x = GraphForensicEntity{}
-	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[19]
+	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[22]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2282,7 +2464,7 @@ func (x *GraphForensicEntity) String() string {
 func (*GraphForensicEntity) ProtoMessage() {}
 
 func (x *GraphForensicEntity) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[19]
+	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[22]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2295,7 +2477,7 @@ func (x *GraphForensicEntity) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GraphForensicEntity.ProtoReflect.Descriptor instead.
 func (*GraphForensicEntity) Descriptor() ([]byte, []int) {
-	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{19}
+	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{22}
 }
 
 func (x *GraphForensicEntity) GetId() string {
@@ -2315,6 +2497,774 @@ func (x *GraphForensicEntity) GetChecksum() string {
 func (x *GraphForensicEntity) GetCanonicalJson() string {
 	if x != nil {
 		return x.CanonicalJson
+	}
+	return ""
+}
+
+type CreateGraphCheckpointRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	SpaceId       string                 `protobuf:"bytes,1,opt,name=space_id,json=spaceId,proto3" json:"space_id,omitempty"`
+	DomainId      string                 `protobuf:"bytes,2,opt,name=domain_id,json=domainId,proto3" json:"domain_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CreateGraphCheckpointRequest) Reset() {
+	*x = CreateGraphCheckpointRequest{}
+	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[23]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CreateGraphCheckpointRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateGraphCheckpointRequest) ProtoMessage() {}
+
+func (x *CreateGraphCheckpointRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[23]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateGraphCheckpointRequest.ProtoReflect.Descriptor instead.
+func (*CreateGraphCheckpointRequest) Descriptor() ([]byte, []int) {
+	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{23}
+}
+
+func (x *CreateGraphCheckpointRequest) GetSpaceId() string {
+	if x != nil {
+		return x.SpaceId
+	}
+	return ""
+}
+
+func (x *CreateGraphCheckpointRequest) GetDomainId() string {
+	if x != nil {
+		return x.DomainId
+	}
+	return ""
+}
+
+type CreateGraphCheckpointResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Status        *GraphCheckpointStatus `protobuf:"bytes,1,opt,name=status,proto3" json:"status,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CreateGraphCheckpointResponse) Reset() {
+	*x = CreateGraphCheckpointResponse{}
+	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[24]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CreateGraphCheckpointResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateGraphCheckpointResponse) ProtoMessage() {}
+
+func (x *CreateGraphCheckpointResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[24]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateGraphCheckpointResponse.ProtoReflect.Descriptor instead.
+func (*CreateGraphCheckpointResponse) Descriptor() ([]byte, []int) {
+	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{24}
+}
+
+func (x *CreateGraphCheckpointResponse) GetStatus() *GraphCheckpointStatus {
+	if x != nil {
+		return x.Status
+	}
+	return nil
+}
+
+type GetGraphCheckpointStatusRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	SpaceId       string                 `protobuf:"bytes,1,opt,name=space_id,json=spaceId,proto3" json:"space_id,omitempty"`
+	DomainId      string                 `protobuf:"bytes,2,opt,name=domain_id,json=domainId,proto3" json:"domain_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetGraphCheckpointStatusRequest) Reset() {
+	*x = GetGraphCheckpointStatusRequest{}
+	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[25]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetGraphCheckpointStatusRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetGraphCheckpointStatusRequest) ProtoMessage() {}
+
+func (x *GetGraphCheckpointStatusRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[25]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetGraphCheckpointStatusRequest.ProtoReflect.Descriptor instead.
+func (*GetGraphCheckpointStatusRequest) Descriptor() ([]byte, []int) {
+	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{25}
+}
+
+func (x *GetGraphCheckpointStatusRequest) GetSpaceId() string {
+	if x != nil {
+		return x.SpaceId
+	}
+	return ""
+}
+
+func (x *GetGraphCheckpointStatusRequest) GetDomainId() string {
+	if x != nil {
+		return x.DomainId
+	}
+	return ""
+}
+
+type GetGraphCheckpointStatusResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Status        *GraphCheckpointStatus `protobuf:"bytes,1,opt,name=status,proto3" json:"status,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetGraphCheckpointStatusResponse) Reset() {
+	*x = GetGraphCheckpointStatusResponse{}
+	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[26]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetGraphCheckpointStatusResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetGraphCheckpointStatusResponse) ProtoMessage() {}
+
+func (x *GetGraphCheckpointStatusResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[26]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetGraphCheckpointStatusResponse.ProtoReflect.Descriptor instead.
+func (*GetGraphCheckpointStatusResponse) Descriptor() ([]byte, []int) {
+	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{26}
+}
+
+func (x *GetGraphCheckpointStatusResponse) GetStatus() *GraphCheckpointStatus {
+	if x != nil {
+		return x.Status
+	}
+	return nil
+}
+
+type GraphCheckpointStatus struct {
+	state                           protoimpl.MessageState      `protogen:"open.v1"`
+	SpaceId                         string                      `protobuf:"bytes,1,opt,name=space_id,json=spaceId,proto3" json:"space_id,omitempty"`
+	DomainId                        string                      `protobuf:"bytes,2,opt,name=domain_id,json=domainId,proto3" json:"domain_id,omitempty"`
+	CurrentRevision                 uint64                      `protobuf:"varint,3,opt,name=current_revision,json=currentRevision,proto3" json:"current_revision,omitempty"`
+	CheckpointPresent               bool                        `protobuf:"varint,4,opt,name=checkpoint_present,json=checkpointPresent,proto3" json:"checkpoint_present,omitempty"`
+	CheckpointRevision              uint64                      `protobuf:"varint,5,opt,name=checkpoint_revision,json=checkpointRevision,proto3" json:"checkpoint_revision,omitempty"`
+	CheckpointCreatedAt             string                      `protobuf:"bytes,6,opt,name=checkpoint_created_at,json=checkpointCreatedAt,proto3" json:"checkpoint_created_at,omitempty"`
+	NodeCount                       uint64                      `protobuf:"varint,7,opt,name=node_count,json=nodeCount,proto3" json:"node_count,omitempty"`
+	EdgeCount                       uint64                      `protobuf:"varint,8,opt,name=edge_count,json=edgeCount,proto3" json:"edge_count,omitempty"`
+	GraphChecksum                   string                      `protobuf:"bytes,9,opt,name=graph_checksum,json=graphChecksum,proto3" json:"graph_checksum,omitempty"`
+	ChecksumAlgorithm               string                      `protobuf:"bytes,10,opt,name=checksum_algorithm,json=checksumAlgorithm,proto3" json:"checksum_algorithm,omitempty"`
+	TailRevisions                   uint64                      `protobuf:"varint,11,opt,name=tail_revisions,json=tailRevisions,proto3" json:"tail_revisions,omitempty"`
+	Source                          string                      `protobuf:"bytes,12,opt,name=source,proto3" json:"source,omitempty"`
+	AutoCheckpointEnabled           bool                        `protobuf:"varint,13,opt,name=auto_checkpoint_enabled,json=autoCheckpointEnabled,proto3" json:"auto_checkpoint_enabled,omitempty"`
+	AutoCheckpointRevisionThreshold uint64                      `protobuf:"varint,14,opt,name=auto_checkpoint_revision_threshold,json=autoCheckpointRevisionThreshold,proto3" json:"auto_checkpoint_revision_threshold,omitempty"`
+	AutoCheckpointInterval          string                      `protobuf:"bytes,15,opt,name=auto_checkpoint_interval,json=autoCheckpointInterval,proto3" json:"auto_checkpoint_interval,omitempty"`
+	LastCheckpointAttemptAt         string                      `protobuf:"bytes,16,opt,name=last_checkpoint_attempt_at,json=lastCheckpointAttemptAt,proto3" json:"last_checkpoint_attempt_at,omitempty"`
+	LastCheckpointSuccessAt         string                      `protobuf:"bytes,17,opt,name=last_checkpoint_success_at,json=lastCheckpointSuccessAt,proto3" json:"last_checkpoint_success_at,omitempty"`
+	LastCheckpointDurationMs        uint64                      `protobuf:"varint,18,opt,name=last_checkpoint_duration_ms,json=lastCheckpointDurationMs,proto3" json:"last_checkpoint_duration_ms,omitempty"`
+	LastCheckpointError             string                      `protobuf:"bytes,19,opt,name=last_checkpoint_error,json=lastCheckpointError,proto3" json:"last_checkpoint_error,omitempty"`
+	CheckpointAgeSeconds            uint64                      `protobuf:"varint,20,opt,name=checkpoint_age_seconds,json=checkpointAgeSeconds,proto3" json:"checkpoint_age_seconds,omitempty"`
+	PersistentIndex                 *GraphPersistentIndexStatus `protobuf:"bytes,21,opt,name=persistent_index,json=persistentIndex,proto3" json:"persistent_index,omitempty"`
+	unknownFields                   protoimpl.UnknownFields
+	sizeCache                       protoimpl.SizeCache
+}
+
+func (x *GraphCheckpointStatus) Reset() {
+	*x = GraphCheckpointStatus{}
+	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[27]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GraphCheckpointStatus) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GraphCheckpointStatus) ProtoMessage() {}
+
+func (x *GraphCheckpointStatus) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[27]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GraphCheckpointStatus.ProtoReflect.Descriptor instead.
+func (*GraphCheckpointStatus) Descriptor() ([]byte, []int) {
+	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{27}
+}
+
+func (x *GraphCheckpointStatus) GetSpaceId() string {
+	if x != nil {
+		return x.SpaceId
+	}
+	return ""
+}
+
+func (x *GraphCheckpointStatus) GetDomainId() string {
+	if x != nil {
+		return x.DomainId
+	}
+	return ""
+}
+
+func (x *GraphCheckpointStatus) GetCurrentRevision() uint64 {
+	if x != nil {
+		return x.CurrentRevision
+	}
+	return 0
+}
+
+func (x *GraphCheckpointStatus) GetCheckpointPresent() bool {
+	if x != nil {
+		return x.CheckpointPresent
+	}
+	return false
+}
+
+func (x *GraphCheckpointStatus) GetCheckpointRevision() uint64 {
+	if x != nil {
+		return x.CheckpointRevision
+	}
+	return 0
+}
+
+func (x *GraphCheckpointStatus) GetCheckpointCreatedAt() string {
+	if x != nil {
+		return x.CheckpointCreatedAt
+	}
+	return ""
+}
+
+func (x *GraphCheckpointStatus) GetNodeCount() uint64 {
+	if x != nil {
+		return x.NodeCount
+	}
+	return 0
+}
+
+func (x *GraphCheckpointStatus) GetEdgeCount() uint64 {
+	if x != nil {
+		return x.EdgeCount
+	}
+	return 0
+}
+
+func (x *GraphCheckpointStatus) GetGraphChecksum() string {
+	if x != nil {
+		return x.GraphChecksum
+	}
+	return ""
+}
+
+func (x *GraphCheckpointStatus) GetChecksumAlgorithm() string {
+	if x != nil {
+		return x.ChecksumAlgorithm
+	}
+	return ""
+}
+
+func (x *GraphCheckpointStatus) GetTailRevisions() uint64 {
+	if x != nil {
+		return x.TailRevisions
+	}
+	return 0
+}
+
+func (x *GraphCheckpointStatus) GetSource() string {
+	if x != nil {
+		return x.Source
+	}
+	return ""
+}
+
+func (x *GraphCheckpointStatus) GetAutoCheckpointEnabled() bool {
+	if x != nil {
+		return x.AutoCheckpointEnabled
+	}
+	return false
+}
+
+func (x *GraphCheckpointStatus) GetAutoCheckpointRevisionThreshold() uint64 {
+	if x != nil {
+		return x.AutoCheckpointRevisionThreshold
+	}
+	return 0
+}
+
+func (x *GraphCheckpointStatus) GetAutoCheckpointInterval() string {
+	if x != nil {
+		return x.AutoCheckpointInterval
+	}
+	return ""
+}
+
+func (x *GraphCheckpointStatus) GetLastCheckpointAttemptAt() string {
+	if x != nil {
+		return x.LastCheckpointAttemptAt
+	}
+	return ""
+}
+
+func (x *GraphCheckpointStatus) GetLastCheckpointSuccessAt() string {
+	if x != nil {
+		return x.LastCheckpointSuccessAt
+	}
+	return ""
+}
+
+func (x *GraphCheckpointStatus) GetLastCheckpointDurationMs() uint64 {
+	if x != nil {
+		return x.LastCheckpointDurationMs
+	}
+	return 0
+}
+
+func (x *GraphCheckpointStatus) GetLastCheckpointError() string {
+	if x != nil {
+		return x.LastCheckpointError
+	}
+	return ""
+}
+
+func (x *GraphCheckpointStatus) GetCheckpointAgeSeconds() uint64 {
+	if x != nil {
+		return x.CheckpointAgeSeconds
+	}
+	return 0
+}
+
+func (x *GraphCheckpointStatus) GetPersistentIndex() *GraphPersistentIndexStatus {
+	if x != nil {
+		return x.PersistentIndex
+	}
+	return nil
+}
+
+type GraphPersistentIndexStatus struct {
+	state             protoimpl.MessageState             `protogen:"open.v1"`
+	Present           bool                               `protobuf:"varint,1,opt,name=present,proto3" json:"present,omitempty"`
+	IndexSetId        string                             `protobuf:"bytes,2,opt,name=index_set_id,json=indexSetId,proto3" json:"index_set_id,omitempty"`
+	IndexFormat       string                             `protobuf:"bytes,3,opt,name=index_format,json=indexFormat,proto3" json:"index_format,omitempty"`
+	GraphRevision     uint64                             `protobuf:"varint,4,opt,name=graph_revision,json=graphRevision,proto3" json:"graph_revision,omitempty"`
+	GraphChecksum     string                             `protobuf:"bytes,5,opt,name=graph_checksum,json=graphChecksum,proto3" json:"graph_checksum,omitempty"`
+	ChecksumAlgorithm string                             `protobuf:"bytes,6,opt,name=checksum_algorithm,json=checksumAlgorithm,proto3" json:"checksum_algorithm,omitempty"`
+	GraphCheckpointId string                             `protobuf:"bytes,7,opt,name=graph_checkpoint_id,json=graphCheckpointId,proto3" json:"graph_checkpoint_id,omitempty"`
+	CreatedAt         string                             `protobuf:"bytes,8,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
+	LoadResult        string                             `protobuf:"bytes,9,opt,name=load_result,json=loadResult,proto3" json:"load_result,omitempty"`
+	FallbackReason    string                             `protobuf:"bytes,10,opt,name=fallback_reason,json=fallbackReason,proto3" json:"fallback_reason,omitempty"`
+	Entries           []*GraphPersistentIndexEntryStatus `protobuf:"bytes,11,rep,name=entries,proto3" json:"entries,omitempty"`
+	QueryIndexes      []*GraphPersistentQueryIndexStatus `protobuf:"bytes,12,rep,name=query_indexes,json=queryIndexes,proto3" json:"query_indexes,omitempty"`
+	unknownFields     protoimpl.UnknownFields
+	sizeCache         protoimpl.SizeCache
+}
+
+func (x *GraphPersistentIndexStatus) Reset() {
+	*x = GraphPersistentIndexStatus{}
+	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[28]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GraphPersistentIndexStatus) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GraphPersistentIndexStatus) ProtoMessage() {}
+
+func (x *GraphPersistentIndexStatus) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[28]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GraphPersistentIndexStatus.ProtoReflect.Descriptor instead.
+func (*GraphPersistentIndexStatus) Descriptor() ([]byte, []int) {
+	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{28}
+}
+
+func (x *GraphPersistentIndexStatus) GetPresent() bool {
+	if x != nil {
+		return x.Present
+	}
+	return false
+}
+
+func (x *GraphPersistentIndexStatus) GetIndexSetId() string {
+	if x != nil {
+		return x.IndexSetId
+	}
+	return ""
+}
+
+func (x *GraphPersistentIndexStatus) GetIndexFormat() string {
+	if x != nil {
+		return x.IndexFormat
+	}
+	return ""
+}
+
+func (x *GraphPersistentIndexStatus) GetGraphRevision() uint64 {
+	if x != nil {
+		return x.GraphRevision
+	}
+	return 0
+}
+
+func (x *GraphPersistentIndexStatus) GetGraphChecksum() string {
+	if x != nil {
+		return x.GraphChecksum
+	}
+	return ""
+}
+
+func (x *GraphPersistentIndexStatus) GetChecksumAlgorithm() string {
+	if x != nil {
+		return x.ChecksumAlgorithm
+	}
+	return ""
+}
+
+func (x *GraphPersistentIndexStatus) GetGraphCheckpointId() string {
+	if x != nil {
+		return x.GraphCheckpointId
+	}
+	return ""
+}
+
+func (x *GraphPersistentIndexStatus) GetCreatedAt() string {
+	if x != nil {
+		return x.CreatedAt
+	}
+	return ""
+}
+
+func (x *GraphPersistentIndexStatus) GetLoadResult() string {
+	if x != nil {
+		return x.LoadResult
+	}
+	return ""
+}
+
+func (x *GraphPersistentIndexStatus) GetFallbackReason() string {
+	if x != nil {
+		return x.FallbackReason
+	}
+	return ""
+}
+
+func (x *GraphPersistentIndexStatus) GetEntries() []*GraphPersistentIndexEntryStatus {
+	if x != nil {
+		return x.Entries
+	}
+	return nil
+}
+
+func (x *GraphPersistentIndexStatus) GetQueryIndexes() []*GraphPersistentQueryIndexStatus {
+	if x != nil {
+		return x.QueryIndexes
+	}
+	return nil
+}
+
+type GraphPersistentIndexEntryStatus struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Kind          string                 `protobuf:"bytes,1,opt,name=kind,proto3" json:"kind,omitempty"`
+	Path          string                 `protobuf:"bytes,2,opt,name=path,proto3" json:"path,omitempty"`
+	EntryCount    uint64                 `protobuf:"varint,3,opt,name=entry_count,json=entryCount,proto3" json:"entry_count,omitempty"`
+	Checksum      string                 `protobuf:"bytes,4,opt,name=checksum,proto3" json:"checksum,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GraphPersistentIndexEntryStatus) Reset() {
+	*x = GraphPersistentIndexEntryStatus{}
+	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[29]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GraphPersistentIndexEntryStatus) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GraphPersistentIndexEntryStatus) ProtoMessage() {}
+
+func (x *GraphPersistentIndexEntryStatus) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[29]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GraphPersistentIndexEntryStatus.ProtoReflect.Descriptor instead.
+func (*GraphPersistentIndexEntryStatus) Descriptor() ([]byte, []int) {
+	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{29}
+}
+
+func (x *GraphPersistentIndexEntryStatus) GetKind() string {
+	if x != nil {
+		return x.Kind
+	}
+	return ""
+}
+
+func (x *GraphPersistentIndexEntryStatus) GetPath() string {
+	if x != nil {
+		return x.Path
+	}
+	return ""
+}
+
+func (x *GraphPersistentIndexEntryStatus) GetEntryCount() uint64 {
+	if x != nil {
+		return x.EntryCount
+	}
+	return 0
+}
+
+func (x *GraphPersistentIndexEntryStatus) GetChecksum() string {
+	if x != nil {
+		return x.Checksum
+	}
+	return ""
+}
+
+type GraphPersistentQueryIndexStatus struct {
+	state                    protoimpl.MessageState `protogen:"open.v1"`
+	Identity                 string                 `protobuf:"bytes,1,opt,name=identity,proto3" json:"identity,omitempty"`
+	Name                     string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	DomainId                 string                 `protobuf:"bytes,3,opt,name=domain_id,json=domainId,proto3" json:"domain_id,omitempty"`
+	SchemaHash               string                 `protobuf:"bytes,4,opt,name=schema_hash,json=schemaHash,proto3" json:"schema_hash,omitempty"`
+	DefinitionFingerprint    string                 `protobuf:"bytes,5,opt,name=definition_fingerprint,json=definitionFingerprint,proto3" json:"definition_fingerprint,omitempty"`
+	TargetKind               string                 `protobuf:"bytes,6,opt,name=target_kind,json=targetKind,proto3" json:"target_kind,omitempty"`
+	TargetType               string                 `protobuf:"bytes,7,opt,name=target_type,json=targetType,proto3" json:"target_type,omitempty"`
+	Labels                   []string               `protobuf:"bytes,8,rep,name=labels,proto3" json:"labels,omitempty"`
+	FieldNamespace           string                 `protobuf:"bytes,9,opt,name=field_namespace,json=fieldNamespace,proto3" json:"field_namespace,omitempty"`
+	FieldName                string                 `protobuf:"bytes,10,opt,name=field_name,json=fieldName,proto3" json:"field_name,omitempty"`
+	IndexKind                string                 `protobuf:"bytes,11,opt,name=index_kind,json=indexKind,proto3" json:"index_kind,omitempty"`
+	Direction                string                 `protobuf:"bytes,12,opt,name=direction,proto3" json:"direction,omitempty"`
+	BuildState               string                 `protobuf:"bytes,13,opt,name=build_state,json=buildState,proto3" json:"build_state,omitempty"`
+	LastIndexedGraphRevision uint64                 `protobuf:"varint,14,opt,name=last_indexed_graph_revision,json=lastIndexedGraphRevision,proto3" json:"last_indexed_graph_revision,omitempty"`
+	KeyEncodingVersion       int32                  `protobuf:"varint,15,opt,name=key_encoding_version,json=keyEncodingVersion,proto3" json:"key_encoding_version,omitempty"`
+	EntryCount               uint64                 `protobuf:"varint,16,opt,name=entry_count,json=entryCount,proto3" json:"entry_count,omitempty"`
+	LoadResult               string                 `protobuf:"bytes,17,opt,name=load_result,json=loadResult,proto3" json:"load_result,omitempty"`
+	unknownFields            protoimpl.UnknownFields
+	sizeCache                protoimpl.SizeCache
+}
+
+func (x *GraphPersistentQueryIndexStatus) Reset() {
+	*x = GraphPersistentQueryIndexStatus{}
+	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[30]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GraphPersistentQueryIndexStatus) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GraphPersistentQueryIndexStatus) ProtoMessage() {}
+
+func (x *GraphPersistentQueryIndexStatus) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[30]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GraphPersistentQueryIndexStatus.ProtoReflect.Descriptor instead.
+func (*GraphPersistentQueryIndexStatus) Descriptor() ([]byte, []int) {
+	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{30}
+}
+
+func (x *GraphPersistentQueryIndexStatus) GetIdentity() string {
+	if x != nil {
+		return x.Identity
+	}
+	return ""
+}
+
+func (x *GraphPersistentQueryIndexStatus) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *GraphPersistentQueryIndexStatus) GetDomainId() string {
+	if x != nil {
+		return x.DomainId
+	}
+	return ""
+}
+
+func (x *GraphPersistentQueryIndexStatus) GetSchemaHash() string {
+	if x != nil {
+		return x.SchemaHash
+	}
+	return ""
+}
+
+func (x *GraphPersistentQueryIndexStatus) GetDefinitionFingerprint() string {
+	if x != nil {
+		return x.DefinitionFingerprint
+	}
+	return ""
+}
+
+func (x *GraphPersistentQueryIndexStatus) GetTargetKind() string {
+	if x != nil {
+		return x.TargetKind
+	}
+	return ""
+}
+
+func (x *GraphPersistentQueryIndexStatus) GetTargetType() string {
+	if x != nil {
+		return x.TargetType
+	}
+	return ""
+}
+
+func (x *GraphPersistentQueryIndexStatus) GetLabels() []string {
+	if x != nil {
+		return x.Labels
+	}
+	return nil
+}
+
+func (x *GraphPersistentQueryIndexStatus) GetFieldNamespace() string {
+	if x != nil {
+		return x.FieldNamespace
+	}
+	return ""
+}
+
+func (x *GraphPersistentQueryIndexStatus) GetFieldName() string {
+	if x != nil {
+		return x.FieldName
+	}
+	return ""
+}
+
+func (x *GraphPersistentQueryIndexStatus) GetIndexKind() string {
+	if x != nil {
+		return x.IndexKind
+	}
+	return ""
+}
+
+func (x *GraphPersistentQueryIndexStatus) GetDirection() string {
+	if x != nil {
+		return x.Direction
+	}
+	return ""
+}
+
+func (x *GraphPersistentQueryIndexStatus) GetBuildState() string {
+	if x != nil {
+		return x.BuildState
+	}
+	return ""
+}
+
+func (x *GraphPersistentQueryIndexStatus) GetLastIndexedGraphRevision() uint64 {
+	if x != nil {
+		return x.LastIndexedGraphRevision
+	}
+	return 0
+}
+
+func (x *GraphPersistentQueryIndexStatus) GetKeyEncodingVersion() int32 {
+	if x != nil {
+		return x.KeyEncodingVersion
+	}
+	return 0
+}
+
+func (x *GraphPersistentQueryIndexStatus) GetEntryCount() uint64 {
+	if x != nil {
+		return x.EntryCount
+	}
+	return 0
+}
+
+func (x *GraphPersistentQueryIndexStatus) GetLoadResult() string {
+	if x != nil {
+		return x.LoadResult
 	}
 	return ""
 }
@@ -2339,7 +3289,7 @@ type LocalGraphConsistencyStats struct {
 
 func (x *LocalGraphConsistencyStats) Reset() {
 	*x = LocalGraphConsistencyStats{}
-	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[20]
+	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[31]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2351,7 +3301,7 @@ func (x *LocalGraphConsistencyStats) String() string {
 func (*LocalGraphConsistencyStats) ProtoMessage() {}
 
 func (x *LocalGraphConsistencyStats) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[20]
+	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[31]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2364,7 +3314,7 @@ func (x *LocalGraphConsistencyStats) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use LocalGraphConsistencyStats.ProtoReflect.Descriptor instead.
 func (*LocalGraphConsistencyStats) Descriptor() ([]byte, []int) {
-	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{20}
+	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{31}
 }
 
 func (x *LocalGraphConsistencyStats) GetSpaceId() string {
@@ -2459,7 +3409,7 @@ type GetClusterStatusRequest struct {
 
 func (x *GetClusterStatusRequest) Reset() {
 	*x = GetClusterStatusRequest{}
-	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[21]
+	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[32]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2471,7 +3421,7 @@ func (x *GetClusterStatusRequest) String() string {
 func (*GetClusterStatusRequest) ProtoMessage() {}
 
 func (x *GetClusterStatusRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[21]
+	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[32]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2484,7 +3434,7 @@ func (x *GetClusterStatusRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetClusterStatusRequest.ProtoReflect.Descriptor instead.
 func (*GetClusterStatusRequest) Descriptor() ([]byte, []int) {
-	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{21}
+	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{32}
 }
 
 type GetClusterStatusResponse struct {
@@ -2499,7 +3449,7 @@ type GetClusterStatusResponse struct {
 
 func (x *GetClusterStatusResponse) Reset() {
 	*x = GetClusterStatusResponse{}
-	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[22]
+	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[33]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2511,7 +3461,7 @@ func (x *GetClusterStatusResponse) String() string {
 func (*GetClusterStatusResponse) ProtoMessage() {}
 
 func (x *GetClusterStatusResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[22]
+	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[33]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2524,7 +3474,7 @@ func (x *GetClusterStatusResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetClusterStatusResponse.ProtoReflect.Descriptor instead.
 func (*GetClusterStatusResponse) Descriptor() ([]byte, []int) {
-	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{22}
+	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{33}
 }
 
 func (x *GetClusterStatusResponse) GetNode() *ClusterLocalNode {
@@ -2570,7 +3520,7 @@ type ClusterLocalNode struct {
 
 func (x *ClusterLocalNode) Reset() {
 	*x = ClusterLocalNode{}
-	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[23]
+	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[34]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2582,7 +3532,7 @@ func (x *ClusterLocalNode) String() string {
 func (*ClusterLocalNode) ProtoMessage() {}
 
 func (x *ClusterLocalNode) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[23]
+	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[34]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2595,7 +3545,7 @@ func (x *ClusterLocalNode) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ClusterLocalNode.ProtoReflect.Descriptor instead.
 func (*ClusterLocalNode) Descriptor() ([]byte, []int) {
-	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{23}
+	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{34}
 }
 
 func (x *ClusterLocalNode) GetNodeId() string {
@@ -2658,7 +3608,7 @@ type ClusterInfo struct {
 
 func (x *ClusterInfo) Reset() {
 	*x = ClusterInfo{}
-	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[24]
+	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[35]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2670,7 +3620,7 @@ func (x *ClusterInfo) String() string {
 func (*ClusterInfo) ProtoMessage() {}
 
 func (x *ClusterInfo) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[24]
+	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[35]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2683,7 +3633,7 @@ func (x *ClusterInfo) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ClusterInfo.ProtoReflect.Descriptor instead.
 func (*ClusterInfo) Descriptor() ([]byte, []int) {
-	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{24}
+	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{35}
 }
 
 func (x *ClusterInfo) GetClusterId() string {
@@ -2723,7 +3673,7 @@ type ClusterPeer struct {
 
 func (x *ClusterPeer) Reset() {
 	*x = ClusterPeer{}
-	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[25]
+	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[36]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2735,7 +3685,7 @@ func (x *ClusterPeer) String() string {
 func (*ClusterPeer) ProtoMessage() {}
 
 func (x *ClusterPeer) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[25]
+	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[36]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2748,7 +3698,7 @@ func (x *ClusterPeer) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ClusterPeer.ProtoReflect.Descriptor instead.
 func (*ClusterPeer) Descriptor() ([]byte, []int) {
-	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{25}
+	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{36}
 }
 
 func (x *ClusterPeer) GetNodeId() string {
@@ -2841,7 +3791,7 @@ type ClusterReadiness struct {
 
 func (x *ClusterReadiness) Reset() {
 	*x = ClusterReadiness{}
-	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[26]
+	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[37]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2853,7 +3803,7 @@ func (x *ClusterReadiness) String() string {
 func (*ClusterReadiness) ProtoMessage() {}
 
 func (x *ClusterReadiness) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[26]
+	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[37]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2866,7 +3816,7 @@ func (x *ClusterReadiness) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ClusterReadiness.ProtoReflect.Descriptor instead.
 func (*ClusterReadiness) Descriptor() ([]byte, []int) {
-	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{26}
+	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{37}
 }
 
 func (x *ClusterReadiness) GetClientReady() bool {
@@ -2968,7 +3918,7 @@ type ListClusterMembersRequest struct {
 
 func (x *ListClusterMembersRequest) Reset() {
 	*x = ListClusterMembersRequest{}
-	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[27]
+	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[38]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2980,7 +3930,7 @@ func (x *ListClusterMembersRequest) String() string {
 func (*ListClusterMembersRequest) ProtoMessage() {}
 
 func (x *ListClusterMembersRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[27]
+	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[38]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2993,7 +3943,7 @@ func (x *ListClusterMembersRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListClusterMembersRequest.ProtoReflect.Descriptor instead.
 func (*ListClusterMembersRequest) Descriptor() ([]byte, []int) {
-	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{27}
+	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{38}
 }
 
 type ListClusterMembersResponse struct {
@@ -3007,7 +3957,7 @@ type ListClusterMembersResponse struct {
 
 func (x *ListClusterMembersResponse) Reset() {
 	*x = ListClusterMembersResponse{}
-	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[28]
+	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[39]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3019,7 +3969,7 @@ func (x *ListClusterMembersResponse) String() string {
 func (*ListClusterMembersResponse) ProtoMessage() {}
 
 func (x *ListClusterMembersResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[28]
+	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[39]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3032,7 +3982,7 @@ func (x *ListClusterMembersResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListClusterMembersResponse.ProtoReflect.Descriptor instead.
 func (*ListClusterMembersResponse) Descriptor() ([]byte, []int) {
-	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{28}
+	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{39}
 }
 
 func (x *ListClusterMembersResponse) GetClusterId() string {
@@ -3078,7 +4028,7 @@ type ClusterMember struct {
 
 func (x *ClusterMember) Reset() {
 	*x = ClusterMember{}
-	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[29]
+	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[40]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3090,7 +4040,7 @@ func (x *ClusterMember) String() string {
 func (*ClusterMember) ProtoMessage() {}
 
 func (x *ClusterMember) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[29]
+	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[40]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3103,7 +4053,7 @@ func (x *ClusterMember) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ClusterMember.ProtoReflect.Descriptor instead.
 func (*ClusterMember) Descriptor() ([]byte, []int) {
-	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{29}
+	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{40}
 }
 
 func (x *ClusterMember) GetNodeName() string {
@@ -3212,7 +4162,7 @@ type GetClusterHealthRequest struct {
 
 func (x *GetClusterHealthRequest) Reset() {
 	*x = GetClusterHealthRequest{}
-	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[30]
+	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[41]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3224,7 +4174,7 @@ func (x *GetClusterHealthRequest) String() string {
 func (*GetClusterHealthRequest) ProtoMessage() {}
 
 func (x *GetClusterHealthRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[30]
+	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[41]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3237,7 +4187,7 @@ func (x *GetClusterHealthRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetClusterHealthRequest.ProtoReflect.Descriptor instead.
 func (*GetClusterHealthRequest) Descriptor() ([]byte, []int) {
-	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{30}
+	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{41}
 }
 
 type GetClusterHealthResponse struct {
@@ -3254,7 +4204,7 @@ type GetClusterHealthResponse struct {
 
 func (x *GetClusterHealthResponse) Reset() {
 	*x = GetClusterHealthResponse{}
-	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[31]
+	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[42]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3266,7 +4216,7 @@ func (x *GetClusterHealthResponse) String() string {
 func (*GetClusterHealthResponse) ProtoMessage() {}
 
 func (x *GetClusterHealthResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[31]
+	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[42]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3279,7 +4229,7 @@ func (x *GetClusterHealthResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetClusterHealthResponse.ProtoReflect.Descriptor instead.
 func (*GetClusterHealthResponse) Descriptor() ([]byte, []int) {
-	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{31}
+	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{42}
 }
 
 func (x *GetClusterHealthResponse) GetStatus() string {
@@ -3372,7 +4322,19 @@ const file_mycel_admin_v1_cluster_proto_rawDesc = "" +
 	" \x01(\tR\x0flastMessageType\"\x17\n" +
 	"\x15ListRaftGroupsRequest\"Q\n" +
 	"\x16ListRaftGroupsResponse\x127\n" +
-	"\x06groups\x18\x01 \x03(\v2\x1f.mycel.admin.v1.RaftGroupStatusR\x06groups\"\x9c\x05\n" +
+	"\x06groups\x18\x01 \x03(\v2\x1f.mycel.admin.v1.RaftGroupStatusR\x06groups\"R\n" +
+	"\x19CreateRaftSnapshotRequest\x12\x1b\n" +
+	"\tgroup_ids\x18\x01 \x03(\tR\bgroupIds\x12\x18\n" +
+	"\acompact\x18\x02 \x01(\bR\acompact\"Z\n" +
+	"\x1aCreateRaftSnapshotResponse\x12<\n" +
+	"\aresults\x18\x01 \x03(\v2\".mycel.admin.v1.RaftSnapshotResultR\aresults\"\xfa\x01\n" +
+	"\x12RaftSnapshotResult\x12\x19\n" +
+	"\bgroup_id\x18\x01 \x01(\tR\agroupId\x12%\n" +
+	"\x0esnapshot_index\x18\x02 \x01(\x04R\rsnapshotIndex\x12\x1c\n" +
+	"\tcompacted\x18\x03 \x01(\bR\tcompacted\x12\x14\n" +
+	"\x05error\x18\x04 \x01(\tR\x05error\x127\n" +
+	"\x06before\x18\x05 \x01(\v2\x1f.mycel.admin.v1.RaftGroupStatusR\x06before\x125\n" +
+	"\x05after\x18\x06 \x01(\v2\x1f.mycel.admin.v1.RaftGroupStatusR\x05after\"\x9c\x05\n" +
 	"\x0fRaftGroupStatus\x12\x19\n" +
 	"\bgroup_id\x18\x01 \x01(\tR\agroupId\x121\n" +
 	"\x04kind\x18\x02 \x01(\x0e2\x1d.mycel.admin.v1.RaftGroupKindR\x04kind\x12!\n" +
@@ -3482,7 +4444,92 @@ const file_mycel_admin_v1_cluster_proto_rawDesc = "" +
 	"\x13GraphForensicEntity\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1a\n" +
 	"\bchecksum\x18\x02 \x01(\tR\bchecksum\x12%\n" +
-	"\x0ecanonical_json\x18\x03 \x01(\tR\rcanonicalJson\"\xac\x03\n" +
+	"\x0ecanonical_json\x18\x03 \x01(\tR\rcanonicalJson\"V\n" +
+	"\x1cCreateGraphCheckpointRequest\x12\x19\n" +
+	"\bspace_id\x18\x01 \x01(\tR\aspaceId\x12\x1b\n" +
+	"\tdomain_id\x18\x02 \x01(\tR\bdomainId\"^\n" +
+	"\x1dCreateGraphCheckpointResponse\x12=\n" +
+	"\x06status\x18\x01 \x01(\v2%.mycel.admin.v1.GraphCheckpointStatusR\x06status\"Y\n" +
+	"\x1fGetGraphCheckpointStatusRequest\x12\x19\n" +
+	"\bspace_id\x18\x01 \x01(\tR\aspaceId\x12\x1b\n" +
+	"\tdomain_id\x18\x02 \x01(\tR\bdomainId\"a\n" +
+	" GetGraphCheckpointStatusResponse\x12=\n" +
+	"\x06status\x18\x01 \x01(\v2%.mycel.admin.v1.GraphCheckpointStatusR\x06status\"\x9a\b\n" +
+	"\x15GraphCheckpointStatus\x12\x19\n" +
+	"\bspace_id\x18\x01 \x01(\tR\aspaceId\x12\x1b\n" +
+	"\tdomain_id\x18\x02 \x01(\tR\bdomainId\x12)\n" +
+	"\x10current_revision\x18\x03 \x01(\x04R\x0fcurrentRevision\x12-\n" +
+	"\x12checkpoint_present\x18\x04 \x01(\bR\x11checkpointPresent\x12/\n" +
+	"\x13checkpoint_revision\x18\x05 \x01(\x04R\x12checkpointRevision\x122\n" +
+	"\x15checkpoint_created_at\x18\x06 \x01(\tR\x13checkpointCreatedAt\x12\x1d\n" +
+	"\n" +
+	"node_count\x18\a \x01(\x04R\tnodeCount\x12\x1d\n" +
+	"\n" +
+	"edge_count\x18\b \x01(\x04R\tedgeCount\x12%\n" +
+	"\x0egraph_checksum\x18\t \x01(\tR\rgraphChecksum\x12-\n" +
+	"\x12checksum_algorithm\x18\n" +
+	" \x01(\tR\x11checksumAlgorithm\x12%\n" +
+	"\x0etail_revisions\x18\v \x01(\x04R\rtailRevisions\x12\x16\n" +
+	"\x06source\x18\f \x01(\tR\x06source\x126\n" +
+	"\x17auto_checkpoint_enabled\x18\r \x01(\bR\x15autoCheckpointEnabled\x12K\n" +
+	"\"auto_checkpoint_revision_threshold\x18\x0e \x01(\x04R\x1fautoCheckpointRevisionThreshold\x128\n" +
+	"\x18auto_checkpoint_interval\x18\x0f \x01(\tR\x16autoCheckpointInterval\x12;\n" +
+	"\x1alast_checkpoint_attempt_at\x18\x10 \x01(\tR\x17lastCheckpointAttemptAt\x12;\n" +
+	"\x1alast_checkpoint_success_at\x18\x11 \x01(\tR\x17lastCheckpointSuccessAt\x12=\n" +
+	"\x1blast_checkpoint_duration_ms\x18\x12 \x01(\x04R\x18lastCheckpointDurationMs\x122\n" +
+	"\x15last_checkpoint_error\x18\x13 \x01(\tR\x13lastCheckpointError\x124\n" +
+	"\x16checkpoint_age_seconds\x18\x14 \x01(\x04R\x14checkpointAgeSeconds\x12U\n" +
+	"\x10persistent_index\x18\x15 \x01(\v2*.mycel.admin.v1.GraphPersistentIndexStatusR\x0fpersistentIndex\"\xb2\x04\n" +
+	"\x1aGraphPersistentIndexStatus\x12\x18\n" +
+	"\apresent\x18\x01 \x01(\bR\apresent\x12 \n" +
+	"\findex_set_id\x18\x02 \x01(\tR\n" +
+	"indexSetId\x12!\n" +
+	"\findex_format\x18\x03 \x01(\tR\vindexFormat\x12%\n" +
+	"\x0egraph_revision\x18\x04 \x01(\x04R\rgraphRevision\x12%\n" +
+	"\x0egraph_checksum\x18\x05 \x01(\tR\rgraphChecksum\x12-\n" +
+	"\x12checksum_algorithm\x18\x06 \x01(\tR\x11checksumAlgorithm\x12.\n" +
+	"\x13graph_checkpoint_id\x18\a \x01(\tR\x11graphCheckpointId\x12\x1d\n" +
+	"\n" +
+	"created_at\x18\b \x01(\tR\tcreatedAt\x12\x1f\n" +
+	"\vload_result\x18\t \x01(\tR\n" +
+	"loadResult\x12'\n" +
+	"\x0ffallback_reason\x18\n" +
+	" \x01(\tR\x0efallbackReason\x12I\n" +
+	"\aentries\x18\v \x03(\v2/.mycel.admin.v1.GraphPersistentIndexEntryStatusR\aentries\x12T\n" +
+	"\rquery_indexes\x18\f \x03(\v2/.mycel.admin.v1.GraphPersistentQueryIndexStatusR\fqueryIndexes\"\x86\x01\n" +
+	"\x1fGraphPersistentIndexEntryStatus\x12\x12\n" +
+	"\x04kind\x18\x01 \x01(\tR\x04kind\x12\x12\n" +
+	"\x04path\x18\x02 \x01(\tR\x04path\x12\x1f\n" +
+	"\ventry_count\x18\x03 \x01(\x04R\n" +
+	"entryCount\x12\x1a\n" +
+	"\bchecksum\x18\x04 \x01(\tR\bchecksum\"\xf9\x04\n" +
+	"\x1fGraphPersistentQueryIndexStatus\x12\x1a\n" +
+	"\bidentity\x18\x01 \x01(\tR\bidentity\x12\x12\n" +
+	"\x04name\x18\x02 \x01(\tR\x04name\x12\x1b\n" +
+	"\tdomain_id\x18\x03 \x01(\tR\bdomainId\x12\x1f\n" +
+	"\vschema_hash\x18\x04 \x01(\tR\n" +
+	"schemaHash\x125\n" +
+	"\x16definition_fingerprint\x18\x05 \x01(\tR\x15definitionFingerprint\x12\x1f\n" +
+	"\vtarget_kind\x18\x06 \x01(\tR\n" +
+	"targetKind\x12\x1f\n" +
+	"\vtarget_type\x18\a \x01(\tR\n" +
+	"targetType\x12\x16\n" +
+	"\x06labels\x18\b \x03(\tR\x06labels\x12'\n" +
+	"\x0ffield_namespace\x18\t \x01(\tR\x0efieldNamespace\x12\x1d\n" +
+	"\n" +
+	"field_name\x18\n" +
+	" \x01(\tR\tfieldName\x12\x1d\n" +
+	"\n" +
+	"index_kind\x18\v \x01(\tR\tindexKind\x12\x1c\n" +
+	"\tdirection\x18\f \x01(\tR\tdirection\x12\x1f\n" +
+	"\vbuild_state\x18\r \x01(\tR\n" +
+	"buildState\x12=\n" +
+	"\x1blast_indexed_graph_revision\x18\x0e \x01(\x04R\x18lastIndexedGraphRevision\x120\n" +
+	"\x14key_encoding_version\x18\x0f \x01(\x05R\x12keyEncodingVersion\x12\x1f\n" +
+	"\ventry_count\x18\x10 \x01(\x04R\n" +
+	"entryCount\x12\x1f\n" +
+	"\vload_result\x18\x11 \x01(\tR\n" +
+	"loadResult\"\xac\x03\n" +
 	"\x1aLocalGraphConsistencyStats\x12\x19\n" +
 	"\bspace_id\x18\x01 \x01(\tR\aspaceId\x12\x1b\n" +
 	"\tdomain_id\x18\x02 \x01(\tR\bdomainId\x12!\n" +
@@ -3645,17 +4692,20 @@ const file_mycel_admin_v1_cluster_proto_rawDesc = "" +
 	".GRAPH_CONSISTENCY_WARNING_SEVERITY_UNSPECIFIED\x10\x00\x12+\n" +
 	"'GRAPH_CONSISTENCY_WARNING_SEVERITY_INFO\x10\x01\x12.\n" +
 	"*GRAPH_CONSISTENCY_WARNING_SEVERITY_WARNING\x10\x02\x12/\n" +
-	"+GRAPH_CONSISTENCY_WARNING_SEVERITY_CRITICAL\x10\x032\x9f\b\n" +
+	"+GRAPH_CONSISTENCY_WARNING_SEVERITY_CRITICAL\x10\x032\x81\v\n" +
 	"\x13AdminClusterService\x12e\n" +
 	"\x10GetClusterStatus\x12'.mycel.admin.v1.GetClusterStatusRequest\x1a(.mycel.admin.v1.GetClusterStatusResponse\x12k\n" +
 	"\x12ListClusterMembers\x12).mycel.admin.v1.ListClusterMembersRequest\x1a*.mycel.admin.v1.ListClusterMembersResponse\x12e\n" +
 	"\x10GetClusterHealth\x12'.mycel.admin.v1.GetClusterHealthRequest\x1a(.mycel.admin.v1.GetClusterHealthResponse\x12z\n" +
 	"\x17GetClusterRuntimeStatus\x12..mycel.admin.v1.GetClusterRuntimeStatusRequest\x1a/.mycel.admin.v1.GetClusterRuntimeStatusResponse\x12_\n" +
-	"\x0eListRaftGroups\x12%.mycel.admin.v1.ListRaftGroupsRequest\x1a&.mycel.admin.v1.ListRaftGroupsResponse\x12e\n" +
+	"\x0eListRaftGroups\x12%.mycel.admin.v1.ListRaftGroupsRequest\x1a&.mycel.admin.v1.ListRaftGroupsResponse\x12k\n" +
+	"\x12CreateRaftSnapshot\x12).mycel.admin.v1.CreateRaftSnapshotRequest\x1a*.mycel.admin.v1.CreateRaftSnapshotResponse\x12e\n" +
 	"\x10LookupSpaceRoute\x12'.mycel.admin.v1.LookupSpaceRouteRequest\x1a(.mycel.admin.v1.LookupSpaceRouteResponse\x12}\n" +
 	"\x18GetLocalGraphConsistency\x12/.mycel.admin.v1.GetLocalGraphConsistencyRequest\x1a0.mycel.admin.v1.GetLocalGraphConsistencyResponse\x12\x80\x01\n" +
 	"\x19GetGraphConsistencyReport\x120.mycel.admin.v1.GetGraphConsistencyReportRequest\x1a1.mycel.admin.v1.GetGraphConsistencyReportResponse\x12\x86\x01\n" +
-	"\x1bGetLocalGraphForensicExport\x122.mycel.admin.v1.GetLocalGraphForensicExportRequest\x1a3.mycel.admin.v1.GetLocalGraphForensicExportResponseB\xbb\x01\n" +
+	"\x1bGetLocalGraphForensicExport\x122.mycel.admin.v1.GetLocalGraphForensicExportRequest\x1a3.mycel.admin.v1.GetLocalGraphForensicExportResponse\x12t\n" +
+	"\x15CreateGraphCheckpoint\x12,.mycel.admin.v1.CreateGraphCheckpointRequest\x1a-.mycel.admin.v1.CreateGraphCheckpointResponse\x12}\n" +
+	"\x18GetGraphCheckpointStatus\x12/.mycel.admin.v1.GetGraphCheckpointStatusRequest\x1a0.mycel.admin.v1.GetGraphCheckpointStatusResponseB\xbb\x01\n" +
 	"\x12com.mycel.admin.v1B\fClusterProtoP\x01Z=github.com/myceldb/mycel-go-sdk/gen/go/mycel/admin/v1;adminv1\xa2\x02\x03MAX\xaa\x02\x0eMycel.Admin.V1\xca\x02\x0eMycel\\Admin\\V1\xe2\x02\x1aMycel\\Admin\\V1\\GPBMetadata\xea\x02\x10Mycel::Admin::V1b\x06proto3"
 
 var (
@@ -3671,7 +4721,7 @@ func file_mycel_admin_v1_cluster_proto_rawDescGZIP() []byte {
 }
 
 var file_mycel_admin_v1_cluster_proto_enumTypes = make([]protoimpl.EnumInfo, 11)
-var file_mycel_admin_v1_cluster_proto_msgTypes = make([]protoimpl.MessageInfo, 32)
+var file_mycel_admin_v1_cluster_proto_msgTypes = make([]protoimpl.MessageInfo, 43)
 var file_mycel_admin_v1_cluster_proto_goTypes = []any{
 	(ClusterEngine)(0),                          // 0: mycel.admin.v1.ClusterEngine
 	(RaftGroupKind)(0),                          // 1: mycel.admin.v1.RaftGroupKind
@@ -3690,87 +4740,112 @@ var file_mycel_admin_v1_cluster_proto_goTypes = []any{
 	(*RaftTransportTargetDiagnostics)(nil),      // 14: mycel.admin.v1.RaftTransportTargetDiagnostics
 	(*ListRaftGroupsRequest)(nil),               // 15: mycel.admin.v1.ListRaftGroupsRequest
 	(*ListRaftGroupsResponse)(nil),              // 16: mycel.admin.v1.ListRaftGroupsResponse
-	(*RaftGroupStatus)(nil),                     // 17: mycel.admin.v1.RaftGroupStatus
-	(*RaftReadDiagnostics)(nil),                 // 18: mycel.admin.v1.RaftReadDiagnostics
-	(*LookupSpaceRouteRequest)(nil),             // 19: mycel.admin.v1.LookupSpaceRouteRequest
-	(*LookupSpaceRouteResponse)(nil),            // 20: mycel.admin.v1.LookupSpaceRouteResponse
-	(*GetLocalGraphConsistencyRequest)(nil),     // 21: mycel.admin.v1.GetLocalGraphConsistencyRequest
-	(*GetLocalGraphConsistencyResponse)(nil),    // 22: mycel.admin.v1.GetLocalGraphConsistencyResponse
-	(*GetGraphConsistencyReportRequest)(nil),    // 23: mycel.admin.v1.GetGraphConsistencyReportRequest
-	(*GetGraphConsistencyReportResponse)(nil),   // 24: mycel.admin.v1.GetGraphConsistencyReportResponse
-	(*GraphConsistencyReplica)(nil),             // 25: mycel.admin.v1.GraphConsistencyReplica
-	(*GraphConsistencyWarning)(nil),             // 26: mycel.admin.v1.GraphConsistencyWarning
-	(*GetLocalGraphForensicExportRequest)(nil),  // 27: mycel.admin.v1.GetLocalGraphForensicExportRequest
-	(*GetLocalGraphForensicExportResponse)(nil), // 28: mycel.admin.v1.GetLocalGraphForensicExportResponse
-	(*GraphForensicExportManifest)(nil),         // 29: mycel.admin.v1.GraphForensicExportManifest
-	(*GraphForensicEntity)(nil),                 // 30: mycel.admin.v1.GraphForensicEntity
-	(*LocalGraphConsistencyStats)(nil),          // 31: mycel.admin.v1.LocalGraphConsistencyStats
-	(*GetClusterStatusRequest)(nil),             // 32: mycel.admin.v1.GetClusterStatusRequest
-	(*GetClusterStatusResponse)(nil),            // 33: mycel.admin.v1.GetClusterStatusResponse
-	(*ClusterLocalNode)(nil),                    // 34: mycel.admin.v1.ClusterLocalNode
-	(*ClusterInfo)(nil),                         // 35: mycel.admin.v1.ClusterInfo
-	(*ClusterPeer)(nil),                         // 36: mycel.admin.v1.ClusterPeer
-	(*ClusterReadiness)(nil),                    // 37: mycel.admin.v1.ClusterReadiness
-	(*ListClusterMembersRequest)(nil),           // 38: mycel.admin.v1.ListClusterMembersRequest
-	(*ListClusterMembersResponse)(nil),          // 39: mycel.admin.v1.ListClusterMembersResponse
-	(*ClusterMember)(nil),                       // 40: mycel.admin.v1.ClusterMember
-	(*GetClusterHealthRequest)(nil),             // 41: mycel.admin.v1.GetClusterHealthRequest
-	(*GetClusterHealthResponse)(nil),            // 42: mycel.admin.v1.GetClusterHealthResponse
+	(*CreateRaftSnapshotRequest)(nil),           // 17: mycel.admin.v1.CreateRaftSnapshotRequest
+	(*CreateRaftSnapshotResponse)(nil),          // 18: mycel.admin.v1.CreateRaftSnapshotResponse
+	(*RaftSnapshotResult)(nil),                  // 19: mycel.admin.v1.RaftSnapshotResult
+	(*RaftGroupStatus)(nil),                     // 20: mycel.admin.v1.RaftGroupStatus
+	(*RaftReadDiagnostics)(nil),                 // 21: mycel.admin.v1.RaftReadDiagnostics
+	(*LookupSpaceRouteRequest)(nil),             // 22: mycel.admin.v1.LookupSpaceRouteRequest
+	(*LookupSpaceRouteResponse)(nil),            // 23: mycel.admin.v1.LookupSpaceRouteResponse
+	(*GetLocalGraphConsistencyRequest)(nil),     // 24: mycel.admin.v1.GetLocalGraphConsistencyRequest
+	(*GetLocalGraphConsistencyResponse)(nil),    // 25: mycel.admin.v1.GetLocalGraphConsistencyResponse
+	(*GetGraphConsistencyReportRequest)(nil),    // 26: mycel.admin.v1.GetGraphConsistencyReportRequest
+	(*GetGraphConsistencyReportResponse)(nil),   // 27: mycel.admin.v1.GetGraphConsistencyReportResponse
+	(*GraphConsistencyReplica)(nil),             // 28: mycel.admin.v1.GraphConsistencyReplica
+	(*GraphConsistencyWarning)(nil),             // 29: mycel.admin.v1.GraphConsistencyWarning
+	(*GetLocalGraphForensicExportRequest)(nil),  // 30: mycel.admin.v1.GetLocalGraphForensicExportRequest
+	(*GetLocalGraphForensicExportResponse)(nil), // 31: mycel.admin.v1.GetLocalGraphForensicExportResponse
+	(*GraphForensicExportManifest)(nil),         // 32: mycel.admin.v1.GraphForensicExportManifest
+	(*GraphForensicEntity)(nil),                 // 33: mycel.admin.v1.GraphForensicEntity
+	(*CreateGraphCheckpointRequest)(nil),        // 34: mycel.admin.v1.CreateGraphCheckpointRequest
+	(*CreateGraphCheckpointResponse)(nil),       // 35: mycel.admin.v1.CreateGraphCheckpointResponse
+	(*GetGraphCheckpointStatusRequest)(nil),     // 36: mycel.admin.v1.GetGraphCheckpointStatusRequest
+	(*GetGraphCheckpointStatusResponse)(nil),    // 37: mycel.admin.v1.GetGraphCheckpointStatusResponse
+	(*GraphCheckpointStatus)(nil),               // 38: mycel.admin.v1.GraphCheckpointStatus
+	(*GraphPersistentIndexStatus)(nil),          // 39: mycel.admin.v1.GraphPersistentIndexStatus
+	(*GraphPersistentIndexEntryStatus)(nil),     // 40: mycel.admin.v1.GraphPersistentIndexEntryStatus
+	(*GraphPersistentQueryIndexStatus)(nil),     // 41: mycel.admin.v1.GraphPersistentQueryIndexStatus
+	(*LocalGraphConsistencyStats)(nil),          // 42: mycel.admin.v1.LocalGraphConsistencyStats
+	(*GetClusterStatusRequest)(nil),             // 43: mycel.admin.v1.GetClusterStatusRequest
+	(*GetClusterStatusResponse)(nil),            // 44: mycel.admin.v1.GetClusterStatusResponse
+	(*ClusterLocalNode)(nil),                    // 45: mycel.admin.v1.ClusterLocalNode
+	(*ClusterInfo)(nil),                         // 46: mycel.admin.v1.ClusterInfo
+	(*ClusterPeer)(nil),                         // 47: mycel.admin.v1.ClusterPeer
+	(*ClusterReadiness)(nil),                    // 48: mycel.admin.v1.ClusterReadiness
+	(*ListClusterMembersRequest)(nil),           // 49: mycel.admin.v1.ListClusterMembersRequest
+	(*ListClusterMembersResponse)(nil),          // 50: mycel.admin.v1.ListClusterMembersResponse
+	(*ClusterMember)(nil),                       // 51: mycel.admin.v1.ClusterMember
+	(*GetClusterHealthRequest)(nil),             // 52: mycel.admin.v1.GetClusterHealthRequest
+	(*GetClusterHealthResponse)(nil),            // 53: mycel.admin.v1.GetClusterHealthResponse
 }
 var file_mycel_admin_v1_cluster_proto_depIdxs = []int32{
 	0,  // 0: mycel.admin.v1.GetClusterRuntimeStatusResponse.engine:type_name -> mycel.admin.v1.ClusterEngine
 	13, // 1: mycel.admin.v1.GetClusterRuntimeStatusResponse.raft_transport:type_name -> mycel.admin.v1.RaftTransportDiagnostics
 	14, // 2: mycel.admin.v1.RaftTransportDiagnostics.targets:type_name -> mycel.admin.v1.RaftTransportTargetDiagnostics
-	17, // 3: mycel.admin.v1.ListRaftGroupsResponse.groups:type_name -> mycel.admin.v1.RaftGroupStatus
-	1,  // 4: mycel.admin.v1.RaftGroupStatus.kind:type_name -> mycel.admin.v1.RaftGroupKind
-	2,  // 5: mycel.admin.v1.RaftGroupStatus.health:type_name -> mycel.admin.v1.RaftGroupHealth
-	18, // 6: mycel.admin.v1.RaftGroupStatus.read_diagnostics:type_name -> mycel.admin.v1.RaftReadDiagnostics
-	31, // 7: mycel.admin.v1.GetLocalGraphConsistencyResponse.stats:type_name -> mycel.admin.v1.LocalGraphConsistencyStats
-	17, // 8: mycel.admin.v1.GetLocalGraphConsistencyResponse.raft_group:type_name -> mycel.admin.v1.RaftGroupStatus
-	9,  // 9: mycel.admin.v1.GetGraphConsistencyReportResponse.status:type_name -> mycel.admin.v1.GraphConsistencyStatus
-	17, // 10: mycel.admin.v1.GetGraphConsistencyReportResponse.raft_group:type_name -> mycel.admin.v1.RaftGroupStatus
-	25, // 11: mycel.admin.v1.GetGraphConsistencyReportResponse.replicas:type_name -> mycel.admin.v1.GraphConsistencyReplica
-	26, // 12: mycel.admin.v1.GetGraphConsistencyReportResponse.warnings:type_name -> mycel.admin.v1.GraphConsistencyWarning
-	31, // 13: mycel.admin.v1.GraphConsistencyReplica.stats:type_name -> mycel.admin.v1.LocalGraphConsistencyStats
-	10, // 14: mycel.admin.v1.GraphConsistencyWarning.severity:type_name -> mycel.admin.v1.GraphConsistencyWarningSeverity
-	29, // 15: mycel.admin.v1.GetLocalGraphForensicExportResponse.manifest:type_name -> mycel.admin.v1.GraphForensicExportManifest
-	31, // 16: mycel.admin.v1.GetLocalGraphForensicExportResponse.stats:type_name -> mycel.admin.v1.LocalGraphConsistencyStats
-	30, // 17: mycel.admin.v1.GetLocalGraphForensicExportResponse.nodes:type_name -> mycel.admin.v1.GraphForensicEntity
-	30, // 18: mycel.admin.v1.GetLocalGraphForensicExportResponse.edges:type_name -> mycel.admin.v1.GraphForensicEntity
-	34, // 19: mycel.admin.v1.GetClusterStatusResponse.node:type_name -> mycel.admin.v1.ClusterLocalNode
-	35, // 20: mycel.admin.v1.GetClusterStatusResponse.cluster:type_name -> mycel.admin.v1.ClusterInfo
-	36, // 21: mycel.admin.v1.GetClusterStatusResponse.peers:type_name -> mycel.admin.v1.ClusterPeer
-	37, // 22: mycel.admin.v1.GetClusterStatusResponse.readiness:type_name -> mycel.admin.v1.ClusterReadiness
-	4,  // 23: mycel.admin.v1.ClusterLocalNode.state:type_name -> mycel.admin.v1.ClusterNodeState
-	3,  // 24: mycel.admin.v1.ClusterInfo.mode:type_name -> mycel.admin.v1.ClusterMode
-	5,  // 25: mycel.admin.v1.ClusterPeer.state:type_name -> mycel.admin.v1.ClusterPeerState
-	6,  // 26: mycel.admin.v1.ClusterPeer.source:type_name -> mycel.admin.v1.ClusterPeerSource
-	40, // 27: mycel.admin.v1.ListClusterMembersResponse.members:type_name -> mycel.admin.v1.ClusterMember
-	7,  // 28: mycel.admin.v1.ClusterMember.state:type_name -> mycel.admin.v1.ClusterMemberState
-	37, // 29: mycel.admin.v1.GetClusterHealthResponse.readiness:type_name -> mycel.admin.v1.ClusterReadiness
-	32, // 30: mycel.admin.v1.AdminClusterService.GetClusterStatus:input_type -> mycel.admin.v1.GetClusterStatusRequest
-	38, // 31: mycel.admin.v1.AdminClusterService.ListClusterMembers:input_type -> mycel.admin.v1.ListClusterMembersRequest
-	41, // 32: mycel.admin.v1.AdminClusterService.GetClusterHealth:input_type -> mycel.admin.v1.GetClusterHealthRequest
-	11, // 33: mycel.admin.v1.AdminClusterService.GetClusterRuntimeStatus:input_type -> mycel.admin.v1.GetClusterRuntimeStatusRequest
-	15, // 34: mycel.admin.v1.AdminClusterService.ListRaftGroups:input_type -> mycel.admin.v1.ListRaftGroupsRequest
-	19, // 35: mycel.admin.v1.AdminClusterService.LookupSpaceRoute:input_type -> mycel.admin.v1.LookupSpaceRouteRequest
-	21, // 36: mycel.admin.v1.AdminClusterService.GetLocalGraphConsistency:input_type -> mycel.admin.v1.GetLocalGraphConsistencyRequest
-	23, // 37: mycel.admin.v1.AdminClusterService.GetGraphConsistencyReport:input_type -> mycel.admin.v1.GetGraphConsistencyReportRequest
-	27, // 38: mycel.admin.v1.AdminClusterService.GetLocalGraphForensicExport:input_type -> mycel.admin.v1.GetLocalGraphForensicExportRequest
-	33, // 39: mycel.admin.v1.AdminClusterService.GetClusterStatus:output_type -> mycel.admin.v1.GetClusterStatusResponse
-	39, // 40: mycel.admin.v1.AdminClusterService.ListClusterMembers:output_type -> mycel.admin.v1.ListClusterMembersResponse
-	42, // 41: mycel.admin.v1.AdminClusterService.GetClusterHealth:output_type -> mycel.admin.v1.GetClusterHealthResponse
-	12, // 42: mycel.admin.v1.AdminClusterService.GetClusterRuntimeStatus:output_type -> mycel.admin.v1.GetClusterRuntimeStatusResponse
-	16, // 43: mycel.admin.v1.AdminClusterService.ListRaftGroups:output_type -> mycel.admin.v1.ListRaftGroupsResponse
-	20, // 44: mycel.admin.v1.AdminClusterService.LookupSpaceRoute:output_type -> mycel.admin.v1.LookupSpaceRouteResponse
-	22, // 45: mycel.admin.v1.AdminClusterService.GetLocalGraphConsistency:output_type -> mycel.admin.v1.GetLocalGraphConsistencyResponse
-	24, // 46: mycel.admin.v1.AdminClusterService.GetGraphConsistencyReport:output_type -> mycel.admin.v1.GetGraphConsistencyReportResponse
-	28, // 47: mycel.admin.v1.AdminClusterService.GetLocalGraphForensicExport:output_type -> mycel.admin.v1.GetLocalGraphForensicExportResponse
-	39, // [39:48] is the sub-list for method output_type
-	30, // [30:39] is the sub-list for method input_type
-	30, // [30:30] is the sub-list for extension type_name
-	30, // [30:30] is the sub-list for extension extendee
-	0,  // [0:30] is the sub-list for field type_name
+	20, // 3: mycel.admin.v1.ListRaftGroupsResponse.groups:type_name -> mycel.admin.v1.RaftGroupStatus
+	19, // 4: mycel.admin.v1.CreateRaftSnapshotResponse.results:type_name -> mycel.admin.v1.RaftSnapshotResult
+	20, // 5: mycel.admin.v1.RaftSnapshotResult.before:type_name -> mycel.admin.v1.RaftGroupStatus
+	20, // 6: mycel.admin.v1.RaftSnapshotResult.after:type_name -> mycel.admin.v1.RaftGroupStatus
+	1,  // 7: mycel.admin.v1.RaftGroupStatus.kind:type_name -> mycel.admin.v1.RaftGroupKind
+	2,  // 8: mycel.admin.v1.RaftGroupStatus.health:type_name -> mycel.admin.v1.RaftGroupHealth
+	21, // 9: mycel.admin.v1.RaftGroupStatus.read_diagnostics:type_name -> mycel.admin.v1.RaftReadDiagnostics
+	42, // 10: mycel.admin.v1.GetLocalGraphConsistencyResponse.stats:type_name -> mycel.admin.v1.LocalGraphConsistencyStats
+	20, // 11: mycel.admin.v1.GetLocalGraphConsistencyResponse.raft_group:type_name -> mycel.admin.v1.RaftGroupStatus
+	9,  // 12: mycel.admin.v1.GetGraphConsistencyReportResponse.status:type_name -> mycel.admin.v1.GraphConsistencyStatus
+	20, // 13: mycel.admin.v1.GetGraphConsistencyReportResponse.raft_group:type_name -> mycel.admin.v1.RaftGroupStatus
+	28, // 14: mycel.admin.v1.GetGraphConsistencyReportResponse.replicas:type_name -> mycel.admin.v1.GraphConsistencyReplica
+	29, // 15: mycel.admin.v1.GetGraphConsistencyReportResponse.warnings:type_name -> mycel.admin.v1.GraphConsistencyWarning
+	42, // 16: mycel.admin.v1.GraphConsistencyReplica.stats:type_name -> mycel.admin.v1.LocalGraphConsistencyStats
+	10, // 17: mycel.admin.v1.GraphConsistencyWarning.severity:type_name -> mycel.admin.v1.GraphConsistencyWarningSeverity
+	32, // 18: mycel.admin.v1.GetLocalGraphForensicExportResponse.manifest:type_name -> mycel.admin.v1.GraphForensicExportManifest
+	42, // 19: mycel.admin.v1.GetLocalGraphForensicExportResponse.stats:type_name -> mycel.admin.v1.LocalGraphConsistencyStats
+	33, // 20: mycel.admin.v1.GetLocalGraphForensicExportResponse.nodes:type_name -> mycel.admin.v1.GraphForensicEntity
+	33, // 21: mycel.admin.v1.GetLocalGraphForensicExportResponse.edges:type_name -> mycel.admin.v1.GraphForensicEntity
+	38, // 22: mycel.admin.v1.CreateGraphCheckpointResponse.status:type_name -> mycel.admin.v1.GraphCheckpointStatus
+	38, // 23: mycel.admin.v1.GetGraphCheckpointStatusResponse.status:type_name -> mycel.admin.v1.GraphCheckpointStatus
+	39, // 24: mycel.admin.v1.GraphCheckpointStatus.persistent_index:type_name -> mycel.admin.v1.GraphPersistentIndexStatus
+	40, // 25: mycel.admin.v1.GraphPersistentIndexStatus.entries:type_name -> mycel.admin.v1.GraphPersistentIndexEntryStatus
+	41, // 26: mycel.admin.v1.GraphPersistentIndexStatus.query_indexes:type_name -> mycel.admin.v1.GraphPersistentQueryIndexStatus
+	45, // 27: mycel.admin.v1.GetClusterStatusResponse.node:type_name -> mycel.admin.v1.ClusterLocalNode
+	46, // 28: mycel.admin.v1.GetClusterStatusResponse.cluster:type_name -> mycel.admin.v1.ClusterInfo
+	47, // 29: mycel.admin.v1.GetClusterStatusResponse.peers:type_name -> mycel.admin.v1.ClusterPeer
+	48, // 30: mycel.admin.v1.GetClusterStatusResponse.readiness:type_name -> mycel.admin.v1.ClusterReadiness
+	4,  // 31: mycel.admin.v1.ClusterLocalNode.state:type_name -> mycel.admin.v1.ClusterNodeState
+	3,  // 32: mycel.admin.v1.ClusterInfo.mode:type_name -> mycel.admin.v1.ClusterMode
+	5,  // 33: mycel.admin.v1.ClusterPeer.state:type_name -> mycel.admin.v1.ClusterPeerState
+	6,  // 34: mycel.admin.v1.ClusterPeer.source:type_name -> mycel.admin.v1.ClusterPeerSource
+	51, // 35: mycel.admin.v1.ListClusterMembersResponse.members:type_name -> mycel.admin.v1.ClusterMember
+	7,  // 36: mycel.admin.v1.ClusterMember.state:type_name -> mycel.admin.v1.ClusterMemberState
+	48, // 37: mycel.admin.v1.GetClusterHealthResponse.readiness:type_name -> mycel.admin.v1.ClusterReadiness
+	43, // 38: mycel.admin.v1.AdminClusterService.GetClusterStatus:input_type -> mycel.admin.v1.GetClusterStatusRequest
+	49, // 39: mycel.admin.v1.AdminClusterService.ListClusterMembers:input_type -> mycel.admin.v1.ListClusterMembersRequest
+	52, // 40: mycel.admin.v1.AdminClusterService.GetClusterHealth:input_type -> mycel.admin.v1.GetClusterHealthRequest
+	11, // 41: mycel.admin.v1.AdminClusterService.GetClusterRuntimeStatus:input_type -> mycel.admin.v1.GetClusterRuntimeStatusRequest
+	15, // 42: mycel.admin.v1.AdminClusterService.ListRaftGroups:input_type -> mycel.admin.v1.ListRaftGroupsRequest
+	17, // 43: mycel.admin.v1.AdminClusterService.CreateRaftSnapshot:input_type -> mycel.admin.v1.CreateRaftSnapshotRequest
+	22, // 44: mycel.admin.v1.AdminClusterService.LookupSpaceRoute:input_type -> mycel.admin.v1.LookupSpaceRouteRequest
+	24, // 45: mycel.admin.v1.AdminClusterService.GetLocalGraphConsistency:input_type -> mycel.admin.v1.GetLocalGraphConsistencyRequest
+	26, // 46: mycel.admin.v1.AdminClusterService.GetGraphConsistencyReport:input_type -> mycel.admin.v1.GetGraphConsistencyReportRequest
+	30, // 47: mycel.admin.v1.AdminClusterService.GetLocalGraphForensicExport:input_type -> mycel.admin.v1.GetLocalGraphForensicExportRequest
+	34, // 48: mycel.admin.v1.AdminClusterService.CreateGraphCheckpoint:input_type -> mycel.admin.v1.CreateGraphCheckpointRequest
+	36, // 49: mycel.admin.v1.AdminClusterService.GetGraphCheckpointStatus:input_type -> mycel.admin.v1.GetGraphCheckpointStatusRequest
+	44, // 50: mycel.admin.v1.AdminClusterService.GetClusterStatus:output_type -> mycel.admin.v1.GetClusterStatusResponse
+	50, // 51: mycel.admin.v1.AdminClusterService.ListClusterMembers:output_type -> mycel.admin.v1.ListClusterMembersResponse
+	53, // 52: mycel.admin.v1.AdminClusterService.GetClusterHealth:output_type -> mycel.admin.v1.GetClusterHealthResponse
+	12, // 53: mycel.admin.v1.AdminClusterService.GetClusterRuntimeStatus:output_type -> mycel.admin.v1.GetClusterRuntimeStatusResponse
+	16, // 54: mycel.admin.v1.AdminClusterService.ListRaftGroups:output_type -> mycel.admin.v1.ListRaftGroupsResponse
+	18, // 55: mycel.admin.v1.AdminClusterService.CreateRaftSnapshot:output_type -> mycel.admin.v1.CreateRaftSnapshotResponse
+	23, // 56: mycel.admin.v1.AdminClusterService.LookupSpaceRoute:output_type -> mycel.admin.v1.LookupSpaceRouteResponse
+	25, // 57: mycel.admin.v1.AdminClusterService.GetLocalGraphConsistency:output_type -> mycel.admin.v1.GetLocalGraphConsistencyResponse
+	27, // 58: mycel.admin.v1.AdminClusterService.GetGraphConsistencyReport:output_type -> mycel.admin.v1.GetGraphConsistencyReportResponse
+	31, // 59: mycel.admin.v1.AdminClusterService.GetLocalGraphForensicExport:output_type -> mycel.admin.v1.GetLocalGraphForensicExportResponse
+	35, // 60: mycel.admin.v1.AdminClusterService.CreateGraphCheckpoint:output_type -> mycel.admin.v1.CreateGraphCheckpointResponse
+	37, // 61: mycel.admin.v1.AdminClusterService.GetGraphCheckpointStatus:output_type -> mycel.admin.v1.GetGraphCheckpointStatusResponse
+	50, // [50:62] is the sub-list for method output_type
+	38, // [38:50] is the sub-list for method input_type
+	38, // [38:38] is the sub-list for extension type_name
+	38, // [38:38] is the sub-list for extension extendee
+	0,  // [0:38] is the sub-list for field type_name
 }
 
 func init() { file_mycel_admin_v1_cluster_proto_init() }
@@ -3784,7 +4859,7 @@ func file_mycel_admin_v1_cluster_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_mycel_admin_v1_cluster_proto_rawDesc), len(file_mycel_admin_v1_cluster_proto_rawDesc)),
 			NumEnums:      11,
-			NumMessages:   32,
+			NumMessages:   43,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
