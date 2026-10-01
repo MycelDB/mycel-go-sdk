@@ -26,10 +26,13 @@ const (
 	AdminClusterService_GetClusterHealth_FullMethodName            = "/mycel.admin.v1.AdminClusterService/GetClusterHealth"
 	AdminClusterService_GetClusterRuntimeStatus_FullMethodName     = "/mycel.admin.v1.AdminClusterService/GetClusterRuntimeStatus"
 	AdminClusterService_ListRaftGroups_FullMethodName              = "/mycel.admin.v1.AdminClusterService/ListRaftGroups"
+	AdminClusterService_CreateRaftSnapshot_FullMethodName          = "/mycel.admin.v1.AdminClusterService/CreateRaftSnapshot"
 	AdminClusterService_LookupSpaceRoute_FullMethodName            = "/mycel.admin.v1.AdminClusterService/LookupSpaceRoute"
 	AdminClusterService_GetLocalGraphConsistency_FullMethodName    = "/mycel.admin.v1.AdminClusterService/GetLocalGraphConsistency"
 	AdminClusterService_GetGraphConsistencyReport_FullMethodName   = "/mycel.admin.v1.AdminClusterService/GetGraphConsistencyReport"
 	AdminClusterService_GetLocalGraphForensicExport_FullMethodName = "/mycel.admin.v1.AdminClusterService/GetLocalGraphForensicExport"
+	AdminClusterService_CreateGraphCheckpoint_FullMethodName       = "/mycel.admin.v1.AdminClusterService/CreateGraphCheckpoint"
+	AdminClusterService_GetGraphCheckpointStatus_FullMethodName    = "/mycel.admin.v1.AdminClusterService/GetGraphCheckpointStatus"
 )
 
 // AdminClusterServiceClient is the client API for AdminClusterService service.
@@ -53,6 +56,10 @@ type AdminClusterServiceClient interface {
 	GetClusterRuntimeStatus(ctx context.Context, in *GetClusterRuntimeStatusRequest, opts ...grpc.CallOption) (*GetClusterRuntimeStatusResponse, error)
 	// ListRaftGroups returns read-only status for the local daemon's Raft groups.
 	ListRaftGroups(ctx context.Context, in *ListRaftGroupsRequest, opts ...grpc.CallOption) (*ListRaftGroupsResponse, error)
+	// CreateRaftSnapshot creates local Raft snapshots on this daemon's groups.
+	// This is an operator/debug operation used to exercise raft snapshot catch-up;
+	// it does not create graph checkpoints, backups, or cross-node snapshots.
+	CreateRaftSnapshot(ctx context.Context, in *CreateRaftSnapshotRequest, opts ...grpc.CallOption) (*CreateRaftSnapshotResponse, error)
 	// LookupSpaceRoute returns the Raft partition and replica set for a space ID.
 	LookupSpaceRoute(ctx context.Context, in *LookupSpaceRouteRequest, opts ...grpc.CallOption) (*LookupSpaceRouteResponse, error)
 	// GetLocalGraphConsistency returns read-only local latest-state graph
@@ -68,6 +75,13 @@ type AdminClusterServiceClient interface {
 	// for one space/domain. The response is intended for forensic diff tooling;
 	// it does not repair, merge, delete, or rebalance data.
 	GetLocalGraphForensicExport(ctx context.Context, in *GetLocalGraphForensicExportRequest, opts ...grpc.CallOption) (*GetLocalGraphForensicExportResponse, error)
+	// CreateGraphCheckpoint writes a local derived graph checkpoint for one
+	// space/domain after the daemon has applied committed graph state. It is a
+	// local storage operation, not a Raft snapshot or backup.
+	CreateGraphCheckpoint(ctx context.Context, in *CreateGraphCheckpointRequest, opts ...grpc.CallOption) (*CreateGraphCheckpointResponse, error)
+	// GetGraphCheckpointStatus returns local latest checkpoint status for one
+	// space/domain. It is read-only and does not collect from peers.
+	GetGraphCheckpointStatus(ctx context.Context, in *GetGraphCheckpointStatusRequest, opts ...grpc.CallOption) (*GetGraphCheckpointStatusResponse, error)
 }
 
 type adminClusterServiceClient struct {
@@ -128,6 +142,16 @@ func (c *adminClusterServiceClient) ListRaftGroups(ctx context.Context, in *List
 	return out, nil
 }
 
+func (c *adminClusterServiceClient) CreateRaftSnapshot(ctx context.Context, in *CreateRaftSnapshotRequest, opts ...grpc.CallOption) (*CreateRaftSnapshotResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CreateRaftSnapshotResponse)
+	err := c.cc.Invoke(ctx, AdminClusterService_CreateRaftSnapshot_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *adminClusterServiceClient) LookupSpaceRoute(ctx context.Context, in *LookupSpaceRouteRequest, opts ...grpc.CallOption) (*LookupSpaceRouteResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(LookupSpaceRouteResponse)
@@ -168,6 +192,26 @@ func (c *adminClusterServiceClient) GetLocalGraphForensicExport(ctx context.Cont
 	return out, nil
 }
 
+func (c *adminClusterServiceClient) CreateGraphCheckpoint(ctx context.Context, in *CreateGraphCheckpointRequest, opts ...grpc.CallOption) (*CreateGraphCheckpointResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CreateGraphCheckpointResponse)
+	err := c.cc.Invoke(ctx, AdminClusterService_CreateGraphCheckpoint_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *adminClusterServiceClient) GetGraphCheckpointStatus(ctx context.Context, in *GetGraphCheckpointStatusRequest, opts ...grpc.CallOption) (*GetGraphCheckpointStatusResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetGraphCheckpointStatusResponse)
+	err := c.cc.Invoke(ctx, AdminClusterService_GetGraphCheckpointStatus_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // AdminClusterServiceServer is the server API for AdminClusterService service.
 // All implementations must embed UnimplementedAdminClusterServiceServer
 // for forward compatibility.
@@ -189,6 +233,10 @@ type AdminClusterServiceServer interface {
 	GetClusterRuntimeStatus(context.Context, *GetClusterRuntimeStatusRequest) (*GetClusterRuntimeStatusResponse, error)
 	// ListRaftGroups returns read-only status for the local daemon's Raft groups.
 	ListRaftGroups(context.Context, *ListRaftGroupsRequest) (*ListRaftGroupsResponse, error)
+	// CreateRaftSnapshot creates local Raft snapshots on this daemon's groups.
+	// This is an operator/debug operation used to exercise raft snapshot catch-up;
+	// it does not create graph checkpoints, backups, or cross-node snapshots.
+	CreateRaftSnapshot(context.Context, *CreateRaftSnapshotRequest) (*CreateRaftSnapshotResponse, error)
 	// LookupSpaceRoute returns the Raft partition and replica set for a space ID.
 	LookupSpaceRoute(context.Context, *LookupSpaceRouteRequest) (*LookupSpaceRouteResponse, error)
 	// GetLocalGraphConsistency returns read-only local latest-state graph
@@ -204,6 +252,13 @@ type AdminClusterServiceServer interface {
 	// for one space/domain. The response is intended for forensic diff tooling;
 	// it does not repair, merge, delete, or rebalance data.
 	GetLocalGraphForensicExport(context.Context, *GetLocalGraphForensicExportRequest) (*GetLocalGraphForensicExportResponse, error)
+	// CreateGraphCheckpoint writes a local derived graph checkpoint for one
+	// space/domain after the daemon has applied committed graph state. It is a
+	// local storage operation, not a Raft snapshot or backup.
+	CreateGraphCheckpoint(context.Context, *CreateGraphCheckpointRequest) (*CreateGraphCheckpointResponse, error)
+	// GetGraphCheckpointStatus returns local latest checkpoint status for one
+	// space/domain. It is read-only and does not collect from peers.
+	GetGraphCheckpointStatus(context.Context, *GetGraphCheckpointStatusRequest) (*GetGraphCheckpointStatusResponse, error)
 	mustEmbedUnimplementedAdminClusterServiceServer()
 }
 
@@ -229,6 +284,9 @@ func (UnimplementedAdminClusterServiceServer) GetClusterRuntimeStatus(context.Co
 func (UnimplementedAdminClusterServiceServer) ListRaftGroups(context.Context, *ListRaftGroupsRequest) (*ListRaftGroupsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListRaftGroups not implemented")
 }
+func (UnimplementedAdminClusterServiceServer) CreateRaftSnapshot(context.Context, *CreateRaftSnapshotRequest) (*CreateRaftSnapshotResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateRaftSnapshot not implemented")
+}
 func (UnimplementedAdminClusterServiceServer) LookupSpaceRoute(context.Context, *LookupSpaceRouteRequest) (*LookupSpaceRouteResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method LookupSpaceRoute not implemented")
 }
@@ -240,6 +298,12 @@ func (UnimplementedAdminClusterServiceServer) GetGraphConsistencyReport(context.
 }
 func (UnimplementedAdminClusterServiceServer) GetLocalGraphForensicExport(context.Context, *GetLocalGraphForensicExportRequest) (*GetLocalGraphForensicExportResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetLocalGraphForensicExport not implemented")
+}
+func (UnimplementedAdminClusterServiceServer) CreateGraphCheckpoint(context.Context, *CreateGraphCheckpointRequest) (*CreateGraphCheckpointResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateGraphCheckpoint not implemented")
+}
+func (UnimplementedAdminClusterServiceServer) GetGraphCheckpointStatus(context.Context, *GetGraphCheckpointStatusRequest) (*GetGraphCheckpointStatusResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetGraphCheckpointStatus not implemented")
 }
 func (UnimplementedAdminClusterServiceServer) mustEmbedUnimplementedAdminClusterServiceServer() {}
 func (UnimplementedAdminClusterServiceServer) testEmbeddedByValue()                             {}
@@ -352,6 +416,24 @@ func _AdminClusterService_ListRaftGroups_Handler(srv interface{}, ctx context.Co
 	return interceptor(ctx, in, info, handler)
 }
 
+func _AdminClusterService_CreateRaftSnapshot_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateRaftSnapshotRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminClusterServiceServer).CreateRaftSnapshot(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AdminClusterService_CreateRaftSnapshot_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminClusterServiceServer).CreateRaftSnapshot(ctx, req.(*CreateRaftSnapshotRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _AdminClusterService_LookupSpaceRoute_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(LookupSpaceRouteRequest)
 	if err := dec(in); err != nil {
@@ -424,6 +506,42 @@ func _AdminClusterService_GetLocalGraphForensicExport_Handler(srv interface{}, c
 	return interceptor(ctx, in, info, handler)
 }
 
+func _AdminClusterService_CreateGraphCheckpoint_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateGraphCheckpointRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminClusterServiceServer).CreateGraphCheckpoint(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AdminClusterService_CreateGraphCheckpoint_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminClusterServiceServer).CreateGraphCheckpoint(ctx, req.(*CreateGraphCheckpointRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AdminClusterService_GetGraphCheckpointStatus_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetGraphCheckpointStatusRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminClusterServiceServer).GetGraphCheckpointStatus(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AdminClusterService_GetGraphCheckpointStatus_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminClusterServiceServer).GetGraphCheckpointStatus(ctx, req.(*GetGraphCheckpointStatusRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // AdminClusterService_ServiceDesc is the grpc.ServiceDesc for AdminClusterService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -452,6 +570,10 @@ var AdminClusterService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _AdminClusterService_ListRaftGroups_Handler,
 		},
 		{
+			MethodName: "CreateRaftSnapshot",
+			Handler:    _AdminClusterService_CreateRaftSnapshot_Handler,
+		},
+		{
 			MethodName: "LookupSpaceRoute",
 			Handler:    _AdminClusterService_LookupSpaceRoute_Handler,
 		},
@@ -466,6 +588,14 @@ var AdminClusterService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetLocalGraphForensicExport",
 			Handler:    _AdminClusterService_GetLocalGraphForensicExport_Handler,
+		},
+		{
+			MethodName: "CreateGraphCheckpoint",
+			Handler:    _AdminClusterService_CreateGraphCheckpoint_Handler,
+		},
+		{
+			MethodName: "GetGraphCheckpointStatus",
+			Handler:    _AdminClusterService_GetGraphCheckpointStatus_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

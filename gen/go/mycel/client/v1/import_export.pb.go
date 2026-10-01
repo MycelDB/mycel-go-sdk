@@ -24,6 +24,67 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
+type SpaceExportStatus int32
+
+const (
+	SpaceExportStatus_SPACE_EXPORT_STATUS_UNSPECIFIED SpaceExportStatus = 0
+	SpaceExportStatus_SPACE_EXPORT_STATUS_QUEUED      SpaceExportStatus = 1
+	SpaceExportStatus_SPACE_EXPORT_STATUS_RUNNING     SpaceExportStatus = 2
+	SpaceExportStatus_SPACE_EXPORT_STATUS_SUCCEEDED   SpaceExportStatus = 3
+	SpaceExportStatus_SPACE_EXPORT_STATUS_FAILED      SpaceExportStatus = 4
+	SpaceExportStatus_SPACE_EXPORT_STATUS_DELETED     SpaceExportStatus = 5
+	SpaceExportStatus_SPACE_EXPORT_STATUS_EXPIRED     SpaceExportStatus = 6
+)
+
+// Enum value maps for SpaceExportStatus.
+var (
+	SpaceExportStatus_name = map[int32]string{
+		0: "SPACE_EXPORT_STATUS_UNSPECIFIED",
+		1: "SPACE_EXPORT_STATUS_QUEUED",
+		2: "SPACE_EXPORT_STATUS_RUNNING",
+		3: "SPACE_EXPORT_STATUS_SUCCEEDED",
+		4: "SPACE_EXPORT_STATUS_FAILED",
+		5: "SPACE_EXPORT_STATUS_DELETED",
+		6: "SPACE_EXPORT_STATUS_EXPIRED",
+	}
+	SpaceExportStatus_value = map[string]int32{
+		"SPACE_EXPORT_STATUS_UNSPECIFIED": 0,
+		"SPACE_EXPORT_STATUS_QUEUED":      1,
+		"SPACE_EXPORT_STATUS_RUNNING":     2,
+		"SPACE_EXPORT_STATUS_SUCCEEDED":   3,
+		"SPACE_EXPORT_STATUS_FAILED":      4,
+		"SPACE_EXPORT_STATUS_DELETED":     5,
+		"SPACE_EXPORT_STATUS_EXPIRED":     6,
+	}
+)
+
+func (x SpaceExportStatus) Enum() *SpaceExportStatus {
+	p := new(SpaceExportStatus)
+	*p = x
+	return p
+}
+
+func (x SpaceExportStatus) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (SpaceExportStatus) Descriptor() protoreflect.EnumDescriptor {
+	return file_mycel_client_v1_import_export_proto_enumTypes[0].Descriptor()
+}
+
+func (SpaceExportStatus) Type() protoreflect.EnumType {
+	return &file_mycel_client_v1_import_export_proto_enumTypes[0]
+}
+
+func (x SpaceExportStatus) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use SpaceExportStatus.Descriptor instead.
+func (SpaceExportStatus) EnumDescriptor() ([]byte, []int) {
+	return file_mycel_client_v1_import_export_proto_rawDescGZIP(), []int{0}
+}
+
 type DomainExportFormat int32
 
 const (
@@ -60,11 +121,11 @@ func (x DomainExportFormat) String() string {
 }
 
 func (DomainExportFormat) Descriptor() protoreflect.EnumDescriptor {
-	return file_mycel_client_v1_import_export_proto_enumTypes[0].Descriptor()
+	return file_mycel_client_v1_import_export_proto_enumTypes[1].Descriptor()
 }
 
 func (DomainExportFormat) Type() protoreflect.EnumType {
-	return &file_mycel_client_v1_import_export_proto_enumTypes[0]
+	return &file_mycel_client_v1_import_export_proto_enumTypes[1]
 }
 
 func (x DomainExportFormat) Number() protoreflect.EnumNumber {
@@ -73,7 +134,7 @@ func (x DomainExportFormat) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use DomainExportFormat.Descriptor instead.
 func (DomainExportFormat) EnumDescriptor() ([]byte, []int) {
-	return file_mycel_client_v1_import_export_proto_rawDescGZIP(), []int{0}
+	return file_mycel_client_v1_import_export_proto_rawDescGZIP(), []int{1}
 }
 
 type DomainImportFormat int32
@@ -112,11 +173,11 @@ func (x DomainImportFormat) String() string {
 }
 
 func (DomainImportFormat) Descriptor() protoreflect.EnumDescriptor {
-	return file_mycel_client_v1_import_export_proto_enumTypes[1].Descriptor()
+	return file_mycel_client_v1_import_export_proto_enumTypes[2].Descriptor()
 }
 
 func (DomainImportFormat) Type() protoreflect.EnumType {
-	return &file_mycel_client_v1_import_export_proto_enumTypes[1]
+	return &file_mycel_client_v1_import_export_proto_enumTypes[2]
 }
 
 func (x DomainImportFormat) Number() protoreflect.EnumNumber {
@@ -125,7 +186,7 @@ func (x DomainImportFormat) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use DomainImportFormat.Descriptor instead.
 func (DomainImportFormat) EnumDescriptor() ([]byte, []int) {
-	return file_mycel_client_v1_import_export_proto_rawDescGZIP(), []int{1}
+	return file_mycel_client_v1_import_export_proto_rawDescGZIP(), []int{2}
 }
 
 type DomainImportMode int32
@@ -168,11 +229,11 @@ func (x DomainImportMode) String() string {
 }
 
 func (DomainImportMode) Descriptor() protoreflect.EnumDescriptor {
-	return file_mycel_client_v1_import_export_proto_enumTypes[2].Descriptor()
+	return file_mycel_client_v1_import_export_proto_enumTypes[3].Descriptor()
 }
 
 func (DomainImportMode) Type() protoreflect.EnumType {
-	return &file_mycel_client_v1_import_export_proto_enumTypes[2]
+	return &file_mycel_client_v1_import_export_proto_enumTypes[3]
 }
 
 func (x DomainImportMode) Number() protoreflect.EnumNumber {
@@ -181,7 +242,7 @@ func (x DomainImportMode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use DomainImportMode.Descriptor instead.
 func (DomainImportMode) EnumDescriptor() ([]byte, []int) {
-	return file_mycel_client_v1_import_export_proto_rawDescGZIP(), []int{2}
+	return file_mycel_client_v1_import_export_proto_rawDescGZIP(), []int{3}
 }
 
 type ExportDomainRequest struct {
@@ -491,6 +552,783 @@ func (x *ImportDomainResponse) GetSummary() *ImportSummary {
 	return nil
 }
 
+type CreateSpaceExportRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Options       *SpaceExportOptions    `protobuf:"bytes,1,opt,name=options,proto3" json:"options,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CreateSpaceExportRequest) Reset() {
+	*x = CreateSpaceExportRequest{}
+	mi := &file_mycel_client_v1_import_export_proto_msgTypes[4]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CreateSpaceExportRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateSpaceExportRequest) ProtoMessage() {}
+
+func (x *CreateSpaceExportRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_client_v1_import_export_proto_msgTypes[4]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateSpaceExportRequest.ProtoReflect.Descriptor instead.
+func (*CreateSpaceExportRequest) Descriptor() ([]byte, []int) {
+	return file_mycel_client_v1_import_export_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *CreateSpaceExportRequest) GetOptions() *SpaceExportOptions {
+	if x != nil {
+		return x.Options
+	}
+	return nil
+}
+
+type CreateSpaceExportResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Job           *SpaceExportJob        `protobuf:"bytes,1,opt,name=job,proto3" json:"job,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CreateSpaceExportResponse) Reset() {
+	*x = CreateSpaceExportResponse{}
+	mi := &file_mycel_client_v1_import_export_proto_msgTypes[5]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CreateSpaceExportResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateSpaceExportResponse) ProtoMessage() {}
+
+func (x *CreateSpaceExportResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_client_v1_import_export_proto_msgTypes[5]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateSpaceExportResponse.ProtoReflect.Descriptor instead.
+func (*CreateSpaceExportResponse) Descriptor() ([]byte, []int) {
+	return file_mycel_client_v1_import_export_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *CreateSpaceExportResponse) GetJob() *SpaceExportJob {
+	if x != nil {
+		return x.Job
+	}
+	return nil
+}
+
+type GetSpaceExportRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	ExportId      string                 `protobuf:"bytes,1,opt,name=export_id,json=exportId,proto3" json:"export_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetSpaceExportRequest) Reset() {
+	*x = GetSpaceExportRequest{}
+	mi := &file_mycel_client_v1_import_export_proto_msgTypes[6]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetSpaceExportRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetSpaceExportRequest) ProtoMessage() {}
+
+func (x *GetSpaceExportRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_client_v1_import_export_proto_msgTypes[6]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetSpaceExportRequest.ProtoReflect.Descriptor instead.
+func (*GetSpaceExportRequest) Descriptor() ([]byte, []int) {
+	return file_mycel_client_v1_import_export_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *GetSpaceExportRequest) GetExportId() string {
+	if x != nil {
+		return x.ExportId
+	}
+	return ""
+}
+
+type GetSpaceExportResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Job           *SpaceExportJob        `protobuf:"bytes,1,opt,name=job,proto3" json:"job,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetSpaceExportResponse) Reset() {
+	*x = GetSpaceExportResponse{}
+	mi := &file_mycel_client_v1_import_export_proto_msgTypes[7]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetSpaceExportResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetSpaceExportResponse) ProtoMessage() {}
+
+func (x *GetSpaceExportResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_client_v1_import_export_proto_msgTypes[7]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetSpaceExportResponse.ProtoReflect.Descriptor instead.
+func (*GetSpaceExportResponse) Descriptor() ([]byte, []int) {
+	return file_mycel_client_v1_import_export_proto_rawDescGZIP(), []int{7}
+}
+
+func (x *GetSpaceExportResponse) GetJob() *SpaceExportJob {
+	if x != nil {
+		return x.Job
+	}
+	return nil
+}
+
+type ListSpaceExportsRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	SpaceId       string                 `protobuf:"bytes,1,opt,name=space_id,json=spaceId,proto3" json:"space_id,omitempty"`
+	PageSize      int32                  `protobuf:"varint,2,opt,name=page_size,json=pageSize,proto3" json:"page_size,omitempty"`
+	PageToken     string                 `protobuf:"bytes,3,opt,name=page_token,json=pageToken,proto3" json:"page_token,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListSpaceExportsRequest) Reset() {
+	*x = ListSpaceExportsRequest{}
+	mi := &file_mycel_client_v1_import_export_proto_msgTypes[8]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListSpaceExportsRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListSpaceExportsRequest) ProtoMessage() {}
+
+func (x *ListSpaceExportsRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_client_v1_import_export_proto_msgTypes[8]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListSpaceExportsRequest.ProtoReflect.Descriptor instead.
+func (*ListSpaceExportsRequest) Descriptor() ([]byte, []int) {
+	return file_mycel_client_v1_import_export_proto_rawDescGZIP(), []int{8}
+}
+
+func (x *ListSpaceExportsRequest) GetSpaceId() string {
+	if x != nil {
+		return x.SpaceId
+	}
+	return ""
+}
+
+func (x *ListSpaceExportsRequest) GetPageSize() int32 {
+	if x != nil {
+		return x.PageSize
+	}
+	return 0
+}
+
+func (x *ListSpaceExportsRequest) GetPageToken() string {
+	if x != nil {
+		return x.PageToken
+	}
+	return ""
+}
+
+type ListSpaceExportsResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Jobs          []*SpaceExportJob      `protobuf:"bytes,1,rep,name=jobs,proto3" json:"jobs,omitempty"`
+	NextPageToken string                 `protobuf:"bytes,2,opt,name=next_page_token,json=nextPageToken,proto3" json:"next_page_token,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListSpaceExportsResponse) Reset() {
+	*x = ListSpaceExportsResponse{}
+	mi := &file_mycel_client_v1_import_export_proto_msgTypes[9]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListSpaceExportsResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListSpaceExportsResponse) ProtoMessage() {}
+
+func (x *ListSpaceExportsResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_client_v1_import_export_proto_msgTypes[9]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListSpaceExportsResponse.ProtoReflect.Descriptor instead.
+func (*ListSpaceExportsResponse) Descriptor() ([]byte, []int) {
+	return file_mycel_client_v1_import_export_proto_rawDescGZIP(), []int{9}
+}
+
+func (x *ListSpaceExportsResponse) GetJobs() []*SpaceExportJob {
+	if x != nil {
+		return x.Jobs
+	}
+	return nil
+}
+
+func (x *ListSpaceExportsResponse) GetNextPageToken() string {
+	if x != nil {
+		return x.NextPageToken
+	}
+	return ""
+}
+
+type DownloadSpaceExportRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	ExportId      string                 `protobuf:"bytes,1,opt,name=export_id,json=exportId,proto3" json:"export_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DownloadSpaceExportRequest) Reset() {
+	*x = DownloadSpaceExportRequest{}
+	mi := &file_mycel_client_v1_import_export_proto_msgTypes[10]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DownloadSpaceExportRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DownloadSpaceExportRequest) ProtoMessage() {}
+
+func (x *DownloadSpaceExportRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_client_v1_import_export_proto_msgTypes[10]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DownloadSpaceExportRequest.ProtoReflect.Descriptor instead.
+func (*DownloadSpaceExportRequest) Descriptor() ([]byte, []int) {
+	return file_mycel_client_v1_import_export_proto_rawDescGZIP(), []int{10}
+}
+
+func (x *DownloadSpaceExportRequest) GetExportId() string {
+	if x != nil {
+		return x.ExportId
+	}
+	return ""
+}
+
+type DownloadSpaceExportResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Chunk         []byte                 `protobuf:"bytes,1,opt,name=chunk,proto3" json:"chunk,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DownloadSpaceExportResponse) Reset() {
+	*x = DownloadSpaceExportResponse{}
+	mi := &file_mycel_client_v1_import_export_proto_msgTypes[11]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DownloadSpaceExportResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DownloadSpaceExportResponse) ProtoMessage() {}
+
+func (x *DownloadSpaceExportResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_client_v1_import_export_proto_msgTypes[11]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DownloadSpaceExportResponse.ProtoReflect.Descriptor instead.
+func (*DownloadSpaceExportResponse) Descriptor() ([]byte, []int) {
+	return file_mycel_client_v1_import_export_proto_rawDescGZIP(), []int{11}
+}
+
+func (x *DownloadSpaceExportResponse) GetChunk() []byte {
+	if x != nil {
+		return x.Chunk
+	}
+	return nil
+}
+
+type DeleteSpaceExportRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	ExportId      string                 `protobuf:"bytes,1,opt,name=export_id,json=exportId,proto3" json:"export_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DeleteSpaceExportRequest) Reset() {
+	*x = DeleteSpaceExportRequest{}
+	mi := &file_mycel_client_v1_import_export_proto_msgTypes[12]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DeleteSpaceExportRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteSpaceExportRequest) ProtoMessage() {}
+
+func (x *DeleteSpaceExportRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_client_v1_import_export_proto_msgTypes[12]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteSpaceExportRequest.ProtoReflect.Descriptor instead.
+func (*DeleteSpaceExportRequest) Descriptor() ([]byte, []int) {
+	return file_mycel_client_v1_import_export_proto_rawDescGZIP(), []int{12}
+}
+
+func (x *DeleteSpaceExportRequest) GetExportId() string {
+	if x != nil {
+		return x.ExportId
+	}
+	return ""
+}
+
+type DeleteSpaceExportResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	ExportId      string                 `protobuf:"bytes,1,opt,name=export_id,json=exportId,proto3" json:"export_id,omitempty"`
+	Deleted       bool                   `protobuf:"varint,2,opt,name=deleted,proto3" json:"deleted,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DeleteSpaceExportResponse) Reset() {
+	*x = DeleteSpaceExportResponse{}
+	mi := &file_mycel_client_v1_import_export_proto_msgTypes[13]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DeleteSpaceExportResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteSpaceExportResponse) ProtoMessage() {}
+
+func (x *DeleteSpaceExportResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_client_v1_import_export_proto_msgTypes[13]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteSpaceExportResponse.ProtoReflect.Descriptor instead.
+func (*DeleteSpaceExportResponse) Descriptor() ([]byte, []int) {
+	return file_mycel_client_v1_import_export_proto_rawDescGZIP(), []int{13}
+}
+
+func (x *DeleteSpaceExportResponse) GetExportId() string {
+	if x != nil {
+		return x.ExportId
+	}
+	return ""
+}
+
+func (x *DeleteSpaceExportResponse) GetDeleted() bool {
+	if x != nil {
+		return x.Deleted
+	}
+	return false
+}
+
+type SpaceExportOptions struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Required target space. The authenticated principal must be allowed to read
+	// the space and every requested domain.
+	SpaceId string `protobuf:"bytes,1,opt,name=space_id,json=spaceId,proto3" json:"space_id,omitempty"`
+	// Optional domain selection. If empty, the export includes all visible
+	// non-system domains in the space, plus system domains when
+	// include_system_domains is true.
+	DomainIds            []string `protobuf:"bytes,2,rep,name=domain_ids,json=domainIds,proto3" json:"domain_ids,omitempty"`
+	IncludeBlobs         bool     `protobuf:"varint,3,opt,name=include_blobs,json=includeBlobs,proto3" json:"include_blobs,omitempty"`
+	IncludeSystemDomains bool     `protobuf:"varint,4,opt,name=include_system_domains,json=includeSystemDomains,proto3" json:"include_system_domains,omitempty"`
+	unknownFields        protoimpl.UnknownFields
+	sizeCache            protoimpl.SizeCache
+}
+
+func (x *SpaceExportOptions) Reset() {
+	*x = SpaceExportOptions{}
+	mi := &file_mycel_client_v1_import_export_proto_msgTypes[14]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SpaceExportOptions) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SpaceExportOptions) ProtoMessage() {}
+
+func (x *SpaceExportOptions) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_client_v1_import_export_proto_msgTypes[14]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SpaceExportOptions.ProtoReflect.Descriptor instead.
+func (*SpaceExportOptions) Descriptor() ([]byte, []int) {
+	return file_mycel_client_v1_import_export_proto_rawDescGZIP(), []int{14}
+}
+
+func (x *SpaceExportOptions) GetSpaceId() string {
+	if x != nil {
+		return x.SpaceId
+	}
+	return ""
+}
+
+func (x *SpaceExportOptions) GetDomainIds() []string {
+	if x != nil {
+		return x.DomainIds
+	}
+	return nil
+}
+
+func (x *SpaceExportOptions) GetIncludeBlobs() bool {
+	if x != nil {
+		return x.IncludeBlobs
+	}
+	return false
+}
+
+func (x *SpaceExportOptions) GetIncludeSystemDomains() bool {
+	if x != nil {
+		return x.IncludeSystemDomains
+	}
+	return false
+}
+
+type SpaceExportJob struct {
+	state                  protoimpl.MessageState `protogen:"open.v1"`
+	ExportId               string                 `protobuf:"bytes,1,opt,name=export_id,json=exportId,proto3" json:"export_id,omitempty"`
+	Status                 SpaceExportStatus      `protobuf:"varint,2,opt,name=status,proto3,enum=mycel.client.v1.SpaceExportStatus" json:"status,omitempty"`
+	FormatVersion          string                 `protobuf:"bytes,3,opt,name=format_version,json=formatVersion,proto3" json:"format_version,omitempty"`
+	Filename               string                 `protobuf:"bytes,4,opt,name=filename,proto3" json:"filename,omitempty"`
+	SizeBytes              int64                  `protobuf:"varint,5,opt,name=size_bytes,json=sizeBytes,proto3" json:"size_bytes,omitempty"`
+	ProgressPercent        int32                  `protobuf:"varint,6,opt,name=progress_percent,json=progressPercent,proto3" json:"progress_percent,omitempty"`
+	Counts                 *SpaceExportCounts     `protobuf:"bytes,7,opt,name=counts,proto3" json:"counts,omitempty"`
+	ErrorMessage           string                 `protobuf:"bytes,8,opt,name=error_message,json=errorMessage,proto3" json:"error_message,omitempty"`
+	CreateTime             *timestamppb.Timestamp `protobuf:"bytes,9,opt,name=create_time,json=createTime,proto3" json:"create_time,omitempty"`
+	UpdateTime             *timestamppb.Timestamp `protobuf:"bytes,10,opt,name=update_time,json=updateTime,proto3" json:"update_time,omitempty"`
+	CompleteTime           *timestamppb.Timestamp `protobuf:"bytes,11,opt,name=complete_time,json=completeTime,proto3" json:"complete_time,omitempty"`
+	ExpireTime             *timestamppb.Timestamp `protobuf:"bytes,12,opt,name=expire_time,json=expireTime,proto3" json:"expire_time,omitempty"`
+	Options                *SpaceExportOptions    `protobuf:"bytes,13,opt,name=options,proto3" json:"options,omitempty"`
+	RequestedByPrincipalId string                 `protobuf:"bytes,14,opt,name=requested_by_principal_id,json=requestedByPrincipalId,proto3" json:"requested_by_principal_id,omitempty"`
+	unknownFields          protoimpl.UnknownFields
+	sizeCache              protoimpl.SizeCache
+}
+
+func (x *SpaceExportJob) Reset() {
+	*x = SpaceExportJob{}
+	mi := &file_mycel_client_v1_import_export_proto_msgTypes[15]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SpaceExportJob) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SpaceExportJob) ProtoMessage() {}
+
+func (x *SpaceExportJob) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_client_v1_import_export_proto_msgTypes[15]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SpaceExportJob.ProtoReflect.Descriptor instead.
+func (*SpaceExportJob) Descriptor() ([]byte, []int) {
+	return file_mycel_client_v1_import_export_proto_rawDescGZIP(), []int{15}
+}
+
+func (x *SpaceExportJob) GetExportId() string {
+	if x != nil {
+		return x.ExportId
+	}
+	return ""
+}
+
+func (x *SpaceExportJob) GetStatus() SpaceExportStatus {
+	if x != nil {
+		return x.Status
+	}
+	return SpaceExportStatus_SPACE_EXPORT_STATUS_UNSPECIFIED
+}
+
+func (x *SpaceExportJob) GetFormatVersion() string {
+	if x != nil {
+		return x.FormatVersion
+	}
+	return ""
+}
+
+func (x *SpaceExportJob) GetFilename() string {
+	if x != nil {
+		return x.Filename
+	}
+	return ""
+}
+
+func (x *SpaceExportJob) GetSizeBytes() int64 {
+	if x != nil {
+		return x.SizeBytes
+	}
+	return 0
+}
+
+func (x *SpaceExportJob) GetProgressPercent() int32 {
+	if x != nil {
+		return x.ProgressPercent
+	}
+	return 0
+}
+
+func (x *SpaceExportJob) GetCounts() *SpaceExportCounts {
+	if x != nil {
+		return x.Counts
+	}
+	return nil
+}
+
+func (x *SpaceExportJob) GetErrorMessage() string {
+	if x != nil {
+		return x.ErrorMessage
+	}
+	return ""
+}
+
+func (x *SpaceExportJob) GetCreateTime() *timestamppb.Timestamp {
+	if x != nil {
+		return x.CreateTime
+	}
+	return nil
+}
+
+func (x *SpaceExportJob) GetUpdateTime() *timestamppb.Timestamp {
+	if x != nil {
+		return x.UpdateTime
+	}
+	return nil
+}
+
+func (x *SpaceExportJob) GetCompleteTime() *timestamppb.Timestamp {
+	if x != nil {
+		return x.CompleteTime
+	}
+	return nil
+}
+
+func (x *SpaceExportJob) GetExpireTime() *timestamppb.Timestamp {
+	if x != nil {
+		return x.ExpireTime
+	}
+	return nil
+}
+
+func (x *SpaceExportJob) GetOptions() *SpaceExportOptions {
+	if x != nil {
+		return x.Options
+	}
+	return nil
+}
+
+func (x *SpaceExportJob) GetRequestedByPrincipalId() string {
+	if x != nil {
+		return x.RequestedByPrincipalId
+	}
+	return ""
+}
+
+type SpaceExportCounts struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Spaces        int32                  `protobuf:"varint,1,opt,name=spaces,proto3" json:"spaces,omitempty"`
+	Domains       int32                  `protobuf:"varint,2,opt,name=domains,proto3" json:"domains,omitempty"`
+	Nodes         int32                  `protobuf:"varint,3,opt,name=nodes,proto3" json:"nodes,omitempty"`
+	Edges         int32                  `protobuf:"varint,4,opt,name=edges,proto3" json:"edges,omitempty"`
+	Blobs         int32                  `protobuf:"varint,5,opt,name=blobs,proto3" json:"blobs,omitempty"`
+	Files         int32                  `protobuf:"varint,6,opt,name=files,proto3" json:"files,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SpaceExportCounts) Reset() {
+	*x = SpaceExportCounts{}
+	mi := &file_mycel_client_v1_import_export_proto_msgTypes[16]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SpaceExportCounts) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SpaceExportCounts) ProtoMessage() {}
+
+func (x *SpaceExportCounts) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_client_v1_import_export_proto_msgTypes[16]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SpaceExportCounts.ProtoReflect.Descriptor instead.
+func (*SpaceExportCounts) Descriptor() ([]byte, []int) {
+	return file_mycel_client_v1_import_export_proto_rawDescGZIP(), []int{16}
+}
+
+func (x *SpaceExportCounts) GetSpaces() int32 {
+	if x != nil {
+		return x.Spaces
+	}
+	return 0
+}
+
+func (x *SpaceExportCounts) GetDomains() int32 {
+	if x != nil {
+		return x.Domains
+	}
+	return 0
+}
+
+func (x *SpaceExportCounts) GetNodes() int32 {
+	if x != nil {
+		return x.Nodes
+	}
+	return 0
+}
+
+func (x *SpaceExportCounts) GetEdges() int32 {
+	if x != nil {
+		return x.Edges
+	}
+	return 0
+}
+
+func (x *SpaceExportCounts) GetBlobs() int32 {
+	if x != nil {
+		return x.Blobs
+	}
+	return 0
+}
+
+func (x *SpaceExportCounts) GetFiles() int32 {
+	if x != nil {
+		return x.Files
+	}
+	return 0
+}
+
 type ImportDomainMetadata struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// Read-write transaction id. The transaction determines target space/domain.
@@ -507,7 +1345,7 @@ type ImportDomainMetadata struct {
 
 func (x *ImportDomainMetadata) Reset() {
 	*x = ImportDomainMetadata{}
-	mi := &file_mycel_client_v1_import_export_proto_msgTypes[4]
+	mi := &file_mycel_client_v1_import_export_proto_msgTypes[17]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -519,7 +1357,7 @@ func (x *ImportDomainMetadata) String() string {
 func (*ImportDomainMetadata) ProtoMessage() {}
 
 func (x *ImportDomainMetadata) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_client_v1_import_export_proto_msgTypes[4]
+	mi := &file_mycel_client_v1_import_export_proto_msgTypes[17]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -532,7 +1370,7 @@ func (x *ImportDomainMetadata) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ImportDomainMetadata.ProtoReflect.Descriptor instead.
 func (*ImportDomainMetadata) Descriptor() ([]byte, []int) {
-	return file_mycel_client_v1_import_export_proto_rawDescGZIP(), []int{4}
+	return file_mycel_client_v1_import_export_proto_rawDescGZIP(), []int{17}
 }
 
 func (x *ImportDomainMetadata) GetTransactionId() string {
@@ -590,7 +1428,7 @@ type DomainExportOptions struct {
 
 func (x *DomainExportOptions) Reset() {
 	*x = DomainExportOptions{}
-	mi := &file_mycel_client_v1_import_export_proto_msgTypes[5]
+	mi := &file_mycel_client_v1_import_export_proto_msgTypes[18]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -602,7 +1440,7 @@ func (x *DomainExportOptions) String() string {
 func (*DomainExportOptions) ProtoMessage() {}
 
 func (x *DomainExportOptions) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_client_v1_import_export_proto_msgTypes[5]
+	mi := &file_mycel_client_v1_import_export_proto_msgTypes[18]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -615,7 +1453,7 @@ func (x *DomainExportOptions) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DomainExportOptions.ProtoReflect.Descriptor instead.
 func (*DomainExportOptions) Descriptor() ([]byte, []int) {
-	return file_mycel_client_v1_import_export_proto_rawDescGZIP(), []int{5}
+	return file_mycel_client_v1_import_export_proto_rawDescGZIP(), []int{18}
 }
 
 func (x *DomainExportOptions) GetIncludeBlobs() bool {
@@ -647,7 +1485,7 @@ type DomainImportOptions struct {
 
 func (x *DomainImportOptions) Reset() {
 	*x = DomainImportOptions{}
-	mi := &file_mycel_client_v1_import_export_proto_msgTypes[6]
+	mi := &file_mycel_client_v1_import_export_proto_msgTypes[19]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -659,7 +1497,7 @@ func (x *DomainImportOptions) String() string {
 func (*DomainImportOptions) ProtoMessage() {}
 
 func (x *DomainImportOptions) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_client_v1_import_export_proto_msgTypes[6]
+	mi := &file_mycel_client_v1_import_export_proto_msgTypes[19]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -672,7 +1510,7 @@ func (x *DomainImportOptions) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DomainImportOptions.ProtoReflect.Descriptor instead.
 func (*DomainImportOptions) Descriptor() ([]byte, []int) {
-	return file_mycel_client_v1_import_export_proto_rawDescGZIP(), []int{6}
+	return file_mycel_client_v1_import_export_proto_rawDescGZIP(), []int{19}
 }
 
 func (x *DomainImportOptions) GetIncludeBlobs() bool {
@@ -710,7 +1548,7 @@ type DomainExportManifest struct {
 
 func (x *DomainExportManifest) Reset() {
 	*x = DomainExportManifest{}
-	mi := &file_mycel_client_v1_import_export_proto_msgTypes[7]
+	mi := &file_mycel_client_v1_import_export_proto_msgTypes[20]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -722,7 +1560,7 @@ func (x *DomainExportManifest) String() string {
 func (*DomainExportManifest) ProtoMessage() {}
 
 func (x *DomainExportManifest) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_client_v1_import_export_proto_msgTypes[7]
+	mi := &file_mycel_client_v1_import_export_proto_msgTypes[20]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -735,7 +1573,7 @@ func (x *DomainExportManifest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DomainExportManifest.ProtoReflect.Descriptor instead.
 func (*DomainExportManifest) Descriptor() ([]byte, []int) {
-	return file_mycel_client_v1_import_export_proto_rawDescGZIP(), []int{7}
+	return file_mycel_client_v1_import_export_proto_rawDescGZIP(), []int{20}
 }
 
 func (x *DomainExportManifest) GetFormat() DomainExportFormat {
@@ -795,7 +1633,7 @@ type ImportSummary struct {
 
 func (x *ImportSummary) Reset() {
 	*x = ImportSummary{}
-	mi := &file_mycel_client_v1_import_export_proto_msgTypes[8]
+	mi := &file_mycel_client_v1_import_export_proto_msgTypes[21]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -807,7 +1645,7 @@ func (x *ImportSummary) String() string {
 func (*ImportSummary) ProtoMessage() {}
 
 func (x *ImportSummary) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_client_v1_import_export_proto_msgTypes[8]
+	mi := &file_mycel_client_v1_import_export_proto_msgTypes[21]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -820,7 +1658,7 @@ func (x *ImportSummary) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ImportSummary.ProtoReflect.Descriptor instead.
 func (*ImportSummary) Descriptor() ([]byte, []int) {
-	return file_mycel_client_v1_import_export_proto_rawDescGZIP(), []int{8}
+	return file_mycel_client_v1_import_export_proto_rawDescGZIP(), []int{21}
 }
 
 func (x *ImportSummary) GetNodesImported() int64 {
@@ -895,7 +1733,7 @@ type ImportExportRecord struct {
 
 func (x *ImportExportRecord) Reset() {
 	*x = ImportExportRecord{}
-	mi := &file_mycel_client_v1_import_export_proto_msgTypes[9]
+	mi := &file_mycel_client_v1_import_export_proto_msgTypes[22]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -907,7 +1745,7 @@ func (x *ImportExportRecord) String() string {
 func (*ImportExportRecord) ProtoMessage() {}
 
 func (x *ImportExportRecord) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_client_v1_import_export_proto_msgTypes[9]
+	mi := &file_mycel_client_v1_import_export_proto_msgTypes[22]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -920,7 +1758,7 @@ func (x *ImportExportRecord) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ImportExportRecord.ProtoReflect.Descriptor instead.
 func (*ImportExportRecord) Descriptor() ([]byte, []int) {
-	return file_mycel_client_v1_import_export_proto_rawDescGZIP(), []int{9}
+	return file_mycel_client_v1_import_export_proto_rawDescGZIP(), []int{22}
 }
 
 func (x *ImportExportRecord) GetIdentity() *ImportIdentity {
@@ -1011,7 +1849,7 @@ type ImportIdentity struct {
 
 func (x *ImportIdentity) Reset() {
 	*x = ImportIdentity{}
-	mi := &file_mycel_client_v1_import_export_proto_msgTypes[10]
+	mi := &file_mycel_client_v1_import_export_proto_msgTypes[23]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1023,7 +1861,7 @@ func (x *ImportIdentity) String() string {
 func (*ImportIdentity) ProtoMessage() {}
 
 func (x *ImportIdentity) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_client_v1_import_export_proto_msgTypes[10]
+	mi := &file_mycel_client_v1_import_export_proto_msgTypes[23]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1036,7 +1874,7 @@ func (x *ImportIdentity) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ImportIdentity.ProtoReflect.Descriptor instead.
 func (*ImportIdentity) Descriptor() ([]byte, []int) {
-	return file_mycel_client_v1_import_export_proto_rawDescGZIP(), []int{10}
+	return file_mycel_client_v1_import_export_proto_rawDescGZIP(), []int{23}
 }
 
 func (x *ImportIdentity) GetSourceSystem() string {
@@ -1067,7 +1905,7 @@ type BlobImportMetadata struct {
 
 func (x *BlobImportMetadata) Reset() {
 	*x = BlobImportMetadata{}
-	mi := &file_mycel_client_v1_import_export_proto_msgTypes[11]
+	mi := &file_mycel_client_v1_import_export_proto_msgTypes[24]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1079,7 +1917,7 @@ func (x *BlobImportMetadata) String() string {
 func (*BlobImportMetadata) ProtoMessage() {}
 
 func (x *BlobImportMetadata) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_client_v1_import_export_proto_msgTypes[11]
+	mi := &file_mycel_client_v1_import_export_proto_msgTypes[24]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1092,7 +1930,7 @@ func (x *BlobImportMetadata) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use BlobImportMetadata.ProtoReflect.Descriptor instead.
 func (*BlobImportMetadata) Descriptor() ([]byte, []int) {
-	return file_mycel_client_v1_import_export_proto_rawDescGZIP(), []int{11}
+	return file_mycel_client_v1_import_export_proto_rawDescGZIP(), []int{24}
 }
 
 func (x *BlobImportMetadata) GetImportBlobId() string {
@@ -1140,7 +1978,7 @@ type BlobImportChunk struct {
 
 func (x *BlobImportChunk) Reset() {
 	*x = BlobImportChunk{}
-	mi := &file_mycel_client_v1_import_export_proto_msgTypes[12]
+	mi := &file_mycel_client_v1_import_export_proto_msgTypes[25]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1152,7 +1990,7 @@ func (x *BlobImportChunk) String() string {
 func (*BlobImportChunk) ProtoMessage() {}
 
 func (x *BlobImportChunk) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_client_v1_import_export_proto_msgTypes[12]
+	mi := &file_mycel_client_v1_import_export_proto_msgTypes[25]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1165,7 +2003,7 @@ func (x *BlobImportChunk) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use BlobImportChunk.ProtoReflect.Descriptor instead.
 func (*BlobImportChunk) Descriptor() ([]byte, []int) {
-	return file_mycel_client_v1_import_export_proto_rawDescGZIP(), []int{12}
+	return file_mycel_client_v1_import_export_proto_rawDescGZIP(), []int{25}
 }
 
 func (x *BlobImportChunk) GetImportBlobId() string {
@@ -1202,7 +2040,65 @@ const file_mycel_client_v1_import_export_proto_rawDesc = "" +
 	"\x05chunk\x18\x03 \x01(\fH\x00R\x05chunkB\x06\n" +
 	"\x04part\"P\n" +
 	"\x14ImportDomainResponse\x128\n" +
-	"\asummary\x18\x01 \x01(\v2\x1e.mycel.client.v1.ImportSummaryR\asummary\"\xb9\x02\n" +
+	"\asummary\x18\x01 \x01(\v2\x1e.mycel.client.v1.ImportSummaryR\asummary\"Y\n" +
+	"\x18CreateSpaceExportRequest\x12=\n" +
+	"\aoptions\x18\x01 \x01(\v2#.mycel.client.v1.SpaceExportOptionsR\aoptions\"N\n" +
+	"\x19CreateSpaceExportResponse\x121\n" +
+	"\x03job\x18\x01 \x01(\v2\x1f.mycel.client.v1.SpaceExportJobR\x03job\"4\n" +
+	"\x15GetSpaceExportRequest\x12\x1b\n" +
+	"\texport_id\x18\x01 \x01(\tR\bexportId\"K\n" +
+	"\x16GetSpaceExportResponse\x121\n" +
+	"\x03job\x18\x01 \x01(\v2\x1f.mycel.client.v1.SpaceExportJobR\x03job\"p\n" +
+	"\x17ListSpaceExportsRequest\x12\x19\n" +
+	"\bspace_id\x18\x01 \x01(\tR\aspaceId\x12\x1b\n" +
+	"\tpage_size\x18\x02 \x01(\x05R\bpageSize\x12\x1d\n" +
+	"\n" +
+	"page_token\x18\x03 \x01(\tR\tpageToken\"w\n" +
+	"\x18ListSpaceExportsResponse\x123\n" +
+	"\x04jobs\x18\x01 \x03(\v2\x1f.mycel.client.v1.SpaceExportJobR\x04jobs\x12&\n" +
+	"\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken\"9\n" +
+	"\x1aDownloadSpaceExportRequest\x12\x1b\n" +
+	"\texport_id\x18\x01 \x01(\tR\bexportId\"3\n" +
+	"\x1bDownloadSpaceExportResponse\x12\x14\n" +
+	"\x05chunk\x18\x01 \x01(\fR\x05chunk\"7\n" +
+	"\x18DeleteSpaceExportRequest\x12\x1b\n" +
+	"\texport_id\x18\x01 \x01(\tR\bexportId\"R\n" +
+	"\x19DeleteSpaceExportResponse\x12\x1b\n" +
+	"\texport_id\x18\x01 \x01(\tR\bexportId\x12\x18\n" +
+	"\adeleted\x18\x02 \x01(\bR\adeleted\"\xa9\x01\n" +
+	"\x12SpaceExportOptions\x12\x19\n" +
+	"\bspace_id\x18\x01 \x01(\tR\aspaceId\x12\x1d\n" +
+	"\n" +
+	"domain_ids\x18\x02 \x03(\tR\tdomainIds\x12#\n" +
+	"\rinclude_blobs\x18\x03 \x01(\bR\fincludeBlobs\x124\n" +
+	"\x16include_system_domains\x18\x04 \x01(\bR\x14includeSystemDomains\"\xc9\x05\n" +
+	"\x0eSpaceExportJob\x12\x1b\n" +
+	"\texport_id\x18\x01 \x01(\tR\bexportId\x12:\n" +
+	"\x06status\x18\x02 \x01(\x0e2\".mycel.client.v1.SpaceExportStatusR\x06status\x12%\n" +
+	"\x0eformat_version\x18\x03 \x01(\tR\rformatVersion\x12\x1a\n" +
+	"\bfilename\x18\x04 \x01(\tR\bfilename\x12\x1d\n" +
+	"\n" +
+	"size_bytes\x18\x05 \x01(\x03R\tsizeBytes\x12)\n" +
+	"\x10progress_percent\x18\x06 \x01(\x05R\x0fprogressPercent\x12:\n" +
+	"\x06counts\x18\a \x01(\v2\".mycel.client.v1.SpaceExportCountsR\x06counts\x12#\n" +
+	"\rerror_message\x18\b \x01(\tR\ferrorMessage\x12;\n" +
+	"\vcreate_time\x18\t \x01(\v2\x1a.google.protobuf.TimestampR\n" +
+	"createTime\x12;\n" +
+	"\vupdate_time\x18\n" +
+	" \x01(\v2\x1a.google.protobuf.TimestampR\n" +
+	"updateTime\x12?\n" +
+	"\rcomplete_time\x18\v \x01(\v2\x1a.google.protobuf.TimestampR\fcompleteTime\x12;\n" +
+	"\vexpire_time\x18\f \x01(\v2\x1a.google.protobuf.TimestampR\n" +
+	"expireTime\x12=\n" +
+	"\aoptions\x18\r \x01(\v2#.mycel.client.v1.SpaceExportOptionsR\aoptions\x129\n" +
+	"\x19requested_by_principal_id\x18\x0e \x01(\tR\x16requestedByPrincipalId\"\x9d\x01\n" +
+	"\x11SpaceExportCounts\x12\x16\n" +
+	"\x06spaces\x18\x01 \x01(\x05R\x06spaces\x12\x18\n" +
+	"\adomains\x18\x02 \x01(\x05R\adomains\x12\x14\n" +
+	"\x05nodes\x18\x03 \x01(\x05R\x05nodes\x12\x14\n" +
+	"\x05edges\x18\x04 \x01(\x05R\x05edges\x12\x14\n" +
+	"\x05blobs\x18\x05 \x01(\x05R\x05blobs\x12\x14\n" +
+	"\x05files\x18\x06 \x01(\x05R\x05files\"\xb9\x02\n" +
 	"\x14ImportDomainMetadata\x12%\n" +
 	"\x0etransaction_id\x18\x01 \x01(\tR\rtransactionId\x12;\n" +
 	"\x06format\x18\x02 \x01(\x0e2#.mycel.client.v1.DomainImportFormatR\x06format\x125\n" +
@@ -1253,7 +2149,15 @@ const file_mycel_client_v1_import_export_proto_rawDesc = "" +
 	"size_bytes\x18\x05 \x01(\x03R\tsizeBytes\"M\n" +
 	"\x0fBlobImportChunk\x12$\n" +
 	"\x0eimport_blob_id\x18\x01 \x01(\tR\fimportBlobId\x12\x14\n" +
-	"\x05chunk\x18\x02 \x01(\fR\x05chunk*\xad\x01\n" +
+	"\x05chunk\x18\x02 \x01(\fR\x05chunk*\xfe\x01\n" +
+	"\x11SpaceExportStatus\x12#\n" +
+	"\x1fSPACE_EXPORT_STATUS_UNSPECIFIED\x10\x00\x12\x1e\n" +
+	"\x1aSPACE_EXPORT_STATUS_QUEUED\x10\x01\x12\x1f\n" +
+	"\x1bSPACE_EXPORT_STATUS_RUNNING\x10\x02\x12!\n" +
+	"\x1dSPACE_EXPORT_STATUS_SUCCEEDED\x10\x03\x12\x1e\n" +
+	"\x1aSPACE_EXPORT_STATUS_FAILED\x10\x04\x12\x1f\n" +
+	"\x1bSPACE_EXPORT_STATUS_DELETED\x10\x05\x12\x1f\n" +
+	"\x1bSPACE_EXPORT_STATUS_EXPIRED\x10\x06*\xad\x01\n" +
 	"\x12DomainExportFormat\x12$\n" +
 	" DOMAIN_EXPORT_FORMAT_UNSPECIFIED\x10\x00\x12%\n" +
 	"!DOMAIN_EXPORT_FORMAT_MYCEL_STREAM\x10\x01\x12#\n" +
@@ -1268,10 +2172,15 @@ const file_mycel_client_v1_import_export_proto_rawDesc = "" +
 	"\x1eDOMAIN_IMPORT_MODE_UNSPECIFIED\x10\x00\x12\x1d\n" +
 	"\x19DOMAIN_IMPORT_MODE_APPEND\x10\x01\x12\x1d\n" +
 	"\x19DOMAIN_IMPORT_MODE_UPSERT\x10\x02\x12%\n" +
-	"!DOMAIN_IMPORT_MODE_REPLACE_DOMAIN\x10\x032\xd3\x01\n" +
+	"!DOMAIN_IMPORT_MODE_REPLACE_DOMAIN\x10\x032\xeb\x05\n" +
 	"\x13ImportExportService\x12]\n" +
 	"\fExportDomain\x12$.mycel.client.v1.ExportDomainRequest\x1a%.mycel.client.v1.ExportDomainResponse0\x01\x12]\n" +
-	"\fImportDomain\x12$.mycel.client.v1.ImportDomainRequest\x1a%.mycel.client.v1.ImportDomainResponse(\x01B\xc7\x01\n" +
+	"\fImportDomain\x12$.mycel.client.v1.ImportDomainRequest\x1a%.mycel.client.v1.ImportDomainResponse(\x01\x12j\n" +
+	"\x11CreateSpaceExport\x12).mycel.client.v1.CreateSpaceExportRequest\x1a*.mycel.client.v1.CreateSpaceExportResponse\x12a\n" +
+	"\x0eGetSpaceExport\x12&.mycel.client.v1.GetSpaceExportRequest\x1a'.mycel.client.v1.GetSpaceExportResponse\x12g\n" +
+	"\x10ListSpaceExports\x12(.mycel.client.v1.ListSpaceExportsRequest\x1a).mycel.client.v1.ListSpaceExportsResponse\x12r\n" +
+	"\x13DownloadSpaceExport\x12+.mycel.client.v1.DownloadSpaceExportRequest\x1a,.mycel.client.v1.DownloadSpaceExportResponse0\x01\x12j\n" +
+	"\x11DeleteSpaceExport\x12).mycel.client.v1.DeleteSpaceExportRequest\x1a*.mycel.client.v1.DeleteSpaceExportResponseB\xc7\x01\n" +
 	"\x13com.mycel.client.v1B\x11ImportExportProtoP\x01Z?github.com/myceldb/mycel-go-sdk/gen/go/mycel/client/v1;clientv1\xa2\x02\x03MCX\xaa\x02\x0fMycel.Client.V1\xca\x02\x0fMycel\\Client\\V1\xe2\x02\x1bMycel\\Client\\V1\\GPBMetadata\xea\x02\x11Mycel::Client::V1b\x06proto3"
 
 var (
@@ -1286,57 +2195,92 @@ func file_mycel_client_v1_import_export_proto_rawDescGZIP() []byte {
 	return file_mycel_client_v1_import_export_proto_rawDescData
 }
 
-var file_mycel_client_v1_import_export_proto_enumTypes = make([]protoimpl.EnumInfo, 3)
-var file_mycel_client_v1_import_export_proto_msgTypes = make([]protoimpl.MessageInfo, 13)
+var file_mycel_client_v1_import_export_proto_enumTypes = make([]protoimpl.EnumInfo, 4)
+var file_mycel_client_v1_import_export_proto_msgTypes = make([]protoimpl.MessageInfo, 26)
 var file_mycel_client_v1_import_export_proto_goTypes = []any{
-	(DomainExportFormat)(0),       // 0: mycel.client.v1.DomainExportFormat
-	(DomainImportFormat)(0),       // 1: mycel.client.v1.DomainImportFormat
-	(DomainImportMode)(0),         // 2: mycel.client.v1.DomainImportMode
-	(*ExportDomainRequest)(nil),   // 3: mycel.client.v1.ExportDomainRequest
-	(*ExportDomainResponse)(nil),  // 4: mycel.client.v1.ExportDomainResponse
-	(*ImportDomainRequest)(nil),   // 5: mycel.client.v1.ImportDomainRequest
-	(*ImportDomainResponse)(nil),  // 6: mycel.client.v1.ImportDomainResponse
-	(*ImportDomainMetadata)(nil),  // 7: mycel.client.v1.ImportDomainMetadata
-	(*DomainExportOptions)(nil),   // 8: mycel.client.v1.DomainExportOptions
-	(*DomainImportOptions)(nil),   // 9: mycel.client.v1.DomainImportOptions
-	(*DomainExportManifest)(nil),  // 10: mycel.client.v1.DomainExportManifest
-	(*ImportSummary)(nil),         // 11: mycel.client.v1.ImportSummary
-	(*ImportExportRecord)(nil),    // 12: mycel.client.v1.ImportExportRecord
-	(*ImportIdentity)(nil),        // 13: mycel.client.v1.ImportIdentity
-	(*BlobImportMetadata)(nil),    // 14: mycel.client.v1.BlobImportMetadata
-	(*BlobImportChunk)(nil),       // 15: mycel.client.v1.BlobImportChunk
-	(*timestamppb.Timestamp)(nil), // 16: google.protobuf.Timestamp
-	(*Node)(nil),                  // 17: mycel.client.v1.Node
-	(*Edge)(nil),                  // 18: mycel.client.v1.Edge
+	(SpaceExportStatus)(0),              // 0: mycel.client.v1.SpaceExportStatus
+	(DomainExportFormat)(0),             // 1: mycel.client.v1.DomainExportFormat
+	(DomainImportFormat)(0),             // 2: mycel.client.v1.DomainImportFormat
+	(DomainImportMode)(0),               // 3: mycel.client.v1.DomainImportMode
+	(*ExportDomainRequest)(nil),         // 4: mycel.client.v1.ExportDomainRequest
+	(*ExportDomainResponse)(nil),        // 5: mycel.client.v1.ExportDomainResponse
+	(*ImportDomainRequest)(nil),         // 6: mycel.client.v1.ImportDomainRequest
+	(*ImportDomainResponse)(nil),        // 7: mycel.client.v1.ImportDomainResponse
+	(*CreateSpaceExportRequest)(nil),    // 8: mycel.client.v1.CreateSpaceExportRequest
+	(*CreateSpaceExportResponse)(nil),   // 9: mycel.client.v1.CreateSpaceExportResponse
+	(*GetSpaceExportRequest)(nil),       // 10: mycel.client.v1.GetSpaceExportRequest
+	(*GetSpaceExportResponse)(nil),      // 11: mycel.client.v1.GetSpaceExportResponse
+	(*ListSpaceExportsRequest)(nil),     // 12: mycel.client.v1.ListSpaceExportsRequest
+	(*ListSpaceExportsResponse)(nil),    // 13: mycel.client.v1.ListSpaceExportsResponse
+	(*DownloadSpaceExportRequest)(nil),  // 14: mycel.client.v1.DownloadSpaceExportRequest
+	(*DownloadSpaceExportResponse)(nil), // 15: mycel.client.v1.DownloadSpaceExportResponse
+	(*DeleteSpaceExportRequest)(nil),    // 16: mycel.client.v1.DeleteSpaceExportRequest
+	(*DeleteSpaceExportResponse)(nil),   // 17: mycel.client.v1.DeleteSpaceExportResponse
+	(*SpaceExportOptions)(nil),          // 18: mycel.client.v1.SpaceExportOptions
+	(*SpaceExportJob)(nil),              // 19: mycel.client.v1.SpaceExportJob
+	(*SpaceExportCounts)(nil),           // 20: mycel.client.v1.SpaceExportCounts
+	(*ImportDomainMetadata)(nil),        // 21: mycel.client.v1.ImportDomainMetadata
+	(*DomainExportOptions)(nil),         // 22: mycel.client.v1.DomainExportOptions
+	(*DomainImportOptions)(nil),         // 23: mycel.client.v1.DomainImportOptions
+	(*DomainExportManifest)(nil),        // 24: mycel.client.v1.DomainExportManifest
+	(*ImportSummary)(nil),               // 25: mycel.client.v1.ImportSummary
+	(*ImportExportRecord)(nil),          // 26: mycel.client.v1.ImportExportRecord
+	(*ImportIdentity)(nil),              // 27: mycel.client.v1.ImportIdentity
+	(*BlobImportMetadata)(nil),          // 28: mycel.client.v1.BlobImportMetadata
+	(*BlobImportChunk)(nil),             // 29: mycel.client.v1.BlobImportChunk
+	(*timestamppb.Timestamp)(nil),       // 30: google.protobuf.Timestamp
+	(*Node)(nil),                        // 31: mycel.client.v1.Node
+	(*Edge)(nil),                        // 32: mycel.client.v1.Edge
 }
 var file_mycel_client_v1_import_export_proto_depIdxs = []int32{
-	0,  // 0: mycel.client.v1.ExportDomainRequest.format:type_name -> mycel.client.v1.DomainExportFormat
-	8,  // 1: mycel.client.v1.ExportDomainRequest.options:type_name -> mycel.client.v1.DomainExportOptions
-	10, // 2: mycel.client.v1.ExportDomainResponse.manifest:type_name -> mycel.client.v1.DomainExportManifest
-	12, // 3: mycel.client.v1.ExportDomainResponse.record:type_name -> mycel.client.v1.ImportExportRecord
-	7,  // 4: mycel.client.v1.ImportDomainRequest.metadata:type_name -> mycel.client.v1.ImportDomainMetadata
-	12, // 5: mycel.client.v1.ImportDomainRequest.record:type_name -> mycel.client.v1.ImportExportRecord
-	11, // 6: mycel.client.v1.ImportDomainResponse.summary:type_name -> mycel.client.v1.ImportSummary
-	1,  // 7: mycel.client.v1.ImportDomainMetadata.format:type_name -> mycel.client.v1.DomainImportFormat
-	2,  // 8: mycel.client.v1.ImportDomainMetadata.mode:type_name -> mycel.client.v1.DomainImportMode
-	9,  // 9: mycel.client.v1.ImportDomainMetadata.options:type_name -> mycel.client.v1.DomainImportOptions
-	0,  // 10: mycel.client.v1.DomainExportManifest.format:type_name -> mycel.client.v1.DomainExportFormat
-	16, // 11: mycel.client.v1.DomainExportManifest.export_time:type_name -> google.protobuf.Timestamp
-	8,  // 12: mycel.client.v1.DomainExportManifest.options:type_name -> mycel.client.v1.DomainExportOptions
-	13, // 13: mycel.client.v1.ImportExportRecord.identity:type_name -> mycel.client.v1.ImportIdentity
-	17, // 14: mycel.client.v1.ImportExportRecord.node:type_name -> mycel.client.v1.Node
-	18, // 15: mycel.client.v1.ImportExportRecord.edge:type_name -> mycel.client.v1.Edge
-	14, // 16: mycel.client.v1.ImportExportRecord.blob_metadata:type_name -> mycel.client.v1.BlobImportMetadata
-	15, // 17: mycel.client.v1.ImportExportRecord.blob_chunk:type_name -> mycel.client.v1.BlobImportChunk
-	3,  // 18: mycel.client.v1.ImportExportService.ExportDomain:input_type -> mycel.client.v1.ExportDomainRequest
-	5,  // 19: mycel.client.v1.ImportExportService.ImportDomain:input_type -> mycel.client.v1.ImportDomainRequest
-	4,  // 20: mycel.client.v1.ImportExportService.ExportDomain:output_type -> mycel.client.v1.ExportDomainResponse
-	6,  // 21: mycel.client.v1.ImportExportService.ImportDomain:output_type -> mycel.client.v1.ImportDomainResponse
-	20, // [20:22] is the sub-list for method output_type
-	18, // [18:20] is the sub-list for method input_type
-	18, // [18:18] is the sub-list for extension type_name
-	18, // [18:18] is the sub-list for extension extendee
-	0,  // [0:18] is the sub-list for field type_name
+	1,  // 0: mycel.client.v1.ExportDomainRequest.format:type_name -> mycel.client.v1.DomainExportFormat
+	22, // 1: mycel.client.v1.ExportDomainRequest.options:type_name -> mycel.client.v1.DomainExportOptions
+	24, // 2: mycel.client.v1.ExportDomainResponse.manifest:type_name -> mycel.client.v1.DomainExportManifest
+	26, // 3: mycel.client.v1.ExportDomainResponse.record:type_name -> mycel.client.v1.ImportExportRecord
+	21, // 4: mycel.client.v1.ImportDomainRequest.metadata:type_name -> mycel.client.v1.ImportDomainMetadata
+	26, // 5: mycel.client.v1.ImportDomainRequest.record:type_name -> mycel.client.v1.ImportExportRecord
+	25, // 6: mycel.client.v1.ImportDomainResponse.summary:type_name -> mycel.client.v1.ImportSummary
+	18, // 7: mycel.client.v1.CreateSpaceExportRequest.options:type_name -> mycel.client.v1.SpaceExportOptions
+	19, // 8: mycel.client.v1.CreateSpaceExportResponse.job:type_name -> mycel.client.v1.SpaceExportJob
+	19, // 9: mycel.client.v1.GetSpaceExportResponse.job:type_name -> mycel.client.v1.SpaceExportJob
+	19, // 10: mycel.client.v1.ListSpaceExportsResponse.jobs:type_name -> mycel.client.v1.SpaceExportJob
+	0,  // 11: mycel.client.v1.SpaceExportJob.status:type_name -> mycel.client.v1.SpaceExportStatus
+	20, // 12: mycel.client.v1.SpaceExportJob.counts:type_name -> mycel.client.v1.SpaceExportCounts
+	30, // 13: mycel.client.v1.SpaceExportJob.create_time:type_name -> google.protobuf.Timestamp
+	30, // 14: mycel.client.v1.SpaceExportJob.update_time:type_name -> google.protobuf.Timestamp
+	30, // 15: mycel.client.v1.SpaceExportJob.complete_time:type_name -> google.protobuf.Timestamp
+	30, // 16: mycel.client.v1.SpaceExportJob.expire_time:type_name -> google.protobuf.Timestamp
+	18, // 17: mycel.client.v1.SpaceExportJob.options:type_name -> mycel.client.v1.SpaceExportOptions
+	2,  // 18: mycel.client.v1.ImportDomainMetadata.format:type_name -> mycel.client.v1.DomainImportFormat
+	3,  // 19: mycel.client.v1.ImportDomainMetadata.mode:type_name -> mycel.client.v1.DomainImportMode
+	23, // 20: mycel.client.v1.ImportDomainMetadata.options:type_name -> mycel.client.v1.DomainImportOptions
+	1,  // 21: mycel.client.v1.DomainExportManifest.format:type_name -> mycel.client.v1.DomainExportFormat
+	30, // 22: mycel.client.v1.DomainExportManifest.export_time:type_name -> google.protobuf.Timestamp
+	22, // 23: mycel.client.v1.DomainExportManifest.options:type_name -> mycel.client.v1.DomainExportOptions
+	27, // 24: mycel.client.v1.ImportExportRecord.identity:type_name -> mycel.client.v1.ImportIdentity
+	31, // 25: mycel.client.v1.ImportExportRecord.node:type_name -> mycel.client.v1.Node
+	32, // 26: mycel.client.v1.ImportExportRecord.edge:type_name -> mycel.client.v1.Edge
+	28, // 27: mycel.client.v1.ImportExportRecord.blob_metadata:type_name -> mycel.client.v1.BlobImportMetadata
+	29, // 28: mycel.client.v1.ImportExportRecord.blob_chunk:type_name -> mycel.client.v1.BlobImportChunk
+	4,  // 29: mycel.client.v1.ImportExportService.ExportDomain:input_type -> mycel.client.v1.ExportDomainRequest
+	6,  // 30: mycel.client.v1.ImportExportService.ImportDomain:input_type -> mycel.client.v1.ImportDomainRequest
+	8,  // 31: mycel.client.v1.ImportExportService.CreateSpaceExport:input_type -> mycel.client.v1.CreateSpaceExportRequest
+	10, // 32: mycel.client.v1.ImportExportService.GetSpaceExport:input_type -> mycel.client.v1.GetSpaceExportRequest
+	12, // 33: mycel.client.v1.ImportExportService.ListSpaceExports:input_type -> mycel.client.v1.ListSpaceExportsRequest
+	14, // 34: mycel.client.v1.ImportExportService.DownloadSpaceExport:input_type -> mycel.client.v1.DownloadSpaceExportRequest
+	16, // 35: mycel.client.v1.ImportExportService.DeleteSpaceExport:input_type -> mycel.client.v1.DeleteSpaceExportRequest
+	5,  // 36: mycel.client.v1.ImportExportService.ExportDomain:output_type -> mycel.client.v1.ExportDomainResponse
+	7,  // 37: mycel.client.v1.ImportExportService.ImportDomain:output_type -> mycel.client.v1.ImportDomainResponse
+	9,  // 38: mycel.client.v1.ImportExportService.CreateSpaceExport:output_type -> mycel.client.v1.CreateSpaceExportResponse
+	11, // 39: mycel.client.v1.ImportExportService.GetSpaceExport:output_type -> mycel.client.v1.GetSpaceExportResponse
+	13, // 40: mycel.client.v1.ImportExportService.ListSpaceExports:output_type -> mycel.client.v1.ListSpaceExportsResponse
+	15, // 41: mycel.client.v1.ImportExportService.DownloadSpaceExport:output_type -> mycel.client.v1.DownloadSpaceExportResponse
+	17, // 42: mycel.client.v1.ImportExportService.DeleteSpaceExport:output_type -> mycel.client.v1.DeleteSpaceExportResponse
+	36, // [36:43] is the sub-list for method output_type
+	29, // [29:36] is the sub-list for method input_type
+	29, // [29:29] is the sub-list for extension type_name
+	29, // [29:29] is the sub-list for extension extendee
+	0,  // [0:29] is the sub-list for field type_name
 }
 
 func init() { file_mycel_client_v1_import_export_proto_init() }
@@ -1355,7 +2299,7 @@ func file_mycel_client_v1_import_export_proto_init() {
 		(*ImportDomainRequest_Record)(nil),
 		(*ImportDomainRequest_Chunk)(nil),
 	}
-	file_mycel_client_v1_import_export_proto_msgTypes[9].OneofWrappers = []any{
+	file_mycel_client_v1_import_export_proto_msgTypes[22].OneofWrappers = []any{
 		(*ImportExportRecord_Node)(nil),
 		(*ImportExportRecord_Edge)(nil),
 		(*ImportExportRecord_BlobMetadata)(nil),
@@ -1366,8 +2310,8 @@ func file_mycel_client_v1_import_export_proto_init() {
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_mycel_client_v1_import_export_proto_rawDesc), len(file_mycel_client_v1_import_export_proto_rawDesc)),
-			NumEnums:      3,
-			NumMessages:   13,
+			NumEnums:      4,
+			NumMessages:   26,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
