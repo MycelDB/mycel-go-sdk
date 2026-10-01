@@ -2,6 +2,7 @@ package mycel
 
 import (
 	"context"
+	"fmt"
 
 	clientv1 "github.com/myceldb/mycel-go-sdk/gen/go/mycel/client/v1"
 	"google.golang.org/protobuf/types/known/fieldmaskpb"
@@ -22,6 +23,17 @@ func (c *Client) ApplyGraphOperations(ctx context.Context, txID string, ops []*c
 	callCtx, cancel := c.AuthCallContext(ctx)
 	defer cancel()
 	return c.Graph.ApplyGraphOperations(callCtx, &clientv1.ApplyGraphOperationsRequest{TransactionId: txID, Operations: ops})
+}
+
+func (c *Client) ReplaceReferences(ctx context.Context, txID string, input *clientv1.ReferencesReplace) (*clientv1.ReferencesReplaceResult, error) {
+	res, err := c.ApplyGraphOperations(ctx, txID, []*clientv1.GraphOperation{{Operation: &clientv1.GraphOperation_ReplaceReferences{ReplaceReferences: input}}})
+	if err != nil {
+		return nil, err
+	}
+	if len(res.GetResults()) != 1 || res.GetResults()[0].GetReplacedReferences() == nil {
+		return nil, fmt.Errorf("replace references: unexpected graph operation result")
+	}
+	return res.GetResults()[0].GetReplacedReferences(), nil
 }
 
 func (c *Client) UpdateNodeContent(ctx context.Context, txID, nodeID, content string) (*clientv1.Node, error) {

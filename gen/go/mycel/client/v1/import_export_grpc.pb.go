@@ -21,16 +21,21 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	ImportExportService_ExportDomain_FullMethodName = "/mycel.client.v1.ImportExportService/ExportDomain"
-	ImportExportService_ImportDomain_FullMethodName = "/mycel.client.v1.ImportExportService/ImportDomain"
+	ImportExportService_ExportDomain_FullMethodName        = "/mycel.client.v1.ImportExportService/ExportDomain"
+	ImportExportService_ImportDomain_FullMethodName        = "/mycel.client.v1.ImportExportService/ImportDomain"
+	ImportExportService_CreateSpaceExport_FullMethodName   = "/mycel.client.v1.ImportExportService/CreateSpaceExport"
+	ImportExportService_GetSpaceExport_FullMethodName      = "/mycel.client.v1.ImportExportService/GetSpaceExport"
+	ImportExportService_ListSpaceExports_FullMethodName    = "/mycel.client.v1.ImportExportService/ListSpaceExports"
+	ImportExportService_DownloadSpaceExport_FullMethodName = "/mycel.client.v1.ImportExportService/DownloadSpaceExport"
+	ImportExportService_DeleteSpaceExport_FullMethodName   = "/mycel.client.v1.ImportExportService/DeleteSpaceExport"
 )
 
 // ImportExportServiceClient is the client API for ImportExportService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 //
-// ImportExportService provides client/application data portability for a domain.
-// It is distinct from admin backup/restore. Format-specific importers such as
+// ImportExportService provides client/application data portability for domains
+// and space-scoped export artifacts. It is distinct from admin backup/restore. Format-specific importers such as
 // Logseq importers convert source data into Mycel-native import streams before
 // calling this service.
 type ImportExportServiceClient interface {
@@ -38,6 +43,22 @@ type ImportExportServiceClient interface {
 	ExportDomain(ctx context.Context, in *ExportDomainRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[ExportDomainResponse], error)
 	// ImportDomain streams Mycel-native records into a read-write transaction.
 	ImportDomain(ctx context.Context, opts ...grpc.CallOption) (grpc.ClientStreamingClient[ImportDomainRequest, ImportDomainResponse], error)
+	// CreateSpaceExport starts a ZIP export job for one authorized space. The job
+	// can include one or more domains and produces a downloadable artifact stored
+	// by the daemon for a bounded retention window.
+	CreateSpaceExport(ctx context.Context, in *CreateSpaceExportRequest, opts ...grpc.CallOption) (*CreateSpaceExportResponse, error)
+	// GetSpaceExport returns status/progress and artifact metadata for a job
+	// created by the authenticated principal.
+	GetSpaceExport(ctx context.Context, in *GetSpaceExportRequest, opts ...grpc.CallOption) (*GetSpaceExportResponse, error)
+	// ListSpaceExports lists recent export jobs created by the authenticated
+	// principal, optionally filtered by space.
+	ListSpaceExports(ctx context.Context, in *ListSpaceExportsRequest, opts ...grpc.CallOption) (*ListSpaceExportsResponse, error)
+	// DownloadSpaceExport streams a completed artifact created by the
+	// authenticated principal.
+	DownloadSpaceExport(ctx context.Context, in *DownloadSpaceExportRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[DownloadSpaceExportResponse], error)
+	// DeleteSpaceExport removes an artifact/job created by the authenticated
+	// principal before automatic expiry.
+	DeleteSpaceExport(ctx context.Context, in *DeleteSpaceExportRequest, opts ...grpc.CallOption) (*DeleteSpaceExportResponse, error)
 }
 
 type importExportServiceClient struct {
@@ -80,12 +101,71 @@ func (c *importExportServiceClient) ImportDomain(ctx context.Context, opts ...gr
 // This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
 type ImportExportService_ImportDomainClient = grpc.ClientStreamingClient[ImportDomainRequest, ImportDomainResponse]
 
+func (c *importExportServiceClient) CreateSpaceExport(ctx context.Context, in *CreateSpaceExportRequest, opts ...grpc.CallOption) (*CreateSpaceExportResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CreateSpaceExportResponse)
+	err := c.cc.Invoke(ctx, ImportExportService_CreateSpaceExport_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *importExportServiceClient) GetSpaceExport(ctx context.Context, in *GetSpaceExportRequest, opts ...grpc.CallOption) (*GetSpaceExportResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetSpaceExportResponse)
+	err := c.cc.Invoke(ctx, ImportExportService_GetSpaceExport_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *importExportServiceClient) ListSpaceExports(ctx context.Context, in *ListSpaceExportsRequest, opts ...grpc.CallOption) (*ListSpaceExportsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListSpaceExportsResponse)
+	err := c.cc.Invoke(ctx, ImportExportService_ListSpaceExports_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *importExportServiceClient) DownloadSpaceExport(ctx context.Context, in *DownloadSpaceExportRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[DownloadSpaceExportResponse], error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	stream, err := c.cc.NewStream(ctx, &ImportExportService_ServiceDesc.Streams[2], ImportExportService_DownloadSpaceExport_FullMethodName, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &grpc.GenericClientStream[DownloadSpaceExportRequest, DownloadSpaceExportResponse]{ClientStream: stream}
+	if err := x.ClientStream.SendMsg(in); err != nil {
+		return nil, err
+	}
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	return x, nil
+}
+
+// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
+type ImportExportService_DownloadSpaceExportClient = grpc.ServerStreamingClient[DownloadSpaceExportResponse]
+
+func (c *importExportServiceClient) DeleteSpaceExport(ctx context.Context, in *DeleteSpaceExportRequest, opts ...grpc.CallOption) (*DeleteSpaceExportResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(DeleteSpaceExportResponse)
+	err := c.cc.Invoke(ctx, ImportExportService_DeleteSpaceExport_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ImportExportServiceServer is the server API for ImportExportService service.
 // All implementations must embed UnimplementedImportExportServiceServer
 // for forward compatibility.
 //
-// ImportExportService provides client/application data portability for a domain.
-// It is distinct from admin backup/restore. Format-specific importers such as
+// ImportExportService provides client/application data portability for domains
+// and space-scoped export artifacts. It is distinct from admin backup/restore. Format-specific importers such as
 // Logseq importers convert source data into Mycel-native import streams before
 // calling this service.
 type ImportExportServiceServer interface {
@@ -93,6 +173,22 @@ type ImportExportServiceServer interface {
 	ExportDomain(*ExportDomainRequest, grpc.ServerStreamingServer[ExportDomainResponse]) error
 	// ImportDomain streams Mycel-native records into a read-write transaction.
 	ImportDomain(grpc.ClientStreamingServer[ImportDomainRequest, ImportDomainResponse]) error
+	// CreateSpaceExport starts a ZIP export job for one authorized space. The job
+	// can include one or more domains and produces a downloadable artifact stored
+	// by the daemon for a bounded retention window.
+	CreateSpaceExport(context.Context, *CreateSpaceExportRequest) (*CreateSpaceExportResponse, error)
+	// GetSpaceExport returns status/progress and artifact metadata for a job
+	// created by the authenticated principal.
+	GetSpaceExport(context.Context, *GetSpaceExportRequest) (*GetSpaceExportResponse, error)
+	// ListSpaceExports lists recent export jobs created by the authenticated
+	// principal, optionally filtered by space.
+	ListSpaceExports(context.Context, *ListSpaceExportsRequest) (*ListSpaceExportsResponse, error)
+	// DownloadSpaceExport streams a completed artifact created by the
+	// authenticated principal.
+	DownloadSpaceExport(*DownloadSpaceExportRequest, grpc.ServerStreamingServer[DownloadSpaceExportResponse]) error
+	// DeleteSpaceExport removes an artifact/job created by the authenticated
+	// principal before automatic expiry.
+	DeleteSpaceExport(context.Context, *DeleteSpaceExportRequest) (*DeleteSpaceExportResponse, error)
 	mustEmbedUnimplementedImportExportServiceServer()
 }
 
@@ -108,6 +204,21 @@ func (UnimplementedImportExportServiceServer) ExportDomain(*ExportDomainRequest,
 }
 func (UnimplementedImportExportServiceServer) ImportDomain(grpc.ClientStreamingServer[ImportDomainRequest, ImportDomainResponse]) error {
 	return status.Errorf(codes.Unimplemented, "method ImportDomain not implemented")
+}
+func (UnimplementedImportExportServiceServer) CreateSpaceExport(context.Context, *CreateSpaceExportRequest) (*CreateSpaceExportResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateSpaceExport not implemented")
+}
+func (UnimplementedImportExportServiceServer) GetSpaceExport(context.Context, *GetSpaceExportRequest) (*GetSpaceExportResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetSpaceExport not implemented")
+}
+func (UnimplementedImportExportServiceServer) ListSpaceExports(context.Context, *ListSpaceExportsRequest) (*ListSpaceExportsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListSpaceExports not implemented")
+}
+func (UnimplementedImportExportServiceServer) DownloadSpaceExport(*DownloadSpaceExportRequest, grpc.ServerStreamingServer[DownloadSpaceExportResponse]) error {
+	return status.Errorf(codes.Unimplemented, "method DownloadSpaceExport not implemented")
+}
+func (UnimplementedImportExportServiceServer) DeleteSpaceExport(context.Context, *DeleteSpaceExportRequest) (*DeleteSpaceExportResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteSpaceExport not implemented")
 }
 func (UnimplementedImportExportServiceServer) mustEmbedUnimplementedImportExportServiceServer() {}
 func (UnimplementedImportExportServiceServer) testEmbeddedByValue()                             {}
@@ -148,13 +259,113 @@ func _ImportExportService_ImportDomain_Handler(srv interface{}, stream grpc.Serv
 // This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
 type ImportExportService_ImportDomainServer = grpc.ClientStreamingServer[ImportDomainRequest, ImportDomainResponse]
 
+func _ImportExportService_CreateSpaceExport_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateSpaceExportRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ImportExportServiceServer).CreateSpaceExport(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ImportExportService_CreateSpaceExport_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ImportExportServiceServer).CreateSpaceExport(ctx, req.(*CreateSpaceExportRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ImportExportService_GetSpaceExport_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetSpaceExportRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ImportExportServiceServer).GetSpaceExport(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ImportExportService_GetSpaceExport_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ImportExportServiceServer).GetSpaceExport(ctx, req.(*GetSpaceExportRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ImportExportService_ListSpaceExports_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListSpaceExportsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ImportExportServiceServer).ListSpaceExports(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ImportExportService_ListSpaceExports_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ImportExportServiceServer).ListSpaceExports(ctx, req.(*ListSpaceExportsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ImportExportService_DownloadSpaceExport_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(DownloadSpaceExportRequest)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
+	}
+	return srv.(ImportExportServiceServer).DownloadSpaceExport(m, &grpc.GenericServerStream[DownloadSpaceExportRequest, DownloadSpaceExportResponse]{ServerStream: stream})
+}
+
+// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
+type ImportExportService_DownloadSpaceExportServer = grpc.ServerStreamingServer[DownloadSpaceExportResponse]
+
+func _ImportExportService_DeleteSpaceExport_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteSpaceExportRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ImportExportServiceServer).DeleteSpaceExport(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ImportExportService_DeleteSpaceExport_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ImportExportServiceServer).DeleteSpaceExport(ctx, req.(*DeleteSpaceExportRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // ImportExportService_ServiceDesc is the grpc.ServiceDesc for ImportExportService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var ImportExportService_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "mycel.client.v1.ImportExportService",
 	HandlerType: (*ImportExportServiceServer)(nil),
-	Methods:     []grpc.MethodDesc{},
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "CreateSpaceExport",
+			Handler:    _ImportExportService_CreateSpaceExport_Handler,
+		},
+		{
+			MethodName: "GetSpaceExport",
+			Handler:    _ImportExportService_GetSpaceExport_Handler,
+		},
+		{
+			MethodName: "ListSpaceExports",
+			Handler:    _ImportExportService_ListSpaceExports_Handler,
+		},
+		{
+			MethodName: "DeleteSpaceExport",
+			Handler:    _ImportExportService_DeleteSpaceExport_Handler,
+		},
+	},
 	Streams: []grpc.StreamDesc{
 		{
 			StreamName:    "ExportDomain",
@@ -165,6 +376,11 @@ var ImportExportService_ServiceDesc = grpc.ServiceDesc{
 			StreamName:    "ImportDomain",
 			Handler:       _ImportExportService_ImportDomain_Handler,
 			ClientStreams: true,
+		},
+		{
+			StreamName:    "DownloadSpaceExport",
+			Handler:       _ImportExportService_DownloadSpaceExport_Handler,
+			ServerStreams: true,
 		},
 	},
 	Metadata: "mycel/client/v1/import_export.proto",

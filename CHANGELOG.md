@@ -6,6 +6,19 @@ This project follows the spirit of [Keep a Changelog](https://keepachangelog.com
 
 ## [Unreleased]
 
+## [v0.17.0] - 2026-09-30
+
+### Added
+
+- Regenerated Go protobuf/gRPC bindings for `mycel-api` v0.17.0, including client space export job APIs, admin Raft snapshot APIs, and graph checkpoint/index status fields.
+
+## [v0.16.0] - 2026-09-24
+
+### Added
+
+- Regenerated Go protobuf/gRPC bindings for `mycel-api` v0.16.0, including graph reference replacement messages and results.
+- Added `GraphClient.ReplaceReferences` for transaction-scoped server-side reference reconciliation.
+
 ## [v0.15.0] - 2026-09-18
 
 ### Added
