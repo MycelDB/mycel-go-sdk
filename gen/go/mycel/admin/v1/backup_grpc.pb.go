@@ -27,8 +27,9 @@ const (
 	AdminBackupService_GetBackupStatus_FullMethodName          = "/mycel.admin.v1.AdminBackupService/GetBackupStatus"
 	AdminBackupService_ListBackups_FullMethodName              = "/mycel.admin.v1.AdminBackupService/ListBackups"
 	AdminBackupService_DeleteBackup_FullMethodName             = "/mycel.admin.v1.AdminBackupService/DeleteBackup"
-	AdminBackupService_TriggerClusterBackup_FullMethodName     = "/mycel.admin.v1.AdminBackupService/TriggerClusterBackup"
+	AdminBackupService_StartClusterBackup_FullMethodName       = "/mycel.admin.v1.AdminBackupService/StartClusterBackup"
 	AdminBackupService_GetClusterBackupStatus_FullMethodName   = "/mycel.admin.v1.AdminBackupService/GetClusterBackupStatus"
+	AdminBackupService_CancelClusterBackup_FullMethodName      = "/mycel.admin.v1.AdminBackupService/CancelClusterBackup"
 	AdminBackupService_ListClusterBackups_FullMethodName       = "/mycel.admin.v1.AdminBackupService/ListClusterBackups"
 	AdminBackupService_ValidateClusterBackupSet_FullMethodName = "/mycel.admin.v1.AdminBackupService/ValidateClusterBackupSet"
 )
@@ -45,8 +46,13 @@ type AdminBackupServiceClient interface {
 	GetBackupStatus(ctx context.Context, in *GetBackupStatusRequest, opts ...grpc.CallOption) (*GetBackupStatusResponse, error)
 	ListBackups(ctx context.Context, in *ListBackupsRequest, opts ...grpc.CallOption) (*ListBackupsResponse, error)
 	DeleteBackup(ctx context.Context, in *DeleteBackupRequest, opts ...grpc.CallOption) (*DeleteBackupResponse, error)
-	TriggerClusterBackup(ctx context.Context, in *TriggerClusterBackupRequest, opts ...grpc.CallOption) (*TriggerClusterBackupResponse, error)
+	// StartClusterBackup creates an asynchronous cluster-wide backup operation. Implementations own
+	// cluster-safety transitions such as waiting for Raft applied-index convergence before capture.
+	StartClusterBackup(ctx context.Context, in *StartClusterBackupRequest, opts ...grpc.CallOption) (*StartClusterBackupResponse, error)
 	GetClusterBackupStatus(ctx context.Context, in *GetClusterBackupStatusRequest, opts ...grpc.CallOption) (*GetClusterBackupStatusResponse, error)
+	// CancelClusterBackup requests cancellation of a pending or active cluster-wide backup operation.
+	// Cancellation is idempotent for terminal operations.
+	CancelClusterBackup(ctx context.Context, in *CancelClusterBackupRequest, opts ...grpc.CallOption) (*CancelClusterBackupResponse, error)
 	ListClusterBackups(ctx context.Context, in *ListClusterBackupsRequest, opts ...grpc.CallOption) (*ListClusterBackupsResponse, error)
 	ValidateClusterBackupSet(ctx context.Context, in *ValidateClusterBackupSetRequest, opts ...grpc.CallOption) (*ValidateClusterBackupSetResponse, error)
 }
@@ -119,10 +125,10 @@ func (c *adminBackupServiceClient) DeleteBackup(ctx context.Context, in *DeleteB
 	return out, nil
 }
 
-func (c *adminBackupServiceClient) TriggerClusterBackup(ctx context.Context, in *TriggerClusterBackupRequest, opts ...grpc.CallOption) (*TriggerClusterBackupResponse, error) {
+func (c *adminBackupServiceClient) StartClusterBackup(ctx context.Context, in *StartClusterBackupRequest, opts ...grpc.CallOption) (*StartClusterBackupResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(TriggerClusterBackupResponse)
-	err := c.cc.Invoke(ctx, AdminBackupService_TriggerClusterBackup_FullMethodName, in, out, cOpts...)
+	out := new(StartClusterBackupResponse)
+	err := c.cc.Invoke(ctx, AdminBackupService_StartClusterBackup_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -133,6 +139,16 @@ func (c *adminBackupServiceClient) GetClusterBackupStatus(ctx context.Context, i
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(GetClusterBackupStatusResponse)
 	err := c.cc.Invoke(ctx, AdminBackupService_GetClusterBackupStatus_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *adminBackupServiceClient) CancelClusterBackup(ctx context.Context, in *CancelClusterBackupRequest, opts ...grpc.CallOption) (*CancelClusterBackupResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CancelClusterBackupResponse)
+	err := c.cc.Invoke(ctx, AdminBackupService_CancelClusterBackup_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -171,8 +187,13 @@ type AdminBackupServiceServer interface {
 	GetBackupStatus(context.Context, *GetBackupStatusRequest) (*GetBackupStatusResponse, error)
 	ListBackups(context.Context, *ListBackupsRequest) (*ListBackupsResponse, error)
 	DeleteBackup(context.Context, *DeleteBackupRequest) (*DeleteBackupResponse, error)
-	TriggerClusterBackup(context.Context, *TriggerClusterBackupRequest) (*TriggerClusterBackupResponse, error)
+	// StartClusterBackup creates an asynchronous cluster-wide backup operation. Implementations own
+	// cluster-safety transitions such as waiting for Raft applied-index convergence before capture.
+	StartClusterBackup(context.Context, *StartClusterBackupRequest) (*StartClusterBackupResponse, error)
 	GetClusterBackupStatus(context.Context, *GetClusterBackupStatusRequest) (*GetClusterBackupStatusResponse, error)
+	// CancelClusterBackup requests cancellation of a pending or active cluster-wide backup operation.
+	// Cancellation is idempotent for terminal operations.
+	CancelClusterBackup(context.Context, *CancelClusterBackupRequest) (*CancelClusterBackupResponse, error)
 	ListClusterBackups(context.Context, *ListClusterBackupsRequest) (*ListClusterBackupsResponse, error)
 	ValidateClusterBackupSet(context.Context, *ValidateClusterBackupSetRequest) (*ValidateClusterBackupSetResponse, error)
 	mustEmbedUnimplementedAdminBackupServiceServer()
@@ -203,11 +224,14 @@ func (UnimplementedAdminBackupServiceServer) ListBackups(context.Context, *ListB
 func (UnimplementedAdminBackupServiceServer) DeleteBackup(context.Context, *DeleteBackupRequest) (*DeleteBackupResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteBackup not implemented")
 }
-func (UnimplementedAdminBackupServiceServer) TriggerClusterBackup(context.Context, *TriggerClusterBackupRequest) (*TriggerClusterBackupResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method TriggerClusterBackup not implemented")
+func (UnimplementedAdminBackupServiceServer) StartClusterBackup(context.Context, *StartClusterBackupRequest) (*StartClusterBackupResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method StartClusterBackup not implemented")
 }
 func (UnimplementedAdminBackupServiceServer) GetClusterBackupStatus(context.Context, *GetClusterBackupStatusRequest) (*GetClusterBackupStatusResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetClusterBackupStatus not implemented")
+}
+func (UnimplementedAdminBackupServiceServer) CancelClusterBackup(context.Context, *CancelClusterBackupRequest) (*CancelClusterBackupResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CancelClusterBackup not implemented")
 }
 func (UnimplementedAdminBackupServiceServer) ListClusterBackups(context.Context, *ListClusterBackupsRequest) (*ListClusterBackupsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListClusterBackups not implemented")
@@ -344,20 +368,20 @@ func _AdminBackupService_DeleteBackup_Handler(srv interface{}, ctx context.Conte
 	return interceptor(ctx, in, info, handler)
 }
 
-func _AdminBackupService_TriggerClusterBackup_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(TriggerClusterBackupRequest)
+func _AdminBackupService_StartClusterBackup_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StartClusterBackupRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AdminBackupServiceServer).TriggerClusterBackup(ctx, in)
+		return srv.(AdminBackupServiceServer).StartClusterBackup(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: AdminBackupService_TriggerClusterBackup_FullMethodName,
+		FullMethod: AdminBackupService_StartClusterBackup_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AdminBackupServiceServer).TriggerClusterBackup(ctx, req.(*TriggerClusterBackupRequest))
+		return srv.(AdminBackupServiceServer).StartClusterBackup(ctx, req.(*StartClusterBackupRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -376,6 +400,24 @@ func _AdminBackupService_GetClusterBackupStatus_Handler(srv interface{}, ctx con
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(AdminBackupServiceServer).GetClusterBackupStatus(ctx, req.(*GetClusterBackupStatusRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AdminBackupService_CancelClusterBackup_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CancelClusterBackupRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminBackupServiceServer).CancelClusterBackup(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AdminBackupService_CancelClusterBackup_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminBackupServiceServer).CancelClusterBackup(ctx, req.(*CancelClusterBackupRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -448,12 +490,16 @@ var AdminBackupService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _AdminBackupService_DeleteBackup_Handler,
 		},
 		{
-			MethodName: "TriggerClusterBackup",
-			Handler:    _AdminBackupService_TriggerClusterBackup_Handler,
+			MethodName: "StartClusterBackup",
+			Handler:    _AdminBackupService_StartClusterBackup_Handler,
 		},
 		{
 			MethodName: "GetClusterBackupStatus",
 			Handler:    _AdminBackupService_GetClusterBackupStatus_Handler,
+		},
+		{
+			MethodName: "CancelClusterBackup",
+			Handler:    _AdminBackupService_CancelClusterBackup_Handler,
 		},
 		{
 			MethodName: "ListClusterBackups",
