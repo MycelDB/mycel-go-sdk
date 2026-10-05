@@ -50,10 +50,19 @@ func (c *AdminClient) DeleteBackup(ctx context.Context, backupID string) (*admin
 	return c.Backup.DeleteBackup(callCtx, &adminv1.DeleteBackupRequest{BackupId: backupID})
 }
 
-func (c *AdminClient) TriggerClusterBackup(ctx context.Context, reason, outputDir string, archiveFormat adminv1.BackupArchiveFormat) (*adminv1.TriggerClusterBackupResponse, error) {
+func (c *AdminClient) StartClusterBackup(ctx context.Context, req *adminv1.StartClusterBackupRequest) (*adminv1.StartClusterBackupResponse, error) {
 	callCtx, cancel := c.AuthCallContext(ctx)
 	defer cancel()
-	return c.Backup.TriggerClusterBackup(callCtx, &adminv1.TriggerClusterBackupRequest{Reason: reason, OutputDir: outputDir, ArchiveFormat: archiveFormat})
+	if req == nil {
+		req = &adminv1.StartClusterBackupRequest{}
+	}
+	return c.Backup.StartClusterBackup(callCtx, req)
+}
+
+func (c *AdminClient) CancelClusterBackup(ctx context.Context, backupSetID, reason string) (*adminv1.CancelClusterBackupResponse, error) {
+	callCtx, cancel := c.AuthCallContext(ctx)
+	defer cancel()
+	return c.Backup.CancelClusterBackup(callCtx, &adminv1.CancelClusterBackupRequest{BackupSetId: backupSetID, Reason: reason})
 }
 
 func (c *AdminClient) GetClusterBackupStatus(ctx context.Context, backupSetID string) (*adminv1.GetClusterBackupStatusResponse, error) {

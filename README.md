@@ -188,7 +188,11 @@ Admin backup helpers wrap `mycel.admin.v1.AdminBackupService`. Cluster backup ar
 policy, err := admin.GetBackupPolicy(ctx)
 status, err := admin.GetBackupStatus(ctx)
 trigger, err := admin.TriggerBackup(ctx, "before upgrade")
-cluster, err := admin.TriggerClusterBackup(ctx, "before upgrade", "/mnt/mycel-backups", adminv1.BackupArchiveFormat_BACKUP_ARCHIVE_FORMAT_TAR_ZST)
+cluster, err := admin.StartClusterBackup(ctx, &adminv1.StartClusterBackupRequest{
+    Reason:        "before upgrade",
+    OutputDir:     "/mnt/mycel-backups",
+    ArchiveFormat: adminv1.BackupArchiveFormat_BACKUP_ARCHIVE_FORMAT_TAR_ZST,
+})
 _ = policy
 _ = status
 _ = trigger
