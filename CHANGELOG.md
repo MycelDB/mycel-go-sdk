@@ -6,6 +6,21 @@ This project follows the spirit of [Keep a Changelog](https://keepachangelog.com
 
 ## [Unreleased]
 
+## [v0.18.0] - 2026-10-07
+
+### Added
+
+- Regenerated Go protobuf/gRPC bindings for `mycel-api` v0.18.0, including asynchronous cluster backup operation contracts, lifecycle states, cancellation flow, retry hints, and readiness blockers.
+- Added `AdminClient` helper methods for async cluster backup start, status, cancellation, listing, and backup-set validation.
+
+### Changed
+
+- Updated backup helper documentation to steer cluster backup callers toward the asynchronous operation API.
+
+### Compatibility
+
+- Best used with Mycel daemon/API v0.18.0 for matching async cluster backup operation semantics.
+
 ## [v0.17.0] - 2026-09-30
 
 ### Added
