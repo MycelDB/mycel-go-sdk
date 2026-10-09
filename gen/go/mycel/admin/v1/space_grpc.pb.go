@@ -21,11 +21,10 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	AdminSpaceService_ListSpaces_FullMethodName          = "/mycel.admin.v1.AdminSpaceService/ListSpaces"
-	AdminSpaceService_GetSpace_FullMethodName            = "/mycel.admin.v1.AdminSpaceService/GetSpace"
-	AdminSpaceService_CreateSpace_FullMethodName         = "/mycel.admin.v1.AdminSpaceService/CreateSpace"
-	AdminSpaceService_DeleteSpace_FullMethodName         = "/mycel.admin.v1.AdminSpaceService/DeleteSpace"
-	AdminSpaceService_GrantSpacePrincipal_FullMethodName = "/mycel.admin.v1.AdminSpaceService/GrantSpacePrincipal"
+	AdminSpaceService_ListSpaces_FullMethodName  = "/mycel.admin.v1.AdminSpaceService/ListSpaces"
+	AdminSpaceService_GetSpace_FullMethodName    = "/mycel.admin.v1.AdminSpaceService/GetSpace"
+	AdminSpaceService_CreateSpace_FullMethodName = "/mycel.admin.v1.AdminSpaceService/CreateSpace"
+	AdminSpaceService_DeleteSpace_FullMethodName = "/mycel.admin.v1.AdminSpaceService/DeleteSpace"
 )
 
 // AdminSpaceServiceClient is the client API for AdminSpaceService service.
@@ -38,7 +37,6 @@ type AdminSpaceServiceClient interface {
 	GetSpace(ctx context.Context, in *AdminSpaceServiceGetSpaceRequest, opts ...grpc.CallOption) (*AdminSpaceServiceGetSpaceResponse, error)
 	CreateSpace(ctx context.Context, in *CreateSpaceRequest, opts ...grpc.CallOption) (*CreateSpaceResponse, error)
 	DeleteSpace(ctx context.Context, in *DeleteSpaceRequest, opts ...grpc.CallOption) (*DeleteSpaceResponse, error)
-	GrantSpacePrincipal(ctx context.Context, in *GrantSpacePrincipalRequest, opts ...grpc.CallOption) (*GrantSpacePrincipalResponse, error)
 }
 
 type adminSpaceServiceClient struct {
@@ -89,16 +87,6 @@ func (c *adminSpaceServiceClient) DeleteSpace(ctx context.Context, in *DeleteSpa
 	return out, nil
 }
 
-func (c *adminSpaceServiceClient) GrantSpacePrincipal(ctx context.Context, in *GrantSpacePrincipalRequest, opts ...grpc.CallOption) (*GrantSpacePrincipalResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(GrantSpacePrincipalResponse)
-	err := c.cc.Invoke(ctx, AdminSpaceService_GrantSpacePrincipal_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 // AdminSpaceServiceServer is the server API for AdminSpaceService service.
 // All implementations must embed UnimplementedAdminSpaceServiceServer
 // for forward compatibility.
@@ -109,7 +97,6 @@ type AdminSpaceServiceServer interface {
 	GetSpace(context.Context, *AdminSpaceServiceGetSpaceRequest) (*AdminSpaceServiceGetSpaceResponse, error)
 	CreateSpace(context.Context, *CreateSpaceRequest) (*CreateSpaceResponse, error)
 	DeleteSpace(context.Context, *DeleteSpaceRequest) (*DeleteSpaceResponse, error)
-	GrantSpacePrincipal(context.Context, *GrantSpacePrincipalRequest) (*GrantSpacePrincipalResponse, error)
 	mustEmbedUnimplementedAdminSpaceServiceServer()
 }
 
@@ -131,9 +118,6 @@ func (UnimplementedAdminSpaceServiceServer) CreateSpace(context.Context, *Create
 }
 func (UnimplementedAdminSpaceServiceServer) DeleteSpace(context.Context, *DeleteSpaceRequest) (*DeleteSpaceResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteSpace not implemented")
-}
-func (UnimplementedAdminSpaceServiceServer) GrantSpacePrincipal(context.Context, *GrantSpacePrincipalRequest) (*GrantSpacePrincipalResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GrantSpacePrincipal not implemented")
 }
 func (UnimplementedAdminSpaceServiceServer) mustEmbedUnimplementedAdminSpaceServiceServer() {}
 func (UnimplementedAdminSpaceServiceServer) testEmbeddedByValue()                           {}
@@ -228,24 +212,6 @@ func _AdminSpaceService_DeleteSpace_Handler(srv interface{}, ctx context.Context
 	return interceptor(ctx, in, info, handler)
 }
 
-func _AdminSpaceService_GrantSpacePrincipal_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GrantSpacePrincipalRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(AdminSpaceServiceServer).GrantSpacePrincipal(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: AdminSpaceService_GrantSpacePrincipal_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AdminSpaceServiceServer).GrantSpacePrincipal(ctx, req.(*GrantSpacePrincipalRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 // AdminSpaceService_ServiceDesc is the grpc.ServiceDesc for AdminSpaceService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -268,10 +234,6 @@ var AdminSpaceService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DeleteSpace",
 			Handler:    _AdminSpaceService_DeleteSpace_Handler,
-		},
-		{
-			MethodName: "GrantSpacePrincipal",
-			Handler:    _AdminSpaceService_GrantSpacePrincipal_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

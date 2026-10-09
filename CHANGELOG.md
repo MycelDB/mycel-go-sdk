@@ -6,6 +6,16 @@ This project follows the spirit of [Keep a Changelog](https://keepachangelog.com
 
 ## [Unreleased]
 
+## [v0.19.0] - 2026-10-09
+
+### Removed
+
+- Removed legacy space ACL grant helpers (`GrantSpaceUser`, `GrantSpacePrincipal`, and `SpaceGrantInfo`) and regenerated bindings after the admin space grant RPC was removed from `mycel-api`.
+
+### Compatibility
+
+- Best used with Mycel daemon/API v0.19.0 for matching identity scoped space access semantics. Callers should use identity role/capability grant helpers instead of legacy space ACL helpers.
+
 ## [v0.18.0] - 2026-10-07
 
 ### Added

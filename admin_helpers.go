@@ -43,14 +43,6 @@ type SpaceInfo struct {
 	Name    string
 }
 
-type SpaceGrantInfo struct {
-	GrantID     string
-	SpaceID     string
-	UserID      string
-	PrincipalID string
-	Role        string
-}
-
 type DomainInfo struct {
 	SpaceID  string
 	DomainID string
@@ -272,25 +264,6 @@ func (c *AdminClient) SetPrincipalCapabilitiesForScope(ctx context.Context, prin
 	return out, nil
 }
 
-func (c *AdminClient) GrantSpaceUser(ctx context.Context, spaceID, userID, role string) (*SpaceGrantInfo, error) {
-	return c.GrantSpacePrincipal(ctx, spaceID, userID, role)
-}
-
-func (c *AdminClient) GrantSpacePrincipal(ctx context.Context, spaceID, principalID, role string) (*SpaceGrantInfo, error) {
-	spaceID = strings.TrimSpace(spaceID)
-	principalID = strings.TrimSpace(principalID)
-	if spaceID == "" || principalID == "" {
-		return nil, fmt.Errorf("space id and principal id are required")
-	}
-	callCtx, cancel := c.AuthCallContext(ctx)
-	defer cancel()
-	res, err := c.Spaces.GrantSpacePrincipal(callCtx, &adminv1.GrantSpacePrincipalRequest{SpaceId: spaceID, PrincipalId: principalID, Role: sdkSpaceRole(role)})
-	if err != nil {
-		return nil, err
-	}
-	return spaceGrantInfo(res.GetGrant()), nil
-}
-
 func (c *AdminClient) GetDomain(ctx context.Context, spaceID, domainRef string) (*DomainInfo, error) {
 	callCtx, cancel := c.AuthCallContext(ctx)
 	defer cancel()
@@ -336,19 +309,6 @@ func sdkCapability(raw string) (commonv1.Capability, error) {
 	return commonv1.Capability_CAPABILITY_UNSPECIFIED, fmt.Errorf("unknown capability %q", raw)
 }
 
-func sdkSpaceRole(role string) commonv1.SpaceRole {
-	switch strings.ToLower(strings.TrimSpace(role)) {
-	case "admin":
-		return commonv1.SpaceRole_SPACE_ROLE_ADMIN
-	case "writer", "write":
-		return commonv1.SpaceRole_SPACE_ROLE_WRITER
-	case "reader", "read":
-		return commonv1.SpaceRole_SPACE_ROLE_READER
-	default:
-		return commonv1.SpaceRole_SPACE_ROLE_UNSPECIFIED
-	}
-}
-
 func principalRoleGrantInfo(grant *adminv1.PrincipalRoleGrant) PrincipalRoleGrantInfo {
 	if grant == nil {
 		return PrincipalRoleGrantInfo{}
@@ -371,29 +331,6 @@ func optionalStringField(value string) *string {
 		return nil
 	}
 	return &value
-}
-
-func spaceGrantInfo(grant *commonv1.AccessGrant) *SpaceGrantInfo {
-	if grant == nil {
-		return &SpaceGrantInfo{}
-	}
-	role := ""
-	if len(grant.GetRoles()) > 0 {
-		switch grant.GetRoles()[0] {
-		case commonv1.SpaceRole_SPACE_ROLE_ADMIN:
-			role = "admin"
-		case commonv1.SpaceRole_SPACE_ROLE_WRITER:
-			role = "writer"
-		case commonv1.SpaceRole_SPACE_ROLE_READER:
-			role = "reader"
-		}
-	}
-	spaceID := ""
-	if grant.GetScope() != nil {
-		spaceID = grant.GetScope().GetSpaceId()
-	}
-	principalID := grant.GetPrincipal().GetId()
-	return &SpaceGrantInfo{GrantID: grant.GetAccessGrantId(), SpaceID: spaceID, UserID: principalID, PrincipalID: principalID, Role: role}
 }
 
 func userInfo(p *adminv1.Principal) *UserInfo {
