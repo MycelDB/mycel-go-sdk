@@ -6,6 +6,10 @@ This project follows the spirit of [Keep a Changelog](https://keepachangelog.com
 
 ## [Unreleased]
 
+### Removed
+
+- Removed legacy space ACL grant helpers (`GrantSpaceUser`, `GrantSpacePrincipal`, and `SpaceGrantInfo`) and regenerated bindings after the admin space grant RPC was removed from `mycel-api`.
+
 ## [v0.18.0] - 2026-10-07
 
 ### Added
