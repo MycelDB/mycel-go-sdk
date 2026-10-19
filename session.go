@@ -3,8 +3,13 @@ package mycel
 import (
 	"context"
 	"fmt"
+	"strings"
+	"time"
+	"unicode/utf8"
 
 	clientv1 "github.com/myceldb/mycel-go-sdk/gen/go/mycel/client/v1"
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/status"
 )
 
 func (c *Client) ResolveDomainID(ctx context.Context, spaceID, domainKey string) (string, error) {
@@ -80,21 +85,167 @@ func (c *Client) BeginReadOnlyTransactionWithOperationID(ctx context.Context, se
 	return c.BeginTransactionWithOperationID(ctx, sessionID, clientv1.TransactionMode_TRANSACTION_MODE_READ_ONLY, operationID)
 }
 
+// IdempotentTransaction carries the durable commit scope chosen before a
+// read-write transaction begins. The key is bound only when Commit succeeds.
+type IdempotentTransaction struct {
+	Transaction   *clientv1.GraphTransaction
+	CommitOptions CommitTransactionOptions
+}
+
+// BeginIdempotentReadWriteTransaction begins a read-write transaction and
+// retains the commit scope that must be reused after an ambiguous outcome.
+func (c *Client) BeginIdempotentReadWriteTransaction(ctx context.Context, sessionID, spaceID, domainID, key string) (*IdempotentTransaction, error) {
+	return c.BeginIdempotentReadWriteTransactionWithOperationID(ctx, sessionID, spaceID, domainID, key, "")
+}
+
+func (c *Client) BeginIdempotentReadWriteTransactionWithOperationID(ctx context.Context, sessionID, spaceID, domainID, key, operationID string) (*IdempotentTransaction, error) {
+	options := CommitTransactionOptions{IdempotencyKey: key, SpaceID: spaceID, DomainID: domainID}
+	if err := validateCommitTransactionOptions(options); err != nil {
+		return nil, err
+	}
+	tx, err := c.BeginReadWriteTransactionWithOperationID(ctx, sessionID, operationID)
+	if err != nil {
+		return nil, err
+	}
+	return &IdempotentTransaction{Transaction: tx, CommitOptions: options}, nil
+}
+
+// CommitIdempotentTransaction commits a transaction returned by
+// BeginIdempotentReadWriteTransaction.
+func (c *Client) CommitIdempotentTransaction(ctx context.Context, tx *IdempotentTransaction) (*clientv1.CommitTransactionResponse, error) {
+	if tx == nil || tx.Transaction == nil || tx.Transaction.GetTransactionId() == "" {
+		return nil, fmt.Errorf("idempotent transaction is required")
+	}
+	return c.CommitTransactionWithOptions(ctx, tx.Transaction.GetTransactionId(), tx.CommitOptions)
+}
+
+// CommitIdempotentTransactionWithRetry retries only failures selected by the
+// policy while preserving the exact transaction ID, key, space, and domain.
+func (c *Client) CommitIdempotentTransactionWithRetry(ctx context.Context, tx *IdempotentTransaction, policy IdempotentCommitRetryPolicy) (*clientv1.CommitTransactionResponse, error) {
+	if tx == nil || tx.Transaction == nil || tx.Transaction.GetTransactionId() == "" {
+		return nil, fmt.Errorf("idempotent transaction is required")
+	}
+	if policy.MaxAttempts <= 0 {
+		policy.MaxAttempts = 1
+	}
+	retryable := policy.Retryable
+	if retryable == nil {
+		retryable = IsAmbiguousCommitError
+	}
+	for attempt := 1; ; attempt++ {
+		res, err := c.CommitTransactionWithOptions(ctx, tx.Transaction.GetTransactionId(), tx.CommitOptions)
+		if err == nil {
+			return res, nil
+		}
+		if ctxErr := ctx.Err(); ctxErr != nil {
+			return nil, ctxErr
+		}
+		if attempt >= policy.MaxAttempts || !retryable(err) {
+			return nil, err
+		}
+		if policy.Backoff == nil {
+			continue
+		}
+		delay := policy.Backoff(attempt)
+		if delay <= 0 {
+			continue
+		}
+		timer := time.NewTimer(delay)
+		select {
+		case <-ctx.Done():
+			if !timer.Stop() {
+				<-timer.C
+			}
+			return nil, ctx.Err()
+		case <-timer.C:
+		}
+	}
+}
+
 func (c *Client) CommitTransaction(ctx context.Context, txID string) error {
 	_, err := c.CommitTransactionResult(ctx, txID)
 	return err
 }
 
+// CommitTransactionOptions controls durable transaction-level idempotency.
+// IdempotencyKey is scoped to the authenticated principal, SpaceID, and
+// DomainID. Keep the same key and scope when retrying an ambiguous commit.
+type CommitTransactionOptions struct {
+	IdempotencyKey string
+	SpaceID        string
+	DomainID       string
+}
+
+// IdempotentCommitRetryPolicy controls retries of ambiguous commit RPC
+// failures. MaxAttempts includes the first call. Retryable and Backoff are
+// caller-controlled; nil uses IsAmbiguousCommitError and no delay.
+type IdempotentCommitRetryPolicy struct {
+	MaxAttempts int
+	Retryable   func(error) bool
+	Backoff     func(failedAttempt int) time.Duration
+}
+
+// IsAmbiguousCommitError reports transport/server failures for which the
+// daemon may have committed without the client receiving the result. Explicit
+// idempotency conflicts, capacity errors, and validation errors are excluded.
+func IsAmbiguousCommitError(err error) bool {
+	switch status.Code(err) {
+	case codes.Unavailable, codes.DeadlineExceeded, codes.Unknown, codes.Internal:
+		return true
+	default:
+		return false
+	}
+}
+
 // CommitTransactionResult commits a read-write transaction and returns commit
 // metadata, including the operation ID associated with the transaction.
 func (c *Client) CommitTransactionResult(ctx context.Context, txID string) (*clientv1.TransactionCommit, error) {
-	callCtx, cancel := c.AuthCallContext(ctx)
-	defer cancel()
-	res, err := c.Transaction.CommitTransaction(callCtx, &clientv1.CommitTransactionRequest{TransactionId: txID})
+	res, err := c.CommitTransactionWithOptions(ctx, txID, CommitTransactionOptions{})
 	if err != nil {
 		return nil, err
 	}
 	return res.GetCommit(), nil
+}
+
+// CommitTransactionIdempotent durably binds the transaction's canonical graph
+// mutation to key within the authenticated principal, space, and domain scope.
+// A retry with the same mutation returns the original commit metadata and sets
+// idempotent_replay; reuse with a different mutation fails.
+func (c *Client) CommitTransactionIdempotent(ctx context.Context, txID, spaceID, domainID, key string) (*clientv1.CommitTransactionResponse, error) {
+	return c.CommitTransactionWithOptions(ctx, txID, CommitTransactionOptions{IdempotencyKey: key, SpaceID: spaceID, DomainID: domainID})
+}
+
+// CommitTransactionWithOptions commits a transaction using the supplied
+// idempotency options. It does not invent or rotate keys, so callers can safely
+// retry an ambiguous call with the exact same options.
+func (c *Client) CommitTransactionWithOptions(ctx context.Context, txID string, options CommitTransactionOptions) (*clientv1.CommitTransactionResponse, error) {
+	if err := validateCommitTransactionOptions(options); err != nil {
+		return nil, err
+	}
+	callCtx, cancel := c.AuthCallContext(ctx)
+	defer cancel()
+	return c.Transaction.CommitTransaction(callCtx, &clientv1.CommitTransactionRequest{
+		TransactionId:  txID,
+		IdempotencyKey: options.IdempotencyKey,
+		SpaceId:        options.SpaceID,
+		DomainId:       options.DomainID,
+	})
+}
+
+func validateCommitTransactionOptions(options CommitTransactionOptions) error {
+	if options.IdempotencyKey == "" {
+		if options.SpaceID != "" || options.DomainID != "" {
+			return fmt.Errorf("space ID and domain ID require an idempotency key")
+		}
+		return nil
+	}
+	if options.IdempotencyKey != strings.TrimSpace(options.IdempotencyKey) || !utf8.ValidString(options.IdempotencyKey) || len(options.IdempotencyKey) > 128 {
+		return fmt.Errorf("idempotency key must be valid UTF-8 without surrounding whitespace and at most 128 bytes")
+	}
+	if strings.TrimSpace(options.SpaceID) == "" || strings.TrimSpace(options.DomainID) == "" {
+		return fmt.Errorf("space ID and domain ID are required with an idempotency key")
+	}
+	return nil
 }
 
 func (c *Client) CloseTransaction(ctx context.Context, txID string) error {

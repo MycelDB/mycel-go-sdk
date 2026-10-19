@@ -6,6 +6,18 @@ This project follows the spirit of [Keep a Changelog](https://keepachangelog.com
 
 ## [Unreleased]
 
+## [v0.20.0] - 2026-10-19
+
+### Added
+
+- Added durable graph transaction commit idempotency helpers with explicit principal/space/domain-scoped keys, preserved request identity, and access to original commit/replay metadata.
+- Added caller-bounded retry helpers that retry only ambiguous commit outcomes by default and preserve cancellation, transaction ID, scope, and key.
+- Regenerated committed Go protobuf/gRPC bindings from `mycel-api v0.20.0`, including commit idempotency fields and cluster runtime diagnostics.
+
+### Compatibility
+
+- Best used with Mycel daemon/API v0.20.0. Existing non-idempotent transaction commit helpers remain supported, and retries remain opt-in.
+
 ## [v0.19.0] - 2026-10-09
 
 ### Removed
