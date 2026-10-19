@@ -8,6 +8,8 @@ import (
 
 	clientv1 "github.com/myceldb/mycel-go-sdk/gen/go/mycel/client/v1"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/status"
 )
 
 func TestNewOperationIDReturnsUUIDV4(t *testing.T) {
@@ -83,6 +85,39 @@ func TestBeginAndCommitIdempotentTransactionPreserveOptions(t *testing.T) {
 	}
 }
 
+func TestCommitIdempotentTransactionWithRetryPreservesRequest(t *testing.T) {
+	transactions := &fakeTransactionServiceClient{
+		commitErrors:   []error{status.Error(codes.Unavailable, "lost response"), nil},
+		commitResponse: &clientv1.CommitTransactionResponse{Commit: &clientv1.TransactionCommit{CommitId: "commit-1"}, IdempotentReplay: true},
+	}
+	c := &Client{Transaction: transactions}
+	tx := &IdempotentTransaction{Transaction: &clientv1.GraphTransaction{TransactionId: "tx-1"}, CommitOptions: CommitTransactionOptions{IdempotencyKey: "capture-1", SpaceID: "space-1", DomainID: "domain-1"}}
+	res, err := c.CommitIdempotentTransactionWithRetry(context.Background(), tx, IdempotentCommitRetryPolicy{MaxAttempts: 3})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if transactions.commitCalls != 2 || !res.GetIdempotentReplay() {
+		t.Fatalf("commit calls = %d, response = %#v", transactions.commitCalls, res)
+	}
+	for _, request := range transactions.commitRequests {
+		if request.GetTransactionId() != "tx-1" || request.GetIdempotencyKey() != "capture-1" || request.GetSpaceId() != "space-1" || request.GetDomainId() != "domain-1" {
+			t.Fatalf("retry changed request: %#v", request)
+		}
+	}
+}
+
+func TestCommitIdempotentTransactionWithRetryDoesNotRetryConflict(t *testing.T) {
+	transactions := &fakeTransactionServiceClient{commitErrors: []error{status.Error(codes.AlreadyExists, "key mismatch")}}
+	c := &Client{Transaction: transactions}
+	tx := &IdempotentTransaction{Transaction: &clientv1.GraphTransaction{TransactionId: "tx-1"}, CommitOptions: CommitTransactionOptions{IdempotencyKey: "capture-1", SpaceID: "space-1", DomainID: "domain-1"}}
+	if _, err := c.CommitIdempotentTransactionWithRetry(context.Background(), tx, IdempotentCommitRetryPolicy{MaxAttempts: 3}); status.Code(err) != codes.AlreadyExists {
+		t.Fatalf("commit error = %v", err)
+	}
+	if transactions.commitCalls != 1 {
+		t.Fatalf("commit calls = %d, want 1", transactions.commitCalls)
+	}
+}
+
 func TestCommitTransactionIdempotentSendsStableScopeAndReturnsReplay(t *testing.T) {
 	transactions := &fakeTransactionServiceClient{commitResponse: &clientv1.CommitTransactionResponse{
 		Commit:           &clientv1.TransactionCommit{CommitId: "commit-1", IdempotencyKey: "capture-1"},
@@ -126,8 +161,11 @@ type fakeTransactionServiceClient struct {
 	beginResponse  *clientv1.BeginTransactionResponse
 	beginErr       error
 	commitRequest  *clientv1.CommitTransactionRequest
+	commitRequests []*clientv1.CommitTransactionRequest
 	commitResponse *clientv1.CommitTransactionResponse
 	commitErr      error
+	commitErrors   []error
+	commitCalls    int
 }
 
 func (f *fakeTransactionServiceClient) BeginTransaction(ctx context.Context, in *clientv1.BeginTransactionRequest, opts ...grpc.CallOption) (*clientv1.BeginTransactionResponse, error) {
@@ -144,6 +182,11 @@ func (f *fakeTransactionServiceClient) GetTransaction(ctx context.Context, in *c
 
 func (f *fakeTransactionServiceClient) CommitTransaction(ctx context.Context, in *clientv1.CommitTransactionRequest, opts ...grpc.CallOption) (*clientv1.CommitTransactionResponse, error) {
 	f.commitRequest = in
+	f.commitRequests = append(f.commitRequests, in)
+	f.commitCalls++
+	if len(f.commitErrors) >= f.commitCalls && f.commitErrors[f.commitCalls-1] != nil {
+		return nil, f.commitErrors[f.commitCalls-1]
+	}
 	if f.commitErr != nil {
 		return nil, f.commitErr
 	}

@@ -134,11 +134,15 @@ if err != nil {
     panic(err)
 }
 // Stage graph writes against tx.Transaction.GetTransactionId().
-result, err := client.CommitIdempotentTransaction(ctx, tx)
+result, err := client.CommitIdempotentTransactionWithRetry(
+    ctx,
+    tx,
+    mycel.IdempotentCommitRetryPolicy{MaxAttempts: 3},
+)
 if err != nil {
-    // A transport failure may have happened after the commit became durable.
-    // Recreate/stage the same mutation if necessary, then retry with exactly
-    // the same scope and key (CommitTransactionIdempotent is also available).
+    // The helper retries only ambiguous transport/server outcomes and keeps
+    // the exact transaction ID, scope, and key. Explicit conflicts, capacity
+    // failures, and validation errors return immediately.
     panic(err)
 }
 if result.GetIdempotentReplay() {

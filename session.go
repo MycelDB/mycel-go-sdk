@@ -4,9 +4,12 @@ import (
 	"context"
 	"fmt"
 	"strings"
+	"time"
 	"unicode/utf8"
 
 	clientv1 "github.com/myceldb/mycel-go-sdk/gen/go/mycel/client/v1"
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/status"
 )
 
 func (c *Client) ResolveDomainID(ctx context.Context, spaceID, domainKey string) (string, error) {
@@ -116,6 +119,49 @@ func (c *Client) CommitIdempotentTransaction(ctx context.Context, tx *Idempotent
 	return c.CommitTransactionWithOptions(ctx, tx.Transaction.GetTransactionId(), tx.CommitOptions)
 }
 
+// CommitIdempotentTransactionWithRetry retries only failures selected by the
+// policy while preserving the exact transaction ID, key, space, and domain.
+func (c *Client) CommitIdempotentTransactionWithRetry(ctx context.Context, tx *IdempotentTransaction, policy IdempotentCommitRetryPolicy) (*clientv1.CommitTransactionResponse, error) {
+	if tx == nil || tx.Transaction == nil || tx.Transaction.GetTransactionId() == "" {
+		return nil, fmt.Errorf("idempotent transaction is required")
+	}
+	if policy.MaxAttempts <= 0 {
+		policy.MaxAttempts = 1
+	}
+	retryable := policy.Retryable
+	if retryable == nil {
+		retryable = IsAmbiguousCommitError
+	}
+	for attempt := 1; ; attempt++ {
+		res, err := c.CommitTransactionWithOptions(ctx, tx.Transaction.GetTransactionId(), tx.CommitOptions)
+		if err == nil {
+			return res, nil
+		}
+		if ctxErr := ctx.Err(); ctxErr != nil {
+			return nil, ctxErr
+		}
+		if attempt >= policy.MaxAttempts || !retryable(err) {
+			return nil, err
+		}
+		if policy.Backoff == nil {
+			continue
+		}
+		delay := policy.Backoff(attempt)
+		if delay <= 0 {
+			continue
+		}
+		timer := time.NewTimer(delay)
+		select {
+		case <-ctx.Done():
+			if !timer.Stop() {
+				<-timer.C
+			}
+			return nil, ctx.Err()
+		case <-timer.C:
+		}
+	}
+}
+
 func (c *Client) CommitTransaction(ctx context.Context, txID string) error {
 	_, err := c.CommitTransactionResult(ctx, txID)
 	return err
@@ -128,6 +174,27 @@ type CommitTransactionOptions struct {
 	IdempotencyKey string
 	SpaceID        string
 	DomainID       string
+}
+
+// IdempotentCommitRetryPolicy controls retries of ambiguous commit RPC
+// failures. MaxAttempts includes the first call. Retryable and Backoff are
+// caller-controlled; nil uses IsAmbiguousCommitError and no delay.
+type IdempotentCommitRetryPolicy struct {
+	MaxAttempts int
+	Retryable   func(error) bool
+	Backoff     func(failedAttempt int) time.Duration
+}
+
+// IsAmbiguousCommitError reports transport/server failures for which the
+// daemon may have committed without the client receiving the result. Explicit
+// idempotency conflicts, capacity errors, and validation errors are excluded.
+func IsAmbiguousCommitError(err error) bool {
+	switch status.Code(err) {
+	case codes.Unavailable, codes.DeadlineExceeded, codes.Unknown, codes.Internal:
+		return true
+	default:
+		return false
+	}
 }
 
 // CommitTransactionResult commits a read-write transaction and returns commit
