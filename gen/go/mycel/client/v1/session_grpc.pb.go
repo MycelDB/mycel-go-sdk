@@ -279,7 +279,8 @@ type TransactionServiceClient interface {
 	// GetTransaction returns transaction state and revision metadata.
 	GetTransaction(ctx context.Context, in *GetTransactionRequest, opts ...grpc.CallOption) (*GetTransactionResponse, error)
 	// CommitTransaction commits a read-write transaction and advances the domain
-	// revision.
+	// revision. An idempotency key may bind the commit to a durable result so an
+	// ambiguous commit response can be retried safely.
 	CommitTransaction(ctx context.Context, in *CommitTransactionRequest, opts ...grpc.CallOption) (*CommitTransactionResponse, error)
 	// RollbackTransaction discards pending mutations in a read-write transaction.
 	RollbackTransaction(ctx context.Context, in *RollbackTransactionRequest, opts ...grpc.CallOption) (*RollbackTransactionResponse, error)
@@ -359,7 +360,8 @@ type TransactionServiceServer interface {
 	// GetTransaction returns transaction state and revision metadata.
 	GetTransaction(context.Context, *GetTransactionRequest) (*GetTransactionResponse, error)
 	// CommitTransaction commits a read-write transaction and advances the domain
-	// revision.
+	// revision. An idempotency key may bind the commit to a durable result so an
+	// ambiguous commit response can be retried safely.
 	CommitTransaction(context.Context, *CommitTransactionRequest) (*CommitTransactionResponse, error)
 	// RollbackTransaction discards pending mutations in a read-write transaction.
 	RollbackTransaction(context.Context, *RollbackTransactionRequest) (*RollbackTransactionResponse, error)

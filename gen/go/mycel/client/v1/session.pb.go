@@ -766,6 +766,25 @@ func (x *GetTransactionResponse) GetTransaction() *GraphTransaction {
 type CommitTransactionRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	TransactionId string                 `protobuf:"bytes,1,opt,name=transaction_id,json=transactionId,proto3" json:"transaction_id,omitempty"`
+	// Optional opaque key for durable commit idempotency. Keys are scoped by the
+	// authenticated principal, space_id, and domain_id. A key is limited to 128
+	// UTF-8 bytes, must not have leading or trailing whitespace, and must not
+	// contain secrets.
+	//
+	// The first successful commit binds the key to the canonical graph mutation
+	// and original TransactionCommit. A retry with the same key and mutation
+	// returns that commit without advancing the graph revision or emitting
+	// duplicate change events. Reusing the key for a different mutation fails
+	// with ALREADY_EXISTS while the binding is retained.
+	//
+	// space_id and domain_id are required when this field is set. Callers should
+	// persist all four fields until the commit outcome is reconciled so the
+	// request remains retryable after daemon restart or leader change.
+	IdempotencyKey string `protobuf:"bytes,2,opt,name=idempotency_key,json=idempotencyKey,proto3" json:"idempotency_key,omitempty"`
+	// Scope used to recover a durable idempotent result when daemon-local
+	// transaction lifecycle state is no longer available.
+	SpaceId       string `protobuf:"bytes,3,opt,name=space_id,json=spaceId,proto3" json:"space_id,omitempty"`
+	DomainId      string `protobuf:"bytes,4,opt,name=domain_id,json=domainId,proto3" json:"domain_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -807,11 +826,36 @@ func (x *CommitTransactionRequest) GetTransactionId() string {
 	return ""
 }
 
+func (x *CommitTransactionRequest) GetIdempotencyKey() string {
+	if x != nil {
+		return x.IdempotencyKey
+	}
+	return ""
+}
+
+func (x *CommitTransactionRequest) GetSpaceId() string {
+	if x != nil {
+		return x.SpaceId
+	}
+	return ""
+}
+
+func (x *CommitTransactionRequest) GetDomainId() string {
+	if x != nil {
+		return x.DomainId
+	}
+	return ""
+}
+
 type CommitTransactionResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Commit        *TransactionCommit     `protobuf:"bytes,1,opt,name=commit,proto3" json:"commit,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state  protoimpl.MessageState `protogen:"open.v1"`
+	Commit *TransactionCommit     `protobuf:"bytes,1,opt,name=commit,proto3" json:"commit,omitempty"`
+	// True when commit is the result of an earlier successful request with the
+	// same idempotency binding. False for the first successful commit and for
+	// commits that do not use idempotency_key.
+	IdempotentReplay bool `protobuf:"varint,2,opt,name=idempotent_replay,json=idempotentReplay,proto3" json:"idempotent_replay,omitempty"`
+	unknownFields    protoimpl.UnknownFields
+	sizeCache        protoimpl.SizeCache
 }
 
 func (x *CommitTransactionResponse) Reset() {
@@ -849,6 +893,13 @@ func (x *CommitTransactionResponse) GetCommit() *TransactionCommit {
 		return x.Commit
 	}
 	return nil
+}
+
+func (x *CommitTransactionResponse) GetIdempotentReplay() bool {
+	if x != nil {
+		return x.IdempotentReplay
+	}
+	return false
 }
 
 type RollbackTransactionRequest struct {
@@ -1267,9 +1318,15 @@ type TransactionCommit struct {
 	OperationCount    int32                  `protobuf:"varint,8,opt,name=operation_count,json=operationCount,proto3" json:"operation_count,omitempty"`
 	CommitTime        *timestamppb.Timestamp `protobuf:"bytes,9,opt,name=commit_time,json=commitTime,proto3" json:"commit_time,omitempty"`
 	// Client write correlation UUID associated with this commit.
-	OperationId   string `protobuf:"bytes,10,opt,name=operation_id,json=operationId,proto3" json:"operation_id,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	OperationId string `protobuf:"bytes,10,opt,name=operation_id,json=operationId,proto3" json:"operation_id,omitempty"`
+	// Durable idempotency key associated with this commit, if one was supplied.
+	IdempotencyKey string `protobuf:"bytes,11,opt,name=idempotency_key,json=idempotencyKey,proto3" json:"idempotency_key,omitempty"`
+	// Time until which the daemon guarantees retention of this idempotency
+	// binding. Absent when idempotency_key is empty. After this time, reusing the
+	// key may create a new commit.
+	IdempotencyExpireTime *timestamppb.Timestamp `protobuf:"bytes,12,opt,name=idempotency_expire_time,json=idempotencyExpireTime,proto3" json:"idempotency_expire_time,omitempty"`
+	unknownFields         protoimpl.UnknownFields
+	sizeCache             protoimpl.SizeCache
 }
 
 func (x *TransactionCommit) Reset() {
@@ -1372,6 +1429,20 @@ func (x *TransactionCommit) GetOperationId() string {
 	return ""
 }
 
+func (x *TransactionCommit) GetIdempotencyKey() string {
+	if x != nil {
+		return x.IdempotencyKey
+	}
+	return ""
+}
+
+func (x *TransactionCommit) GetIdempotencyExpireTime() *timestamppb.Timestamp {
+	if x != nil {
+		return x.IdempotencyExpireTime
+	}
+	return nil
+}
+
 var File_mycel_client_v1_session_proto protoreflect.FileDescriptor
 
 const file_mycel_client_v1_session_proto_rawDesc = "" +
@@ -1409,11 +1480,15 @@ const file_mycel_client_v1_session_proto_rawDesc = "" +
 	"\x15GetTransactionRequest\x12%\n" +
 	"\x0etransaction_id\x18\x01 \x01(\tR\rtransactionId\"]\n" +
 	"\x16GetTransactionResponse\x12C\n" +
-	"\vtransaction\x18\x01 \x01(\v2!.mycel.client.v1.GraphTransactionR\vtransaction\"A\n" +
+	"\vtransaction\x18\x01 \x01(\v2!.mycel.client.v1.GraphTransactionR\vtransaction\"\xa2\x01\n" +
 	"\x18CommitTransactionRequest\x12%\n" +
-	"\x0etransaction_id\x18\x01 \x01(\tR\rtransactionId\"W\n" +
+	"\x0etransaction_id\x18\x01 \x01(\tR\rtransactionId\x12'\n" +
+	"\x0fidempotency_key\x18\x02 \x01(\tR\x0eidempotencyKey\x12\x19\n" +
+	"\bspace_id\x18\x03 \x01(\tR\aspaceId\x12\x1b\n" +
+	"\tdomain_id\x18\x04 \x01(\tR\bdomainId\"\x84\x01\n" +
 	"\x19CommitTransactionResponse\x12:\n" +
-	"\x06commit\x18\x01 \x01(\v2\".mycel.client.v1.TransactionCommitR\x06commit\"C\n" +
+	"\x06commit\x18\x01 \x01(\v2\".mycel.client.v1.TransactionCommitR\x06commit\x12+\n" +
+	"\x11idempotent_replay\x18\x02 \x01(\bR\x10idempotentReplay\"C\n" +
 	"\x1aRollbackTransactionRequest\x12%\n" +
 	"\x0etransaction_id\x18\x01 \x01(\tR\rtransactionId\"b\n" +
 	"\x1bRollbackTransactionResponse\x12C\n" +
@@ -1448,7 +1523,7 @@ const file_mycel_client_v1_session_proto_rawDesc = "" +
 	"\vexpire_time\x18\n" +
 	" \x01(\v2\x1a.google.protobuf.TimestampR\n" +
 	"expireTime\x12!\n" +
-	"\foperation_id\x18\v \x01(\tR\voperationId\"\x8b\x03\n" +
+	"\foperation_id\x18\v \x01(\tR\voperationId\"\x88\x04\n" +
 	"\x11TransactionCommit\x12\x1b\n" +
 	"\tcommit_id\x18\x01 \x01(\tR\bcommitId\x12%\n" +
 	"\x0etransaction_id\x18\x02 \x01(\tR\rtransactionId\x12\x1d\n" +
@@ -1462,7 +1537,9 @@ const file_mycel_client_v1_session_proto_rawDesc = "" +
 	"\vcommit_time\x18\t \x01(\v2\x1a.google.protobuf.TimestampR\n" +
 	"commitTime\x12!\n" +
 	"\foperation_id\x18\n" +
-	" \x01(\tR\voperationId*|\n" +
+	" \x01(\tR\voperationId\x12'\n" +
+	"\x0fidempotency_key\x18\v \x01(\tR\x0eidempotencyKey\x12R\n" +
+	"\x17idempotency_expire_time\x18\f \x01(\v2\x1a.google.protobuf.TimestampR\x15idempotencyExpireTime*|\n" +
 	"\fSessionState\x12\x1d\n" +
 	"\x19SESSION_STATE_UNSPECIFIED\x10\x00\x12\x18\n" +
 	"\x14SESSION_STATE_ACTIVE\x10\x01\x12\x18\n" +
@@ -1559,29 +1636,30 @@ var file_mycel_client_v1_session_proto_depIdxs = []int32{
 	25, // 19: mycel.client.v1.GraphTransaction.last_seen_time:type_name -> google.protobuf.Timestamp
 	25, // 20: mycel.client.v1.GraphTransaction.expire_time:type_name -> google.protobuf.Timestamp
 	25, // 21: mycel.client.v1.TransactionCommit.commit_time:type_name -> google.protobuf.Timestamp
-	3,  // 22: mycel.client.v1.SessionService.OpenSession:input_type -> mycel.client.v1.OpenSessionRequest
-	5,  // 23: mycel.client.v1.SessionService.GetSession:input_type -> mycel.client.v1.GetSessionRequest
-	7,  // 24: mycel.client.v1.SessionService.HeartbeatSession:input_type -> mycel.client.v1.HeartbeatSessionRequest
-	9,  // 25: mycel.client.v1.SessionService.CloseSession:input_type -> mycel.client.v1.CloseSessionRequest
-	11, // 26: mycel.client.v1.TransactionService.BeginTransaction:input_type -> mycel.client.v1.BeginTransactionRequest
-	13, // 27: mycel.client.v1.TransactionService.GetTransaction:input_type -> mycel.client.v1.GetTransactionRequest
-	15, // 28: mycel.client.v1.TransactionService.CommitTransaction:input_type -> mycel.client.v1.CommitTransactionRequest
-	17, // 29: mycel.client.v1.TransactionService.RollbackTransaction:input_type -> mycel.client.v1.RollbackTransactionRequest
-	19, // 30: mycel.client.v1.TransactionService.CloseTransaction:input_type -> mycel.client.v1.CloseTransactionRequest
-	4,  // 31: mycel.client.v1.SessionService.OpenSession:output_type -> mycel.client.v1.OpenSessionResponse
-	6,  // 32: mycel.client.v1.SessionService.GetSession:output_type -> mycel.client.v1.GetSessionResponse
-	8,  // 33: mycel.client.v1.SessionService.HeartbeatSession:output_type -> mycel.client.v1.HeartbeatSessionResponse
-	10, // 34: mycel.client.v1.SessionService.CloseSession:output_type -> mycel.client.v1.CloseSessionResponse
-	12, // 35: mycel.client.v1.TransactionService.BeginTransaction:output_type -> mycel.client.v1.BeginTransactionResponse
-	14, // 36: mycel.client.v1.TransactionService.GetTransaction:output_type -> mycel.client.v1.GetTransactionResponse
-	16, // 37: mycel.client.v1.TransactionService.CommitTransaction:output_type -> mycel.client.v1.CommitTransactionResponse
-	18, // 38: mycel.client.v1.TransactionService.RollbackTransaction:output_type -> mycel.client.v1.RollbackTransactionResponse
-	20, // 39: mycel.client.v1.TransactionService.CloseTransaction:output_type -> mycel.client.v1.CloseTransactionResponse
-	31, // [31:40] is the sub-list for method output_type
-	22, // [22:31] is the sub-list for method input_type
-	22, // [22:22] is the sub-list for extension type_name
-	22, // [22:22] is the sub-list for extension extendee
-	0,  // [0:22] is the sub-list for field type_name
+	25, // 22: mycel.client.v1.TransactionCommit.idempotency_expire_time:type_name -> google.protobuf.Timestamp
+	3,  // 23: mycel.client.v1.SessionService.OpenSession:input_type -> mycel.client.v1.OpenSessionRequest
+	5,  // 24: mycel.client.v1.SessionService.GetSession:input_type -> mycel.client.v1.GetSessionRequest
+	7,  // 25: mycel.client.v1.SessionService.HeartbeatSession:input_type -> mycel.client.v1.HeartbeatSessionRequest
+	9,  // 26: mycel.client.v1.SessionService.CloseSession:input_type -> mycel.client.v1.CloseSessionRequest
+	11, // 27: mycel.client.v1.TransactionService.BeginTransaction:input_type -> mycel.client.v1.BeginTransactionRequest
+	13, // 28: mycel.client.v1.TransactionService.GetTransaction:input_type -> mycel.client.v1.GetTransactionRequest
+	15, // 29: mycel.client.v1.TransactionService.CommitTransaction:input_type -> mycel.client.v1.CommitTransactionRequest
+	17, // 30: mycel.client.v1.TransactionService.RollbackTransaction:input_type -> mycel.client.v1.RollbackTransactionRequest
+	19, // 31: mycel.client.v1.TransactionService.CloseTransaction:input_type -> mycel.client.v1.CloseTransactionRequest
+	4,  // 32: mycel.client.v1.SessionService.OpenSession:output_type -> mycel.client.v1.OpenSessionResponse
+	6,  // 33: mycel.client.v1.SessionService.GetSession:output_type -> mycel.client.v1.GetSessionResponse
+	8,  // 34: mycel.client.v1.SessionService.HeartbeatSession:output_type -> mycel.client.v1.HeartbeatSessionResponse
+	10, // 35: mycel.client.v1.SessionService.CloseSession:output_type -> mycel.client.v1.CloseSessionResponse
+	12, // 36: mycel.client.v1.TransactionService.BeginTransaction:output_type -> mycel.client.v1.BeginTransactionResponse
+	14, // 37: mycel.client.v1.TransactionService.GetTransaction:output_type -> mycel.client.v1.GetTransactionResponse
+	16, // 38: mycel.client.v1.TransactionService.CommitTransaction:output_type -> mycel.client.v1.CommitTransactionResponse
+	18, // 39: mycel.client.v1.TransactionService.RollbackTransaction:output_type -> mycel.client.v1.RollbackTransactionResponse
+	20, // 40: mycel.client.v1.TransactionService.CloseTransaction:output_type -> mycel.client.v1.CloseTransactionResponse
+	32, // [32:41] is the sub-list for method output_type
+	23, // [23:32] is the sub-list for method input_type
+	23, // [23:23] is the sub-list for extension type_name
+	23, // [23:23] is the sub-list for extension extendee
+	0,  // [0:23] is the sub-list for field type_name
 }
 
 func init() { file_mycel_client_v1_session_proto_init() }

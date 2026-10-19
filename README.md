@@ -122,6 +122,43 @@ if err != nil {
 _ = commit.GetOperationId() // matches operationID
 ```
 
+For an ambiguous read-write commit outcome, use a durable idempotency key and
+retry with the same key, space, domain, and canonical graph mutation:
+
+```go
+const commitKey = "import-batch-2026-10-19-0001" // persist before the first attempt
+tx, err := client.BeginIdempotentReadWriteTransaction(
+    ctx, sessionID, spaceID, domainID, commitKey,
+)
+if err != nil {
+    panic(err)
+}
+// Stage graph writes against tx.Transaction.GetTransactionId().
+result, err := client.CommitIdempotentTransactionWithRetry(
+    ctx,
+    tx,
+    mycel.IdempotentCommitRetryPolicy{MaxAttempts: 3},
+)
+if err != nil {
+    // The helper retries only ambiguous transport/server outcomes and keeps
+    // the exact transaction ID, scope, and key. Explicit conflicts, capacity
+    // failures, and validation errors return immediately.
+    panic(err)
+}
+if result.GetIdempotentReplay() {
+    // result.Commit is the original durable commit, not a new commit.
+}
+```
+
+Keys are scoped to the authenticated principal, space, and domain, are limited
+to 128 UTF-8 bytes, and are retained by the daemon for 30 days. Reusing a key
+for a different canonical mutation fails rather than executing it. A stable
+node or edge ID is sufficient when retrying one idempotent upsert and duplicate
+entity creation is the only risk. Use transaction-level idempotency for grouped
+writes, non-upsert mutations, or any commit whose outcome can be lost after the
+server has durably applied it. `operation_id` remains correlation metadata and
+must not be used as an idempotency key.
+
 Common structured query shapes can be built without hand-assembling every protobuf field:
 
 ```go
