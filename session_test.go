@@ -3,6 +3,7 @@ package mycel
 import (
 	"context"
 	"regexp"
+	"strings"
 	"testing"
 
 	clientv1 "github.com/myceldb/mycel-go-sdk/gen/go/mycel/client/v1"
@@ -58,6 +59,65 @@ func TestCommitTransactionResultReturnsOperationID(t *testing.T) {
 	}
 	if got := transactions.commitRequest.GetTransactionId(); got != "tx-1" {
 		t.Fatalf("request transaction_id = %q, want tx-1", got)
+	}
+}
+
+func TestBeginAndCommitIdempotentTransactionPreserveOptions(t *testing.T) {
+	transactions := &fakeTransactionServiceClient{
+		beginResponse:  &clientv1.BeginTransactionResponse{Transaction: &clientv1.GraphTransaction{TransactionId: "tx-1"}},
+		commitResponse: &clientv1.CommitTransactionResponse{Commit: &clientv1.TransactionCommit{CommitId: "commit-1"}},
+	}
+	c := &Client{Transaction: transactions}
+	tx, err := c.BeginIdempotentReadWriteTransaction(context.Background(), "session-1", "space-1", "domain-1", "capture-1")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if tx.Transaction.GetTransactionId() != "tx-1" || tx.CommitOptions.IdempotencyKey != "capture-1" {
+		t.Fatalf("idempotent transaction = %#v", tx)
+	}
+	if _, err := c.CommitIdempotentTransaction(context.Background(), tx); err != nil {
+		t.Fatal(err)
+	}
+	if request := transactions.commitRequest; request.GetIdempotencyKey() != "capture-1" || request.GetSpaceId() != "space-1" || request.GetDomainId() != "domain-1" {
+		t.Fatalf("commit request = %#v", request)
+	}
+}
+
+func TestCommitTransactionIdempotentSendsStableScopeAndReturnsReplay(t *testing.T) {
+	transactions := &fakeTransactionServiceClient{commitResponse: &clientv1.CommitTransactionResponse{
+		Commit:           &clientv1.TransactionCommit{CommitId: "commit-1", IdempotencyKey: "capture-1"},
+		IdempotentReplay: true,
+	}}
+	c := &Client{Transaction: transactions}
+	res, err := c.CommitTransactionIdempotent(context.Background(), "tx-1", "space-1", "domain-1", "capture-1")
+	if err != nil {
+		t.Fatalf("CommitTransactionIdempotent() error = %v", err)
+	}
+	if !res.GetIdempotentReplay() || res.GetCommit().GetCommitId() != "commit-1" {
+		t.Fatalf("unexpected response: %#v", res)
+	}
+	request := transactions.commitRequest
+	if request.GetTransactionId() != "tx-1" || request.GetIdempotencyKey() != "capture-1" || request.GetSpaceId() != "space-1" || request.GetDomainId() != "domain-1" {
+		t.Fatalf("unexpected commit request: %#v", request)
+	}
+}
+
+func TestCommitTransactionWithOptionsRejectsInvalidIdempotencyWithoutRPC(t *testing.T) {
+	tests := []CommitTransactionOptions{
+		{SpaceID: "space-1"},
+		{IdempotencyKey: " key ", SpaceID: "space-1", DomainID: "domain-1"},
+		{IdempotencyKey: "key"},
+		{IdempotencyKey: strings.Repeat("x", 129), SpaceID: "space-1", DomainID: "domain-1"},
+	}
+	for _, options := range tests {
+		transactions := &fakeTransactionServiceClient{}
+		c := &Client{Transaction: transactions}
+		if _, err := c.CommitTransactionWithOptions(context.Background(), "tx-1", options); err == nil {
+			t.Fatalf("CommitTransactionWithOptions(%#v) succeeded", options)
+		}
+		if transactions.commitRequest != nil {
+			t.Fatalf("invalid options invoked RPC: %#v", transactions.commitRequest)
+		}
 	}
 }
 
