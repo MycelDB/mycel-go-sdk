@@ -341,10 +341,12 @@ type SearchRequest struct {
 	// Unspecified mode defaults to lexical for backward compatibility. Hybrid mode
 	// combines lexical and semantic candidate retrieval into one fused ranking.
 	Mode SearchMode `protobuf:"varint,3,opt,name=mode,proto3,enum=mycel.client.v1.SearchMode" json:"mode,omitempty"`
-	// Lucene-style v1 query string. Supported syntax includes terms, quoted
-	// phrases, AND, OR, NOT, unary '-', and parentheses. The implicit operator is
-	// AND. Wildcard, fuzzy, range, and fielded lexical syntax are reserved and
-	// should return structured diagnostics rather than partial matches.
+	// Deprecated compatibility query used as the fallback for both lexical and
+	// semantic retrieval when their channel-specific query is omitted. New
+	// callers should set lexical.query and semantic.query explicitly because the
+	// lexical query language and semantic embedding text have different syntax.
+	//
+	// Deprecated: Marked as deprecated in mycel/client/v1/search.proto.
 	Query string `protobuf:"bytes,4,opt,name=query,proto3" json:"query,omitempty"`
 	// Optional hard eligibility filters. Filters constrain which candidate nodes
 	// may be returned and do not contribute to score.
@@ -424,6 +426,7 @@ func (x *SearchRequest) GetMode() SearchMode {
 	return SearchMode_SEARCH_MODE_UNSPECIFIED
 }
 
+// Deprecated: Marked as deprecated in mycel/client/v1/search.proto.
 func (x *SearchRequest) GetQuery() string {
 	if x != nil {
 		return x.Query
@@ -773,8 +776,15 @@ type LexicalSearchOptions struct {
 	// Number of lexical candidates to retrieve before filtering/fusion. If unset,
 	// the daemon chooses a bounded default.
 	CandidateCount int32 `protobuf:"varint,1,opt,name=candidate_count,json=candidateCount,proto3" json:"candidate_count,omitempty"`
-	unknownFields  protoimpl.UnknownFields
-	sizeCache      protoimpl.SizeCache
+	// Optional Lucene-style v1 query string for lexical retrieval. Supported
+	// syntax includes terms, quoted phrases, AND, OR, NOT, unary '-', and
+	// parentheses. The implicit operator is AND. Wildcard, fuzzy, range, and
+	// fielded syntax are reserved and should return structured diagnostics rather
+	// than partial matches. If omitted or empty, SearchRequest.query is used for
+	// backward compatibility.
+	Query         *string `protobuf:"bytes,2,opt,name=query,proto3,oneof" json:"query,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
 func (x *LexicalSearchOptions) Reset() {
@@ -814,6 +824,13 @@ func (x *LexicalSearchOptions) GetCandidateCount() int32 {
 	return 0
 }
 
+func (x *LexicalSearchOptions) GetQuery() string {
+	if x != nil && x.Query != nil {
+		return *x.Query
+	}
+	return ""
+}
+
 type SemanticSearchOptions struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// Optional. If omitted, the daemon searches all enabled searchable semantic
@@ -827,8 +844,11 @@ type SemanticSearchOptions struct {
 	// Number of semantic candidates to retrieve before filtering/fusion. If unset,
 	// the daemon chooses a bounded default.
 	CandidateCount int32 `protobuf:"varint,4,opt,name=candidate_count,json=candidateCount,proto3" json:"candidate_count,omitempty"`
-	unknownFields  protoimpl.UnknownFields
-	sizeCache      protoimpl.SizeCache
+	// Optional natural-language text to embed for semantic retrieval. If omitted
+	// or empty, SearchRequest.query is used for backward compatibility.
+	Query         *string `protobuf:"bytes,5,opt,name=query,proto3,oneof" json:"query,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
 func (x *SemanticSearchOptions) Reset() {
@@ -887,6 +907,13 @@ func (x *SemanticSearchOptions) GetCandidateCount() int32 {
 		return x.CandidateCount
 	}
 	return 0
+}
+
+func (x *SemanticSearchOptions) GetQuery() string {
+	if x != nil && x.Query != nil {
+		return *x.Query
+	}
+	return ""
 }
 
 type SearchFilters struct {
@@ -1590,12 +1617,12 @@ var File_mycel_client_v1_search_proto protoreflect.FileDescriptor
 
 const file_mycel_client_v1_search_proto_rawDesc = "" +
 	"\n" +
-	"\x1cmycel/client/v1/search.proto\x12\x0fmycel.client.v1\"\xc3\x04\n" +
+	"\x1cmycel/client/v1/search.proto\x12\x0fmycel.client.v1\"\xc7\x04\n" +
 	"\rSearchRequest\x12\x19\n" +
 	"\bspace_id\x18\x01 \x01(\tR\aspaceId\x12\x1b\n" +
 	"\tdomain_id\x18\x02 \x01(\tR\bdomainId\x12/\n" +
-	"\x04mode\x18\x03 \x01(\x0e2\x1b.mycel.client.v1.SearchModeR\x04mode\x12\x14\n" +
-	"\x05query\x18\x04 \x01(\tR\x05query\x128\n" +
+	"\x04mode\x18\x03 \x01(\x0e2\x1b.mycel.client.v1.SearchModeR\x04mode\x12\x18\n" +
+	"\x05query\x18\x04 \x01(\tB\x02\x18\x01R\x05query\x128\n" +
 	"\afilters\x18\x05 \x01(\v2\x1e.mycel.client.v1.SearchFiltersR\afilters\x12\x1b\n" +
 	"\tpage_size\x18\x06 \x01(\x05R\bpageSize\x12\x1d\n" +
 	"\n" +
@@ -1631,18 +1658,22 @@ const file_mycel_client_v1_search_proto_rawDesc = "" +
 	"\x0elexical_weight\x18\x01 \x01(\x01R\rlexicalWeight\x12'\n" +
 	"\x0fsemantic_weight\x18\x02 \x01(\x01R\x0esemanticWeight\x12N\n" +
 	"\x0ffusion_strategy\x18\x03 \x01(\x0e2%.mycel.client.v1.HybridFusionStrategyR\x0efusionStrategy\x12!\n" +
-	"\frequire_both\x18\x04 \x01(\bR\vrequireBoth\"?\n" +
+	"\frequire_both\x18\x04 \x01(\bR\vrequireBoth\"d\n" +
 	"\x14LexicalSearchOptions\x12'\n" +
-	"\x0fcandidate_count\x18\x01 \x01(\x05R\x0ecandidateCount\"\x87\x02\n" +
+	"\x0fcandidate_count\x18\x01 \x01(\x05R\x0ecandidateCount\x12\x19\n" +
+	"\x05query\x18\x02 \x01(\tH\x00R\x05query\x88\x01\x01B\b\n" +
+	"\x06_query\"\xac\x02\n" +
 	"\x15SemanticSearchOptions\x12-\n" +
 	"\x10semantic_rule_id\x18\x01 \x01(\tH\x00R\x0esemanticRuleId\x88\x01\x01\x127\n" +
 	"\x15embedding_binding_key\x18\x02 \x01(\tH\x01R\x13embeddingBindingKey\x88\x01\x01\x12 \n" +
 	"\tmin_score\x18\x03 \x01(\x01H\x02R\bminScore\x88\x01\x01\x12'\n" +
-	"\x0fcandidate_count\x18\x04 \x01(\x05R\x0ecandidateCountB\x13\n" +
+	"\x0fcandidate_count\x18\x04 \x01(\x05R\x0ecandidateCount\x12\x19\n" +
+	"\x05query\x18\x05 \x01(\tH\x03R\x05query\x88\x01\x01B\x13\n" +
 	"\x11_semantic_rule_idB\x18\n" +
 	"\x16_embedding_binding_keyB\f\n" +
 	"\n" +
-	"_min_score\"\x8c\x01\n" +
+	"_min_scoreB\b\n" +
+	"\x06_query\"\x8c\x01\n" +
 	"\rSearchFilters\x12\x1f\n" +
 	"\vnode_labels\x18\x01 \x03(\tR\n" +
 	"nodeLabels\x12?\n" +
@@ -1815,6 +1846,7 @@ func file_mycel_client_v1_search_proto_init() {
 	if File_mycel_client_v1_search_proto != nil {
 		return
 	}
+	file_mycel_client_v1_search_proto_msgTypes[4].OneofWrappers = []any{}
 	file_mycel_client_v1_search_proto_msgTypes[5].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
