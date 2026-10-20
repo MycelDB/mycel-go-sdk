@@ -6,6 +6,16 @@ This project follows the spirit of [Keep a Changelog](https://keepachangelog.com
 
 ## [Unreleased]
 
+## [v0.20.1] - 2026-10-20
+
+### Fixed
+
+- Regenerated committed Go protobuf/gRPC bindings from `mycel-api v0.20.1` so session, structured-query, and domain-export comments describe read-only operations as repeatable reads pinned to `base_revision`.
+
+### Compatibility
+
+- Documentation-only generated-binding correction. Go APIs and protobuf wire behavior are unchanged from v0.20.0; use with Mycel daemon/API v0.20.1 or later in the v0.20 line for the corrected public contract documentation.
+
 ## [v0.20.0] - 2026-10-19
 
 ### Added

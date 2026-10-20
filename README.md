@@ -33,7 +33,7 @@ Generated code is committed under `gen/go/` so tagged Go module releases are sel
 
 ## Generate protobuf stubs
 
-The committed stubs on release branches are generated from the matching `mycel-api` release tag. The current release line is aligned with `mycel-api` `v0.20.0`.
+The committed stubs on release branches are generated from the matching `mycel-api` release tag. The current release line is aligned with `mycel-api` `v0.20.1`.
 
 By default generation reads protobufs from a sibling checkout:
 
