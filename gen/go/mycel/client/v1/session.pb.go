@@ -1172,9 +1172,9 @@ func (x *GraphSession) GetExpireTime() *timestamppb.Timestamp {
 }
 
 // GraphTransaction is an atomic read or write unit inside a GraphSession.
-// In the current daemon, read-only transactions are linearizable current-read
-// contexts, not historical repeatable snapshots: base_revision records the
-// revision observed at begin time, while later reads may observe newer commits.
+// Read-only transactions are repeatable-read graph snapshots pinned to the
+// base_revision observed through the strong-read path when they begin. Later
+// graph and query reads in the transaction do not observe newer commits.
 type GraphTransaction struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	TransactionId string                 `protobuf:"bytes,1,opt,name=transaction_id,json=transactionId,proto3" json:"transaction_id,omitempty"`
@@ -1184,9 +1184,8 @@ type GraphTransaction struct {
 	Mode          TransactionMode        `protobuf:"varint,5,opt,name=mode,proto3,enum=mycel.client.v1.TransactionMode" json:"mode,omitempty"`
 	State         TransactionState       `protobuf:"varint,6,opt,name=state,proto3,enum=mycel.client.v1.TransactionState" json:"state,omitempty"`
 	// Domain revision observed when the transaction began. The daemon is
-	// authoritative for this value. For read-only transactions this is a
-	// freshness floor and diagnostic/cache-validation value, not a pinned
-	// historical snapshot revision.
+	// authoritative for this value. For read-only transactions this is the
+	// pinned graph snapshot revision used by subsequent reads.
 	BaseRevision int64                  `protobuf:"varint,7,opt,name=base_revision,json=baseRevision,proto3" json:"base_revision,omitempty"`
 	CreateTime   *timestamppb.Timestamp `protobuf:"bytes,8,opt,name=create_time,json=createTime,proto3" json:"create_time,omitempty"`
 	LastSeenTime *timestamppb.Timestamp `protobuf:"bytes,9,opt,name=last_seen_time,json=lastSeenTime,proto3" json:"last_seen_time,omitempty"`
