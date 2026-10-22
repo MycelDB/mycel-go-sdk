@@ -22,6 +22,8 @@ const _ = grpc.SupportPackageIsVersion9
 
 const (
 	AdminSemanticMaintenanceService_GetSemanticMaintenanceStatus_FullMethodName  = "/mycel.admin.v1.AdminSemanticMaintenanceService/GetSemanticMaintenanceStatus"
+	AdminSemanticMaintenanceService_GetSemanticReliabilityStatus_FullMethodName  = "/mycel.admin.v1.AdminSemanticMaintenanceService/GetSemanticReliabilityStatus"
+	AdminSemanticMaintenanceService_RebuildSemanticRule_FullMethodName           = "/mycel.admin.v1.AdminSemanticMaintenanceService/RebuildSemanticRule"
 	AdminSemanticMaintenanceService_ListSemanticMaintenanceWork_FullMethodName   = "/mycel.admin.v1.AdminSemanticMaintenanceService/ListSemanticMaintenanceWork"
 	AdminSemanticMaintenanceService_RetrySemanticMaintenanceWork_FullMethodName  = "/mycel.admin.v1.AdminSemanticMaintenanceService/RetrySemanticMaintenanceWork"
 	AdminSemanticMaintenanceService_CancelSemanticMaintenanceWork_FullMethodName = "/mycel.admin.v1.AdminSemanticMaintenanceService/CancelSemanticMaintenanceWork"
@@ -38,6 +40,22 @@ const (
 // maintenance work.
 type AdminSemanticMaintenanceServiceClient interface {
 	GetSemanticMaintenanceStatus(ctx context.Context, in *GetSemanticMaintenanceStatusRequest, opts ...grpc.CallOption) (*GetSemanticMaintenanceStatusResponse, error)
+	GetSemanticReliabilityStatus(ctx context.Context, in *GetSemanticReliabilityStatusRequest, opts ...grpc.CallOption) (*GetSemanticReliabilityStatusResponse, error)
+	// Synchronously starts and executes a full reconciled baseline at a pinned
+	// graph revision followed by bounded delta catch-up. Success returns only
+	// after state is "completed". Failure returns a non-OK status and normally
+	// persists "failed" after an epoch starts. If leadership or durable-state
+	// transition fails, the epoch may remain "running" until its owner is fenced;
+	// clients must inspect GetSemanticReliabilityStatus after every non-OK
+	// result. A concurrent request for the same rule/binding fails with
+	// FAILED_PRECONDITION, except that a new leader may fence an abandoned
+	// running owner and start a new epoch.
+	//
+	// This method is not idempotent: every accepted request, including one after
+	// a completed or failed rebuild, starts a new rebuild_epoch. After an
+	// ambiguous transport outcome, clients must inspect
+	// GetSemanticReliabilityStatus before retrying.
+	RebuildSemanticRule(ctx context.Context, in *RebuildSemanticRuleRequest, opts ...grpc.CallOption) (*RebuildSemanticRuleResponse, error)
 	ListSemanticMaintenanceWork(ctx context.Context, in *ListSemanticMaintenanceWorkRequest, opts ...grpc.CallOption) (*ListSemanticMaintenanceWorkResponse, error)
 	RetrySemanticMaintenanceWork(ctx context.Context, in *RetrySemanticMaintenanceWorkRequest, opts ...grpc.CallOption) (*RetrySemanticMaintenanceWorkResponse, error)
 	CancelSemanticMaintenanceWork(ctx context.Context, in *CancelSemanticMaintenanceWorkRequest, opts ...grpc.CallOption) (*CancelSemanticMaintenanceWorkResponse, error)
@@ -58,6 +76,26 @@ func (c *adminSemanticMaintenanceServiceClient) GetSemanticMaintenanceStatus(ctx
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(GetSemanticMaintenanceStatusResponse)
 	err := c.cc.Invoke(ctx, AdminSemanticMaintenanceService_GetSemanticMaintenanceStatus_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *adminSemanticMaintenanceServiceClient) GetSemanticReliabilityStatus(ctx context.Context, in *GetSemanticReliabilityStatusRequest, opts ...grpc.CallOption) (*GetSemanticReliabilityStatusResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetSemanticReliabilityStatusResponse)
+	err := c.cc.Invoke(ctx, AdminSemanticMaintenanceService_GetSemanticReliabilityStatus_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *adminSemanticMaintenanceServiceClient) RebuildSemanticRule(ctx context.Context, in *RebuildSemanticRuleRequest, opts ...grpc.CallOption) (*RebuildSemanticRuleResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(RebuildSemanticRuleResponse)
+	err := c.cc.Invoke(ctx, AdminSemanticMaintenanceService_RebuildSemanticRule_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -132,6 +170,22 @@ func (c *adminSemanticMaintenanceServiceClient) BackfillSemanticRule(ctx context
 // maintenance work.
 type AdminSemanticMaintenanceServiceServer interface {
 	GetSemanticMaintenanceStatus(context.Context, *GetSemanticMaintenanceStatusRequest) (*GetSemanticMaintenanceStatusResponse, error)
+	GetSemanticReliabilityStatus(context.Context, *GetSemanticReliabilityStatusRequest) (*GetSemanticReliabilityStatusResponse, error)
+	// Synchronously starts and executes a full reconciled baseline at a pinned
+	// graph revision followed by bounded delta catch-up. Success returns only
+	// after state is "completed". Failure returns a non-OK status and normally
+	// persists "failed" after an epoch starts. If leadership or durable-state
+	// transition fails, the epoch may remain "running" until its owner is fenced;
+	// clients must inspect GetSemanticReliabilityStatus after every non-OK
+	// result. A concurrent request for the same rule/binding fails with
+	// FAILED_PRECONDITION, except that a new leader may fence an abandoned
+	// running owner and start a new epoch.
+	//
+	// This method is not idempotent: every accepted request, including one after
+	// a completed or failed rebuild, starts a new rebuild_epoch. After an
+	// ambiguous transport outcome, clients must inspect
+	// GetSemanticReliabilityStatus before retrying.
+	RebuildSemanticRule(context.Context, *RebuildSemanticRuleRequest) (*RebuildSemanticRuleResponse, error)
 	ListSemanticMaintenanceWork(context.Context, *ListSemanticMaintenanceWorkRequest) (*ListSemanticMaintenanceWorkResponse, error)
 	RetrySemanticMaintenanceWork(context.Context, *RetrySemanticMaintenanceWorkRequest) (*RetrySemanticMaintenanceWorkResponse, error)
 	CancelSemanticMaintenanceWork(context.Context, *CancelSemanticMaintenanceWorkRequest) (*CancelSemanticMaintenanceWorkResponse, error)
@@ -150,6 +204,12 @@ type UnimplementedAdminSemanticMaintenanceServiceServer struct{}
 
 func (UnimplementedAdminSemanticMaintenanceServiceServer) GetSemanticMaintenanceStatus(context.Context, *GetSemanticMaintenanceStatusRequest) (*GetSemanticMaintenanceStatusResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetSemanticMaintenanceStatus not implemented")
+}
+func (UnimplementedAdminSemanticMaintenanceServiceServer) GetSemanticReliabilityStatus(context.Context, *GetSemanticReliabilityStatusRequest) (*GetSemanticReliabilityStatusResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetSemanticReliabilityStatus not implemented")
+}
+func (UnimplementedAdminSemanticMaintenanceServiceServer) RebuildSemanticRule(context.Context, *RebuildSemanticRuleRequest) (*RebuildSemanticRuleResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RebuildSemanticRule not implemented")
 }
 func (UnimplementedAdminSemanticMaintenanceServiceServer) ListSemanticMaintenanceWork(context.Context, *ListSemanticMaintenanceWorkRequest) (*ListSemanticMaintenanceWorkResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListSemanticMaintenanceWork not implemented")
@@ -205,6 +265,42 @@ func _AdminSemanticMaintenanceService_GetSemanticMaintenanceStatus_Handler(srv i
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(AdminSemanticMaintenanceServiceServer).GetSemanticMaintenanceStatus(ctx, req.(*GetSemanticMaintenanceStatusRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AdminSemanticMaintenanceService_GetSemanticReliabilityStatus_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetSemanticReliabilityStatusRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminSemanticMaintenanceServiceServer).GetSemanticReliabilityStatus(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AdminSemanticMaintenanceService_GetSemanticReliabilityStatus_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminSemanticMaintenanceServiceServer).GetSemanticReliabilityStatus(ctx, req.(*GetSemanticReliabilityStatusRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AdminSemanticMaintenanceService_RebuildSemanticRule_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RebuildSemanticRuleRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminSemanticMaintenanceServiceServer).RebuildSemanticRule(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AdminSemanticMaintenanceService_RebuildSemanticRule_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminSemanticMaintenanceServiceServer).RebuildSemanticRule(ctx, req.(*RebuildSemanticRuleRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -327,6 +423,14 @@ var AdminSemanticMaintenanceService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetSemanticMaintenanceStatus",
 			Handler:    _AdminSemanticMaintenanceService_GetSemanticMaintenanceStatus_Handler,
+		},
+		{
+			MethodName: "GetSemanticReliabilityStatus",
+			Handler:    _AdminSemanticMaintenanceService_GetSemanticReliabilityStatus_Handler,
+		},
+		{
+			MethodName: "RebuildSemanticRule",
+			Handler:    _AdminSemanticMaintenanceService_RebuildSemanticRule_Handler,
 		},
 		{
 			MethodName: "ListSemanticMaintenanceWork",

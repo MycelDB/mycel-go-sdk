@@ -223,6 +223,586 @@ func (x *GetSemanticMaintenanceStatusResponse) GetWorkerRuns() int32 {
 	return 0
 }
 
+type GetSemanticReliabilityStatusRequest struct {
+	state               protoimpl.MessageState `protogen:"open.v1"`
+	SpaceId             string                 `protobuf:"bytes,1,opt,name=space_id,json=spaceId,proto3" json:"space_id,omitempty"`
+	SemanticRuleId      string                 `protobuf:"bytes,2,opt,name=semantic_rule_id,json=semanticRuleId,proto3" json:"semantic_rule_id,omitempty"`
+	EmbeddingBindingKey string                 `protobuf:"bytes,3,opt,name=embedding_binding_key,json=embeddingBindingKey,proto3" json:"embedding_binding_key,omitempty"`
+	unknownFields       protoimpl.UnknownFields
+	sizeCache           protoimpl.SizeCache
+}
+
+func (x *GetSemanticReliabilityStatusRequest) Reset() {
+	*x = GetSemanticReliabilityStatusRequest{}
+	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[2]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetSemanticReliabilityStatusRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetSemanticReliabilityStatusRequest) ProtoMessage() {}
+
+func (x *GetSemanticReliabilityStatusRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[2]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetSemanticReliabilityStatusRequest.ProtoReflect.Descriptor instead.
+func (*GetSemanticReliabilityStatusRequest) Descriptor() ([]byte, []int) {
+	return file_mycel_admin_v1_semantic_maintenance_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *GetSemanticReliabilityStatusRequest) GetSpaceId() string {
+	if x != nil {
+		return x.SpaceId
+	}
+	return ""
+}
+
+func (x *GetSemanticReliabilityStatusRequest) GetSemanticRuleId() string {
+	if x != nil {
+		return x.SemanticRuleId
+	}
+	return ""
+}
+
+func (x *GetSemanticReliabilityStatusRequest) GetEmbeddingBindingKey() string {
+	if x != nil {
+		return x.EmbeddingBindingKey
+	}
+	return ""
+}
+
+type GetSemanticReliabilityStatusResponse struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Authorization-scoped resource identity; no credential identity is exposed.
+	SpaceId             string `protobuf:"bytes,1,opt,name=space_id,json=spaceId,proto3" json:"space_id,omitempty"`
+	SemanticRuleId      string `protobuf:"bytes,2,opt,name=semantic_rule_id,json=semanticRuleId,proto3" json:"semantic_rule_id,omitempty"`
+	EmbeddingBindingKey string `protobuf:"bytes,3,opt,name=embedding_binding_key,json=embeddingBindingKey,proto3" json:"embedding_binding_key,omitempty"`
+	// Highest committed graph revision observed for this domain.
+	LatestObservedGraphRevision uint64 `protobuf:"varint,4,opt,name=latest_observed_graph_revision,json=latestObservedGraphRevision,proto3" json:"latest_observed_graph_revision,omitempty"`
+	// Ingestion cursor only: events through this revision were classified. This
+	// field is not a semantic freshness claim.
+	AnalyzedThroughGraphRevision uint64 `protobuf:"varint,5,opt,name=analyzed_through_graph_revision,json=analyzedThroughGraphRevision,proto3" json:"analyzed_through_graph_revision,omitempty"`
+	// Highest contiguous revision whose required semantic outcomes completed
+	// successfully for semantic_generation. Successful outcomes are a published
+	// current record, an applied delete, an explicit policy no-op/skip, or work
+	// reconciled by a completed rebuild. Pending, running, retryable/permanent
+	// failure, or cancellation never permits this frontier to cross the affected
+	// revision.
+	//
+	// Freshness through revision R is proved only when this field is >= R and
+	// the same response has the expected semantic_generation, zero unresolved
+	// gaps, capacity_state "ok", degraded false, and rebuild_required false,
+	// with rebuild.state neither "required", "running", nor "failed".
+	FreshThroughGraphRevision uint64 `protobuf:"varint,6,opt,name=fresh_through_graph_revision,json=freshThroughGraphRevision,proto3" json:"fresh_through_graph_revision,omitempty"`
+	// Bounded unresolved interval diagnostics; these expose no node/source text.
+	UnresolvedGapCount            uint64 `protobuf:"varint,7,opt,name=unresolved_gap_count,json=unresolvedGapCount,proto3" json:"unresolved_gap_count,omitempty"`
+	OldestUnresolvedGraphRevision uint64 `protobuf:"varint,8,opt,name=oldest_unresolved_graph_revision,json=oldestUnresolvedGraphRevision,proto3" json:"oldest_unresolved_graph_revision,omitempty"`
+	ConfiguredFrontierLimit       uint64 `protobuf:"varint,9,opt,name=configured_frontier_limit,json=configuredFrontierLimit,proto3" json:"configured_frontier_limit,omitempty"`
+	RetainedWorkItemCount         uint64 `protobuf:"varint,10,opt,name=retained_work_item_count,json=retainedWorkItemCount,proto3" json:"retained_work_item_count,omitempty"`
+	// Generation rotates for incompatible semantic configuration changes. A
+	// rotation resets fresh_through_graph_revision and requires a rebuilt
+	// baseline for the new generation; values from different generations must
+	// never be combined into one freshness claim.
+	SemanticGeneration uint64 `protobuf:"varint,11,opt,name=semantic_generation,json=semanticGeneration,proto3" json:"semantic_generation,omitempty"`
+	// "ok" or "exhausted". Exhaustion is restart-safe, invalidates freshness,
+	// and requires rebuild.
+	CapacityState string `protobuf:"bytes,12,opt,name=capacity_state,json=capacityState,proto3" json:"capacity_state,omitempty"`
+	Degraded      bool   `protobuf:"varint,13,opt,name=degraded,proto3" json:"degraded,omitempty"`
+	// Bounded sanitized operator diagnostic; provider bodies are excluded.
+	DegradedReason                string                 `protobuf:"bytes,14,opt,name=degraded_reason,json=degradedReason,proto3" json:"degraded_reason,omitempty"`
+	RebuildRequired               bool                   `protobuf:"varint,15,opt,name=rebuild_required,json=rebuildRequired,proto3" json:"rebuild_required,omitempty"`
+	Rebuild                       *SemanticRebuildStatus `protobuf:"bytes,16,opt,name=rebuild,proto3" json:"rebuild,omitempty"`
+	ConfiguredGapIntervalLimit    uint64                 `protobuf:"varint,17,opt,name=configured_gap_interval_limit,json=configuredGapIntervalLimit,proto3" json:"configured_gap_interval_limit,omitempty"`
+	ConfiguredRevisionSpanLimit   uint64                 `protobuf:"varint,18,opt,name=configured_revision_span_limit,json=configuredRevisionSpanLimit,proto3" json:"configured_revision_span_limit,omitempty"`
+	ConfiguredSerializedByteLimit uint64                 `protobuf:"varint,19,opt,name=configured_serialized_byte_limit,json=configuredSerializedByteLimit,proto3" json:"configured_serialized_byte_limit,omitempty"`
+	RetainedGapIntervalCount      uint64                 `protobuf:"varint,20,opt,name=retained_gap_interval_count,json=retainedGapIntervalCount,proto3" json:"retained_gap_interval_count,omitempty"`
+	RetainedRevisionSpan          uint64                 `protobuf:"varint,21,opt,name=retained_revision_span,json=retainedRevisionSpan,proto3" json:"retained_revision_span,omitempty"`
+	RetainedSerializedBytes       uint64                 `protobuf:"varint,22,opt,name=retained_serialized_bytes,json=retainedSerializedBytes,proto3" json:"retained_serialized_bytes,omitempty"`
+	unknownFields                 protoimpl.UnknownFields
+	sizeCache                     protoimpl.SizeCache
+}
+
+func (x *GetSemanticReliabilityStatusResponse) Reset() {
+	*x = GetSemanticReliabilityStatusResponse{}
+	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[3]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetSemanticReliabilityStatusResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetSemanticReliabilityStatusResponse) ProtoMessage() {}
+
+func (x *GetSemanticReliabilityStatusResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[3]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetSemanticReliabilityStatusResponse.ProtoReflect.Descriptor instead.
+func (*GetSemanticReliabilityStatusResponse) Descriptor() ([]byte, []int) {
+	return file_mycel_admin_v1_semantic_maintenance_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *GetSemanticReliabilityStatusResponse) GetSpaceId() string {
+	if x != nil {
+		return x.SpaceId
+	}
+	return ""
+}
+
+func (x *GetSemanticReliabilityStatusResponse) GetSemanticRuleId() string {
+	if x != nil {
+		return x.SemanticRuleId
+	}
+	return ""
+}
+
+func (x *GetSemanticReliabilityStatusResponse) GetEmbeddingBindingKey() string {
+	if x != nil {
+		return x.EmbeddingBindingKey
+	}
+	return ""
+}
+
+func (x *GetSemanticReliabilityStatusResponse) GetLatestObservedGraphRevision() uint64 {
+	if x != nil {
+		return x.LatestObservedGraphRevision
+	}
+	return 0
+}
+
+func (x *GetSemanticReliabilityStatusResponse) GetAnalyzedThroughGraphRevision() uint64 {
+	if x != nil {
+		return x.AnalyzedThroughGraphRevision
+	}
+	return 0
+}
+
+func (x *GetSemanticReliabilityStatusResponse) GetFreshThroughGraphRevision() uint64 {
+	if x != nil {
+		return x.FreshThroughGraphRevision
+	}
+	return 0
+}
+
+func (x *GetSemanticReliabilityStatusResponse) GetUnresolvedGapCount() uint64 {
+	if x != nil {
+		return x.UnresolvedGapCount
+	}
+	return 0
+}
+
+func (x *GetSemanticReliabilityStatusResponse) GetOldestUnresolvedGraphRevision() uint64 {
+	if x != nil {
+		return x.OldestUnresolvedGraphRevision
+	}
+	return 0
+}
+
+func (x *GetSemanticReliabilityStatusResponse) GetConfiguredFrontierLimit() uint64 {
+	if x != nil {
+		return x.ConfiguredFrontierLimit
+	}
+	return 0
+}
+
+func (x *GetSemanticReliabilityStatusResponse) GetRetainedWorkItemCount() uint64 {
+	if x != nil {
+		return x.RetainedWorkItemCount
+	}
+	return 0
+}
+
+func (x *GetSemanticReliabilityStatusResponse) GetSemanticGeneration() uint64 {
+	if x != nil {
+		return x.SemanticGeneration
+	}
+	return 0
+}
+
+func (x *GetSemanticReliabilityStatusResponse) GetCapacityState() string {
+	if x != nil {
+		return x.CapacityState
+	}
+	return ""
+}
+
+func (x *GetSemanticReliabilityStatusResponse) GetDegraded() bool {
+	if x != nil {
+		return x.Degraded
+	}
+	return false
+}
+
+func (x *GetSemanticReliabilityStatusResponse) GetDegradedReason() string {
+	if x != nil {
+		return x.DegradedReason
+	}
+	return ""
+}
+
+func (x *GetSemanticReliabilityStatusResponse) GetRebuildRequired() bool {
+	if x != nil {
+		return x.RebuildRequired
+	}
+	return false
+}
+
+func (x *GetSemanticReliabilityStatusResponse) GetRebuild() *SemanticRebuildStatus {
+	if x != nil {
+		return x.Rebuild
+	}
+	return nil
+}
+
+func (x *GetSemanticReliabilityStatusResponse) GetConfiguredGapIntervalLimit() uint64 {
+	if x != nil {
+		return x.ConfiguredGapIntervalLimit
+	}
+	return 0
+}
+
+func (x *GetSemanticReliabilityStatusResponse) GetConfiguredRevisionSpanLimit() uint64 {
+	if x != nil {
+		return x.ConfiguredRevisionSpanLimit
+	}
+	return 0
+}
+
+func (x *GetSemanticReliabilityStatusResponse) GetConfiguredSerializedByteLimit() uint64 {
+	if x != nil {
+		return x.ConfiguredSerializedByteLimit
+	}
+	return 0
+}
+
+func (x *GetSemanticReliabilityStatusResponse) GetRetainedGapIntervalCount() uint64 {
+	if x != nil {
+		return x.RetainedGapIntervalCount
+	}
+	return 0
+}
+
+func (x *GetSemanticReliabilityStatusResponse) GetRetainedRevisionSpan() uint64 {
+	if x != nil {
+		return x.RetainedRevisionSpan
+	}
+	return 0
+}
+
+func (x *GetSemanticReliabilityStatusResponse) GetRetainedSerializedBytes() uint64 {
+	if x != nil {
+		return x.RetainedSerializedBytes
+	}
+	return 0
+}
+
+type SemanticRebuildStatus struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Unique identity for one accepted rebuild invocation. Each accepted request
+	// creates a new epoch; clients use it to detect replacement or takeover.
+	RebuildEpoch string `protobuf:"bytes,1,opt,name=rebuild_epoch,json=rebuildEpoch,proto3" json:"rebuild_epoch,omitempty"`
+	// Closed value set: empty means no rebuild has been recorded; "required"
+	// means the current generation lacks a valid baseline; "running" is
+	// non-terminal; "completed" is successful terminal state; and "failed" is
+	// unsuccessful terminal state. Unknown values must be treated as not ready.
+	State string `protobuf:"bytes,2,opt,name=state,proto3" json:"state,omitempty"`
+	// Graph revision pinned for the reconciled full baseline.
+	PinnedTargetGraphRevision uint64 `protobuf:"varint,3,opt,name=pinned_target_graph_revision,json=pinnedTargetGraphRevision,proto3" json:"pinned_target_graph_revision,omitempty"`
+	// Latest graph revision accounted by delta catch-up. On completed state it
+	// reaches at least the latest revision observed before completion.
+	DeltaCatchupGraphRevision uint64 `protobuf:"varint,4,opt,name=delta_catchup_graph_revision,json=deltaCatchupGraphRevision,proto3" json:"delta_catchup_graph_revision,omitempty"`
+	// Generation rebuilt by this epoch. Rebuild itself does not rotate the
+	// generation; incompatible configuration changes rotate it before rebuild.
+	SemanticGeneration uint64 `protobuf:"varint,5,opt,name=semantic_generation,json=semanticGeneration,proto3" json:"semantic_generation,omitempty"`
+	// RFC 3339 timestamps. completed_at identifies the most recent successfully
+	// completed baseline for this epoch. It may remain populated if a later
+	// configuration change or capacity marker changes state from "completed" to
+	// "required"; it is not evidence that the current state is completed.
+	StartedAt   string `protobuf:"bytes,6,opt,name=started_at,json=startedAt,proto3" json:"started_at,omitempty"`
+	CompletedAt string `protobuf:"bytes,7,opt,name=completed_at,json=completedAt,proto3" json:"completed_at,omitempty"`
+	// Bounded operator-safe failure detail; credentials and provider bodies are
+	// excluded.
+	ErrorMessageSanitized string `protobuf:"bytes,8,opt,name=error_message_sanitized,json=errorMessageSanitized,proto3" json:"error_message_sanitized,omitempty"`
+	unknownFields         protoimpl.UnknownFields
+	sizeCache             protoimpl.SizeCache
+}
+
+func (x *SemanticRebuildStatus) Reset() {
+	*x = SemanticRebuildStatus{}
+	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[4]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SemanticRebuildStatus) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SemanticRebuildStatus) ProtoMessage() {}
+
+func (x *SemanticRebuildStatus) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[4]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SemanticRebuildStatus.ProtoReflect.Descriptor instead.
+func (*SemanticRebuildStatus) Descriptor() ([]byte, []int) {
+	return file_mycel_admin_v1_semantic_maintenance_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *SemanticRebuildStatus) GetRebuildEpoch() string {
+	if x != nil {
+		return x.RebuildEpoch
+	}
+	return ""
+}
+
+func (x *SemanticRebuildStatus) GetState() string {
+	if x != nil {
+		return x.State
+	}
+	return ""
+}
+
+func (x *SemanticRebuildStatus) GetPinnedTargetGraphRevision() uint64 {
+	if x != nil {
+		return x.PinnedTargetGraphRevision
+	}
+	return 0
+}
+
+func (x *SemanticRebuildStatus) GetDeltaCatchupGraphRevision() uint64 {
+	if x != nil {
+		return x.DeltaCatchupGraphRevision
+	}
+	return 0
+}
+
+func (x *SemanticRebuildStatus) GetSemanticGeneration() uint64 {
+	if x != nil {
+		return x.SemanticGeneration
+	}
+	return 0
+}
+
+func (x *SemanticRebuildStatus) GetStartedAt() string {
+	if x != nil {
+		return x.StartedAt
+	}
+	return ""
+}
+
+func (x *SemanticRebuildStatus) GetCompletedAt() string {
+	if x != nil {
+		return x.CompletedAt
+	}
+	return ""
+}
+
+func (x *SemanticRebuildStatus) GetErrorMessageSanitized() string {
+	if x != nil {
+		return x.ErrorMessageSanitized
+	}
+	return ""
+}
+
+type RebuildSemanticRuleRequest struct {
+	state                 protoimpl.MessageState `protogen:"open.v1"`
+	SpaceId               string                 `protobuf:"bytes,1,opt,name=space_id,json=spaceId,proto3" json:"space_id,omitempty"`
+	SemanticRuleId        string                 `protobuf:"bytes,2,opt,name=semantic_rule_id,json=semanticRuleId,proto3" json:"semantic_rule_id,omitempty"`
+	EmbeddingBindingKey   string                 `protobuf:"bytes,3,opt,name=embedding_binding_key,json=embeddingBindingKey,proto3" json:"embedding_binding_key,omitempty"`
+	BackfillLimit         int32                  `protobuf:"varint,4,opt,name=backfill_limit,json=backfillLimit,proto3" json:"backfill_limit,omitempty"`
+	MaintenanceBatchLimit int32                  `protobuf:"varint,5,opt,name=maintenance_batch_limit,json=maintenanceBatchLimit,proto3" json:"maintenance_batch_limit,omitempty"`
+	MaxCatchupIterations  int32                  `protobuf:"varint,6,opt,name=max_catchup_iterations,json=maxCatchupIterations,proto3" json:"max_catchup_iterations,omitempty"`
+	unknownFields         protoimpl.UnknownFields
+	sizeCache             protoimpl.SizeCache
+}
+
+func (x *RebuildSemanticRuleRequest) Reset() {
+	*x = RebuildSemanticRuleRequest{}
+	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[5]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *RebuildSemanticRuleRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RebuildSemanticRuleRequest) ProtoMessage() {}
+
+func (x *RebuildSemanticRuleRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[5]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RebuildSemanticRuleRequest.ProtoReflect.Descriptor instead.
+func (*RebuildSemanticRuleRequest) Descriptor() ([]byte, []int) {
+	return file_mycel_admin_v1_semantic_maintenance_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *RebuildSemanticRuleRequest) GetSpaceId() string {
+	if x != nil {
+		return x.SpaceId
+	}
+	return ""
+}
+
+func (x *RebuildSemanticRuleRequest) GetSemanticRuleId() string {
+	if x != nil {
+		return x.SemanticRuleId
+	}
+	return ""
+}
+
+func (x *RebuildSemanticRuleRequest) GetEmbeddingBindingKey() string {
+	if x != nil {
+		return x.EmbeddingBindingKey
+	}
+	return ""
+}
+
+func (x *RebuildSemanticRuleRequest) GetBackfillLimit() int32 {
+	if x != nil {
+		return x.BackfillLimit
+	}
+	return 0
+}
+
+func (x *RebuildSemanticRuleRequest) GetMaintenanceBatchLimit() int32 {
+	if x != nil {
+		return x.MaintenanceBatchLimit
+	}
+	return 0
+}
+
+func (x *RebuildSemanticRuleRequest) GetMaxCatchupIterations() int32 {
+	if x != nil {
+		return x.MaxCatchupIterations
+	}
+	return 0
+}
+
+type RebuildSemanticRuleResponse struct {
+	state          protoimpl.MessageState                `protogen:"open.v1"`
+	Rebuild        *SemanticRebuildStatus                `protobuf:"bytes,1,opt,name=rebuild,proto3" json:"rebuild,omitempty"`
+	Reliability    *GetSemanticReliabilityStatusResponse `protobuf:"bytes,2,opt,name=reliability,proto3" json:"reliability,omitempty"`
+	SelectedCount  int32                                 `protobuf:"varint,3,opt,name=selected_count,json=selectedCount,proto3" json:"selected_count,omitempty"`
+	GeneratedCount int32                                 `protobuf:"varint,4,opt,name=generated_count,json=generatedCount,proto3" json:"generated_count,omitempty"`
+	SkippedCount   int32                                 `protobuf:"varint,5,opt,name=skipped_count,json=skippedCount,proto3" json:"skipped_count,omitempty"`
+	FailedCount    int32                                 `protobuf:"varint,6,opt,name=failed_count,json=failedCount,proto3" json:"failed_count,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
+}
+
+func (x *RebuildSemanticRuleResponse) Reset() {
+	*x = RebuildSemanticRuleResponse{}
+	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[6]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *RebuildSemanticRuleResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RebuildSemanticRuleResponse) ProtoMessage() {}
+
+func (x *RebuildSemanticRuleResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[6]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RebuildSemanticRuleResponse.ProtoReflect.Descriptor instead.
+func (*RebuildSemanticRuleResponse) Descriptor() ([]byte, []int) {
+	return file_mycel_admin_v1_semantic_maintenance_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *RebuildSemanticRuleResponse) GetRebuild() *SemanticRebuildStatus {
+	if x != nil {
+		return x.Rebuild
+	}
+	return nil
+}
+
+func (x *RebuildSemanticRuleResponse) GetReliability() *GetSemanticReliabilityStatusResponse {
+	if x != nil {
+		return x.Reliability
+	}
+	return nil
+}
+
+func (x *RebuildSemanticRuleResponse) GetSelectedCount() int32 {
+	if x != nil {
+		return x.SelectedCount
+	}
+	return 0
+}
+
+func (x *RebuildSemanticRuleResponse) GetGeneratedCount() int32 {
+	if x != nil {
+		return x.GeneratedCount
+	}
+	return 0
+}
+
+func (x *RebuildSemanticRuleResponse) GetSkippedCount() int32 {
+	if x != nil {
+		return x.SkippedCount
+	}
+	return 0
+}
+
+func (x *RebuildSemanticRuleResponse) GetFailedCount() int32 {
+	if x != nil {
+		return x.FailedCount
+	}
+	return 0
+}
+
 type ListSemanticMaintenanceWorkRequest struct {
 	state               protoimpl.MessageState `protogen:"open.v1"`
 	SpaceId             string                 `protobuf:"bytes,1,opt,name=space_id,json=spaceId,proto3" json:"space_id,omitempty"`
@@ -236,7 +816,7 @@ type ListSemanticMaintenanceWorkRequest struct {
 
 func (x *ListSemanticMaintenanceWorkRequest) Reset() {
 	*x = ListSemanticMaintenanceWorkRequest{}
-	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[2]
+	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[7]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -248,7 +828,7 @@ func (x *ListSemanticMaintenanceWorkRequest) String() string {
 func (*ListSemanticMaintenanceWorkRequest) ProtoMessage() {}
 
 func (x *ListSemanticMaintenanceWorkRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[2]
+	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[7]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -261,7 +841,7 @@ func (x *ListSemanticMaintenanceWorkRequest) ProtoReflect() protoreflect.Message
 
 // Deprecated: Use ListSemanticMaintenanceWorkRequest.ProtoReflect.Descriptor instead.
 func (*ListSemanticMaintenanceWorkRequest) Descriptor() ([]byte, []int) {
-	return file_mycel_admin_v1_semantic_maintenance_proto_rawDescGZIP(), []int{2}
+	return file_mycel_admin_v1_semantic_maintenance_proto_rawDescGZIP(), []int{7}
 }
 
 func (x *ListSemanticMaintenanceWorkRequest) GetSpaceId() string {
@@ -308,7 +888,7 @@ type ListSemanticMaintenanceWorkResponse struct {
 
 func (x *ListSemanticMaintenanceWorkResponse) Reset() {
 	*x = ListSemanticMaintenanceWorkResponse{}
-	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[3]
+	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[8]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -320,7 +900,7 @@ func (x *ListSemanticMaintenanceWorkResponse) String() string {
 func (*ListSemanticMaintenanceWorkResponse) ProtoMessage() {}
 
 func (x *ListSemanticMaintenanceWorkResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[3]
+	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[8]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -333,7 +913,7 @@ func (x *ListSemanticMaintenanceWorkResponse) ProtoReflect() protoreflect.Messag
 
 // Deprecated: Use ListSemanticMaintenanceWorkResponse.ProtoReflect.Descriptor instead.
 func (*ListSemanticMaintenanceWorkResponse) Descriptor() ([]byte, []int) {
-	return file_mycel_admin_v1_semantic_maintenance_proto_rawDescGZIP(), []int{3}
+	return file_mycel_admin_v1_semantic_maintenance_proto_rawDescGZIP(), []int{8}
 }
 
 func (x *ListSemanticMaintenanceWorkResponse) GetItems() []*SemanticMaintenanceWorkItem {
@@ -360,13 +940,16 @@ type SemanticMaintenanceWorkItem struct {
 	LastErrorMessageSanitized string                 `protobuf:"bytes,13,opt,name=last_error_message_sanitized,json=lastErrorMessageSanitized,proto3" json:"last_error_message_sanitized,omitempty"`
 	CreatedAt                 string                 `protobuf:"bytes,14,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
 	UpdatedAt                 string                 `protobuf:"bytes,15,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
+	FirstGraphRevision        uint64                 `protobuf:"varint,16,opt,name=first_graph_revision,json=firstGraphRevision,proto3" json:"first_graph_revision,omitempty"`
+	LastGraphRevision         uint64                 `protobuf:"varint,17,opt,name=last_graph_revision,json=lastGraphRevision,proto3" json:"last_graph_revision,omitempty"`
+	WorkGeneration            uint64                 `protobuf:"varint,18,opt,name=work_generation,json=workGeneration,proto3" json:"work_generation,omitempty"`
 	unknownFields             protoimpl.UnknownFields
 	sizeCache                 protoimpl.SizeCache
 }
 
 func (x *SemanticMaintenanceWorkItem) Reset() {
 	*x = SemanticMaintenanceWorkItem{}
-	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[4]
+	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[9]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -378,7 +961,7 @@ func (x *SemanticMaintenanceWorkItem) String() string {
 func (*SemanticMaintenanceWorkItem) ProtoMessage() {}
 
 func (x *SemanticMaintenanceWorkItem) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[4]
+	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[9]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -391,7 +974,7 @@ func (x *SemanticMaintenanceWorkItem) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SemanticMaintenanceWorkItem.ProtoReflect.Descriptor instead.
 func (*SemanticMaintenanceWorkItem) Descriptor() ([]byte, []int) {
-	return file_mycel_admin_v1_semantic_maintenance_proto_rawDescGZIP(), []int{4}
+	return file_mycel_admin_v1_semantic_maintenance_proto_rawDescGZIP(), []int{9}
 }
 
 func (x *SemanticMaintenanceWorkItem) GetWorkItemId() string {
@@ -499,6 +1082,27 @@ func (x *SemanticMaintenanceWorkItem) GetUpdatedAt() string {
 	return ""
 }
 
+func (x *SemanticMaintenanceWorkItem) GetFirstGraphRevision() uint64 {
+	if x != nil {
+		return x.FirstGraphRevision
+	}
+	return 0
+}
+
+func (x *SemanticMaintenanceWorkItem) GetLastGraphRevision() uint64 {
+	if x != nil {
+		return x.LastGraphRevision
+	}
+	return 0
+}
+
+func (x *SemanticMaintenanceWorkItem) GetWorkGeneration() uint64 {
+	if x != nil {
+		return x.WorkGeneration
+	}
+	return 0
+}
+
 type RetrySemanticMaintenanceWorkRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	SpaceId       string                 `protobuf:"bytes,1,opt,name=space_id,json=spaceId,proto3" json:"space_id,omitempty"`
@@ -509,7 +1113,7 @@ type RetrySemanticMaintenanceWorkRequest struct {
 
 func (x *RetrySemanticMaintenanceWorkRequest) Reset() {
 	*x = RetrySemanticMaintenanceWorkRequest{}
-	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[5]
+	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[10]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -521,7 +1125,7 @@ func (x *RetrySemanticMaintenanceWorkRequest) String() string {
 func (*RetrySemanticMaintenanceWorkRequest) ProtoMessage() {}
 
 func (x *RetrySemanticMaintenanceWorkRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[5]
+	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[10]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -534,7 +1138,7 @@ func (x *RetrySemanticMaintenanceWorkRequest) ProtoReflect() protoreflect.Messag
 
 // Deprecated: Use RetrySemanticMaintenanceWorkRequest.ProtoReflect.Descriptor instead.
 func (*RetrySemanticMaintenanceWorkRequest) Descriptor() ([]byte, []int) {
-	return file_mycel_admin_v1_semantic_maintenance_proto_rawDescGZIP(), []int{5}
+	return file_mycel_admin_v1_semantic_maintenance_proto_rawDescGZIP(), []int{10}
 }
 
 func (x *RetrySemanticMaintenanceWorkRequest) GetSpaceId() string {
@@ -560,7 +1164,7 @@ type RetrySemanticMaintenanceWorkResponse struct {
 
 func (x *RetrySemanticMaintenanceWorkResponse) Reset() {
 	*x = RetrySemanticMaintenanceWorkResponse{}
-	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[6]
+	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[11]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -572,7 +1176,7 @@ func (x *RetrySemanticMaintenanceWorkResponse) String() string {
 func (*RetrySemanticMaintenanceWorkResponse) ProtoMessage() {}
 
 func (x *RetrySemanticMaintenanceWorkResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[6]
+	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[11]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -585,7 +1189,7 @@ func (x *RetrySemanticMaintenanceWorkResponse) ProtoReflect() protoreflect.Messa
 
 // Deprecated: Use RetrySemanticMaintenanceWorkResponse.ProtoReflect.Descriptor instead.
 func (*RetrySemanticMaintenanceWorkResponse) Descriptor() ([]byte, []int) {
-	return file_mycel_admin_v1_semantic_maintenance_proto_rawDescGZIP(), []int{6}
+	return file_mycel_admin_v1_semantic_maintenance_proto_rawDescGZIP(), []int{11}
 }
 
 func (x *RetrySemanticMaintenanceWorkResponse) GetItem() *SemanticMaintenanceWorkItem {
@@ -605,7 +1209,7 @@ type CancelSemanticMaintenanceWorkRequest struct {
 
 func (x *CancelSemanticMaintenanceWorkRequest) Reset() {
 	*x = CancelSemanticMaintenanceWorkRequest{}
-	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[7]
+	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[12]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -617,7 +1221,7 @@ func (x *CancelSemanticMaintenanceWorkRequest) String() string {
 func (*CancelSemanticMaintenanceWorkRequest) ProtoMessage() {}
 
 func (x *CancelSemanticMaintenanceWorkRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[7]
+	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[12]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -630,7 +1234,7 @@ func (x *CancelSemanticMaintenanceWorkRequest) ProtoReflect() protoreflect.Messa
 
 // Deprecated: Use CancelSemanticMaintenanceWorkRequest.ProtoReflect.Descriptor instead.
 func (*CancelSemanticMaintenanceWorkRequest) Descriptor() ([]byte, []int) {
-	return file_mycel_admin_v1_semantic_maintenance_proto_rawDescGZIP(), []int{7}
+	return file_mycel_admin_v1_semantic_maintenance_proto_rawDescGZIP(), []int{12}
 }
 
 func (x *CancelSemanticMaintenanceWorkRequest) GetSpaceId() string {
@@ -656,7 +1260,7 @@ type CancelSemanticMaintenanceWorkResponse struct {
 
 func (x *CancelSemanticMaintenanceWorkResponse) Reset() {
 	*x = CancelSemanticMaintenanceWorkResponse{}
-	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[8]
+	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[13]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -668,7 +1272,7 @@ func (x *CancelSemanticMaintenanceWorkResponse) String() string {
 func (*CancelSemanticMaintenanceWorkResponse) ProtoMessage() {}
 
 func (x *CancelSemanticMaintenanceWorkResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[8]
+	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[13]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -681,7 +1285,7 @@ func (x *CancelSemanticMaintenanceWorkResponse) ProtoReflect() protoreflect.Mess
 
 // Deprecated: Use CancelSemanticMaintenanceWorkResponse.ProtoReflect.Descriptor instead.
 func (*CancelSemanticMaintenanceWorkResponse) Descriptor() ([]byte, []int) {
-	return file_mycel_admin_v1_semantic_maintenance_proto_rawDescGZIP(), []int{8}
+	return file_mycel_admin_v1_semantic_maintenance_proto_rawDescGZIP(), []int{13}
 }
 
 func (x *CancelSemanticMaintenanceWorkResponse) GetItem() *SemanticMaintenanceWorkItem {
@@ -703,7 +1307,7 @@ type AnalyzeSemanticDirtyWorkRequest struct {
 
 func (x *AnalyzeSemanticDirtyWorkRequest) Reset() {
 	*x = AnalyzeSemanticDirtyWorkRequest{}
-	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[9]
+	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[14]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -715,7 +1319,7 @@ func (x *AnalyzeSemanticDirtyWorkRequest) String() string {
 func (*AnalyzeSemanticDirtyWorkRequest) ProtoMessage() {}
 
 func (x *AnalyzeSemanticDirtyWorkRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[9]
+	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[14]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -728,7 +1332,7 @@ func (x *AnalyzeSemanticDirtyWorkRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AnalyzeSemanticDirtyWorkRequest.ProtoReflect.Descriptor instead.
 func (*AnalyzeSemanticDirtyWorkRequest) Descriptor() ([]byte, []int) {
-	return file_mycel_admin_v1_semantic_maintenance_proto_rawDescGZIP(), []int{9}
+	return file_mycel_admin_v1_semantic_maintenance_proto_rawDescGZIP(), []int{14}
 }
 
 func (x *AnalyzeSemanticDirtyWorkRequest) GetSpaceId() string {
@@ -769,7 +1373,7 @@ type AnalyzeSemanticDirtyWorkResponse struct {
 
 func (x *AnalyzeSemanticDirtyWorkResponse) Reset() {
 	*x = AnalyzeSemanticDirtyWorkResponse{}
-	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[10]
+	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[15]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -781,7 +1385,7 @@ func (x *AnalyzeSemanticDirtyWorkResponse) String() string {
 func (*AnalyzeSemanticDirtyWorkResponse) ProtoMessage() {}
 
 func (x *AnalyzeSemanticDirtyWorkResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[10]
+	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[15]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -794,7 +1398,7 @@ func (x *AnalyzeSemanticDirtyWorkResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AnalyzeSemanticDirtyWorkResponse.ProtoReflect.Descriptor instead.
 func (*AnalyzeSemanticDirtyWorkResponse) Descriptor() ([]byte, []int) {
-	return file_mycel_admin_v1_semantic_maintenance_proto_rawDescGZIP(), []int{10}
+	return file_mycel_admin_v1_semantic_maintenance_proto_rawDescGZIP(), []int{15}
 }
 
 func (x *AnalyzeSemanticDirtyWorkResponse) GetProcessedEvents() int32 {
@@ -821,7 +1425,7 @@ type ProcessSemanticDirtyWorkRequest struct {
 
 func (x *ProcessSemanticDirtyWorkRequest) Reset() {
 	*x = ProcessSemanticDirtyWorkRequest{}
-	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[11]
+	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[16]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -833,7 +1437,7 @@ func (x *ProcessSemanticDirtyWorkRequest) String() string {
 func (*ProcessSemanticDirtyWorkRequest) ProtoMessage() {}
 
 func (x *ProcessSemanticDirtyWorkRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[11]
+	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[16]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -846,7 +1450,7 @@ func (x *ProcessSemanticDirtyWorkRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ProcessSemanticDirtyWorkRequest.ProtoReflect.Descriptor instead.
 func (*ProcessSemanticDirtyWorkRequest) Descriptor() ([]byte, []int) {
-	return file_mycel_admin_v1_semantic_maintenance_proto_rawDescGZIP(), []int{11}
+	return file_mycel_admin_v1_semantic_maintenance_proto_rawDescGZIP(), []int{16}
 }
 
 func (x *ProcessSemanticDirtyWorkRequest) GetSpaceId() string {
@@ -874,7 +1478,7 @@ type ProcessSemanticDirtyWorkResponse struct {
 
 func (x *ProcessSemanticDirtyWorkResponse) Reset() {
 	*x = ProcessSemanticDirtyWorkResponse{}
-	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[12]
+	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[17]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -886,7 +1490,7 @@ func (x *ProcessSemanticDirtyWorkResponse) String() string {
 func (*ProcessSemanticDirtyWorkResponse) ProtoMessage() {}
 
 func (x *ProcessSemanticDirtyWorkResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[12]
+	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[17]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -899,7 +1503,7 @@ func (x *ProcessSemanticDirtyWorkResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ProcessSemanticDirtyWorkResponse.ProtoReflect.Descriptor instead.
 func (*ProcessSemanticDirtyWorkResponse) Descriptor() ([]byte, []int) {
-	return file_mycel_admin_v1_semantic_maintenance_proto_rawDescGZIP(), []int{12}
+	return file_mycel_admin_v1_semantic_maintenance_proto_rawDescGZIP(), []int{17}
 }
 
 func (x *ProcessSemanticDirtyWorkResponse) GetProcessedItems() int32 {
@@ -938,7 +1542,7 @@ type BackfillSemanticRuleRequest struct {
 
 func (x *BackfillSemanticRuleRequest) Reset() {
 	*x = BackfillSemanticRuleRequest{}
-	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[13]
+	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[18]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -950,7 +1554,7 @@ func (x *BackfillSemanticRuleRequest) String() string {
 func (*BackfillSemanticRuleRequest) ProtoMessage() {}
 
 func (x *BackfillSemanticRuleRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[13]
+	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[18]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -963,7 +1567,7 @@ func (x *BackfillSemanticRuleRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use BackfillSemanticRuleRequest.ProtoReflect.Descriptor instead.
 func (*BackfillSemanticRuleRequest) Descriptor() ([]byte, []int) {
-	return file_mycel_admin_v1_semantic_maintenance_proto_rawDescGZIP(), []int{13}
+	return file_mycel_admin_v1_semantic_maintenance_proto_rawDescGZIP(), []int{18}
 }
 
 func (x *BackfillSemanticRuleRequest) GetSpaceId() string {
@@ -1031,7 +1635,7 @@ type BackfillSemanticRuleResponse struct {
 
 func (x *BackfillSemanticRuleResponse) Reset() {
 	*x = BackfillSemanticRuleResponse{}
-	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[14]
+	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[19]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1043,7 +1647,7 @@ func (x *BackfillSemanticRuleResponse) String() string {
 func (*BackfillSemanticRuleResponse) ProtoMessage() {}
 
 func (x *BackfillSemanticRuleResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[14]
+	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[19]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1056,7 +1660,7 @@ func (x *BackfillSemanticRuleResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use BackfillSemanticRuleResponse.ProtoReflect.Descriptor instead.
 func (*BackfillSemanticRuleResponse) Descriptor() ([]byte, []int) {
-	return file_mycel_admin_v1_semantic_maintenance_proto_rawDescGZIP(), []int{14}
+	return file_mycel_admin_v1_semantic_maintenance_proto_rawDescGZIP(), []int{19}
 }
 
 func (x *BackfillSemanticRuleResponse) GetSemanticRuleId() string {
@@ -1125,7 +1729,7 @@ type BackfillSkipped struct {
 
 func (x *BackfillSkipped) Reset() {
 	*x = BackfillSkipped{}
-	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[15]
+	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[20]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1137,7 +1741,7 @@ func (x *BackfillSkipped) String() string {
 func (*BackfillSkipped) ProtoMessage() {}
 
 func (x *BackfillSkipped) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[15]
+	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[20]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1150,7 +1754,7 @@ func (x *BackfillSkipped) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use BackfillSkipped.ProtoReflect.Descriptor instead.
 func (*BackfillSkipped) Descriptor() ([]byte, []int) {
-	return file_mycel_admin_v1_semantic_maintenance_proto_rawDescGZIP(), []int{15}
+	return file_mycel_admin_v1_semantic_maintenance_proto_rawDescGZIP(), []int{20}
 }
 
 func (x *BackfillSkipped) GetNodeId() string {
@@ -1177,7 +1781,7 @@ type BackfillFailure struct {
 
 func (x *BackfillFailure) Reset() {
 	*x = BackfillFailure{}
-	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[16]
+	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[21]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1189,7 +1793,7 @@ func (x *BackfillFailure) String() string {
 func (*BackfillFailure) ProtoMessage() {}
 
 func (x *BackfillFailure) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[16]
+	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[21]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1202,7 +1806,7 @@ func (x *BackfillFailure) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use BackfillFailure.ProtoReflect.Descriptor instead.
 func (*BackfillFailure) Descriptor() ([]byte, []int) {
-	return file_mycel_admin_v1_semantic_maintenance_proto_rawDescGZIP(), []int{16}
+	return file_mycel_admin_v1_semantic_maintenance_proto_rawDescGZIP(), []int{21}
 }
 
 func (x *BackfillFailure) GetNodeId() string {
@@ -1243,7 +1847,59 @@ const file_mycel_admin_v1_semantic_maintenance_proto_rawDesc = "" +
 	"\x0ethrottle_state\x18\r \x01(\tR\rthrottleState\x12#\n" +
 	"\ranalyzer_runs\x18\x0e \x01(\x05R\fanalyzerRuns\x12\x1f\n" +
 	"\vworker_runs\x18\x0f \x01(\x05R\n" +
-	"workerRuns\"\xcb\x01\n" +
+	"workerRuns\"\x9e\x01\n" +
+	"#GetSemanticReliabilityStatusRequest\x12\x19\n" +
+	"\bspace_id\x18\x01 \x01(\tR\aspaceId\x12(\n" +
+	"\x10semantic_rule_id\x18\x02 \x01(\tR\x0esemanticRuleId\x122\n" +
+	"\x15embedding_binding_key\x18\x03 \x01(\tR\x13embeddingBindingKey\"\xe7\t\n" +
+	"$GetSemanticReliabilityStatusResponse\x12\x19\n" +
+	"\bspace_id\x18\x01 \x01(\tR\aspaceId\x12(\n" +
+	"\x10semantic_rule_id\x18\x02 \x01(\tR\x0esemanticRuleId\x122\n" +
+	"\x15embedding_binding_key\x18\x03 \x01(\tR\x13embeddingBindingKey\x12C\n" +
+	"\x1elatest_observed_graph_revision\x18\x04 \x01(\x04R\x1blatestObservedGraphRevision\x12E\n" +
+	"\x1fanalyzed_through_graph_revision\x18\x05 \x01(\x04R\x1canalyzedThroughGraphRevision\x12?\n" +
+	"\x1cfresh_through_graph_revision\x18\x06 \x01(\x04R\x19freshThroughGraphRevision\x120\n" +
+	"\x14unresolved_gap_count\x18\a \x01(\x04R\x12unresolvedGapCount\x12G\n" +
+	" oldest_unresolved_graph_revision\x18\b \x01(\x04R\x1doldestUnresolvedGraphRevision\x12:\n" +
+	"\x19configured_frontier_limit\x18\t \x01(\x04R\x17configuredFrontierLimit\x127\n" +
+	"\x18retained_work_item_count\x18\n" +
+	" \x01(\x04R\x15retainedWorkItemCount\x12/\n" +
+	"\x13semantic_generation\x18\v \x01(\x04R\x12semanticGeneration\x12%\n" +
+	"\x0ecapacity_state\x18\f \x01(\tR\rcapacityState\x12\x1a\n" +
+	"\bdegraded\x18\r \x01(\bR\bdegraded\x12'\n" +
+	"\x0fdegraded_reason\x18\x0e \x01(\tR\x0edegradedReason\x12)\n" +
+	"\x10rebuild_required\x18\x0f \x01(\bR\x0frebuildRequired\x12?\n" +
+	"\arebuild\x18\x10 \x01(\v2%.mycel.admin.v1.SemanticRebuildStatusR\arebuild\x12A\n" +
+	"\x1dconfigured_gap_interval_limit\x18\x11 \x01(\x04R\x1aconfiguredGapIntervalLimit\x12C\n" +
+	"\x1econfigured_revision_span_limit\x18\x12 \x01(\x04R\x1bconfiguredRevisionSpanLimit\x12G\n" +
+	" configured_serialized_byte_limit\x18\x13 \x01(\x04R\x1dconfiguredSerializedByteLimit\x12=\n" +
+	"\x1bretained_gap_interval_count\x18\x14 \x01(\x04R\x18retainedGapIntervalCount\x124\n" +
+	"\x16retained_revision_span\x18\x15 \x01(\x04R\x14retainedRevisionSpan\x12:\n" +
+	"\x19retained_serialized_bytes\x18\x16 \x01(\x04R\x17retainedSerializedBytes\"\xff\x02\n" +
+	"\x15SemanticRebuildStatus\x12#\n" +
+	"\rrebuild_epoch\x18\x01 \x01(\tR\frebuildEpoch\x12\x14\n" +
+	"\x05state\x18\x02 \x01(\tR\x05state\x12?\n" +
+	"\x1cpinned_target_graph_revision\x18\x03 \x01(\x04R\x19pinnedTargetGraphRevision\x12?\n" +
+	"\x1cdelta_catchup_graph_revision\x18\x04 \x01(\x04R\x19deltaCatchupGraphRevision\x12/\n" +
+	"\x13semantic_generation\x18\x05 \x01(\x04R\x12semanticGeneration\x12\x1d\n" +
+	"\n" +
+	"started_at\x18\x06 \x01(\tR\tstartedAt\x12!\n" +
+	"\fcompleted_at\x18\a \x01(\tR\vcompletedAt\x126\n" +
+	"\x17error_message_sanitized\x18\b \x01(\tR\x15errorMessageSanitized\"\xaa\x02\n" +
+	"\x1aRebuildSemanticRuleRequest\x12\x19\n" +
+	"\bspace_id\x18\x01 \x01(\tR\aspaceId\x12(\n" +
+	"\x10semantic_rule_id\x18\x02 \x01(\tR\x0esemanticRuleId\x122\n" +
+	"\x15embedding_binding_key\x18\x03 \x01(\tR\x13embeddingBindingKey\x12%\n" +
+	"\x0ebackfill_limit\x18\x04 \x01(\x05R\rbackfillLimit\x126\n" +
+	"\x17maintenance_batch_limit\x18\x05 \x01(\x05R\x15maintenanceBatchLimit\x124\n" +
+	"\x16max_catchup_iterations\x18\x06 \x01(\x05R\x14maxCatchupIterations\"\xce\x02\n" +
+	"\x1bRebuildSemanticRuleResponse\x12?\n" +
+	"\arebuild\x18\x01 \x01(\v2%.mycel.admin.v1.SemanticRebuildStatusR\arebuild\x12V\n" +
+	"\vreliability\x18\x02 \x01(\v24.mycel.admin.v1.GetSemanticReliabilityStatusResponseR\vreliability\x12%\n" +
+	"\x0eselected_count\x18\x03 \x01(\x05R\rselectedCount\x12'\n" +
+	"\x0fgenerated_count\x18\x04 \x01(\x05R\x0egeneratedCount\x12#\n" +
+	"\rskipped_count\x18\x05 \x01(\x05R\fskippedCount\x12!\n" +
+	"\ffailed_count\x18\x06 \x01(\x05R\vfailedCount\"\xcb\x01\n" +
 	"\"ListSemanticMaintenanceWorkRequest\x12\x19\n" +
 	"\bspace_id\x18\x01 \x01(\tR\aspaceId\x12\x16\n" +
 	"\x06status\x18\x02 \x01(\tR\x06status\x12\x14\n" +
@@ -1251,7 +1907,7 @@ const file_mycel_admin_v1_semantic_maintenance_proto_rawDesc = "" +
 	"\x10semantic_rule_id\x18\x04 \x01(\tR\x0esemanticRuleId\x122\n" +
 	"\x15embedding_binding_key\x18\x05 \x01(\tR\x13embeddingBindingKey\"h\n" +
 	"#ListSemanticMaintenanceWorkResponse\x12A\n" +
-	"\x05items\x18\x01 \x03(\v2+.mycel.admin.v1.SemanticMaintenanceWorkItemR\x05items\"\xc3\x04\n" +
+	"\x05items\x18\x01 \x03(\v2+.mycel.admin.v1.SemanticMaintenanceWorkItemR\x05items\"\xce\x05\n" +
 	"\x1bSemanticMaintenanceWorkItem\x12 \n" +
 	"\fwork_item_id\x18\x01 \x01(\tR\n" +
 	"workItemId\x12\x19\n" +
@@ -1272,7 +1928,10 @@ const file_mycel_admin_v1_semantic_maintenance_proto_rawDesc = "" +
 	"\n" +
 	"created_at\x18\x0e \x01(\tR\tcreatedAt\x12\x1d\n" +
 	"\n" +
-	"updated_at\x18\x0f \x01(\tR\tupdatedAt\"b\n" +
+	"updated_at\x18\x0f \x01(\tR\tupdatedAt\x120\n" +
+	"\x14first_graph_revision\x18\x10 \x01(\x04R\x12firstGraphRevision\x12.\n" +
+	"\x13last_graph_revision\x18\x11 \x01(\x04R\x11lastGraphRevision\x12'\n" +
+	"\x0fwork_generation\x18\x12 \x01(\x04R\x0eworkGeneration\"b\n" +
 	"#RetrySemanticMaintenanceWorkRequest\x12\x19\n" +
 	"\bspace_id\x18\x01 \x01(\tR\aspaceId\x12 \n" +
 	"\fwork_item_id\x18\x02 \x01(\tR\n" +
@@ -1322,9 +1981,11 @@ const file_mycel_admin_v1_semantic_maintenance_proto_rawDesc = "" +
 	"\x06reason\x18\x02 \x01(\tR\x06reason\"@\n" +
 	"\x0fBackfillFailure\x12\x17\n" +
 	"\anode_id\x18\x01 \x01(\tR\x06nodeId\x12\x14\n" +
-	"\x05error\x18\x02 \x01(\tR\x05error2\xc2\a\n" +
+	"\x05error\x18\x02 \x01(\tR\x05error2\xbe\t\n" +
 	"\x1fAdminSemanticMaintenanceService\x12\x89\x01\n" +
-	"\x1cGetSemanticMaintenanceStatus\x123.mycel.admin.v1.GetSemanticMaintenanceStatusRequest\x1a4.mycel.admin.v1.GetSemanticMaintenanceStatusResponse\x12\x86\x01\n" +
+	"\x1cGetSemanticMaintenanceStatus\x123.mycel.admin.v1.GetSemanticMaintenanceStatusRequest\x1a4.mycel.admin.v1.GetSemanticMaintenanceStatusResponse\x12\x89\x01\n" +
+	"\x1cGetSemanticReliabilityStatus\x123.mycel.admin.v1.GetSemanticReliabilityStatusRequest\x1a4.mycel.admin.v1.GetSemanticReliabilityStatusResponse\x12n\n" +
+	"\x13RebuildSemanticRule\x12*.mycel.admin.v1.RebuildSemanticRuleRequest\x1a+.mycel.admin.v1.RebuildSemanticRuleResponse\x12\x86\x01\n" +
 	"\x1bListSemanticMaintenanceWork\x122.mycel.admin.v1.ListSemanticMaintenanceWorkRequest\x1a3.mycel.admin.v1.ListSemanticMaintenanceWorkResponse\x12\x89\x01\n" +
 	"\x1cRetrySemanticMaintenanceWork\x123.mycel.admin.v1.RetrySemanticMaintenanceWorkRequest\x1a4.mycel.admin.v1.RetrySemanticMaintenanceWorkResponse\x12\x8c\x01\n" +
 	"\x1dCancelSemanticMaintenanceWork\x124.mycel.admin.v1.CancelSemanticMaintenanceWorkRequest\x1a5.mycel.admin.v1.CancelSemanticMaintenanceWorkResponse\x12}\n" +
@@ -1345,51 +2006,63 @@ func file_mycel_admin_v1_semantic_maintenance_proto_rawDescGZIP() []byte {
 	return file_mycel_admin_v1_semantic_maintenance_proto_rawDescData
 }
 
-var file_mycel_admin_v1_semantic_maintenance_proto_msgTypes = make([]protoimpl.MessageInfo, 17)
+var file_mycel_admin_v1_semantic_maintenance_proto_msgTypes = make([]protoimpl.MessageInfo, 22)
 var file_mycel_admin_v1_semantic_maintenance_proto_goTypes = []any{
 	(*GetSemanticMaintenanceStatusRequest)(nil),   // 0: mycel.admin.v1.GetSemanticMaintenanceStatusRequest
 	(*GetSemanticMaintenanceStatusResponse)(nil),  // 1: mycel.admin.v1.GetSemanticMaintenanceStatusResponse
-	(*ListSemanticMaintenanceWorkRequest)(nil),    // 2: mycel.admin.v1.ListSemanticMaintenanceWorkRequest
-	(*ListSemanticMaintenanceWorkResponse)(nil),   // 3: mycel.admin.v1.ListSemanticMaintenanceWorkResponse
-	(*SemanticMaintenanceWorkItem)(nil),           // 4: mycel.admin.v1.SemanticMaintenanceWorkItem
-	(*RetrySemanticMaintenanceWorkRequest)(nil),   // 5: mycel.admin.v1.RetrySemanticMaintenanceWorkRequest
-	(*RetrySemanticMaintenanceWorkResponse)(nil),  // 6: mycel.admin.v1.RetrySemanticMaintenanceWorkResponse
-	(*CancelSemanticMaintenanceWorkRequest)(nil),  // 7: mycel.admin.v1.CancelSemanticMaintenanceWorkRequest
-	(*CancelSemanticMaintenanceWorkResponse)(nil), // 8: mycel.admin.v1.CancelSemanticMaintenanceWorkResponse
-	(*AnalyzeSemanticDirtyWorkRequest)(nil),       // 9: mycel.admin.v1.AnalyzeSemanticDirtyWorkRequest
-	(*AnalyzeSemanticDirtyWorkResponse)(nil),      // 10: mycel.admin.v1.AnalyzeSemanticDirtyWorkResponse
-	(*ProcessSemanticDirtyWorkRequest)(nil),       // 11: mycel.admin.v1.ProcessSemanticDirtyWorkRequest
-	(*ProcessSemanticDirtyWorkResponse)(nil),      // 12: mycel.admin.v1.ProcessSemanticDirtyWorkResponse
-	(*BackfillSemanticRuleRequest)(nil),           // 13: mycel.admin.v1.BackfillSemanticRuleRequest
-	(*BackfillSemanticRuleResponse)(nil),          // 14: mycel.admin.v1.BackfillSemanticRuleResponse
-	(*BackfillSkipped)(nil),                       // 15: mycel.admin.v1.BackfillSkipped
-	(*BackfillFailure)(nil),                       // 16: mycel.admin.v1.BackfillFailure
+	(*GetSemanticReliabilityStatusRequest)(nil),   // 2: mycel.admin.v1.GetSemanticReliabilityStatusRequest
+	(*GetSemanticReliabilityStatusResponse)(nil),  // 3: mycel.admin.v1.GetSemanticReliabilityStatusResponse
+	(*SemanticRebuildStatus)(nil),                 // 4: mycel.admin.v1.SemanticRebuildStatus
+	(*RebuildSemanticRuleRequest)(nil),            // 5: mycel.admin.v1.RebuildSemanticRuleRequest
+	(*RebuildSemanticRuleResponse)(nil),           // 6: mycel.admin.v1.RebuildSemanticRuleResponse
+	(*ListSemanticMaintenanceWorkRequest)(nil),    // 7: mycel.admin.v1.ListSemanticMaintenanceWorkRequest
+	(*ListSemanticMaintenanceWorkResponse)(nil),   // 8: mycel.admin.v1.ListSemanticMaintenanceWorkResponse
+	(*SemanticMaintenanceWorkItem)(nil),           // 9: mycel.admin.v1.SemanticMaintenanceWorkItem
+	(*RetrySemanticMaintenanceWorkRequest)(nil),   // 10: mycel.admin.v1.RetrySemanticMaintenanceWorkRequest
+	(*RetrySemanticMaintenanceWorkResponse)(nil),  // 11: mycel.admin.v1.RetrySemanticMaintenanceWorkResponse
+	(*CancelSemanticMaintenanceWorkRequest)(nil),  // 12: mycel.admin.v1.CancelSemanticMaintenanceWorkRequest
+	(*CancelSemanticMaintenanceWorkResponse)(nil), // 13: mycel.admin.v1.CancelSemanticMaintenanceWorkResponse
+	(*AnalyzeSemanticDirtyWorkRequest)(nil),       // 14: mycel.admin.v1.AnalyzeSemanticDirtyWorkRequest
+	(*AnalyzeSemanticDirtyWorkResponse)(nil),      // 15: mycel.admin.v1.AnalyzeSemanticDirtyWorkResponse
+	(*ProcessSemanticDirtyWorkRequest)(nil),       // 16: mycel.admin.v1.ProcessSemanticDirtyWorkRequest
+	(*ProcessSemanticDirtyWorkResponse)(nil),      // 17: mycel.admin.v1.ProcessSemanticDirtyWorkResponse
+	(*BackfillSemanticRuleRequest)(nil),           // 18: mycel.admin.v1.BackfillSemanticRuleRequest
+	(*BackfillSemanticRuleResponse)(nil),          // 19: mycel.admin.v1.BackfillSemanticRuleResponse
+	(*BackfillSkipped)(nil),                       // 20: mycel.admin.v1.BackfillSkipped
+	(*BackfillFailure)(nil),                       // 21: mycel.admin.v1.BackfillFailure
 }
 var file_mycel_admin_v1_semantic_maintenance_proto_depIdxs = []int32{
-	4,  // 0: mycel.admin.v1.ListSemanticMaintenanceWorkResponse.items:type_name -> mycel.admin.v1.SemanticMaintenanceWorkItem
-	4,  // 1: mycel.admin.v1.RetrySemanticMaintenanceWorkResponse.item:type_name -> mycel.admin.v1.SemanticMaintenanceWorkItem
-	4,  // 2: mycel.admin.v1.CancelSemanticMaintenanceWorkResponse.item:type_name -> mycel.admin.v1.SemanticMaintenanceWorkItem
-	15, // 3: mycel.admin.v1.BackfillSemanticRuleResponse.skipped:type_name -> mycel.admin.v1.BackfillSkipped
-	16, // 4: mycel.admin.v1.BackfillSemanticRuleResponse.failures:type_name -> mycel.admin.v1.BackfillFailure
-	0,  // 5: mycel.admin.v1.AdminSemanticMaintenanceService.GetSemanticMaintenanceStatus:input_type -> mycel.admin.v1.GetSemanticMaintenanceStatusRequest
-	2,  // 6: mycel.admin.v1.AdminSemanticMaintenanceService.ListSemanticMaintenanceWork:input_type -> mycel.admin.v1.ListSemanticMaintenanceWorkRequest
-	5,  // 7: mycel.admin.v1.AdminSemanticMaintenanceService.RetrySemanticMaintenanceWork:input_type -> mycel.admin.v1.RetrySemanticMaintenanceWorkRequest
-	7,  // 8: mycel.admin.v1.AdminSemanticMaintenanceService.CancelSemanticMaintenanceWork:input_type -> mycel.admin.v1.CancelSemanticMaintenanceWorkRequest
-	9,  // 9: mycel.admin.v1.AdminSemanticMaintenanceService.AnalyzeSemanticDirtyWork:input_type -> mycel.admin.v1.AnalyzeSemanticDirtyWorkRequest
-	11, // 10: mycel.admin.v1.AdminSemanticMaintenanceService.ProcessSemanticDirtyWork:input_type -> mycel.admin.v1.ProcessSemanticDirtyWorkRequest
-	13, // 11: mycel.admin.v1.AdminSemanticMaintenanceService.BackfillSemanticRule:input_type -> mycel.admin.v1.BackfillSemanticRuleRequest
-	1,  // 12: mycel.admin.v1.AdminSemanticMaintenanceService.GetSemanticMaintenanceStatus:output_type -> mycel.admin.v1.GetSemanticMaintenanceStatusResponse
-	3,  // 13: mycel.admin.v1.AdminSemanticMaintenanceService.ListSemanticMaintenanceWork:output_type -> mycel.admin.v1.ListSemanticMaintenanceWorkResponse
-	6,  // 14: mycel.admin.v1.AdminSemanticMaintenanceService.RetrySemanticMaintenanceWork:output_type -> mycel.admin.v1.RetrySemanticMaintenanceWorkResponse
-	8,  // 15: mycel.admin.v1.AdminSemanticMaintenanceService.CancelSemanticMaintenanceWork:output_type -> mycel.admin.v1.CancelSemanticMaintenanceWorkResponse
-	10, // 16: mycel.admin.v1.AdminSemanticMaintenanceService.AnalyzeSemanticDirtyWork:output_type -> mycel.admin.v1.AnalyzeSemanticDirtyWorkResponse
-	12, // 17: mycel.admin.v1.AdminSemanticMaintenanceService.ProcessSemanticDirtyWork:output_type -> mycel.admin.v1.ProcessSemanticDirtyWorkResponse
-	14, // 18: mycel.admin.v1.AdminSemanticMaintenanceService.BackfillSemanticRule:output_type -> mycel.admin.v1.BackfillSemanticRuleResponse
-	12, // [12:19] is the sub-list for method output_type
-	5,  // [5:12] is the sub-list for method input_type
-	5,  // [5:5] is the sub-list for extension type_name
-	5,  // [5:5] is the sub-list for extension extendee
-	0,  // [0:5] is the sub-list for field type_name
+	4,  // 0: mycel.admin.v1.GetSemanticReliabilityStatusResponse.rebuild:type_name -> mycel.admin.v1.SemanticRebuildStatus
+	4,  // 1: mycel.admin.v1.RebuildSemanticRuleResponse.rebuild:type_name -> mycel.admin.v1.SemanticRebuildStatus
+	3,  // 2: mycel.admin.v1.RebuildSemanticRuleResponse.reliability:type_name -> mycel.admin.v1.GetSemanticReliabilityStatusResponse
+	9,  // 3: mycel.admin.v1.ListSemanticMaintenanceWorkResponse.items:type_name -> mycel.admin.v1.SemanticMaintenanceWorkItem
+	9,  // 4: mycel.admin.v1.RetrySemanticMaintenanceWorkResponse.item:type_name -> mycel.admin.v1.SemanticMaintenanceWorkItem
+	9,  // 5: mycel.admin.v1.CancelSemanticMaintenanceWorkResponse.item:type_name -> mycel.admin.v1.SemanticMaintenanceWorkItem
+	20, // 6: mycel.admin.v1.BackfillSemanticRuleResponse.skipped:type_name -> mycel.admin.v1.BackfillSkipped
+	21, // 7: mycel.admin.v1.BackfillSemanticRuleResponse.failures:type_name -> mycel.admin.v1.BackfillFailure
+	0,  // 8: mycel.admin.v1.AdminSemanticMaintenanceService.GetSemanticMaintenanceStatus:input_type -> mycel.admin.v1.GetSemanticMaintenanceStatusRequest
+	2,  // 9: mycel.admin.v1.AdminSemanticMaintenanceService.GetSemanticReliabilityStatus:input_type -> mycel.admin.v1.GetSemanticReliabilityStatusRequest
+	5,  // 10: mycel.admin.v1.AdminSemanticMaintenanceService.RebuildSemanticRule:input_type -> mycel.admin.v1.RebuildSemanticRuleRequest
+	7,  // 11: mycel.admin.v1.AdminSemanticMaintenanceService.ListSemanticMaintenanceWork:input_type -> mycel.admin.v1.ListSemanticMaintenanceWorkRequest
+	10, // 12: mycel.admin.v1.AdminSemanticMaintenanceService.RetrySemanticMaintenanceWork:input_type -> mycel.admin.v1.RetrySemanticMaintenanceWorkRequest
+	12, // 13: mycel.admin.v1.AdminSemanticMaintenanceService.CancelSemanticMaintenanceWork:input_type -> mycel.admin.v1.CancelSemanticMaintenanceWorkRequest
+	14, // 14: mycel.admin.v1.AdminSemanticMaintenanceService.AnalyzeSemanticDirtyWork:input_type -> mycel.admin.v1.AnalyzeSemanticDirtyWorkRequest
+	16, // 15: mycel.admin.v1.AdminSemanticMaintenanceService.ProcessSemanticDirtyWork:input_type -> mycel.admin.v1.ProcessSemanticDirtyWorkRequest
+	18, // 16: mycel.admin.v1.AdminSemanticMaintenanceService.BackfillSemanticRule:input_type -> mycel.admin.v1.BackfillSemanticRuleRequest
+	1,  // 17: mycel.admin.v1.AdminSemanticMaintenanceService.GetSemanticMaintenanceStatus:output_type -> mycel.admin.v1.GetSemanticMaintenanceStatusResponse
+	3,  // 18: mycel.admin.v1.AdminSemanticMaintenanceService.GetSemanticReliabilityStatus:output_type -> mycel.admin.v1.GetSemanticReliabilityStatusResponse
+	6,  // 19: mycel.admin.v1.AdminSemanticMaintenanceService.RebuildSemanticRule:output_type -> mycel.admin.v1.RebuildSemanticRuleResponse
+	8,  // 20: mycel.admin.v1.AdminSemanticMaintenanceService.ListSemanticMaintenanceWork:output_type -> mycel.admin.v1.ListSemanticMaintenanceWorkResponse
+	11, // 21: mycel.admin.v1.AdminSemanticMaintenanceService.RetrySemanticMaintenanceWork:output_type -> mycel.admin.v1.RetrySemanticMaintenanceWorkResponse
+	13, // 22: mycel.admin.v1.AdminSemanticMaintenanceService.CancelSemanticMaintenanceWork:output_type -> mycel.admin.v1.CancelSemanticMaintenanceWorkResponse
+	15, // 23: mycel.admin.v1.AdminSemanticMaintenanceService.AnalyzeSemanticDirtyWork:output_type -> mycel.admin.v1.AnalyzeSemanticDirtyWorkResponse
+	17, // 24: mycel.admin.v1.AdminSemanticMaintenanceService.ProcessSemanticDirtyWork:output_type -> mycel.admin.v1.ProcessSemanticDirtyWorkResponse
+	19, // 25: mycel.admin.v1.AdminSemanticMaintenanceService.BackfillSemanticRule:output_type -> mycel.admin.v1.BackfillSemanticRuleResponse
+	17, // [17:26] is the sub-list for method output_type
+	8,  // [8:17] is the sub-list for method input_type
+	8,  // [8:8] is the sub-list for extension type_name
+	8,  // [8:8] is the sub-list for extension extendee
+	0,  // [0:8] is the sub-list for field type_name
 }
 
 func init() { file_mycel_admin_v1_semantic_maintenance_proto_init() }
@@ -1403,7 +2076,7 @@ func file_mycel_admin_v1_semantic_maintenance_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_mycel_admin_v1_semantic_maintenance_proto_rawDesc), len(file_mycel_admin_v1_semantic_maintenance_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   17,
+			NumMessages:   22,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

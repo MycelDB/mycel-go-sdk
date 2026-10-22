@@ -6,6 +6,15 @@ This project follows the spirit of [Keep a Changelog](https://keepachangelog.com
 
 ## [Unreleased]
 
+### Added
+
+- Regenerated Go bindings for direct semantic pagination, hard-eligibility filters, safe result provenance, and Admin semantic reliability/rebuild diagnostics.
+
+### Compatibility
+
+- Generated additions require a daemon advertising the corresponding semantic reliability capability when applications depend on the new RPCs.
+- `AdminSemanticMaintenanceServiceClient` and `AdminSemanticMaintenanceServiceServer` add the reliability-status and rebuild methods. Custom interface implementations and test doubles must implement them; servers embedding `UnimplementedAdminSemanticMaintenanceServiceServer` inherit forward-compatible stubs.
+
 ## [v0.20.1] - 2026-10-20
 
 ### Fixed
