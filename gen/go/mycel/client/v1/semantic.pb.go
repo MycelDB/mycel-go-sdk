@@ -338,12 +338,19 @@ type SemanticSearchRequest struct {
 	// higher scores should represent more relevant results.
 	MinScore *float64 `protobuf:"fixed64,7,opt,name=min_score,json=minScore,proto3,oneof" json:"min_score,omitempty"`
 	// Opaque direct-semantic continuation. The daemon binds this token to the
-	// authenticated visibility scope, graph/index view, query, rule, binding,
-	// route, ranking version, and continuation position.
+	// authenticated visibility scope, graph/index view, ranking version,
+	// continuation position, canonical normalized filter, and every
+	// result-affecting request field except page_token, including the query,
+	// limit, score threshold, rule, and binding. A malformed or integrity-invalid
+	// token fails with INVALID_ARGUMENT. A valid token used with a different
+	// request/scope or a stale graph, rule, binding, route, generation, ranking,
+	// or candidate view fails with FAILED_PRECONDITION.
 	PageToken *string `protobuf:"bytes,8,opt,name=page_token,json=pageToken,proto3,oneof" json:"page_token,omitempty"`
 	// Optional hard-eligibility filter for direct semantic candidates. The
 	// daemon authorizes graph visibility before evaluating properties and
-	// applies eligibility before score thresholding and page truncation.
+	// applies eligibility before score thresholding, ranking, and page
+	// truncation. All labels, node IDs, and property predicates are combined
+	// with logical AND.
 	Filter        *SemanticEligibilityFilter `protobuf:"bytes,9,opt,name=filter,proto3" json:"filter,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -450,12 +457,24 @@ type SemanticSearchResponse struct {
 	// must not include secrets.
 	Warnings []string `protobuf:"bytes,2,rep,name=warnings,proto3" json:"warnings,omitempty"`
 	// Opaque continuation for the same direct-semantic request and authorized
-	// read/index view. A stale or mismatched token fails explicitly.
+	// read/index view. See SemanticSearchRequest.page_token for binding and
+	// error semantics.
 	NextPageToken string `protobuf:"bytes,3,opt,name=next_page_token,json=nextPageToken,proto3" json:"next_page_token,omitempty"`
+	// Empty when no filter was requested; otherwise
 	// "semantic_index_pushdown" or "authorized_candidate_post_filter".
-	FilterExecutionMode        string `protobuf:"bytes,4,opt,name=filter_execution_mode,json=filterExecutionMode,proto3" json:"filter_execution_mode,omitempty"`
-	ExaminedSemanticCandidates int32  `protobuf:"varint,5,opt,name=examined_semantic_candidates,json=examinedSemanticCandidates,proto3" json:"examined_semantic_candidates,omitempty"`
-	EligibleSemanticCandidates int32  `protobuf:"varint,6,opt,name=eligible_semantic_candidates,json=eligibleSemanticCandidates,proto3" json:"eligible_semantic_candidates,omitempty"`
+	FilterExecutionMode string `protobuf:"bytes,4,opt,name=filter_execution_mode,json=filterExecutionMode,proto3" json:"filter_execution_mode,omitempty"`
+	// Number of caller-visible, authorized semantic candidates examined. This
+	// never includes candidates hidden by graph or semantic authorization.
+	// Implementations that cannot produce this count without disclosure return
+	// zero rather than exposing a pre-authorization count.
+	ExaminedSemanticCandidates int32 `protobuf:"varint,5,opt,name=examined_semantic_candidates,json=examinedSemanticCandidates,proto3" json:"examined_semantic_candidates,omitempty"`
+	// Number of caller-visible, authorized candidates satisfying the hard
+	// filter. In authorized_candidate_post_filter mode this is counted before
+	// minimum-score evaluation, ranking, and page truncation. When execution mode
+	// is empty because no hard filter was requested, it equals
+	// examined_semantic_candidates after any backend minimum-score evaluation.
+	// Implementations that cannot produce this safely return zero.
+	EligibleSemanticCandidates int32 `protobuf:"varint,6,opt,name=eligible_semantic_candidates,json=eligibleSemanticCandidates,proto3" json:"eligible_semantic_candidates,omitempty"`
 	unknownFields              protoimpl.UnknownFields
 	sizeCache                  protoimpl.SizeCache
 }
@@ -597,10 +616,18 @@ func (x *SemanticEligibilityFilter) GetProperties() []*SemanticPropertyPredicate
 }
 
 type SemanticPropertyPredicate struct {
-	state         protoimpl.MessageState   `protogen:"open.v1"`
-	Key           string                   `protobuf:"bytes,1,opt,name=key,proto3" json:"key,omitempty"`
-	Operator      SemanticPropertyOperator `protobuf:"varint,2,opt,name=operator,proto3,enum=mycel.client.v1.SemanticPropertyOperator" json:"operator,omitempty"`
-	Value         *structpb.Value          `protobuf:"bytes,3,opt,name=value,proto3" json:"value,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	Key   string                 `protobuf:"bytes,1,opt,name=key,proto3" json:"key,omitempty"`
+	// UNSPECIFIED and unknown operators are invalid and fail with
+	// INVALID_ARGUMENT.
+	Operator SemanticPropertyOperator `protobuf:"varint,2,opt,name=operator,proto3,enum=mycel.client.v1.SemanticPropertyOperator" json:"operator,omitempty"`
+	// EQUAL and NOT_EQUAL require value. Equality is exact, type-sensitive
+	// protobuf Value equality: scalar kinds and values must match, list order and
+	// elements must match, and struct key/value mappings must match. A missing
+	// key satisfies neither EQUAL nor NOT_EQUAL. EXISTS and MISSING reject a
+	// supplied value; EXISTS is true for a present key including null, while
+	// MISSING is true only when the key is absent.
+	Value         *structpb.Value `protobuf:"bytes,3,opt,name=value,proto3" json:"value,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }

@@ -294,16 +294,30 @@ type GetSemanticReliabilityStatusResponse struct {
 	// Ingestion cursor only: events through this revision were classified. This
 	// field is not a semantic freshness claim.
 	AnalyzedThroughGraphRevision uint64 `protobuf:"varint,5,opt,name=analyzed_through_graph_revision,json=analyzedThroughGraphRevision,proto3" json:"analyzed_through_graph_revision,omitempty"`
-	// Highest contiguous revision whose required semantic outcomes are terminal.
+	// Highest contiguous revision whose required semantic outcomes completed
+	// successfully for semantic_generation. Successful outcomes are a published
+	// current record, an applied delete, an explicit policy no-op/skip, or work
+	// reconciled by a completed rebuild. Pending, running, retryable/permanent
+	// failure, or cancellation never permits this frontier to cross the affected
+	// revision.
+	//
+	// Freshness through revision R is proved only when this field is >= R and
+	// the same response has the expected semantic_generation, zero unresolved
+	// gaps, capacity_state "ok", degraded false, and rebuild_required false,
+	// with rebuild.state neither "required", "running", nor "failed".
 	FreshThroughGraphRevision uint64 `protobuf:"varint,6,opt,name=fresh_through_graph_revision,json=freshThroughGraphRevision,proto3" json:"fresh_through_graph_revision,omitempty"`
 	// Bounded unresolved interval diagnostics; these expose no node/source text.
 	UnresolvedGapCount            uint64 `protobuf:"varint,7,opt,name=unresolved_gap_count,json=unresolvedGapCount,proto3" json:"unresolved_gap_count,omitempty"`
 	OldestUnresolvedGraphRevision uint64 `protobuf:"varint,8,opt,name=oldest_unresolved_graph_revision,json=oldestUnresolvedGraphRevision,proto3" json:"oldest_unresolved_graph_revision,omitempty"`
 	ConfiguredFrontierLimit       uint64 `protobuf:"varint,9,opt,name=configured_frontier_limit,json=configuredFrontierLimit,proto3" json:"configured_frontier_limit,omitempty"`
 	RetainedWorkItemCount         uint64 `protobuf:"varint,10,opt,name=retained_work_item_count,json=retainedWorkItemCount,proto3" json:"retained_work_item_count,omitempty"`
-	// Generation rotates for incompatible semantic configuration changes.
+	// Generation rotates for incompatible semantic configuration changes. A
+	// rotation resets fresh_through_graph_revision and requires a rebuilt
+	// baseline for the new generation; values from different generations must
+	// never be combined into one freshness claim.
 	SemanticGeneration uint64 `protobuf:"varint,11,opt,name=semantic_generation,json=semanticGeneration,proto3" json:"semantic_generation,omitempty"`
-	// "ok" or "exhausted". Exhaustion is restart-safe and requires rebuild.
+	// "ok" or "exhausted". Exhaustion is restart-safe, invalidates freshness,
+	// and requires rebuild.
 	CapacityState string `protobuf:"bytes,12,opt,name=capacity_state,json=capacityState,proto3" json:"capacity_state,omitempty"`
 	Degraded      bool   `protobuf:"varint,13,opt,name=degraded,proto3" json:"degraded,omitempty"`
 	// Bounded sanitized operator diagnostic; provider bodies are excluded.
@@ -505,17 +519,34 @@ func (x *GetSemanticReliabilityStatusResponse) GetRetainedSerializedBytes() uint
 }
 
 type SemanticRebuildStatus struct {
-	state                     protoimpl.MessageState `protogen:"open.v1"`
-	RebuildEpoch              string                 `protobuf:"bytes,1,opt,name=rebuild_epoch,json=rebuildEpoch,proto3" json:"rebuild_epoch,omitempty"`
-	State                     string                 `protobuf:"bytes,2,opt,name=state,proto3" json:"state,omitempty"`
-	PinnedTargetGraphRevision uint64                 `protobuf:"varint,3,opt,name=pinned_target_graph_revision,json=pinnedTargetGraphRevision,proto3" json:"pinned_target_graph_revision,omitempty"`
-	DeltaCatchupGraphRevision uint64                 `protobuf:"varint,4,opt,name=delta_catchup_graph_revision,json=deltaCatchupGraphRevision,proto3" json:"delta_catchup_graph_revision,omitempty"`
-	SemanticGeneration        uint64                 `protobuf:"varint,5,opt,name=semantic_generation,json=semanticGeneration,proto3" json:"semantic_generation,omitempty"`
-	StartedAt                 string                 `protobuf:"bytes,6,opt,name=started_at,json=startedAt,proto3" json:"started_at,omitempty"`
-	CompletedAt               string                 `protobuf:"bytes,7,opt,name=completed_at,json=completedAt,proto3" json:"completed_at,omitempty"`
-	ErrorMessageSanitized     string                 `protobuf:"bytes,8,opt,name=error_message_sanitized,json=errorMessageSanitized,proto3" json:"error_message_sanitized,omitempty"`
-	unknownFields             protoimpl.UnknownFields
-	sizeCache                 protoimpl.SizeCache
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Unique identity for one accepted rebuild invocation. Each accepted request
+	// creates a new epoch; clients use it to detect replacement or takeover.
+	RebuildEpoch string `protobuf:"bytes,1,opt,name=rebuild_epoch,json=rebuildEpoch,proto3" json:"rebuild_epoch,omitempty"`
+	// Closed value set: empty means no rebuild has been recorded; "required"
+	// means the current generation lacks a valid baseline; "running" is
+	// non-terminal; "completed" is successful terminal state; and "failed" is
+	// unsuccessful terminal state. Unknown values must be treated as not ready.
+	State string `protobuf:"bytes,2,opt,name=state,proto3" json:"state,omitempty"`
+	// Graph revision pinned for the reconciled full baseline.
+	PinnedTargetGraphRevision uint64 `protobuf:"varint,3,opt,name=pinned_target_graph_revision,json=pinnedTargetGraphRevision,proto3" json:"pinned_target_graph_revision,omitempty"`
+	// Latest graph revision accounted by delta catch-up. On completed state it
+	// reaches at least the latest revision observed before completion.
+	DeltaCatchupGraphRevision uint64 `protobuf:"varint,4,opt,name=delta_catchup_graph_revision,json=deltaCatchupGraphRevision,proto3" json:"delta_catchup_graph_revision,omitempty"`
+	// Generation rebuilt by this epoch. Rebuild itself does not rotate the
+	// generation; incompatible configuration changes rotate it before rebuild.
+	SemanticGeneration uint64 `protobuf:"varint,5,opt,name=semantic_generation,json=semanticGeneration,proto3" json:"semantic_generation,omitempty"`
+	// RFC 3339 timestamps. completed_at identifies the most recent successfully
+	// completed baseline for this epoch. It may remain populated if a later
+	// configuration change or capacity marker changes state from "completed" to
+	// "required"; it is not evidence that the current state is completed.
+	StartedAt   string `protobuf:"bytes,6,opt,name=started_at,json=startedAt,proto3" json:"started_at,omitempty"`
+	CompletedAt string `protobuf:"bytes,7,opt,name=completed_at,json=completedAt,proto3" json:"completed_at,omitempty"`
+	// Bounded operator-safe failure detail; credentials and provider bodies are
+	// excluded.
+	ErrorMessageSanitized string `protobuf:"bytes,8,opt,name=error_message_sanitized,json=errorMessageSanitized,proto3" json:"error_message_sanitized,omitempty"`
+	unknownFields         protoimpl.UnknownFields
+	sizeCache             protoimpl.SizeCache
 }
 
 func (x *SemanticRebuildStatus) Reset() {

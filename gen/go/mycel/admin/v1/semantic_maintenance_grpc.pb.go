@@ -41,6 +41,20 @@ const (
 type AdminSemanticMaintenanceServiceClient interface {
 	GetSemanticMaintenanceStatus(ctx context.Context, in *GetSemanticMaintenanceStatusRequest, opts ...grpc.CallOption) (*GetSemanticMaintenanceStatusResponse, error)
 	GetSemanticReliabilityStatus(ctx context.Context, in *GetSemanticReliabilityStatusRequest, opts ...grpc.CallOption) (*GetSemanticReliabilityStatusResponse, error)
+	// Synchronously starts and executes a full reconciled baseline at a pinned
+	// graph revision followed by bounded delta catch-up. Success returns only
+	// after state is "completed". Failure returns a non-OK status and normally
+	// persists "failed" after an epoch starts. If leadership or durable-state
+	// transition fails, the epoch may remain "running" until its owner is fenced;
+	// clients must inspect GetSemanticReliabilityStatus after every non-OK
+	// result. A concurrent request for the same rule/binding fails with
+	// FAILED_PRECONDITION, except that a new leader may fence an abandoned
+	// running owner and start a new epoch.
+	//
+	// This method is not idempotent: every accepted request, including one after
+	// a completed or failed rebuild, starts a new rebuild_epoch. After an
+	// ambiguous transport outcome, clients must inspect
+	// GetSemanticReliabilityStatus before retrying.
 	RebuildSemanticRule(ctx context.Context, in *RebuildSemanticRuleRequest, opts ...grpc.CallOption) (*RebuildSemanticRuleResponse, error)
 	ListSemanticMaintenanceWork(ctx context.Context, in *ListSemanticMaintenanceWorkRequest, opts ...grpc.CallOption) (*ListSemanticMaintenanceWorkResponse, error)
 	RetrySemanticMaintenanceWork(ctx context.Context, in *RetrySemanticMaintenanceWorkRequest, opts ...grpc.CallOption) (*RetrySemanticMaintenanceWorkResponse, error)
@@ -157,6 +171,20 @@ func (c *adminSemanticMaintenanceServiceClient) BackfillSemanticRule(ctx context
 type AdminSemanticMaintenanceServiceServer interface {
 	GetSemanticMaintenanceStatus(context.Context, *GetSemanticMaintenanceStatusRequest) (*GetSemanticMaintenanceStatusResponse, error)
 	GetSemanticReliabilityStatus(context.Context, *GetSemanticReliabilityStatusRequest) (*GetSemanticReliabilityStatusResponse, error)
+	// Synchronously starts and executes a full reconciled baseline at a pinned
+	// graph revision followed by bounded delta catch-up. Success returns only
+	// after state is "completed". Failure returns a non-OK status and normally
+	// persists "failed" after an epoch starts. If leadership or durable-state
+	// transition fails, the epoch may remain "running" until its owner is fenced;
+	// clients must inspect GetSemanticReliabilityStatus after every non-OK
+	// result. A concurrent request for the same rule/binding fails with
+	// FAILED_PRECONDITION, except that a new leader may fence an abandoned
+	// running owner and start a new epoch.
+	//
+	// This method is not idempotent: every accepted request, including one after
+	// a completed or failed rebuild, starts a new rebuild_epoch. After an
+	// ambiguous transport outcome, clients must inspect
+	// GetSemanticReliabilityStatus before retrying.
 	RebuildSemanticRule(context.Context, *RebuildSemanticRuleRequest) (*RebuildSemanticRuleResponse, error)
 	ListSemanticMaintenanceWork(context.Context, *ListSemanticMaintenanceWorkRequest) (*ListSemanticMaintenanceWorkResponse, error)
 	RetrySemanticMaintenanceWork(context.Context, *RetrySemanticMaintenanceWorkRequest) (*RetrySemanticMaintenanceWorkResponse, error)
