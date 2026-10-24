@@ -1870,6 +1870,9 @@ type AdminIntelligenceAccessPolicyServiceCreateAccessPolicyRequest struct {
 	RequireLocalEndpoint  bool                        `protobuf:"varint,8,opt,name=require_local_endpoint,json=requireLocalEndpoint,proto3" json:"require_local_endpoint,omitempty"`
 	Reason                string                      `protobuf:"bytes,9,opt,name=reason,proto3" json:"reason,omitempty"`
 	ExpiresAt             *timestamppb.Timestamp      `protobuf:"bytes,10,opt,name=expires_at,json=expiresAt,proto3" json:"expires_at,omitempty"`
+	EndpointRefs          []string                    `protobuf:"bytes,11,rep,name=endpoint_refs,json=endpointRefs,proto3" json:"endpoint_refs,omitempty"`
+	ModelRefs             []string                    `protobuf:"bytes,12,rep,name=model_refs,json=modelRefs,proto3" json:"model_refs,omitempty"`
+	CapabilityRefs        []string                    `protobuf:"bytes,13,rep,name=capability_refs,json=capabilityRefs,proto3" json:"capability_refs,omitempty"`
 	unknownFields         protoimpl.UnknownFields
 	sizeCache             protoimpl.SizeCache
 }
@@ -1970,6 +1973,27 @@ func (x *AdminIntelligenceAccessPolicyServiceCreateAccessPolicyRequest) GetReaso
 func (x *AdminIntelligenceAccessPolicyServiceCreateAccessPolicyRequest) GetExpiresAt() *timestamppb.Timestamp {
 	if x != nil {
 		return x.ExpiresAt
+	}
+	return nil
+}
+
+func (x *AdminIntelligenceAccessPolicyServiceCreateAccessPolicyRequest) GetEndpointRefs() []string {
+	if x != nil {
+		return x.EndpointRefs
+	}
+	return nil
+}
+
+func (x *AdminIntelligenceAccessPolicyServiceCreateAccessPolicyRequest) GetModelRefs() []string {
+	if x != nil {
+		return x.ModelRefs
+	}
+	return nil
+}
+
+func (x *AdminIntelligenceAccessPolicyServiceCreateAccessPolicyRequest) GetCapabilityRefs() []string {
+	if x != nil {
+		return x.CapabilityRefs
 	}
 	return nil
 }
@@ -3475,33 +3499,36 @@ func (x *IntelligenceCredentialGrant) GetReason() string {
 }
 
 type IntelligenceAccessPolicy struct {
-	state                     protoimpl.MessageState            `protogen:"open.v1"`
-	AccessPolicyId            string                            `protobuf:"bytes,1,opt,name=access_policy_id,json=accessPolicyId,proto3" json:"access_policy_id,omitempty"`
-	Scope                     *v1.IntelligenceAccessScope       `protobuf:"bytes,2,opt,name=scope,proto3" json:"scope,omitempty"`
-	Effect                    string                            `protobuf:"bytes,3,opt,name=effect,proto3" json:"effect,omitempty"`
-	Operations                []string                          `protobuf:"bytes,4,rep,name=operations,proto3" json:"operations,omitempty"`
-	NoIntelligence            bool                              `protobuf:"varint,5,opt,name=no_intelligence,json=noIntelligence,proto3" json:"no_intelligence,omitempty"`
-	AllowedPrivacyClasses     []string                          `protobuf:"bytes,6,rep,name=allowed_privacy_classes,json=allowedPrivacyClasses,proto3" json:"allowed_privacy_classes,omitempty"`
-	DisallowThirdParty        bool                              `protobuf:"varint,7,opt,name=disallow_third_party,json=disallowThirdParty,proto3" json:"disallow_third_party,omitempty"`
-	RequireLocalEndpoint      bool                              `protobuf:"varint,8,opt,name=require_local_endpoint,json=requireLocalEndpoint,proto3" json:"require_local_endpoint,omitempty"`
-	Reason                    string                            `protobuf:"bytes,9,opt,name=reason,proto3" json:"reason,omitempty"`
-	CreatedBy                 string                            `protobuf:"bytes,10,opt,name=created_by,json=createdBy,proto3" json:"created_by,omitempty"`
-	CreateTime                *timestamppb.Timestamp            `protobuf:"bytes,11,opt,name=create_time,json=createTime,proto3" json:"create_time,omitempty"`
-	ExpireTime                *timestamppb.Timestamp            `protobuf:"bytes,12,opt,name=expire_time,json=expireTime,proto3" json:"expire_time,omitempty"`
-	Action                    v1.IntelligenceAccessPolicyAction `protobuf:"varint,14,opt,name=action,proto3,enum=mycel.common.v1.IntelligenceAccessPolicyAction" json:"action,omitempty"`
-	OperationValues           []v1.InferenceOperation           `protobuf:"varint,15,rep,packed,name=operation_values,json=operationValues,proto3,enum=mycel.common.v1.InferenceOperation" json:"operation_values,omitempty"`
-	AllowedPrivacyClassValues []v1.InferencePrivacyClass        `protobuf:"varint,16,rep,packed,name=allowed_privacy_class_values,json=allowedPrivacyClassValues,proto3,enum=mycel.common.v1.InferencePrivacyClass" json:"allowed_privacy_class_values,omitempty"`
-	IntelligenceProfileIds    []string                          `protobuf:"bytes,17,rep,name=intelligence_profile_ids,json=intelligenceProfileIds,proto3" json:"intelligence_profile_ids,omitempty"`
-	MaxInputTokens            int32                             `protobuf:"varint,18,opt,name=max_input_tokens,json=maxInputTokens,proto3" json:"max_input_tokens,omitempty"`
-	MaxOutputTokens           int32                             `protobuf:"varint,19,opt,name=max_output_tokens,json=maxOutputTokens,proto3" json:"max_output_tokens,omitempty"`
-	MaxRequestsPerRun         int32                             `protobuf:"varint,20,opt,name=max_requests_per_run,json=maxRequestsPerRun,proto3" json:"max_requests_per_run,omitempty"`
-	DataClasses               []string                          `protobuf:"bytes,21,rep,name=data_classes,json=dataClasses,proto3" json:"data_classes,omitempty"`
-	Priority                  int32                             `protobuf:"varint,22,opt,name=priority,proto3" json:"priority,omitempty"`
-	State                     v1.IntelligenceAccessPolicyState  `protobuf:"varint,23,opt,name=state,proto3,enum=mycel.common.v1.IntelligenceAccessPolicyState" json:"state,omitempty"`
-	RevokedBy                 string                            `protobuf:"bytes,24,opt,name=revoked_by,json=revokedBy,proto3" json:"revoked_by,omitempty"`
-	RevokedAt                 *timestamppb.Timestamp            `protobuf:"bytes,25,opt,name=revoked_at,json=revokedAt,proto3" json:"revoked_at,omitempty"`
-	unknownFields             protoimpl.UnknownFields
-	sizeCache                 protoimpl.SizeCache
+	state                      protoimpl.MessageState            `protogen:"open.v1"`
+	AccessPolicyId             string                            `protobuf:"bytes,1,opt,name=access_policy_id,json=accessPolicyId,proto3" json:"access_policy_id,omitempty"`
+	Scope                      *v1.IntelligenceAccessScope       `protobuf:"bytes,2,opt,name=scope,proto3" json:"scope,omitempty"`
+	Effect                     string                            `protobuf:"bytes,3,opt,name=effect,proto3" json:"effect,omitempty"`
+	Operations                 []string                          `protobuf:"bytes,4,rep,name=operations,proto3" json:"operations,omitempty"`
+	NoIntelligence             bool                              `protobuf:"varint,5,opt,name=no_intelligence,json=noIntelligence,proto3" json:"no_intelligence,omitempty"`
+	AllowedPrivacyClasses      []string                          `protobuf:"bytes,6,rep,name=allowed_privacy_classes,json=allowedPrivacyClasses,proto3" json:"allowed_privacy_classes,omitempty"`
+	DisallowThirdParty         bool                              `protobuf:"varint,7,opt,name=disallow_third_party,json=disallowThirdParty,proto3" json:"disallow_third_party,omitempty"`
+	RequireLocalEndpoint       bool                              `protobuf:"varint,8,opt,name=require_local_endpoint,json=requireLocalEndpoint,proto3" json:"require_local_endpoint,omitempty"`
+	Reason                     string                            `protobuf:"bytes,9,opt,name=reason,proto3" json:"reason,omitempty"`
+	CreatedBy                  string                            `protobuf:"bytes,10,opt,name=created_by,json=createdBy,proto3" json:"created_by,omitempty"`
+	CreateTime                 *timestamppb.Timestamp            `protobuf:"bytes,11,opt,name=create_time,json=createTime,proto3" json:"create_time,omitempty"`
+	ExpireTime                 *timestamppb.Timestamp            `protobuf:"bytes,12,opt,name=expire_time,json=expireTime,proto3" json:"expire_time,omitempty"`
+	Action                     v1.IntelligenceAccessPolicyAction `protobuf:"varint,14,opt,name=action,proto3,enum=mycel.common.v1.IntelligenceAccessPolicyAction" json:"action,omitempty"`
+	OperationValues            []v1.InferenceOperation           `protobuf:"varint,15,rep,packed,name=operation_values,json=operationValues,proto3,enum=mycel.common.v1.InferenceOperation" json:"operation_values,omitempty"`
+	AllowedPrivacyClassValues  []v1.InferencePrivacyClass        `protobuf:"varint,16,rep,packed,name=allowed_privacy_class_values,json=allowedPrivacyClassValues,proto3,enum=mycel.common.v1.InferencePrivacyClass" json:"allowed_privacy_class_values,omitempty"`
+	IntelligenceProfileIds     []string                          `protobuf:"bytes,17,rep,name=intelligence_profile_ids,json=intelligenceProfileIds,proto3" json:"intelligence_profile_ids,omitempty"`
+	MaxInputTokens             int32                             `protobuf:"varint,18,opt,name=max_input_tokens,json=maxInputTokens,proto3" json:"max_input_tokens,omitempty"`
+	MaxOutputTokens            int32                             `protobuf:"varint,19,opt,name=max_output_tokens,json=maxOutputTokens,proto3" json:"max_output_tokens,omitempty"`
+	MaxRequestsPerRun          int32                             `protobuf:"varint,20,opt,name=max_requests_per_run,json=maxRequestsPerRun,proto3" json:"max_requests_per_run,omitempty"`
+	DataClasses                []string                          `protobuf:"bytes,21,rep,name=data_classes,json=dataClasses,proto3" json:"data_classes,omitempty"`
+	Priority                   int32                             `protobuf:"varint,22,opt,name=priority,proto3" json:"priority,omitempty"`
+	State                      v1.IntelligenceAccessPolicyState  `protobuf:"varint,23,opt,name=state,proto3,enum=mycel.common.v1.IntelligenceAccessPolicyState" json:"state,omitempty"`
+	RevokedBy                  string                            `protobuf:"bytes,24,opt,name=revoked_by,json=revokedBy,proto3" json:"revoked_by,omitempty"`
+	RevokedAt                  *timestamppb.Timestamp            `protobuf:"bytes,25,opt,name=revoked_at,json=revokedAt,proto3" json:"revoked_at,omitempty"`
+	ModelEndpointIds           []string                          `protobuf:"bytes,26,rep,name=model_endpoint_ids,json=modelEndpointIds,proto3" json:"model_endpoint_ids,omitempty"`
+	ModelIds                   []string                          `protobuf:"bytes,27,rep,name=model_ids,json=modelIds,proto3" json:"model_ids,omitempty"`
+	ModelEndpointCapabilityIds []string                          `protobuf:"bytes,28,rep,name=model_endpoint_capability_ids,json=modelEndpointCapabilityIds,proto3" json:"model_endpoint_capability_ids,omitempty"`
+	unknownFields              protoimpl.UnknownFields
+	sizeCache                  protoimpl.SizeCache
 }
 
 func (x *IntelligenceAccessPolicy) Reset() {
@@ -3698,6 +3725,27 @@ func (x *IntelligenceAccessPolicy) GetRevokedBy() string {
 func (x *IntelligenceAccessPolicy) GetRevokedAt() *timestamppb.Timestamp {
 	if x != nil {
 		return x.RevokedAt
+	}
+	return nil
+}
+
+func (x *IntelligenceAccessPolicy) GetModelEndpointIds() []string {
+	if x != nil {
+		return x.ModelEndpointIds
+	}
+	return nil
+}
+
+func (x *IntelligenceAccessPolicy) GetModelIds() []string {
+	if x != nil {
+		return x.ModelIds
+	}
+	return nil
+}
+
+func (x *IntelligenceAccessPolicy) GetModelEndpointCapabilityIds() []string {
+	if x != nil {
+		return x.ModelEndpointCapabilityIds
 	}
 	return nil
 }
@@ -4464,7 +4512,7 @@ const file_mycel_admin_v1_intelligence_access_proto_rawDesc = "" +
 	"\bspace_id\x18\x01 \x01(\tR\aspaceId\x12.\n" +
 	"\x13credential_grant_id\x18\x02 \x01(\tR\x11credentialGrantId\"r\n" +
 	"@AdminIntelligenceAccessGrantServiceDeleteCredentialGrantResponse\x12.\n" +
-	"\x13credential_grant_id\x18\x01 \x01(\tR\x11credentialGrantId\"\xee\x03\n" +
+	"\x13credential_grant_id\x18\x01 \x01(\tR\x11credentialGrantId\"\xdb\x04\n" +
 	"=AdminIntelligenceAccessPolicyServiceCreateAccessPolicyRequest\x12\x19\n" +
 	"\bspace_id\x18\x01 \x01(\tR\aspaceId\x12>\n" +
 	"\x05scope\x18\x02 \x01(\v2(.mycel.common.v1.IntelligenceAccessScopeR\x05scope\x12\x16\n" +
@@ -4479,7 +4527,11 @@ const file_mycel_admin_v1_intelligence_access_proto_rawDesc = "" +
 	"\x06reason\x18\t \x01(\tR\x06reason\x129\n" +
 	"\n" +
 	"expires_at\x18\n" +
-	" \x01(\v2\x1a.google.protobuf.TimestampR\texpiresAt\"\x8f\x01\n" +
+	" \x01(\v2\x1a.google.protobuf.TimestampR\texpiresAt\x12#\n" +
+	"\rendpoint_refs\x18\v \x03(\tR\fendpointRefs\x12\x1d\n" +
+	"\n" +
+	"model_refs\x18\f \x03(\tR\tmodelRefs\x12'\n" +
+	"\x0fcapability_refs\x18\r \x03(\tR\x0ecapabilityRefs\"\x8f\x01\n" +
 	">AdminIntelligenceAccessPolicyServiceCreateAccessPolicyResponse\x12M\n" +
 	"\raccess_policy\x18\x01 \x01(\v2(.mycel.admin.v1.IntelligenceAccessPolicyR\faccessPolicy\"\xd7\x01\n" +
 	"=AdminIntelligenceAccessPolicyServiceListAccessPoliciesRequest\x12\x19\n" +
@@ -4636,7 +4688,8 @@ const file_mycel_admin_v1_intelligence_access_proto_rawDesc = "" +
 	"revoked_by\x18\x15 \x01(\tR\trevokedBy\x129\n" +
 	"\n" +
 	"revoked_at\x18\x16 \x01(\v2\x1a.google.protobuf.TimestampR\trevokedAt\x12\x16\n" +
-	"\x06reason\x18\x17 \x01(\tR\x06reason\"\xd8\t\n" +
+	"\x06reason\x18\x17 \x01(\tR\x06reason\"\xe6\n" +
+	"\n" +
 	"\x18IntelligenceAccessPolicy\x12(\n" +
 	"\x10access_policy_id\x18\x01 \x01(\tR\x0eaccessPolicyId\x12>\n" +
 	"\x05scope\x18\x02 \x01(\v2(.mycel.common.v1.IntelligenceAccessScopeR\x05scope\x12\x16\n" +
@@ -4669,7 +4722,10 @@ const file_mycel_admin_v1_intelligence_access_proto_rawDesc = "" +
 	"\n" +
 	"revoked_by\x18\x18 \x01(\tR\trevokedBy\x129\n" +
 	"\n" +
-	"revoked_at\x18\x19 \x01(\v2\x1a.google.protobuf.TimestampR\trevokedAt\"\xa0\b\n" +
+	"revoked_at\x18\x19 \x01(\v2\x1a.google.protobuf.TimestampR\trevokedAt\x12,\n" +
+	"\x12model_endpoint_ids\x18\x1a \x03(\tR\x10modelEndpointIds\x12\x1b\n" +
+	"\tmodel_ids\x18\x1b \x03(\tR\bmodelIds\x12A\n" +
+	"\x1dmodel_endpoint_capability_ids\x18\x1c \x03(\tR\x1amodelEndpointCapabilityIds\"\xa0\b\n" +
 	" IntelligenceAccessPolicyDecision\x12,\n" +
 	"\x12policy_decision_id\x18\x01 \x01(\tR\x10policyDecisionId\x12\x19\n" +
 	"\bspace_id\x18\x02 \x01(\tR\aspaceId\x12\x1b\n" +

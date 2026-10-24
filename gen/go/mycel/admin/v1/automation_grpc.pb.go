@@ -21,32 +21,37 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	AdminAutomationService_ValidateAutomation_FullMethodName             = "/mycel.admin.v1.AdminAutomationService/ValidateAutomation"
-	AdminAutomationService_CreateAutomation_FullMethodName               = "/mycel.admin.v1.AdminAutomationService/CreateAutomation"
-	AdminAutomationService_UpdateAutomation_FullMethodName               = "/mycel.admin.v1.AdminAutomationService/UpdateAutomation"
-	AdminAutomationService_DeleteAutomation_FullMethodName               = "/mycel.admin.v1.AdminAutomationService/DeleteAutomation"
-	AdminAutomationService_GetAutomation_FullMethodName                  = "/mycel.admin.v1.AdminAutomationService/GetAutomation"
-	AdminAutomationService_ListAutomations_FullMethodName                = "/mycel.admin.v1.AdminAutomationService/ListAutomations"
-	AdminAutomationService_EnableAutomation_FullMethodName               = "/mycel.admin.v1.AdminAutomationService/EnableAutomation"
-	AdminAutomationService_DisableAutomation_FullMethodName              = "/mycel.admin.v1.AdminAutomationService/DisableAutomation"
-	AdminAutomationService_ListAutomationInvocations_FullMethodName      = "/mycel.admin.v1.AdminAutomationService/ListAutomationInvocations"
-	AdminAutomationService_GetAutomationRun_FullMethodName               = "/mycel.admin.v1.AdminAutomationService/GetAutomationRun"
-	AdminAutomationService_RetryAutomationInvocation_FullMethodName      = "/mycel.admin.v1.AdminAutomationService/RetryAutomationInvocation"
-	AdminAutomationService_CancelAutomationInvocation_FullMethodName     = "/mycel.admin.v1.AdminAutomationService/CancelAutomationInvocation"
-	AdminAutomationService_ValidateGraphProcedure_FullMethodName         = "/mycel.admin.v1.AdminAutomationService/ValidateGraphProcedure"
-	AdminAutomationService_CreateGraphProcedure_FullMethodName           = "/mycel.admin.v1.AdminAutomationService/CreateGraphProcedure"
-	AdminAutomationService_UpdateGraphProcedure_FullMethodName           = "/mycel.admin.v1.AdminAutomationService/UpdateGraphProcedure"
-	AdminAutomationService_DeleteGraphProcedure_FullMethodName           = "/mycel.admin.v1.AdminAutomationService/DeleteGraphProcedure"
-	AdminAutomationService_GetGraphProcedure_FullMethodName              = "/mycel.admin.v1.AdminAutomationService/GetGraphProcedure"
-	AdminAutomationService_ListGraphProcedures_FullMethodName            = "/mycel.admin.v1.AdminAutomationService/ListGraphProcedures"
-	AdminAutomationService_ValidateGraphAutomationBinding_FullMethodName = "/mycel.admin.v1.AdminAutomationService/ValidateGraphAutomationBinding"
-	AdminAutomationService_CreateGraphAutomationBinding_FullMethodName   = "/mycel.admin.v1.AdminAutomationService/CreateGraphAutomationBinding"
-	AdminAutomationService_UpdateGraphAutomationBinding_FullMethodName   = "/mycel.admin.v1.AdminAutomationService/UpdateGraphAutomationBinding"
-	AdminAutomationService_DeleteGraphAutomationBinding_FullMethodName   = "/mycel.admin.v1.AdminAutomationService/DeleteGraphAutomationBinding"
-	AdminAutomationService_GetGraphAutomationBinding_FullMethodName      = "/mycel.admin.v1.AdminAutomationService/GetGraphAutomationBinding"
-	AdminAutomationService_ListGraphAutomationBindings_FullMethodName    = "/mycel.admin.v1.AdminAutomationService/ListGraphAutomationBindings"
-	AdminAutomationService_EnableGraphAutomationBinding_FullMethodName   = "/mycel.admin.v1.AdminAutomationService/EnableGraphAutomationBinding"
-	AdminAutomationService_DisableGraphAutomationBinding_FullMethodName  = "/mycel.admin.v1.AdminAutomationService/DisableGraphAutomationBinding"
+	AdminAutomationService_ValidateAutomation_FullMethodName                   = "/mycel.admin.v1.AdminAutomationService/ValidateAutomation"
+	AdminAutomationService_CreateAutomation_FullMethodName                     = "/mycel.admin.v1.AdminAutomationService/CreateAutomation"
+	AdminAutomationService_UpdateAutomation_FullMethodName                     = "/mycel.admin.v1.AdminAutomationService/UpdateAutomation"
+	AdminAutomationService_DeleteAutomation_FullMethodName                     = "/mycel.admin.v1.AdminAutomationService/DeleteAutomation"
+	AdminAutomationService_GetAutomation_FullMethodName                        = "/mycel.admin.v1.AdminAutomationService/GetAutomation"
+	AdminAutomationService_ListAutomations_FullMethodName                      = "/mycel.admin.v1.AdminAutomationService/ListAutomations"
+	AdminAutomationService_EnableAutomation_FullMethodName                     = "/mycel.admin.v1.AdminAutomationService/EnableAutomation"
+	AdminAutomationService_DisableAutomation_FullMethodName                    = "/mycel.admin.v1.AdminAutomationService/DisableAutomation"
+	AdminAutomationService_ListAutomationInvocations_FullMethodName            = "/mycel.admin.v1.AdminAutomationService/ListAutomationInvocations"
+	AdminAutomationService_GetAutomationRun_FullMethodName                     = "/mycel.admin.v1.AdminAutomationService/GetAutomationRun"
+	AdminAutomationService_RetryAutomationInvocation_FullMethodName            = "/mycel.admin.v1.AdminAutomationService/RetryAutomationInvocation"
+	AdminAutomationService_CancelAutomationInvocation_FullMethodName           = "/mycel.admin.v1.AdminAutomationService/CancelAutomationInvocation"
+	AdminAutomationService_ValidateGraphProcedure_FullMethodName               = "/mycel.admin.v1.AdminAutomationService/ValidateGraphProcedure"
+	AdminAutomationService_CreateGraphProcedure_FullMethodName                 = "/mycel.admin.v1.AdminAutomationService/CreateGraphProcedure"
+	AdminAutomationService_UpdateGraphProcedure_FullMethodName                 = "/mycel.admin.v1.AdminAutomationService/UpdateGraphProcedure"
+	AdminAutomationService_DeleteGraphProcedure_FullMethodName                 = "/mycel.admin.v1.AdminAutomationService/DeleteGraphProcedure"
+	AdminAutomationService_GetGraphProcedure_FullMethodName                    = "/mycel.admin.v1.AdminAutomationService/GetGraphProcedure"
+	AdminAutomationService_ListGraphProcedures_FullMethodName                  = "/mycel.admin.v1.AdminAutomationService/ListGraphProcedures"
+	AdminAutomationService_EnableGraphProcedure_FullMethodName                 = "/mycel.admin.v1.AdminAutomationService/EnableGraphProcedure"
+	AdminAutomationService_DisableGraphProcedure_FullMethodName                = "/mycel.admin.v1.AdminAutomationService/DisableGraphProcedure"
+	AdminAutomationService_GetProcedureInferenceAttempt_FullMethodName         = "/mycel.admin.v1.AdminAutomationService/GetProcedureInferenceAttempt"
+	AdminAutomationService_ListProcedureInferenceAttempts_FullMethodName       = "/mycel.admin.v1.AdminAutomationService/ListProcedureInferenceAttempts"
+	AdminAutomationService_ListProcedureInferenceAttemptChanges_FullMethodName = "/mycel.admin.v1.AdminAutomationService/ListProcedureInferenceAttemptChanges"
+	AdminAutomationService_ValidateGraphAutomationBinding_FullMethodName       = "/mycel.admin.v1.AdminAutomationService/ValidateGraphAutomationBinding"
+	AdminAutomationService_CreateGraphAutomationBinding_FullMethodName         = "/mycel.admin.v1.AdminAutomationService/CreateGraphAutomationBinding"
+	AdminAutomationService_UpdateGraphAutomationBinding_FullMethodName         = "/mycel.admin.v1.AdminAutomationService/UpdateGraphAutomationBinding"
+	AdminAutomationService_DeleteGraphAutomationBinding_FullMethodName         = "/mycel.admin.v1.AdminAutomationService/DeleteGraphAutomationBinding"
+	AdminAutomationService_GetGraphAutomationBinding_FullMethodName            = "/mycel.admin.v1.AdminAutomationService/GetGraphAutomationBinding"
+	AdminAutomationService_ListGraphAutomationBindings_FullMethodName          = "/mycel.admin.v1.AdminAutomationService/ListGraphAutomationBindings"
+	AdminAutomationService_EnableGraphAutomationBinding_FullMethodName         = "/mycel.admin.v1.AdminAutomationService/EnableGraphAutomationBinding"
+	AdminAutomationService_DisableGraphAutomationBinding_FullMethodName        = "/mycel.admin.v1.AdminAutomationService/DisableGraphAutomationBinding"
 )
 
 // AdminAutomationServiceClient is the client API for AdminAutomationService service.
@@ -73,6 +78,13 @@ type AdminAutomationServiceClient interface {
 	DeleteGraphProcedure(ctx context.Context, in *DeleteGraphProcedureRequest, opts ...grpc.CallOption) (*DeleteGraphProcedureResponse, error)
 	GetGraphProcedure(ctx context.Context, in *GetGraphProcedureRequest, opts ...grpc.CallOption) (*GetGraphProcedureResponse, error)
 	ListGraphProcedures(ctx context.Context, in *ListGraphProceduresRequest, opts ...grpc.CallOption) (*ListGraphProceduresResponse, error)
+	// EnableGraphProcedure is idempotent and returns only after its cross-partition barrier completes.
+	EnableGraphProcedure(ctx context.Context, in *EnableGraphProcedureRequest, opts ...grpc.CallOption) (*EnableGraphProcedureResponse, error)
+	// DisableGraphProcedure is idempotent and returns only after its cross-partition barrier completes.
+	DisableGraphProcedure(ctx context.Context, in *DisableGraphProcedureRequest, opts ...grpc.CallOption) (*DisableGraphProcedureResponse, error)
+	GetProcedureInferenceAttempt(ctx context.Context, in *GetProcedureInferenceAttemptRequest, opts ...grpc.CallOption) (*GetProcedureInferenceAttemptResponse, error)
+	ListProcedureInferenceAttempts(ctx context.Context, in *ListProcedureInferenceAttemptsRequest, opts ...grpc.CallOption) (*ListProcedureInferenceAttemptsResponse, error)
+	ListProcedureInferenceAttemptChanges(ctx context.Context, in *ListProcedureInferenceAttemptChangesRequest, opts ...grpc.CallOption) (*ListProcedureInferenceAttemptChangesResponse, error)
 	ValidateGraphAutomationBinding(ctx context.Context, in *ValidateGraphAutomationBindingRequest, opts ...grpc.CallOption) (*ValidateGraphAutomationBindingResponse, error)
 	CreateGraphAutomationBinding(ctx context.Context, in *CreateGraphAutomationBindingRequest, opts ...grpc.CallOption) (*CreateGraphAutomationBindingResponse, error)
 	UpdateGraphAutomationBinding(ctx context.Context, in *UpdateGraphAutomationBindingRequest, opts ...grpc.CallOption) (*UpdateGraphAutomationBindingResponse, error)
@@ -271,6 +283,56 @@ func (c *adminAutomationServiceClient) ListGraphProcedures(ctx context.Context, 
 	return out, nil
 }
 
+func (c *adminAutomationServiceClient) EnableGraphProcedure(ctx context.Context, in *EnableGraphProcedureRequest, opts ...grpc.CallOption) (*EnableGraphProcedureResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(EnableGraphProcedureResponse)
+	err := c.cc.Invoke(ctx, AdminAutomationService_EnableGraphProcedure_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *adminAutomationServiceClient) DisableGraphProcedure(ctx context.Context, in *DisableGraphProcedureRequest, opts ...grpc.CallOption) (*DisableGraphProcedureResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(DisableGraphProcedureResponse)
+	err := c.cc.Invoke(ctx, AdminAutomationService_DisableGraphProcedure_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *adminAutomationServiceClient) GetProcedureInferenceAttempt(ctx context.Context, in *GetProcedureInferenceAttemptRequest, opts ...grpc.CallOption) (*GetProcedureInferenceAttemptResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetProcedureInferenceAttemptResponse)
+	err := c.cc.Invoke(ctx, AdminAutomationService_GetProcedureInferenceAttempt_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *adminAutomationServiceClient) ListProcedureInferenceAttempts(ctx context.Context, in *ListProcedureInferenceAttemptsRequest, opts ...grpc.CallOption) (*ListProcedureInferenceAttemptsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListProcedureInferenceAttemptsResponse)
+	err := c.cc.Invoke(ctx, AdminAutomationService_ListProcedureInferenceAttempts_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *adminAutomationServiceClient) ListProcedureInferenceAttemptChanges(ctx context.Context, in *ListProcedureInferenceAttemptChangesRequest, opts ...grpc.CallOption) (*ListProcedureInferenceAttemptChangesResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListProcedureInferenceAttemptChangesResponse)
+	err := c.cc.Invoke(ctx, AdminAutomationService_ListProcedureInferenceAttemptChanges_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *adminAutomationServiceClient) ValidateGraphAutomationBinding(ctx context.Context, in *ValidateGraphAutomationBindingRequest, opts ...grpc.CallOption) (*ValidateGraphAutomationBindingResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(ValidateGraphAutomationBindingResponse)
@@ -375,6 +437,13 @@ type AdminAutomationServiceServer interface {
 	DeleteGraphProcedure(context.Context, *DeleteGraphProcedureRequest) (*DeleteGraphProcedureResponse, error)
 	GetGraphProcedure(context.Context, *GetGraphProcedureRequest) (*GetGraphProcedureResponse, error)
 	ListGraphProcedures(context.Context, *ListGraphProceduresRequest) (*ListGraphProceduresResponse, error)
+	// EnableGraphProcedure is idempotent and returns only after its cross-partition barrier completes.
+	EnableGraphProcedure(context.Context, *EnableGraphProcedureRequest) (*EnableGraphProcedureResponse, error)
+	// DisableGraphProcedure is idempotent and returns only after its cross-partition barrier completes.
+	DisableGraphProcedure(context.Context, *DisableGraphProcedureRequest) (*DisableGraphProcedureResponse, error)
+	GetProcedureInferenceAttempt(context.Context, *GetProcedureInferenceAttemptRequest) (*GetProcedureInferenceAttemptResponse, error)
+	ListProcedureInferenceAttempts(context.Context, *ListProcedureInferenceAttemptsRequest) (*ListProcedureInferenceAttemptsResponse, error)
+	ListProcedureInferenceAttemptChanges(context.Context, *ListProcedureInferenceAttemptChangesRequest) (*ListProcedureInferenceAttemptChangesResponse, error)
 	ValidateGraphAutomationBinding(context.Context, *ValidateGraphAutomationBindingRequest) (*ValidateGraphAutomationBindingResponse, error)
 	CreateGraphAutomationBinding(context.Context, *CreateGraphAutomationBindingRequest) (*CreateGraphAutomationBindingResponse, error)
 	UpdateGraphAutomationBinding(context.Context, *UpdateGraphAutomationBindingRequest) (*UpdateGraphAutomationBindingResponse, error)
@@ -446,6 +515,21 @@ func (UnimplementedAdminAutomationServiceServer) GetGraphProcedure(context.Conte
 }
 func (UnimplementedAdminAutomationServiceServer) ListGraphProcedures(context.Context, *ListGraphProceduresRequest) (*ListGraphProceduresResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListGraphProcedures not implemented")
+}
+func (UnimplementedAdminAutomationServiceServer) EnableGraphProcedure(context.Context, *EnableGraphProcedureRequest) (*EnableGraphProcedureResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method EnableGraphProcedure not implemented")
+}
+func (UnimplementedAdminAutomationServiceServer) DisableGraphProcedure(context.Context, *DisableGraphProcedureRequest) (*DisableGraphProcedureResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DisableGraphProcedure not implemented")
+}
+func (UnimplementedAdminAutomationServiceServer) GetProcedureInferenceAttempt(context.Context, *GetProcedureInferenceAttemptRequest) (*GetProcedureInferenceAttemptResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetProcedureInferenceAttempt not implemented")
+}
+func (UnimplementedAdminAutomationServiceServer) ListProcedureInferenceAttempts(context.Context, *ListProcedureInferenceAttemptsRequest) (*ListProcedureInferenceAttemptsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListProcedureInferenceAttempts not implemented")
+}
+func (UnimplementedAdminAutomationServiceServer) ListProcedureInferenceAttemptChanges(context.Context, *ListProcedureInferenceAttemptChangesRequest) (*ListProcedureInferenceAttemptChangesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListProcedureInferenceAttemptChanges not implemented")
 }
 func (UnimplementedAdminAutomationServiceServer) ValidateGraphAutomationBinding(context.Context, *ValidateGraphAutomationBindingRequest) (*ValidateGraphAutomationBindingResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ValidateGraphAutomationBinding not implemented")
@@ -817,6 +901,96 @@ func _AdminAutomationService_ListGraphProcedures_Handler(srv interface{}, ctx co
 	return interceptor(ctx, in, info, handler)
 }
 
+func _AdminAutomationService_EnableGraphProcedure_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(EnableGraphProcedureRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminAutomationServiceServer).EnableGraphProcedure(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AdminAutomationService_EnableGraphProcedure_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminAutomationServiceServer).EnableGraphProcedure(ctx, req.(*EnableGraphProcedureRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AdminAutomationService_DisableGraphProcedure_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DisableGraphProcedureRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminAutomationServiceServer).DisableGraphProcedure(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AdminAutomationService_DisableGraphProcedure_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminAutomationServiceServer).DisableGraphProcedure(ctx, req.(*DisableGraphProcedureRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AdminAutomationService_GetProcedureInferenceAttempt_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetProcedureInferenceAttemptRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminAutomationServiceServer).GetProcedureInferenceAttempt(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AdminAutomationService_GetProcedureInferenceAttempt_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminAutomationServiceServer).GetProcedureInferenceAttempt(ctx, req.(*GetProcedureInferenceAttemptRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AdminAutomationService_ListProcedureInferenceAttempts_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListProcedureInferenceAttemptsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminAutomationServiceServer).ListProcedureInferenceAttempts(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AdminAutomationService_ListProcedureInferenceAttempts_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminAutomationServiceServer).ListProcedureInferenceAttempts(ctx, req.(*ListProcedureInferenceAttemptsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AdminAutomationService_ListProcedureInferenceAttemptChanges_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListProcedureInferenceAttemptChangesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminAutomationServiceServer).ListProcedureInferenceAttemptChanges(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AdminAutomationService_ListProcedureInferenceAttemptChanges_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminAutomationServiceServer).ListProcedureInferenceAttemptChanges(ctx, req.(*ListProcedureInferenceAttemptChangesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _AdminAutomationService_ValidateGraphAutomationBinding_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ValidateGraphAutomationBindingRequest)
 	if err := dec(in); err != nil {
@@ -1039,6 +1213,26 @@ var AdminAutomationService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListGraphProcedures",
 			Handler:    _AdminAutomationService_ListGraphProcedures_Handler,
+		},
+		{
+			MethodName: "EnableGraphProcedure",
+			Handler:    _AdminAutomationService_EnableGraphProcedure_Handler,
+		},
+		{
+			MethodName: "DisableGraphProcedure",
+			Handler:    _AdminAutomationService_DisableGraphProcedure_Handler,
+		},
+		{
+			MethodName: "GetProcedureInferenceAttempt",
+			Handler:    _AdminAutomationService_GetProcedureInferenceAttempt_Handler,
+		},
+		{
+			MethodName: "ListProcedureInferenceAttempts",
+			Handler:    _AdminAutomationService_ListProcedureInferenceAttempts_Handler,
+		},
+		{
+			MethodName: "ListProcedureInferenceAttemptChanges",
+			Handler:    _AdminAutomationService_ListProcedureInferenceAttemptChanges_Handler,
 		},
 		{
 			MethodName: "ValidateGraphAutomationBinding",
