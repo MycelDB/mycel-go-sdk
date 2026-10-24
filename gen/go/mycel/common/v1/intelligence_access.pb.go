@@ -512,7 +512,12 @@ func (IntelligenceAccessUsageStatus) EnumDescriptor() ([]byte, []int) {
 
 // IntelligenceAccessScope scopes grants, policies, decisions, and usage
 // telemetry across automations, semantic generation rules, and future
-// intelligence workloads.
+// intelligence workloads. Populated selectors are conjunctive. An unset
+// version matches all versions of its populated ID; a populated version
+// requires the corresponding ID. A procedure_id with no procedure_version is
+// therefore a logical-procedure scope across versions. Procedure-scoped
+// positive authorization requires an exact version; deny policy may omit the
+// version to revoke the logical procedure across versions.
 type IntelligenceAccessScope struct {
 	state               protoimpl.MessageState `protogen:"open.v1"`
 	SpaceId             string                 `protobuf:"bytes,1,opt,name=space_id,json=spaceId,proto3" json:"space_id,omitempty"`
@@ -521,6 +526,12 @@ type IntelligenceAccessScope struct {
 	NodeId              string                 `protobuf:"bytes,4,opt,name=node_id,json=nodeId,proto3" json:"node_id,omitempty"`
 	IncludeDescendants  bool                   `protobuf:"varint,5,opt,name=include_descendants,json=includeDescendants,proto3" json:"include_descendants,omitempty"`
 	EmbeddingBindingKey string                 `protobuf:"bytes,6,opt,name=embedding_binding_key,json=embeddingBindingKey,proto3" json:"embedding_binding_key,omitempty"`
+	ProcedureId         string                 `protobuf:"bytes,7,opt,name=procedure_id,json=procedureId,proto3" json:"procedure_id,omitempty"`
+	ProcedureVersion    int32                  `protobuf:"varint,8,opt,name=procedure_version,json=procedureVersion,proto3" json:"procedure_version,omitempty"`
+	BindingId           string                 `protobuf:"bytes,9,opt,name=binding_id,json=bindingId,proto3" json:"binding_id,omitempty"`
+	BindingVersion      int32                  `protobuf:"varint,10,opt,name=binding_version,json=bindingVersion,proto3" json:"binding_version,omitempty"`
+	InvocationId        string                 `protobuf:"bytes,11,opt,name=invocation_id,json=invocationId,proto3" json:"invocation_id,omitempty"`
+	RunId               string                 `protobuf:"bytes,12,opt,name=run_id,json=runId,proto3" json:"run_id,omitempty"`
 	unknownFields       protoimpl.UnknownFields
 	sizeCache           protoimpl.SizeCache
 }
@@ -597,18 +608,68 @@ func (x *IntelligenceAccessScope) GetEmbeddingBindingKey() string {
 	return ""
 }
 
+func (x *IntelligenceAccessScope) GetProcedureId() string {
+	if x != nil {
+		return x.ProcedureId
+	}
+	return ""
+}
+
+func (x *IntelligenceAccessScope) GetProcedureVersion() int32 {
+	if x != nil {
+		return x.ProcedureVersion
+	}
+	return 0
+}
+
+func (x *IntelligenceAccessScope) GetBindingId() string {
+	if x != nil {
+		return x.BindingId
+	}
+	return ""
+}
+
+func (x *IntelligenceAccessScope) GetBindingVersion() int32 {
+	if x != nil {
+		return x.BindingVersion
+	}
+	return 0
+}
+
+func (x *IntelligenceAccessScope) GetInvocationId() string {
+	if x != nil {
+		return x.InvocationId
+	}
+	return ""
+}
+
+func (x *IntelligenceAccessScope) GetRunId() string {
+	if x != nil {
+		return x.RunId
+	}
+	return ""
+}
+
 var File_mycel_common_v1_intelligence_access_proto protoreflect.FileDescriptor
 
 const file_mycel_common_v1_intelligence_access_proto_rawDesc = "" +
 	"\n" +
-	")mycel/common/v1/intelligence_access.proto\x12\x0fmycel.common.v1\"\xf9\x01\n" +
+	")mycel/common/v1/intelligence_access.proto\x12\x0fmycel.common.v1\"\xcd\x03\n" +
 	"\x17IntelligenceAccessScope\x12\x19\n" +
 	"\bspace_id\x18\x01 \x01(\tR\aspaceId\x12\x1b\n" +
 	"\tdomain_id\x18\x02 \x01(\tR\bdomainId\x12(\n" +
 	"\x10semantic_rule_id\x18\x03 \x01(\tR\x0esemanticRuleId\x12\x17\n" +
 	"\anode_id\x18\x04 \x01(\tR\x06nodeId\x12/\n" +
 	"\x13include_descendants\x18\x05 \x01(\bR\x12includeDescendants\x122\n" +
-	"\x15embedding_binding_key\x18\x06 \x01(\tR\x13embeddingBindingKey*\x88\x02\n" +
+	"\x15embedding_binding_key\x18\x06 \x01(\tR\x13embeddingBindingKey\x12!\n" +
+	"\fprocedure_id\x18\a \x01(\tR\vprocedureId\x12+\n" +
+	"\x11procedure_version\x18\b \x01(\x05R\x10procedureVersion\x12\x1d\n" +
+	"\n" +
+	"binding_id\x18\t \x01(\tR\tbindingId\x12'\n" +
+	"\x0fbinding_version\x18\n" +
+	" \x01(\x05R\x0ebindingVersion\x12#\n" +
+	"\rinvocation_id\x18\v \x01(\tR\finvocationId\x12\x15\n" +
+	"\x06run_id\x18\f \x01(\tR\x05runId*\x88\x02\n" +
 	"\x1bIntelligenceAccessUsageMode\x12.\n" +
 	"*INTELLIGENCE_ACCESS_USAGE_MODE_UNSPECIFIED\x10\x00\x12.\n" +
 	"*INTELLIGENCE_ACCESS_USAGE_MODE_INTERACTIVE\x10\x01\x12-\n" +
