@@ -9,12 +9,13 @@ This project follows the spirit of [Keep a Changelog](https://keepachangelog.com
 ### Added
 
 - Regenerated Go bindings for direct semantic pagination, hard-eligibility filters, safe result provenance, and Admin semantic reliability/rebuild diagnostics.
+- Added semantic provider-budget policy, authenticated enforcement-capability discovery, retained-scope, and immutable attempt-event bindings.
 - Regenerated procedure-inference attempt polling, typed automation-run, procedure control-barrier, and procedure/binding Intelligence Access bindings.
 
 ### Compatibility
 
 - Generated additions require a daemon advertising the corresponding semantic reliability capability when applications depend on the new RPCs.
-- `AdminSemanticMaintenanceServiceClient` and `AdminSemanticMaintenanceServiceServer` add the reliability-status and rebuild methods. Custom interface implementations and test doubles must implement them; servers embedding `UnimplementedAdminSemanticMaintenanceServiceServer` inherit forward-compatible stubs.
+- `AdminSemanticMaintenanceServiceClient` and `AdminSemanticMaintenanceServiceServer` add reliability-status, rebuild, provider-budget capability/status, retained-scope, and immutable attempt-event methods. Custom interface implementations, mocks, and test doubles must implement them; servers embedding `UnimplementedAdminSemanticMaintenanceServiceServer` inherit forward-compatible stubs.
 - Client and Admin automation service interfaces gain procedure-attempt query/polling and procedure enable/disable methods. Custom interface implementations and mocks must add them; embedded generated unimplemented servers remain forward-compatible.
 
 ## [v0.20.1] - 2026-10-20
