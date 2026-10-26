@@ -8,6 +8,7 @@ This project follows the spirit of [Keep a Changelog](https://keepachangelog.com
 
 ### Added
 
+- Regenerated Go bindings with typed semantic trigger events while retaining the deprecated string field for compatible dual-write migration.
 - Regenerated Go bindings for direct semantic pagination, hard-eligibility filters, safe result provenance, and Admin semantic reliability/rebuild diagnostics.
 - Added semantic provider-budget policy, authenticated enforcement-capability discovery, retained-scope, and immutable attempt-event bindings.
 - Regenerated procedure-inference attempt polling, typed automation-run, procedure control-barrier, and procedure/binding Intelligence Access bindings.
