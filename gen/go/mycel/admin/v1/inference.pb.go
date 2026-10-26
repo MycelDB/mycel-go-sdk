@@ -26,14 +26,77 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
+type VectorStoreCatalogConflictReason int32
+
+const (
+	VectorStoreCatalogConflictReason_VECTOR_STORE_CATALOG_CONFLICT_REASON_UNSPECIFIED           VectorStoreCatalogConflictReason = 0
+	VectorStoreCatalogConflictReason_VECTOR_STORE_CATALOG_CONFLICT_REASON_KEY_ALREADY_EXISTS    VectorStoreCatalogConflictReason = 1
+	VectorStoreCatalogConflictReason_VECTOR_STORE_CATALOG_CONFLICT_REASON_NAME_ALREADY_EXISTS   VectorStoreCatalogConflictReason = 2
+	VectorStoreCatalogConflictReason_VECTOR_STORE_CATALOG_CONFLICT_REASON_LEGACY_AMBIGUOUS_KEY  VectorStoreCatalogConflictReason = 3
+	VectorStoreCatalogConflictReason_VECTOR_STORE_CATALOG_CONFLICT_REASON_LEGACY_AMBIGUOUS_NAME VectorStoreCatalogConflictReason = 4
+)
+
+// Enum value maps for VectorStoreCatalogConflictReason.
+var (
+	VectorStoreCatalogConflictReason_name = map[int32]string{
+		0: "VECTOR_STORE_CATALOG_CONFLICT_REASON_UNSPECIFIED",
+		1: "VECTOR_STORE_CATALOG_CONFLICT_REASON_KEY_ALREADY_EXISTS",
+		2: "VECTOR_STORE_CATALOG_CONFLICT_REASON_NAME_ALREADY_EXISTS",
+		3: "VECTOR_STORE_CATALOG_CONFLICT_REASON_LEGACY_AMBIGUOUS_KEY",
+		4: "VECTOR_STORE_CATALOG_CONFLICT_REASON_LEGACY_AMBIGUOUS_NAME",
+	}
+	VectorStoreCatalogConflictReason_value = map[string]int32{
+		"VECTOR_STORE_CATALOG_CONFLICT_REASON_UNSPECIFIED":           0,
+		"VECTOR_STORE_CATALOG_CONFLICT_REASON_KEY_ALREADY_EXISTS":    1,
+		"VECTOR_STORE_CATALOG_CONFLICT_REASON_NAME_ALREADY_EXISTS":   2,
+		"VECTOR_STORE_CATALOG_CONFLICT_REASON_LEGACY_AMBIGUOUS_KEY":  3,
+		"VECTOR_STORE_CATALOG_CONFLICT_REASON_LEGACY_AMBIGUOUS_NAME": 4,
+	}
+)
+
+func (x VectorStoreCatalogConflictReason) Enum() *VectorStoreCatalogConflictReason {
+	p := new(VectorStoreCatalogConflictReason)
+	*p = x
+	return p
+}
+
+func (x VectorStoreCatalogConflictReason) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (VectorStoreCatalogConflictReason) Descriptor() protoreflect.EnumDescriptor {
+	return file_mycel_admin_v1_inference_proto_enumTypes[0].Descriptor()
+}
+
+func (VectorStoreCatalogConflictReason) Type() protoreflect.EnumType {
+	return &file_mycel_admin_v1_inference_proto_enumTypes[0]
+}
+
+func (x VectorStoreCatalogConflictReason) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use VectorStoreCatalogConflictReason.Descriptor instead.
+func (VectorStoreCatalogConflictReason) EnumDescriptor() ([]byte, []int) {
+	return file_mycel_admin_v1_inference_proto_rawDescGZIP(), []int{0}
+}
+
 type AdminInferenceCatalogServiceApplyInferencePackageRequest struct {
-	state                     protoimpl.MessageState               `protogen:"open.v1"`
-	Name                      string                               `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
-	Version                   string                               `protobuf:"bytes,2,opt,name=version,proto3" json:"version,omitempty"`
-	Source                    string                               `protobuf:"bytes,3,opt,name=source,proto3" json:"source,omitempty"`
-	Checksum                  string                               `protobuf:"bytes,4,opt,name=checksum,proto3" json:"checksum,omitempty"`
-	ModelEndpoints            []*ModelEndpoint                     `protobuf:"bytes,5,rep,name=model_endpoints,json=modelEndpoints,proto3" json:"model_endpoints,omitempty"`
-	Models                    []*InferenceModel                    `protobuf:"bytes,6,rep,name=models,proto3" json:"models,omitempty"`
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	Name           string                 `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	Version        string                 `protobuf:"bytes,2,opt,name=version,proto3" json:"version,omitempty"`
+	Source         string                 `protobuf:"bytes,3,opt,name=source,proto3" json:"source,omitempty"`
+	Checksum       string                 `protobuf:"bytes,4,opt,name=checksum,proto3" json:"checksum,omitempty"`
+	ModelEndpoints []*ModelEndpoint       `protobuf:"bytes,5,rep,name=model_endpoints,json=modelEndpoints,proto3" json:"model_endpoints,omitempty"`
+	Models         []*InferenceModel      `protobuf:"bytes,6,rep,name=models,proto3" json:"models,omitempty"`
+	// Vector stores are created or updated by authoritative vector_store_id when
+	// supplied. A definition without an ID may update the single store having the
+	// same normalized key for package compatibility; an ambiguous key is rejected.
+	// Key or name uniqueness conflicts fail with ALREADY_EXISTS and a
+	// VectorStoreCatalogConflict status detail. Blank definitions fail with
+	// INVALID_ARGUMENT. The implementation must validate the complete vector-store
+	// set before making package changes visible; it never renames, merges, replaces,
+	// or deletes a resource to resolve a collision.
 	VectorStores              []*VectorStore                       `protobuf:"bytes,7,rep,name=vector_stores,json=vectorStores,proto3" json:"vector_stores,omitempty"`
 	ModelEndpointCapabilities []*ModelEndpointCapabilityDefinition `protobuf:"bytes,8,rep,name=model_endpoint_capabilities,json=modelEndpointCapabilities,proto3" json:"model_endpoint_capabilities,omitempty"`
 	unknownFields             protoimpl.UnknownFields
@@ -591,9 +654,12 @@ func (x *AdminInferenceCatalogServiceListVectorStoresRequest) GetIncludeDisabled
 }
 
 type AdminInferenceCatalogServiceListVectorStoresResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	VectorStores  []*VectorStore         `protobuf:"bytes,1,rep,name=vector_stores,json=vectorStores,proto3" json:"vector_stores,omitempty"`
-	NextPageToken string                 `protobuf:"bytes,2,opt,name=next_page_token,json=nextPageToken,proto3" json:"next_page_token,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Legacy catalogs containing blank or duplicate normalized keys or names remain
+	// readable so operators can diagnose them. Clients must use vector_store_id as
+	// identity and must not resolve an ambiguous legacy key or name themselves.
+	VectorStores  []*VectorStore `protobuf:"bytes,1,rep,name=vector_stores,json=vectorStores,proto3" json:"vector_stores,omitempty"`
+	NextPageToken string         `protobuf:"bytes,2,opt,name=next_page_token,json=nextPageToken,proto3" json:"next_page_token,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1902,10 +1968,29 @@ func (x *InferenceModel) GetEnabled() bool {
 	return false
 }
 
+// VectorStore is one entry in the system-scoped vector-store catalog.
+//
+// vector_store_id is the immutable authoritative identity and durable foreign
+// reference. key is a stable machine/configuration identifier. name is the
+// operator-facing display name and may be changed without changing the ID or
+// breaking UUID-based references. New and updated stores require non-empty key
+// and name values, and both are unique after deterministic normalization within
+// the system catalog.
+//
+// Normalization removes leading and trailing Unicode whitespace and applies the
+// Unicode default lowercase mapping. The key is stored in normalized form; the
+// display name preserves its trimmed spelling. Names are labels, not foreign
+// keys. Legacy ambiguous catalogs remain listable for remediation, but ambiguous
+// key/name lookup and unrelated colliding mutations fail closed. Snapshot or
+// backup restore rejects ambiguous or blank catalogs rather than silently
+// renaming, merging, replacing, or deleting entries.
 type VectorStore struct {
-	state             protoimpl.MessageState   `protogen:"open.v1"`
-	VectorStoreId     string                   `protobuf:"bytes,1,opt,name=vector_store_id,json=vectorStoreId,proto3" json:"vector_store_id,omitempty"`
-	Key               string                   `protobuf:"bytes,2,opt,name=key,proto3" json:"key,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Immutable authoritative UUID identity.
+	VectorStoreId string `protobuf:"bytes,1,opt,name=vector_store_id,json=vectorStoreId,proto3" json:"vector_store_id,omitempty"`
+	// Required stable machine key, unique after catalog normalization.
+	Key string `protobuf:"bytes,2,opt,name=key,proto3" json:"key,omitempty"`
+	// Required renameable display label, unique after catalog normalization.
 	Name              string                   `protobuf:"bytes,3,opt,name=name,proto3" json:"name,omitempty"`
 	Type              string                   `protobuf:"bytes,4,opt,name=type,proto3" json:"type,omitempty"`
 	PrivacyClass      string                   `protobuf:"bytes,5,opt,name=privacy_class,json=privacyClass,proto3" json:"privacy_class,omitempty"`
@@ -2002,6 +2087,70 @@ func (x *VectorStore) GetPrivacyClassValue() v1.InferencePrivacyClass {
 	return v1.InferencePrivacyClass(0)
 }
 
+// VectorStoreCatalogConflict is attached to an ALREADY_EXISTS or
+// FAILED_PRECONDITION gRPC status when a vector-store mutation conflicts with a
+// unique key/name or encounters ambiguous legacy data. Values are normalized and
+// contain no vector-store configuration or secret material.
+type VectorStoreCatalogConflict struct {
+	state                     protoimpl.MessageState           `protogen:"open.v1"`
+	Reason                    VectorStoreCatalogConflictReason `protobuf:"varint,1,opt,name=reason,proto3,enum=mycel.admin.v1.VectorStoreCatalogConflictReason" json:"reason,omitempty"`
+	NormalizedValue           string                           `protobuf:"bytes,2,opt,name=normalized_value,json=normalizedValue,proto3" json:"normalized_value,omitempty"`
+	ConflictingVectorStoreIds []string                         `protobuf:"bytes,3,rep,name=conflicting_vector_store_ids,json=conflictingVectorStoreIds,proto3" json:"conflicting_vector_store_ids,omitempty"`
+	unknownFields             protoimpl.UnknownFields
+	sizeCache                 protoimpl.SizeCache
+}
+
+func (x *VectorStoreCatalogConflict) Reset() {
+	*x = VectorStoreCatalogConflict{}
+	mi := &file_mycel_admin_v1_inference_proto_msgTypes[30]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *VectorStoreCatalogConflict) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*VectorStoreCatalogConflict) ProtoMessage() {}
+
+func (x *VectorStoreCatalogConflict) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_admin_v1_inference_proto_msgTypes[30]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use VectorStoreCatalogConflict.ProtoReflect.Descriptor instead.
+func (*VectorStoreCatalogConflict) Descriptor() ([]byte, []int) {
+	return file_mycel_admin_v1_inference_proto_rawDescGZIP(), []int{30}
+}
+
+func (x *VectorStoreCatalogConflict) GetReason() VectorStoreCatalogConflictReason {
+	if x != nil {
+		return x.Reason
+	}
+	return VectorStoreCatalogConflictReason_VECTOR_STORE_CATALOG_CONFLICT_REASON_UNSPECIFIED
+}
+
+func (x *VectorStoreCatalogConflict) GetNormalizedValue() string {
+	if x != nil {
+		return x.NormalizedValue
+	}
+	return ""
+}
+
+func (x *VectorStoreCatalogConflict) GetConflictingVectorStoreIds() []string {
+	if x != nil {
+		return x.ConflictingVectorStoreIds
+	}
+	return nil
+}
+
 type ModelEndpointCapability struct {
 	state                     protoimpl.MessageState `protogen:"open.v1"`
 	ModelEndpointCapabilityId string                 `protobuf:"bytes,1,opt,name=model_endpoint_capability_id,json=modelEndpointCapabilityId,proto3" json:"model_endpoint_capability_id,omitempty"`
@@ -2024,7 +2173,7 @@ type ModelEndpointCapability struct {
 
 func (x *ModelEndpointCapability) Reset() {
 	*x = ModelEndpointCapability{}
-	mi := &file_mycel_admin_v1_inference_proto_msgTypes[30]
+	mi := &file_mycel_admin_v1_inference_proto_msgTypes[31]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2036,7 +2185,7 @@ func (x *ModelEndpointCapability) String() string {
 func (*ModelEndpointCapability) ProtoMessage() {}
 
 func (x *ModelEndpointCapability) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_admin_v1_inference_proto_msgTypes[30]
+	mi := &file_mycel_admin_v1_inference_proto_msgTypes[31]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2049,7 +2198,7 @@ func (x *ModelEndpointCapability) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ModelEndpointCapability.ProtoReflect.Descriptor instead.
 func (*ModelEndpointCapability) Descriptor() ([]byte, []int) {
-	return file_mycel_admin_v1_inference_proto_rawDescGZIP(), []int{30}
+	return file_mycel_admin_v1_inference_proto_rawDescGZIP(), []int{31}
 }
 
 func (x *ModelEndpointCapability) GetModelEndpointCapabilityId() string {
@@ -2166,7 +2315,7 @@ type ModelEndpointCapabilityDefinition struct {
 
 func (x *ModelEndpointCapabilityDefinition) Reset() {
 	*x = ModelEndpointCapabilityDefinition{}
-	mi := &file_mycel_admin_v1_inference_proto_msgTypes[31]
+	mi := &file_mycel_admin_v1_inference_proto_msgTypes[32]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2178,7 +2327,7 @@ func (x *ModelEndpointCapabilityDefinition) String() string {
 func (*ModelEndpointCapabilityDefinition) ProtoMessage() {}
 
 func (x *ModelEndpointCapabilityDefinition) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_admin_v1_inference_proto_msgTypes[31]
+	mi := &file_mycel_admin_v1_inference_proto_msgTypes[32]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2191,7 +2340,7 @@ func (x *ModelEndpointCapabilityDefinition) ProtoReflect() protoreflect.Message 
 
 // Deprecated: Use ModelEndpointCapabilityDefinition.ProtoReflect.Descriptor instead.
 func (*ModelEndpointCapabilityDefinition) Descriptor() ([]byte, []int) {
-	return file_mycel_admin_v1_inference_proto_rawDescGZIP(), []int{31}
+	return file_mycel_admin_v1_inference_proto_rawDescGZIP(), []int{32}
 }
 
 func (x *ModelEndpointCapabilityDefinition) GetModelEndpoint() string {
@@ -2415,7 +2564,11 @@ const file_mycel_admin_v1_inference_proto_rawDesc = "" +
 	"\rprivacy_class\x18\x05 \x01(\tR\fprivacyClass\x12\x18\n" +
 	"\aenabled\x18\x06 \x01(\bR\aenabled\x12/\n" +
 	"\x06config\x18\a \x01(\v2\x17.google.protobuf.StructR\x06config\x12V\n" +
-	"\x13privacy_class_value\x18\b \x01(\x0e2&.mycel.common.v1.InferencePrivacyClassR\x11privacyClassValue\"\xaf\x05\n" +
+	"\x13privacy_class_value\x18\b \x01(\x0e2&.mycel.common.v1.InferencePrivacyClassR\x11privacyClassValue\"\xd2\x01\n" +
+	"\x1aVectorStoreCatalogConflict\x12H\n" +
+	"\x06reason\x18\x01 \x01(\x0e20.mycel.admin.v1.VectorStoreCatalogConflictReasonR\x06reason\x12)\n" +
+	"\x10normalized_value\x18\x02 \x01(\tR\x0fnormalizedValue\x12?\n" +
+	"\x1cconflicting_vector_store_ids\x18\x03 \x03(\tR\x19conflictingVectorStoreIds\"\xaf\x05\n" +
 	"\x17ModelEndpointCapability\x12?\n" +
 	"\x1cmodel_endpoint_capability_id\x18\x01 \x01(\tR\x19modelEndpointCapabilityId\x12*\n" +
 	"\x11model_endpoint_id\x18\x02 \x01(\tR\x0fmodelEndpointId\x12\x19\n" +
@@ -2442,7 +2595,13 @@ const file_mycel_admin_v1_inference_proto_rawDesc = "" +
 	"\x13model_name_override\x18\a \x01(\tR\x11modelNameOverride\x123\n" +
 	"\bmetadata\x18\b \x01(\v2\x17.google.protobuf.StructR\bmetadataB\n" +
 	"\n" +
-	"\b_enabled2\xf2\x11\n" +
+	"\b_enabled*\xd2\x02\n" +
+	" VectorStoreCatalogConflictReason\x124\n" +
+	"0VECTOR_STORE_CATALOG_CONFLICT_REASON_UNSPECIFIED\x10\x00\x12;\n" +
+	"7VECTOR_STORE_CATALOG_CONFLICT_REASON_KEY_ALREADY_EXISTS\x10\x01\x12<\n" +
+	"8VECTOR_STORE_CATALOG_CONFLICT_REASON_NAME_ALREADY_EXISTS\x10\x02\x12=\n" +
+	"9VECTOR_STORE_CATALOG_CONFLICT_REASON_LEGACY_AMBIGUOUS_KEY\x10\x03\x12>\n" +
+	":VECTOR_STORE_CATALOG_CONFLICT_REASON_LEGACY_AMBIGUOUS_NAME\x10\x042\xf2\x11\n" +
 	"\x1cAdminInferenceCatalogService\x12\xac\x01\n" +
 	"\x15ApplyInferencePackage\x12H.mycel.admin.v1.AdminInferenceCatalogServiceApplyInferencePackageRequest\x1aI.mycel.admin.v1.AdminInferenceCatalogServiceApplyInferencePackageResponse\x12\xac\x01\n" +
 	"\x15ListInferencePackages\x12H.mycel.admin.v1.AdminInferenceCatalogServiceListInferencePackagesRequest\x1aI.mycel.admin.v1.AdminInferenceCatalogServiceListInferencePackagesResponse\x12\xa3\x01\n" +
@@ -2472,113 +2631,117 @@ func file_mycel_admin_v1_inference_proto_rawDescGZIP() []byte {
 	return file_mycel_admin_v1_inference_proto_rawDescData
 }
 
-var file_mycel_admin_v1_inference_proto_msgTypes = make([]protoimpl.MessageInfo, 33)
+var file_mycel_admin_v1_inference_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
+var file_mycel_admin_v1_inference_proto_msgTypes = make([]protoimpl.MessageInfo, 34)
 var file_mycel_admin_v1_inference_proto_goTypes = []any{
-	(*AdminInferenceCatalogServiceApplyInferencePackageRequest)(nil),              // 0: mycel.admin.v1.AdminInferenceCatalogServiceApplyInferencePackageRequest
-	(*AdminInferenceCatalogServiceApplyInferencePackageResponse)(nil),             // 1: mycel.admin.v1.AdminInferenceCatalogServiceApplyInferencePackageResponse
-	(*AdminInferenceCatalogServiceListInferencePackagesRequest)(nil),              // 2: mycel.admin.v1.AdminInferenceCatalogServiceListInferencePackagesRequest
-	(*AdminInferenceCatalogServiceListInferencePackagesResponse)(nil),             // 3: mycel.admin.v1.AdminInferenceCatalogServiceListInferencePackagesResponse
-	(*AdminInferenceCatalogServiceListModelEndpointsRequest)(nil),                 // 4: mycel.admin.v1.AdminInferenceCatalogServiceListModelEndpointsRequest
-	(*AdminInferenceCatalogServiceListModelEndpointsResponse)(nil),                // 5: mycel.admin.v1.AdminInferenceCatalogServiceListModelEndpointsResponse
-	(*AdminInferenceCatalogServiceListModelsRequest)(nil),                         // 6: mycel.admin.v1.AdminInferenceCatalogServiceListModelsRequest
-	(*AdminInferenceCatalogServiceListModelsResponse)(nil),                        // 7: mycel.admin.v1.AdminInferenceCatalogServiceListModelsResponse
-	(*AdminInferenceCatalogServiceListVectorStoresRequest)(nil),                   // 8: mycel.admin.v1.AdminInferenceCatalogServiceListVectorStoresRequest
-	(*AdminInferenceCatalogServiceListVectorStoresResponse)(nil),                  // 9: mycel.admin.v1.AdminInferenceCatalogServiceListVectorStoresResponse
-	(*AdminInferenceCatalogServiceListModelEndpointCapabilitiesRequest)(nil),      // 10: mycel.admin.v1.AdminInferenceCatalogServiceListModelEndpointCapabilitiesRequest
-	(*AdminInferenceCatalogServiceListModelEndpointCapabilitiesResponse)(nil),     // 11: mycel.admin.v1.AdminInferenceCatalogServiceListModelEndpointCapabilitiesResponse
-	(*AdminInferenceCatalogServiceSetModelEndpointEnabledRequest)(nil),            // 12: mycel.admin.v1.AdminInferenceCatalogServiceSetModelEndpointEnabledRequest
-	(*AdminInferenceCatalogServiceSetModelEndpointEnabledResponse)(nil),           // 13: mycel.admin.v1.AdminInferenceCatalogServiceSetModelEndpointEnabledResponse
-	(*AdminInferenceCatalogServiceSetVectorStoreEnabledRequest)(nil),              // 14: mycel.admin.v1.AdminInferenceCatalogServiceSetVectorStoreEnabledRequest
-	(*AdminInferenceCatalogServiceSetVectorStoreEnabledResponse)(nil),             // 15: mycel.admin.v1.AdminInferenceCatalogServiceSetVectorStoreEnabledResponse
-	(*AdminInferenceCatalogServiceSetModelEndpointCapabilityEnabledRequest)(nil),  // 16: mycel.admin.v1.AdminInferenceCatalogServiceSetModelEndpointCapabilityEnabledRequest
-	(*AdminInferenceCatalogServiceSetModelEndpointCapabilityEnabledResponse)(nil), // 17: mycel.admin.v1.AdminInferenceCatalogServiceSetModelEndpointCapabilityEnabledResponse
-	(*AdminInferenceCatalogServiceDeleteModelEndpointRequest)(nil),                // 18: mycel.admin.v1.AdminInferenceCatalogServiceDeleteModelEndpointRequest
-	(*AdminInferenceCatalogServiceDeleteModelEndpointResponse)(nil),               // 19: mycel.admin.v1.AdminInferenceCatalogServiceDeleteModelEndpointResponse
-	(*AdminInferenceCatalogServiceDeleteModelRequest)(nil),                        // 20: mycel.admin.v1.AdminInferenceCatalogServiceDeleteModelRequest
-	(*AdminInferenceCatalogServiceDeleteModelResponse)(nil),                       // 21: mycel.admin.v1.AdminInferenceCatalogServiceDeleteModelResponse
-	(*AdminInferenceCatalogServiceDeleteVectorStoreRequest)(nil),                  // 22: mycel.admin.v1.AdminInferenceCatalogServiceDeleteVectorStoreRequest
-	(*AdminInferenceCatalogServiceDeleteVectorStoreResponse)(nil),                 // 23: mycel.admin.v1.AdminInferenceCatalogServiceDeleteVectorStoreResponse
-	(*AdminInferenceCatalogServiceDeleteModelEndpointCapabilityRequest)(nil),      // 24: mycel.admin.v1.AdminInferenceCatalogServiceDeleteModelEndpointCapabilityRequest
-	(*AdminInferenceCatalogServiceDeleteModelEndpointCapabilityResponse)(nil),     // 25: mycel.admin.v1.AdminInferenceCatalogServiceDeleteModelEndpointCapabilityResponse
-	(*InferencePackage)(nil),                  // 26: mycel.admin.v1.InferencePackage
-	(*ModelEndpoint)(nil),                     // 27: mycel.admin.v1.ModelEndpoint
-	(*InferenceModel)(nil),                    // 28: mycel.admin.v1.InferenceModel
-	(*VectorStore)(nil),                       // 29: mycel.admin.v1.VectorStore
-	(*ModelEndpointCapability)(nil),           // 30: mycel.admin.v1.ModelEndpointCapability
-	(*ModelEndpointCapabilityDefinition)(nil), // 31: mycel.admin.v1.ModelEndpointCapabilityDefinition
-	nil,                           // 32: mycel.admin.v1.InferencePackage.DefinitionCountsEntry
-	(*timestamppb.Timestamp)(nil), // 33: google.protobuf.Timestamp
-	(*structpb.Struct)(nil),       // 34: google.protobuf.Struct
-	(v1.InferenceNetworkClass)(0), // 35: mycel.common.v1.InferenceNetworkClass
-	(v1.InferencePrivacyClass)(0), // 36: mycel.common.v1.InferencePrivacyClass
-	(v1.IntelligenceAccessCredentialAuthType)(0), // 37: mycel.common.v1.IntelligenceAccessCredentialAuthType
-	(v1.InferenceOperation)(0),                   // 38: mycel.common.v1.InferenceOperation
-	(v1.InferenceModelKind)(0),                   // 39: mycel.common.v1.InferenceModelKind
+	(VectorStoreCatalogConflictReason)(0),                                         // 0: mycel.admin.v1.VectorStoreCatalogConflictReason
+	(*AdminInferenceCatalogServiceApplyInferencePackageRequest)(nil),              // 1: mycel.admin.v1.AdminInferenceCatalogServiceApplyInferencePackageRequest
+	(*AdminInferenceCatalogServiceApplyInferencePackageResponse)(nil),             // 2: mycel.admin.v1.AdminInferenceCatalogServiceApplyInferencePackageResponse
+	(*AdminInferenceCatalogServiceListInferencePackagesRequest)(nil),              // 3: mycel.admin.v1.AdminInferenceCatalogServiceListInferencePackagesRequest
+	(*AdminInferenceCatalogServiceListInferencePackagesResponse)(nil),             // 4: mycel.admin.v1.AdminInferenceCatalogServiceListInferencePackagesResponse
+	(*AdminInferenceCatalogServiceListModelEndpointsRequest)(nil),                 // 5: mycel.admin.v1.AdminInferenceCatalogServiceListModelEndpointsRequest
+	(*AdminInferenceCatalogServiceListModelEndpointsResponse)(nil),                // 6: mycel.admin.v1.AdminInferenceCatalogServiceListModelEndpointsResponse
+	(*AdminInferenceCatalogServiceListModelsRequest)(nil),                         // 7: mycel.admin.v1.AdminInferenceCatalogServiceListModelsRequest
+	(*AdminInferenceCatalogServiceListModelsResponse)(nil),                        // 8: mycel.admin.v1.AdminInferenceCatalogServiceListModelsResponse
+	(*AdminInferenceCatalogServiceListVectorStoresRequest)(nil),                   // 9: mycel.admin.v1.AdminInferenceCatalogServiceListVectorStoresRequest
+	(*AdminInferenceCatalogServiceListVectorStoresResponse)(nil),                  // 10: mycel.admin.v1.AdminInferenceCatalogServiceListVectorStoresResponse
+	(*AdminInferenceCatalogServiceListModelEndpointCapabilitiesRequest)(nil),      // 11: mycel.admin.v1.AdminInferenceCatalogServiceListModelEndpointCapabilitiesRequest
+	(*AdminInferenceCatalogServiceListModelEndpointCapabilitiesResponse)(nil),     // 12: mycel.admin.v1.AdminInferenceCatalogServiceListModelEndpointCapabilitiesResponse
+	(*AdminInferenceCatalogServiceSetModelEndpointEnabledRequest)(nil),            // 13: mycel.admin.v1.AdminInferenceCatalogServiceSetModelEndpointEnabledRequest
+	(*AdminInferenceCatalogServiceSetModelEndpointEnabledResponse)(nil),           // 14: mycel.admin.v1.AdminInferenceCatalogServiceSetModelEndpointEnabledResponse
+	(*AdminInferenceCatalogServiceSetVectorStoreEnabledRequest)(nil),              // 15: mycel.admin.v1.AdminInferenceCatalogServiceSetVectorStoreEnabledRequest
+	(*AdminInferenceCatalogServiceSetVectorStoreEnabledResponse)(nil),             // 16: mycel.admin.v1.AdminInferenceCatalogServiceSetVectorStoreEnabledResponse
+	(*AdminInferenceCatalogServiceSetModelEndpointCapabilityEnabledRequest)(nil),  // 17: mycel.admin.v1.AdminInferenceCatalogServiceSetModelEndpointCapabilityEnabledRequest
+	(*AdminInferenceCatalogServiceSetModelEndpointCapabilityEnabledResponse)(nil), // 18: mycel.admin.v1.AdminInferenceCatalogServiceSetModelEndpointCapabilityEnabledResponse
+	(*AdminInferenceCatalogServiceDeleteModelEndpointRequest)(nil),                // 19: mycel.admin.v1.AdminInferenceCatalogServiceDeleteModelEndpointRequest
+	(*AdminInferenceCatalogServiceDeleteModelEndpointResponse)(nil),               // 20: mycel.admin.v1.AdminInferenceCatalogServiceDeleteModelEndpointResponse
+	(*AdminInferenceCatalogServiceDeleteModelRequest)(nil),                        // 21: mycel.admin.v1.AdminInferenceCatalogServiceDeleteModelRequest
+	(*AdminInferenceCatalogServiceDeleteModelResponse)(nil),                       // 22: mycel.admin.v1.AdminInferenceCatalogServiceDeleteModelResponse
+	(*AdminInferenceCatalogServiceDeleteVectorStoreRequest)(nil),                  // 23: mycel.admin.v1.AdminInferenceCatalogServiceDeleteVectorStoreRequest
+	(*AdminInferenceCatalogServiceDeleteVectorStoreResponse)(nil),                 // 24: mycel.admin.v1.AdminInferenceCatalogServiceDeleteVectorStoreResponse
+	(*AdminInferenceCatalogServiceDeleteModelEndpointCapabilityRequest)(nil),      // 25: mycel.admin.v1.AdminInferenceCatalogServiceDeleteModelEndpointCapabilityRequest
+	(*AdminInferenceCatalogServiceDeleteModelEndpointCapabilityResponse)(nil),     // 26: mycel.admin.v1.AdminInferenceCatalogServiceDeleteModelEndpointCapabilityResponse
+	(*InferencePackage)(nil),                  // 27: mycel.admin.v1.InferencePackage
+	(*ModelEndpoint)(nil),                     // 28: mycel.admin.v1.ModelEndpoint
+	(*InferenceModel)(nil),                    // 29: mycel.admin.v1.InferenceModel
+	(*VectorStore)(nil),                       // 30: mycel.admin.v1.VectorStore
+	(*VectorStoreCatalogConflict)(nil),        // 31: mycel.admin.v1.VectorStoreCatalogConflict
+	(*ModelEndpointCapability)(nil),           // 32: mycel.admin.v1.ModelEndpointCapability
+	(*ModelEndpointCapabilityDefinition)(nil), // 33: mycel.admin.v1.ModelEndpointCapabilityDefinition
+	nil,                           // 34: mycel.admin.v1.InferencePackage.DefinitionCountsEntry
+	(*timestamppb.Timestamp)(nil), // 35: google.protobuf.Timestamp
+	(*structpb.Struct)(nil),       // 36: google.protobuf.Struct
+	(v1.InferenceNetworkClass)(0), // 37: mycel.common.v1.InferenceNetworkClass
+	(v1.InferencePrivacyClass)(0), // 38: mycel.common.v1.InferencePrivacyClass
+	(v1.IntelligenceAccessCredentialAuthType)(0), // 39: mycel.common.v1.IntelligenceAccessCredentialAuthType
+	(v1.InferenceOperation)(0),                   // 40: mycel.common.v1.InferenceOperation
+	(v1.InferenceModelKind)(0),                   // 41: mycel.common.v1.InferenceModelKind
 }
 var file_mycel_admin_v1_inference_proto_depIdxs = []int32{
-	27, // 0: mycel.admin.v1.AdminInferenceCatalogServiceApplyInferencePackageRequest.model_endpoints:type_name -> mycel.admin.v1.ModelEndpoint
-	28, // 1: mycel.admin.v1.AdminInferenceCatalogServiceApplyInferencePackageRequest.models:type_name -> mycel.admin.v1.InferenceModel
-	29, // 2: mycel.admin.v1.AdminInferenceCatalogServiceApplyInferencePackageRequest.vector_stores:type_name -> mycel.admin.v1.VectorStore
-	31, // 3: mycel.admin.v1.AdminInferenceCatalogServiceApplyInferencePackageRequest.model_endpoint_capabilities:type_name -> mycel.admin.v1.ModelEndpointCapabilityDefinition
-	26, // 4: mycel.admin.v1.AdminInferenceCatalogServiceApplyInferencePackageResponse.package:type_name -> mycel.admin.v1.InferencePackage
-	27, // 5: mycel.admin.v1.AdminInferenceCatalogServiceApplyInferencePackageResponse.model_endpoints:type_name -> mycel.admin.v1.ModelEndpoint
-	28, // 6: mycel.admin.v1.AdminInferenceCatalogServiceApplyInferencePackageResponse.models:type_name -> mycel.admin.v1.InferenceModel
-	29, // 7: mycel.admin.v1.AdminInferenceCatalogServiceApplyInferencePackageResponse.vector_stores:type_name -> mycel.admin.v1.VectorStore
-	30, // 8: mycel.admin.v1.AdminInferenceCatalogServiceApplyInferencePackageResponse.model_endpoint_capabilities:type_name -> mycel.admin.v1.ModelEndpointCapability
-	26, // 9: mycel.admin.v1.AdminInferenceCatalogServiceListInferencePackagesResponse.packages:type_name -> mycel.admin.v1.InferencePackage
-	27, // 10: mycel.admin.v1.AdminInferenceCatalogServiceListModelEndpointsResponse.model_endpoints:type_name -> mycel.admin.v1.ModelEndpoint
-	28, // 11: mycel.admin.v1.AdminInferenceCatalogServiceListModelsResponse.models:type_name -> mycel.admin.v1.InferenceModel
-	29, // 12: mycel.admin.v1.AdminInferenceCatalogServiceListVectorStoresResponse.vector_stores:type_name -> mycel.admin.v1.VectorStore
-	30, // 13: mycel.admin.v1.AdminInferenceCatalogServiceListModelEndpointCapabilitiesResponse.model_endpoint_capabilities:type_name -> mycel.admin.v1.ModelEndpointCapability
-	27, // 14: mycel.admin.v1.AdminInferenceCatalogServiceSetModelEndpointEnabledResponse.model_endpoint:type_name -> mycel.admin.v1.ModelEndpoint
-	29, // 15: mycel.admin.v1.AdminInferenceCatalogServiceSetVectorStoreEnabledResponse.vector_store:type_name -> mycel.admin.v1.VectorStore
-	30, // 16: mycel.admin.v1.AdminInferenceCatalogServiceSetModelEndpointCapabilityEnabledResponse.model_endpoint_capability:type_name -> mycel.admin.v1.ModelEndpointCapability
-	32, // 17: mycel.admin.v1.InferencePackage.definition_counts:type_name -> mycel.admin.v1.InferencePackage.DefinitionCountsEntry
-	33, // 18: mycel.admin.v1.InferencePackage.installed_at:type_name -> google.protobuf.Timestamp
-	34, // 19: mycel.admin.v1.ModelEndpoint.metadata:type_name -> google.protobuf.Struct
-	35, // 20: mycel.admin.v1.ModelEndpoint.network_class_value:type_name -> mycel.common.v1.InferenceNetworkClass
-	36, // 21: mycel.admin.v1.ModelEndpoint.privacy_class_value:type_name -> mycel.common.v1.InferencePrivacyClass
-	37, // 22: mycel.admin.v1.ModelEndpoint.auth_type_values:type_name -> mycel.common.v1.IntelligenceAccessCredentialAuthType
-	38, // 23: mycel.admin.v1.ModelEndpoint.operation_values:type_name -> mycel.common.v1.InferenceOperation
-	34, // 24: mycel.admin.v1.InferenceModel.metadata:type_name -> google.protobuf.Struct
-	39, // 25: mycel.admin.v1.InferenceModel.kind_value:type_name -> mycel.common.v1.InferenceModelKind
-	34, // 26: mycel.admin.v1.VectorStore.config:type_name -> google.protobuf.Struct
-	36, // 27: mycel.admin.v1.VectorStore.privacy_class_value:type_name -> mycel.common.v1.InferencePrivacyClass
-	34, // 28: mycel.admin.v1.ModelEndpointCapability.metadata:type_name -> google.protobuf.Struct
-	38, // 29: mycel.admin.v1.ModelEndpointCapability.operation_value:type_name -> mycel.common.v1.InferenceOperation
-	34, // 30: mycel.admin.v1.ModelEndpointCapability.default_parameters:type_name -> google.protobuf.Struct
-	34, // 31: mycel.admin.v1.ModelEndpointCapabilityDefinition.metadata:type_name -> google.protobuf.Struct
-	0,  // 32: mycel.admin.v1.AdminInferenceCatalogService.ApplyInferencePackage:input_type -> mycel.admin.v1.AdminInferenceCatalogServiceApplyInferencePackageRequest
-	2,  // 33: mycel.admin.v1.AdminInferenceCatalogService.ListInferencePackages:input_type -> mycel.admin.v1.AdminInferenceCatalogServiceListInferencePackagesRequest
-	4,  // 34: mycel.admin.v1.AdminInferenceCatalogService.ListModelEndpoints:input_type -> mycel.admin.v1.AdminInferenceCatalogServiceListModelEndpointsRequest
-	6,  // 35: mycel.admin.v1.AdminInferenceCatalogService.ListModels:input_type -> mycel.admin.v1.AdminInferenceCatalogServiceListModelsRequest
-	8,  // 36: mycel.admin.v1.AdminInferenceCatalogService.ListVectorStores:input_type -> mycel.admin.v1.AdminInferenceCatalogServiceListVectorStoresRequest
-	10, // 37: mycel.admin.v1.AdminInferenceCatalogService.ListModelEndpointCapabilities:input_type -> mycel.admin.v1.AdminInferenceCatalogServiceListModelEndpointCapabilitiesRequest
-	12, // 38: mycel.admin.v1.AdminInferenceCatalogService.SetModelEndpointEnabled:input_type -> mycel.admin.v1.AdminInferenceCatalogServiceSetModelEndpointEnabledRequest
-	14, // 39: mycel.admin.v1.AdminInferenceCatalogService.SetVectorStoreEnabled:input_type -> mycel.admin.v1.AdminInferenceCatalogServiceSetVectorStoreEnabledRequest
-	16, // 40: mycel.admin.v1.AdminInferenceCatalogService.SetModelEndpointCapabilityEnabled:input_type -> mycel.admin.v1.AdminInferenceCatalogServiceSetModelEndpointCapabilityEnabledRequest
-	18, // 41: mycel.admin.v1.AdminInferenceCatalogService.DeleteModelEndpoint:input_type -> mycel.admin.v1.AdminInferenceCatalogServiceDeleteModelEndpointRequest
-	20, // 42: mycel.admin.v1.AdminInferenceCatalogService.DeleteModel:input_type -> mycel.admin.v1.AdminInferenceCatalogServiceDeleteModelRequest
-	22, // 43: mycel.admin.v1.AdminInferenceCatalogService.DeleteVectorStore:input_type -> mycel.admin.v1.AdminInferenceCatalogServiceDeleteVectorStoreRequest
-	24, // 44: mycel.admin.v1.AdminInferenceCatalogService.DeleteModelEndpointCapability:input_type -> mycel.admin.v1.AdminInferenceCatalogServiceDeleteModelEndpointCapabilityRequest
-	1,  // 45: mycel.admin.v1.AdminInferenceCatalogService.ApplyInferencePackage:output_type -> mycel.admin.v1.AdminInferenceCatalogServiceApplyInferencePackageResponse
-	3,  // 46: mycel.admin.v1.AdminInferenceCatalogService.ListInferencePackages:output_type -> mycel.admin.v1.AdminInferenceCatalogServiceListInferencePackagesResponse
-	5,  // 47: mycel.admin.v1.AdminInferenceCatalogService.ListModelEndpoints:output_type -> mycel.admin.v1.AdminInferenceCatalogServiceListModelEndpointsResponse
-	7,  // 48: mycel.admin.v1.AdminInferenceCatalogService.ListModels:output_type -> mycel.admin.v1.AdminInferenceCatalogServiceListModelsResponse
-	9,  // 49: mycel.admin.v1.AdminInferenceCatalogService.ListVectorStores:output_type -> mycel.admin.v1.AdminInferenceCatalogServiceListVectorStoresResponse
-	11, // 50: mycel.admin.v1.AdminInferenceCatalogService.ListModelEndpointCapabilities:output_type -> mycel.admin.v1.AdminInferenceCatalogServiceListModelEndpointCapabilitiesResponse
-	13, // 51: mycel.admin.v1.AdminInferenceCatalogService.SetModelEndpointEnabled:output_type -> mycel.admin.v1.AdminInferenceCatalogServiceSetModelEndpointEnabledResponse
-	15, // 52: mycel.admin.v1.AdminInferenceCatalogService.SetVectorStoreEnabled:output_type -> mycel.admin.v1.AdminInferenceCatalogServiceSetVectorStoreEnabledResponse
-	17, // 53: mycel.admin.v1.AdminInferenceCatalogService.SetModelEndpointCapabilityEnabled:output_type -> mycel.admin.v1.AdminInferenceCatalogServiceSetModelEndpointCapabilityEnabledResponse
-	19, // 54: mycel.admin.v1.AdminInferenceCatalogService.DeleteModelEndpoint:output_type -> mycel.admin.v1.AdminInferenceCatalogServiceDeleteModelEndpointResponse
-	21, // 55: mycel.admin.v1.AdminInferenceCatalogService.DeleteModel:output_type -> mycel.admin.v1.AdminInferenceCatalogServiceDeleteModelResponse
-	23, // 56: mycel.admin.v1.AdminInferenceCatalogService.DeleteVectorStore:output_type -> mycel.admin.v1.AdminInferenceCatalogServiceDeleteVectorStoreResponse
-	25, // 57: mycel.admin.v1.AdminInferenceCatalogService.DeleteModelEndpointCapability:output_type -> mycel.admin.v1.AdminInferenceCatalogServiceDeleteModelEndpointCapabilityResponse
-	45, // [45:58] is the sub-list for method output_type
-	32, // [32:45] is the sub-list for method input_type
-	32, // [32:32] is the sub-list for extension type_name
-	32, // [32:32] is the sub-list for extension extendee
-	0,  // [0:32] is the sub-list for field type_name
+	28, // 0: mycel.admin.v1.AdminInferenceCatalogServiceApplyInferencePackageRequest.model_endpoints:type_name -> mycel.admin.v1.ModelEndpoint
+	29, // 1: mycel.admin.v1.AdminInferenceCatalogServiceApplyInferencePackageRequest.models:type_name -> mycel.admin.v1.InferenceModel
+	30, // 2: mycel.admin.v1.AdminInferenceCatalogServiceApplyInferencePackageRequest.vector_stores:type_name -> mycel.admin.v1.VectorStore
+	33, // 3: mycel.admin.v1.AdminInferenceCatalogServiceApplyInferencePackageRequest.model_endpoint_capabilities:type_name -> mycel.admin.v1.ModelEndpointCapabilityDefinition
+	27, // 4: mycel.admin.v1.AdminInferenceCatalogServiceApplyInferencePackageResponse.package:type_name -> mycel.admin.v1.InferencePackage
+	28, // 5: mycel.admin.v1.AdminInferenceCatalogServiceApplyInferencePackageResponse.model_endpoints:type_name -> mycel.admin.v1.ModelEndpoint
+	29, // 6: mycel.admin.v1.AdminInferenceCatalogServiceApplyInferencePackageResponse.models:type_name -> mycel.admin.v1.InferenceModel
+	30, // 7: mycel.admin.v1.AdminInferenceCatalogServiceApplyInferencePackageResponse.vector_stores:type_name -> mycel.admin.v1.VectorStore
+	32, // 8: mycel.admin.v1.AdminInferenceCatalogServiceApplyInferencePackageResponse.model_endpoint_capabilities:type_name -> mycel.admin.v1.ModelEndpointCapability
+	27, // 9: mycel.admin.v1.AdminInferenceCatalogServiceListInferencePackagesResponse.packages:type_name -> mycel.admin.v1.InferencePackage
+	28, // 10: mycel.admin.v1.AdminInferenceCatalogServiceListModelEndpointsResponse.model_endpoints:type_name -> mycel.admin.v1.ModelEndpoint
+	29, // 11: mycel.admin.v1.AdminInferenceCatalogServiceListModelsResponse.models:type_name -> mycel.admin.v1.InferenceModel
+	30, // 12: mycel.admin.v1.AdminInferenceCatalogServiceListVectorStoresResponse.vector_stores:type_name -> mycel.admin.v1.VectorStore
+	32, // 13: mycel.admin.v1.AdminInferenceCatalogServiceListModelEndpointCapabilitiesResponse.model_endpoint_capabilities:type_name -> mycel.admin.v1.ModelEndpointCapability
+	28, // 14: mycel.admin.v1.AdminInferenceCatalogServiceSetModelEndpointEnabledResponse.model_endpoint:type_name -> mycel.admin.v1.ModelEndpoint
+	30, // 15: mycel.admin.v1.AdminInferenceCatalogServiceSetVectorStoreEnabledResponse.vector_store:type_name -> mycel.admin.v1.VectorStore
+	32, // 16: mycel.admin.v1.AdminInferenceCatalogServiceSetModelEndpointCapabilityEnabledResponse.model_endpoint_capability:type_name -> mycel.admin.v1.ModelEndpointCapability
+	34, // 17: mycel.admin.v1.InferencePackage.definition_counts:type_name -> mycel.admin.v1.InferencePackage.DefinitionCountsEntry
+	35, // 18: mycel.admin.v1.InferencePackage.installed_at:type_name -> google.protobuf.Timestamp
+	36, // 19: mycel.admin.v1.ModelEndpoint.metadata:type_name -> google.protobuf.Struct
+	37, // 20: mycel.admin.v1.ModelEndpoint.network_class_value:type_name -> mycel.common.v1.InferenceNetworkClass
+	38, // 21: mycel.admin.v1.ModelEndpoint.privacy_class_value:type_name -> mycel.common.v1.InferencePrivacyClass
+	39, // 22: mycel.admin.v1.ModelEndpoint.auth_type_values:type_name -> mycel.common.v1.IntelligenceAccessCredentialAuthType
+	40, // 23: mycel.admin.v1.ModelEndpoint.operation_values:type_name -> mycel.common.v1.InferenceOperation
+	36, // 24: mycel.admin.v1.InferenceModel.metadata:type_name -> google.protobuf.Struct
+	41, // 25: mycel.admin.v1.InferenceModel.kind_value:type_name -> mycel.common.v1.InferenceModelKind
+	36, // 26: mycel.admin.v1.VectorStore.config:type_name -> google.protobuf.Struct
+	38, // 27: mycel.admin.v1.VectorStore.privacy_class_value:type_name -> mycel.common.v1.InferencePrivacyClass
+	0,  // 28: mycel.admin.v1.VectorStoreCatalogConflict.reason:type_name -> mycel.admin.v1.VectorStoreCatalogConflictReason
+	36, // 29: mycel.admin.v1.ModelEndpointCapability.metadata:type_name -> google.protobuf.Struct
+	40, // 30: mycel.admin.v1.ModelEndpointCapability.operation_value:type_name -> mycel.common.v1.InferenceOperation
+	36, // 31: mycel.admin.v1.ModelEndpointCapability.default_parameters:type_name -> google.protobuf.Struct
+	36, // 32: mycel.admin.v1.ModelEndpointCapabilityDefinition.metadata:type_name -> google.protobuf.Struct
+	1,  // 33: mycel.admin.v1.AdminInferenceCatalogService.ApplyInferencePackage:input_type -> mycel.admin.v1.AdminInferenceCatalogServiceApplyInferencePackageRequest
+	3,  // 34: mycel.admin.v1.AdminInferenceCatalogService.ListInferencePackages:input_type -> mycel.admin.v1.AdminInferenceCatalogServiceListInferencePackagesRequest
+	5,  // 35: mycel.admin.v1.AdminInferenceCatalogService.ListModelEndpoints:input_type -> mycel.admin.v1.AdminInferenceCatalogServiceListModelEndpointsRequest
+	7,  // 36: mycel.admin.v1.AdminInferenceCatalogService.ListModels:input_type -> mycel.admin.v1.AdminInferenceCatalogServiceListModelsRequest
+	9,  // 37: mycel.admin.v1.AdminInferenceCatalogService.ListVectorStores:input_type -> mycel.admin.v1.AdminInferenceCatalogServiceListVectorStoresRequest
+	11, // 38: mycel.admin.v1.AdminInferenceCatalogService.ListModelEndpointCapabilities:input_type -> mycel.admin.v1.AdminInferenceCatalogServiceListModelEndpointCapabilitiesRequest
+	13, // 39: mycel.admin.v1.AdminInferenceCatalogService.SetModelEndpointEnabled:input_type -> mycel.admin.v1.AdminInferenceCatalogServiceSetModelEndpointEnabledRequest
+	15, // 40: mycel.admin.v1.AdminInferenceCatalogService.SetVectorStoreEnabled:input_type -> mycel.admin.v1.AdminInferenceCatalogServiceSetVectorStoreEnabledRequest
+	17, // 41: mycel.admin.v1.AdminInferenceCatalogService.SetModelEndpointCapabilityEnabled:input_type -> mycel.admin.v1.AdminInferenceCatalogServiceSetModelEndpointCapabilityEnabledRequest
+	19, // 42: mycel.admin.v1.AdminInferenceCatalogService.DeleteModelEndpoint:input_type -> mycel.admin.v1.AdminInferenceCatalogServiceDeleteModelEndpointRequest
+	21, // 43: mycel.admin.v1.AdminInferenceCatalogService.DeleteModel:input_type -> mycel.admin.v1.AdminInferenceCatalogServiceDeleteModelRequest
+	23, // 44: mycel.admin.v1.AdminInferenceCatalogService.DeleteVectorStore:input_type -> mycel.admin.v1.AdminInferenceCatalogServiceDeleteVectorStoreRequest
+	25, // 45: mycel.admin.v1.AdminInferenceCatalogService.DeleteModelEndpointCapability:input_type -> mycel.admin.v1.AdminInferenceCatalogServiceDeleteModelEndpointCapabilityRequest
+	2,  // 46: mycel.admin.v1.AdminInferenceCatalogService.ApplyInferencePackage:output_type -> mycel.admin.v1.AdminInferenceCatalogServiceApplyInferencePackageResponse
+	4,  // 47: mycel.admin.v1.AdminInferenceCatalogService.ListInferencePackages:output_type -> mycel.admin.v1.AdminInferenceCatalogServiceListInferencePackagesResponse
+	6,  // 48: mycel.admin.v1.AdminInferenceCatalogService.ListModelEndpoints:output_type -> mycel.admin.v1.AdminInferenceCatalogServiceListModelEndpointsResponse
+	8,  // 49: mycel.admin.v1.AdminInferenceCatalogService.ListModels:output_type -> mycel.admin.v1.AdminInferenceCatalogServiceListModelsResponse
+	10, // 50: mycel.admin.v1.AdminInferenceCatalogService.ListVectorStores:output_type -> mycel.admin.v1.AdminInferenceCatalogServiceListVectorStoresResponse
+	12, // 51: mycel.admin.v1.AdminInferenceCatalogService.ListModelEndpointCapabilities:output_type -> mycel.admin.v1.AdminInferenceCatalogServiceListModelEndpointCapabilitiesResponse
+	14, // 52: mycel.admin.v1.AdminInferenceCatalogService.SetModelEndpointEnabled:output_type -> mycel.admin.v1.AdminInferenceCatalogServiceSetModelEndpointEnabledResponse
+	16, // 53: mycel.admin.v1.AdminInferenceCatalogService.SetVectorStoreEnabled:output_type -> mycel.admin.v1.AdminInferenceCatalogServiceSetVectorStoreEnabledResponse
+	18, // 54: mycel.admin.v1.AdminInferenceCatalogService.SetModelEndpointCapabilityEnabled:output_type -> mycel.admin.v1.AdminInferenceCatalogServiceSetModelEndpointCapabilityEnabledResponse
+	20, // 55: mycel.admin.v1.AdminInferenceCatalogService.DeleteModelEndpoint:output_type -> mycel.admin.v1.AdminInferenceCatalogServiceDeleteModelEndpointResponse
+	22, // 56: mycel.admin.v1.AdminInferenceCatalogService.DeleteModel:output_type -> mycel.admin.v1.AdminInferenceCatalogServiceDeleteModelResponse
+	24, // 57: mycel.admin.v1.AdminInferenceCatalogService.DeleteVectorStore:output_type -> mycel.admin.v1.AdminInferenceCatalogServiceDeleteVectorStoreResponse
+	26, // 58: mycel.admin.v1.AdminInferenceCatalogService.DeleteModelEndpointCapability:output_type -> mycel.admin.v1.AdminInferenceCatalogServiceDeleteModelEndpointCapabilityResponse
+	46, // [46:59] is the sub-list for method output_type
+	33, // [33:46] is the sub-list for method input_type
+	33, // [33:33] is the sub-list for extension type_name
+	33, // [33:33] is the sub-list for extension extendee
+	0,  // [0:33] is the sub-list for field type_name
 }
 
 func init() { file_mycel_admin_v1_inference_proto_init() }
@@ -2587,19 +2750,20 @@ func file_mycel_admin_v1_inference_proto_init() {
 		return
 	}
 	file_mycel_admin_v1_inference_proto_msgTypes[10].OneofWrappers = []any{}
-	file_mycel_admin_v1_inference_proto_msgTypes[31].OneofWrappers = []any{}
+	file_mycel_admin_v1_inference_proto_msgTypes[32].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_mycel_admin_v1_inference_proto_rawDesc), len(file_mycel_admin_v1_inference_proto_rawDesc)),
-			NumEnums:      0,
-			NumMessages:   33,
+			NumEnums:      1,
+			NumMessages:   34,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
 		GoTypes:           file_mycel_admin_v1_inference_proto_goTypes,
 		DependencyIndexes: file_mycel_admin_v1_inference_proto_depIdxs,
+		EnumInfos:         file_mycel_admin_v1_inference_proto_enumTypes,
 		MessageInfos:      file_mycel_admin_v1_inference_proto_msgTypes,
 	}.Build()
 	File_mycel_admin_v1_inference_proto = out.File
