@@ -26,6 +26,75 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
+// SemanticTriggerEventType identifies a committed graph change that can make
+// semantic output stale. The values in a trigger policy are treated as a set.
+type SemanticTriggerEventType int32
+
+const (
+	SemanticTriggerEventType_SEMANTIC_TRIGGER_EVENT_TYPE_UNSPECIFIED  SemanticTriggerEventType = 0
+	SemanticTriggerEventType_SEMANTIC_TRIGGER_EVENT_TYPE_CHANGED      SemanticTriggerEventType = 1
+	SemanticTriggerEventType_SEMANTIC_TRIGGER_EVENT_TYPE_NODE_CREATED SemanticTriggerEventType = 2
+	SemanticTriggerEventType_SEMANTIC_TRIGGER_EVENT_TYPE_NODE_UPDATED SemanticTriggerEventType = 3
+	SemanticTriggerEventType_SEMANTIC_TRIGGER_EVENT_TYPE_NODE_DELETED SemanticTriggerEventType = 4
+	SemanticTriggerEventType_SEMANTIC_TRIGGER_EVENT_TYPE_EDGE_CHANGED SemanticTriggerEventType = 5
+	SemanticTriggerEventType_SEMANTIC_TRIGGER_EVENT_TYPE_EDGE_CREATED SemanticTriggerEventType = 6
+	SemanticTriggerEventType_SEMANTIC_TRIGGER_EVENT_TYPE_EDGE_UPDATED SemanticTriggerEventType = 7
+	SemanticTriggerEventType_SEMANTIC_TRIGGER_EVENT_TYPE_EDGE_DELETED SemanticTriggerEventType = 8
+)
+
+// Enum value maps for SemanticTriggerEventType.
+var (
+	SemanticTriggerEventType_name = map[int32]string{
+		0: "SEMANTIC_TRIGGER_EVENT_TYPE_UNSPECIFIED",
+		1: "SEMANTIC_TRIGGER_EVENT_TYPE_CHANGED",
+		2: "SEMANTIC_TRIGGER_EVENT_TYPE_NODE_CREATED",
+		3: "SEMANTIC_TRIGGER_EVENT_TYPE_NODE_UPDATED",
+		4: "SEMANTIC_TRIGGER_EVENT_TYPE_NODE_DELETED",
+		5: "SEMANTIC_TRIGGER_EVENT_TYPE_EDGE_CHANGED",
+		6: "SEMANTIC_TRIGGER_EVENT_TYPE_EDGE_CREATED",
+		7: "SEMANTIC_TRIGGER_EVENT_TYPE_EDGE_UPDATED",
+		8: "SEMANTIC_TRIGGER_EVENT_TYPE_EDGE_DELETED",
+	}
+	SemanticTriggerEventType_value = map[string]int32{
+		"SEMANTIC_TRIGGER_EVENT_TYPE_UNSPECIFIED":  0,
+		"SEMANTIC_TRIGGER_EVENT_TYPE_CHANGED":      1,
+		"SEMANTIC_TRIGGER_EVENT_TYPE_NODE_CREATED": 2,
+		"SEMANTIC_TRIGGER_EVENT_TYPE_NODE_UPDATED": 3,
+		"SEMANTIC_TRIGGER_EVENT_TYPE_NODE_DELETED": 4,
+		"SEMANTIC_TRIGGER_EVENT_TYPE_EDGE_CHANGED": 5,
+		"SEMANTIC_TRIGGER_EVENT_TYPE_EDGE_CREATED": 6,
+		"SEMANTIC_TRIGGER_EVENT_TYPE_EDGE_UPDATED": 7,
+		"SEMANTIC_TRIGGER_EVENT_TYPE_EDGE_DELETED": 8,
+	}
+)
+
+func (x SemanticTriggerEventType) Enum() *SemanticTriggerEventType {
+	p := new(SemanticTriggerEventType)
+	*p = x
+	return p
+}
+
+func (x SemanticTriggerEventType) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (SemanticTriggerEventType) Descriptor() protoreflect.EnumDescriptor {
+	return file_mycel_admin_v1_semantic_proto_enumTypes[0].Descriptor()
+}
+
+func (SemanticTriggerEventType) Type() protoreflect.EnumType {
+	return &file_mycel_admin_v1_semantic_proto_enumTypes[0]
+}
+
+func (x SemanticTriggerEventType) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use SemanticTriggerEventType.Descriptor instead.
+func (SemanticTriggerEventType) EnumDescriptor() ([]byte, []int) {
+	return file_mycel_admin_v1_semantic_proto_rawDescGZIP(), []int{0}
+}
+
 type SemanticProviderBatchingMode int32
 
 const (
@@ -59,11 +128,11 @@ func (x SemanticProviderBatchingMode) String() string {
 }
 
 func (SemanticProviderBatchingMode) Descriptor() protoreflect.EnumDescriptor {
-	return file_mycel_admin_v1_semantic_proto_enumTypes[0].Descriptor()
+	return file_mycel_admin_v1_semantic_proto_enumTypes[1].Descriptor()
 }
 
 func (SemanticProviderBatchingMode) Type() protoreflect.EnumType {
-	return &file_mycel_admin_v1_semantic_proto_enumTypes[0]
+	return &file_mycel_admin_v1_semantic_proto_enumTypes[1]
 }
 
 func (x SemanticProviderBatchingMode) Number() protoreflect.EnumNumber {
@@ -72,7 +141,7 @@ func (x SemanticProviderBatchingMode) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use SemanticProviderBatchingMode.Descriptor instead.
 func (SemanticProviderBatchingMode) EnumDescriptor() ([]byte, []int) {
-	return file_mycel_admin_v1_semantic_proto_rawDescGZIP(), []int{0}
+	return file_mycel_admin_v1_semantic_proto_rawDescGZIP(), []int{1}
 }
 
 type ListSemanticRulesRequest struct {
@@ -1033,11 +1102,22 @@ func (x *SemanticGenerationRule) GetUpdatedAt() string {
 }
 
 type SemanticTriggerPolicy struct {
-	state  protoimpl.MessageState `protogen:"open.v1"`
-	Events []string               `protobuf:"bytes,1,rep,name=events,proto3" json:"events,omitempty"`
-	Labels []string               `protobuf:"bytes,2,rep,name=labels,proto3" json:"labels,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Deprecated compatibility representation. New clients should use
+	// event_types. During migration a client may send both fields when they
+	// describe the same normalized set. Conflicting representations are invalid.
+	// Responses populate both fields so clients generated from older contracts
+	// continue to observe the configured triggers.
+	//
+	// Deprecated: Marked as deprecated in mycel/admin/v1/semantic.proto.
+	Events []string `protobuf:"bytes,1,rep,name=events,proto3" json:"events,omitempty"`
+	Labels []string `protobuf:"bytes,2,rep,name=labels,proto3" json:"labels,omitempty"`
 	// Go duration string such as "120s". Empty uses daemon default.
-	Debounce      string `protobuf:"bytes,3,opt,name=debounce,proto3" json:"debounce,omitempty"`
+	Debounce string `protobuf:"bytes,3,opt,name=debounce,proto3" json:"debounce,omitempty"`
+	// Typed trigger events. Explicit UNSPECIFIED and unknown numeric values are
+	// invalid. If both event representations are empty, the policy defaults to
+	// SEMANTIC_TRIGGER_EVENT_TYPE_CHANGED.
+	EventTypes    []SemanticTriggerEventType `protobuf:"varint,4,rep,packed,name=event_types,json=eventTypes,proto3,enum=mycel.admin.v1.SemanticTriggerEventType" json:"event_types,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1072,6 +1152,7 @@ func (*SemanticTriggerPolicy) Descriptor() ([]byte, []int) {
 	return file_mycel_admin_v1_semantic_proto_rawDescGZIP(), []int{15}
 }
 
+// Deprecated: Marked as deprecated in mycel/admin/v1/semantic.proto.
 func (x *SemanticTriggerPolicy) GetEvents() []string {
 	if x != nil {
 		return x.Events
@@ -1091,6 +1172,13 @@ func (x *SemanticTriggerPolicy) GetDebounce() string {
 		return x.Debounce
 	}
 	return ""
+}
+
+func (x *SemanticTriggerPolicy) GetEventTypes() []SemanticTriggerEventType {
+	if x != nil {
+		return x.EventTypes
+	}
+	return nil
 }
 
 type SemanticTargetSelector struct {
@@ -1859,11 +1947,13 @@ const file_mycel_admin_v1_semantic_proto_rawDesc = "" +
 	"\n" +
 	"created_at\x18\x10 \x01(\tR\tcreatedAt\x12\x1d\n" +
 	"\n" +
-	"updated_at\x18\x11 \x01(\tR\tupdatedAt\"c\n" +
-	"\x15SemanticTriggerPolicy\x12\x16\n" +
-	"\x06events\x18\x01 \x03(\tR\x06events\x12\x16\n" +
+	"updated_at\x18\x11 \x01(\tR\tupdatedAt\"\xb2\x01\n" +
+	"\x15SemanticTriggerPolicy\x12\x1a\n" +
+	"\x06events\x18\x01 \x03(\tB\x02\x18\x01R\x06events\x12\x16\n" +
 	"\x06labels\x18\x02 \x03(\tR\x06labels\x12\x1a\n" +
-	"\bdebounce\x18\x03 \x01(\tR\bdebounce\"\xb5\x01\n" +
+	"\bdebounce\x18\x03 \x01(\tR\bdebounce\x12I\n" +
+	"\vevent_types\x18\x04 \x03(\x0e2(.mycel.admin.v1.SemanticTriggerEventTypeR\n" +
+	"eventTypes\"\xb5\x01\n" +
 	"\x16SemanticTargetSelector\x12\x12\n" +
 	"\x04mode\x18\x01 \x01(\tR\x04mode\x12\x16\n" +
 	"\x06labels\x18\x02 \x03(\tR\x06labels\x12\x10\n" +
@@ -1933,7 +2023,17 @@ const file_mycel_admin_v1_semantic_proto_rawDesc = "" +
 	" SemanticRuleValidationDiagnostic\x12\x1a\n" +
 	"\bseverity\x18\x01 \x01(\tR\bseverity\x12\x12\n" +
 	"\x04path\x18\x02 \x01(\tR\x04path\x12\x18\n" +
-	"\amessage\x18\x03 \x01(\tR\amessage*\xa6\x01\n" +
+	"\amessage\x18\x03 \x01(\tR\amessage*\xb2\x03\n" +
+	"\x18SemanticTriggerEventType\x12+\n" +
+	"'SEMANTIC_TRIGGER_EVENT_TYPE_UNSPECIFIED\x10\x00\x12'\n" +
+	"#SEMANTIC_TRIGGER_EVENT_TYPE_CHANGED\x10\x01\x12,\n" +
+	"(SEMANTIC_TRIGGER_EVENT_TYPE_NODE_CREATED\x10\x02\x12,\n" +
+	"(SEMANTIC_TRIGGER_EVENT_TYPE_NODE_UPDATED\x10\x03\x12,\n" +
+	"(SEMANTIC_TRIGGER_EVENT_TYPE_NODE_DELETED\x10\x04\x12,\n" +
+	"(SEMANTIC_TRIGGER_EVENT_TYPE_EDGE_CHANGED\x10\x05\x12,\n" +
+	"(SEMANTIC_TRIGGER_EVENT_TYPE_EDGE_CREATED\x10\x06\x12,\n" +
+	"(SEMANTIC_TRIGGER_EVENT_TYPE_EDGE_UPDATED\x10\a\x12,\n" +
+	"(SEMANTIC_TRIGGER_EVENT_TYPE_EDGE_DELETED\x10\b*\xa6\x01\n" +
 	"\x1cSemanticProviderBatchingMode\x12/\n" +
 	"+SEMANTIC_PROVIDER_BATCHING_MODE_UNSPECIFIED\x10\x00\x12*\n" +
 	"&SEMANTIC_PROVIDER_BATCHING_MODE_SINGLE\x10\x01\x12)\n" +
@@ -1960,84 +2060,86 @@ func file_mycel_admin_v1_semantic_proto_rawDescGZIP() []byte {
 	return file_mycel_admin_v1_semantic_proto_rawDescData
 }
 
-var file_mycel_admin_v1_semantic_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
+var file_mycel_admin_v1_semantic_proto_enumTypes = make([]protoimpl.EnumInfo, 2)
 var file_mycel_admin_v1_semantic_proto_msgTypes = make([]protoimpl.MessageInfo, 24)
 var file_mycel_admin_v1_semantic_proto_goTypes = []any{
-	(SemanticProviderBatchingMode)(0),        // 0: mycel.admin.v1.SemanticProviderBatchingMode
-	(*ListSemanticRulesRequest)(nil),         // 1: mycel.admin.v1.ListSemanticRulesRequest
-	(*ListSemanticRulesResponse)(nil),        // 2: mycel.admin.v1.ListSemanticRulesResponse
-	(*GetSemanticRuleRequest)(nil),           // 3: mycel.admin.v1.GetSemanticRuleRequest
-	(*GetSemanticRuleResponse)(nil),          // 4: mycel.admin.v1.GetSemanticRuleResponse
-	(*ValidateSemanticRuleRequest)(nil),      // 5: mycel.admin.v1.ValidateSemanticRuleRequest
-	(*ValidateSemanticRuleResponse)(nil),     // 6: mycel.admin.v1.ValidateSemanticRuleResponse
-	(*CreateSemanticRuleRequest)(nil),        // 7: mycel.admin.v1.CreateSemanticRuleRequest
-	(*CreateSemanticRuleResponse)(nil),       // 8: mycel.admin.v1.CreateSemanticRuleResponse
-	(*UpdateSemanticRuleRequest)(nil),        // 9: mycel.admin.v1.UpdateSemanticRuleRequest
-	(*UpdateSemanticRuleResponse)(nil),       // 10: mycel.admin.v1.UpdateSemanticRuleResponse
-	(*SetSemanticRuleEnabledRequest)(nil),    // 11: mycel.admin.v1.SetSemanticRuleEnabledRequest
-	(*SetSemanticRuleEnabledResponse)(nil),   // 12: mycel.admin.v1.SetSemanticRuleEnabledResponse
-	(*DeleteSemanticRuleRequest)(nil),        // 13: mycel.admin.v1.DeleteSemanticRuleRequest
-	(*DeleteSemanticRuleResponse)(nil),       // 14: mycel.admin.v1.DeleteSemanticRuleResponse
-	(*SemanticGenerationRule)(nil),           // 15: mycel.admin.v1.SemanticGenerationRule
-	(*SemanticTriggerPolicy)(nil),            // 16: mycel.admin.v1.SemanticTriggerPolicy
-	(*SemanticTargetSelector)(nil),           // 17: mycel.admin.v1.SemanticTargetSelector
-	(*SemanticSourceAssemblyPolicy)(nil),     // 18: mycel.admin.v1.SemanticSourceAssemblyPolicy
-	(*SemanticEmbeddingBinding)(nil),         // 19: mycel.admin.v1.SemanticEmbeddingBinding
-	(*SemanticProviderBudgetPolicy)(nil),     // 20: mycel.admin.v1.SemanticProviderBudgetPolicy
-	(*SemanticProviderCostLimit)(nil),        // 21: mycel.admin.v1.SemanticProviderCostLimit
-	(*SemanticMaintenancePolicy)(nil),        // 22: mycel.admin.v1.SemanticMaintenancePolicy
-	(*SemanticStoragePolicy)(nil),            // 23: mycel.admin.v1.SemanticStoragePolicy
-	(*SemanticRuleValidationDiagnostic)(nil), // 24: mycel.admin.v1.SemanticRuleValidationDiagnostic
-	(*v1.SemanticGenerationRuleSummary)(nil), // 25: mycel.client.v1.SemanticGenerationRuleSummary
-	(*structpb.Struct)(nil),                  // 26: google.protobuf.Struct
-	(*durationpb.Duration)(nil),              // 27: google.protobuf.Duration
+	(SemanticTriggerEventType)(0),            // 0: mycel.admin.v1.SemanticTriggerEventType
+	(SemanticProviderBatchingMode)(0),        // 1: mycel.admin.v1.SemanticProviderBatchingMode
+	(*ListSemanticRulesRequest)(nil),         // 2: mycel.admin.v1.ListSemanticRulesRequest
+	(*ListSemanticRulesResponse)(nil),        // 3: mycel.admin.v1.ListSemanticRulesResponse
+	(*GetSemanticRuleRequest)(nil),           // 4: mycel.admin.v1.GetSemanticRuleRequest
+	(*GetSemanticRuleResponse)(nil),          // 5: mycel.admin.v1.GetSemanticRuleResponse
+	(*ValidateSemanticRuleRequest)(nil),      // 6: mycel.admin.v1.ValidateSemanticRuleRequest
+	(*ValidateSemanticRuleResponse)(nil),     // 7: mycel.admin.v1.ValidateSemanticRuleResponse
+	(*CreateSemanticRuleRequest)(nil),        // 8: mycel.admin.v1.CreateSemanticRuleRequest
+	(*CreateSemanticRuleResponse)(nil),       // 9: mycel.admin.v1.CreateSemanticRuleResponse
+	(*UpdateSemanticRuleRequest)(nil),        // 10: mycel.admin.v1.UpdateSemanticRuleRequest
+	(*UpdateSemanticRuleResponse)(nil),       // 11: mycel.admin.v1.UpdateSemanticRuleResponse
+	(*SetSemanticRuleEnabledRequest)(nil),    // 12: mycel.admin.v1.SetSemanticRuleEnabledRequest
+	(*SetSemanticRuleEnabledResponse)(nil),   // 13: mycel.admin.v1.SetSemanticRuleEnabledResponse
+	(*DeleteSemanticRuleRequest)(nil),        // 14: mycel.admin.v1.DeleteSemanticRuleRequest
+	(*DeleteSemanticRuleResponse)(nil),       // 15: mycel.admin.v1.DeleteSemanticRuleResponse
+	(*SemanticGenerationRule)(nil),           // 16: mycel.admin.v1.SemanticGenerationRule
+	(*SemanticTriggerPolicy)(nil),            // 17: mycel.admin.v1.SemanticTriggerPolicy
+	(*SemanticTargetSelector)(nil),           // 18: mycel.admin.v1.SemanticTargetSelector
+	(*SemanticSourceAssemblyPolicy)(nil),     // 19: mycel.admin.v1.SemanticSourceAssemblyPolicy
+	(*SemanticEmbeddingBinding)(nil),         // 20: mycel.admin.v1.SemanticEmbeddingBinding
+	(*SemanticProviderBudgetPolicy)(nil),     // 21: mycel.admin.v1.SemanticProviderBudgetPolicy
+	(*SemanticProviderCostLimit)(nil),        // 22: mycel.admin.v1.SemanticProviderCostLimit
+	(*SemanticMaintenancePolicy)(nil),        // 23: mycel.admin.v1.SemanticMaintenancePolicy
+	(*SemanticStoragePolicy)(nil),            // 24: mycel.admin.v1.SemanticStoragePolicy
+	(*SemanticRuleValidationDiagnostic)(nil), // 25: mycel.admin.v1.SemanticRuleValidationDiagnostic
+	(*v1.SemanticGenerationRuleSummary)(nil), // 26: mycel.client.v1.SemanticGenerationRuleSummary
+	(*structpb.Struct)(nil),                  // 27: google.protobuf.Struct
+	(*durationpb.Duration)(nil),              // 28: google.protobuf.Duration
 }
 var file_mycel_admin_v1_semantic_proto_depIdxs = []int32{
-	25, // 0: mycel.admin.v1.ListSemanticRulesResponse.rules:type_name -> mycel.client.v1.SemanticGenerationRuleSummary
-	15, // 1: mycel.admin.v1.GetSemanticRuleResponse.rule:type_name -> mycel.admin.v1.SemanticGenerationRule
-	25, // 2: mycel.admin.v1.GetSemanticRuleResponse.summary:type_name -> mycel.client.v1.SemanticGenerationRuleSummary
-	15, // 3: mycel.admin.v1.ValidateSemanticRuleRequest.rule:type_name -> mycel.admin.v1.SemanticGenerationRule
-	24, // 4: mycel.admin.v1.ValidateSemanticRuleResponse.diagnostics:type_name -> mycel.admin.v1.SemanticRuleValidationDiagnostic
-	15, // 5: mycel.admin.v1.ValidateSemanticRuleResponse.normalized_rule:type_name -> mycel.admin.v1.SemanticGenerationRule
-	15, // 6: mycel.admin.v1.CreateSemanticRuleRequest.rule:type_name -> mycel.admin.v1.SemanticGenerationRule
-	15, // 7: mycel.admin.v1.CreateSemanticRuleResponse.rule:type_name -> mycel.admin.v1.SemanticGenerationRule
-	25, // 8: mycel.admin.v1.CreateSemanticRuleResponse.summary:type_name -> mycel.client.v1.SemanticGenerationRuleSummary
-	15, // 9: mycel.admin.v1.UpdateSemanticRuleRequest.rule:type_name -> mycel.admin.v1.SemanticGenerationRule
-	15, // 10: mycel.admin.v1.UpdateSemanticRuleResponse.rule:type_name -> mycel.admin.v1.SemanticGenerationRule
-	25, // 11: mycel.admin.v1.UpdateSemanticRuleResponse.summary:type_name -> mycel.client.v1.SemanticGenerationRuleSummary
-	15, // 12: mycel.admin.v1.SetSemanticRuleEnabledResponse.rule:type_name -> mycel.admin.v1.SemanticGenerationRule
-	25, // 13: mycel.admin.v1.SetSemanticRuleEnabledResponse.summary:type_name -> mycel.client.v1.SemanticGenerationRuleSummary
-	16, // 14: mycel.admin.v1.SemanticGenerationRule.trigger:type_name -> mycel.admin.v1.SemanticTriggerPolicy
-	17, // 15: mycel.admin.v1.SemanticGenerationRule.selector:type_name -> mycel.admin.v1.SemanticTargetSelector
-	18, // 16: mycel.admin.v1.SemanticGenerationRule.source:type_name -> mycel.admin.v1.SemanticSourceAssemblyPolicy
-	19, // 17: mycel.admin.v1.SemanticGenerationRule.embeddings:type_name -> mycel.admin.v1.SemanticEmbeddingBinding
-	22, // 18: mycel.admin.v1.SemanticGenerationRule.maintenance:type_name -> mycel.admin.v1.SemanticMaintenancePolicy
-	23, // 19: mycel.admin.v1.SemanticGenerationRule.storage:type_name -> mycel.admin.v1.SemanticStoragePolicy
-	26, // 20: mycel.admin.v1.SemanticEmbeddingBinding.metadata:type_name -> google.protobuf.Struct
-	20, // 21: mycel.admin.v1.SemanticEmbeddingBinding.provider_budget:type_name -> mycel.admin.v1.SemanticProviderBudgetPolicy
-	0,  // 22: mycel.admin.v1.SemanticProviderBudgetPolicy.batching_mode:type_name -> mycel.admin.v1.SemanticProviderBatchingMode
-	27, // 23: mycel.admin.v1.SemanticProviderBudgetPolicy.request_timeout:type_name -> google.protobuf.Duration
-	27, // 24: mycel.admin.v1.SemanticProviderBudgetPolicy.total_timeout:type_name -> google.protobuf.Duration
-	21, // 25: mycel.admin.v1.SemanticProviderBudgetPolicy.cost:type_name -> mycel.admin.v1.SemanticProviderCostLimit
-	1,  // 26: mycel.admin.v1.AdminSemanticService.ListSemanticRules:input_type -> mycel.admin.v1.ListSemanticRulesRequest
-	3,  // 27: mycel.admin.v1.AdminSemanticService.GetSemanticRule:input_type -> mycel.admin.v1.GetSemanticRuleRequest
-	5,  // 28: mycel.admin.v1.AdminSemanticService.ValidateSemanticRule:input_type -> mycel.admin.v1.ValidateSemanticRuleRequest
-	7,  // 29: mycel.admin.v1.AdminSemanticService.CreateSemanticRule:input_type -> mycel.admin.v1.CreateSemanticRuleRequest
-	9,  // 30: mycel.admin.v1.AdminSemanticService.UpdateSemanticRule:input_type -> mycel.admin.v1.UpdateSemanticRuleRequest
-	11, // 31: mycel.admin.v1.AdminSemanticService.SetSemanticRuleEnabled:input_type -> mycel.admin.v1.SetSemanticRuleEnabledRequest
-	13, // 32: mycel.admin.v1.AdminSemanticService.DeleteSemanticRule:input_type -> mycel.admin.v1.DeleteSemanticRuleRequest
-	2,  // 33: mycel.admin.v1.AdminSemanticService.ListSemanticRules:output_type -> mycel.admin.v1.ListSemanticRulesResponse
-	4,  // 34: mycel.admin.v1.AdminSemanticService.GetSemanticRule:output_type -> mycel.admin.v1.GetSemanticRuleResponse
-	6,  // 35: mycel.admin.v1.AdminSemanticService.ValidateSemanticRule:output_type -> mycel.admin.v1.ValidateSemanticRuleResponse
-	8,  // 36: mycel.admin.v1.AdminSemanticService.CreateSemanticRule:output_type -> mycel.admin.v1.CreateSemanticRuleResponse
-	10, // 37: mycel.admin.v1.AdminSemanticService.UpdateSemanticRule:output_type -> mycel.admin.v1.UpdateSemanticRuleResponse
-	12, // 38: mycel.admin.v1.AdminSemanticService.SetSemanticRuleEnabled:output_type -> mycel.admin.v1.SetSemanticRuleEnabledResponse
-	14, // 39: mycel.admin.v1.AdminSemanticService.DeleteSemanticRule:output_type -> mycel.admin.v1.DeleteSemanticRuleResponse
-	33, // [33:40] is the sub-list for method output_type
-	26, // [26:33] is the sub-list for method input_type
-	26, // [26:26] is the sub-list for extension type_name
-	26, // [26:26] is the sub-list for extension extendee
-	0,  // [0:26] is the sub-list for field type_name
+	26, // 0: mycel.admin.v1.ListSemanticRulesResponse.rules:type_name -> mycel.client.v1.SemanticGenerationRuleSummary
+	16, // 1: mycel.admin.v1.GetSemanticRuleResponse.rule:type_name -> mycel.admin.v1.SemanticGenerationRule
+	26, // 2: mycel.admin.v1.GetSemanticRuleResponse.summary:type_name -> mycel.client.v1.SemanticGenerationRuleSummary
+	16, // 3: mycel.admin.v1.ValidateSemanticRuleRequest.rule:type_name -> mycel.admin.v1.SemanticGenerationRule
+	25, // 4: mycel.admin.v1.ValidateSemanticRuleResponse.diagnostics:type_name -> mycel.admin.v1.SemanticRuleValidationDiagnostic
+	16, // 5: mycel.admin.v1.ValidateSemanticRuleResponse.normalized_rule:type_name -> mycel.admin.v1.SemanticGenerationRule
+	16, // 6: mycel.admin.v1.CreateSemanticRuleRequest.rule:type_name -> mycel.admin.v1.SemanticGenerationRule
+	16, // 7: mycel.admin.v1.CreateSemanticRuleResponse.rule:type_name -> mycel.admin.v1.SemanticGenerationRule
+	26, // 8: mycel.admin.v1.CreateSemanticRuleResponse.summary:type_name -> mycel.client.v1.SemanticGenerationRuleSummary
+	16, // 9: mycel.admin.v1.UpdateSemanticRuleRequest.rule:type_name -> mycel.admin.v1.SemanticGenerationRule
+	16, // 10: mycel.admin.v1.UpdateSemanticRuleResponse.rule:type_name -> mycel.admin.v1.SemanticGenerationRule
+	26, // 11: mycel.admin.v1.UpdateSemanticRuleResponse.summary:type_name -> mycel.client.v1.SemanticGenerationRuleSummary
+	16, // 12: mycel.admin.v1.SetSemanticRuleEnabledResponse.rule:type_name -> mycel.admin.v1.SemanticGenerationRule
+	26, // 13: mycel.admin.v1.SetSemanticRuleEnabledResponse.summary:type_name -> mycel.client.v1.SemanticGenerationRuleSummary
+	17, // 14: mycel.admin.v1.SemanticGenerationRule.trigger:type_name -> mycel.admin.v1.SemanticTriggerPolicy
+	18, // 15: mycel.admin.v1.SemanticGenerationRule.selector:type_name -> mycel.admin.v1.SemanticTargetSelector
+	19, // 16: mycel.admin.v1.SemanticGenerationRule.source:type_name -> mycel.admin.v1.SemanticSourceAssemblyPolicy
+	20, // 17: mycel.admin.v1.SemanticGenerationRule.embeddings:type_name -> mycel.admin.v1.SemanticEmbeddingBinding
+	23, // 18: mycel.admin.v1.SemanticGenerationRule.maintenance:type_name -> mycel.admin.v1.SemanticMaintenancePolicy
+	24, // 19: mycel.admin.v1.SemanticGenerationRule.storage:type_name -> mycel.admin.v1.SemanticStoragePolicy
+	0,  // 20: mycel.admin.v1.SemanticTriggerPolicy.event_types:type_name -> mycel.admin.v1.SemanticTriggerEventType
+	27, // 21: mycel.admin.v1.SemanticEmbeddingBinding.metadata:type_name -> google.protobuf.Struct
+	21, // 22: mycel.admin.v1.SemanticEmbeddingBinding.provider_budget:type_name -> mycel.admin.v1.SemanticProviderBudgetPolicy
+	1,  // 23: mycel.admin.v1.SemanticProviderBudgetPolicy.batching_mode:type_name -> mycel.admin.v1.SemanticProviderBatchingMode
+	28, // 24: mycel.admin.v1.SemanticProviderBudgetPolicy.request_timeout:type_name -> google.protobuf.Duration
+	28, // 25: mycel.admin.v1.SemanticProviderBudgetPolicy.total_timeout:type_name -> google.protobuf.Duration
+	22, // 26: mycel.admin.v1.SemanticProviderBudgetPolicy.cost:type_name -> mycel.admin.v1.SemanticProviderCostLimit
+	2,  // 27: mycel.admin.v1.AdminSemanticService.ListSemanticRules:input_type -> mycel.admin.v1.ListSemanticRulesRequest
+	4,  // 28: mycel.admin.v1.AdminSemanticService.GetSemanticRule:input_type -> mycel.admin.v1.GetSemanticRuleRequest
+	6,  // 29: mycel.admin.v1.AdminSemanticService.ValidateSemanticRule:input_type -> mycel.admin.v1.ValidateSemanticRuleRequest
+	8,  // 30: mycel.admin.v1.AdminSemanticService.CreateSemanticRule:input_type -> mycel.admin.v1.CreateSemanticRuleRequest
+	10, // 31: mycel.admin.v1.AdminSemanticService.UpdateSemanticRule:input_type -> mycel.admin.v1.UpdateSemanticRuleRequest
+	12, // 32: mycel.admin.v1.AdminSemanticService.SetSemanticRuleEnabled:input_type -> mycel.admin.v1.SetSemanticRuleEnabledRequest
+	14, // 33: mycel.admin.v1.AdminSemanticService.DeleteSemanticRule:input_type -> mycel.admin.v1.DeleteSemanticRuleRequest
+	3,  // 34: mycel.admin.v1.AdminSemanticService.ListSemanticRules:output_type -> mycel.admin.v1.ListSemanticRulesResponse
+	5,  // 35: mycel.admin.v1.AdminSemanticService.GetSemanticRule:output_type -> mycel.admin.v1.GetSemanticRuleResponse
+	7,  // 36: mycel.admin.v1.AdminSemanticService.ValidateSemanticRule:output_type -> mycel.admin.v1.ValidateSemanticRuleResponse
+	9,  // 37: mycel.admin.v1.AdminSemanticService.CreateSemanticRule:output_type -> mycel.admin.v1.CreateSemanticRuleResponse
+	11, // 38: mycel.admin.v1.AdminSemanticService.UpdateSemanticRule:output_type -> mycel.admin.v1.UpdateSemanticRuleResponse
+	13, // 39: mycel.admin.v1.AdminSemanticService.SetSemanticRuleEnabled:output_type -> mycel.admin.v1.SetSemanticRuleEnabledResponse
+	15, // 40: mycel.admin.v1.AdminSemanticService.DeleteSemanticRule:output_type -> mycel.admin.v1.DeleteSemanticRuleResponse
+	34, // [34:41] is the sub-list for method output_type
+	27, // [27:34] is the sub-list for method input_type
+	27, // [27:27] is the sub-list for extension type_name
+	27, // [27:27] is the sub-list for extension extendee
+	0,  // [0:27] is the sub-list for field type_name
 }
 
 func init() { file_mycel_admin_v1_semantic_proto_init() }
@@ -2053,7 +2155,7 @@ func file_mycel_admin_v1_semantic_proto_init() {
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_mycel_admin_v1_semantic_proto_rawDesc), len(file_mycel_admin_v1_semantic_proto_rawDesc)),
-			NumEnums:      1,
+			NumEnums:      2,
 			NumMessages:   24,
 			NumExtensions: 0,
 			NumServices:   1,
