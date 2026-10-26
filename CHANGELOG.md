@@ -12,6 +12,7 @@ This project follows the spirit of [Keep a Changelog](https://keepachangelog.com
 - Regenerated Go bindings for direct semantic pagination, hard-eligibility filters, safe result provenance, and Admin semantic reliability/rebuild diagnostics.
 - Added semantic provider-budget policy, authenticated enforcement-capability discovery, retained-scope, and immutable attempt-event bindings.
 - Regenerated procedure-inference attempt polling, typed automation-run, procedure control-barrier, and procedure/binding Intelligence Access bindings.
+- Regenerated vector-store UUID identity, normalized key/display-name uniqueness documentation, and structured catalog-conflict bindings.
 
 ### Compatibility
 
