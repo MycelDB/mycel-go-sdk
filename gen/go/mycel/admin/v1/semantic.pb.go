@@ -1276,11 +1276,14 @@ type SemanticEmbeddingBinding struct {
 	// Optional daemon-owned provider budget for this rule/binding. Clients
 	// configure limits but never create scopes, reserve attempts, or release
 	// capacity. The daemon pins the resolved route and creates the durable scope
-	// before provider-backed work becomes eligible. Creating a rule fails
-	// atomically if its scope cannot be created. An update that changes the
-	// profile, route, or policy fails with FAILED_PRECONDITION while the current
-	// scope has reserved or ambiguous attempts; otherwise it completes and
-	// retains the old scope, then atomically installs a new current scope.
+	// before provider-backed work becomes eligible. Deterministic scope
+	// preflight failures leave no rule. Once a create or update transition is
+	// durably staged, an ambiguous storage or cluster failure can return an
+	// error while leaving an ineligible pending rule; the daemon rolls that
+	// journal forward before provider-backed work becomes eligible. An update
+	// that changes the profile, route, or policy fails with FAILED_PRECONDITION
+	// while the current scope has reserved or ambiguous attempts; otherwise it
+	// completes and retains the old scope, then installs a new current scope.
 	// Disable/delete prevents new attempts but retains prior scope evidence until
 	// retention_until.
 	ProviderBudget *SemanticProviderBudgetPolicy `protobuf:"bytes,9,opt,name=provider_budget,json=providerBudget,proto3" json:"provider_budget,omitempty"`
