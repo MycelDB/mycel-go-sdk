@@ -6,6 +6,8 @@ This project follows the spirit of [Keep a Changelog](https://keepachangelog.com
 
 ## [Unreleased]
 
+## [v0.21.0] - 2026-10-27
+
 ### Added
 
 - Regenerated Go bindings for channel-owned Search queries; deprecated top-level `SearchRequest.query` is removed and callers must populate `lexical.query` and/or `semantic.query`.
