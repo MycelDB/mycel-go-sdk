@@ -8,6 +8,7 @@ This project follows the spirit of [Keep a Changelog](https://keepachangelog.com
 
 ### Added
 
+- Regenerated Go bindings for channel-owned Search queries; deprecated top-level `SearchRequest.query` is removed and callers must populate `lexical.query` and/or `semantic.query`.
 - Regenerated Go bindings for the enum-only `SemanticTriggerPolicy.events` contract; the legacy string representation and transitional `event_types` field are removed. This is intentionally source- and wire-incompatible with earlier unreleased bindings.
 - Regenerated Go bindings for direct semantic pagination, hard-eligibility filters, safe result provenance, and Admin semantic reliability/rebuild diagnostics.
 - Added semantic provider-budget policy, authenticated enforcement-capability discovery, retained-scope, and immutable attempt-event bindings.
@@ -16,6 +17,7 @@ This project follows the spirit of [Keep a Changelog](https://keepachangelog.com
 
 ### Compatibility
 
+- Removing top-level `SearchRequest.query` is intentionally source-incompatible. Search callers must migrate to the query field for each enabled retrieval channel.
 - Generated additions require a daemon advertising the corresponding semantic reliability capability when applications depend on the new RPCs.
 - `AdminSemanticMaintenanceServiceClient` and `AdminSemanticMaintenanceServiceServer` add reliability-status, rebuild, provider-budget capability/status, retained-scope, and immutable attempt-event methods. Custom interface implementations, mocks, and test doubles must implement them; servers embedding `UnimplementedAdminSemanticMaintenanceServiceServer` inherit forward-compatible stubs.
 - Client and Admin automation service interfaces gain procedure-attempt query/polling and procedure enable/disable methods. Custom interface implementations and mocks must add them; embedded generated unimplemented servers remain forward-compatible.
