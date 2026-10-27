@@ -1103,21 +1103,12 @@ func (x *SemanticGenerationRule) GetUpdatedAt() string {
 
 type SemanticTriggerPolicy struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// Deprecated compatibility representation. New clients should use
-	// event_types. During migration a client may send both fields when they
-	// describe the same normalized set. Conflicting representations are invalid.
-	// Responses populate both fields so clients generated from older contracts
-	// continue to observe the configured triggers.
-	//
-	// Deprecated: Marked as deprecated in mycel/admin/v1/semantic.proto.
-	Events []string `protobuf:"bytes,1,rep,name=events,proto3" json:"events,omitempty"`
-	Labels []string `protobuf:"bytes,2,rep,name=labels,proto3" json:"labels,omitempty"`
-	// Go duration string such as "120s". Empty uses daemon default.
-	Debounce string `protobuf:"bytes,3,opt,name=debounce,proto3" json:"debounce,omitempty"`
 	// Typed trigger events. Explicit UNSPECIFIED and unknown numeric values are
-	// invalid. If both event representations are empty, the policy defaults to
-	// SEMANTIC_TRIGGER_EVENT_TYPE_CHANGED.
-	EventTypes    []SemanticTriggerEventType `protobuf:"varint,4,rep,packed,name=event_types,json=eventTypes,proto3,enum=mycel.admin.v1.SemanticTriggerEventType" json:"event_types,omitempty"`
+	// invalid. An empty set defaults to SEMANTIC_TRIGGER_EVENT_TYPE_CHANGED.
+	Events []SemanticTriggerEventType `protobuf:"varint,1,rep,packed,name=events,proto3,enum=mycel.admin.v1.SemanticTriggerEventType" json:"events,omitempty"`
+	Labels []string                   `protobuf:"bytes,2,rep,name=labels,proto3" json:"labels,omitempty"`
+	// Go duration string such as "120s". Empty uses daemon default.
+	Debounce      string `protobuf:"bytes,3,opt,name=debounce,proto3" json:"debounce,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1152,8 +1143,7 @@ func (*SemanticTriggerPolicy) Descriptor() ([]byte, []int) {
 	return file_mycel_admin_v1_semantic_proto_rawDescGZIP(), []int{15}
 }
 
-// Deprecated: Marked as deprecated in mycel/admin/v1/semantic.proto.
-func (x *SemanticTriggerPolicy) GetEvents() []string {
+func (x *SemanticTriggerPolicy) GetEvents() []SemanticTriggerEventType {
 	if x != nil {
 		return x.Events
 	}
@@ -1172,13 +1162,6 @@ func (x *SemanticTriggerPolicy) GetDebounce() string {
 		return x.Debounce
 	}
 	return ""
-}
-
-func (x *SemanticTriggerPolicy) GetEventTypes() []SemanticTriggerEventType {
-	if x != nil {
-		return x.EventTypes
-	}
-	return nil
 }
 
 type SemanticTargetSelector struct {
@@ -1947,13 +1930,11 @@ const file_mycel_admin_v1_semantic_proto_rawDesc = "" +
 	"\n" +
 	"created_at\x18\x10 \x01(\tR\tcreatedAt\x12\x1d\n" +
 	"\n" +
-	"updated_at\x18\x11 \x01(\tR\tupdatedAt\"\xb2\x01\n" +
-	"\x15SemanticTriggerPolicy\x12\x1a\n" +
-	"\x06events\x18\x01 \x03(\tB\x02\x18\x01R\x06events\x12\x16\n" +
+	"updated_at\x18\x11 \x01(\tR\tupdatedAt\"\xa0\x01\n" +
+	"\x15SemanticTriggerPolicy\x12@\n" +
+	"\x06events\x18\x01 \x03(\x0e2(.mycel.admin.v1.SemanticTriggerEventTypeR\x06events\x12\x16\n" +
 	"\x06labels\x18\x02 \x03(\tR\x06labels\x12\x1a\n" +
-	"\bdebounce\x18\x03 \x01(\tR\bdebounce\x12I\n" +
-	"\vevent_types\x18\x04 \x03(\x0e2(.mycel.admin.v1.SemanticTriggerEventTypeR\n" +
-	"eventTypes\"\xb5\x01\n" +
+	"\bdebounce\x18\x03 \x01(\tR\bdebounceJ\x04\b\x04\x10\x05R\vevent_types\"\xb5\x01\n" +
 	"\x16SemanticTargetSelector\x12\x12\n" +
 	"\x04mode\x18\x01 \x01(\tR\x04mode\x12\x16\n" +
 	"\x06labels\x18\x02 \x03(\tR\x06labels\x12\x10\n" +
@@ -2114,7 +2095,7 @@ var file_mycel_admin_v1_semantic_proto_depIdxs = []int32{
 	20, // 17: mycel.admin.v1.SemanticGenerationRule.embeddings:type_name -> mycel.admin.v1.SemanticEmbeddingBinding
 	23, // 18: mycel.admin.v1.SemanticGenerationRule.maintenance:type_name -> mycel.admin.v1.SemanticMaintenancePolicy
 	24, // 19: mycel.admin.v1.SemanticGenerationRule.storage:type_name -> mycel.admin.v1.SemanticStoragePolicy
-	0,  // 20: mycel.admin.v1.SemanticTriggerPolicy.event_types:type_name -> mycel.admin.v1.SemanticTriggerEventType
+	0,  // 20: mycel.admin.v1.SemanticTriggerPolicy.events:type_name -> mycel.admin.v1.SemanticTriggerEventType
 	27, // 21: mycel.admin.v1.SemanticEmbeddingBinding.metadata:type_name -> google.protobuf.Struct
 	21, // 22: mycel.admin.v1.SemanticEmbeddingBinding.provider_budget:type_name -> mycel.admin.v1.SemanticProviderBudgetPolicy
 	1,  // 23: mycel.admin.v1.SemanticProviderBudgetPolicy.batching_mode:type_name -> mycel.admin.v1.SemanticProviderBatchingMode
