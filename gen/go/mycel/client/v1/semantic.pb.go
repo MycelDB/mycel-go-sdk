@@ -11,6 +11,7 @@ package clientv1
 import (
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
+	structpb "google.golang.org/protobuf/types/known/structpb"
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
@@ -22,6 +23,61 @@ const (
 	// Verify that runtime/protoimpl is sufficiently up-to-date.
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
+
+type SemanticPropertyOperator int32
+
+const (
+	SemanticPropertyOperator_SEMANTIC_PROPERTY_OPERATOR_UNSPECIFIED SemanticPropertyOperator = 0
+	SemanticPropertyOperator_SEMANTIC_PROPERTY_OPERATOR_EQUAL       SemanticPropertyOperator = 1
+	SemanticPropertyOperator_SEMANTIC_PROPERTY_OPERATOR_NOT_EQUAL   SemanticPropertyOperator = 2
+	SemanticPropertyOperator_SEMANTIC_PROPERTY_OPERATOR_EXISTS      SemanticPropertyOperator = 3
+	SemanticPropertyOperator_SEMANTIC_PROPERTY_OPERATOR_MISSING     SemanticPropertyOperator = 4
+)
+
+// Enum value maps for SemanticPropertyOperator.
+var (
+	SemanticPropertyOperator_name = map[int32]string{
+		0: "SEMANTIC_PROPERTY_OPERATOR_UNSPECIFIED",
+		1: "SEMANTIC_PROPERTY_OPERATOR_EQUAL",
+		2: "SEMANTIC_PROPERTY_OPERATOR_NOT_EQUAL",
+		3: "SEMANTIC_PROPERTY_OPERATOR_EXISTS",
+		4: "SEMANTIC_PROPERTY_OPERATOR_MISSING",
+	}
+	SemanticPropertyOperator_value = map[string]int32{
+		"SEMANTIC_PROPERTY_OPERATOR_UNSPECIFIED": 0,
+		"SEMANTIC_PROPERTY_OPERATOR_EQUAL":       1,
+		"SEMANTIC_PROPERTY_OPERATOR_NOT_EQUAL":   2,
+		"SEMANTIC_PROPERTY_OPERATOR_EXISTS":      3,
+		"SEMANTIC_PROPERTY_OPERATOR_MISSING":     4,
+	}
+)
+
+func (x SemanticPropertyOperator) Enum() *SemanticPropertyOperator {
+	p := new(SemanticPropertyOperator)
+	*p = x
+	return p
+}
+
+func (x SemanticPropertyOperator) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (SemanticPropertyOperator) Descriptor() protoreflect.EnumDescriptor {
+	return file_mycel_client_v1_semantic_proto_enumTypes[0].Descriptor()
+}
+
+func (SemanticPropertyOperator) Type() protoreflect.EnumType {
+	return &file_mycel_client_v1_semantic_proto_enumTypes[0]
+}
+
+func (x SemanticPropertyOperator) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use SemanticPropertyOperator.Descriptor instead.
+func (SemanticPropertyOperator) EnumDescriptor() ([]byte, []int) {
+	return file_mycel_client_v1_semantic_proto_rawDescGZIP(), []int{0}
+}
 
 type SemanticRuleState int32
 
@@ -65,11 +121,11 @@ func (x SemanticRuleState) String() string {
 }
 
 func (SemanticRuleState) Descriptor() protoreflect.EnumDescriptor {
-	return file_mycel_client_v1_semantic_proto_enumTypes[0].Descriptor()
+	return file_mycel_client_v1_semantic_proto_enumTypes[1].Descriptor()
 }
 
 func (SemanticRuleState) Type() protoreflect.EnumType {
-	return &file_mycel_client_v1_semantic_proto_enumTypes[0]
+	return &file_mycel_client_v1_semantic_proto_enumTypes[1]
 }
 
 func (x SemanticRuleState) Number() protoreflect.EnumNumber {
@@ -78,7 +134,7 @@ func (x SemanticRuleState) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use SemanticRuleState.Descriptor instead.
 func (SemanticRuleState) EnumDescriptor() ([]byte, []int) {
-	return file_mycel_client_v1_semantic_proto_rawDescGZIP(), []int{0}
+	return file_mycel_client_v1_semantic_proto_rawDescGZIP(), []int{1}
 }
 
 type SearchIndexState int32
@@ -123,11 +179,11 @@ func (x SearchIndexState) String() string {
 }
 
 func (SearchIndexState) Descriptor() protoreflect.EnumDescriptor {
-	return file_mycel_client_v1_semantic_proto_enumTypes[1].Descriptor()
+	return file_mycel_client_v1_semantic_proto_enumTypes[2].Descriptor()
 }
 
 func (SearchIndexState) Type() protoreflect.EnumType {
-	return &file_mycel_client_v1_semantic_proto_enumTypes[1]
+	return &file_mycel_client_v1_semantic_proto_enumTypes[2]
 }
 
 func (x SearchIndexState) Number() protoreflect.EnumNumber {
@@ -136,7 +192,7 @@ func (x SearchIndexState) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use SearchIndexState.Descriptor instead.
 func (SearchIndexState) EnumDescriptor() ([]byte, []int) {
-	return file_mycel_client_v1_semantic_proto_rawDescGZIP(), []int{1}
+	return file_mycel_client_v1_semantic_proto_rawDescGZIP(), []int{2}
 }
 
 type ListSemanticRulesRequest struct {
@@ -280,7 +336,22 @@ type SemanticSearchRequest struct {
 	Limit               int32   `protobuf:"varint,6,opt,name=limit,proto3" json:"limit,omitempty"`
 	// Optional minimum score threshold. Score meaning is model dependent but
 	// higher scores should represent more relevant results.
-	MinScore      *float64 `protobuf:"fixed64,7,opt,name=min_score,json=minScore,proto3,oneof" json:"min_score,omitempty"`
+	MinScore *float64 `protobuf:"fixed64,7,opt,name=min_score,json=minScore,proto3,oneof" json:"min_score,omitempty"`
+	// Opaque direct-semantic continuation. The daemon binds this token to the
+	// authenticated visibility scope, graph/index view, ranking version,
+	// continuation position, canonical normalized filter, and every
+	// result-affecting request field except page_token, including the query,
+	// limit, score threshold, rule, and binding. A malformed or integrity-invalid
+	// token fails with INVALID_ARGUMENT. A valid token used with a different
+	// request/scope or a stale graph, rule, binding, route, generation, ranking,
+	// or candidate view fails with FAILED_PRECONDITION.
+	PageToken *string `protobuf:"bytes,8,opt,name=page_token,json=pageToken,proto3,oneof" json:"page_token,omitempty"`
+	// Optional hard-eligibility filter for direct semantic candidates. The
+	// daemon authorizes graph visibility before evaluating properties and
+	// applies eligibility before score thresholding, ranking, and page
+	// truncation. All labels, node IDs, and property predicates are combined
+	// with logical AND.
+	Filter        *SemanticEligibilityFilter `protobuf:"bytes,9,opt,name=filter,proto3" json:"filter,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -364,15 +435,48 @@ func (x *SemanticSearchRequest) GetMinScore() float64 {
 	return 0
 }
 
+func (x *SemanticSearchRequest) GetPageToken() string {
+	if x != nil && x.PageToken != nil {
+		return *x.PageToken
+	}
+	return ""
+}
+
+func (x *SemanticSearchRequest) GetFilter() *SemanticEligibilityFilter {
+	if x != nil {
+		return x.Filter
+	}
+	return nil
+}
+
 type SemanticSearchResponse struct {
 	state   protoimpl.MessageState  `protogen:"open.v1"`
 	Results []*SemanticSearchResult `protobuf:"bytes,1,rep,name=results,proto3" json:"results,omitempty"`
 	// Non-fatal search warnings such as stale rule state, degraded physical
 	// search indexes, unavailable vector spaces, or skipped providers. Warnings
 	// must not include secrets.
-	Warnings      []string `protobuf:"bytes,2,rep,name=warnings,proto3" json:"warnings,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	Warnings []string `protobuf:"bytes,2,rep,name=warnings,proto3" json:"warnings,omitempty"`
+	// Opaque continuation for the same direct-semantic request and authorized
+	// read/index view. See SemanticSearchRequest.page_token for binding and
+	// error semantics.
+	NextPageToken string `protobuf:"bytes,3,opt,name=next_page_token,json=nextPageToken,proto3" json:"next_page_token,omitempty"`
+	// Empty when no filter was requested; otherwise
+	// "semantic_index_pushdown" or "authorized_candidate_post_filter".
+	FilterExecutionMode string `protobuf:"bytes,4,opt,name=filter_execution_mode,json=filterExecutionMode,proto3" json:"filter_execution_mode,omitempty"`
+	// Number of caller-visible, authorized semantic candidates examined. This
+	// never includes candidates hidden by graph or semantic authorization.
+	// Implementations that cannot produce this count without disclosure return
+	// zero rather than exposing a pre-authorization count.
+	ExaminedSemanticCandidates int32 `protobuf:"varint,5,opt,name=examined_semantic_candidates,json=examinedSemanticCandidates,proto3" json:"examined_semantic_candidates,omitempty"`
+	// Number of caller-visible, authorized candidates satisfying the hard
+	// filter. In authorized_candidate_post_filter mode this is counted before
+	// minimum-score evaluation, ranking, and page truncation. When execution mode
+	// is empty because no hard filter was requested, it equals
+	// examined_semantic_candidates after any backend minimum-score evaluation.
+	// Implementations that cannot produce this safely return zero.
+	EligibleSemanticCandidates int32 `protobuf:"varint,6,opt,name=eligible_semantic_candidates,json=eligibleSemanticCandidates,proto3" json:"eligible_semantic_candidates,omitempty"`
+	unknownFields              protoimpl.UnknownFields
+	sizeCache                  protoimpl.SizeCache
 }
 
 func (x *SemanticSearchResponse) Reset() {
@@ -419,6 +523,166 @@ func (x *SemanticSearchResponse) GetWarnings() []string {
 	return nil
 }
 
+func (x *SemanticSearchResponse) GetNextPageToken() string {
+	if x != nil {
+		return x.NextPageToken
+	}
+	return ""
+}
+
+func (x *SemanticSearchResponse) GetFilterExecutionMode() string {
+	if x != nil {
+		return x.FilterExecutionMode
+	}
+	return ""
+}
+
+func (x *SemanticSearchResponse) GetExaminedSemanticCandidates() int32 {
+	if x != nil {
+		return x.ExaminedSemanticCandidates
+	}
+	return 0
+}
+
+func (x *SemanticSearchResponse) GetEligibleSemanticCandidates() int32 {
+	if x != nil {
+		return x.EligibleSemanticCandidates
+	}
+	return 0
+}
+
+type SemanticEligibilityFilter struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Every listed label is required.
+	NodeLabels []string `protobuf:"bytes,1,rep,name=node_labels,json=nodeLabels,proto3" json:"node_labels,omitempty"`
+	// When non-empty, only these exact node IDs are eligible.
+	NodeIds []string `protobuf:"bytes,2,rep,name=node_ids,json=nodeIds,proto3" json:"node_ids,omitempty"`
+	// Every property predicate is required. Property keys are top-level payload
+	// keys. Missing is distinct from a present null value.
+	Properties    []*SemanticPropertyPredicate `protobuf:"bytes,3,rep,name=properties,proto3" json:"properties,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SemanticEligibilityFilter) Reset() {
+	*x = SemanticEligibilityFilter{}
+	mi := &file_mycel_client_v1_semantic_proto_msgTypes[4]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SemanticEligibilityFilter) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SemanticEligibilityFilter) ProtoMessage() {}
+
+func (x *SemanticEligibilityFilter) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_client_v1_semantic_proto_msgTypes[4]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SemanticEligibilityFilter.ProtoReflect.Descriptor instead.
+func (*SemanticEligibilityFilter) Descriptor() ([]byte, []int) {
+	return file_mycel_client_v1_semantic_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *SemanticEligibilityFilter) GetNodeLabels() []string {
+	if x != nil {
+		return x.NodeLabels
+	}
+	return nil
+}
+
+func (x *SemanticEligibilityFilter) GetNodeIds() []string {
+	if x != nil {
+		return x.NodeIds
+	}
+	return nil
+}
+
+func (x *SemanticEligibilityFilter) GetProperties() []*SemanticPropertyPredicate {
+	if x != nil {
+		return x.Properties
+	}
+	return nil
+}
+
+type SemanticPropertyPredicate struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	Key   string                 `protobuf:"bytes,1,opt,name=key,proto3" json:"key,omitempty"`
+	// UNSPECIFIED and unknown operators are invalid and fail with
+	// INVALID_ARGUMENT.
+	Operator SemanticPropertyOperator `protobuf:"varint,2,opt,name=operator,proto3,enum=mycel.client.v1.SemanticPropertyOperator" json:"operator,omitempty"`
+	// EQUAL and NOT_EQUAL require value. Equality is exact, type-sensitive
+	// protobuf Value equality: scalar kinds and values must match, list order and
+	// elements must match, and struct key/value mappings must match. A missing
+	// key satisfies neither EQUAL nor NOT_EQUAL. EXISTS and MISSING reject a
+	// supplied value; EXISTS is true for a present key including null, while
+	// MISSING is true only when the key is absent.
+	Value         *structpb.Value `protobuf:"bytes,3,opt,name=value,proto3" json:"value,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SemanticPropertyPredicate) Reset() {
+	*x = SemanticPropertyPredicate{}
+	mi := &file_mycel_client_v1_semantic_proto_msgTypes[5]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SemanticPropertyPredicate) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SemanticPropertyPredicate) ProtoMessage() {}
+
+func (x *SemanticPropertyPredicate) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_client_v1_semantic_proto_msgTypes[5]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SemanticPropertyPredicate.ProtoReflect.Descriptor instead.
+func (*SemanticPropertyPredicate) Descriptor() ([]byte, []int) {
+	return file_mycel_client_v1_semantic_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *SemanticPropertyPredicate) GetKey() string {
+	if x != nil {
+		return x.Key
+	}
+	return ""
+}
+
+func (x *SemanticPropertyPredicate) GetOperator() SemanticPropertyOperator {
+	if x != nil {
+		return x.Operator
+	}
+	return SemanticPropertyOperator_SEMANTIC_PROPERTY_OPERATOR_UNSPECIFIED
+}
+
+func (x *SemanticPropertyPredicate) GetValue() *structpb.Value {
+	if x != nil {
+		return x.Value
+	}
+	return nil
+}
+
 type SemanticSearchResult struct {
 	state               protoimpl.MessageState `protogen:"open.v1"`
 	SemanticRuleId      string                 `protobuf:"bytes,1,opt,name=semantic_rule_id,json=semanticRuleId,proto3" json:"semantic_rule_id,omitempty"`
@@ -431,13 +695,16 @@ type SemanticSearchResult struct {
 	Node            *Node    `protobuf:"bytes,6,opt,name=node,proto3" json:"node,omitempty"`
 	MatchedChunkIds []string `protobuf:"bytes,7,rep,name=matched_chunk_ids,json=matchedChunkIds,proto3" json:"matched_chunk_ids,omitempty"`
 	Snippet         string   `protobuf:"bytes,8,opt,name=snippet,proto3" json:"snippet,omitempty"`
-	unknownFields   protoimpl.UnknownFields
-	sizeCache       protoimpl.SizeCache
+	// Safe, authorization-scoped generation evidence. It excludes credentials,
+	// raw vectors, projected source text, and source-content digests.
+	Provenance    *SemanticResultProvenance `protobuf:"bytes,9,opt,name=provenance,proto3" json:"provenance,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
 func (x *SemanticSearchResult) Reset() {
 	*x = SemanticSearchResult{}
-	mi := &file_mycel_client_v1_semantic_proto_msgTypes[4]
+	mi := &file_mycel_client_v1_semantic_proto_msgTypes[6]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -449,7 +716,7 @@ func (x *SemanticSearchResult) String() string {
 func (*SemanticSearchResult) ProtoMessage() {}
 
 func (x *SemanticSearchResult) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_client_v1_semantic_proto_msgTypes[4]
+	mi := &file_mycel_client_v1_semantic_proto_msgTypes[6]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -462,7 +729,7 @@ func (x *SemanticSearchResult) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SemanticSearchResult.ProtoReflect.Descriptor instead.
 func (*SemanticSearchResult) Descriptor() ([]byte, []int) {
-	return file_mycel_client_v1_semantic_proto_rawDescGZIP(), []int{4}
+	return file_mycel_client_v1_semantic_proto_rawDescGZIP(), []int{6}
 }
 
 func (x *SemanticSearchResult) GetSemanticRuleId() string {
@@ -521,6 +788,177 @@ func (x *SemanticSearchResult) GetSnippet() string {
 	return ""
 }
 
+func (x *SemanticSearchResult) GetProvenance() *SemanticResultProvenance {
+	if x != nil {
+		return x.Provenance
+	}
+	return nil
+}
+
+type SemanticResultProvenance struct {
+	state                           protoimpl.MessageState `protogen:"open.v1"`
+	SourceGraphRevision             uint64                 `protobuf:"varint,1,opt,name=source_graph_revision,json=sourceGraphRevision,proto3" json:"source_graph_revision,omitempty"`
+	SemanticGeneration              uint64                 `protobuf:"varint,2,opt,name=semantic_generation,json=semanticGeneration,proto3" json:"semantic_generation,omitempty"`
+	SemanticConfigurationHash       string                 `protobuf:"bytes,3,opt,name=semantic_configuration_hash,json=semanticConfigurationHash,proto3" json:"semantic_configuration_hash,omitempty"`
+	OpaqueSourceVersion             string                 `protobuf:"bytes,4,opt,name=opaque_source_version,json=opaqueSourceVersion,proto3" json:"opaque_source_version,omitempty"`
+	Dimensions                      int32                  `protobuf:"varint,5,opt,name=dimensions,proto3" json:"dimensions,omitempty"`
+	VectorSpaceKey                  string                 `protobuf:"bytes,6,opt,name=vector_space_key,json=vectorSpaceKey,proto3" json:"vector_space_key,omitempty"`
+	ConfiguredIntelligenceProfileId string                 `protobuf:"bytes,7,opt,name=configured_intelligence_profile_id,json=configuredIntelligenceProfileId,proto3" json:"configured_intelligence_profile_id,omitempty"`
+	ConfiguredModelEndpointId       string                 `protobuf:"bytes,8,opt,name=configured_model_endpoint_id,json=configuredModelEndpointId,proto3" json:"configured_model_endpoint_id,omitempty"`
+	ConfiguredModelId               string                 `protobuf:"bytes,9,opt,name=configured_model_id,json=configuredModelId,proto3" json:"configured_model_id,omitempty"`
+	ConfiguredCapabilityId          string                 `protobuf:"bytes,10,opt,name=configured_capability_id,json=configuredCapabilityId,proto3" json:"configured_capability_id,omitempty"`
+	ActualRouteKnown                bool                   `protobuf:"varint,11,opt,name=actual_route_known,json=actualRouteKnown,proto3" json:"actual_route_known,omitempty"`
+	ActualModelEndpointId           string                 `protobuf:"bytes,12,opt,name=actual_model_endpoint_id,json=actualModelEndpointId,proto3" json:"actual_model_endpoint_id,omitempty"`
+	ActualModelId                   string                 `protobuf:"bytes,13,opt,name=actual_model_id,json=actualModelId,proto3" json:"actual_model_id,omitempty"`
+	ActualCapabilityId              string                 `protobuf:"bytes,14,opt,name=actual_capability_id,json=actualCapabilityId,proto3" json:"actual_capability_id,omitempty"`
+	RebuildEpoch                    string                 `protobuf:"bytes,15,opt,name=rebuild_epoch,json=rebuildEpoch,proto3" json:"rebuild_epoch,omitempty"`
+	GeneratedAt                     string                 `protobuf:"bytes,16,opt,name=generated_at,json=generatedAt,proto3" json:"generated_at,omitempty"`
+	unknownFields                   protoimpl.UnknownFields
+	sizeCache                       protoimpl.SizeCache
+}
+
+func (x *SemanticResultProvenance) Reset() {
+	*x = SemanticResultProvenance{}
+	mi := &file_mycel_client_v1_semantic_proto_msgTypes[7]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SemanticResultProvenance) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SemanticResultProvenance) ProtoMessage() {}
+
+func (x *SemanticResultProvenance) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_client_v1_semantic_proto_msgTypes[7]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SemanticResultProvenance.ProtoReflect.Descriptor instead.
+func (*SemanticResultProvenance) Descriptor() ([]byte, []int) {
+	return file_mycel_client_v1_semantic_proto_rawDescGZIP(), []int{7}
+}
+
+func (x *SemanticResultProvenance) GetSourceGraphRevision() uint64 {
+	if x != nil {
+		return x.SourceGraphRevision
+	}
+	return 0
+}
+
+func (x *SemanticResultProvenance) GetSemanticGeneration() uint64 {
+	if x != nil {
+		return x.SemanticGeneration
+	}
+	return 0
+}
+
+func (x *SemanticResultProvenance) GetSemanticConfigurationHash() string {
+	if x != nil {
+		return x.SemanticConfigurationHash
+	}
+	return ""
+}
+
+func (x *SemanticResultProvenance) GetOpaqueSourceVersion() string {
+	if x != nil {
+		return x.OpaqueSourceVersion
+	}
+	return ""
+}
+
+func (x *SemanticResultProvenance) GetDimensions() int32 {
+	if x != nil {
+		return x.Dimensions
+	}
+	return 0
+}
+
+func (x *SemanticResultProvenance) GetVectorSpaceKey() string {
+	if x != nil {
+		return x.VectorSpaceKey
+	}
+	return ""
+}
+
+func (x *SemanticResultProvenance) GetConfiguredIntelligenceProfileId() string {
+	if x != nil {
+		return x.ConfiguredIntelligenceProfileId
+	}
+	return ""
+}
+
+func (x *SemanticResultProvenance) GetConfiguredModelEndpointId() string {
+	if x != nil {
+		return x.ConfiguredModelEndpointId
+	}
+	return ""
+}
+
+func (x *SemanticResultProvenance) GetConfiguredModelId() string {
+	if x != nil {
+		return x.ConfiguredModelId
+	}
+	return ""
+}
+
+func (x *SemanticResultProvenance) GetConfiguredCapabilityId() string {
+	if x != nil {
+		return x.ConfiguredCapabilityId
+	}
+	return ""
+}
+
+func (x *SemanticResultProvenance) GetActualRouteKnown() bool {
+	if x != nil {
+		return x.ActualRouteKnown
+	}
+	return false
+}
+
+func (x *SemanticResultProvenance) GetActualModelEndpointId() string {
+	if x != nil {
+		return x.ActualModelEndpointId
+	}
+	return ""
+}
+
+func (x *SemanticResultProvenance) GetActualModelId() string {
+	if x != nil {
+		return x.ActualModelId
+	}
+	return ""
+}
+
+func (x *SemanticResultProvenance) GetActualCapabilityId() string {
+	if x != nil {
+		return x.ActualCapabilityId
+	}
+	return ""
+}
+
+func (x *SemanticResultProvenance) GetRebuildEpoch() string {
+	if x != nil {
+		return x.RebuildEpoch
+	}
+	return ""
+}
+
+func (x *SemanticResultProvenance) GetGeneratedAt() string {
+	if x != nil {
+		return x.GeneratedAt
+	}
+	return ""
+}
+
 type SemanticGenerationRuleSummary struct {
 	state          protoimpl.MessageState             `protogen:"open.v1"`
 	SemanticRuleId string                             `protobuf:"bytes,1,opt,name=semantic_rule_id,json=semanticRuleId,proto3" json:"semantic_rule_id,omitempty"`
@@ -539,7 +977,7 @@ type SemanticGenerationRuleSummary struct {
 
 func (x *SemanticGenerationRuleSummary) Reset() {
 	*x = SemanticGenerationRuleSummary{}
-	mi := &file_mycel_client_v1_semantic_proto_msgTypes[5]
+	mi := &file_mycel_client_v1_semantic_proto_msgTypes[8]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -551,7 +989,7 @@ func (x *SemanticGenerationRuleSummary) String() string {
 func (*SemanticGenerationRuleSummary) ProtoMessage() {}
 
 func (x *SemanticGenerationRuleSummary) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_client_v1_semantic_proto_msgTypes[5]
+	mi := &file_mycel_client_v1_semantic_proto_msgTypes[8]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -564,7 +1002,7 @@ func (x *SemanticGenerationRuleSummary) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SemanticGenerationRuleSummary.ProtoReflect.Descriptor instead.
 func (*SemanticGenerationRuleSummary) Descriptor() ([]byte, []int) {
-	return file_mycel_client_v1_semantic_proto_rawDescGZIP(), []int{5}
+	return file_mycel_client_v1_semantic_proto_rawDescGZIP(), []int{8}
 }
 
 func (x *SemanticGenerationRuleSummary) GetSemanticRuleId() string {
@@ -653,7 +1091,7 @@ type SemanticEmbeddingBindingSummary struct {
 
 func (x *SemanticEmbeddingBindingSummary) Reset() {
 	*x = SemanticEmbeddingBindingSummary{}
-	mi := &file_mycel_client_v1_semantic_proto_msgTypes[6]
+	mi := &file_mycel_client_v1_semantic_proto_msgTypes[9]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -665,7 +1103,7 @@ func (x *SemanticEmbeddingBindingSummary) String() string {
 func (*SemanticEmbeddingBindingSummary) ProtoMessage() {}
 
 func (x *SemanticEmbeddingBindingSummary) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_client_v1_semantic_proto_msgTypes[6]
+	mi := &file_mycel_client_v1_semantic_proto_msgTypes[9]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -678,7 +1116,7 @@ func (x *SemanticEmbeddingBindingSummary) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SemanticEmbeddingBindingSummary.ProtoReflect.Descriptor instead.
 func (*SemanticEmbeddingBindingSummary) Descriptor() ([]byte, []int) {
-	return file_mycel_client_v1_semantic_proto_rawDescGZIP(), []int{6}
+	return file_mycel_client_v1_semantic_proto_rawDescGZIP(), []int{9}
 }
 
 func (x *SemanticEmbeddingBindingSummary) GetKey() string {
@@ -749,7 +1187,7 @@ type SearchIndexStatus struct {
 
 func (x *SearchIndexStatus) Reset() {
 	*x = SearchIndexStatus{}
-	mi := &file_mycel_client_v1_semantic_proto_msgTypes[7]
+	mi := &file_mycel_client_v1_semantic_proto_msgTypes[10]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -761,7 +1199,7 @@ func (x *SearchIndexStatus) String() string {
 func (*SearchIndexStatus) ProtoMessage() {}
 
 func (x *SearchIndexStatus) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_client_v1_semantic_proto_msgTypes[7]
+	mi := &file_mycel_client_v1_semantic_proto_msgTypes[10]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -774,7 +1212,7 @@ func (x *SearchIndexStatus) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SearchIndexStatus.ProtoReflect.Descriptor instead.
 func (*SearchIndexStatus) Descriptor() ([]byte, []int) {
-	return file_mycel_client_v1_semantic_proto_rawDescGZIP(), []int{7}
+	return file_mycel_client_v1_semantic_proto_rawDescGZIP(), []int{10}
 }
 
 func (x *SearchIndexStatus) GetState() SearchIndexState {
@@ -820,7 +1258,7 @@ type SemanticRuleStatus struct {
 
 func (x *SemanticRuleStatus) Reset() {
 	*x = SemanticRuleStatus{}
-	mi := &file_mycel_client_v1_semantic_proto_msgTypes[8]
+	mi := &file_mycel_client_v1_semantic_proto_msgTypes[11]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -832,7 +1270,7 @@ func (x *SemanticRuleStatus) String() string {
 func (*SemanticRuleStatus) ProtoMessage() {}
 
 func (x *SemanticRuleStatus) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_client_v1_semantic_proto_msgTypes[8]
+	mi := &file_mycel_client_v1_semantic_proto_msgTypes[11]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -845,7 +1283,7 @@ func (x *SemanticRuleStatus) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SemanticRuleStatus.ProtoReflect.Descriptor instead.
 func (*SemanticRuleStatus) Descriptor() ([]byte, []int) {
-	return file_mycel_client_v1_semantic_proto_rawDescGZIP(), []int{8}
+	return file_mycel_client_v1_semantic_proto_rawDescGZIP(), []int{11}
 }
 
 func (x *SemanticRuleStatus) GetQueueDepthPending() int32 {
@@ -901,7 +1339,7 @@ var File_mycel_client_v1_semantic_proto protoreflect.FileDescriptor
 
 const file_mycel_client_v1_semantic_proto_rawDesc = "" +
 	"\n" +
-	"\x1emycel/client/v1/semantic.proto\x12\x0fmycel.client.v1\x1a\x1bmycel/client/v1/graph.proto\"\xb9\x01\n" +
+	"\x1emycel/client/v1/semantic.proto\x12\x0fmycel.client.v1\x1a\x1cgoogle/protobuf/struct.proto\x1a\x1bmycel/client/v1/graph.proto\"\xb9\x01\n" +
 	"\x18ListSemanticRulesRequest\x12\x19\n" +
 	"\bspace_id\x18\x01 \x01(\tR\aspaceId\x12\x1b\n" +
 	"\tdomain_id\x18\x02 \x01(\tR\bdomainId\x12\x1b\n" +
@@ -911,7 +1349,7 @@ const file_mycel_client_v1_semantic_proto_rawDesc = "" +
 	"\x10include_disabled\x18\x05 \x01(\bR\x0fincludeDisabled\"\x89\x01\n" +
 	"\x19ListSemanticRulesResponse\x12D\n" +
 	"\x05rules\x18\x01 \x03(\v2..mycel.client.v1.SemanticGenerationRuleSummaryR\x05rules\x12&\n" +
-	"\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken\"\xc2\x02\n" +
+	"\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken\"\xb9\x03\n" +
 	"\x15SemanticSearchRequest\x12\x19\n" +
 	"\bspace_id\x18\x01 \x01(\tR\aspaceId\x12\x1b\n" +
 	"\tdomain_id\x18\x02 \x01(\tR\bdomainId\x12-\n" +
@@ -919,14 +1357,33 @@ const file_mycel_client_v1_semantic_proto_rawDesc = "" +
 	"\x15embedding_binding_key\x18\x04 \x01(\tH\x01R\x13embeddingBindingKey\x88\x01\x01\x12\x14\n" +
 	"\x05query\x18\x05 \x01(\tR\x05query\x12\x14\n" +
 	"\x05limit\x18\x06 \x01(\x05R\x05limit\x12 \n" +
-	"\tmin_score\x18\a \x01(\x01H\x02R\bminScore\x88\x01\x01B\x13\n" +
+	"\tmin_score\x18\a \x01(\x01H\x02R\bminScore\x88\x01\x01\x12\"\n" +
+	"\n" +
+	"page_token\x18\b \x01(\tH\x03R\tpageToken\x88\x01\x01\x12B\n" +
+	"\x06filter\x18\t \x01(\v2*.mycel.client.v1.SemanticEligibilityFilterR\x06filterB\x13\n" +
 	"\x11_semantic_rule_idB\x18\n" +
 	"\x16_embedding_binding_keyB\f\n" +
 	"\n" +
-	"_min_score\"u\n" +
+	"_min_scoreB\r\n" +
+	"\v_page_token\"\xd5\x02\n" +
 	"\x16SemanticSearchResponse\x12?\n" +
 	"\aresults\x18\x01 \x03(\v2%.mycel.client.v1.SemanticSearchResultR\aresults\x12\x1a\n" +
-	"\bwarnings\x18\x02 \x03(\tR\bwarnings\"\xb1\x02\n" +
+	"\bwarnings\x18\x02 \x03(\tR\bwarnings\x12&\n" +
+	"\x0fnext_page_token\x18\x03 \x01(\tR\rnextPageToken\x122\n" +
+	"\x15filter_execution_mode\x18\x04 \x01(\tR\x13filterExecutionMode\x12@\n" +
+	"\x1cexamined_semantic_candidates\x18\x05 \x01(\x05R\x1aexaminedSemanticCandidates\x12@\n" +
+	"\x1celigible_semantic_candidates\x18\x06 \x01(\x05R\x1aeligibleSemanticCandidates\"\xa3\x01\n" +
+	"\x19SemanticEligibilityFilter\x12\x1f\n" +
+	"\vnode_labels\x18\x01 \x03(\tR\n" +
+	"nodeLabels\x12\x19\n" +
+	"\bnode_ids\x18\x02 \x03(\tR\anodeIds\x12J\n" +
+	"\n" +
+	"properties\x18\x03 \x03(\v2*.mycel.client.v1.SemanticPropertyPredicateR\n" +
+	"properties\"\xa2\x01\n" +
+	"\x19SemanticPropertyPredicate\x12\x10\n" +
+	"\x03key\x18\x01 \x01(\tR\x03key\x12E\n" +
+	"\boperator\x18\x02 \x01(\x0e2).mycel.client.v1.SemanticPropertyOperatorR\boperator\x12,\n" +
+	"\x05value\x18\x03 \x01(\v2\x16.google.protobuf.ValueR\x05value\"\xfc\x02\n" +
 	"\x14SemanticSearchResult\x12(\n" +
 	"\x10semantic_rule_id\x18\x01 \x01(\tR\x0esemanticRuleId\x122\n" +
 	"\x15embedding_binding_key\x18\x02 \x01(\tR\x13embeddingBindingKey\x12\x1b\n" +
@@ -935,7 +1392,30 @@ const file_mycel_client_v1_semantic_proto_rawDesc = "" +
 	"\x05score\x18\x05 \x01(\x01R\x05score\x12)\n" +
 	"\x04node\x18\x06 \x01(\v2\x15.mycel.client.v1.NodeR\x04node\x12*\n" +
 	"\x11matched_chunk_ids\x18\a \x03(\tR\x0fmatchedChunkIds\x12\x18\n" +
-	"\asnippet\x18\b \x01(\tR\asnippet\"\xb7\x03\n" +
+	"\asnippet\x18\b \x01(\tR\asnippet\x12I\n" +
+	"\n" +
+	"provenance\x18\t \x01(\v2).mycel.client.v1.SemanticResultProvenanceR\n" +
+	"provenance\"\xbe\x06\n" +
+	"\x18SemanticResultProvenance\x122\n" +
+	"\x15source_graph_revision\x18\x01 \x01(\x04R\x13sourceGraphRevision\x12/\n" +
+	"\x13semantic_generation\x18\x02 \x01(\x04R\x12semanticGeneration\x12>\n" +
+	"\x1bsemantic_configuration_hash\x18\x03 \x01(\tR\x19semanticConfigurationHash\x122\n" +
+	"\x15opaque_source_version\x18\x04 \x01(\tR\x13opaqueSourceVersion\x12\x1e\n" +
+	"\n" +
+	"dimensions\x18\x05 \x01(\x05R\n" +
+	"dimensions\x12(\n" +
+	"\x10vector_space_key\x18\x06 \x01(\tR\x0evectorSpaceKey\x12K\n" +
+	"\"configured_intelligence_profile_id\x18\a \x01(\tR\x1fconfiguredIntelligenceProfileId\x12?\n" +
+	"\x1cconfigured_model_endpoint_id\x18\b \x01(\tR\x19configuredModelEndpointId\x12.\n" +
+	"\x13configured_model_id\x18\t \x01(\tR\x11configuredModelId\x128\n" +
+	"\x18configured_capability_id\x18\n" +
+	" \x01(\tR\x16configuredCapabilityId\x12,\n" +
+	"\x12actual_route_known\x18\v \x01(\bR\x10actualRouteKnown\x127\n" +
+	"\x18actual_model_endpoint_id\x18\f \x01(\tR\x15actualModelEndpointId\x12&\n" +
+	"\x0factual_model_id\x18\r \x01(\tR\ractualModelId\x120\n" +
+	"\x14actual_capability_id\x18\x0e \x01(\tR\x12actualCapabilityId\x12#\n" +
+	"\rrebuild_epoch\x18\x0f \x01(\tR\frebuildEpoch\x12!\n" +
+	"\fgenerated_at\x18\x10 \x01(\tR\vgeneratedAt\"\xb7\x03\n" +
 	"\x1dSemanticGenerationRuleSummary\x12(\n" +
 	"\x10semantic_rule_id\x18\x01 \x01(\tR\x0esemanticRuleId\x12\x10\n" +
 	"\x03key\x18\x02 \x01(\tR\x03key\x12!\n" +
@@ -971,7 +1451,13 @@ const file_mycel_client_v1_semantic_proto_rawDesc = "" +
 	"\x0flast_refresh_at\x18\x05 \x01(\tR\rlastRefreshAt\x12(\n" +
 	"\x10last_backfill_at\x18\x06 \x01(\tR\x0elastBackfillAt\x12\x1d\n" +
 	"\n" +
-	"last_error\x18\a \x01(\tR\tlastError*\xda\x01\n" +
+	"last_error\x18\a \x01(\tR\tlastError*\xe5\x01\n" +
+	"\x18SemanticPropertyOperator\x12*\n" +
+	"&SEMANTIC_PROPERTY_OPERATOR_UNSPECIFIED\x10\x00\x12$\n" +
+	" SEMANTIC_PROPERTY_OPERATOR_EQUAL\x10\x01\x12(\n" +
+	"$SEMANTIC_PROPERTY_OPERATOR_NOT_EQUAL\x10\x02\x12%\n" +
+	"!SEMANTIC_PROPERTY_OPERATOR_EXISTS\x10\x03\x12&\n" +
+	"\"SEMANTIC_PROPERTY_OPERATOR_MISSING\x10\x04*\xda\x01\n" +
 	"\x11SemanticRuleState\x12#\n" +
 	"\x1fSEMANTIC_RULE_STATE_UNSPECIFIED\x10\x00\x12\x1e\n" +
 	"\x1aSEMANTIC_RULE_STATE_ACTIVE\x10\x01\x12 \n" +
@@ -1003,40 +1489,50 @@ func file_mycel_client_v1_semantic_proto_rawDescGZIP() []byte {
 	return file_mycel_client_v1_semantic_proto_rawDescData
 }
 
-var file_mycel_client_v1_semantic_proto_enumTypes = make([]protoimpl.EnumInfo, 2)
-var file_mycel_client_v1_semantic_proto_msgTypes = make([]protoimpl.MessageInfo, 9)
+var file_mycel_client_v1_semantic_proto_enumTypes = make([]protoimpl.EnumInfo, 3)
+var file_mycel_client_v1_semantic_proto_msgTypes = make([]protoimpl.MessageInfo, 12)
 var file_mycel_client_v1_semantic_proto_goTypes = []any{
-	(SemanticRuleState)(0),                  // 0: mycel.client.v1.SemanticRuleState
-	(SearchIndexState)(0),                   // 1: mycel.client.v1.SearchIndexState
-	(*ListSemanticRulesRequest)(nil),        // 2: mycel.client.v1.ListSemanticRulesRequest
-	(*ListSemanticRulesResponse)(nil),       // 3: mycel.client.v1.ListSemanticRulesResponse
-	(*SemanticSearchRequest)(nil),           // 4: mycel.client.v1.SemanticSearchRequest
-	(*SemanticSearchResponse)(nil),          // 5: mycel.client.v1.SemanticSearchResponse
-	(*SemanticSearchResult)(nil),            // 6: mycel.client.v1.SemanticSearchResult
-	(*SemanticGenerationRuleSummary)(nil),   // 7: mycel.client.v1.SemanticGenerationRuleSummary
-	(*SemanticEmbeddingBindingSummary)(nil), // 8: mycel.client.v1.SemanticEmbeddingBindingSummary
-	(*SearchIndexStatus)(nil),               // 9: mycel.client.v1.SearchIndexStatus
-	(*SemanticRuleStatus)(nil),              // 10: mycel.client.v1.SemanticRuleStatus
-	(*Node)(nil),                            // 11: mycel.client.v1.Node
+	(SemanticPropertyOperator)(0),           // 0: mycel.client.v1.SemanticPropertyOperator
+	(SemanticRuleState)(0),                  // 1: mycel.client.v1.SemanticRuleState
+	(SearchIndexState)(0),                   // 2: mycel.client.v1.SearchIndexState
+	(*ListSemanticRulesRequest)(nil),        // 3: mycel.client.v1.ListSemanticRulesRequest
+	(*ListSemanticRulesResponse)(nil),       // 4: mycel.client.v1.ListSemanticRulesResponse
+	(*SemanticSearchRequest)(nil),           // 5: mycel.client.v1.SemanticSearchRequest
+	(*SemanticSearchResponse)(nil),          // 6: mycel.client.v1.SemanticSearchResponse
+	(*SemanticEligibilityFilter)(nil),       // 7: mycel.client.v1.SemanticEligibilityFilter
+	(*SemanticPropertyPredicate)(nil),       // 8: mycel.client.v1.SemanticPropertyPredicate
+	(*SemanticSearchResult)(nil),            // 9: mycel.client.v1.SemanticSearchResult
+	(*SemanticResultProvenance)(nil),        // 10: mycel.client.v1.SemanticResultProvenance
+	(*SemanticGenerationRuleSummary)(nil),   // 11: mycel.client.v1.SemanticGenerationRuleSummary
+	(*SemanticEmbeddingBindingSummary)(nil), // 12: mycel.client.v1.SemanticEmbeddingBindingSummary
+	(*SearchIndexStatus)(nil),               // 13: mycel.client.v1.SearchIndexStatus
+	(*SemanticRuleStatus)(nil),              // 14: mycel.client.v1.SemanticRuleStatus
+	(*structpb.Value)(nil),                  // 15: google.protobuf.Value
+	(*Node)(nil),                            // 16: mycel.client.v1.Node
 }
 var file_mycel_client_v1_semantic_proto_depIdxs = []int32{
-	7,  // 0: mycel.client.v1.ListSemanticRulesResponse.rules:type_name -> mycel.client.v1.SemanticGenerationRuleSummary
-	6,  // 1: mycel.client.v1.SemanticSearchResponse.results:type_name -> mycel.client.v1.SemanticSearchResult
-	11, // 2: mycel.client.v1.SemanticSearchResult.node:type_name -> mycel.client.v1.Node
-	0,  // 3: mycel.client.v1.SemanticGenerationRuleSummary.state:type_name -> mycel.client.v1.SemanticRuleState
-	8,  // 4: mycel.client.v1.SemanticGenerationRuleSummary.bindings:type_name -> mycel.client.v1.SemanticEmbeddingBindingSummary
-	10, // 5: mycel.client.v1.SemanticGenerationRuleSummary.status:type_name -> mycel.client.v1.SemanticRuleStatus
-	9,  // 6: mycel.client.v1.SemanticEmbeddingBindingSummary.search_index:type_name -> mycel.client.v1.SearchIndexStatus
-	1,  // 7: mycel.client.v1.SearchIndexStatus.state:type_name -> mycel.client.v1.SearchIndexState
-	2,  // 8: mycel.client.v1.SemanticService.ListSemanticRules:input_type -> mycel.client.v1.ListSemanticRulesRequest
-	4,  // 9: mycel.client.v1.SemanticService.SemanticSearch:input_type -> mycel.client.v1.SemanticSearchRequest
-	3,  // 10: mycel.client.v1.SemanticService.ListSemanticRules:output_type -> mycel.client.v1.ListSemanticRulesResponse
-	5,  // 11: mycel.client.v1.SemanticService.SemanticSearch:output_type -> mycel.client.v1.SemanticSearchResponse
-	10, // [10:12] is the sub-list for method output_type
-	8,  // [8:10] is the sub-list for method input_type
-	8,  // [8:8] is the sub-list for extension type_name
-	8,  // [8:8] is the sub-list for extension extendee
-	0,  // [0:8] is the sub-list for field type_name
+	11, // 0: mycel.client.v1.ListSemanticRulesResponse.rules:type_name -> mycel.client.v1.SemanticGenerationRuleSummary
+	7,  // 1: mycel.client.v1.SemanticSearchRequest.filter:type_name -> mycel.client.v1.SemanticEligibilityFilter
+	9,  // 2: mycel.client.v1.SemanticSearchResponse.results:type_name -> mycel.client.v1.SemanticSearchResult
+	8,  // 3: mycel.client.v1.SemanticEligibilityFilter.properties:type_name -> mycel.client.v1.SemanticPropertyPredicate
+	0,  // 4: mycel.client.v1.SemanticPropertyPredicate.operator:type_name -> mycel.client.v1.SemanticPropertyOperator
+	15, // 5: mycel.client.v1.SemanticPropertyPredicate.value:type_name -> google.protobuf.Value
+	16, // 6: mycel.client.v1.SemanticSearchResult.node:type_name -> mycel.client.v1.Node
+	10, // 7: mycel.client.v1.SemanticSearchResult.provenance:type_name -> mycel.client.v1.SemanticResultProvenance
+	1,  // 8: mycel.client.v1.SemanticGenerationRuleSummary.state:type_name -> mycel.client.v1.SemanticRuleState
+	12, // 9: mycel.client.v1.SemanticGenerationRuleSummary.bindings:type_name -> mycel.client.v1.SemanticEmbeddingBindingSummary
+	14, // 10: mycel.client.v1.SemanticGenerationRuleSummary.status:type_name -> mycel.client.v1.SemanticRuleStatus
+	13, // 11: mycel.client.v1.SemanticEmbeddingBindingSummary.search_index:type_name -> mycel.client.v1.SearchIndexStatus
+	2,  // 12: mycel.client.v1.SearchIndexStatus.state:type_name -> mycel.client.v1.SearchIndexState
+	3,  // 13: mycel.client.v1.SemanticService.ListSemanticRules:input_type -> mycel.client.v1.ListSemanticRulesRequest
+	5,  // 14: mycel.client.v1.SemanticService.SemanticSearch:input_type -> mycel.client.v1.SemanticSearchRequest
+	4,  // 15: mycel.client.v1.SemanticService.ListSemanticRules:output_type -> mycel.client.v1.ListSemanticRulesResponse
+	6,  // 16: mycel.client.v1.SemanticService.SemanticSearch:output_type -> mycel.client.v1.SemanticSearchResponse
+	15, // [15:17] is the sub-list for method output_type
+	13, // [13:15] is the sub-list for method input_type
+	13, // [13:13] is the sub-list for extension type_name
+	13, // [13:13] is the sub-list for extension extendee
+	0,  // [0:13] is the sub-list for field type_name
 }
 
 func init() { file_mycel_client_v1_semantic_proto_init() }
@@ -1051,8 +1547,8 @@ func file_mycel_client_v1_semantic_proto_init() {
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_mycel_client_v1_semantic_proto_rawDesc), len(file_mycel_client_v1_semantic_proto_rawDesc)),
-			NumEnums:      2,
-			NumMessages:   9,
+			NumEnums:      3,
+			NumMessages:   12,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

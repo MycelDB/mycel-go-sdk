@@ -21,13 +21,19 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	AdminSemanticMaintenanceService_GetSemanticMaintenanceStatus_FullMethodName  = "/mycel.admin.v1.AdminSemanticMaintenanceService/GetSemanticMaintenanceStatus"
-	AdminSemanticMaintenanceService_ListSemanticMaintenanceWork_FullMethodName   = "/mycel.admin.v1.AdminSemanticMaintenanceService/ListSemanticMaintenanceWork"
-	AdminSemanticMaintenanceService_RetrySemanticMaintenanceWork_FullMethodName  = "/mycel.admin.v1.AdminSemanticMaintenanceService/RetrySemanticMaintenanceWork"
-	AdminSemanticMaintenanceService_CancelSemanticMaintenanceWork_FullMethodName = "/mycel.admin.v1.AdminSemanticMaintenanceService/CancelSemanticMaintenanceWork"
-	AdminSemanticMaintenanceService_AnalyzeSemanticDirtyWork_FullMethodName      = "/mycel.admin.v1.AdminSemanticMaintenanceService/AnalyzeSemanticDirtyWork"
-	AdminSemanticMaintenanceService_ProcessSemanticDirtyWork_FullMethodName      = "/mycel.admin.v1.AdminSemanticMaintenanceService/ProcessSemanticDirtyWork"
-	AdminSemanticMaintenanceService_BackfillSemanticRule_FullMethodName          = "/mycel.admin.v1.AdminSemanticMaintenanceService/BackfillSemanticRule"
+	AdminSemanticMaintenanceService_GetSemanticMaintenanceStatus_FullMethodName            = "/mycel.admin.v1.AdminSemanticMaintenanceService/GetSemanticMaintenanceStatus"
+	AdminSemanticMaintenanceService_GetSemanticReliabilityStatus_FullMethodName            = "/mycel.admin.v1.AdminSemanticMaintenanceService/GetSemanticReliabilityStatus"
+	AdminSemanticMaintenanceService_RebuildSemanticRule_FullMethodName                     = "/mycel.admin.v1.AdminSemanticMaintenanceService/RebuildSemanticRule"
+	AdminSemanticMaintenanceService_ListSemanticMaintenanceWork_FullMethodName             = "/mycel.admin.v1.AdminSemanticMaintenanceService/ListSemanticMaintenanceWork"
+	AdminSemanticMaintenanceService_RetrySemanticMaintenanceWork_FullMethodName            = "/mycel.admin.v1.AdminSemanticMaintenanceService/RetrySemanticMaintenanceWork"
+	AdminSemanticMaintenanceService_CancelSemanticMaintenanceWork_FullMethodName           = "/mycel.admin.v1.AdminSemanticMaintenanceService/CancelSemanticMaintenanceWork"
+	AdminSemanticMaintenanceService_AnalyzeSemanticDirtyWork_FullMethodName                = "/mycel.admin.v1.AdminSemanticMaintenanceService/AnalyzeSemanticDirtyWork"
+	AdminSemanticMaintenanceService_ProcessSemanticDirtyWork_FullMethodName                = "/mycel.admin.v1.AdminSemanticMaintenanceService/ProcessSemanticDirtyWork"
+	AdminSemanticMaintenanceService_BackfillSemanticRule_FullMethodName                    = "/mycel.admin.v1.AdminSemanticMaintenanceService/BackfillSemanticRule"
+	AdminSemanticMaintenanceService_GetSemanticProviderBudgetCapabilities_FullMethodName   = "/mycel.admin.v1.AdminSemanticMaintenanceService/GetSemanticProviderBudgetCapabilities"
+	AdminSemanticMaintenanceService_GetSemanticProviderBudgetStatus_FullMethodName         = "/mycel.admin.v1.AdminSemanticMaintenanceService/GetSemanticProviderBudgetStatus"
+	AdminSemanticMaintenanceService_ListSemanticProviderBudgetScopes_FullMethodName        = "/mycel.admin.v1.AdminSemanticMaintenanceService/ListSemanticProviderBudgetScopes"
+	AdminSemanticMaintenanceService_ListSemanticProviderBudgetAttemptEvents_FullMethodName = "/mycel.admin.v1.AdminSemanticMaintenanceService/ListSemanticProviderBudgetAttemptEvents"
 )
 
 // AdminSemanticMaintenanceServiceClient is the client API for AdminSemanticMaintenanceService service.
@@ -35,15 +41,43 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 //
 // AdminSemanticMaintenanceService runs daemon-owned semantic generation rule
-// maintenance work.
+// maintenance work. Provider-budget RPCs require CAPABILITY_SEMANTIC_MANAGE
+// scoped to request.space_id. An authenticated caller without that grant
+// receives PERMISSION_DENIED without disclosure of resource existence.
 type AdminSemanticMaintenanceServiceClient interface {
 	GetSemanticMaintenanceStatus(ctx context.Context, in *GetSemanticMaintenanceStatusRequest, opts ...grpc.CallOption) (*GetSemanticMaintenanceStatusResponse, error)
+	GetSemanticReliabilityStatus(ctx context.Context, in *GetSemanticReliabilityStatusRequest, opts ...grpc.CallOption) (*GetSemanticReliabilityStatusResponse, error)
+	// Synchronously starts and executes a full reconciled baseline at a pinned
+	// graph revision followed by bounded delta catch-up. Success returns only
+	// after state is "completed". Failure returns a non-OK status and normally
+	// persists "failed" after an epoch starts. If leadership or durable-state
+	// transition fails, the epoch may remain "running" until its owner is fenced;
+	// clients must inspect GetSemanticReliabilityStatus after every non-OK
+	// result. A concurrent request for the same rule/binding fails with
+	// FAILED_PRECONDITION, except that a new leader may fence an abandoned
+	// running owner and start a new epoch.
+	//
+	// This method is not idempotent: every accepted request, including one after
+	// a completed or failed rebuild, starts a new rebuild_epoch. After an
+	// ambiguous transport outcome, clients must inspect
+	// GetSemanticReliabilityStatus before retrying.
+	RebuildSemanticRule(ctx context.Context, in *RebuildSemanticRuleRequest, opts ...grpc.CallOption) (*RebuildSemanticRuleResponse, error)
 	ListSemanticMaintenanceWork(ctx context.Context, in *ListSemanticMaintenanceWorkRequest, opts ...grpc.CallOption) (*ListSemanticMaintenanceWorkResponse, error)
 	RetrySemanticMaintenanceWork(ctx context.Context, in *RetrySemanticMaintenanceWorkRequest, opts ...grpc.CallOption) (*RetrySemanticMaintenanceWorkResponse, error)
 	CancelSemanticMaintenanceWork(ctx context.Context, in *CancelSemanticMaintenanceWorkRequest, opts ...grpc.CallOption) (*CancelSemanticMaintenanceWorkResponse, error)
 	AnalyzeSemanticDirtyWork(ctx context.Context, in *AnalyzeSemanticDirtyWorkRequest, opts ...grpc.CallOption) (*AnalyzeSemanticDirtyWorkResponse, error)
 	ProcessSemanticDirtyWork(ctx context.Context, in *ProcessSemanticDirtyWorkRequest, opts ...grpc.CallOption) (*ProcessSemanticDirtyWorkResponse, error)
 	BackfillSemanticRule(ctx context.Context, in *BackfillSemanticRuleRequest, opts ...grpc.CallOption) (*BackfillSemanticRuleResponse, error)
+	// Returns authenticated daemon capabilities before a live credential is
+	// resolved or persisted. Capabilities describe enforcement, not merely
+	// accepted configuration fields.
+	GetSemanticProviderBudgetCapabilities(ctx context.Context, in *GetSemanticProviderBudgetCapabilitiesRequest, opts ...grpc.CallOption) (*GetSemanticProviderBudgetCapabilitiesResponse, error)
+	// Read-only for either the current rule/binding scope or a retained scope id.
+	GetSemanticProviderBudgetStatus(ctx context.Context, in *GetSemanticProviderBudgetStatusRequest, opts ...grpc.CallOption) (*GetSemanticProviderBudgetStatusResponse, error)
+	// Discovers current and retained scopes without granting scope mutation.
+	ListSemanticProviderBudgetScopes(ctx context.Context, in *ListSemanticProviderBudgetScopesRequest, opts ...grpc.CallOption) (*ListSemanticProviderBudgetScopesResponse, error)
+	// Returns append-only attempt transition events for one immutable scope.
+	ListSemanticProviderBudgetAttemptEvents(ctx context.Context, in *ListSemanticProviderBudgetAttemptEventsRequest, opts ...grpc.CallOption) (*ListSemanticProviderBudgetAttemptEventsResponse, error)
 }
 
 type adminSemanticMaintenanceServiceClient struct {
@@ -58,6 +92,26 @@ func (c *adminSemanticMaintenanceServiceClient) GetSemanticMaintenanceStatus(ctx
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(GetSemanticMaintenanceStatusResponse)
 	err := c.cc.Invoke(ctx, AdminSemanticMaintenanceService_GetSemanticMaintenanceStatus_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *adminSemanticMaintenanceServiceClient) GetSemanticReliabilityStatus(ctx context.Context, in *GetSemanticReliabilityStatusRequest, opts ...grpc.CallOption) (*GetSemanticReliabilityStatusResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetSemanticReliabilityStatusResponse)
+	err := c.cc.Invoke(ctx, AdminSemanticMaintenanceService_GetSemanticReliabilityStatus_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *adminSemanticMaintenanceServiceClient) RebuildSemanticRule(ctx context.Context, in *RebuildSemanticRuleRequest, opts ...grpc.CallOption) (*RebuildSemanticRuleResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(RebuildSemanticRuleResponse)
+	err := c.cc.Invoke(ctx, AdminSemanticMaintenanceService_RebuildSemanticRule_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -124,20 +178,88 @@ func (c *adminSemanticMaintenanceServiceClient) BackfillSemanticRule(ctx context
 	return out, nil
 }
 
+func (c *adminSemanticMaintenanceServiceClient) GetSemanticProviderBudgetCapabilities(ctx context.Context, in *GetSemanticProviderBudgetCapabilitiesRequest, opts ...grpc.CallOption) (*GetSemanticProviderBudgetCapabilitiesResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetSemanticProviderBudgetCapabilitiesResponse)
+	err := c.cc.Invoke(ctx, AdminSemanticMaintenanceService_GetSemanticProviderBudgetCapabilities_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *adminSemanticMaintenanceServiceClient) GetSemanticProviderBudgetStatus(ctx context.Context, in *GetSemanticProviderBudgetStatusRequest, opts ...grpc.CallOption) (*GetSemanticProviderBudgetStatusResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetSemanticProviderBudgetStatusResponse)
+	err := c.cc.Invoke(ctx, AdminSemanticMaintenanceService_GetSemanticProviderBudgetStatus_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *adminSemanticMaintenanceServiceClient) ListSemanticProviderBudgetScopes(ctx context.Context, in *ListSemanticProviderBudgetScopesRequest, opts ...grpc.CallOption) (*ListSemanticProviderBudgetScopesResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListSemanticProviderBudgetScopesResponse)
+	err := c.cc.Invoke(ctx, AdminSemanticMaintenanceService_ListSemanticProviderBudgetScopes_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *adminSemanticMaintenanceServiceClient) ListSemanticProviderBudgetAttemptEvents(ctx context.Context, in *ListSemanticProviderBudgetAttemptEventsRequest, opts ...grpc.CallOption) (*ListSemanticProviderBudgetAttemptEventsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListSemanticProviderBudgetAttemptEventsResponse)
+	err := c.cc.Invoke(ctx, AdminSemanticMaintenanceService_ListSemanticProviderBudgetAttemptEvents_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // AdminSemanticMaintenanceServiceServer is the server API for AdminSemanticMaintenanceService service.
 // All implementations must embed UnimplementedAdminSemanticMaintenanceServiceServer
 // for forward compatibility.
 //
 // AdminSemanticMaintenanceService runs daemon-owned semantic generation rule
-// maintenance work.
+// maintenance work. Provider-budget RPCs require CAPABILITY_SEMANTIC_MANAGE
+// scoped to request.space_id. An authenticated caller without that grant
+// receives PERMISSION_DENIED without disclosure of resource existence.
 type AdminSemanticMaintenanceServiceServer interface {
 	GetSemanticMaintenanceStatus(context.Context, *GetSemanticMaintenanceStatusRequest) (*GetSemanticMaintenanceStatusResponse, error)
+	GetSemanticReliabilityStatus(context.Context, *GetSemanticReliabilityStatusRequest) (*GetSemanticReliabilityStatusResponse, error)
+	// Synchronously starts and executes a full reconciled baseline at a pinned
+	// graph revision followed by bounded delta catch-up. Success returns only
+	// after state is "completed". Failure returns a non-OK status and normally
+	// persists "failed" after an epoch starts. If leadership or durable-state
+	// transition fails, the epoch may remain "running" until its owner is fenced;
+	// clients must inspect GetSemanticReliabilityStatus after every non-OK
+	// result. A concurrent request for the same rule/binding fails with
+	// FAILED_PRECONDITION, except that a new leader may fence an abandoned
+	// running owner and start a new epoch.
+	//
+	// This method is not idempotent: every accepted request, including one after
+	// a completed or failed rebuild, starts a new rebuild_epoch. After an
+	// ambiguous transport outcome, clients must inspect
+	// GetSemanticReliabilityStatus before retrying.
+	RebuildSemanticRule(context.Context, *RebuildSemanticRuleRequest) (*RebuildSemanticRuleResponse, error)
 	ListSemanticMaintenanceWork(context.Context, *ListSemanticMaintenanceWorkRequest) (*ListSemanticMaintenanceWorkResponse, error)
 	RetrySemanticMaintenanceWork(context.Context, *RetrySemanticMaintenanceWorkRequest) (*RetrySemanticMaintenanceWorkResponse, error)
 	CancelSemanticMaintenanceWork(context.Context, *CancelSemanticMaintenanceWorkRequest) (*CancelSemanticMaintenanceWorkResponse, error)
 	AnalyzeSemanticDirtyWork(context.Context, *AnalyzeSemanticDirtyWorkRequest) (*AnalyzeSemanticDirtyWorkResponse, error)
 	ProcessSemanticDirtyWork(context.Context, *ProcessSemanticDirtyWorkRequest) (*ProcessSemanticDirtyWorkResponse, error)
 	BackfillSemanticRule(context.Context, *BackfillSemanticRuleRequest) (*BackfillSemanticRuleResponse, error)
+	// Returns authenticated daemon capabilities before a live credential is
+	// resolved or persisted. Capabilities describe enforcement, not merely
+	// accepted configuration fields.
+	GetSemanticProviderBudgetCapabilities(context.Context, *GetSemanticProviderBudgetCapabilitiesRequest) (*GetSemanticProviderBudgetCapabilitiesResponse, error)
+	// Read-only for either the current rule/binding scope or a retained scope id.
+	GetSemanticProviderBudgetStatus(context.Context, *GetSemanticProviderBudgetStatusRequest) (*GetSemanticProviderBudgetStatusResponse, error)
+	// Discovers current and retained scopes without granting scope mutation.
+	ListSemanticProviderBudgetScopes(context.Context, *ListSemanticProviderBudgetScopesRequest) (*ListSemanticProviderBudgetScopesResponse, error)
+	// Returns append-only attempt transition events for one immutable scope.
+	ListSemanticProviderBudgetAttemptEvents(context.Context, *ListSemanticProviderBudgetAttemptEventsRequest) (*ListSemanticProviderBudgetAttemptEventsResponse, error)
 	mustEmbedUnimplementedAdminSemanticMaintenanceServiceServer()
 }
 
@@ -150,6 +272,12 @@ type UnimplementedAdminSemanticMaintenanceServiceServer struct{}
 
 func (UnimplementedAdminSemanticMaintenanceServiceServer) GetSemanticMaintenanceStatus(context.Context, *GetSemanticMaintenanceStatusRequest) (*GetSemanticMaintenanceStatusResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetSemanticMaintenanceStatus not implemented")
+}
+func (UnimplementedAdminSemanticMaintenanceServiceServer) GetSemanticReliabilityStatus(context.Context, *GetSemanticReliabilityStatusRequest) (*GetSemanticReliabilityStatusResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetSemanticReliabilityStatus not implemented")
+}
+func (UnimplementedAdminSemanticMaintenanceServiceServer) RebuildSemanticRule(context.Context, *RebuildSemanticRuleRequest) (*RebuildSemanticRuleResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RebuildSemanticRule not implemented")
 }
 func (UnimplementedAdminSemanticMaintenanceServiceServer) ListSemanticMaintenanceWork(context.Context, *ListSemanticMaintenanceWorkRequest) (*ListSemanticMaintenanceWorkResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListSemanticMaintenanceWork not implemented")
@@ -168,6 +296,18 @@ func (UnimplementedAdminSemanticMaintenanceServiceServer) ProcessSemanticDirtyWo
 }
 func (UnimplementedAdminSemanticMaintenanceServiceServer) BackfillSemanticRule(context.Context, *BackfillSemanticRuleRequest) (*BackfillSemanticRuleResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method BackfillSemanticRule not implemented")
+}
+func (UnimplementedAdminSemanticMaintenanceServiceServer) GetSemanticProviderBudgetCapabilities(context.Context, *GetSemanticProviderBudgetCapabilitiesRequest) (*GetSemanticProviderBudgetCapabilitiesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetSemanticProviderBudgetCapabilities not implemented")
+}
+func (UnimplementedAdminSemanticMaintenanceServiceServer) GetSemanticProviderBudgetStatus(context.Context, *GetSemanticProviderBudgetStatusRequest) (*GetSemanticProviderBudgetStatusResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetSemanticProviderBudgetStatus not implemented")
+}
+func (UnimplementedAdminSemanticMaintenanceServiceServer) ListSemanticProviderBudgetScopes(context.Context, *ListSemanticProviderBudgetScopesRequest) (*ListSemanticProviderBudgetScopesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListSemanticProviderBudgetScopes not implemented")
+}
+func (UnimplementedAdminSemanticMaintenanceServiceServer) ListSemanticProviderBudgetAttemptEvents(context.Context, *ListSemanticProviderBudgetAttemptEventsRequest) (*ListSemanticProviderBudgetAttemptEventsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListSemanticProviderBudgetAttemptEvents not implemented")
 }
 func (UnimplementedAdminSemanticMaintenanceServiceServer) mustEmbedUnimplementedAdminSemanticMaintenanceServiceServer() {
 }
@@ -205,6 +345,42 @@ func _AdminSemanticMaintenanceService_GetSemanticMaintenanceStatus_Handler(srv i
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(AdminSemanticMaintenanceServiceServer).GetSemanticMaintenanceStatus(ctx, req.(*GetSemanticMaintenanceStatusRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AdminSemanticMaintenanceService_GetSemanticReliabilityStatus_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetSemanticReliabilityStatusRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminSemanticMaintenanceServiceServer).GetSemanticReliabilityStatus(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AdminSemanticMaintenanceService_GetSemanticReliabilityStatus_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminSemanticMaintenanceServiceServer).GetSemanticReliabilityStatus(ctx, req.(*GetSemanticReliabilityStatusRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AdminSemanticMaintenanceService_RebuildSemanticRule_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RebuildSemanticRuleRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminSemanticMaintenanceServiceServer).RebuildSemanticRule(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AdminSemanticMaintenanceService_RebuildSemanticRule_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminSemanticMaintenanceServiceServer).RebuildSemanticRule(ctx, req.(*RebuildSemanticRuleRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -317,6 +493,78 @@ func _AdminSemanticMaintenanceService_BackfillSemanticRule_Handler(srv interface
 	return interceptor(ctx, in, info, handler)
 }
 
+func _AdminSemanticMaintenanceService_GetSemanticProviderBudgetCapabilities_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetSemanticProviderBudgetCapabilitiesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminSemanticMaintenanceServiceServer).GetSemanticProviderBudgetCapabilities(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AdminSemanticMaintenanceService_GetSemanticProviderBudgetCapabilities_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminSemanticMaintenanceServiceServer).GetSemanticProviderBudgetCapabilities(ctx, req.(*GetSemanticProviderBudgetCapabilitiesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AdminSemanticMaintenanceService_GetSemanticProviderBudgetStatus_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetSemanticProviderBudgetStatusRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminSemanticMaintenanceServiceServer).GetSemanticProviderBudgetStatus(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AdminSemanticMaintenanceService_GetSemanticProviderBudgetStatus_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminSemanticMaintenanceServiceServer).GetSemanticProviderBudgetStatus(ctx, req.(*GetSemanticProviderBudgetStatusRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AdminSemanticMaintenanceService_ListSemanticProviderBudgetScopes_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListSemanticProviderBudgetScopesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminSemanticMaintenanceServiceServer).ListSemanticProviderBudgetScopes(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AdminSemanticMaintenanceService_ListSemanticProviderBudgetScopes_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminSemanticMaintenanceServiceServer).ListSemanticProviderBudgetScopes(ctx, req.(*ListSemanticProviderBudgetScopesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AdminSemanticMaintenanceService_ListSemanticProviderBudgetAttemptEvents_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListSemanticProviderBudgetAttemptEventsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminSemanticMaintenanceServiceServer).ListSemanticProviderBudgetAttemptEvents(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AdminSemanticMaintenanceService_ListSemanticProviderBudgetAttemptEvents_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminSemanticMaintenanceServiceServer).ListSemanticProviderBudgetAttemptEvents(ctx, req.(*ListSemanticProviderBudgetAttemptEventsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // AdminSemanticMaintenanceService_ServiceDesc is the grpc.ServiceDesc for AdminSemanticMaintenanceService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -327,6 +575,14 @@ var AdminSemanticMaintenanceService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetSemanticMaintenanceStatus",
 			Handler:    _AdminSemanticMaintenanceService_GetSemanticMaintenanceStatus_Handler,
+		},
+		{
+			MethodName: "GetSemanticReliabilityStatus",
+			Handler:    _AdminSemanticMaintenanceService_GetSemanticReliabilityStatus_Handler,
+		},
+		{
+			MethodName: "RebuildSemanticRule",
+			Handler:    _AdminSemanticMaintenanceService_RebuildSemanticRule_Handler,
 		},
 		{
 			MethodName: "ListSemanticMaintenanceWork",
@@ -351,6 +607,22 @@ var AdminSemanticMaintenanceService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "BackfillSemanticRule",
 			Handler:    _AdminSemanticMaintenanceService_BackfillSemanticRule_Handler,
+		},
+		{
+			MethodName: "GetSemanticProviderBudgetCapabilities",
+			Handler:    _AdminSemanticMaintenanceService_GetSemanticProviderBudgetCapabilities_Handler,
+		},
+		{
+			MethodName: "GetSemanticProviderBudgetStatus",
+			Handler:    _AdminSemanticMaintenanceService_GetSemanticProviderBudgetStatus_Handler,
+		},
+		{
+			MethodName: "ListSemanticProviderBudgetScopes",
+			Handler:    _AdminSemanticMaintenanceService_ListSemanticProviderBudgetScopes_Handler,
+		},
+		{
+			MethodName: "ListSemanticProviderBudgetAttemptEvents",
+			Handler:    _AdminSemanticMaintenanceService_ListSemanticProviderBudgetAttemptEvents_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

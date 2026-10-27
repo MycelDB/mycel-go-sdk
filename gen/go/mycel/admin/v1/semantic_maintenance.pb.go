@@ -11,6 +11,7 @@ package adminv1
 import (
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
+	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
@@ -22,6 +23,265 @@ const (
 	// Verify that runtime/protoimpl is sufficiently up-to-date.
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
+
+type SemanticProviderBudgetScopeState int32
+
+const (
+	SemanticProviderBudgetScopeState_SEMANTIC_PROVIDER_BUDGET_SCOPE_STATE_UNSPECIFIED SemanticProviderBudgetScopeState = 0
+	SemanticProviderBudgetScopeState_SEMANTIC_PROVIDER_BUDGET_SCOPE_STATE_ACTIVE      SemanticProviderBudgetScopeState = 1
+	SemanticProviderBudgetScopeState_SEMANTIC_PROVIDER_BUDGET_SCOPE_STATE_COMPLETED   SemanticProviderBudgetScopeState = 2
+	SemanticProviderBudgetScopeState_SEMANTIC_PROVIDER_BUDGET_SCOPE_STATE_EXPIRED     SemanticProviderBudgetScopeState = 3
+	SemanticProviderBudgetScopeState_SEMANTIC_PROVIDER_BUDGET_SCOPE_STATE_EXHAUSTED   SemanticProviderBudgetScopeState = 4
+)
+
+// Enum value maps for SemanticProviderBudgetScopeState.
+var (
+	SemanticProviderBudgetScopeState_name = map[int32]string{
+		0: "SEMANTIC_PROVIDER_BUDGET_SCOPE_STATE_UNSPECIFIED",
+		1: "SEMANTIC_PROVIDER_BUDGET_SCOPE_STATE_ACTIVE",
+		2: "SEMANTIC_PROVIDER_BUDGET_SCOPE_STATE_COMPLETED",
+		3: "SEMANTIC_PROVIDER_BUDGET_SCOPE_STATE_EXPIRED",
+		4: "SEMANTIC_PROVIDER_BUDGET_SCOPE_STATE_EXHAUSTED",
+	}
+	SemanticProviderBudgetScopeState_value = map[string]int32{
+		"SEMANTIC_PROVIDER_BUDGET_SCOPE_STATE_UNSPECIFIED": 0,
+		"SEMANTIC_PROVIDER_BUDGET_SCOPE_STATE_ACTIVE":      1,
+		"SEMANTIC_PROVIDER_BUDGET_SCOPE_STATE_COMPLETED":   2,
+		"SEMANTIC_PROVIDER_BUDGET_SCOPE_STATE_EXPIRED":     3,
+		"SEMANTIC_PROVIDER_BUDGET_SCOPE_STATE_EXHAUSTED":   4,
+	}
+)
+
+func (x SemanticProviderBudgetScopeState) Enum() *SemanticProviderBudgetScopeState {
+	p := new(SemanticProviderBudgetScopeState)
+	*p = x
+	return p
+}
+
+func (x SemanticProviderBudgetScopeState) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (SemanticProviderBudgetScopeState) Descriptor() protoreflect.EnumDescriptor {
+	return file_mycel_admin_v1_semantic_maintenance_proto_enumTypes[0].Descriptor()
+}
+
+func (SemanticProviderBudgetScopeState) Type() protoreflect.EnumType {
+	return &file_mycel_admin_v1_semantic_maintenance_proto_enumTypes[0]
+}
+
+func (x SemanticProviderBudgetScopeState) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use SemanticProviderBudgetScopeState.Descriptor instead.
+func (SemanticProviderBudgetScopeState) EnumDescriptor() ([]byte, []int) {
+	return file_mycel_admin_v1_semantic_maintenance_proto_rawDescGZIP(), []int{0}
+}
+
+type SemanticProviderBudgetDenialReason int32
+
+const (
+	SemanticProviderBudgetDenialReason_SEMANTIC_PROVIDER_BUDGET_DENIAL_REASON_UNSPECIFIED             SemanticProviderBudgetDenialReason = 0
+	SemanticProviderBudgetDenialReason_SEMANTIC_PROVIDER_BUDGET_DENIAL_REASON_NONE                    SemanticProviderBudgetDenialReason = 1
+	SemanticProviderBudgetDenialReason_SEMANTIC_PROVIDER_BUDGET_DENIAL_REASON_REQUEST_LIMIT           SemanticProviderBudgetDenialReason = 2
+	SemanticProviderBudgetDenialReason_SEMANTIC_PROVIDER_BUDGET_DENIAL_REASON_ATTEMPT_LIMIT           SemanticProviderBudgetDenialReason = 3
+	SemanticProviderBudgetDenialReason_SEMANTIC_PROVIDER_BUDGET_DENIAL_REASON_RETRY_LIMIT             SemanticProviderBudgetDenialReason = 4
+	SemanticProviderBudgetDenialReason_SEMANTIC_PROVIDER_BUDGET_DENIAL_REASON_PER_REQUEST_RETRY_LIMIT SemanticProviderBudgetDenialReason = 5
+	SemanticProviderBudgetDenialReason_SEMANTIC_PROVIDER_BUDGET_DENIAL_REASON_CONCURRENCY_LIMIT       SemanticProviderBudgetDenialReason = 6
+	SemanticProviderBudgetDenialReason_SEMANTIC_PROVIDER_BUDGET_DENIAL_REASON_BATCH_LIMIT             SemanticProviderBudgetDenialReason = 7
+	SemanticProviderBudgetDenialReason_SEMANTIC_PROVIDER_BUDGET_DENIAL_REASON_INPUT_TOKEN_LIMIT       SemanticProviderBudgetDenialReason = 8
+	SemanticProviderBudgetDenialReason_SEMANTIC_PROVIDER_BUDGET_DENIAL_REASON_PROVIDER_TIME_LIMIT     SemanticProviderBudgetDenialReason = 9
+	SemanticProviderBudgetDenialReason_SEMANTIC_PROVIDER_BUDGET_DENIAL_REASON_DEADLINE                SemanticProviderBudgetDenialReason = 10
+	SemanticProviderBudgetDenialReason_SEMANTIC_PROVIDER_BUDGET_DENIAL_REASON_COST_LIMIT              SemanticProviderBudgetDenialReason = 11
+	SemanticProviderBudgetDenialReason_SEMANTIC_PROVIDER_BUDGET_DENIAL_REASON_ROUTE_MISMATCH          SemanticProviderBudgetDenialReason = 12
+	SemanticProviderBudgetDenialReason_SEMANTIC_PROVIDER_BUDGET_DENIAL_REASON_ACCOUNTING              SemanticProviderBudgetDenialReason = 13
+	SemanticProviderBudgetDenialReason_SEMANTIC_PROVIDER_BUDGET_DENIAL_REASON_CAPACITY                SemanticProviderBudgetDenialReason = 14
+)
+
+// Enum value maps for SemanticProviderBudgetDenialReason.
+var (
+	SemanticProviderBudgetDenialReason_name = map[int32]string{
+		0:  "SEMANTIC_PROVIDER_BUDGET_DENIAL_REASON_UNSPECIFIED",
+		1:  "SEMANTIC_PROVIDER_BUDGET_DENIAL_REASON_NONE",
+		2:  "SEMANTIC_PROVIDER_BUDGET_DENIAL_REASON_REQUEST_LIMIT",
+		3:  "SEMANTIC_PROVIDER_BUDGET_DENIAL_REASON_ATTEMPT_LIMIT",
+		4:  "SEMANTIC_PROVIDER_BUDGET_DENIAL_REASON_RETRY_LIMIT",
+		5:  "SEMANTIC_PROVIDER_BUDGET_DENIAL_REASON_PER_REQUEST_RETRY_LIMIT",
+		6:  "SEMANTIC_PROVIDER_BUDGET_DENIAL_REASON_CONCURRENCY_LIMIT",
+		7:  "SEMANTIC_PROVIDER_BUDGET_DENIAL_REASON_BATCH_LIMIT",
+		8:  "SEMANTIC_PROVIDER_BUDGET_DENIAL_REASON_INPUT_TOKEN_LIMIT",
+		9:  "SEMANTIC_PROVIDER_BUDGET_DENIAL_REASON_PROVIDER_TIME_LIMIT",
+		10: "SEMANTIC_PROVIDER_BUDGET_DENIAL_REASON_DEADLINE",
+		11: "SEMANTIC_PROVIDER_BUDGET_DENIAL_REASON_COST_LIMIT",
+		12: "SEMANTIC_PROVIDER_BUDGET_DENIAL_REASON_ROUTE_MISMATCH",
+		13: "SEMANTIC_PROVIDER_BUDGET_DENIAL_REASON_ACCOUNTING",
+		14: "SEMANTIC_PROVIDER_BUDGET_DENIAL_REASON_CAPACITY",
+	}
+	SemanticProviderBudgetDenialReason_value = map[string]int32{
+		"SEMANTIC_PROVIDER_BUDGET_DENIAL_REASON_UNSPECIFIED":             0,
+		"SEMANTIC_PROVIDER_BUDGET_DENIAL_REASON_NONE":                    1,
+		"SEMANTIC_PROVIDER_BUDGET_DENIAL_REASON_REQUEST_LIMIT":           2,
+		"SEMANTIC_PROVIDER_BUDGET_DENIAL_REASON_ATTEMPT_LIMIT":           3,
+		"SEMANTIC_PROVIDER_BUDGET_DENIAL_REASON_RETRY_LIMIT":             4,
+		"SEMANTIC_PROVIDER_BUDGET_DENIAL_REASON_PER_REQUEST_RETRY_LIMIT": 5,
+		"SEMANTIC_PROVIDER_BUDGET_DENIAL_REASON_CONCURRENCY_LIMIT":       6,
+		"SEMANTIC_PROVIDER_BUDGET_DENIAL_REASON_BATCH_LIMIT":             7,
+		"SEMANTIC_PROVIDER_BUDGET_DENIAL_REASON_INPUT_TOKEN_LIMIT":       8,
+		"SEMANTIC_PROVIDER_BUDGET_DENIAL_REASON_PROVIDER_TIME_LIMIT":     9,
+		"SEMANTIC_PROVIDER_BUDGET_DENIAL_REASON_DEADLINE":                10,
+		"SEMANTIC_PROVIDER_BUDGET_DENIAL_REASON_COST_LIMIT":              11,
+		"SEMANTIC_PROVIDER_BUDGET_DENIAL_REASON_ROUTE_MISMATCH":          12,
+		"SEMANTIC_PROVIDER_BUDGET_DENIAL_REASON_ACCOUNTING":              13,
+		"SEMANTIC_PROVIDER_BUDGET_DENIAL_REASON_CAPACITY":                14,
+	}
+)
+
+func (x SemanticProviderBudgetDenialReason) Enum() *SemanticProviderBudgetDenialReason {
+	p := new(SemanticProviderBudgetDenialReason)
+	*p = x
+	return p
+}
+
+func (x SemanticProviderBudgetDenialReason) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (SemanticProviderBudgetDenialReason) Descriptor() protoreflect.EnumDescriptor {
+	return file_mycel_admin_v1_semantic_maintenance_proto_enumTypes[1].Descriptor()
+}
+
+func (SemanticProviderBudgetDenialReason) Type() protoreflect.EnumType {
+	return &file_mycel_admin_v1_semantic_maintenance_proto_enumTypes[1]
+}
+
+func (x SemanticProviderBudgetDenialReason) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use SemanticProviderBudgetDenialReason.Descriptor instead.
+func (SemanticProviderBudgetDenialReason) EnumDescriptor() ([]byte, []int) {
+	return file_mycel_admin_v1_semantic_maintenance_proto_rawDescGZIP(), []int{1}
+}
+
+type SemanticProviderBudgetAttemptState int32
+
+const (
+	SemanticProviderBudgetAttemptState_SEMANTIC_PROVIDER_BUDGET_ATTEMPT_STATE_UNSPECIFIED SemanticProviderBudgetAttemptState = 0
+	SemanticProviderBudgetAttemptState_SEMANTIC_PROVIDER_BUDGET_ATTEMPT_STATE_RESERVED    SemanticProviderBudgetAttemptState = 1
+	SemanticProviderBudgetAttemptState_SEMANTIC_PROVIDER_BUDGET_ATTEMPT_STATE_SUCCEEDED   SemanticProviderBudgetAttemptState = 2
+	SemanticProviderBudgetAttemptState_SEMANTIC_PROVIDER_BUDGET_ATTEMPT_STATE_FAILED      SemanticProviderBudgetAttemptState = 3
+	SemanticProviderBudgetAttemptState_SEMANTIC_PROVIDER_BUDGET_ATTEMPT_STATE_CANCELED    SemanticProviderBudgetAttemptState = 4
+	SemanticProviderBudgetAttemptState_SEMANTIC_PROVIDER_BUDGET_ATTEMPT_STATE_AMBIGUOUS   SemanticProviderBudgetAttemptState = 5
+)
+
+// Enum value maps for SemanticProviderBudgetAttemptState.
+var (
+	SemanticProviderBudgetAttemptState_name = map[int32]string{
+		0: "SEMANTIC_PROVIDER_BUDGET_ATTEMPT_STATE_UNSPECIFIED",
+		1: "SEMANTIC_PROVIDER_BUDGET_ATTEMPT_STATE_RESERVED",
+		2: "SEMANTIC_PROVIDER_BUDGET_ATTEMPT_STATE_SUCCEEDED",
+		3: "SEMANTIC_PROVIDER_BUDGET_ATTEMPT_STATE_FAILED",
+		4: "SEMANTIC_PROVIDER_BUDGET_ATTEMPT_STATE_CANCELED",
+		5: "SEMANTIC_PROVIDER_BUDGET_ATTEMPT_STATE_AMBIGUOUS",
+	}
+	SemanticProviderBudgetAttemptState_value = map[string]int32{
+		"SEMANTIC_PROVIDER_BUDGET_ATTEMPT_STATE_UNSPECIFIED": 0,
+		"SEMANTIC_PROVIDER_BUDGET_ATTEMPT_STATE_RESERVED":    1,
+		"SEMANTIC_PROVIDER_BUDGET_ATTEMPT_STATE_SUCCEEDED":   2,
+		"SEMANTIC_PROVIDER_BUDGET_ATTEMPT_STATE_FAILED":      3,
+		"SEMANTIC_PROVIDER_BUDGET_ATTEMPT_STATE_CANCELED":    4,
+		"SEMANTIC_PROVIDER_BUDGET_ATTEMPT_STATE_AMBIGUOUS":   5,
+	}
+)
+
+func (x SemanticProviderBudgetAttemptState) Enum() *SemanticProviderBudgetAttemptState {
+	p := new(SemanticProviderBudgetAttemptState)
+	*p = x
+	return p
+}
+
+func (x SemanticProviderBudgetAttemptState) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (SemanticProviderBudgetAttemptState) Descriptor() protoreflect.EnumDescriptor {
+	return file_mycel_admin_v1_semantic_maintenance_proto_enumTypes[2].Descriptor()
+}
+
+func (SemanticProviderBudgetAttemptState) Type() protoreflect.EnumType {
+	return &file_mycel_admin_v1_semantic_maintenance_proto_enumTypes[2]
+}
+
+func (x SemanticProviderBudgetAttemptState) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use SemanticProviderBudgetAttemptState.Descriptor instead.
+func (SemanticProviderBudgetAttemptState) EnumDescriptor() ([]byte, []int) {
+	return file_mycel_admin_v1_semantic_maintenance_proto_rawDescGZIP(), []int{2}
+}
+
+type SemanticProviderBudgetOutcomeCategory int32
+
+const (
+	SemanticProviderBudgetOutcomeCategory_SEMANTIC_PROVIDER_BUDGET_OUTCOME_CATEGORY_UNSPECIFIED            SemanticProviderBudgetOutcomeCategory = 0
+	SemanticProviderBudgetOutcomeCategory_SEMANTIC_PROVIDER_BUDGET_OUTCOME_CATEGORY_NONE                   SemanticProviderBudgetOutcomeCategory = 1
+	SemanticProviderBudgetOutcomeCategory_SEMANTIC_PROVIDER_BUDGET_OUTCOME_CATEGORY_SUCCESS                SemanticProviderBudgetOutcomeCategory = 2
+	SemanticProviderBudgetOutcomeCategory_SEMANTIC_PROVIDER_BUDGET_OUTCOME_CATEGORY_TRANSIENT_FAILURE      SemanticProviderBudgetOutcomeCategory = 3
+	SemanticProviderBudgetOutcomeCategory_SEMANTIC_PROVIDER_BUDGET_OUTCOME_CATEGORY_PERMANENT_FAILURE      SemanticProviderBudgetOutcomeCategory = 4
+	SemanticProviderBudgetOutcomeCategory_SEMANTIC_PROVIDER_BUDGET_OUTCOME_CATEGORY_CANCELED_BEFORE_EFFECT SemanticProviderBudgetOutcomeCategory = 5
+	SemanticProviderBudgetOutcomeCategory_SEMANTIC_PROVIDER_BUDGET_OUTCOME_CATEGORY_AMBIGUOUS              SemanticProviderBudgetOutcomeCategory = 6
+)
+
+// Enum value maps for SemanticProviderBudgetOutcomeCategory.
+var (
+	SemanticProviderBudgetOutcomeCategory_name = map[int32]string{
+		0: "SEMANTIC_PROVIDER_BUDGET_OUTCOME_CATEGORY_UNSPECIFIED",
+		1: "SEMANTIC_PROVIDER_BUDGET_OUTCOME_CATEGORY_NONE",
+		2: "SEMANTIC_PROVIDER_BUDGET_OUTCOME_CATEGORY_SUCCESS",
+		3: "SEMANTIC_PROVIDER_BUDGET_OUTCOME_CATEGORY_TRANSIENT_FAILURE",
+		4: "SEMANTIC_PROVIDER_BUDGET_OUTCOME_CATEGORY_PERMANENT_FAILURE",
+		5: "SEMANTIC_PROVIDER_BUDGET_OUTCOME_CATEGORY_CANCELED_BEFORE_EFFECT",
+		6: "SEMANTIC_PROVIDER_BUDGET_OUTCOME_CATEGORY_AMBIGUOUS",
+	}
+	SemanticProviderBudgetOutcomeCategory_value = map[string]int32{
+		"SEMANTIC_PROVIDER_BUDGET_OUTCOME_CATEGORY_UNSPECIFIED":            0,
+		"SEMANTIC_PROVIDER_BUDGET_OUTCOME_CATEGORY_NONE":                   1,
+		"SEMANTIC_PROVIDER_BUDGET_OUTCOME_CATEGORY_SUCCESS":                2,
+		"SEMANTIC_PROVIDER_BUDGET_OUTCOME_CATEGORY_TRANSIENT_FAILURE":      3,
+		"SEMANTIC_PROVIDER_BUDGET_OUTCOME_CATEGORY_PERMANENT_FAILURE":      4,
+		"SEMANTIC_PROVIDER_BUDGET_OUTCOME_CATEGORY_CANCELED_BEFORE_EFFECT": 5,
+		"SEMANTIC_PROVIDER_BUDGET_OUTCOME_CATEGORY_AMBIGUOUS":              6,
+	}
+)
+
+func (x SemanticProviderBudgetOutcomeCategory) Enum() *SemanticProviderBudgetOutcomeCategory {
+	p := new(SemanticProviderBudgetOutcomeCategory)
+	*p = x
+	return p
+}
+
+func (x SemanticProviderBudgetOutcomeCategory) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (SemanticProviderBudgetOutcomeCategory) Descriptor() protoreflect.EnumDescriptor {
+	return file_mycel_admin_v1_semantic_maintenance_proto_enumTypes[3].Descriptor()
+}
+
+func (SemanticProviderBudgetOutcomeCategory) Type() protoreflect.EnumType {
+	return &file_mycel_admin_v1_semantic_maintenance_proto_enumTypes[3]
+}
+
+func (x SemanticProviderBudgetOutcomeCategory) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use SemanticProviderBudgetOutcomeCategory.Descriptor instead.
+func (SemanticProviderBudgetOutcomeCategory) EnumDescriptor() ([]byte, []int) {
+	return file_mycel_admin_v1_semantic_maintenance_proto_rawDescGZIP(), []int{3}
+}
 
 type GetSemanticMaintenanceStatusRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
@@ -223,6 +483,1995 @@ func (x *GetSemanticMaintenanceStatusResponse) GetWorkerRuns() int32 {
 	return 0
 }
 
+type GetSemanticReliabilityStatusRequest struct {
+	state               protoimpl.MessageState `protogen:"open.v1"`
+	SpaceId             string                 `protobuf:"bytes,1,opt,name=space_id,json=spaceId,proto3" json:"space_id,omitempty"`
+	SemanticRuleId      string                 `protobuf:"bytes,2,opt,name=semantic_rule_id,json=semanticRuleId,proto3" json:"semantic_rule_id,omitempty"`
+	EmbeddingBindingKey string                 `protobuf:"bytes,3,opt,name=embedding_binding_key,json=embeddingBindingKey,proto3" json:"embedding_binding_key,omitempty"`
+	unknownFields       protoimpl.UnknownFields
+	sizeCache           protoimpl.SizeCache
+}
+
+func (x *GetSemanticReliabilityStatusRequest) Reset() {
+	*x = GetSemanticReliabilityStatusRequest{}
+	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[2]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetSemanticReliabilityStatusRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetSemanticReliabilityStatusRequest) ProtoMessage() {}
+
+func (x *GetSemanticReliabilityStatusRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[2]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetSemanticReliabilityStatusRequest.ProtoReflect.Descriptor instead.
+func (*GetSemanticReliabilityStatusRequest) Descriptor() ([]byte, []int) {
+	return file_mycel_admin_v1_semantic_maintenance_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *GetSemanticReliabilityStatusRequest) GetSpaceId() string {
+	if x != nil {
+		return x.SpaceId
+	}
+	return ""
+}
+
+func (x *GetSemanticReliabilityStatusRequest) GetSemanticRuleId() string {
+	if x != nil {
+		return x.SemanticRuleId
+	}
+	return ""
+}
+
+func (x *GetSemanticReliabilityStatusRequest) GetEmbeddingBindingKey() string {
+	if x != nil {
+		return x.EmbeddingBindingKey
+	}
+	return ""
+}
+
+type GetSemanticReliabilityStatusResponse struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Authorization-scoped resource identity; no credential identity is exposed.
+	SpaceId             string `protobuf:"bytes,1,opt,name=space_id,json=spaceId,proto3" json:"space_id,omitempty"`
+	SemanticRuleId      string `protobuf:"bytes,2,opt,name=semantic_rule_id,json=semanticRuleId,proto3" json:"semantic_rule_id,omitempty"`
+	EmbeddingBindingKey string `protobuf:"bytes,3,opt,name=embedding_binding_key,json=embeddingBindingKey,proto3" json:"embedding_binding_key,omitempty"`
+	// Highest committed graph revision observed for this domain.
+	LatestObservedGraphRevision uint64 `protobuf:"varint,4,opt,name=latest_observed_graph_revision,json=latestObservedGraphRevision,proto3" json:"latest_observed_graph_revision,omitempty"`
+	// Ingestion cursor only: events through this revision were classified. This
+	// field is not a semantic freshness claim.
+	AnalyzedThroughGraphRevision uint64 `protobuf:"varint,5,opt,name=analyzed_through_graph_revision,json=analyzedThroughGraphRevision,proto3" json:"analyzed_through_graph_revision,omitempty"`
+	// Highest contiguous revision whose required semantic outcomes completed
+	// successfully for semantic_generation. Successful outcomes are a published
+	// current record, an applied delete, an explicit policy no-op/skip, or work
+	// reconciled by a completed rebuild. Pending, running, retryable/permanent
+	// failure, or cancellation never permits this frontier to cross the affected
+	// revision.
+	//
+	// Freshness through revision R is proved only when this field is >= R and
+	// the same response has the expected semantic_generation, zero unresolved
+	// gaps, capacity_state "ok", degraded false, and rebuild_required false,
+	// with rebuild.state neither "required", "running", nor "failed".
+	FreshThroughGraphRevision uint64 `protobuf:"varint,6,opt,name=fresh_through_graph_revision,json=freshThroughGraphRevision,proto3" json:"fresh_through_graph_revision,omitempty"`
+	// Bounded unresolved interval diagnostics; these expose no node/source text.
+	UnresolvedGapCount            uint64 `protobuf:"varint,7,opt,name=unresolved_gap_count,json=unresolvedGapCount,proto3" json:"unresolved_gap_count,omitempty"`
+	OldestUnresolvedGraphRevision uint64 `protobuf:"varint,8,opt,name=oldest_unresolved_graph_revision,json=oldestUnresolvedGraphRevision,proto3" json:"oldest_unresolved_graph_revision,omitempty"`
+	ConfiguredFrontierLimit       uint64 `protobuf:"varint,9,opt,name=configured_frontier_limit,json=configuredFrontierLimit,proto3" json:"configured_frontier_limit,omitempty"`
+	RetainedWorkItemCount         uint64 `protobuf:"varint,10,opt,name=retained_work_item_count,json=retainedWorkItemCount,proto3" json:"retained_work_item_count,omitempty"`
+	// Generation rotates for incompatible semantic configuration changes. A
+	// rotation resets fresh_through_graph_revision and requires a rebuilt
+	// baseline for the new generation; values from different generations must
+	// never be combined into one freshness claim.
+	SemanticGeneration uint64 `protobuf:"varint,11,opt,name=semantic_generation,json=semanticGeneration,proto3" json:"semantic_generation,omitempty"`
+	// "ok" or "exhausted". Exhaustion is restart-safe, invalidates freshness,
+	// and requires rebuild.
+	CapacityState string `protobuf:"bytes,12,opt,name=capacity_state,json=capacityState,proto3" json:"capacity_state,omitempty"`
+	Degraded      bool   `protobuf:"varint,13,opt,name=degraded,proto3" json:"degraded,omitempty"`
+	// Bounded sanitized operator diagnostic; provider bodies are excluded.
+	DegradedReason                string                 `protobuf:"bytes,14,opt,name=degraded_reason,json=degradedReason,proto3" json:"degraded_reason,omitempty"`
+	RebuildRequired               bool                   `protobuf:"varint,15,opt,name=rebuild_required,json=rebuildRequired,proto3" json:"rebuild_required,omitempty"`
+	Rebuild                       *SemanticRebuildStatus `protobuf:"bytes,16,opt,name=rebuild,proto3" json:"rebuild,omitempty"`
+	ConfiguredGapIntervalLimit    uint64                 `protobuf:"varint,17,opt,name=configured_gap_interval_limit,json=configuredGapIntervalLimit,proto3" json:"configured_gap_interval_limit,omitempty"`
+	ConfiguredRevisionSpanLimit   uint64                 `protobuf:"varint,18,opt,name=configured_revision_span_limit,json=configuredRevisionSpanLimit,proto3" json:"configured_revision_span_limit,omitempty"`
+	ConfiguredSerializedByteLimit uint64                 `protobuf:"varint,19,opt,name=configured_serialized_byte_limit,json=configuredSerializedByteLimit,proto3" json:"configured_serialized_byte_limit,omitempty"`
+	RetainedGapIntervalCount      uint64                 `protobuf:"varint,20,opt,name=retained_gap_interval_count,json=retainedGapIntervalCount,proto3" json:"retained_gap_interval_count,omitempty"`
+	RetainedRevisionSpan          uint64                 `protobuf:"varint,21,opt,name=retained_revision_span,json=retainedRevisionSpan,proto3" json:"retained_revision_span,omitempty"`
+	RetainedSerializedBytes       uint64                 `protobuf:"varint,22,opt,name=retained_serialized_bytes,json=retainedSerializedBytes,proto3" json:"retained_serialized_bytes,omitempty"`
+	unknownFields                 protoimpl.UnknownFields
+	sizeCache                     protoimpl.SizeCache
+}
+
+func (x *GetSemanticReliabilityStatusResponse) Reset() {
+	*x = GetSemanticReliabilityStatusResponse{}
+	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[3]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetSemanticReliabilityStatusResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetSemanticReliabilityStatusResponse) ProtoMessage() {}
+
+func (x *GetSemanticReliabilityStatusResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[3]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetSemanticReliabilityStatusResponse.ProtoReflect.Descriptor instead.
+func (*GetSemanticReliabilityStatusResponse) Descriptor() ([]byte, []int) {
+	return file_mycel_admin_v1_semantic_maintenance_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *GetSemanticReliabilityStatusResponse) GetSpaceId() string {
+	if x != nil {
+		return x.SpaceId
+	}
+	return ""
+}
+
+func (x *GetSemanticReliabilityStatusResponse) GetSemanticRuleId() string {
+	if x != nil {
+		return x.SemanticRuleId
+	}
+	return ""
+}
+
+func (x *GetSemanticReliabilityStatusResponse) GetEmbeddingBindingKey() string {
+	if x != nil {
+		return x.EmbeddingBindingKey
+	}
+	return ""
+}
+
+func (x *GetSemanticReliabilityStatusResponse) GetLatestObservedGraphRevision() uint64 {
+	if x != nil {
+		return x.LatestObservedGraphRevision
+	}
+	return 0
+}
+
+func (x *GetSemanticReliabilityStatusResponse) GetAnalyzedThroughGraphRevision() uint64 {
+	if x != nil {
+		return x.AnalyzedThroughGraphRevision
+	}
+	return 0
+}
+
+func (x *GetSemanticReliabilityStatusResponse) GetFreshThroughGraphRevision() uint64 {
+	if x != nil {
+		return x.FreshThroughGraphRevision
+	}
+	return 0
+}
+
+func (x *GetSemanticReliabilityStatusResponse) GetUnresolvedGapCount() uint64 {
+	if x != nil {
+		return x.UnresolvedGapCount
+	}
+	return 0
+}
+
+func (x *GetSemanticReliabilityStatusResponse) GetOldestUnresolvedGraphRevision() uint64 {
+	if x != nil {
+		return x.OldestUnresolvedGraphRevision
+	}
+	return 0
+}
+
+func (x *GetSemanticReliabilityStatusResponse) GetConfiguredFrontierLimit() uint64 {
+	if x != nil {
+		return x.ConfiguredFrontierLimit
+	}
+	return 0
+}
+
+func (x *GetSemanticReliabilityStatusResponse) GetRetainedWorkItemCount() uint64 {
+	if x != nil {
+		return x.RetainedWorkItemCount
+	}
+	return 0
+}
+
+func (x *GetSemanticReliabilityStatusResponse) GetSemanticGeneration() uint64 {
+	if x != nil {
+		return x.SemanticGeneration
+	}
+	return 0
+}
+
+func (x *GetSemanticReliabilityStatusResponse) GetCapacityState() string {
+	if x != nil {
+		return x.CapacityState
+	}
+	return ""
+}
+
+func (x *GetSemanticReliabilityStatusResponse) GetDegraded() bool {
+	if x != nil {
+		return x.Degraded
+	}
+	return false
+}
+
+func (x *GetSemanticReliabilityStatusResponse) GetDegradedReason() string {
+	if x != nil {
+		return x.DegradedReason
+	}
+	return ""
+}
+
+func (x *GetSemanticReliabilityStatusResponse) GetRebuildRequired() bool {
+	if x != nil {
+		return x.RebuildRequired
+	}
+	return false
+}
+
+func (x *GetSemanticReliabilityStatusResponse) GetRebuild() *SemanticRebuildStatus {
+	if x != nil {
+		return x.Rebuild
+	}
+	return nil
+}
+
+func (x *GetSemanticReliabilityStatusResponse) GetConfiguredGapIntervalLimit() uint64 {
+	if x != nil {
+		return x.ConfiguredGapIntervalLimit
+	}
+	return 0
+}
+
+func (x *GetSemanticReliabilityStatusResponse) GetConfiguredRevisionSpanLimit() uint64 {
+	if x != nil {
+		return x.ConfiguredRevisionSpanLimit
+	}
+	return 0
+}
+
+func (x *GetSemanticReliabilityStatusResponse) GetConfiguredSerializedByteLimit() uint64 {
+	if x != nil {
+		return x.ConfiguredSerializedByteLimit
+	}
+	return 0
+}
+
+func (x *GetSemanticReliabilityStatusResponse) GetRetainedGapIntervalCount() uint64 {
+	if x != nil {
+		return x.RetainedGapIntervalCount
+	}
+	return 0
+}
+
+func (x *GetSemanticReliabilityStatusResponse) GetRetainedRevisionSpan() uint64 {
+	if x != nil {
+		return x.RetainedRevisionSpan
+	}
+	return 0
+}
+
+func (x *GetSemanticReliabilityStatusResponse) GetRetainedSerializedBytes() uint64 {
+	if x != nil {
+		return x.RetainedSerializedBytes
+	}
+	return 0
+}
+
+type GetSemanticProviderBudgetCapabilitiesRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	SpaceId       string                 `protobuf:"bytes,1,opt,name=space_id,json=spaceId,proto3" json:"space_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetSemanticProviderBudgetCapabilitiesRequest) Reset() {
+	*x = GetSemanticProviderBudgetCapabilitiesRequest{}
+	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[4]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetSemanticProviderBudgetCapabilitiesRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetSemanticProviderBudgetCapabilitiesRequest) ProtoMessage() {}
+
+func (x *GetSemanticProviderBudgetCapabilitiesRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[4]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetSemanticProviderBudgetCapabilitiesRequest.ProtoReflect.Descriptor instead.
+func (*GetSemanticProviderBudgetCapabilitiesRequest) Descriptor() ([]byte, []int) {
+	return file_mycel_admin_v1_semantic_maintenance_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *GetSemanticProviderBudgetCapabilitiesRequest) GetSpaceId() string {
+	if x != nil {
+		return x.SpaceId
+	}
+	return ""
+}
+
+type GetSemanticProviderBudgetCapabilitiesResponse struct {
+	state                             protoimpl.MessageState `protogen:"open.v1"`
+	ContractVersion                   string                 `protobuf:"bytes,1,opt,name=contract_version,json=contractVersion,proto3" json:"contract_version,omitempty"`
+	DaemonOwnedScopes                 bool                   `protobuf:"varint,2,opt,name=daemon_owned_scopes,json=daemonOwnedScopes,proto3" json:"daemon_owned_scopes,omitempty"`
+	PreProviderAttemptReservation     bool                   `protobuf:"varint,3,opt,name=pre_provider_attempt_reservation,json=preProviderAttemptReservation,proto3" json:"pre_provider_attempt_reservation,omitempty"`
+	DurableRestartRecovery            bool                   `protobuf:"varint,4,opt,name=durable_restart_recovery,json=durableRestartRecovery,proto3" json:"durable_restart_recovery,omitempty"`
+	RaftReplicated                    bool                   `protobuf:"varint,5,opt,name=raft_replicated,json=raftReplicated,proto3" json:"raft_replicated,omitempty"`
+	RequestLimit                      bool                   `protobuf:"varint,6,opt,name=request_limit,json=requestLimit,proto3" json:"request_limit,omitempty"`
+	DerivedAttemptLimit               bool                   `protobuf:"varint,7,opt,name=derived_attempt_limit,json=derivedAttemptLimit,proto3" json:"derived_attempt_limit,omitempty"`
+	AggregateRetryLimit               bool                   `protobuf:"varint,8,opt,name=aggregate_retry_limit,json=aggregateRetryLimit,proto3" json:"aggregate_retry_limit,omitempty"`
+	PerRequestRetryLimit              bool                   `protobuf:"varint,9,opt,name=per_request_retry_limit,json=perRequestRetryLimit,proto3" json:"per_request_retry_limit,omitempty"`
+	ProviderConcurrencyLimit          bool                   `protobuf:"varint,10,opt,name=provider_concurrency_limit,json=providerConcurrencyLimit,proto3" json:"provider_concurrency_limit,omitempty"`
+	SingleItemBatching                bool                   `protobuf:"varint,11,opt,name=single_item_batching,json=singleItemBatching,proto3" json:"single_item_batching,omitempty"`
+	MultiItemBatching                 bool                   `protobuf:"varint,12,opt,name=multi_item_batching,json=multiItemBatching,proto3" json:"multi_item_batching,omitempty"`
+	PerRequestInputTokenLimit         bool                   `protobuf:"varint,13,opt,name=per_request_input_token_limit,json=perRequestInputTokenLimit,proto3" json:"per_request_input_token_limit,omitempty"`
+	AggregateInputTokenLimit          bool                   `protobuf:"varint,14,opt,name=aggregate_input_token_limit,json=aggregateInputTokenLimit,proto3" json:"aggregate_input_token_limit,omitempty"`
+	RequestTimeout                    bool                   `protobuf:"varint,15,opt,name=request_timeout,json=requestTimeout,proto3" json:"request_timeout,omitempty"`
+	TotalTimeout                      bool                   `protobuf:"varint,16,opt,name=total_timeout,json=totalTimeout,proto3" json:"total_timeout,omitempty"`
+	VersionedCostLimit                bool                   `protobuf:"varint,17,opt,name=versioned_cost_limit,json=versionedCostLimit,proto3" json:"versioned_cost_limit,omitempty"`
+	ConservativeAmbiguousReservations bool                   `protobuf:"varint,18,opt,name=conservative_ambiguous_reservations,json=conservativeAmbiguousReservations,proto3" json:"conservative_ambiguous_reservations,omitempty"`
+	AppendOnlyAttemptEvents           bool                   `protobuf:"varint,19,opt,name=append_only_attempt_events,json=appendOnlyAttemptEvents,proto3" json:"append_only_attempt_events,omitempty"`
+	SupportedCurrencies               []string               `protobuf:"bytes,20,rep,name=supported_currencies,json=supportedCurrencies,proto3" json:"supported_currencies,omitempty"`
+	MaximumAttemptEventPageSize       int32                  `protobuf:"varint,21,opt,name=maximum_attempt_event_page_size,json=maximumAttemptEventPageSize,proto3" json:"maximum_attempt_event_page_size,omitempty"`
+	MaximumScopePageSize              int32                  `protobuf:"varint,22,opt,name=maximum_scope_page_size,json=maximumScopePageSize,proto3" json:"maximum_scope_page_size,omitempty"`
+	OverageExhaustion                 bool                   `protobuf:"varint,23,opt,name=overage_exhaustion,json=overageExhaustion,proto3" json:"overage_exhaustion,omitempty"`
+	unknownFields                     protoimpl.UnknownFields
+	sizeCache                         protoimpl.SizeCache
+}
+
+func (x *GetSemanticProviderBudgetCapabilitiesResponse) Reset() {
+	*x = GetSemanticProviderBudgetCapabilitiesResponse{}
+	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[5]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetSemanticProviderBudgetCapabilitiesResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetSemanticProviderBudgetCapabilitiesResponse) ProtoMessage() {}
+
+func (x *GetSemanticProviderBudgetCapabilitiesResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[5]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetSemanticProviderBudgetCapabilitiesResponse.ProtoReflect.Descriptor instead.
+func (*GetSemanticProviderBudgetCapabilitiesResponse) Descriptor() ([]byte, []int) {
+	return file_mycel_admin_v1_semantic_maintenance_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *GetSemanticProviderBudgetCapabilitiesResponse) GetContractVersion() string {
+	if x != nil {
+		return x.ContractVersion
+	}
+	return ""
+}
+
+func (x *GetSemanticProviderBudgetCapabilitiesResponse) GetDaemonOwnedScopes() bool {
+	if x != nil {
+		return x.DaemonOwnedScopes
+	}
+	return false
+}
+
+func (x *GetSemanticProviderBudgetCapabilitiesResponse) GetPreProviderAttemptReservation() bool {
+	if x != nil {
+		return x.PreProviderAttemptReservation
+	}
+	return false
+}
+
+func (x *GetSemanticProviderBudgetCapabilitiesResponse) GetDurableRestartRecovery() bool {
+	if x != nil {
+		return x.DurableRestartRecovery
+	}
+	return false
+}
+
+func (x *GetSemanticProviderBudgetCapabilitiesResponse) GetRaftReplicated() bool {
+	if x != nil {
+		return x.RaftReplicated
+	}
+	return false
+}
+
+func (x *GetSemanticProviderBudgetCapabilitiesResponse) GetRequestLimit() bool {
+	if x != nil {
+		return x.RequestLimit
+	}
+	return false
+}
+
+func (x *GetSemanticProviderBudgetCapabilitiesResponse) GetDerivedAttemptLimit() bool {
+	if x != nil {
+		return x.DerivedAttemptLimit
+	}
+	return false
+}
+
+func (x *GetSemanticProviderBudgetCapabilitiesResponse) GetAggregateRetryLimit() bool {
+	if x != nil {
+		return x.AggregateRetryLimit
+	}
+	return false
+}
+
+func (x *GetSemanticProviderBudgetCapabilitiesResponse) GetPerRequestRetryLimit() bool {
+	if x != nil {
+		return x.PerRequestRetryLimit
+	}
+	return false
+}
+
+func (x *GetSemanticProviderBudgetCapabilitiesResponse) GetProviderConcurrencyLimit() bool {
+	if x != nil {
+		return x.ProviderConcurrencyLimit
+	}
+	return false
+}
+
+func (x *GetSemanticProviderBudgetCapabilitiesResponse) GetSingleItemBatching() bool {
+	if x != nil {
+		return x.SingleItemBatching
+	}
+	return false
+}
+
+func (x *GetSemanticProviderBudgetCapabilitiesResponse) GetMultiItemBatching() bool {
+	if x != nil {
+		return x.MultiItemBatching
+	}
+	return false
+}
+
+func (x *GetSemanticProviderBudgetCapabilitiesResponse) GetPerRequestInputTokenLimit() bool {
+	if x != nil {
+		return x.PerRequestInputTokenLimit
+	}
+	return false
+}
+
+func (x *GetSemanticProviderBudgetCapabilitiesResponse) GetAggregateInputTokenLimit() bool {
+	if x != nil {
+		return x.AggregateInputTokenLimit
+	}
+	return false
+}
+
+func (x *GetSemanticProviderBudgetCapabilitiesResponse) GetRequestTimeout() bool {
+	if x != nil {
+		return x.RequestTimeout
+	}
+	return false
+}
+
+func (x *GetSemanticProviderBudgetCapabilitiesResponse) GetTotalTimeout() bool {
+	if x != nil {
+		return x.TotalTimeout
+	}
+	return false
+}
+
+func (x *GetSemanticProviderBudgetCapabilitiesResponse) GetVersionedCostLimit() bool {
+	if x != nil {
+		return x.VersionedCostLimit
+	}
+	return false
+}
+
+func (x *GetSemanticProviderBudgetCapabilitiesResponse) GetConservativeAmbiguousReservations() bool {
+	if x != nil {
+		return x.ConservativeAmbiguousReservations
+	}
+	return false
+}
+
+func (x *GetSemanticProviderBudgetCapabilitiesResponse) GetAppendOnlyAttemptEvents() bool {
+	if x != nil {
+		return x.AppendOnlyAttemptEvents
+	}
+	return false
+}
+
+func (x *GetSemanticProviderBudgetCapabilitiesResponse) GetSupportedCurrencies() []string {
+	if x != nil {
+		return x.SupportedCurrencies
+	}
+	return nil
+}
+
+func (x *GetSemanticProviderBudgetCapabilitiesResponse) GetMaximumAttemptEventPageSize() int32 {
+	if x != nil {
+		return x.MaximumAttemptEventPageSize
+	}
+	return 0
+}
+
+func (x *GetSemanticProviderBudgetCapabilitiesResponse) GetMaximumScopePageSize() int32 {
+	if x != nil {
+		return x.MaximumScopePageSize
+	}
+	return 0
+}
+
+func (x *GetSemanticProviderBudgetCapabilitiesResponse) GetOverageExhaustion() bool {
+	if x != nil {
+		return x.OverageExhaustion
+	}
+	return false
+}
+
+type SemanticProviderBudgetBindingSelector struct {
+	state               protoimpl.MessageState `protogen:"open.v1"`
+	SemanticRuleId      string                 `protobuf:"bytes,1,opt,name=semantic_rule_id,json=semanticRuleId,proto3" json:"semantic_rule_id,omitempty"`
+	EmbeddingBindingKey string                 `protobuf:"bytes,2,opt,name=embedding_binding_key,json=embeddingBindingKey,proto3" json:"embedding_binding_key,omitempty"`
+	unknownFields       protoimpl.UnknownFields
+	sizeCache           protoimpl.SizeCache
+}
+
+func (x *SemanticProviderBudgetBindingSelector) Reset() {
+	*x = SemanticProviderBudgetBindingSelector{}
+	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[6]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SemanticProviderBudgetBindingSelector) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SemanticProviderBudgetBindingSelector) ProtoMessage() {}
+
+func (x *SemanticProviderBudgetBindingSelector) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[6]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SemanticProviderBudgetBindingSelector.ProtoReflect.Descriptor instead.
+func (*SemanticProviderBudgetBindingSelector) Descriptor() ([]byte, []int) {
+	return file_mycel_admin_v1_semantic_maintenance_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *SemanticProviderBudgetBindingSelector) GetSemanticRuleId() string {
+	if x != nil {
+		return x.SemanticRuleId
+	}
+	return ""
+}
+
+func (x *SemanticProviderBudgetBindingSelector) GetEmbeddingBindingKey() string {
+	if x != nil {
+		return x.EmbeddingBindingKey
+	}
+	return ""
+}
+
+type GetSemanticProviderBudgetStatusRequest struct {
+	state   protoimpl.MessageState `protogen:"open.v1"`
+	SpaceId string                 `protobuf:"bytes,1,opt,name=space_id,json=spaceId,proto3" json:"space_id,omitempty"`
+	// Types that are valid to be assigned to Selector:
+	//
+	//	*GetSemanticProviderBudgetStatusRequest_BudgetScopeId
+	//	*GetSemanticProviderBudgetStatusRequest_CurrentBinding
+	Selector      isGetSemanticProviderBudgetStatusRequest_Selector `protobuf_oneof:"selector"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetSemanticProviderBudgetStatusRequest) Reset() {
+	*x = GetSemanticProviderBudgetStatusRequest{}
+	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[7]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetSemanticProviderBudgetStatusRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetSemanticProviderBudgetStatusRequest) ProtoMessage() {}
+
+func (x *GetSemanticProviderBudgetStatusRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[7]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetSemanticProviderBudgetStatusRequest.ProtoReflect.Descriptor instead.
+func (*GetSemanticProviderBudgetStatusRequest) Descriptor() ([]byte, []int) {
+	return file_mycel_admin_v1_semantic_maintenance_proto_rawDescGZIP(), []int{7}
+}
+
+func (x *GetSemanticProviderBudgetStatusRequest) GetSpaceId() string {
+	if x != nil {
+		return x.SpaceId
+	}
+	return ""
+}
+
+func (x *GetSemanticProviderBudgetStatusRequest) GetSelector() isGetSemanticProviderBudgetStatusRequest_Selector {
+	if x != nil {
+		return x.Selector
+	}
+	return nil
+}
+
+func (x *GetSemanticProviderBudgetStatusRequest) GetBudgetScopeId() string {
+	if x != nil {
+		if x, ok := x.Selector.(*GetSemanticProviderBudgetStatusRequest_BudgetScopeId); ok {
+			return x.BudgetScopeId
+		}
+	}
+	return ""
+}
+
+func (x *GetSemanticProviderBudgetStatusRequest) GetCurrentBinding() *SemanticProviderBudgetBindingSelector {
+	if x != nil {
+		if x, ok := x.Selector.(*GetSemanticProviderBudgetStatusRequest_CurrentBinding); ok {
+			return x.CurrentBinding
+		}
+	}
+	return nil
+}
+
+type isGetSemanticProviderBudgetStatusRequest_Selector interface {
+	isGetSemanticProviderBudgetStatusRequest_Selector()
+}
+
+type GetSemanticProviderBudgetStatusRequest_BudgetScopeId struct {
+	// Selects a retained immutable scope across rule/binding rollover.
+	BudgetScopeId string `protobuf:"bytes,2,opt,name=budget_scope_id,json=budgetScopeId,proto3,oneof"`
+}
+
+type GetSemanticProviderBudgetStatusRequest_CurrentBinding struct {
+	// Selects the current scope only.
+	CurrentBinding *SemanticProviderBudgetBindingSelector `protobuf:"bytes,3,opt,name=current_binding,json=currentBinding,proto3,oneof"`
+}
+
+func (*GetSemanticProviderBudgetStatusRequest_BudgetScopeId) isGetSemanticProviderBudgetStatusRequest_Selector() {
+}
+
+func (*GetSemanticProviderBudgetStatusRequest_CurrentBinding) isGetSemanticProviderBudgetStatusRequest_Selector() {
+}
+
+type GetSemanticProviderBudgetStatusResponse struct {
+	state         protoimpl.MessageState        `protogen:"open.v1"`
+	Status        *SemanticProviderBudgetStatus `protobuf:"bytes,1,opt,name=status,proto3" json:"status,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetSemanticProviderBudgetStatusResponse) Reset() {
+	*x = GetSemanticProviderBudgetStatusResponse{}
+	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[8]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetSemanticProviderBudgetStatusResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetSemanticProviderBudgetStatusResponse) ProtoMessage() {}
+
+func (x *GetSemanticProviderBudgetStatusResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[8]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetSemanticProviderBudgetStatusResponse.ProtoReflect.Descriptor instead.
+func (*GetSemanticProviderBudgetStatusResponse) Descriptor() ([]byte, []int) {
+	return file_mycel_admin_v1_semantic_maintenance_proto_rawDescGZIP(), []int{8}
+}
+
+func (x *GetSemanticProviderBudgetStatusResponse) GetStatus() *SemanticProviderBudgetStatus {
+	if x != nil {
+		return x.Status
+	}
+	return nil
+}
+
+type SemanticProviderBudgetStatus struct {
+	state                         protoimpl.MessageState             `protogen:"open.v1"`
+	SpaceId                       string                             `protobuf:"bytes,1,opt,name=space_id,json=spaceId,proto3" json:"space_id,omitempty"`
+	SemanticRuleId                string                             `protobuf:"bytes,2,opt,name=semantic_rule_id,json=semanticRuleId,proto3" json:"semantic_rule_id,omitempty"`
+	EmbeddingBindingKey           string                             `protobuf:"bytes,3,opt,name=embedding_binding_key,json=embeddingBindingKey,proto3" json:"embedding_binding_key,omitempty"`
+	BudgetScopeId                 string                             `protobuf:"bytes,4,opt,name=budget_scope_id,json=budgetScopeId,proto3" json:"budget_scope_id,omitempty"`
+	CorrelationId                 string                             `protobuf:"bytes,5,opt,name=correlation_id,json=correlationId,proto3" json:"correlation_id,omitempty"`
+	ModelEndpointId               string                             `protobuf:"bytes,6,opt,name=model_endpoint_id,json=modelEndpointId,proto3" json:"model_endpoint_id,omitempty"`
+	ModelId                       string                             `protobuf:"bytes,7,opt,name=model_id,json=modelId,proto3" json:"model_id,omitempty"`
+	ModelEndpointCapabilityId     string                             `protobuf:"bytes,8,opt,name=model_endpoint_capability_id,json=modelEndpointCapabilityId,proto3" json:"model_endpoint_capability_id,omitempty"`
+	State                         SemanticProviderBudgetScopeState   `protobuf:"varint,9,opt,name=state,proto3,enum=mycel.admin.v1.SemanticProviderBudgetScopeState" json:"state,omitempty"`
+	Limits                        *SemanticProviderBudgetPolicy      `protobuf:"bytes,10,opt,name=limits,proto3" json:"limits,omitempty"`
+	Usage                         *SemanticProviderBudgetUsage       `protobuf:"bytes,11,opt,name=usage,proto3" json:"usage,omitempty"`
+	EarliestRetainedEventSequence uint64                             `protobuf:"varint,12,opt,name=earliest_retained_event_sequence,json=earliestRetainedEventSequence,proto3" json:"earliest_retained_event_sequence,omitempty"`
+	HighWaterEventSequence        uint64                             `protobuf:"varint,13,opt,name=high_water_event_sequence,json=highWaterEventSequence,proto3" json:"high_water_event_sequence,omitempty"`
+	CreatedAt                     *timestamppb.Timestamp             `protobuf:"bytes,14,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
+	UpdatedAt                     *timestamppb.Timestamp             `protobuf:"bytes,15,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
+	ExpiresAt                     *timestamppb.Timestamp             `protobuf:"bytes,16,opt,name=expires_at,json=expiresAt,proto3" json:"expires_at,omitempty"`
+	RetentionUntil                *timestamppb.Timestamp             `protobuf:"bytes,17,opt,name=retention_until,json=retentionUntil,proto3" json:"retention_until,omitempty"`
+	DenialReason                  SemanticProviderBudgetDenialReason `protobuf:"varint,18,opt,name=denial_reason,json=denialReason,proto3,enum=mycel.admin.v1.SemanticProviderBudgetDenialReason" json:"denial_reason,omitempty"`
+	// Monotonic within a space, never reused, and retained across restart.
+	ScopeSequence uint64 `protobuf:"varint,19,opt,name=scope_sequence,json=scopeSequence,proto3" json:"scope_sequence,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SemanticProviderBudgetStatus) Reset() {
+	*x = SemanticProviderBudgetStatus{}
+	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[9]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SemanticProviderBudgetStatus) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SemanticProviderBudgetStatus) ProtoMessage() {}
+
+func (x *SemanticProviderBudgetStatus) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[9]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SemanticProviderBudgetStatus.ProtoReflect.Descriptor instead.
+func (*SemanticProviderBudgetStatus) Descriptor() ([]byte, []int) {
+	return file_mycel_admin_v1_semantic_maintenance_proto_rawDescGZIP(), []int{9}
+}
+
+func (x *SemanticProviderBudgetStatus) GetSpaceId() string {
+	if x != nil {
+		return x.SpaceId
+	}
+	return ""
+}
+
+func (x *SemanticProviderBudgetStatus) GetSemanticRuleId() string {
+	if x != nil {
+		return x.SemanticRuleId
+	}
+	return ""
+}
+
+func (x *SemanticProviderBudgetStatus) GetEmbeddingBindingKey() string {
+	if x != nil {
+		return x.EmbeddingBindingKey
+	}
+	return ""
+}
+
+func (x *SemanticProviderBudgetStatus) GetBudgetScopeId() string {
+	if x != nil {
+		return x.BudgetScopeId
+	}
+	return ""
+}
+
+func (x *SemanticProviderBudgetStatus) GetCorrelationId() string {
+	if x != nil {
+		return x.CorrelationId
+	}
+	return ""
+}
+
+func (x *SemanticProviderBudgetStatus) GetModelEndpointId() string {
+	if x != nil {
+		return x.ModelEndpointId
+	}
+	return ""
+}
+
+func (x *SemanticProviderBudgetStatus) GetModelId() string {
+	if x != nil {
+		return x.ModelId
+	}
+	return ""
+}
+
+func (x *SemanticProviderBudgetStatus) GetModelEndpointCapabilityId() string {
+	if x != nil {
+		return x.ModelEndpointCapabilityId
+	}
+	return ""
+}
+
+func (x *SemanticProviderBudgetStatus) GetState() SemanticProviderBudgetScopeState {
+	if x != nil {
+		return x.State
+	}
+	return SemanticProviderBudgetScopeState_SEMANTIC_PROVIDER_BUDGET_SCOPE_STATE_UNSPECIFIED
+}
+
+func (x *SemanticProviderBudgetStatus) GetLimits() *SemanticProviderBudgetPolicy {
+	if x != nil {
+		return x.Limits
+	}
+	return nil
+}
+
+func (x *SemanticProviderBudgetStatus) GetUsage() *SemanticProviderBudgetUsage {
+	if x != nil {
+		return x.Usage
+	}
+	return nil
+}
+
+func (x *SemanticProviderBudgetStatus) GetEarliestRetainedEventSequence() uint64 {
+	if x != nil {
+		return x.EarliestRetainedEventSequence
+	}
+	return 0
+}
+
+func (x *SemanticProviderBudgetStatus) GetHighWaterEventSequence() uint64 {
+	if x != nil {
+		return x.HighWaterEventSequence
+	}
+	return 0
+}
+
+func (x *SemanticProviderBudgetStatus) GetCreatedAt() *timestamppb.Timestamp {
+	if x != nil {
+		return x.CreatedAt
+	}
+	return nil
+}
+
+func (x *SemanticProviderBudgetStatus) GetUpdatedAt() *timestamppb.Timestamp {
+	if x != nil {
+		return x.UpdatedAt
+	}
+	return nil
+}
+
+func (x *SemanticProviderBudgetStatus) GetExpiresAt() *timestamppb.Timestamp {
+	if x != nil {
+		return x.ExpiresAt
+	}
+	return nil
+}
+
+func (x *SemanticProviderBudgetStatus) GetRetentionUntil() *timestamppb.Timestamp {
+	if x != nil {
+		return x.RetentionUntil
+	}
+	return nil
+}
+
+func (x *SemanticProviderBudgetStatus) GetDenialReason() SemanticProviderBudgetDenialReason {
+	if x != nil {
+		return x.DenialReason
+	}
+	return SemanticProviderBudgetDenialReason_SEMANTIC_PROVIDER_BUDGET_DENIAL_REASON_UNSPECIFIED
+}
+
+func (x *SemanticProviderBudgetStatus) GetScopeSequence() uint64 {
+	if x != nil {
+		return x.ScopeSequence
+	}
+	return 0
+}
+
+type ListSemanticProviderBudgetScopesRequest struct {
+	state   protoimpl.MessageState `protogen:"open.v1"`
+	SpaceId string                 `protobuf:"bytes,1,opt,name=space_id,json=spaceId,proto3" json:"space_id,omitempty"`
+	// At least correlation_id or semantic_rule_id is required. When both are
+	// supplied all filters are conjunctive. embedding_binding_key requires
+	// semantic_rule_id.
+	CorrelationId       string `protobuf:"bytes,2,opt,name=correlation_id,json=correlationId,proto3" json:"correlation_id,omitempty"`
+	SemanticRuleId      string `protobuf:"bytes,3,opt,name=semantic_rule_id,json=semanticRuleId,proto3" json:"semantic_rule_id,omitempty"`
+	EmbeddingBindingKey string `protobuf:"bytes,4,opt,name=embedding_binding_key,json=embeddingBindingKey,proto3" json:"embedding_binding_key,omitempty"`
+	PageSize            int32  `protobuf:"varint,5,opt,name=page_size,json=pageSize,proto3" json:"page_size,omitempty"`
+	// Opaque and bound to principal, space, all filters, and the fixed matching
+	// scope set selected by the first page. A continuation supplies page_token
+	// and the identical filters; changing filters is INVALID_ARGUMENT.
+	PageToken     string `protobuf:"bytes,6,opt,name=page_token,json=pageToken,proto3" json:"page_token,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListSemanticProviderBudgetScopesRequest) Reset() {
+	*x = ListSemanticProviderBudgetScopesRequest{}
+	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[10]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListSemanticProviderBudgetScopesRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListSemanticProviderBudgetScopesRequest) ProtoMessage() {}
+
+func (x *ListSemanticProviderBudgetScopesRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[10]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListSemanticProviderBudgetScopesRequest.ProtoReflect.Descriptor instead.
+func (*ListSemanticProviderBudgetScopesRequest) Descriptor() ([]byte, []int) {
+	return file_mycel_admin_v1_semantic_maintenance_proto_rawDescGZIP(), []int{10}
+}
+
+func (x *ListSemanticProviderBudgetScopesRequest) GetSpaceId() string {
+	if x != nil {
+		return x.SpaceId
+	}
+	return ""
+}
+
+func (x *ListSemanticProviderBudgetScopesRequest) GetCorrelationId() string {
+	if x != nil {
+		return x.CorrelationId
+	}
+	return ""
+}
+
+func (x *ListSemanticProviderBudgetScopesRequest) GetSemanticRuleId() string {
+	if x != nil {
+		return x.SemanticRuleId
+	}
+	return ""
+}
+
+func (x *ListSemanticProviderBudgetScopesRequest) GetEmbeddingBindingKey() string {
+	if x != nil {
+		return x.EmbeddingBindingKey
+	}
+	return ""
+}
+
+func (x *ListSemanticProviderBudgetScopesRequest) GetPageSize() int32 {
+	if x != nil {
+		return x.PageSize
+	}
+	return 0
+}
+
+func (x *ListSemanticProviderBudgetScopesRequest) GetPageToken() string {
+	if x != nil {
+		return x.PageToken
+	}
+	return ""
+}
+
+type ListSemanticProviderBudgetScopesResponse struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Strictly ascending by scope_sequence. References are immutable discovery
+	// records; retrieve current counters with GetSemanticProviderBudgetStatus.
+	// The first page is linearized to a fixed set of matching retained scopes;
+	// scopes created later are excluded from every continuation. If retention
+	// removes a selected scope between pages, continuation fails with
+	// FAILED_PRECONDITION and no partial page. Expired or malformed tokens are
+	// INVALID_ARGUMENT. An empty result is not proof that no matching scope ever
+	// existed; callers expecting one must fail their reconciliation.
+	Scopes        []*SemanticProviderBudgetScopeReference `protobuf:"bytes,1,rep,name=scopes,proto3" json:"scopes,omitempty"`
+	NextPageToken string                                  `protobuf:"bytes,2,opt,name=next_page_token,json=nextPageToken,proto3" json:"next_page_token,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListSemanticProviderBudgetScopesResponse) Reset() {
+	*x = ListSemanticProviderBudgetScopesResponse{}
+	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[11]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListSemanticProviderBudgetScopesResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListSemanticProviderBudgetScopesResponse) ProtoMessage() {}
+
+func (x *ListSemanticProviderBudgetScopesResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[11]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListSemanticProviderBudgetScopesResponse.ProtoReflect.Descriptor instead.
+func (*ListSemanticProviderBudgetScopesResponse) Descriptor() ([]byte, []int) {
+	return file_mycel_admin_v1_semantic_maintenance_proto_rawDescGZIP(), []int{11}
+}
+
+func (x *ListSemanticProviderBudgetScopesResponse) GetScopes() []*SemanticProviderBudgetScopeReference {
+	if x != nil {
+		return x.Scopes
+	}
+	return nil
+}
+
+func (x *ListSemanticProviderBudgetScopesResponse) GetNextPageToken() string {
+	if x != nil {
+		return x.NextPageToken
+	}
+	return ""
+}
+
+type SemanticProviderBudgetScopeReference struct {
+	state               protoimpl.MessageState `protogen:"open.v1"`
+	ScopeSequence       uint64                 `protobuf:"varint,1,opt,name=scope_sequence,json=scopeSequence,proto3" json:"scope_sequence,omitempty"`
+	BudgetScopeId       string                 `protobuf:"bytes,2,opt,name=budget_scope_id,json=budgetScopeId,proto3" json:"budget_scope_id,omitempty"`
+	SemanticRuleId      string                 `protobuf:"bytes,3,opt,name=semantic_rule_id,json=semanticRuleId,proto3" json:"semantic_rule_id,omitempty"`
+	EmbeddingBindingKey string                 `protobuf:"bytes,4,opt,name=embedding_binding_key,json=embeddingBindingKey,proto3" json:"embedding_binding_key,omitempty"`
+	CorrelationId       string                 `protobuf:"bytes,5,opt,name=correlation_id,json=correlationId,proto3" json:"correlation_id,omitempty"`
+	CreatedAt           *timestamppb.Timestamp `protobuf:"bytes,6,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
+	RetentionUntil      *timestamppb.Timestamp `protobuf:"bytes,7,opt,name=retention_until,json=retentionUntil,proto3" json:"retention_until,omitempty"`
+	unknownFields       protoimpl.UnknownFields
+	sizeCache           protoimpl.SizeCache
+}
+
+func (x *SemanticProviderBudgetScopeReference) Reset() {
+	*x = SemanticProviderBudgetScopeReference{}
+	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[12]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SemanticProviderBudgetScopeReference) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SemanticProviderBudgetScopeReference) ProtoMessage() {}
+
+func (x *SemanticProviderBudgetScopeReference) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[12]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SemanticProviderBudgetScopeReference.ProtoReflect.Descriptor instead.
+func (*SemanticProviderBudgetScopeReference) Descriptor() ([]byte, []int) {
+	return file_mycel_admin_v1_semantic_maintenance_proto_rawDescGZIP(), []int{12}
+}
+
+func (x *SemanticProviderBudgetScopeReference) GetScopeSequence() uint64 {
+	if x != nil {
+		return x.ScopeSequence
+	}
+	return 0
+}
+
+func (x *SemanticProviderBudgetScopeReference) GetBudgetScopeId() string {
+	if x != nil {
+		return x.BudgetScopeId
+	}
+	return ""
+}
+
+func (x *SemanticProviderBudgetScopeReference) GetSemanticRuleId() string {
+	if x != nil {
+		return x.SemanticRuleId
+	}
+	return ""
+}
+
+func (x *SemanticProviderBudgetScopeReference) GetEmbeddingBindingKey() string {
+	if x != nil {
+		return x.EmbeddingBindingKey
+	}
+	return ""
+}
+
+func (x *SemanticProviderBudgetScopeReference) GetCorrelationId() string {
+	if x != nil {
+		return x.CorrelationId
+	}
+	return ""
+}
+
+func (x *SemanticProviderBudgetScopeReference) GetCreatedAt() *timestamppb.Timestamp {
+	if x != nil {
+		return x.CreatedAt
+	}
+	return nil
+}
+
+func (x *SemanticProviderBudgetScopeReference) GetRetentionUntil() *timestamppb.Timestamp {
+	if x != nil {
+		return x.RetentionUntil
+	}
+	return nil
+}
+
+type SemanticProviderBudgetUsage struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// A request is one logical embedding operation with one stable request id.
+	// A provider batch is one request regardless of batch_items. The first
+	// reservation consumes one request; each reservation consumes one attempt;
+	// and every retry_index > 0 also consumes one retry attempt.
+	Requests      int64 `protobuf:"varint,1,opt,name=requests,proto3" json:"requests,omitempty"`
+	Attempts      int64 `protobuf:"varint,2,opt,name=attempts,proto3" json:"attempts,omitempty"`
+	RetryAttempts int64 `protobuf:"varint,3,opt,name=retry_attempts,json=retryAttempts,proto3" json:"retry_attempts,omitempty"`
+	BatchItems    int64 `protobuf:"varint,4,opt,name=batch_items,json=batchItems,proto3" json:"batch_items,omitempty"`
+	// Includes reserved attempts and terminal attempts with unresolved provider
+	// effects, so ambiguity cannot free concurrency.
+	ActiveProviderCalls int64 `protobuf:"varint,5,opt,name=active_provider_calls,json=activeProviderCalls,proto3" json:"active_provider_calls,omitempty"`
+	// Token, duration, and cost totals use charged values only when known and no
+	// greater than their reservations; otherwise they retain the conservative
+	// reserved values. Reserved, expired-reserved, and ambiguous attempts remain
+	// counted. Unknown provider effects are never released as unused capacity.
+	// A charged overage is counted at its checked actual value, immediately
+	// exhausts the scope with ACCOUNTING, and is recorded in its terminal event.
+	// Summation overflow saturates the affected counter at int64 max, sets
+	// accounting_overflow, exhausts the scope, and prevents later attempts.
+	InputTokens         int64 `protobuf:"varint,6,opt,name=input_tokens,json=inputTokens,proto3" json:"input_tokens,omitempty"`
+	ProviderMillis      int64 `protobuf:"varint,7,opt,name=provider_millis,json=providerMillis,proto3" json:"provider_millis,omitempty"`
+	EstimatedCostMicros int64 `protobuf:"varint,8,opt,name=estimated_cost_micros,json=estimatedCostMicros,proto3" json:"estimated_cost_micros,omitempty"`
+	AmbiguousAttempts   int64 `protobuf:"varint,9,opt,name=ambiguous_attempts,json=ambiguousAttempts,proto3" json:"ambiguous_attempts,omitempty"`
+	AccountingOverflow  bool  `protobuf:"varint,10,opt,name=accounting_overflow,json=accountingOverflow,proto3" json:"accounting_overflow,omitempty"`
+	unknownFields       protoimpl.UnknownFields
+	sizeCache           protoimpl.SizeCache
+}
+
+func (x *SemanticProviderBudgetUsage) Reset() {
+	*x = SemanticProviderBudgetUsage{}
+	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[13]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SemanticProviderBudgetUsage) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SemanticProviderBudgetUsage) ProtoMessage() {}
+
+func (x *SemanticProviderBudgetUsage) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[13]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SemanticProviderBudgetUsage.ProtoReflect.Descriptor instead.
+func (*SemanticProviderBudgetUsage) Descriptor() ([]byte, []int) {
+	return file_mycel_admin_v1_semantic_maintenance_proto_rawDescGZIP(), []int{13}
+}
+
+func (x *SemanticProviderBudgetUsage) GetRequests() int64 {
+	if x != nil {
+		return x.Requests
+	}
+	return 0
+}
+
+func (x *SemanticProviderBudgetUsage) GetAttempts() int64 {
+	if x != nil {
+		return x.Attempts
+	}
+	return 0
+}
+
+func (x *SemanticProviderBudgetUsage) GetRetryAttempts() int64 {
+	if x != nil {
+		return x.RetryAttempts
+	}
+	return 0
+}
+
+func (x *SemanticProviderBudgetUsage) GetBatchItems() int64 {
+	if x != nil {
+		return x.BatchItems
+	}
+	return 0
+}
+
+func (x *SemanticProviderBudgetUsage) GetActiveProviderCalls() int64 {
+	if x != nil {
+		return x.ActiveProviderCalls
+	}
+	return 0
+}
+
+func (x *SemanticProviderBudgetUsage) GetInputTokens() int64 {
+	if x != nil {
+		return x.InputTokens
+	}
+	return 0
+}
+
+func (x *SemanticProviderBudgetUsage) GetProviderMillis() int64 {
+	if x != nil {
+		return x.ProviderMillis
+	}
+	return 0
+}
+
+func (x *SemanticProviderBudgetUsage) GetEstimatedCostMicros() int64 {
+	if x != nil {
+		return x.EstimatedCostMicros
+	}
+	return 0
+}
+
+func (x *SemanticProviderBudgetUsage) GetAmbiguousAttempts() int64 {
+	if x != nil {
+		return x.AmbiguousAttempts
+	}
+	return 0
+}
+
+func (x *SemanticProviderBudgetUsage) GetAccountingOverflow() bool {
+	if x != nil {
+		return x.AccountingOverflow
+	}
+	return false
+}
+
+type ListSemanticProviderBudgetAttemptEventsRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	SpaceId       string                 `protobuf:"bytes,1,opt,name=space_id,json=spaceId,proto3" json:"space_id,omitempty"`
+	BudgetScopeId string                 `protobuf:"bytes,2,opt,name=budget_scope_id,json=budgetScopeId,proto3" json:"budget_scope_id,omitempty"`
+	// Optional exclusive sequence. It is mutually exclusive with page_token.
+	// retry_index is zero for the original attempt and increases by one for each
+	// later attempt with the same request_id.
+	AfterSequence uint64 `protobuf:"varint,3,opt,name=after_sequence,json=afterSequence,proto3" json:"after_sequence,omitempty"`
+	// Bounded to maximum_attempt_event_page_size advertised by the daemon.
+	PageSize int32 `protobuf:"varint,4,opt,name=page_size,json=pageSize,proto3" json:"page_size,omitempty"`
+	// Opaque and bound to principal, space, scope, after_sequence, and the fixed
+	// snapshot_high_water_sequence selected by the first page.
+	PageToken     string `protobuf:"bytes,5,opt,name=page_token,json=pageToken,proto3" json:"page_token,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListSemanticProviderBudgetAttemptEventsRequest) Reset() {
+	*x = ListSemanticProviderBudgetAttemptEventsRequest{}
+	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[14]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListSemanticProviderBudgetAttemptEventsRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListSemanticProviderBudgetAttemptEventsRequest) ProtoMessage() {}
+
+func (x *ListSemanticProviderBudgetAttemptEventsRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[14]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListSemanticProviderBudgetAttemptEventsRequest.ProtoReflect.Descriptor instead.
+func (*ListSemanticProviderBudgetAttemptEventsRequest) Descriptor() ([]byte, []int) {
+	return file_mycel_admin_v1_semantic_maintenance_proto_rawDescGZIP(), []int{14}
+}
+
+func (x *ListSemanticProviderBudgetAttemptEventsRequest) GetSpaceId() string {
+	if x != nil {
+		return x.SpaceId
+	}
+	return ""
+}
+
+func (x *ListSemanticProviderBudgetAttemptEventsRequest) GetBudgetScopeId() string {
+	if x != nil {
+		return x.BudgetScopeId
+	}
+	return ""
+}
+
+func (x *ListSemanticProviderBudgetAttemptEventsRequest) GetAfterSequence() uint64 {
+	if x != nil {
+		return x.AfterSequence
+	}
+	return 0
+}
+
+func (x *ListSemanticProviderBudgetAttemptEventsRequest) GetPageSize() int32 {
+	if x != nil {
+		return x.PageSize
+	}
+	return 0
+}
+
+func (x *ListSemanticProviderBudgetAttemptEventsRequest) GetPageToken() string {
+	if x != nil {
+		return x.PageToken
+	}
+	return ""
+}
+
+type ListSemanticProviderBudgetAttemptEventsResponse struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Strictly ascending by event_sequence. Each event is immutable. A provider
+	// attempt has exactly one RESERVED event before any provider effect and at
+	// most one later terminal event with the same attempt_id and version 2.
+	Events                        []*SemanticProviderBudgetAttemptEvent `protobuf:"bytes,1,rep,name=events,proto3" json:"events,omitempty"`
+	NextPageToken                 string                                `protobuf:"bytes,2,opt,name=next_page_token,json=nextPageToken,proto3" json:"next_page_token,omitempty"`
+	EarliestRetainedEventSequence uint64                                `protobuf:"varint,3,opt,name=earliest_retained_event_sequence,json=earliestRetainedEventSequence,proto3" json:"earliest_retained_event_sequence,omitempty"`
+	// Fixed on the first page and unchanged on every continuation page. Events
+	// appended later are excluded; callers start another read after this value.
+	SnapshotHighWaterSequence uint64 `protobuf:"varint,4,opt,name=snapshot_high_water_sequence,json=snapshotHighWaterSequence,proto3" json:"snapshot_high_water_sequence,omitempty"`
+	// Current high-water at the response linearization point; it may exceed the
+	// snapshot boundary on continuation pages.
+	CurrentHighWaterSequence uint64 `protobuf:"varint,5,opt,name=current_high_water_sequence,json=currentHighWaterSequence,proto3" json:"current_high_water_sequence,omitempty"`
+	// True exactly when after_sequence + 1 is less than the earliest retained
+	// sequence, including an initial after_sequence of zero. Arithmetic is
+	// overflow checked. When no event has ever existed, earliest retained and
+	// both high-water values are zero and history_gap is false. When events once
+	// existed but all are pruned, earliest retained is zero, current high-water
+	// remains non-zero, and history_gap is true exactly when after_sequence is
+	// less than snapshot_high_water_sequence. A maximum uint64 after_sequence is
+	// INVALID_ARGUMENT. If retention removes a required event
+	// between pages, the continuation fails with FAILED_PRECONDITION and returns
+	// no partial page. Expired, malformed, or filter-mismatched tokens are
+	// INVALID_ARGUMENT. Callers must fail reconciliation on history_gap.
+	HistoryGap    bool `protobuf:"varint,6,opt,name=history_gap,json=historyGap,proto3" json:"history_gap,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListSemanticProviderBudgetAttemptEventsResponse) Reset() {
+	*x = ListSemanticProviderBudgetAttemptEventsResponse{}
+	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[15]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListSemanticProviderBudgetAttemptEventsResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListSemanticProviderBudgetAttemptEventsResponse) ProtoMessage() {}
+
+func (x *ListSemanticProviderBudgetAttemptEventsResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[15]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListSemanticProviderBudgetAttemptEventsResponse.ProtoReflect.Descriptor instead.
+func (*ListSemanticProviderBudgetAttemptEventsResponse) Descriptor() ([]byte, []int) {
+	return file_mycel_admin_v1_semantic_maintenance_proto_rawDescGZIP(), []int{15}
+}
+
+func (x *ListSemanticProviderBudgetAttemptEventsResponse) GetEvents() []*SemanticProviderBudgetAttemptEvent {
+	if x != nil {
+		return x.Events
+	}
+	return nil
+}
+
+func (x *ListSemanticProviderBudgetAttemptEventsResponse) GetNextPageToken() string {
+	if x != nil {
+		return x.NextPageToken
+	}
+	return ""
+}
+
+func (x *ListSemanticProviderBudgetAttemptEventsResponse) GetEarliestRetainedEventSequence() uint64 {
+	if x != nil {
+		return x.EarliestRetainedEventSequence
+	}
+	return 0
+}
+
+func (x *ListSemanticProviderBudgetAttemptEventsResponse) GetSnapshotHighWaterSequence() uint64 {
+	if x != nil {
+		return x.SnapshotHighWaterSequence
+	}
+	return 0
+}
+
+func (x *ListSemanticProviderBudgetAttemptEventsResponse) GetCurrentHighWaterSequence() uint64 {
+	if x != nil {
+		return x.CurrentHighWaterSequence
+	}
+	return 0
+}
+
+func (x *ListSemanticProviderBudgetAttemptEventsResponse) GetHistoryGap() bool {
+	if x != nil {
+		return x.HistoryGap
+	}
+	return false
+}
+
+type SemanticProviderBudgetAttemptEvent struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	EventSequence uint64                 `protobuf:"varint,1,opt,name=event_sequence,json=eventSequence,proto3" json:"event_sequence,omitempty"`
+	BudgetScopeId string                 `protobuf:"bytes,2,opt,name=budget_scope_id,json=budgetScopeId,proto3" json:"budget_scope_id,omitempty"`
+	// Daemon-generated opaque identities. They must not encode graph identities,
+	// source text, credentials, provider request ids, or provider bodies.
+	AttemptId string `protobuf:"bytes,3,opt,name=attempt_id,json=attemptId,proto3" json:"attempt_id,omitempty"`
+	// Exactly 1 for RESERVED and exactly 2 for the optional terminal event.
+	AttemptVersion         uint32                                `protobuf:"varint,4,opt,name=attempt_version,json=attemptVersion,proto3" json:"attempt_version,omitempty"`
+	RequestId              string                                `protobuf:"bytes,5,opt,name=request_id,json=requestId,proto3" json:"request_id,omitempty"`
+	RetryIndex             int64                                 `protobuf:"varint,6,opt,name=retry_index,json=retryIndex,proto3" json:"retry_index,omitempty"`
+	State                  SemanticProviderBudgetAttemptState    `protobuf:"varint,7,opt,name=state,proto3,enum=mycel.admin.v1.SemanticProviderBudgetAttemptState" json:"state,omitempty"`
+	BatchItems             int64                                 `protobuf:"varint,8,opt,name=batch_items,json=batchItems,proto3" json:"batch_items,omitempty"`
+	ReservedInputTokens    int64                                 `protobuf:"varint,9,opt,name=reserved_input_tokens,json=reservedInputTokens,proto3" json:"reserved_input_tokens,omitempty"`
+	ChargedInputTokens     int64                                 `protobuf:"varint,10,opt,name=charged_input_tokens,json=chargedInputTokens,proto3" json:"charged_input_tokens,omitempty"`
+	ReservedProviderMillis int64                                 `protobuf:"varint,11,opt,name=reserved_provider_millis,json=reservedProviderMillis,proto3" json:"reserved_provider_millis,omitempty"`
+	ChargedProviderMillis  int64                                 `protobuf:"varint,12,opt,name=charged_provider_millis,json=chargedProviderMillis,proto3" json:"charged_provider_millis,omitempty"`
+	ReservedCostMicros     int64                                 `protobuf:"varint,13,opt,name=reserved_cost_micros,json=reservedCostMicros,proto3" json:"reserved_cost_micros,omitempty"`
+	ChargedCostMicros      int64                                 `protobuf:"varint,14,opt,name=charged_cost_micros,json=chargedCostMicros,proto3" json:"charged_cost_micros,omitempty"`
+	UsageKnown             bool                                  `protobuf:"varint,15,opt,name=usage_known,json=usageKnown,proto3" json:"usage_known,omitempty"`
+	OutcomeKnown           bool                                  `protobuf:"varint,16,opt,name=outcome_known,json=outcomeKnown,proto3" json:"outcome_known,omitempty"`
+	ProviderDurationKnown  bool                                  `protobuf:"varint,17,opt,name=provider_duration_known,json=providerDurationKnown,proto3" json:"provider_duration_known,omitempty"`
+	OutcomeCategory        SemanticProviderBudgetOutcomeCategory `protobuf:"varint,18,opt,name=outcome_category,json=outcomeCategory,proto3,enum=mycel.admin.v1.SemanticProviderBudgetOutcomeCategory" json:"outcome_category,omitempty"`
+	RecordedAt             *timestamppb.Timestamp                `protobuf:"bytes,19,opt,name=recorded_at,json=recordedAt,proto3" json:"recorded_at,omitempty"`
+	ReservedUntil          *timestamppb.Timestamp                `protobuf:"bytes,20,opt,name=reserved_until,json=reservedUntil,proto3" json:"reserved_until,omitempty"`
+	// True only when final cost multiplication or ceiling division exceeded
+	// int64. charged_cost_micros is then int64 max, the aggregate cost saturates,
+	// accounting_overflow is true, and the scope is exhausted with ACCOUNTING.
+	ChargedCostSaturated bool `protobuf:"varint,21,opt,name=charged_cost_saturated,json=chargedCostSaturated,proto3" json:"charged_cost_saturated,omitempty"`
+	unknownFields        protoimpl.UnknownFields
+	sizeCache            protoimpl.SizeCache
+}
+
+func (x *SemanticProviderBudgetAttemptEvent) Reset() {
+	*x = SemanticProviderBudgetAttemptEvent{}
+	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[16]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SemanticProviderBudgetAttemptEvent) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SemanticProviderBudgetAttemptEvent) ProtoMessage() {}
+
+func (x *SemanticProviderBudgetAttemptEvent) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[16]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SemanticProviderBudgetAttemptEvent.ProtoReflect.Descriptor instead.
+func (*SemanticProviderBudgetAttemptEvent) Descriptor() ([]byte, []int) {
+	return file_mycel_admin_v1_semantic_maintenance_proto_rawDescGZIP(), []int{16}
+}
+
+func (x *SemanticProviderBudgetAttemptEvent) GetEventSequence() uint64 {
+	if x != nil {
+		return x.EventSequence
+	}
+	return 0
+}
+
+func (x *SemanticProviderBudgetAttemptEvent) GetBudgetScopeId() string {
+	if x != nil {
+		return x.BudgetScopeId
+	}
+	return ""
+}
+
+func (x *SemanticProviderBudgetAttemptEvent) GetAttemptId() string {
+	if x != nil {
+		return x.AttemptId
+	}
+	return ""
+}
+
+func (x *SemanticProviderBudgetAttemptEvent) GetAttemptVersion() uint32 {
+	if x != nil {
+		return x.AttemptVersion
+	}
+	return 0
+}
+
+func (x *SemanticProviderBudgetAttemptEvent) GetRequestId() string {
+	if x != nil {
+		return x.RequestId
+	}
+	return ""
+}
+
+func (x *SemanticProviderBudgetAttemptEvent) GetRetryIndex() int64 {
+	if x != nil {
+		return x.RetryIndex
+	}
+	return 0
+}
+
+func (x *SemanticProviderBudgetAttemptEvent) GetState() SemanticProviderBudgetAttemptState {
+	if x != nil {
+		return x.State
+	}
+	return SemanticProviderBudgetAttemptState_SEMANTIC_PROVIDER_BUDGET_ATTEMPT_STATE_UNSPECIFIED
+}
+
+func (x *SemanticProviderBudgetAttemptEvent) GetBatchItems() int64 {
+	if x != nil {
+		return x.BatchItems
+	}
+	return 0
+}
+
+func (x *SemanticProviderBudgetAttemptEvent) GetReservedInputTokens() int64 {
+	if x != nil {
+		return x.ReservedInputTokens
+	}
+	return 0
+}
+
+func (x *SemanticProviderBudgetAttemptEvent) GetChargedInputTokens() int64 {
+	if x != nil {
+		return x.ChargedInputTokens
+	}
+	return 0
+}
+
+func (x *SemanticProviderBudgetAttemptEvent) GetReservedProviderMillis() int64 {
+	if x != nil {
+		return x.ReservedProviderMillis
+	}
+	return 0
+}
+
+func (x *SemanticProviderBudgetAttemptEvent) GetChargedProviderMillis() int64 {
+	if x != nil {
+		return x.ChargedProviderMillis
+	}
+	return 0
+}
+
+func (x *SemanticProviderBudgetAttemptEvent) GetReservedCostMicros() int64 {
+	if x != nil {
+		return x.ReservedCostMicros
+	}
+	return 0
+}
+
+func (x *SemanticProviderBudgetAttemptEvent) GetChargedCostMicros() int64 {
+	if x != nil {
+		return x.ChargedCostMicros
+	}
+	return 0
+}
+
+func (x *SemanticProviderBudgetAttemptEvent) GetUsageKnown() bool {
+	if x != nil {
+		return x.UsageKnown
+	}
+	return false
+}
+
+func (x *SemanticProviderBudgetAttemptEvent) GetOutcomeKnown() bool {
+	if x != nil {
+		return x.OutcomeKnown
+	}
+	return false
+}
+
+func (x *SemanticProviderBudgetAttemptEvent) GetProviderDurationKnown() bool {
+	if x != nil {
+		return x.ProviderDurationKnown
+	}
+	return false
+}
+
+func (x *SemanticProviderBudgetAttemptEvent) GetOutcomeCategory() SemanticProviderBudgetOutcomeCategory {
+	if x != nil {
+		return x.OutcomeCategory
+	}
+	return SemanticProviderBudgetOutcomeCategory_SEMANTIC_PROVIDER_BUDGET_OUTCOME_CATEGORY_UNSPECIFIED
+}
+
+func (x *SemanticProviderBudgetAttemptEvent) GetRecordedAt() *timestamppb.Timestamp {
+	if x != nil {
+		return x.RecordedAt
+	}
+	return nil
+}
+
+func (x *SemanticProviderBudgetAttemptEvent) GetReservedUntil() *timestamppb.Timestamp {
+	if x != nil {
+		return x.ReservedUntil
+	}
+	return nil
+}
+
+func (x *SemanticProviderBudgetAttemptEvent) GetChargedCostSaturated() bool {
+	if x != nil {
+		return x.ChargedCostSaturated
+	}
+	return false
+}
+
+type SemanticRebuildStatus struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Unique identity for one accepted rebuild invocation. Each accepted request
+	// creates a new epoch; clients use it to detect replacement or takeover.
+	RebuildEpoch string `protobuf:"bytes,1,opt,name=rebuild_epoch,json=rebuildEpoch,proto3" json:"rebuild_epoch,omitempty"`
+	// Closed value set: empty means no rebuild has been recorded; "required"
+	// means the current generation lacks a valid baseline; "running" is
+	// non-terminal; "completed" is successful terminal state; and "failed" is
+	// unsuccessful terminal state. Unknown values must be treated as not ready.
+	State string `protobuf:"bytes,2,opt,name=state,proto3" json:"state,omitempty"`
+	// Graph revision pinned for the reconciled full baseline.
+	PinnedTargetGraphRevision uint64 `protobuf:"varint,3,opt,name=pinned_target_graph_revision,json=pinnedTargetGraphRevision,proto3" json:"pinned_target_graph_revision,omitempty"`
+	// Latest graph revision accounted by delta catch-up. On completed state it
+	// reaches at least the latest revision observed before completion.
+	DeltaCatchupGraphRevision uint64 `protobuf:"varint,4,opt,name=delta_catchup_graph_revision,json=deltaCatchupGraphRevision,proto3" json:"delta_catchup_graph_revision,omitempty"`
+	// Generation rebuilt by this epoch. Rebuild itself does not rotate the
+	// generation; incompatible configuration changes rotate it before rebuild.
+	SemanticGeneration uint64 `protobuf:"varint,5,opt,name=semantic_generation,json=semanticGeneration,proto3" json:"semantic_generation,omitempty"`
+	// RFC 3339 timestamps. completed_at identifies the most recent successfully
+	// completed baseline for this epoch. It may remain populated if a later
+	// configuration change or capacity marker changes state from "completed" to
+	// "required"; it is not evidence that the current state is completed.
+	StartedAt   string `protobuf:"bytes,6,opt,name=started_at,json=startedAt,proto3" json:"started_at,omitempty"`
+	CompletedAt string `protobuf:"bytes,7,opt,name=completed_at,json=completedAt,proto3" json:"completed_at,omitempty"`
+	// Bounded operator-safe failure detail; credentials and provider bodies are
+	// excluded.
+	ErrorMessageSanitized string `protobuf:"bytes,8,opt,name=error_message_sanitized,json=errorMessageSanitized,proto3" json:"error_message_sanitized,omitempty"`
+	unknownFields         protoimpl.UnknownFields
+	sizeCache             protoimpl.SizeCache
+}
+
+func (x *SemanticRebuildStatus) Reset() {
+	*x = SemanticRebuildStatus{}
+	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[17]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SemanticRebuildStatus) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SemanticRebuildStatus) ProtoMessage() {}
+
+func (x *SemanticRebuildStatus) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[17]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SemanticRebuildStatus.ProtoReflect.Descriptor instead.
+func (*SemanticRebuildStatus) Descriptor() ([]byte, []int) {
+	return file_mycel_admin_v1_semantic_maintenance_proto_rawDescGZIP(), []int{17}
+}
+
+func (x *SemanticRebuildStatus) GetRebuildEpoch() string {
+	if x != nil {
+		return x.RebuildEpoch
+	}
+	return ""
+}
+
+func (x *SemanticRebuildStatus) GetState() string {
+	if x != nil {
+		return x.State
+	}
+	return ""
+}
+
+func (x *SemanticRebuildStatus) GetPinnedTargetGraphRevision() uint64 {
+	if x != nil {
+		return x.PinnedTargetGraphRevision
+	}
+	return 0
+}
+
+func (x *SemanticRebuildStatus) GetDeltaCatchupGraphRevision() uint64 {
+	if x != nil {
+		return x.DeltaCatchupGraphRevision
+	}
+	return 0
+}
+
+func (x *SemanticRebuildStatus) GetSemanticGeneration() uint64 {
+	if x != nil {
+		return x.SemanticGeneration
+	}
+	return 0
+}
+
+func (x *SemanticRebuildStatus) GetStartedAt() string {
+	if x != nil {
+		return x.StartedAt
+	}
+	return ""
+}
+
+func (x *SemanticRebuildStatus) GetCompletedAt() string {
+	if x != nil {
+		return x.CompletedAt
+	}
+	return ""
+}
+
+func (x *SemanticRebuildStatus) GetErrorMessageSanitized() string {
+	if x != nil {
+		return x.ErrorMessageSanitized
+	}
+	return ""
+}
+
+type RebuildSemanticRuleRequest struct {
+	state                 protoimpl.MessageState `protogen:"open.v1"`
+	SpaceId               string                 `protobuf:"bytes,1,opt,name=space_id,json=spaceId,proto3" json:"space_id,omitempty"`
+	SemanticRuleId        string                 `protobuf:"bytes,2,opt,name=semantic_rule_id,json=semanticRuleId,proto3" json:"semantic_rule_id,omitempty"`
+	EmbeddingBindingKey   string                 `protobuf:"bytes,3,opt,name=embedding_binding_key,json=embeddingBindingKey,proto3" json:"embedding_binding_key,omitempty"`
+	BackfillLimit         int32                  `protobuf:"varint,4,opt,name=backfill_limit,json=backfillLimit,proto3" json:"backfill_limit,omitempty"`
+	MaintenanceBatchLimit int32                  `protobuf:"varint,5,opt,name=maintenance_batch_limit,json=maintenanceBatchLimit,proto3" json:"maintenance_batch_limit,omitempty"`
+	MaxCatchupIterations  int32                  `protobuf:"varint,6,opt,name=max_catchup_iterations,json=maxCatchupIterations,proto3" json:"max_catchup_iterations,omitempty"`
+	unknownFields         protoimpl.UnknownFields
+	sizeCache             protoimpl.SizeCache
+}
+
+func (x *RebuildSemanticRuleRequest) Reset() {
+	*x = RebuildSemanticRuleRequest{}
+	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[18]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *RebuildSemanticRuleRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RebuildSemanticRuleRequest) ProtoMessage() {}
+
+func (x *RebuildSemanticRuleRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[18]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RebuildSemanticRuleRequest.ProtoReflect.Descriptor instead.
+func (*RebuildSemanticRuleRequest) Descriptor() ([]byte, []int) {
+	return file_mycel_admin_v1_semantic_maintenance_proto_rawDescGZIP(), []int{18}
+}
+
+func (x *RebuildSemanticRuleRequest) GetSpaceId() string {
+	if x != nil {
+		return x.SpaceId
+	}
+	return ""
+}
+
+func (x *RebuildSemanticRuleRequest) GetSemanticRuleId() string {
+	if x != nil {
+		return x.SemanticRuleId
+	}
+	return ""
+}
+
+func (x *RebuildSemanticRuleRequest) GetEmbeddingBindingKey() string {
+	if x != nil {
+		return x.EmbeddingBindingKey
+	}
+	return ""
+}
+
+func (x *RebuildSemanticRuleRequest) GetBackfillLimit() int32 {
+	if x != nil {
+		return x.BackfillLimit
+	}
+	return 0
+}
+
+func (x *RebuildSemanticRuleRequest) GetMaintenanceBatchLimit() int32 {
+	if x != nil {
+		return x.MaintenanceBatchLimit
+	}
+	return 0
+}
+
+func (x *RebuildSemanticRuleRequest) GetMaxCatchupIterations() int32 {
+	if x != nil {
+		return x.MaxCatchupIterations
+	}
+	return 0
+}
+
+type RebuildSemanticRuleResponse struct {
+	state          protoimpl.MessageState                `protogen:"open.v1"`
+	Rebuild        *SemanticRebuildStatus                `protobuf:"bytes,1,opt,name=rebuild,proto3" json:"rebuild,omitempty"`
+	Reliability    *GetSemanticReliabilityStatusResponse `protobuf:"bytes,2,opt,name=reliability,proto3" json:"reliability,omitempty"`
+	SelectedCount  int32                                 `protobuf:"varint,3,opt,name=selected_count,json=selectedCount,proto3" json:"selected_count,omitempty"`
+	GeneratedCount int32                                 `protobuf:"varint,4,opt,name=generated_count,json=generatedCount,proto3" json:"generated_count,omitempty"`
+	SkippedCount   int32                                 `protobuf:"varint,5,opt,name=skipped_count,json=skippedCount,proto3" json:"skipped_count,omitempty"`
+	FailedCount    int32                                 `protobuf:"varint,6,opt,name=failed_count,json=failedCount,proto3" json:"failed_count,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
+}
+
+func (x *RebuildSemanticRuleResponse) Reset() {
+	*x = RebuildSemanticRuleResponse{}
+	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[19]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *RebuildSemanticRuleResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RebuildSemanticRuleResponse) ProtoMessage() {}
+
+func (x *RebuildSemanticRuleResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[19]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RebuildSemanticRuleResponse.ProtoReflect.Descriptor instead.
+func (*RebuildSemanticRuleResponse) Descriptor() ([]byte, []int) {
+	return file_mycel_admin_v1_semantic_maintenance_proto_rawDescGZIP(), []int{19}
+}
+
+func (x *RebuildSemanticRuleResponse) GetRebuild() *SemanticRebuildStatus {
+	if x != nil {
+		return x.Rebuild
+	}
+	return nil
+}
+
+func (x *RebuildSemanticRuleResponse) GetReliability() *GetSemanticReliabilityStatusResponse {
+	if x != nil {
+		return x.Reliability
+	}
+	return nil
+}
+
+func (x *RebuildSemanticRuleResponse) GetSelectedCount() int32 {
+	if x != nil {
+		return x.SelectedCount
+	}
+	return 0
+}
+
+func (x *RebuildSemanticRuleResponse) GetGeneratedCount() int32 {
+	if x != nil {
+		return x.GeneratedCount
+	}
+	return 0
+}
+
+func (x *RebuildSemanticRuleResponse) GetSkippedCount() int32 {
+	if x != nil {
+		return x.SkippedCount
+	}
+	return 0
+}
+
+func (x *RebuildSemanticRuleResponse) GetFailedCount() int32 {
+	if x != nil {
+		return x.FailedCount
+	}
+	return 0
+}
+
 type ListSemanticMaintenanceWorkRequest struct {
 	state               protoimpl.MessageState `protogen:"open.v1"`
 	SpaceId             string                 `protobuf:"bytes,1,opt,name=space_id,json=spaceId,proto3" json:"space_id,omitempty"`
@@ -236,7 +2485,7 @@ type ListSemanticMaintenanceWorkRequest struct {
 
 func (x *ListSemanticMaintenanceWorkRequest) Reset() {
 	*x = ListSemanticMaintenanceWorkRequest{}
-	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[2]
+	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[20]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -248,7 +2497,7 @@ func (x *ListSemanticMaintenanceWorkRequest) String() string {
 func (*ListSemanticMaintenanceWorkRequest) ProtoMessage() {}
 
 func (x *ListSemanticMaintenanceWorkRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[2]
+	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[20]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -261,7 +2510,7 @@ func (x *ListSemanticMaintenanceWorkRequest) ProtoReflect() protoreflect.Message
 
 // Deprecated: Use ListSemanticMaintenanceWorkRequest.ProtoReflect.Descriptor instead.
 func (*ListSemanticMaintenanceWorkRequest) Descriptor() ([]byte, []int) {
-	return file_mycel_admin_v1_semantic_maintenance_proto_rawDescGZIP(), []int{2}
+	return file_mycel_admin_v1_semantic_maintenance_proto_rawDescGZIP(), []int{20}
 }
 
 func (x *ListSemanticMaintenanceWorkRequest) GetSpaceId() string {
@@ -308,7 +2557,7 @@ type ListSemanticMaintenanceWorkResponse struct {
 
 func (x *ListSemanticMaintenanceWorkResponse) Reset() {
 	*x = ListSemanticMaintenanceWorkResponse{}
-	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[3]
+	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[21]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -320,7 +2569,7 @@ func (x *ListSemanticMaintenanceWorkResponse) String() string {
 func (*ListSemanticMaintenanceWorkResponse) ProtoMessage() {}
 
 func (x *ListSemanticMaintenanceWorkResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[3]
+	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[21]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -333,7 +2582,7 @@ func (x *ListSemanticMaintenanceWorkResponse) ProtoReflect() protoreflect.Messag
 
 // Deprecated: Use ListSemanticMaintenanceWorkResponse.ProtoReflect.Descriptor instead.
 func (*ListSemanticMaintenanceWorkResponse) Descriptor() ([]byte, []int) {
-	return file_mycel_admin_v1_semantic_maintenance_proto_rawDescGZIP(), []int{3}
+	return file_mycel_admin_v1_semantic_maintenance_proto_rawDescGZIP(), []int{21}
 }
 
 func (x *ListSemanticMaintenanceWorkResponse) GetItems() []*SemanticMaintenanceWorkItem {
@@ -360,13 +2609,16 @@ type SemanticMaintenanceWorkItem struct {
 	LastErrorMessageSanitized string                 `protobuf:"bytes,13,opt,name=last_error_message_sanitized,json=lastErrorMessageSanitized,proto3" json:"last_error_message_sanitized,omitempty"`
 	CreatedAt                 string                 `protobuf:"bytes,14,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
 	UpdatedAt                 string                 `protobuf:"bytes,15,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
+	FirstGraphRevision        uint64                 `protobuf:"varint,16,opt,name=first_graph_revision,json=firstGraphRevision,proto3" json:"first_graph_revision,omitempty"`
+	LastGraphRevision         uint64                 `protobuf:"varint,17,opt,name=last_graph_revision,json=lastGraphRevision,proto3" json:"last_graph_revision,omitempty"`
+	WorkGeneration            uint64                 `protobuf:"varint,18,opt,name=work_generation,json=workGeneration,proto3" json:"work_generation,omitempty"`
 	unknownFields             protoimpl.UnknownFields
 	sizeCache                 protoimpl.SizeCache
 }
 
 func (x *SemanticMaintenanceWorkItem) Reset() {
 	*x = SemanticMaintenanceWorkItem{}
-	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[4]
+	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[22]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -378,7 +2630,7 @@ func (x *SemanticMaintenanceWorkItem) String() string {
 func (*SemanticMaintenanceWorkItem) ProtoMessage() {}
 
 func (x *SemanticMaintenanceWorkItem) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[4]
+	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[22]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -391,7 +2643,7 @@ func (x *SemanticMaintenanceWorkItem) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SemanticMaintenanceWorkItem.ProtoReflect.Descriptor instead.
 func (*SemanticMaintenanceWorkItem) Descriptor() ([]byte, []int) {
-	return file_mycel_admin_v1_semantic_maintenance_proto_rawDescGZIP(), []int{4}
+	return file_mycel_admin_v1_semantic_maintenance_proto_rawDescGZIP(), []int{22}
 }
 
 func (x *SemanticMaintenanceWorkItem) GetWorkItemId() string {
@@ -499,6 +2751,27 @@ func (x *SemanticMaintenanceWorkItem) GetUpdatedAt() string {
 	return ""
 }
 
+func (x *SemanticMaintenanceWorkItem) GetFirstGraphRevision() uint64 {
+	if x != nil {
+		return x.FirstGraphRevision
+	}
+	return 0
+}
+
+func (x *SemanticMaintenanceWorkItem) GetLastGraphRevision() uint64 {
+	if x != nil {
+		return x.LastGraphRevision
+	}
+	return 0
+}
+
+func (x *SemanticMaintenanceWorkItem) GetWorkGeneration() uint64 {
+	if x != nil {
+		return x.WorkGeneration
+	}
+	return 0
+}
+
 type RetrySemanticMaintenanceWorkRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	SpaceId       string                 `protobuf:"bytes,1,opt,name=space_id,json=spaceId,proto3" json:"space_id,omitempty"`
@@ -509,7 +2782,7 @@ type RetrySemanticMaintenanceWorkRequest struct {
 
 func (x *RetrySemanticMaintenanceWorkRequest) Reset() {
 	*x = RetrySemanticMaintenanceWorkRequest{}
-	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[5]
+	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[23]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -521,7 +2794,7 @@ func (x *RetrySemanticMaintenanceWorkRequest) String() string {
 func (*RetrySemanticMaintenanceWorkRequest) ProtoMessage() {}
 
 func (x *RetrySemanticMaintenanceWorkRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[5]
+	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[23]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -534,7 +2807,7 @@ func (x *RetrySemanticMaintenanceWorkRequest) ProtoReflect() protoreflect.Messag
 
 // Deprecated: Use RetrySemanticMaintenanceWorkRequest.ProtoReflect.Descriptor instead.
 func (*RetrySemanticMaintenanceWorkRequest) Descriptor() ([]byte, []int) {
-	return file_mycel_admin_v1_semantic_maintenance_proto_rawDescGZIP(), []int{5}
+	return file_mycel_admin_v1_semantic_maintenance_proto_rawDescGZIP(), []int{23}
 }
 
 func (x *RetrySemanticMaintenanceWorkRequest) GetSpaceId() string {
@@ -560,7 +2833,7 @@ type RetrySemanticMaintenanceWorkResponse struct {
 
 func (x *RetrySemanticMaintenanceWorkResponse) Reset() {
 	*x = RetrySemanticMaintenanceWorkResponse{}
-	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[6]
+	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[24]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -572,7 +2845,7 @@ func (x *RetrySemanticMaintenanceWorkResponse) String() string {
 func (*RetrySemanticMaintenanceWorkResponse) ProtoMessage() {}
 
 func (x *RetrySemanticMaintenanceWorkResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[6]
+	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[24]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -585,7 +2858,7 @@ func (x *RetrySemanticMaintenanceWorkResponse) ProtoReflect() protoreflect.Messa
 
 // Deprecated: Use RetrySemanticMaintenanceWorkResponse.ProtoReflect.Descriptor instead.
 func (*RetrySemanticMaintenanceWorkResponse) Descriptor() ([]byte, []int) {
-	return file_mycel_admin_v1_semantic_maintenance_proto_rawDescGZIP(), []int{6}
+	return file_mycel_admin_v1_semantic_maintenance_proto_rawDescGZIP(), []int{24}
 }
 
 func (x *RetrySemanticMaintenanceWorkResponse) GetItem() *SemanticMaintenanceWorkItem {
@@ -605,7 +2878,7 @@ type CancelSemanticMaintenanceWorkRequest struct {
 
 func (x *CancelSemanticMaintenanceWorkRequest) Reset() {
 	*x = CancelSemanticMaintenanceWorkRequest{}
-	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[7]
+	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[25]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -617,7 +2890,7 @@ func (x *CancelSemanticMaintenanceWorkRequest) String() string {
 func (*CancelSemanticMaintenanceWorkRequest) ProtoMessage() {}
 
 func (x *CancelSemanticMaintenanceWorkRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[7]
+	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[25]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -630,7 +2903,7 @@ func (x *CancelSemanticMaintenanceWorkRequest) ProtoReflect() protoreflect.Messa
 
 // Deprecated: Use CancelSemanticMaintenanceWorkRequest.ProtoReflect.Descriptor instead.
 func (*CancelSemanticMaintenanceWorkRequest) Descriptor() ([]byte, []int) {
-	return file_mycel_admin_v1_semantic_maintenance_proto_rawDescGZIP(), []int{7}
+	return file_mycel_admin_v1_semantic_maintenance_proto_rawDescGZIP(), []int{25}
 }
 
 func (x *CancelSemanticMaintenanceWorkRequest) GetSpaceId() string {
@@ -656,7 +2929,7 @@ type CancelSemanticMaintenanceWorkResponse struct {
 
 func (x *CancelSemanticMaintenanceWorkResponse) Reset() {
 	*x = CancelSemanticMaintenanceWorkResponse{}
-	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[8]
+	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[26]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -668,7 +2941,7 @@ func (x *CancelSemanticMaintenanceWorkResponse) String() string {
 func (*CancelSemanticMaintenanceWorkResponse) ProtoMessage() {}
 
 func (x *CancelSemanticMaintenanceWorkResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[8]
+	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[26]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -681,7 +2954,7 @@ func (x *CancelSemanticMaintenanceWorkResponse) ProtoReflect() protoreflect.Mess
 
 // Deprecated: Use CancelSemanticMaintenanceWorkResponse.ProtoReflect.Descriptor instead.
 func (*CancelSemanticMaintenanceWorkResponse) Descriptor() ([]byte, []int) {
-	return file_mycel_admin_v1_semantic_maintenance_proto_rawDescGZIP(), []int{8}
+	return file_mycel_admin_v1_semantic_maintenance_proto_rawDescGZIP(), []int{26}
 }
 
 func (x *CancelSemanticMaintenanceWorkResponse) GetItem() *SemanticMaintenanceWorkItem {
@@ -703,7 +2976,7 @@ type AnalyzeSemanticDirtyWorkRequest struct {
 
 func (x *AnalyzeSemanticDirtyWorkRequest) Reset() {
 	*x = AnalyzeSemanticDirtyWorkRequest{}
-	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[9]
+	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[27]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -715,7 +2988,7 @@ func (x *AnalyzeSemanticDirtyWorkRequest) String() string {
 func (*AnalyzeSemanticDirtyWorkRequest) ProtoMessage() {}
 
 func (x *AnalyzeSemanticDirtyWorkRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[9]
+	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[27]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -728,7 +3001,7 @@ func (x *AnalyzeSemanticDirtyWorkRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AnalyzeSemanticDirtyWorkRequest.ProtoReflect.Descriptor instead.
 func (*AnalyzeSemanticDirtyWorkRequest) Descriptor() ([]byte, []int) {
-	return file_mycel_admin_v1_semantic_maintenance_proto_rawDescGZIP(), []int{9}
+	return file_mycel_admin_v1_semantic_maintenance_proto_rawDescGZIP(), []int{27}
 }
 
 func (x *AnalyzeSemanticDirtyWorkRequest) GetSpaceId() string {
@@ -769,7 +3042,7 @@ type AnalyzeSemanticDirtyWorkResponse struct {
 
 func (x *AnalyzeSemanticDirtyWorkResponse) Reset() {
 	*x = AnalyzeSemanticDirtyWorkResponse{}
-	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[10]
+	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[28]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -781,7 +3054,7 @@ func (x *AnalyzeSemanticDirtyWorkResponse) String() string {
 func (*AnalyzeSemanticDirtyWorkResponse) ProtoMessage() {}
 
 func (x *AnalyzeSemanticDirtyWorkResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[10]
+	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[28]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -794,7 +3067,7 @@ func (x *AnalyzeSemanticDirtyWorkResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AnalyzeSemanticDirtyWorkResponse.ProtoReflect.Descriptor instead.
 func (*AnalyzeSemanticDirtyWorkResponse) Descriptor() ([]byte, []int) {
-	return file_mycel_admin_v1_semantic_maintenance_proto_rawDescGZIP(), []int{10}
+	return file_mycel_admin_v1_semantic_maintenance_proto_rawDescGZIP(), []int{28}
 }
 
 func (x *AnalyzeSemanticDirtyWorkResponse) GetProcessedEvents() int32 {
@@ -821,7 +3094,7 @@ type ProcessSemanticDirtyWorkRequest struct {
 
 func (x *ProcessSemanticDirtyWorkRequest) Reset() {
 	*x = ProcessSemanticDirtyWorkRequest{}
-	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[11]
+	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[29]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -833,7 +3106,7 @@ func (x *ProcessSemanticDirtyWorkRequest) String() string {
 func (*ProcessSemanticDirtyWorkRequest) ProtoMessage() {}
 
 func (x *ProcessSemanticDirtyWorkRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[11]
+	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[29]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -846,7 +3119,7 @@ func (x *ProcessSemanticDirtyWorkRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ProcessSemanticDirtyWorkRequest.ProtoReflect.Descriptor instead.
 func (*ProcessSemanticDirtyWorkRequest) Descriptor() ([]byte, []int) {
-	return file_mycel_admin_v1_semantic_maintenance_proto_rawDescGZIP(), []int{11}
+	return file_mycel_admin_v1_semantic_maintenance_proto_rawDescGZIP(), []int{29}
 }
 
 func (x *ProcessSemanticDirtyWorkRequest) GetSpaceId() string {
@@ -874,7 +3147,7 @@ type ProcessSemanticDirtyWorkResponse struct {
 
 func (x *ProcessSemanticDirtyWorkResponse) Reset() {
 	*x = ProcessSemanticDirtyWorkResponse{}
-	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[12]
+	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[30]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -886,7 +3159,7 @@ func (x *ProcessSemanticDirtyWorkResponse) String() string {
 func (*ProcessSemanticDirtyWorkResponse) ProtoMessage() {}
 
 func (x *ProcessSemanticDirtyWorkResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[12]
+	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[30]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -899,7 +3172,7 @@ func (x *ProcessSemanticDirtyWorkResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ProcessSemanticDirtyWorkResponse.ProtoReflect.Descriptor instead.
 func (*ProcessSemanticDirtyWorkResponse) Descriptor() ([]byte, []int) {
-	return file_mycel_admin_v1_semantic_maintenance_proto_rawDescGZIP(), []int{12}
+	return file_mycel_admin_v1_semantic_maintenance_proto_rawDescGZIP(), []int{30}
 }
 
 func (x *ProcessSemanticDirtyWorkResponse) GetProcessedItems() int32 {
@@ -938,7 +3211,7 @@ type BackfillSemanticRuleRequest struct {
 
 func (x *BackfillSemanticRuleRequest) Reset() {
 	*x = BackfillSemanticRuleRequest{}
-	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[13]
+	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[31]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -950,7 +3223,7 @@ func (x *BackfillSemanticRuleRequest) String() string {
 func (*BackfillSemanticRuleRequest) ProtoMessage() {}
 
 func (x *BackfillSemanticRuleRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[13]
+	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[31]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -963,7 +3236,7 @@ func (x *BackfillSemanticRuleRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use BackfillSemanticRuleRequest.ProtoReflect.Descriptor instead.
 func (*BackfillSemanticRuleRequest) Descriptor() ([]byte, []int) {
-	return file_mycel_admin_v1_semantic_maintenance_proto_rawDescGZIP(), []int{13}
+	return file_mycel_admin_v1_semantic_maintenance_proto_rawDescGZIP(), []int{31}
 }
 
 func (x *BackfillSemanticRuleRequest) GetSpaceId() string {
@@ -1031,7 +3304,7 @@ type BackfillSemanticRuleResponse struct {
 
 func (x *BackfillSemanticRuleResponse) Reset() {
 	*x = BackfillSemanticRuleResponse{}
-	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[14]
+	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[32]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1043,7 +3316,7 @@ func (x *BackfillSemanticRuleResponse) String() string {
 func (*BackfillSemanticRuleResponse) ProtoMessage() {}
 
 func (x *BackfillSemanticRuleResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[14]
+	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[32]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1056,7 +3329,7 @@ func (x *BackfillSemanticRuleResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use BackfillSemanticRuleResponse.ProtoReflect.Descriptor instead.
 func (*BackfillSemanticRuleResponse) Descriptor() ([]byte, []int) {
-	return file_mycel_admin_v1_semantic_maintenance_proto_rawDescGZIP(), []int{14}
+	return file_mycel_admin_v1_semantic_maintenance_proto_rawDescGZIP(), []int{32}
 }
 
 func (x *BackfillSemanticRuleResponse) GetSemanticRuleId() string {
@@ -1125,7 +3398,7 @@ type BackfillSkipped struct {
 
 func (x *BackfillSkipped) Reset() {
 	*x = BackfillSkipped{}
-	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[15]
+	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[33]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1137,7 +3410,7 @@ func (x *BackfillSkipped) String() string {
 func (*BackfillSkipped) ProtoMessage() {}
 
 func (x *BackfillSkipped) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[15]
+	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[33]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1150,7 +3423,7 @@ func (x *BackfillSkipped) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use BackfillSkipped.ProtoReflect.Descriptor instead.
 func (*BackfillSkipped) Descriptor() ([]byte, []int) {
-	return file_mycel_admin_v1_semantic_maintenance_proto_rawDescGZIP(), []int{15}
+	return file_mycel_admin_v1_semantic_maintenance_proto_rawDescGZIP(), []int{33}
 }
 
 func (x *BackfillSkipped) GetNodeId() string {
@@ -1177,7 +3450,7 @@ type BackfillFailure struct {
 
 func (x *BackfillFailure) Reset() {
 	*x = BackfillFailure{}
-	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[16]
+	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[34]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1189,7 +3462,7 @@ func (x *BackfillFailure) String() string {
 func (*BackfillFailure) ProtoMessage() {}
 
 func (x *BackfillFailure) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[16]
+	mi := &file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[34]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1202,7 +3475,7 @@ func (x *BackfillFailure) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use BackfillFailure.ProtoReflect.Descriptor instead.
 func (*BackfillFailure) Descriptor() ([]byte, []int) {
-	return file_mycel_admin_v1_semantic_maintenance_proto_rawDescGZIP(), []int{16}
+	return file_mycel_admin_v1_semantic_maintenance_proto_rawDescGZIP(), []int{34}
 }
 
 func (x *BackfillFailure) GetNodeId() string {
@@ -1223,7 +3496,7 @@ var File_mycel_admin_v1_semantic_maintenance_proto protoreflect.FileDescriptor
 
 const file_mycel_admin_v1_semantic_maintenance_proto_rawDesc = "" +
 	"\n" +
-	")mycel/admin/v1/semantic_maintenance.proto\x12\x0emycel.admin.v1\"@\n" +
+	")mycel/admin/v1/semantic_maintenance.proto\x12\x0emycel.admin.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1dmycel/admin/v1/semantic.proto\"@\n" +
 	"#GetSemanticMaintenanceStatusRequest\x12\x19\n" +
 	"\bspace_id\x18\x01 \x01(\tR\aspaceId\"\xd0\x05\n" +
 	"$GetSemanticMaintenanceStatusResponse\x12\x18\n" +
@@ -1243,7 +3516,199 @@ const file_mycel_admin_v1_semantic_maintenance_proto_rawDesc = "" +
 	"\x0ethrottle_state\x18\r \x01(\tR\rthrottleState\x12#\n" +
 	"\ranalyzer_runs\x18\x0e \x01(\x05R\fanalyzerRuns\x12\x1f\n" +
 	"\vworker_runs\x18\x0f \x01(\x05R\n" +
-	"workerRuns\"\xcb\x01\n" +
+	"workerRuns\"\x9e\x01\n" +
+	"#GetSemanticReliabilityStatusRequest\x12\x19\n" +
+	"\bspace_id\x18\x01 \x01(\tR\aspaceId\x12(\n" +
+	"\x10semantic_rule_id\x18\x02 \x01(\tR\x0esemanticRuleId\x122\n" +
+	"\x15embedding_binding_key\x18\x03 \x01(\tR\x13embeddingBindingKey\"\xe7\t\n" +
+	"$GetSemanticReliabilityStatusResponse\x12\x19\n" +
+	"\bspace_id\x18\x01 \x01(\tR\aspaceId\x12(\n" +
+	"\x10semantic_rule_id\x18\x02 \x01(\tR\x0esemanticRuleId\x122\n" +
+	"\x15embedding_binding_key\x18\x03 \x01(\tR\x13embeddingBindingKey\x12C\n" +
+	"\x1elatest_observed_graph_revision\x18\x04 \x01(\x04R\x1blatestObservedGraphRevision\x12E\n" +
+	"\x1fanalyzed_through_graph_revision\x18\x05 \x01(\x04R\x1canalyzedThroughGraphRevision\x12?\n" +
+	"\x1cfresh_through_graph_revision\x18\x06 \x01(\x04R\x19freshThroughGraphRevision\x120\n" +
+	"\x14unresolved_gap_count\x18\a \x01(\x04R\x12unresolvedGapCount\x12G\n" +
+	" oldest_unresolved_graph_revision\x18\b \x01(\x04R\x1doldestUnresolvedGraphRevision\x12:\n" +
+	"\x19configured_frontier_limit\x18\t \x01(\x04R\x17configuredFrontierLimit\x127\n" +
+	"\x18retained_work_item_count\x18\n" +
+	" \x01(\x04R\x15retainedWorkItemCount\x12/\n" +
+	"\x13semantic_generation\x18\v \x01(\x04R\x12semanticGeneration\x12%\n" +
+	"\x0ecapacity_state\x18\f \x01(\tR\rcapacityState\x12\x1a\n" +
+	"\bdegraded\x18\r \x01(\bR\bdegraded\x12'\n" +
+	"\x0fdegraded_reason\x18\x0e \x01(\tR\x0edegradedReason\x12)\n" +
+	"\x10rebuild_required\x18\x0f \x01(\bR\x0frebuildRequired\x12?\n" +
+	"\arebuild\x18\x10 \x01(\v2%.mycel.admin.v1.SemanticRebuildStatusR\arebuild\x12A\n" +
+	"\x1dconfigured_gap_interval_limit\x18\x11 \x01(\x04R\x1aconfiguredGapIntervalLimit\x12C\n" +
+	"\x1econfigured_revision_span_limit\x18\x12 \x01(\x04R\x1bconfiguredRevisionSpanLimit\x12G\n" +
+	" configured_serialized_byte_limit\x18\x13 \x01(\x04R\x1dconfiguredSerializedByteLimit\x12=\n" +
+	"\x1bretained_gap_interval_count\x18\x14 \x01(\x04R\x18retainedGapIntervalCount\x124\n" +
+	"\x16retained_revision_span\x18\x15 \x01(\x04R\x14retainedRevisionSpan\x12:\n" +
+	"\x19retained_serialized_bytes\x18\x16 \x01(\x04R\x17retainedSerializedBytes\"I\n" +
+	",GetSemanticProviderBudgetCapabilitiesRequest\x12\x19\n" +
+	"\bspace_id\x18\x01 \x01(\tR\aspaceId\"\x87\n" +
+	"\n" +
+	"-GetSemanticProviderBudgetCapabilitiesResponse\x12)\n" +
+	"\x10contract_version\x18\x01 \x01(\tR\x0fcontractVersion\x12.\n" +
+	"\x13daemon_owned_scopes\x18\x02 \x01(\bR\x11daemonOwnedScopes\x12G\n" +
+	" pre_provider_attempt_reservation\x18\x03 \x01(\bR\x1dpreProviderAttemptReservation\x128\n" +
+	"\x18durable_restart_recovery\x18\x04 \x01(\bR\x16durableRestartRecovery\x12'\n" +
+	"\x0fraft_replicated\x18\x05 \x01(\bR\x0eraftReplicated\x12#\n" +
+	"\rrequest_limit\x18\x06 \x01(\bR\frequestLimit\x122\n" +
+	"\x15derived_attempt_limit\x18\a \x01(\bR\x13derivedAttemptLimit\x122\n" +
+	"\x15aggregate_retry_limit\x18\b \x01(\bR\x13aggregateRetryLimit\x125\n" +
+	"\x17per_request_retry_limit\x18\t \x01(\bR\x14perRequestRetryLimit\x12<\n" +
+	"\x1aprovider_concurrency_limit\x18\n" +
+	" \x01(\bR\x18providerConcurrencyLimit\x120\n" +
+	"\x14single_item_batching\x18\v \x01(\bR\x12singleItemBatching\x12.\n" +
+	"\x13multi_item_batching\x18\f \x01(\bR\x11multiItemBatching\x12@\n" +
+	"\x1dper_request_input_token_limit\x18\r \x01(\bR\x19perRequestInputTokenLimit\x12=\n" +
+	"\x1baggregate_input_token_limit\x18\x0e \x01(\bR\x18aggregateInputTokenLimit\x12'\n" +
+	"\x0frequest_timeout\x18\x0f \x01(\bR\x0erequestTimeout\x12#\n" +
+	"\rtotal_timeout\x18\x10 \x01(\bR\ftotalTimeout\x120\n" +
+	"\x14versioned_cost_limit\x18\x11 \x01(\bR\x12versionedCostLimit\x12N\n" +
+	"#conservative_ambiguous_reservations\x18\x12 \x01(\bR!conservativeAmbiguousReservations\x12;\n" +
+	"\x1aappend_only_attempt_events\x18\x13 \x01(\bR\x17appendOnlyAttemptEvents\x121\n" +
+	"\x14supported_currencies\x18\x14 \x03(\tR\x13supportedCurrencies\x12D\n" +
+	"\x1fmaximum_attempt_event_page_size\x18\x15 \x01(\x05R\x1bmaximumAttemptEventPageSize\x125\n" +
+	"\x17maximum_scope_page_size\x18\x16 \x01(\x05R\x14maximumScopePageSize\x12-\n" +
+	"\x12overage_exhaustion\x18\x17 \x01(\bR\x11overageExhaustion\"\x85\x01\n" +
+	"%SemanticProviderBudgetBindingSelector\x12(\n" +
+	"\x10semantic_rule_id\x18\x01 \x01(\tR\x0esemanticRuleId\x122\n" +
+	"\x15embedding_binding_key\x18\x02 \x01(\tR\x13embeddingBindingKey\"\xdb\x01\n" +
+	"&GetSemanticProviderBudgetStatusRequest\x12\x19\n" +
+	"\bspace_id\x18\x01 \x01(\tR\aspaceId\x12(\n" +
+	"\x0fbudget_scope_id\x18\x02 \x01(\tH\x00R\rbudgetScopeId\x12`\n" +
+	"\x0fcurrent_binding\x18\x03 \x01(\v25.mycel.admin.v1.SemanticProviderBudgetBindingSelectorH\x00R\x0ecurrentBindingB\n" +
+	"\n" +
+	"\bselector\"o\n" +
+	"'GetSemanticProviderBudgetStatusResponse\x12D\n" +
+	"\x06status\x18\x01 \x01(\v2,.mycel.admin.v1.SemanticProviderBudgetStatusR\x06status\"\xb9\b\n" +
+	"\x1cSemanticProviderBudgetStatus\x12\x19\n" +
+	"\bspace_id\x18\x01 \x01(\tR\aspaceId\x12(\n" +
+	"\x10semantic_rule_id\x18\x02 \x01(\tR\x0esemanticRuleId\x122\n" +
+	"\x15embedding_binding_key\x18\x03 \x01(\tR\x13embeddingBindingKey\x12&\n" +
+	"\x0fbudget_scope_id\x18\x04 \x01(\tR\rbudgetScopeId\x12%\n" +
+	"\x0ecorrelation_id\x18\x05 \x01(\tR\rcorrelationId\x12*\n" +
+	"\x11model_endpoint_id\x18\x06 \x01(\tR\x0fmodelEndpointId\x12\x19\n" +
+	"\bmodel_id\x18\a \x01(\tR\amodelId\x12?\n" +
+	"\x1cmodel_endpoint_capability_id\x18\b \x01(\tR\x19modelEndpointCapabilityId\x12F\n" +
+	"\x05state\x18\t \x01(\x0e20.mycel.admin.v1.SemanticProviderBudgetScopeStateR\x05state\x12D\n" +
+	"\x06limits\x18\n" +
+	" \x01(\v2,.mycel.admin.v1.SemanticProviderBudgetPolicyR\x06limits\x12A\n" +
+	"\x05usage\x18\v \x01(\v2+.mycel.admin.v1.SemanticProviderBudgetUsageR\x05usage\x12G\n" +
+	" earliest_retained_event_sequence\x18\f \x01(\x04R\x1dearliestRetainedEventSequence\x129\n" +
+	"\x19high_water_event_sequence\x18\r \x01(\x04R\x16highWaterEventSequence\x129\n" +
+	"\n" +
+	"created_at\x18\x0e \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\x129\n" +
+	"\n" +
+	"updated_at\x18\x0f \x01(\v2\x1a.google.protobuf.TimestampR\tupdatedAt\x129\n" +
+	"\n" +
+	"expires_at\x18\x10 \x01(\v2\x1a.google.protobuf.TimestampR\texpiresAt\x12C\n" +
+	"\x0fretention_until\x18\x11 \x01(\v2\x1a.google.protobuf.TimestampR\x0eretentionUntil\x12W\n" +
+	"\rdenial_reason\x18\x12 \x01(\x0e22.mycel.admin.v1.SemanticProviderBudgetDenialReasonR\fdenialReason\x12%\n" +
+	"\x0escope_sequence\x18\x13 \x01(\x04R\rscopeSequence\"\x85\x02\n" +
+	"'ListSemanticProviderBudgetScopesRequest\x12\x19\n" +
+	"\bspace_id\x18\x01 \x01(\tR\aspaceId\x12%\n" +
+	"\x0ecorrelation_id\x18\x02 \x01(\tR\rcorrelationId\x12(\n" +
+	"\x10semantic_rule_id\x18\x03 \x01(\tR\x0esemanticRuleId\x122\n" +
+	"\x15embedding_binding_key\x18\x04 \x01(\tR\x13embeddingBindingKey\x12\x1b\n" +
+	"\tpage_size\x18\x05 \x01(\x05R\bpageSize\x12\x1d\n" +
+	"\n" +
+	"page_token\x18\x06 \x01(\tR\tpageToken\"\xa0\x01\n" +
+	"(ListSemanticProviderBudgetScopesResponse\x12L\n" +
+	"\x06scopes\x18\x01 \x03(\v24.mycel.admin.v1.SemanticProviderBudgetScopeReferenceR\x06scopes\x12&\n" +
+	"\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken\"\xfa\x02\n" +
+	"$SemanticProviderBudgetScopeReference\x12%\n" +
+	"\x0escope_sequence\x18\x01 \x01(\x04R\rscopeSequence\x12&\n" +
+	"\x0fbudget_scope_id\x18\x02 \x01(\tR\rbudgetScopeId\x12(\n" +
+	"\x10semantic_rule_id\x18\x03 \x01(\tR\x0esemanticRuleId\x122\n" +
+	"\x15embedding_binding_key\x18\x04 \x01(\tR\x13embeddingBindingKey\x12%\n" +
+	"\x0ecorrelation_id\x18\x05 \x01(\tR\rcorrelationId\x129\n" +
+	"\n" +
+	"created_at\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\x12C\n" +
+	"\x0fretention_until\x18\a \x01(\v2\x1a.google.protobuf.TimestampR\x0eretentionUntil\"\xb1\x03\n" +
+	"\x1bSemanticProviderBudgetUsage\x12\x1a\n" +
+	"\brequests\x18\x01 \x01(\x03R\brequests\x12\x1a\n" +
+	"\battempts\x18\x02 \x01(\x03R\battempts\x12%\n" +
+	"\x0eretry_attempts\x18\x03 \x01(\x03R\rretryAttempts\x12\x1f\n" +
+	"\vbatch_items\x18\x04 \x01(\x03R\n" +
+	"batchItems\x122\n" +
+	"\x15active_provider_calls\x18\x05 \x01(\x03R\x13activeProviderCalls\x12!\n" +
+	"\finput_tokens\x18\x06 \x01(\x03R\vinputTokens\x12'\n" +
+	"\x0fprovider_millis\x18\a \x01(\x03R\x0eproviderMillis\x122\n" +
+	"\x15estimated_cost_micros\x18\b \x01(\x03R\x13estimatedCostMicros\x12-\n" +
+	"\x12ambiguous_attempts\x18\t \x01(\x03R\x11ambiguousAttempts\x12/\n" +
+	"\x13accounting_overflow\x18\n" +
+	" \x01(\bR\x12accountingOverflow\"\xd6\x01\n" +
+	".ListSemanticProviderBudgetAttemptEventsRequest\x12\x19\n" +
+	"\bspace_id\x18\x01 \x01(\tR\aspaceId\x12&\n" +
+	"\x0fbudget_scope_id\x18\x02 \x01(\tR\rbudgetScopeId\x12%\n" +
+	"\x0eafter_sequence\x18\x03 \x01(\x04R\rafterSequence\x12\x1b\n" +
+	"\tpage_size\x18\x04 \x01(\x05R\bpageSize\x12\x1d\n" +
+	"\n" +
+	"page_token\x18\x05 \x01(\tR\tpageToken\"\x8f\x03\n" +
+	"/ListSemanticProviderBudgetAttemptEventsResponse\x12J\n" +
+	"\x06events\x18\x01 \x03(\v22.mycel.admin.v1.SemanticProviderBudgetAttemptEventR\x06events\x12&\n" +
+	"\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken\x12G\n" +
+	" earliest_retained_event_sequence\x18\x03 \x01(\x04R\x1dearliestRetainedEventSequence\x12?\n" +
+	"\x1csnapshot_high_water_sequence\x18\x04 \x01(\x04R\x19snapshotHighWaterSequence\x12=\n" +
+	"\x1bcurrent_high_water_sequence\x18\x05 \x01(\x04R\x18currentHighWaterSequence\x12\x1f\n" +
+	"\vhistory_gap\x18\x06 \x01(\bR\n" +
+	"historyGap\"\xb6\b\n" +
+	"\"SemanticProviderBudgetAttemptEvent\x12%\n" +
+	"\x0eevent_sequence\x18\x01 \x01(\x04R\reventSequence\x12&\n" +
+	"\x0fbudget_scope_id\x18\x02 \x01(\tR\rbudgetScopeId\x12\x1d\n" +
+	"\n" +
+	"attempt_id\x18\x03 \x01(\tR\tattemptId\x12'\n" +
+	"\x0fattempt_version\x18\x04 \x01(\rR\x0eattemptVersion\x12\x1d\n" +
+	"\n" +
+	"request_id\x18\x05 \x01(\tR\trequestId\x12\x1f\n" +
+	"\vretry_index\x18\x06 \x01(\x03R\n" +
+	"retryIndex\x12H\n" +
+	"\x05state\x18\a \x01(\x0e22.mycel.admin.v1.SemanticProviderBudgetAttemptStateR\x05state\x12\x1f\n" +
+	"\vbatch_items\x18\b \x01(\x03R\n" +
+	"batchItems\x122\n" +
+	"\x15reserved_input_tokens\x18\t \x01(\x03R\x13reservedInputTokens\x120\n" +
+	"\x14charged_input_tokens\x18\n" +
+	" \x01(\x03R\x12chargedInputTokens\x128\n" +
+	"\x18reserved_provider_millis\x18\v \x01(\x03R\x16reservedProviderMillis\x126\n" +
+	"\x17charged_provider_millis\x18\f \x01(\x03R\x15chargedProviderMillis\x120\n" +
+	"\x14reserved_cost_micros\x18\r \x01(\x03R\x12reservedCostMicros\x12.\n" +
+	"\x13charged_cost_micros\x18\x0e \x01(\x03R\x11chargedCostMicros\x12\x1f\n" +
+	"\vusage_known\x18\x0f \x01(\bR\n" +
+	"usageKnown\x12#\n" +
+	"\routcome_known\x18\x10 \x01(\bR\foutcomeKnown\x126\n" +
+	"\x17provider_duration_known\x18\x11 \x01(\bR\x15providerDurationKnown\x12`\n" +
+	"\x10outcome_category\x18\x12 \x01(\x0e25.mycel.admin.v1.SemanticProviderBudgetOutcomeCategoryR\x0foutcomeCategory\x12;\n" +
+	"\vrecorded_at\x18\x13 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
+	"recordedAt\x12A\n" +
+	"\x0ereserved_until\x18\x14 \x01(\v2\x1a.google.protobuf.TimestampR\rreservedUntil\x124\n" +
+	"\x16charged_cost_saturated\x18\x15 \x01(\bR\x14chargedCostSaturated\"\xff\x02\n" +
+	"\x15SemanticRebuildStatus\x12#\n" +
+	"\rrebuild_epoch\x18\x01 \x01(\tR\frebuildEpoch\x12\x14\n" +
+	"\x05state\x18\x02 \x01(\tR\x05state\x12?\n" +
+	"\x1cpinned_target_graph_revision\x18\x03 \x01(\x04R\x19pinnedTargetGraphRevision\x12?\n" +
+	"\x1cdelta_catchup_graph_revision\x18\x04 \x01(\x04R\x19deltaCatchupGraphRevision\x12/\n" +
+	"\x13semantic_generation\x18\x05 \x01(\x04R\x12semanticGeneration\x12\x1d\n" +
+	"\n" +
+	"started_at\x18\x06 \x01(\tR\tstartedAt\x12!\n" +
+	"\fcompleted_at\x18\a \x01(\tR\vcompletedAt\x126\n" +
+	"\x17error_message_sanitized\x18\b \x01(\tR\x15errorMessageSanitized\"\xaa\x02\n" +
+	"\x1aRebuildSemanticRuleRequest\x12\x19\n" +
+	"\bspace_id\x18\x01 \x01(\tR\aspaceId\x12(\n" +
+	"\x10semantic_rule_id\x18\x02 \x01(\tR\x0esemanticRuleId\x122\n" +
+	"\x15embedding_binding_key\x18\x03 \x01(\tR\x13embeddingBindingKey\x12%\n" +
+	"\x0ebackfill_limit\x18\x04 \x01(\x05R\rbackfillLimit\x126\n" +
+	"\x17maintenance_batch_limit\x18\x05 \x01(\x05R\x15maintenanceBatchLimit\x124\n" +
+	"\x16max_catchup_iterations\x18\x06 \x01(\x05R\x14maxCatchupIterations\"\xce\x02\n" +
+	"\x1bRebuildSemanticRuleResponse\x12?\n" +
+	"\arebuild\x18\x01 \x01(\v2%.mycel.admin.v1.SemanticRebuildStatusR\arebuild\x12V\n" +
+	"\vreliability\x18\x02 \x01(\v24.mycel.admin.v1.GetSemanticReliabilityStatusResponseR\vreliability\x12%\n" +
+	"\x0eselected_count\x18\x03 \x01(\x05R\rselectedCount\x12'\n" +
+	"\x0fgenerated_count\x18\x04 \x01(\x05R\x0egeneratedCount\x12#\n" +
+	"\rskipped_count\x18\x05 \x01(\x05R\fskippedCount\x12!\n" +
+	"\ffailed_count\x18\x06 \x01(\x05R\vfailedCount\"\xcb\x01\n" +
 	"\"ListSemanticMaintenanceWorkRequest\x12\x19\n" +
 	"\bspace_id\x18\x01 \x01(\tR\aspaceId\x12\x16\n" +
 	"\x06status\x18\x02 \x01(\tR\x06status\x12\x14\n" +
@@ -1251,7 +3716,7 @@ const file_mycel_admin_v1_semantic_maintenance_proto_rawDesc = "" +
 	"\x10semantic_rule_id\x18\x04 \x01(\tR\x0esemanticRuleId\x122\n" +
 	"\x15embedding_binding_key\x18\x05 \x01(\tR\x13embeddingBindingKey\"h\n" +
 	"#ListSemanticMaintenanceWorkResponse\x12A\n" +
-	"\x05items\x18\x01 \x03(\v2+.mycel.admin.v1.SemanticMaintenanceWorkItemR\x05items\"\xc3\x04\n" +
+	"\x05items\x18\x01 \x03(\v2+.mycel.admin.v1.SemanticMaintenanceWorkItemR\x05items\"\xce\x05\n" +
 	"\x1bSemanticMaintenanceWorkItem\x12 \n" +
 	"\fwork_item_id\x18\x01 \x01(\tR\n" +
 	"workItemId\x12\x19\n" +
@@ -1272,7 +3737,10 @@ const file_mycel_admin_v1_semantic_maintenance_proto_rawDesc = "" +
 	"\n" +
 	"created_at\x18\x0e \x01(\tR\tcreatedAt\x12\x1d\n" +
 	"\n" +
-	"updated_at\x18\x0f \x01(\tR\tupdatedAt\"b\n" +
+	"updated_at\x18\x0f \x01(\tR\tupdatedAt\x120\n" +
+	"\x14first_graph_revision\x18\x10 \x01(\x04R\x12firstGraphRevision\x12.\n" +
+	"\x13last_graph_revision\x18\x11 \x01(\x04R\x11lastGraphRevision\x12'\n" +
+	"\x0fwork_generation\x18\x12 \x01(\x04R\x0eworkGeneration\"b\n" +
 	"#RetrySemanticMaintenanceWorkRequest\x12\x19\n" +
 	"\bspace_id\x18\x01 \x01(\tR\aspaceId\x12 \n" +
 	"\fwork_item_id\x18\x02 \x01(\tR\n" +
@@ -1322,15 +3790,59 @@ const file_mycel_admin_v1_semantic_maintenance_proto_rawDesc = "" +
 	"\x06reason\x18\x02 \x01(\tR\x06reason\"@\n" +
 	"\x0fBackfillFailure\x12\x17\n" +
 	"\anode_id\x18\x01 \x01(\tR\x06nodeId\x12\x14\n" +
-	"\x05error\x18\x02 \x01(\tR\x05error2\xc2\a\n" +
+	"\x05error\x18\x02 \x01(\tR\x05error*\xa3\x02\n" +
+	" SemanticProviderBudgetScopeState\x124\n" +
+	"0SEMANTIC_PROVIDER_BUDGET_SCOPE_STATE_UNSPECIFIED\x10\x00\x12/\n" +
+	"+SEMANTIC_PROVIDER_BUDGET_SCOPE_STATE_ACTIVE\x10\x01\x122\n" +
+	".SEMANTIC_PROVIDER_BUDGET_SCOPE_STATE_COMPLETED\x10\x02\x120\n" +
+	",SEMANTIC_PROVIDER_BUDGET_SCOPE_STATE_EXPIRED\x10\x03\x122\n" +
+	".SEMANTIC_PROVIDER_BUDGET_SCOPE_STATE_EXHAUSTED\x10\x04*\x84\a\n" +
+	"\"SemanticProviderBudgetDenialReason\x126\n" +
+	"2SEMANTIC_PROVIDER_BUDGET_DENIAL_REASON_UNSPECIFIED\x10\x00\x12/\n" +
+	"+SEMANTIC_PROVIDER_BUDGET_DENIAL_REASON_NONE\x10\x01\x128\n" +
+	"4SEMANTIC_PROVIDER_BUDGET_DENIAL_REASON_REQUEST_LIMIT\x10\x02\x128\n" +
+	"4SEMANTIC_PROVIDER_BUDGET_DENIAL_REASON_ATTEMPT_LIMIT\x10\x03\x126\n" +
+	"2SEMANTIC_PROVIDER_BUDGET_DENIAL_REASON_RETRY_LIMIT\x10\x04\x12B\n" +
+	">SEMANTIC_PROVIDER_BUDGET_DENIAL_REASON_PER_REQUEST_RETRY_LIMIT\x10\x05\x12<\n" +
+	"8SEMANTIC_PROVIDER_BUDGET_DENIAL_REASON_CONCURRENCY_LIMIT\x10\x06\x126\n" +
+	"2SEMANTIC_PROVIDER_BUDGET_DENIAL_REASON_BATCH_LIMIT\x10\a\x12<\n" +
+	"8SEMANTIC_PROVIDER_BUDGET_DENIAL_REASON_INPUT_TOKEN_LIMIT\x10\b\x12>\n" +
+	":SEMANTIC_PROVIDER_BUDGET_DENIAL_REASON_PROVIDER_TIME_LIMIT\x10\t\x123\n" +
+	"/SEMANTIC_PROVIDER_BUDGET_DENIAL_REASON_DEADLINE\x10\n" +
+	"\x125\n" +
+	"1SEMANTIC_PROVIDER_BUDGET_DENIAL_REASON_COST_LIMIT\x10\v\x129\n" +
+	"5SEMANTIC_PROVIDER_BUDGET_DENIAL_REASON_ROUTE_MISMATCH\x10\f\x125\n" +
+	"1SEMANTIC_PROVIDER_BUDGET_DENIAL_REASON_ACCOUNTING\x10\r\x123\n" +
+	"/SEMANTIC_PROVIDER_BUDGET_DENIAL_REASON_CAPACITY\x10\x0e*\xe5\x02\n" +
+	"\"SemanticProviderBudgetAttemptState\x126\n" +
+	"2SEMANTIC_PROVIDER_BUDGET_ATTEMPT_STATE_UNSPECIFIED\x10\x00\x123\n" +
+	"/SEMANTIC_PROVIDER_BUDGET_ATTEMPT_STATE_RESERVED\x10\x01\x124\n" +
+	"0SEMANTIC_PROVIDER_BUDGET_ATTEMPT_STATE_SUCCEEDED\x10\x02\x121\n" +
+	"-SEMANTIC_PROVIDER_BUDGET_ATTEMPT_STATE_FAILED\x10\x03\x123\n" +
+	"/SEMANTIC_PROVIDER_BUDGET_ATTEMPT_STATE_CANCELED\x10\x04\x124\n" +
+	"0SEMANTIC_PROVIDER_BUDGET_ATTEMPT_STATE_AMBIGUOUS\x10\x05*\xce\x03\n" +
+	"%SemanticProviderBudgetOutcomeCategory\x129\n" +
+	"5SEMANTIC_PROVIDER_BUDGET_OUTCOME_CATEGORY_UNSPECIFIED\x10\x00\x122\n" +
+	".SEMANTIC_PROVIDER_BUDGET_OUTCOME_CATEGORY_NONE\x10\x01\x125\n" +
+	"1SEMANTIC_PROVIDER_BUDGET_OUTCOME_CATEGORY_SUCCESS\x10\x02\x12?\n" +
+	";SEMANTIC_PROVIDER_BUDGET_OUTCOME_CATEGORY_TRANSIENT_FAILURE\x10\x03\x12?\n" +
+	";SEMANTIC_PROVIDER_BUDGET_OUTCOME_CATEGORY_PERMANENT_FAILURE\x10\x04\x12D\n" +
+	"@SEMANTIC_PROVIDER_BUDGET_OUTCOME_CATEGORY_CANCELED_BEFORE_EFFECT\x10\x05\x127\n" +
+	"3SEMANTIC_PROVIDER_BUDGET_OUTCOME_CATEGORY_AMBIGUOUS\x10\x062\xbf\x0e\n" +
 	"\x1fAdminSemanticMaintenanceService\x12\x89\x01\n" +
-	"\x1cGetSemanticMaintenanceStatus\x123.mycel.admin.v1.GetSemanticMaintenanceStatusRequest\x1a4.mycel.admin.v1.GetSemanticMaintenanceStatusResponse\x12\x86\x01\n" +
+	"\x1cGetSemanticMaintenanceStatus\x123.mycel.admin.v1.GetSemanticMaintenanceStatusRequest\x1a4.mycel.admin.v1.GetSemanticMaintenanceStatusResponse\x12\x89\x01\n" +
+	"\x1cGetSemanticReliabilityStatus\x123.mycel.admin.v1.GetSemanticReliabilityStatusRequest\x1a4.mycel.admin.v1.GetSemanticReliabilityStatusResponse\x12n\n" +
+	"\x13RebuildSemanticRule\x12*.mycel.admin.v1.RebuildSemanticRuleRequest\x1a+.mycel.admin.v1.RebuildSemanticRuleResponse\x12\x86\x01\n" +
 	"\x1bListSemanticMaintenanceWork\x122.mycel.admin.v1.ListSemanticMaintenanceWorkRequest\x1a3.mycel.admin.v1.ListSemanticMaintenanceWorkResponse\x12\x89\x01\n" +
 	"\x1cRetrySemanticMaintenanceWork\x123.mycel.admin.v1.RetrySemanticMaintenanceWorkRequest\x1a4.mycel.admin.v1.RetrySemanticMaintenanceWorkResponse\x12\x8c\x01\n" +
 	"\x1dCancelSemanticMaintenanceWork\x124.mycel.admin.v1.CancelSemanticMaintenanceWorkRequest\x1a5.mycel.admin.v1.CancelSemanticMaintenanceWorkResponse\x12}\n" +
 	"\x18AnalyzeSemanticDirtyWork\x12/.mycel.admin.v1.AnalyzeSemanticDirtyWorkRequest\x1a0.mycel.admin.v1.AnalyzeSemanticDirtyWorkResponse\x12}\n" +
 	"\x18ProcessSemanticDirtyWork\x12/.mycel.admin.v1.ProcessSemanticDirtyWorkRequest\x1a0.mycel.admin.v1.ProcessSemanticDirtyWorkResponse\x12q\n" +
-	"\x14BackfillSemanticRule\x12+.mycel.admin.v1.BackfillSemanticRuleRequest\x1a,.mycel.admin.v1.BackfillSemanticRuleResponseB\xc7\x01\n" +
+	"\x14BackfillSemanticRule\x12+.mycel.admin.v1.BackfillSemanticRuleRequest\x1a,.mycel.admin.v1.BackfillSemanticRuleResponse\x12\xa4\x01\n" +
+	"%GetSemanticProviderBudgetCapabilities\x12<.mycel.admin.v1.GetSemanticProviderBudgetCapabilitiesRequest\x1a=.mycel.admin.v1.GetSemanticProviderBudgetCapabilitiesResponse\x12\x92\x01\n" +
+	"\x1fGetSemanticProviderBudgetStatus\x126.mycel.admin.v1.GetSemanticProviderBudgetStatusRequest\x1a7.mycel.admin.v1.GetSemanticProviderBudgetStatusResponse\x12\x95\x01\n" +
+	" ListSemanticProviderBudgetScopes\x127.mycel.admin.v1.ListSemanticProviderBudgetScopesRequest\x1a8.mycel.admin.v1.ListSemanticProviderBudgetScopesResponse\x12\xaa\x01\n" +
+	"'ListSemanticProviderBudgetAttemptEvents\x12>.mycel.admin.v1.ListSemanticProviderBudgetAttemptEventsRequest\x1a?.mycel.admin.v1.ListSemanticProviderBudgetAttemptEventsResponseB\xc7\x01\n" +
 	"\x12com.mycel.admin.v1B\x18SemanticMaintenanceProtoP\x01Z=github.com/myceldb/mycel-go-sdk/gen/go/mycel/admin/v1;adminv1\xa2\x02\x03MAX\xaa\x02\x0eMycel.Admin.V1\xca\x02\x0eMycel\\Admin\\V1\xe2\x02\x1aMycel\\Admin\\V1\\GPBMetadata\xea\x02\x10Mycel::Admin::V1b\x06proto3"
 
 var (
@@ -1345,51 +3857,109 @@ func file_mycel_admin_v1_semantic_maintenance_proto_rawDescGZIP() []byte {
 	return file_mycel_admin_v1_semantic_maintenance_proto_rawDescData
 }
 
-var file_mycel_admin_v1_semantic_maintenance_proto_msgTypes = make([]protoimpl.MessageInfo, 17)
+var file_mycel_admin_v1_semantic_maintenance_proto_enumTypes = make([]protoimpl.EnumInfo, 4)
+var file_mycel_admin_v1_semantic_maintenance_proto_msgTypes = make([]protoimpl.MessageInfo, 35)
 var file_mycel_admin_v1_semantic_maintenance_proto_goTypes = []any{
-	(*GetSemanticMaintenanceStatusRequest)(nil),   // 0: mycel.admin.v1.GetSemanticMaintenanceStatusRequest
-	(*GetSemanticMaintenanceStatusResponse)(nil),  // 1: mycel.admin.v1.GetSemanticMaintenanceStatusResponse
-	(*ListSemanticMaintenanceWorkRequest)(nil),    // 2: mycel.admin.v1.ListSemanticMaintenanceWorkRequest
-	(*ListSemanticMaintenanceWorkResponse)(nil),   // 3: mycel.admin.v1.ListSemanticMaintenanceWorkResponse
-	(*SemanticMaintenanceWorkItem)(nil),           // 4: mycel.admin.v1.SemanticMaintenanceWorkItem
-	(*RetrySemanticMaintenanceWorkRequest)(nil),   // 5: mycel.admin.v1.RetrySemanticMaintenanceWorkRequest
-	(*RetrySemanticMaintenanceWorkResponse)(nil),  // 6: mycel.admin.v1.RetrySemanticMaintenanceWorkResponse
-	(*CancelSemanticMaintenanceWorkRequest)(nil),  // 7: mycel.admin.v1.CancelSemanticMaintenanceWorkRequest
-	(*CancelSemanticMaintenanceWorkResponse)(nil), // 8: mycel.admin.v1.CancelSemanticMaintenanceWorkResponse
-	(*AnalyzeSemanticDirtyWorkRequest)(nil),       // 9: mycel.admin.v1.AnalyzeSemanticDirtyWorkRequest
-	(*AnalyzeSemanticDirtyWorkResponse)(nil),      // 10: mycel.admin.v1.AnalyzeSemanticDirtyWorkResponse
-	(*ProcessSemanticDirtyWorkRequest)(nil),       // 11: mycel.admin.v1.ProcessSemanticDirtyWorkRequest
-	(*ProcessSemanticDirtyWorkResponse)(nil),      // 12: mycel.admin.v1.ProcessSemanticDirtyWorkResponse
-	(*BackfillSemanticRuleRequest)(nil),           // 13: mycel.admin.v1.BackfillSemanticRuleRequest
-	(*BackfillSemanticRuleResponse)(nil),          // 14: mycel.admin.v1.BackfillSemanticRuleResponse
-	(*BackfillSkipped)(nil),                       // 15: mycel.admin.v1.BackfillSkipped
-	(*BackfillFailure)(nil),                       // 16: mycel.admin.v1.BackfillFailure
+	(SemanticProviderBudgetScopeState)(0),                   // 0: mycel.admin.v1.SemanticProviderBudgetScopeState
+	(SemanticProviderBudgetDenialReason)(0),                 // 1: mycel.admin.v1.SemanticProviderBudgetDenialReason
+	(SemanticProviderBudgetAttemptState)(0),                 // 2: mycel.admin.v1.SemanticProviderBudgetAttemptState
+	(SemanticProviderBudgetOutcomeCategory)(0),              // 3: mycel.admin.v1.SemanticProviderBudgetOutcomeCategory
+	(*GetSemanticMaintenanceStatusRequest)(nil),             // 4: mycel.admin.v1.GetSemanticMaintenanceStatusRequest
+	(*GetSemanticMaintenanceStatusResponse)(nil),            // 5: mycel.admin.v1.GetSemanticMaintenanceStatusResponse
+	(*GetSemanticReliabilityStatusRequest)(nil),             // 6: mycel.admin.v1.GetSemanticReliabilityStatusRequest
+	(*GetSemanticReliabilityStatusResponse)(nil),            // 7: mycel.admin.v1.GetSemanticReliabilityStatusResponse
+	(*GetSemanticProviderBudgetCapabilitiesRequest)(nil),    // 8: mycel.admin.v1.GetSemanticProviderBudgetCapabilitiesRequest
+	(*GetSemanticProviderBudgetCapabilitiesResponse)(nil),   // 9: mycel.admin.v1.GetSemanticProviderBudgetCapabilitiesResponse
+	(*SemanticProviderBudgetBindingSelector)(nil),           // 10: mycel.admin.v1.SemanticProviderBudgetBindingSelector
+	(*GetSemanticProviderBudgetStatusRequest)(nil),          // 11: mycel.admin.v1.GetSemanticProviderBudgetStatusRequest
+	(*GetSemanticProviderBudgetStatusResponse)(nil),         // 12: mycel.admin.v1.GetSemanticProviderBudgetStatusResponse
+	(*SemanticProviderBudgetStatus)(nil),                    // 13: mycel.admin.v1.SemanticProviderBudgetStatus
+	(*ListSemanticProviderBudgetScopesRequest)(nil),         // 14: mycel.admin.v1.ListSemanticProviderBudgetScopesRequest
+	(*ListSemanticProviderBudgetScopesResponse)(nil),        // 15: mycel.admin.v1.ListSemanticProviderBudgetScopesResponse
+	(*SemanticProviderBudgetScopeReference)(nil),            // 16: mycel.admin.v1.SemanticProviderBudgetScopeReference
+	(*SemanticProviderBudgetUsage)(nil),                     // 17: mycel.admin.v1.SemanticProviderBudgetUsage
+	(*ListSemanticProviderBudgetAttemptEventsRequest)(nil),  // 18: mycel.admin.v1.ListSemanticProviderBudgetAttemptEventsRequest
+	(*ListSemanticProviderBudgetAttemptEventsResponse)(nil), // 19: mycel.admin.v1.ListSemanticProviderBudgetAttemptEventsResponse
+	(*SemanticProviderBudgetAttemptEvent)(nil),              // 20: mycel.admin.v1.SemanticProviderBudgetAttemptEvent
+	(*SemanticRebuildStatus)(nil),                           // 21: mycel.admin.v1.SemanticRebuildStatus
+	(*RebuildSemanticRuleRequest)(nil),                      // 22: mycel.admin.v1.RebuildSemanticRuleRequest
+	(*RebuildSemanticRuleResponse)(nil),                     // 23: mycel.admin.v1.RebuildSemanticRuleResponse
+	(*ListSemanticMaintenanceWorkRequest)(nil),              // 24: mycel.admin.v1.ListSemanticMaintenanceWorkRequest
+	(*ListSemanticMaintenanceWorkResponse)(nil),             // 25: mycel.admin.v1.ListSemanticMaintenanceWorkResponse
+	(*SemanticMaintenanceWorkItem)(nil),                     // 26: mycel.admin.v1.SemanticMaintenanceWorkItem
+	(*RetrySemanticMaintenanceWorkRequest)(nil),             // 27: mycel.admin.v1.RetrySemanticMaintenanceWorkRequest
+	(*RetrySemanticMaintenanceWorkResponse)(nil),            // 28: mycel.admin.v1.RetrySemanticMaintenanceWorkResponse
+	(*CancelSemanticMaintenanceWorkRequest)(nil),            // 29: mycel.admin.v1.CancelSemanticMaintenanceWorkRequest
+	(*CancelSemanticMaintenanceWorkResponse)(nil),           // 30: mycel.admin.v1.CancelSemanticMaintenanceWorkResponse
+	(*AnalyzeSemanticDirtyWorkRequest)(nil),                 // 31: mycel.admin.v1.AnalyzeSemanticDirtyWorkRequest
+	(*AnalyzeSemanticDirtyWorkResponse)(nil),                // 32: mycel.admin.v1.AnalyzeSemanticDirtyWorkResponse
+	(*ProcessSemanticDirtyWorkRequest)(nil),                 // 33: mycel.admin.v1.ProcessSemanticDirtyWorkRequest
+	(*ProcessSemanticDirtyWorkResponse)(nil),                // 34: mycel.admin.v1.ProcessSemanticDirtyWorkResponse
+	(*BackfillSemanticRuleRequest)(nil),                     // 35: mycel.admin.v1.BackfillSemanticRuleRequest
+	(*BackfillSemanticRuleResponse)(nil),                    // 36: mycel.admin.v1.BackfillSemanticRuleResponse
+	(*BackfillSkipped)(nil),                                 // 37: mycel.admin.v1.BackfillSkipped
+	(*BackfillFailure)(nil),                                 // 38: mycel.admin.v1.BackfillFailure
+	(*SemanticProviderBudgetPolicy)(nil),                    // 39: mycel.admin.v1.SemanticProviderBudgetPolicy
+	(*timestamppb.Timestamp)(nil),                           // 40: google.protobuf.Timestamp
 }
 var file_mycel_admin_v1_semantic_maintenance_proto_depIdxs = []int32{
-	4,  // 0: mycel.admin.v1.ListSemanticMaintenanceWorkResponse.items:type_name -> mycel.admin.v1.SemanticMaintenanceWorkItem
-	4,  // 1: mycel.admin.v1.RetrySemanticMaintenanceWorkResponse.item:type_name -> mycel.admin.v1.SemanticMaintenanceWorkItem
-	4,  // 2: mycel.admin.v1.CancelSemanticMaintenanceWorkResponse.item:type_name -> mycel.admin.v1.SemanticMaintenanceWorkItem
-	15, // 3: mycel.admin.v1.BackfillSemanticRuleResponse.skipped:type_name -> mycel.admin.v1.BackfillSkipped
-	16, // 4: mycel.admin.v1.BackfillSemanticRuleResponse.failures:type_name -> mycel.admin.v1.BackfillFailure
-	0,  // 5: mycel.admin.v1.AdminSemanticMaintenanceService.GetSemanticMaintenanceStatus:input_type -> mycel.admin.v1.GetSemanticMaintenanceStatusRequest
-	2,  // 6: mycel.admin.v1.AdminSemanticMaintenanceService.ListSemanticMaintenanceWork:input_type -> mycel.admin.v1.ListSemanticMaintenanceWorkRequest
-	5,  // 7: mycel.admin.v1.AdminSemanticMaintenanceService.RetrySemanticMaintenanceWork:input_type -> mycel.admin.v1.RetrySemanticMaintenanceWorkRequest
-	7,  // 8: mycel.admin.v1.AdminSemanticMaintenanceService.CancelSemanticMaintenanceWork:input_type -> mycel.admin.v1.CancelSemanticMaintenanceWorkRequest
-	9,  // 9: mycel.admin.v1.AdminSemanticMaintenanceService.AnalyzeSemanticDirtyWork:input_type -> mycel.admin.v1.AnalyzeSemanticDirtyWorkRequest
-	11, // 10: mycel.admin.v1.AdminSemanticMaintenanceService.ProcessSemanticDirtyWork:input_type -> mycel.admin.v1.ProcessSemanticDirtyWorkRequest
-	13, // 11: mycel.admin.v1.AdminSemanticMaintenanceService.BackfillSemanticRule:input_type -> mycel.admin.v1.BackfillSemanticRuleRequest
-	1,  // 12: mycel.admin.v1.AdminSemanticMaintenanceService.GetSemanticMaintenanceStatus:output_type -> mycel.admin.v1.GetSemanticMaintenanceStatusResponse
-	3,  // 13: mycel.admin.v1.AdminSemanticMaintenanceService.ListSemanticMaintenanceWork:output_type -> mycel.admin.v1.ListSemanticMaintenanceWorkResponse
-	6,  // 14: mycel.admin.v1.AdminSemanticMaintenanceService.RetrySemanticMaintenanceWork:output_type -> mycel.admin.v1.RetrySemanticMaintenanceWorkResponse
-	8,  // 15: mycel.admin.v1.AdminSemanticMaintenanceService.CancelSemanticMaintenanceWork:output_type -> mycel.admin.v1.CancelSemanticMaintenanceWorkResponse
-	10, // 16: mycel.admin.v1.AdminSemanticMaintenanceService.AnalyzeSemanticDirtyWork:output_type -> mycel.admin.v1.AnalyzeSemanticDirtyWorkResponse
-	12, // 17: mycel.admin.v1.AdminSemanticMaintenanceService.ProcessSemanticDirtyWork:output_type -> mycel.admin.v1.ProcessSemanticDirtyWorkResponse
-	14, // 18: mycel.admin.v1.AdminSemanticMaintenanceService.BackfillSemanticRule:output_type -> mycel.admin.v1.BackfillSemanticRuleResponse
-	12, // [12:19] is the sub-list for method output_type
-	5,  // [5:12] is the sub-list for method input_type
-	5,  // [5:5] is the sub-list for extension type_name
-	5,  // [5:5] is the sub-list for extension extendee
-	0,  // [0:5] is the sub-list for field type_name
+	21, // 0: mycel.admin.v1.GetSemanticReliabilityStatusResponse.rebuild:type_name -> mycel.admin.v1.SemanticRebuildStatus
+	10, // 1: mycel.admin.v1.GetSemanticProviderBudgetStatusRequest.current_binding:type_name -> mycel.admin.v1.SemanticProviderBudgetBindingSelector
+	13, // 2: mycel.admin.v1.GetSemanticProviderBudgetStatusResponse.status:type_name -> mycel.admin.v1.SemanticProviderBudgetStatus
+	0,  // 3: mycel.admin.v1.SemanticProviderBudgetStatus.state:type_name -> mycel.admin.v1.SemanticProviderBudgetScopeState
+	39, // 4: mycel.admin.v1.SemanticProviderBudgetStatus.limits:type_name -> mycel.admin.v1.SemanticProviderBudgetPolicy
+	17, // 5: mycel.admin.v1.SemanticProviderBudgetStatus.usage:type_name -> mycel.admin.v1.SemanticProviderBudgetUsage
+	40, // 6: mycel.admin.v1.SemanticProviderBudgetStatus.created_at:type_name -> google.protobuf.Timestamp
+	40, // 7: mycel.admin.v1.SemanticProviderBudgetStatus.updated_at:type_name -> google.protobuf.Timestamp
+	40, // 8: mycel.admin.v1.SemanticProviderBudgetStatus.expires_at:type_name -> google.protobuf.Timestamp
+	40, // 9: mycel.admin.v1.SemanticProviderBudgetStatus.retention_until:type_name -> google.protobuf.Timestamp
+	1,  // 10: mycel.admin.v1.SemanticProviderBudgetStatus.denial_reason:type_name -> mycel.admin.v1.SemanticProviderBudgetDenialReason
+	16, // 11: mycel.admin.v1.ListSemanticProviderBudgetScopesResponse.scopes:type_name -> mycel.admin.v1.SemanticProviderBudgetScopeReference
+	40, // 12: mycel.admin.v1.SemanticProviderBudgetScopeReference.created_at:type_name -> google.protobuf.Timestamp
+	40, // 13: mycel.admin.v1.SemanticProviderBudgetScopeReference.retention_until:type_name -> google.protobuf.Timestamp
+	20, // 14: mycel.admin.v1.ListSemanticProviderBudgetAttemptEventsResponse.events:type_name -> mycel.admin.v1.SemanticProviderBudgetAttemptEvent
+	2,  // 15: mycel.admin.v1.SemanticProviderBudgetAttemptEvent.state:type_name -> mycel.admin.v1.SemanticProviderBudgetAttemptState
+	3,  // 16: mycel.admin.v1.SemanticProviderBudgetAttemptEvent.outcome_category:type_name -> mycel.admin.v1.SemanticProviderBudgetOutcomeCategory
+	40, // 17: mycel.admin.v1.SemanticProviderBudgetAttemptEvent.recorded_at:type_name -> google.protobuf.Timestamp
+	40, // 18: mycel.admin.v1.SemanticProviderBudgetAttemptEvent.reserved_until:type_name -> google.protobuf.Timestamp
+	21, // 19: mycel.admin.v1.RebuildSemanticRuleResponse.rebuild:type_name -> mycel.admin.v1.SemanticRebuildStatus
+	7,  // 20: mycel.admin.v1.RebuildSemanticRuleResponse.reliability:type_name -> mycel.admin.v1.GetSemanticReliabilityStatusResponse
+	26, // 21: mycel.admin.v1.ListSemanticMaintenanceWorkResponse.items:type_name -> mycel.admin.v1.SemanticMaintenanceWorkItem
+	26, // 22: mycel.admin.v1.RetrySemanticMaintenanceWorkResponse.item:type_name -> mycel.admin.v1.SemanticMaintenanceWorkItem
+	26, // 23: mycel.admin.v1.CancelSemanticMaintenanceWorkResponse.item:type_name -> mycel.admin.v1.SemanticMaintenanceWorkItem
+	37, // 24: mycel.admin.v1.BackfillSemanticRuleResponse.skipped:type_name -> mycel.admin.v1.BackfillSkipped
+	38, // 25: mycel.admin.v1.BackfillSemanticRuleResponse.failures:type_name -> mycel.admin.v1.BackfillFailure
+	4,  // 26: mycel.admin.v1.AdminSemanticMaintenanceService.GetSemanticMaintenanceStatus:input_type -> mycel.admin.v1.GetSemanticMaintenanceStatusRequest
+	6,  // 27: mycel.admin.v1.AdminSemanticMaintenanceService.GetSemanticReliabilityStatus:input_type -> mycel.admin.v1.GetSemanticReliabilityStatusRequest
+	22, // 28: mycel.admin.v1.AdminSemanticMaintenanceService.RebuildSemanticRule:input_type -> mycel.admin.v1.RebuildSemanticRuleRequest
+	24, // 29: mycel.admin.v1.AdminSemanticMaintenanceService.ListSemanticMaintenanceWork:input_type -> mycel.admin.v1.ListSemanticMaintenanceWorkRequest
+	27, // 30: mycel.admin.v1.AdminSemanticMaintenanceService.RetrySemanticMaintenanceWork:input_type -> mycel.admin.v1.RetrySemanticMaintenanceWorkRequest
+	29, // 31: mycel.admin.v1.AdminSemanticMaintenanceService.CancelSemanticMaintenanceWork:input_type -> mycel.admin.v1.CancelSemanticMaintenanceWorkRequest
+	31, // 32: mycel.admin.v1.AdminSemanticMaintenanceService.AnalyzeSemanticDirtyWork:input_type -> mycel.admin.v1.AnalyzeSemanticDirtyWorkRequest
+	33, // 33: mycel.admin.v1.AdminSemanticMaintenanceService.ProcessSemanticDirtyWork:input_type -> mycel.admin.v1.ProcessSemanticDirtyWorkRequest
+	35, // 34: mycel.admin.v1.AdminSemanticMaintenanceService.BackfillSemanticRule:input_type -> mycel.admin.v1.BackfillSemanticRuleRequest
+	8,  // 35: mycel.admin.v1.AdminSemanticMaintenanceService.GetSemanticProviderBudgetCapabilities:input_type -> mycel.admin.v1.GetSemanticProviderBudgetCapabilitiesRequest
+	11, // 36: mycel.admin.v1.AdminSemanticMaintenanceService.GetSemanticProviderBudgetStatus:input_type -> mycel.admin.v1.GetSemanticProviderBudgetStatusRequest
+	14, // 37: mycel.admin.v1.AdminSemanticMaintenanceService.ListSemanticProviderBudgetScopes:input_type -> mycel.admin.v1.ListSemanticProviderBudgetScopesRequest
+	18, // 38: mycel.admin.v1.AdminSemanticMaintenanceService.ListSemanticProviderBudgetAttemptEvents:input_type -> mycel.admin.v1.ListSemanticProviderBudgetAttemptEventsRequest
+	5,  // 39: mycel.admin.v1.AdminSemanticMaintenanceService.GetSemanticMaintenanceStatus:output_type -> mycel.admin.v1.GetSemanticMaintenanceStatusResponse
+	7,  // 40: mycel.admin.v1.AdminSemanticMaintenanceService.GetSemanticReliabilityStatus:output_type -> mycel.admin.v1.GetSemanticReliabilityStatusResponse
+	23, // 41: mycel.admin.v1.AdminSemanticMaintenanceService.RebuildSemanticRule:output_type -> mycel.admin.v1.RebuildSemanticRuleResponse
+	25, // 42: mycel.admin.v1.AdminSemanticMaintenanceService.ListSemanticMaintenanceWork:output_type -> mycel.admin.v1.ListSemanticMaintenanceWorkResponse
+	28, // 43: mycel.admin.v1.AdminSemanticMaintenanceService.RetrySemanticMaintenanceWork:output_type -> mycel.admin.v1.RetrySemanticMaintenanceWorkResponse
+	30, // 44: mycel.admin.v1.AdminSemanticMaintenanceService.CancelSemanticMaintenanceWork:output_type -> mycel.admin.v1.CancelSemanticMaintenanceWorkResponse
+	32, // 45: mycel.admin.v1.AdminSemanticMaintenanceService.AnalyzeSemanticDirtyWork:output_type -> mycel.admin.v1.AnalyzeSemanticDirtyWorkResponse
+	34, // 46: mycel.admin.v1.AdminSemanticMaintenanceService.ProcessSemanticDirtyWork:output_type -> mycel.admin.v1.ProcessSemanticDirtyWorkResponse
+	36, // 47: mycel.admin.v1.AdminSemanticMaintenanceService.BackfillSemanticRule:output_type -> mycel.admin.v1.BackfillSemanticRuleResponse
+	9,  // 48: mycel.admin.v1.AdminSemanticMaintenanceService.GetSemanticProviderBudgetCapabilities:output_type -> mycel.admin.v1.GetSemanticProviderBudgetCapabilitiesResponse
+	12, // 49: mycel.admin.v1.AdminSemanticMaintenanceService.GetSemanticProviderBudgetStatus:output_type -> mycel.admin.v1.GetSemanticProviderBudgetStatusResponse
+	15, // 50: mycel.admin.v1.AdminSemanticMaintenanceService.ListSemanticProviderBudgetScopes:output_type -> mycel.admin.v1.ListSemanticProviderBudgetScopesResponse
+	19, // 51: mycel.admin.v1.AdminSemanticMaintenanceService.ListSemanticProviderBudgetAttemptEvents:output_type -> mycel.admin.v1.ListSemanticProviderBudgetAttemptEventsResponse
+	39, // [39:52] is the sub-list for method output_type
+	26, // [26:39] is the sub-list for method input_type
+	26, // [26:26] is the sub-list for extension type_name
+	26, // [26:26] is the sub-list for extension extendee
+	0,  // [0:26] is the sub-list for field type_name
 }
 
 func init() { file_mycel_admin_v1_semantic_maintenance_proto_init() }
@@ -1397,18 +3967,24 @@ func file_mycel_admin_v1_semantic_maintenance_proto_init() {
 	if File_mycel_admin_v1_semantic_maintenance_proto != nil {
 		return
 	}
+	file_mycel_admin_v1_semantic_proto_init()
+	file_mycel_admin_v1_semantic_maintenance_proto_msgTypes[7].OneofWrappers = []any{
+		(*GetSemanticProviderBudgetStatusRequest_BudgetScopeId)(nil),
+		(*GetSemanticProviderBudgetStatusRequest_CurrentBinding)(nil),
+	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_mycel_admin_v1_semantic_maintenance_proto_rawDesc), len(file_mycel_admin_v1_semantic_maintenance_proto_rawDesc)),
-			NumEnums:      0,
-			NumMessages:   17,
+			NumEnums:      4,
+			NumMessages:   35,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
 		GoTypes:           file_mycel_admin_v1_semantic_maintenance_proto_goTypes,
 		DependencyIndexes: file_mycel_admin_v1_semantic_maintenance_proto_depIdxs,
+		EnumInfos:         file_mycel_admin_v1_semantic_maintenance_proto_enumTypes,
 		MessageInfos:      file_mycel_admin_v1_semantic_maintenance_proto_msgTypes,
 	}.Build()
 	File_mycel_admin_v1_semantic_maintenance_proto = out.File
