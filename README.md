@@ -180,6 +180,41 @@ _ = res.GetResult().GetRows()
 
 Other helpers include `OrderedNodeQuery`, `TextPredicateQuery`, `SemanticPredicateQuery`, `PathQuery`, `AggregateCountQuery`, `AggregatePropertyQuery`, and `ExplainGQL`.
 
+Direct semantic search supports typed hard-eligibility filters and opaque continuation tokens from Mycel API/daemon v0.21.0 or later:
+
+```go
+published, err := mycel.SemanticEqual("status", "published")
+if err != nil {
+    panic(err)
+}
+request := &clientv1.SemanticSearchRequest{
+    SpaceId: spaceID,
+    DomainId: domainID,
+    Query: "raft recovery",
+    Limit: 25,
+    Filter: mycel.NewSemanticEligibilityFilter(
+        []string{"Article"},
+        nil,
+        published,
+        mycel.SemanticMissing("deleted_at"),
+    ),
+}
+page, err := client.SemanticSearch(ctx, request)
+if err != nil {
+    panic(err)
+}
+if token := page.GetNextPageToken(); token != "" {
+    request.PageToken = &token
+    nextPage, err := client.SemanticSearch(ctx, request)
+    if err != nil {
+        panic(err)
+    }
+    _ = nextPage
+}
+```
+
+Continuation tokens are request- and visibility-bound. Keep them opaque, preserve every result-affecting request field, and surface stale or mismatched-token errors instead of silently restarting pagination. `SemanticEqual("property", nil)` means explicit protobuf null; use `SemanticMissing("property")` for an absent key.
+
 Graph changes can be watched with `GraphChangeService.WatchGraphChanges` through the SDK helper. Persist the last processed `event.revision` and use it as `after_revision` when reconnecting:
 
 ```go
