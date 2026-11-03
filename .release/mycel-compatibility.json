@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "component": "mycel-go-sdk",
+  "component_release": "v0.21.1",
+  "source_revision": "a056f614a9ec46f15d00b0b5273c282a6434bbf3",
+  "mycel_api_line": "0.21",
+  "supported_daemon_api_lines": [
+    "0.21"
+  ],
+  "incompatible_daemon_api_lines": [
+    {
+      "line": "0.20",
+      "contracts": [
+        "search-channel-owned-query-v1",
+        "semantic-trigger-events-enum-v1"
+      ]
+    }
+  ],
+  "published_at": "2026-10-30T21:42:47Z"
+}
