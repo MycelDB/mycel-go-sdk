@@ -43,17 +43,17 @@ func TestCompatibilityManifestV1(t *testing.T) {
 	if manifest.Component != "mycel-go-sdk" {
 		t.Fatalf("component = %q, want mycel-go-sdk", manifest.Component)
 	}
-	if manifest.ComponentRelease != "v0.21.1" {
-		t.Fatalf("component_release = %q, want v0.21.1", manifest.ComponentRelease)
+	if manifest.ComponentRelease != "v0.22.0" {
+		t.Fatalf("component_release = %q, want v0.22.0", manifest.ComponentRelease)
 	}
-	if manifest.SourceRevision != "a056f614a9ec46f15d00b0b5273c282a6434bbf3" {
-		t.Fatalf("source_revision = %q, want immutable v0.21.1 commit", manifest.SourceRevision)
+	if manifest.SourceRevision != "95ce6e3e22591811f8404d92f3169a3843d3fc93" {
+		t.Fatalf("source_revision = %q, want immutable v0.22.0 source commit", manifest.SourceRevision)
 	}
-	if manifest.MycelAPILine != "0.21" {
-		t.Fatalf("mycel_api_line = %q, want 0.21", manifest.MycelAPILine)
+	if manifest.MycelAPILine != "0.22" {
+		t.Fatalf("mycel_api_line = %q, want 0.22", manifest.MycelAPILine)
 	}
-	if !reflect.DeepEqual(manifest.SupportedDaemonAPILines, []string{"0.21"}) {
-		t.Fatalf("supported_daemon_api_lines = %v, want [0.21]", manifest.SupportedDaemonAPILines)
+	if !reflect.DeepEqual(manifest.SupportedDaemonAPILines, []string{"0.22"}) {
+		t.Fatalf("supported_daemon_api_lines = %v, want [0.22]", manifest.SupportedDaemonAPILines)
 	}
 
 	wantIncompatible := []incompatibleDaemonAPILine{{
@@ -63,7 +63,7 @@ func TestCompatibilityManifestV1(t *testing.T) {
 	if !reflect.DeepEqual(manifest.IncompatibleDaemonAPILines, wantIncompatible) {
 		t.Fatalf("incompatible_daemon_api_lines = %#v, want %#v", manifest.IncompatibleDaemonAPILines, wantIncompatible)
 	}
-	if manifest.PublishedAt != "2026-10-30T21:42:47Z" {
-		t.Fatalf("published_at = %q, want v0.21.1 publication time", manifest.PublishedAt)
+	if manifest.PublishedAt != "2026-11-09T22:48:39Z" {
+		t.Fatalf("published_at = %q, want v0.22.0 publication time", manifest.PublishedAt)
 	}
 }

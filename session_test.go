@@ -7,6 +7,7 @@ import (
 	"testing"
 
 	clientv1 "github.com/myceldb/mycel-go-sdk/gen/go/mycel/client/v1"
+	"google.golang.org/genproto/googleapis/rpc/errdetails"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
@@ -42,6 +43,37 @@ func TestBeginTransactionWithOperationIDSendsOperationID(t *testing.T) {
 	}
 	if got := transactions.beginRequest.GetMode(); got != clientv1.TransactionMode_TRANSACTION_MODE_READ_WRITE {
 		t.Fatalf("request mode = %s, want READ_WRITE", got)
+	}
+}
+
+func TestCommitTransactionWithRevisionWitnesses(t *testing.T) {
+	witnesses := [][]byte{[]byte("witness-a"), []byte("witness-b")}
+	transactions := &fakeTransactionServiceClient{commitResponse: &clientv1.CommitTransactionResponse{Commit: &clientv1.TransactionCommit{CommitId: "commit-1"}}}
+	c := &Client{Transaction: transactions}
+	if _, err := c.CommitTransactionWithOptions(context.Background(), "tx-1", CommitTransactionOptions{RevisionWitnesses: witnesses}); err != nil {
+		t.Fatal(err)
+	}
+	got := transactions.commitRequest.GetRevisionWitnesses()
+	if len(got) != 2 || string(got[0]) != "witness-a" || string(got[1]) != "witness-b" {
+		t.Fatalf("revision witnesses = %q", got)
+	}
+	witnesses[0][0] = 'x'
+	if string(got[0]) != "witness-a" {
+		t.Fatal("commit request retained caller-owned witness storage")
+	}
+}
+
+func TestAsRevisionFenceConflict(t *testing.T) {
+	st := status.New(codes.Aborted, "graph revision fence conflict")
+	st, err := st.WithDetails(&errdetails.ErrorInfo{Reason: revisionFenceConflictReason, Domain: "mycel.graph"})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !IsRevisionFenceConflict(st.Err()) {
+		t.Fatal("expected revision fence conflict")
+	}
+	if _, ok := AsRevisionFenceConflict(st.Err()); !ok {
+		t.Fatal("expected typed revision fence conflict")
 	}
 }
 
