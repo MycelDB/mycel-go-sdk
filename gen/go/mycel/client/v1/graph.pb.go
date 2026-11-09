@@ -2107,9 +2107,13 @@ type ReadMetadata struct {
 	AppliedIndex     uint64 `protobuf:"varint,5,opt,name=applied_index,json=appliedIndex,proto3" json:"applied_index,omitempty"`
 	ObservedRevision int64  `protobuf:"varint,6,opt,name=observed_revision,json=observedRevision,proto3" json:"observed_revision,omitempty"`
 	Stale            bool   `protobuf:"varint,7,opt,name=stale,proto3" json:"stale,omitempty"`
-	StaleReason      string `protobuf:"bytes,8,opt,name=stale_reason,json=staleReason,proto3" json:"stale_reason,omitempty"`
-	unknownFields    protoimpl.UnknownFields
-	sizeCache        protoimpl.SizeCache
+	// Opaque read-set witness that can be supplied to a later atomic graph
+	// commit. It contains no graph payload or credentials and must be treated as
+	// an uninterpreted value by clients.
+	RevisionWitness []byte `protobuf:"bytes,9,opt,name=revision_witness,json=revisionWitness,proto3" json:"revision_witness,omitempty"`
+	StaleReason     string `protobuf:"bytes,8,opt,name=stale_reason,json=staleReason,proto3" json:"stale_reason,omitempty"`
+	unknownFields   protoimpl.UnknownFields
+	sizeCache       protoimpl.SizeCache
 }
 
 func (x *ReadMetadata) Reset() {
@@ -2189,6 +2193,13 @@ func (x *ReadMetadata) GetStale() bool {
 		return x.Stale
 	}
 	return false
+}
+
+func (x *ReadMetadata) GetRevisionWitness() []byte {
+	if x != nil {
+		return x.RevisionWitness
+	}
+	return nil
 }
 
 func (x *ReadMetadata) GetStaleReason() string {
@@ -3851,7 +3862,7 @@ const file_mycel_client_v1_graph_proto_rawDesc = "" +
 	"\aresults\x18\x01 \x03(\v2%.mycel.client.v1.GraphOperationResultR\aresults\".\n" +
 	"\vReadOptions\x12\x1f\n" +
 	"\vallow_stale\x18\x01 \x01(\bR\n" +
-	"allowStale\"\xa4\x02\n" +
+	"allowStale\"\xcf\x02\n" +
 	"\fReadMetadata\x12 \n" +
 	"\vconsistency\x18\x01 \x01(\tR\vconsistency\x12\"\n" +
 	"\rraft_group_id\x18\x02 \x01(\tR\vraftGroupId\x12$\n" +
@@ -3860,7 +3871,8 @@ const file_mycel_client_v1_graph_proto_rawDesc = "" +
 	"read_index\x18\x04 \x01(\x04R\treadIndex\x12#\n" +
 	"\rapplied_index\x18\x05 \x01(\x04R\fappliedIndex\x12+\n" +
 	"\x11observed_revision\x18\x06 \x01(\x03R\x10observedRevision\x12\x14\n" +
-	"\x05stale\x18\a \x01(\bR\x05stale\x12!\n" +
+	"\x05stale\x18\a \x01(\bR\x05stale\x12)\n" +
+	"\x10revision_witness\x18\t \x01(\fR\x0frevisionWitness\x12!\n" +
 	"\fstale_reason\x18\b \x01(\tR\vstaleReason\"\xe7\x02\n" +
 	"\x04Node\x12\x17\n" +
 	"\anode_id\x18\x01 \x01(\tR\x06nodeId\x12\x1b\n" +

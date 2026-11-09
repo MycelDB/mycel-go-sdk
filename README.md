@@ -22,7 +22,7 @@ The SDK generates Go protobuf/gRPC stubs from the language-independent `mycel-ap
 - bearer-token metadata injection
 - generated Admin and Client service clients under `gen/go/` after generation, including lexical Search and admin lexical maintenance clients
 - call timeout helpers
-- session/transaction helpers
+- session/transaction helpers, including opaque revision-fenced commits
 - thin graph/query convenience methods
 - structured query builders and explain helpers for common indexed/text/semantic/path/aggregate shapes
 - graph-change watch helpers

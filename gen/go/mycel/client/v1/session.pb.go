@@ -783,10 +783,15 @@ type CommitTransactionRequest struct {
 	IdempotencyKey string `protobuf:"bytes,2,opt,name=idempotency_key,json=idempotencyKey,proto3" json:"idempotency_key,omitempty"`
 	// Scope used to recover a durable idempotent result when daemon-local
 	// transaction lifecycle state is no longer available.
-	SpaceId       string `protobuf:"bytes,3,opt,name=space_id,json=spaceId,proto3" json:"space_id,omitempty"`
-	DomainId      string `protobuf:"bytes,4,opt,name=domain_id,json=domainId,proto3" json:"domain_id,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	SpaceId  string `protobuf:"bytes,3,opt,name=space_id,json=spaceId,proto3" json:"space_id,omitempty"`
+	DomainId string `protobuf:"bytes,4,opt,name=domain_id,json=domainId,proto3" json:"domain_id,omitempty"`
+	// Opaque read-set witnesses returned by graph/query reads. At commit, the
+	// daemon atomically verifies that every declared dependency is unchanged.
+	// A conflict returns ABORTED and applies no mutation. Callers must re-read
+	// and regenerate derived output; stale witnesses must not be retried.
+	RevisionWitnesses [][]byte `protobuf:"bytes,5,rep,name=revision_witnesses,json=revisionWitnesses,proto3" json:"revision_witnesses,omitempty"`
+	unknownFields     protoimpl.UnknownFields
+	sizeCache         protoimpl.SizeCache
 }
 
 func (x *CommitTransactionRequest) Reset() {
@@ -845,6 +850,13 @@ func (x *CommitTransactionRequest) GetDomainId() string {
 		return x.DomainId
 	}
 	return ""
+}
+
+func (x *CommitTransactionRequest) GetRevisionWitnesses() [][]byte {
+	if x != nil {
+		return x.RevisionWitnesses
+	}
+	return nil
 }
 
 type CommitTransactionResponse struct {
@@ -1479,12 +1491,13 @@ const file_mycel_client_v1_session_proto_rawDesc = "" +
 	"\x15GetTransactionRequest\x12%\n" +
 	"\x0etransaction_id\x18\x01 \x01(\tR\rtransactionId\"]\n" +
 	"\x16GetTransactionResponse\x12C\n" +
-	"\vtransaction\x18\x01 \x01(\v2!.mycel.client.v1.GraphTransactionR\vtransaction\"\xa2\x01\n" +
+	"\vtransaction\x18\x01 \x01(\v2!.mycel.client.v1.GraphTransactionR\vtransaction\"\xd1\x01\n" +
 	"\x18CommitTransactionRequest\x12%\n" +
 	"\x0etransaction_id\x18\x01 \x01(\tR\rtransactionId\x12'\n" +
 	"\x0fidempotency_key\x18\x02 \x01(\tR\x0eidempotencyKey\x12\x19\n" +
 	"\bspace_id\x18\x03 \x01(\tR\aspaceId\x12\x1b\n" +
-	"\tdomain_id\x18\x04 \x01(\tR\bdomainId\"\x84\x01\n" +
+	"\tdomain_id\x18\x04 \x01(\tR\bdomainId\x12-\n" +
+	"\x12revision_witnesses\x18\x05 \x03(\fR\x11revisionWitnesses\"\x84\x01\n" +
 	"\x19CommitTransactionResponse\x12:\n" +
 	"\x06commit\x18\x01 \x01(\v2\".mycel.client.v1.TransactionCommitR\x06commit\x12+\n" +
 	"\x11idempotent_replay\x18\x02 \x01(\bR\x10idempotentReplay\"C\n" +
