@@ -3921,6 +3921,518 @@ func (x *DisableGraphAutomationBindingResponse) GetBindingJson() string {
 	return ""
 }
 
+type StartGraphAutomationReconciliationRequest struct {
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	SpaceId        string                 `protobuf:"bytes,1,opt,name=space_id,json=spaceId,proto3" json:"space_id,omitempty"`
+	DomainId       string                 `protobuf:"bytes,2,opt,name=domain_id,json=domainId,proto3" json:"domain_id,omitempty"`
+	BindingId      string                 `protobuf:"bytes,3,opt,name=binding_id,json=bindingId,proto3" json:"binding_id,omitempty"`
+	IdempotencyKey string                 `protobuf:"bytes,4,opt,name=idempotency_key,json=idempotencyKey,proto3" json:"idempotency_key,omitempty"`
+	// batch_size defaults to the daemon limit and must be bounded by it.
+	BatchSize int32 `protobuf:"varint,5,opt,name=batch_size,json=batchSize,proto3" json:"batch_size,omitempty"`
+	// max_concurrency is an optional operation-local ceiling. The daemon may apply a lower
+	// global or binding limit; zero uses the daemon default.
+	MaxConcurrency int32 `protobuf:"varint,6,opt,name=max_concurrency,json=maxConcurrency,proto3" json:"max_concurrency,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
+}
+
+func (x *StartGraphAutomationReconciliationRequest) Reset() {
+	*x = StartGraphAutomationReconciliationRequest{}
+	mi := &file_mycel_client_v1_automation_proto_msgTypes[67]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *StartGraphAutomationReconciliationRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*StartGraphAutomationReconciliationRequest) ProtoMessage() {}
+
+func (x *StartGraphAutomationReconciliationRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_client_v1_automation_proto_msgTypes[67]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use StartGraphAutomationReconciliationRequest.ProtoReflect.Descriptor instead.
+func (*StartGraphAutomationReconciliationRequest) Descriptor() ([]byte, []int) {
+	return file_mycel_client_v1_automation_proto_rawDescGZIP(), []int{67}
+}
+
+func (x *StartGraphAutomationReconciliationRequest) GetSpaceId() string {
+	if x != nil {
+		return x.SpaceId
+	}
+	return ""
+}
+
+func (x *StartGraphAutomationReconciliationRequest) GetDomainId() string {
+	if x != nil {
+		return x.DomainId
+	}
+	return ""
+}
+
+func (x *StartGraphAutomationReconciliationRequest) GetBindingId() string {
+	if x != nil {
+		return x.BindingId
+	}
+	return ""
+}
+
+func (x *StartGraphAutomationReconciliationRequest) GetIdempotencyKey() string {
+	if x != nil {
+		return x.IdempotencyKey
+	}
+	return ""
+}
+
+func (x *StartGraphAutomationReconciliationRequest) GetBatchSize() int32 {
+	if x != nil {
+		return x.BatchSize
+	}
+	return 0
+}
+
+func (x *StartGraphAutomationReconciliationRequest) GetMaxConcurrency() int32 {
+	if x != nil {
+		return x.MaxConcurrency
+	}
+	return 0
+}
+
+type StartGraphAutomationReconciliationResponse struct {
+	state         protoimpl.MessageState         `protogen:"open.v1"`
+	Operation     *GraphAutomationReconciliation `protobuf:"bytes,1,opt,name=operation,proto3" json:"operation,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *StartGraphAutomationReconciliationResponse) Reset() {
+	*x = StartGraphAutomationReconciliationResponse{}
+	mi := &file_mycel_client_v1_automation_proto_msgTypes[68]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *StartGraphAutomationReconciliationResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*StartGraphAutomationReconciliationResponse) ProtoMessage() {}
+
+func (x *StartGraphAutomationReconciliationResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_client_v1_automation_proto_msgTypes[68]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use StartGraphAutomationReconciliationResponse.ProtoReflect.Descriptor instead.
+func (*StartGraphAutomationReconciliationResponse) Descriptor() ([]byte, []int) {
+	return file_mycel_client_v1_automation_proto_rawDescGZIP(), []int{68}
+}
+
+func (x *StartGraphAutomationReconciliationResponse) GetOperation() *GraphAutomationReconciliation {
+	if x != nil {
+		return x.Operation
+	}
+	return nil
+}
+
+type GetGraphAutomationReconciliationRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	SpaceId       string                 `protobuf:"bytes,1,opt,name=space_id,json=spaceId,proto3" json:"space_id,omitempty"`
+	OperationId   string                 `protobuf:"bytes,2,opt,name=operation_id,json=operationId,proto3" json:"operation_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetGraphAutomationReconciliationRequest) Reset() {
+	*x = GetGraphAutomationReconciliationRequest{}
+	mi := &file_mycel_client_v1_automation_proto_msgTypes[69]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetGraphAutomationReconciliationRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetGraphAutomationReconciliationRequest) ProtoMessage() {}
+
+func (x *GetGraphAutomationReconciliationRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_client_v1_automation_proto_msgTypes[69]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetGraphAutomationReconciliationRequest.ProtoReflect.Descriptor instead.
+func (*GetGraphAutomationReconciliationRequest) Descriptor() ([]byte, []int) {
+	return file_mycel_client_v1_automation_proto_rawDescGZIP(), []int{69}
+}
+
+func (x *GetGraphAutomationReconciliationRequest) GetSpaceId() string {
+	if x != nil {
+		return x.SpaceId
+	}
+	return ""
+}
+
+func (x *GetGraphAutomationReconciliationRequest) GetOperationId() string {
+	if x != nil {
+		return x.OperationId
+	}
+	return ""
+}
+
+type GetGraphAutomationReconciliationResponse struct {
+	state         protoimpl.MessageState         `protogen:"open.v1"`
+	Operation     *GraphAutomationReconciliation `protobuf:"bytes,1,opt,name=operation,proto3" json:"operation,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetGraphAutomationReconciliationResponse) Reset() {
+	*x = GetGraphAutomationReconciliationResponse{}
+	mi := &file_mycel_client_v1_automation_proto_msgTypes[70]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetGraphAutomationReconciliationResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetGraphAutomationReconciliationResponse) ProtoMessage() {}
+
+func (x *GetGraphAutomationReconciliationResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_client_v1_automation_proto_msgTypes[70]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetGraphAutomationReconciliationResponse.ProtoReflect.Descriptor instead.
+func (*GetGraphAutomationReconciliationResponse) Descriptor() ([]byte, []int) {
+	return file_mycel_client_v1_automation_proto_rawDescGZIP(), []int{70}
+}
+
+func (x *GetGraphAutomationReconciliationResponse) GetOperation() *GraphAutomationReconciliation {
+	if x != nil {
+		return x.Operation
+	}
+	return nil
+}
+
+type CancelGraphAutomationReconciliationRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	SpaceId       string                 `protobuf:"bytes,1,opt,name=space_id,json=spaceId,proto3" json:"space_id,omitempty"`
+	OperationId   string                 `protobuf:"bytes,2,opt,name=operation_id,json=operationId,proto3" json:"operation_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CancelGraphAutomationReconciliationRequest) Reset() {
+	*x = CancelGraphAutomationReconciliationRequest{}
+	mi := &file_mycel_client_v1_automation_proto_msgTypes[71]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CancelGraphAutomationReconciliationRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CancelGraphAutomationReconciliationRequest) ProtoMessage() {}
+
+func (x *CancelGraphAutomationReconciliationRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_client_v1_automation_proto_msgTypes[71]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CancelGraphAutomationReconciliationRequest.ProtoReflect.Descriptor instead.
+func (*CancelGraphAutomationReconciliationRequest) Descriptor() ([]byte, []int) {
+	return file_mycel_client_v1_automation_proto_rawDescGZIP(), []int{71}
+}
+
+func (x *CancelGraphAutomationReconciliationRequest) GetSpaceId() string {
+	if x != nil {
+		return x.SpaceId
+	}
+	return ""
+}
+
+func (x *CancelGraphAutomationReconciliationRequest) GetOperationId() string {
+	if x != nil {
+		return x.OperationId
+	}
+	return ""
+}
+
+type CancelGraphAutomationReconciliationResponse struct {
+	state         protoimpl.MessageState         `protogen:"open.v1"`
+	Operation     *GraphAutomationReconciliation `protobuf:"bytes,1,opt,name=operation,proto3" json:"operation,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CancelGraphAutomationReconciliationResponse) Reset() {
+	*x = CancelGraphAutomationReconciliationResponse{}
+	mi := &file_mycel_client_v1_automation_proto_msgTypes[72]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CancelGraphAutomationReconciliationResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CancelGraphAutomationReconciliationResponse) ProtoMessage() {}
+
+func (x *CancelGraphAutomationReconciliationResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_client_v1_automation_proto_msgTypes[72]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CancelGraphAutomationReconciliationResponse.ProtoReflect.Descriptor instead.
+func (*CancelGraphAutomationReconciliationResponse) Descriptor() ([]byte, []int) {
+	return file_mycel_client_v1_automation_proto_rawDescGZIP(), []int{72}
+}
+
+func (x *CancelGraphAutomationReconciliationResponse) GetOperation() *GraphAutomationReconciliation {
+	if x != nil {
+		return x.Operation
+	}
+	return nil
+}
+
+type GraphAutomationReconciliation struct {
+	state            protoimpl.MessageState `protogen:"open.v1"`
+	OperationId      string                 `protobuf:"bytes,1,opt,name=operation_id,json=operationId,proto3" json:"operation_id,omitempty"`
+	SpaceId          string                 `protobuf:"bytes,2,opt,name=space_id,json=spaceId,proto3" json:"space_id,omitempty"`
+	DomainId         string                 `protobuf:"bytes,3,opt,name=domain_id,json=domainId,proto3" json:"domain_id,omitempty"`
+	BindingId        string                 `protobuf:"bytes,4,opt,name=binding_id,json=bindingId,proto3" json:"binding_id,omitempty"`
+	BindingVersion   int32                  `protobuf:"varint,5,opt,name=binding_version,json=bindingVersion,proto3" json:"binding_version,omitempty"`
+	ProcedureId      string                 `protobuf:"bytes,6,opt,name=procedure_id,json=procedureId,proto3" json:"procedure_id,omitempty"`
+	ProcedureVersion int32                  `protobuf:"varint,7,opt,name=procedure_version,json=procedureVersion,proto3" json:"procedure_version,omitempty"`
+	// queued | running | completed | completed_with_failures | canceled | failed
+	Status            string `protobuf:"bytes,8,opt,name=status,proto3" json:"status,omitempty"`
+	Cursor            string `protobuf:"bytes,9,opt,name=cursor,proto3" json:"cursor,omitempty"`
+	ScannedCount      int64  `protobuf:"varint,10,opt,name=scanned_count,json=scannedCount,proto3" json:"scanned_count,omitempty"`
+	FreshSkippedCount int64  `protobuf:"varint,11,opt,name=fresh_skipped_count,json=freshSkippedCount,proto3" json:"fresh_skipped_count,omitempty"`
+	ScheduledCount    int64  `protobuf:"varint,12,opt,name=scheduled_count,json=scheduledCount,proto3" json:"scheduled_count,omitempty"`
+	CompletedCount    int64  `protobuf:"varint,13,opt,name=completed_count,json=completedCount,proto3" json:"completed_count,omitempty"`
+	RetryingCount     int64  `protobuf:"varint,14,opt,name=retrying_count,json=retryingCount,proto3" json:"retrying_count,omitempty"`
+	FailedCount       int64  `protobuf:"varint,15,opt,name=failed_count,json=failedCount,proto3" json:"failed_count,omitempty"`
+	FailureCode       string `protobuf:"bytes,16,opt,name=failure_code,json=failureCode,proto3" json:"failure_code,omitempty"`
+	CreatedAt         string `protobuf:"bytes,17,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
+	UpdatedAt         string `protobuf:"bytes,18,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
+	CompletedAt       string `protobuf:"bytes,19,opt,name=completed_at,json=completedAt,proto3" json:"completed_at,omitempty"`
+	unknownFields     protoimpl.UnknownFields
+	sizeCache         protoimpl.SizeCache
+}
+
+func (x *GraphAutomationReconciliation) Reset() {
+	*x = GraphAutomationReconciliation{}
+	mi := &file_mycel_client_v1_automation_proto_msgTypes[73]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GraphAutomationReconciliation) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GraphAutomationReconciliation) ProtoMessage() {}
+
+func (x *GraphAutomationReconciliation) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_client_v1_automation_proto_msgTypes[73]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GraphAutomationReconciliation.ProtoReflect.Descriptor instead.
+func (*GraphAutomationReconciliation) Descriptor() ([]byte, []int) {
+	return file_mycel_client_v1_automation_proto_rawDescGZIP(), []int{73}
+}
+
+func (x *GraphAutomationReconciliation) GetOperationId() string {
+	if x != nil {
+		return x.OperationId
+	}
+	return ""
+}
+
+func (x *GraphAutomationReconciliation) GetSpaceId() string {
+	if x != nil {
+		return x.SpaceId
+	}
+	return ""
+}
+
+func (x *GraphAutomationReconciliation) GetDomainId() string {
+	if x != nil {
+		return x.DomainId
+	}
+	return ""
+}
+
+func (x *GraphAutomationReconciliation) GetBindingId() string {
+	if x != nil {
+		return x.BindingId
+	}
+	return ""
+}
+
+func (x *GraphAutomationReconciliation) GetBindingVersion() int32 {
+	if x != nil {
+		return x.BindingVersion
+	}
+	return 0
+}
+
+func (x *GraphAutomationReconciliation) GetProcedureId() string {
+	if x != nil {
+		return x.ProcedureId
+	}
+	return ""
+}
+
+func (x *GraphAutomationReconciliation) GetProcedureVersion() int32 {
+	if x != nil {
+		return x.ProcedureVersion
+	}
+	return 0
+}
+
+func (x *GraphAutomationReconciliation) GetStatus() string {
+	if x != nil {
+		return x.Status
+	}
+	return ""
+}
+
+func (x *GraphAutomationReconciliation) GetCursor() string {
+	if x != nil {
+		return x.Cursor
+	}
+	return ""
+}
+
+func (x *GraphAutomationReconciliation) GetScannedCount() int64 {
+	if x != nil {
+		return x.ScannedCount
+	}
+	return 0
+}
+
+func (x *GraphAutomationReconciliation) GetFreshSkippedCount() int64 {
+	if x != nil {
+		return x.FreshSkippedCount
+	}
+	return 0
+}
+
+func (x *GraphAutomationReconciliation) GetScheduledCount() int64 {
+	if x != nil {
+		return x.ScheduledCount
+	}
+	return 0
+}
+
+func (x *GraphAutomationReconciliation) GetCompletedCount() int64 {
+	if x != nil {
+		return x.CompletedCount
+	}
+	return 0
+}
+
+func (x *GraphAutomationReconciliation) GetRetryingCount() int64 {
+	if x != nil {
+		return x.RetryingCount
+	}
+	return 0
+}
+
+func (x *GraphAutomationReconciliation) GetFailedCount() int64 {
+	if x != nil {
+		return x.FailedCount
+	}
+	return 0
+}
+
+func (x *GraphAutomationReconciliation) GetFailureCode() string {
+	if x != nil {
+		return x.FailureCode
+	}
+	return ""
+}
+
+func (x *GraphAutomationReconciliation) GetCreatedAt() string {
+	if x != nil {
+		return x.CreatedAt
+	}
+	return ""
+}
+
+func (x *GraphAutomationReconciliation) GetUpdatedAt() string {
+	if x != nil {
+		return x.UpdatedAt
+	}
+	return ""
+}
+
+func (x *GraphAutomationReconciliation) GetCompletedAt() string {
+	if x != nil {
+		return x.CompletedAt
+	}
+	return ""
+}
+
 var File_mycel_client_v1_automation_proto protoreflect.FileDescriptor
 
 const file_mycel_client_v1_automation_proto_rawDesc = "" +
@@ -4203,7 +4715,52 @@ const file_mycel_client_v1_automation_proto_rawDesc = "" +
 	"$EnableGraphAutomationBindingResponse\x12!\n" +
 	"\fbinding_json\x18\x01 \x01(\tR\vbindingJson\"J\n" +
 	"%DisableGraphAutomationBindingResponse\x12!\n" +
-	"\fbinding_json\x18\x01 \x01(\tR\vbindingJson2\xad\x1e\n" +
+	"\fbinding_json\x18\x01 \x01(\tR\vbindingJson\"\xf3\x01\n" +
+	")StartGraphAutomationReconciliationRequest\x12\x19\n" +
+	"\bspace_id\x18\x01 \x01(\tR\aspaceId\x12\x1b\n" +
+	"\tdomain_id\x18\x02 \x01(\tR\bdomainId\x12\x1d\n" +
+	"\n" +
+	"binding_id\x18\x03 \x01(\tR\tbindingId\x12'\n" +
+	"\x0fidempotency_key\x18\x04 \x01(\tR\x0eidempotencyKey\x12\x1d\n" +
+	"\n" +
+	"batch_size\x18\x05 \x01(\x05R\tbatchSize\x12'\n" +
+	"\x0fmax_concurrency\x18\x06 \x01(\x05R\x0emaxConcurrency\"z\n" +
+	"*StartGraphAutomationReconciliationResponse\x12L\n" +
+	"\toperation\x18\x01 \x01(\v2..mycel.client.v1.GraphAutomationReconciliationR\toperation\"g\n" +
+	"'GetGraphAutomationReconciliationRequest\x12\x19\n" +
+	"\bspace_id\x18\x01 \x01(\tR\aspaceId\x12!\n" +
+	"\foperation_id\x18\x02 \x01(\tR\voperationId\"x\n" +
+	"(GetGraphAutomationReconciliationResponse\x12L\n" +
+	"\toperation\x18\x01 \x01(\v2..mycel.client.v1.GraphAutomationReconciliationR\toperation\"j\n" +
+	"*CancelGraphAutomationReconciliationRequest\x12\x19\n" +
+	"\bspace_id\x18\x01 \x01(\tR\aspaceId\x12!\n" +
+	"\foperation_id\x18\x02 \x01(\tR\voperationId\"{\n" +
+	"+CancelGraphAutomationReconciliationResponse\x12L\n" +
+	"\toperation\x18\x01 \x01(\v2..mycel.client.v1.GraphAutomationReconciliationR\toperation\"\xb7\x05\n" +
+	"\x1dGraphAutomationReconciliation\x12!\n" +
+	"\foperation_id\x18\x01 \x01(\tR\voperationId\x12\x19\n" +
+	"\bspace_id\x18\x02 \x01(\tR\aspaceId\x12\x1b\n" +
+	"\tdomain_id\x18\x03 \x01(\tR\bdomainId\x12\x1d\n" +
+	"\n" +
+	"binding_id\x18\x04 \x01(\tR\tbindingId\x12'\n" +
+	"\x0fbinding_version\x18\x05 \x01(\x05R\x0ebindingVersion\x12!\n" +
+	"\fprocedure_id\x18\x06 \x01(\tR\vprocedureId\x12+\n" +
+	"\x11procedure_version\x18\a \x01(\x05R\x10procedureVersion\x12\x16\n" +
+	"\x06status\x18\b \x01(\tR\x06status\x12\x16\n" +
+	"\x06cursor\x18\t \x01(\tR\x06cursor\x12#\n" +
+	"\rscanned_count\x18\n" +
+	" \x01(\x03R\fscannedCount\x12.\n" +
+	"\x13fresh_skipped_count\x18\v \x01(\x03R\x11freshSkippedCount\x12'\n" +
+	"\x0fscheduled_count\x18\f \x01(\x03R\x0escheduledCount\x12'\n" +
+	"\x0fcompleted_count\x18\r \x01(\x03R\x0ecompletedCount\x12%\n" +
+	"\x0eretrying_count\x18\x0e \x01(\x03R\rretryingCount\x12!\n" +
+	"\ffailed_count\x18\x0f \x01(\x03R\vfailedCount\x12!\n" +
+	"\ffailure_code\x18\x10 \x01(\tR\vfailureCode\x12\x1d\n" +
+	"\n" +
+	"created_at\x18\x11 \x01(\tR\tcreatedAt\x12\x1d\n" +
+	"\n" +
+	"updated_at\x18\x12 \x01(\tR\tupdatedAt\x12!\n" +
+	"\fcompleted_at\x18\x13 \x01(\tR\vcompletedAt2\x8a\"\n" +
 	"\x11AutomationService\x12m\n" +
 	"\x12ValidateAutomation\x12*.mycel.client.v1.ValidateAutomationRequest\x1a+.mycel.client.v1.ValidateAutomationResponse\x12g\n" +
 	"\x10CreateAutomation\x12(.mycel.client.v1.CreateAutomationRequest\x1a).mycel.client.v1.CreateAutomationResponse\x12g\n" +
@@ -4235,7 +4792,10 @@ const file_mycel_client_v1_automation_proto_rawDesc = "" +
 	"\x19GetGraphAutomationBinding\x121.mycel.client.v1.GetGraphAutomationBindingRequest\x1a2.mycel.client.v1.GetGraphAutomationBindingResponse\x12\x88\x01\n" +
 	"\x1bListGraphAutomationBindings\x123.mycel.client.v1.ListGraphAutomationBindingsRequest\x1a4.mycel.client.v1.ListGraphAutomationBindingsResponse\x12\x8b\x01\n" +
 	"\x1cEnableGraphAutomationBinding\x124.mycel.client.v1.EnableGraphAutomationBindingRequest\x1a5.mycel.client.v1.EnableGraphAutomationBindingResponse\x12\x8e\x01\n" +
-	"\x1dDisableGraphAutomationBinding\x125.mycel.client.v1.DisableGraphAutomationBindingRequest\x1a6.mycel.client.v1.DisableGraphAutomationBindingResponseB\xc5\x01\n" +
+	"\x1dDisableGraphAutomationBinding\x125.mycel.client.v1.DisableGraphAutomationBindingRequest\x1a6.mycel.client.v1.DisableGraphAutomationBindingResponse\x12\x9d\x01\n" +
+	"\"StartGraphAutomationReconciliation\x12:.mycel.client.v1.StartGraphAutomationReconciliationRequest\x1a;.mycel.client.v1.StartGraphAutomationReconciliationResponse\x12\x97\x01\n" +
+	" GetGraphAutomationReconciliation\x128.mycel.client.v1.GetGraphAutomationReconciliationRequest\x1a9.mycel.client.v1.GetGraphAutomationReconciliationResponse\x12\xa0\x01\n" +
+	"#CancelGraphAutomationReconciliation\x12;.mycel.client.v1.CancelGraphAutomationReconciliationRequest\x1a<.mycel.client.v1.CancelGraphAutomationReconciliationResponseB\xc5\x01\n" +
 	"\x13com.mycel.client.v1B\x0fAutomationProtoP\x01Z?github.com/myceldb/mycel-go-sdk/gen/go/mycel/client/v1;clientv1\xa2\x02\x03MCX\xaa\x02\x0fMycel.Client.V1\xca\x02\x0fMycel\\Client\\V1\xe2\x02\x1bMycel\\Client\\V1\\GPBMetadata\xea\x02\x11Mycel::Client::V1b\x06proto3"
 
 var (
@@ -4250,7 +4810,7 @@ func file_mycel_client_v1_automation_proto_rawDescGZIP() []byte {
 	return file_mycel_client_v1_automation_proto_rawDescData
 }
 
-var file_mycel_client_v1_automation_proto_msgTypes = make([]protoimpl.MessageInfo, 67)
+var file_mycel_client_v1_automation_proto_msgTypes = make([]protoimpl.MessageInfo, 74)
 var file_mycel_client_v1_automation_proto_goTypes = []any{
 	(*ValidateAutomationRequest)(nil),                    // 0: mycel.client.v1.ValidateAutomationRequest
 	(*ValidateAutomationResponse)(nil),                   // 1: mycel.client.v1.ValidateAutomationResponse
@@ -4319,97 +4879,113 @@ var file_mycel_client_v1_automation_proto_goTypes = []any{
 	(*GetGraphAutomationBindingResponse)(nil),            // 64: mycel.client.v1.GetGraphAutomationBindingResponse
 	(*EnableGraphAutomationBindingResponse)(nil),         // 65: mycel.client.v1.EnableGraphAutomationBindingResponse
 	(*DisableGraphAutomationBindingResponse)(nil),        // 66: mycel.client.v1.DisableGraphAutomationBindingResponse
-	(*v1.AutomationRun)(nil),                             // 67: mycel.common.v1.AutomationRun
-	(*v1.InferenceRef)(nil),                              // 68: mycel.common.v1.InferenceRef
-	(*v1.ProcedureControlBarrier)(nil),                   // 69: mycel.common.v1.ProcedureControlBarrier
-	(*v1.ProcedureInferenceAttempt)(nil),                 // 70: mycel.common.v1.ProcedureInferenceAttempt
-	(*v1.ProcedureInferenceAttemptFilter)(nil),           // 71: mycel.common.v1.ProcedureInferenceAttemptFilter
-	(*v1.ProcedureInferenceAttemptChange)(nil),           // 72: mycel.common.v1.ProcedureInferenceAttemptChange
+	(*StartGraphAutomationReconciliationRequest)(nil),    // 67: mycel.client.v1.StartGraphAutomationReconciliationRequest
+	(*StartGraphAutomationReconciliationResponse)(nil),   // 68: mycel.client.v1.StartGraphAutomationReconciliationResponse
+	(*GetGraphAutomationReconciliationRequest)(nil),      // 69: mycel.client.v1.GetGraphAutomationReconciliationRequest
+	(*GetGraphAutomationReconciliationResponse)(nil),     // 70: mycel.client.v1.GetGraphAutomationReconciliationResponse
+	(*CancelGraphAutomationReconciliationRequest)(nil),   // 71: mycel.client.v1.CancelGraphAutomationReconciliationRequest
+	(*CancelGraphAutomationReconciliationResponse)(nil),  // 72: mycel.client.v1.CancelGraphAutomationReconciliationResponse
+	(*GraphAutomationReconciliation)(nil),                // 73: mycel.client.v1.GraphAutomationReconciliation
+	(*v1.AutomationRun)(nil),                             // 74: mycel.common.v1.AutomationRun
+	(*v1.InferenceRef)(nil),                              // 75: mycel.common.v1.InferenceRef
+	(*v1.ProcedureControlBarrier)(nil),                   // 76: mycel.common.v1.ProcedureControlBarrier
+	(*v1.ProcedureInferenceAttempt)(nil),                 // 77: mycel.common.v1.ProcedureInferenceAttempt
+	(*v1.ProcedureInferenceAttemptFilter)(nil),           // 78: mycel.common.v1.ProcedureInferenceAttemptFilter
+	(*v1.ProcedureInferenceAttemptChange)(nil),           // 79: mycel.common.v1.ProcedureInferenceAttemptChange
 }
 var file_mycel_client_v1_automation_proto_depIdxs = []int32{
 	28, // 0: mycel.client.v1.ValidateAutomationResponse.inference_refs:type_name -> mycel.client.v1.AutomationInferenceRef
 	16, // 1: mycel.client.v1.ListAutomationsResponse.automations:type_name -> mycel.client.v1.AutomationDefinitionSummary
 	21, // 2: mycel.client.v1.ListAutomationInvocationsResponse.invocations:type_name -> mycel.client.v1.AutomationInvocationSummary
-	67, // 3: mycel.client.v1.GetAutomationRunResponse.run:type_name -> mycel.common.v1.AutomationRun
+	74, // 3: mycel.client.v1.GetAutomationRunResponse.run:type_name -> mycel.common.v1.AutomationRun
 	21, // 4: mycel.client.v1.RetryAutomationInvocationResponse.invocation:type_name -> mycel.client.v1.AutomationInvocationSummary
 	21, // 5: mycel.client.v1.CancelAutomationInvocationResponse.invocation:type_name -> mycel.client.v1.AutomationInvocationSummary
-	68, // 6: mycel.client.v1.AutomationInferenceRef.inference:type_name -> mycel.common.v1.InferenceRef
+	75, // 6: mycel.client.v1.AutomationInferenceRef.inference:type_name -> mycel.common.v1.InferenceRef
 	17, // 7: mycel.client.v1.ListGraphProceduresResponse.procedures:type_name -> mycel.client.v1.GraphProcedureSummary
-	69, // 8: mycel.client.v1.EnableGraphProcedureResponse.control:type_name -> mycel.common.v1.ProcedureControlBarrier
-	69, // 9: mycel.client.v1.DisableGraphProcedureResponse.control:type_name -> mycel.common.v1.ProcedureControlBarrier
-	70, // 10: mycel.client.v1.GetProcedureInferenceAttemptResponse.attempt:type_name -> mycel.common.v1.ProcedureInferenceAttempt
-	71, // 11: mycel.client.v1.ListProcedureInferenceAttemptsRequest.filter:type_name -> mycel.common.v1.ProcedureInferenceAttemptFilter
-	70, // 12: mycel.client.v1.ListProcedureInferenceAttemptsResponse.attempts:type_name -> mycel.common.v1.ProcedureInferenceAttempt
-	71, // 13: mycel.client.v1.ListProcedureInferenceAttemptChangesRequest.filter:type_name -> mycel.common.v1.ProcedureInferenceAttemptFilter
-	72, // 14: mycel.client.v1.ListProcedureInferenceAttemptChangesResponse.changes:type_name -> mycel.common.v1.ProcedureInferenceAttemptChange
+	76, // 8: mycel.client.v1.EnableGraphProcedureResponse.control:type_name -> mycel.common.v1.ProcedureControlBarrier
+	76, // 9: mycel.client.v1.DisableGraphProcedureResponse.control:type_name -> mycel.common.v1.ProcedureControlBarrier
+	77, // 10: mycel.client.v1.GetProcedureInferenceAttemptResponse.attempt:type_name -> mycel.common.v1.ProcedureInferenceAttempt
+	78, // 11: mycel.client.v1.ListProcedureInferenceAttemptsRequest.filter:type_name -> mycel.common.v1.ProcedureInferenceAttemptFilter
+	77, // 12: mycel.client.v1.ListProcedureInferenceAttemptsResponse.attempts:type_name -> mycel.common.v1.ProcedureInferenceAttempt
+	78, // 13: mycel.client.v1.ListProcedureInferenceAttemptChangesRequest.filter:type_name -> mycel.common.v1.ProcedureInferenceAttemptFilter
+	79, // 14: mycel.client.v1.ListProcedureInferenceAttemptChangesResponse.changes:type_name -> mycel.common.v1.ProcedureInferenceAttemptChange
 	18, // 15: mycel.client.v1.ListGraphAutomationBindingsResponse.bindings:type_name -> mycel.client.v1.GraphAutomationBindingSummary
-	0,  // 16: mycel.client.v1.AutomationService.ValidateAutomation:input_type -> mycel.client.v1.ValidateAutomationRequest
-	2,  // 17: mycel.client.v1.AutomationService.CreateAutomation:input_type -> mycel.client.v1.CreateAutomationRequest
-	3,  // 18: mycel.client.v1.AutomationService.UpdateAutomation:input_type -> mycel.client.v1.UpdateAutomationRequest
-	4,  // 19: mycel.client.v1.AutomationService.DeleteAutomation:input_type -> mycel.client.v1.DeleteAutomationRequest
-	6,  // 20: mycel.client.v1.AutomationService.GetAutomation:input_type -> mycel.client.v1.GetAutomationRequest
-	7,  // 21: mycel.client.v1.AutomationService.ListAutomations:input_type -> mycel.client.v1.ListAutomationsRequest
-	9,  // 22: mycel.client.v1.AutomationService.EnableAutomation:input_type -> mycel.client.v1.EnableAutomationRequest
-	10, // 23: mycel.client.v1.AutomationService.DisableAutomation:input_type -> mycel.client.v1.DisableAutomationRequest
-	19, // 24: mycel.client.v1.AutomationService.ListAutomationInvocations:input_type -> mycel.client.v1.ListAutomationInvocationsRequest
-	22, // 25: mycel.client.v1.AutomationService.GetAutomationRun:input_type -> mycel.client.v1.GetAutomationRunRequest
-	24, // 26: mycel.client.v1.AutomationService.RetryAutomationInvocation:input_type -> mycel.client.v1.RetryAutomationInvocationRequest
-	26, // 27: mycel.client.v1.AutomationService.CancelAutomationInvocation:input_type -> mycel.client.v1.CancelAutomationInvocationRequest
-	29, // 28: mycel.client.v1.AutomationService.ValidateGraphProcedure:input_type -> mycel.client.v1.ValidateGraphProcedureRequest
-	31, // 29: mycel.client.v1.AutomationService.CreateGraphProcedure:input_type -> mycel.client.v1.CreateGraphProcedureRequest
-	32, // 30: mycel.client.v1.AutomationService.UpdateGraphProcedure:input_type -> mycel.client.v1.UpdateGraphProcedureRequest
-	33, // 31: mycel.client.v1.AutomationService.DeleteGraphProcedure:input_type -> mycel.client.v1.DeleteGraphProcedureRequest
-	35, // 32: mycel.client.v1.AutomationService.GetGraphProcedure:input_type -> mycel.client.v1.GetGraphProcedureRequest
-	36, // 33: mycel.client.v1.AutomationService.ListGraphProcedures:input_type -> mycel.client.v1.ListGraphProceduresRequest
-	41, // 34: mycel.client.v1.AutomationService.EnableGraphProcedure:input_type -> mycel.client.v1.EnableGraphProcedureRequest
-	43, // 35: mycel.client.v1.AutomationService.DisableGraphProcedure:input_type -> mycel.client.v1.DisableGraphProcedureRequest
-	45, // 36: mycel.client.v1.AutomationService.GetProcedureInferenceAttempt:input_type -> mycel.client.v1.GetProcedureInferenceAttemptRequest
-	47, // 37: mycel.client.v1.AutomationService.ListProcedureInferenceAttempts:input_type -> mycel.client.v1.ListProcedureInferenceAttemptsRequest
-	49, // 38: mycel.client.v1.AutomationService.ListProcedureInferenceAttemptChanges:input_type -> mycel.client.v1.ListProcedureInferenceAttemptChangesRequest
-	51, // 39: mycel.client.v1.AutomationService.ValidateGraphAutomationBinding:input_type -> mycel.client.v1.ValidateGraphAutomationBindingRequest
-	53, // 40: mycel.client.v1.AutomationService.CreateGraphAutomationBinding:input_type -> mycel.client.v1.CreateGraphAutomationBindingRequest
-	54, // 41: mycel.client.v1.AutomationService.UpdateGraphAutomationBinding:input_type -> mycel.client.v1.UpdateGraphAutomationBindingRequest
-	55, // 42: mycel.client.v1.AutomationService.DeleteGraphAutomationBinding:input_type -> mycel.client.v1.DeleteGraphAutomationBindingRequest
-	57, // 43: mycel.client.v1.AutomationService.GetGraphAutomationBinding:input_type -> mycel.client.v1.GetGraphAutomationBindingRequest
-	58, // 44: mycel.client.v1.AutomationService.ListGraphAutomationBindings:input_type -> mycel.client.v1.ListGraphAutomationBindingsRequest
-	60, // 45: mycel.client.v1.AutomationService.EnableGraphAutomationBinding:input_type -> mycel.client.v1.EnableGraphAutomationBindingRequest
-	61, // 46: mycel.client.v1.AutomationService.DisableGraphAutomationBinding:input_type -> mycel.client.v1.DisableGraphAutomationBindingRequest
-	1,  // 47: mycel.client.v1.AutomationService.ValidateAutomation:output_type -> mycel.client.v1.ValidateAutomationResponse
-	11, // 48: mycel.client.v1.AutomationService.CreateAutomation:output_type -> mycel.client.v1.CreateAutomationResponse
-	12, // 49: mycel.client.v1.AutomationService.UpdateAutomation:output_type -> mycel.client.v1.UpdateAutomationResponse
-	5,  // 50: mycel.client.v1.AutomationService.DeleteAutomation:output_type -> mycel.client.v1.DeleteAutomationResponse
-	13, // 51: mycel.client.v1.AutomationService.GetAutomation:output_type -> mycel.client.v1.GetAutomationResponse
-	8,  // 52: mycel.client.v1.AutomationService.ListAutomations:output_type -> mycel.client.v1.ListAutomationsResponse
-	14, // 53: mycel.client.v1.AutomationService.EnableAutomation:output_type -> mycel.client.v1.EnableAutomationResponse
-	15, // 54: mycel.client.v1.AutomationService.DisableAutomation:output_type -> mycel.client.v1.DisableAutomationResponse
-	20, // 55: mycel.client.v1.AutomationService.ListAutomationInvocations:output_type -> mycel.client.v1.ListAutomationInvocationsResponse
-	23, // 56: mycel.client.v1.AutomationService.GetAutomationRun:output_type -> mycel.client.v1.GetAutomationRunResponse
-	25, // 57: mycel.client.v1.AutomationService.RetryAutomationInvocation:output_type -> mycel.client.v1.RetryAutomationInvocationResponse
-	27, // 58: mycel.client.v1.AutomationService.CancelAutomationInvocation:output_type -> mycel.client.v1.CancelAutomationInvocationResponse
-	30, // 59: mycel.client.v1.AutomationService.ValidateGraphProcedure:output_type -> mycel.client.v1.ValidateGraphProcedureResponse
-	38, // 60: mycel.client.v1.AutomationService.CreateGraphProcedure:output_type -> mycel.client.v1.CreateGraphProcedureResponse
-	39, // 61: mycel.client.v1.AutomationService.UpdateGraphProcedure:output_type -> mycel.client.v1.UpdateGraphProcedureResponse
-	34, // 62: mycel.client.v1.AutomationService.DeleteGraphProcedure:output_type -> mycel.client.v1.DeleteGraphProcedureResponse
-	40, // 63: mycel.client.v1.AutomationService.GetGraphProcedure:output_type -> mycel.client.v1.GetGraphProcedureResponse
-	37, // 64: mycel.client.v1.AutomationService.ListGraphProcedures:output_type -> mycel.client.v1.ListGraphProceduresResponse
-	42, // 65: mycel.client.v1.AutomationService.EnableGraphProcedure:output_type -> mycel.client.v1.EnableGraphProcedureResponse
-	44, // 66: mycel.client.v1.AutomationService.DisableGraphProcedure:output_type -> mycel.client.v1.DisableGraphProcedureResponse
-	46, // 67: mycel.client.v1.AutomationService.GetProcedureInferenceAttempt:output_type -> mycel.client.v1.GetProcedureInferenceAttemptResponse
-	48, // 68: mycel.client.v1.AutomationService.ListProcedureInferenceAttempts:output_type -> mycel.client.v1.ListProcedureInferenceAttemptsResponse
-	50, // 69: mycel.client.v1.AutomationService.ListProcedureInferenceAttemptChanges:output_type -> mycel.client.v1.ListProcedureInferenceAttemptChangesResponse
-	52, // 70: mycel.client.v1.AutomationService.ValidateGraphAutomationBinding:output_type -> mycel.client.v1.ValidateGraphAutomationBindingResponse
-	62, // 71: mycel.client.v1.AutomationService.CreateGraphAutomationBinding:output_type -> mycel.client.v1.CreateGraphAutomationBindingResponse
-	63, // 72: mycel.client.v1.AutomationService.UpdateGraphAutomationBinding:output_type -> mycel.client.v1.UpdateGraphAutomationBindingResponse
-	56, // 73: mycel.client.v1.AutomationService.DeleteGraphAutomationBinding:output_type -> mycel.client.v1.DeleteGraphAutomationBindingResponse
-	64, // 74: mycel.client.v1.AutomationService.GetGraphAutomationBinding:output_type -> mycel.client.v1.GetGraphAutomationBindingResponse
-	59, // 75: mycel.client.v1.AutomationService.ListGraphAutomationBindings:output_type -> mycel.client.v1.ListGraphAutomationBindingsResponse
-	65, // 76: mycel.client.v1.AutomationService.EnableGraphAutomationBinding:output_type -> mycel.client.v1.EnableGraphAutomationBindingResponse
-	66, // 77: mycel.client.v1.AutomationService.DisableGraphAutomationBinding:output_type -> mycel.client.v1.DisableGraphAutomationBindingResponse
-	47, // [47:78] is the sub-list for method output_type
-	16, // [16:47] is the sub-list for method input_type
-	16, // [16:16] is the sub-list for extension type_name
-	16, // [16:16] is the sub-list for extension extendee
-	0,  // [0:16] is the sub-list for field type_name
+	73, // 16: mycel.client.v1.StartGraphAutomationReconciliationResponse.operation:type_name -> mycel.client.v1.GraphAutomationReconciliation
+	73, // 17: mycel.client.v1.GetGraphAutomationReconciliationResponse.operation:type_name -> mycel.client.v1.GraphAutomationReconciliation
+	73, // 18: mycel.client.v1.CancelGraphAutomationReconciliationResponse.operation:type_name -> mycel.client.v1.GraphAutomationReconciliation
+	0,  // 19: mycel.client.v1.AutomationService.ValidateAutomation:input_type -> mycel.client.v1.ValidateAutomationRequest
+	2,  // 20: mycel.client.v1.AutomationService.CreateAutomation:input_type -> mycel.client.v1.CreateAutomationRequest
+	3,  // 21: mycel.client.v1.AutomationService.UpdateAutomation:input_type -> mycel.client.v1.UpdateAutomationRequest
+	4,  // 22: mycel.client.v1.AutomationService.DeleteAutomation:input_type -> mycel.client.v1.DeleteAutomationRequest
+	6,  // 23: mycel.client.v1.AutomationService.GetAutomation:input_type -> mycel.client.v1.GetAutomationRequest
+	7,  // 24: mycel.client.v1.AutomationService.ListAutomations:input_type -> mycel.client.v1.ListAutomationsRequest
+	9,  // 25: mycel.client.v1.AutomationService.EnableAutomation:input_type -> mycel.client.v1.EnableAutomationRequest
+	10, // 26: mycel.client.v1.AutomationService.DisableAutomation:input_type -> mycel.client.v1.DisableAutomationRequest
+	19, // 27: mycel.client.v1.AutomationService.ListAutomationInvocations:input_type -> mycel.client.v1.ListAutomationInvocationsRequest
+	22, // 28: mycel.client.v1.AutomationService.GetAutomationRun:input_type -> mycel.client.v1.GetAutomationRunRequest
+	24, // 29: mycel.client.v1.AutomationService.RetryAutomationInvocation:input_type -> mycel.client.v1.RetryAutomationInvocationRequest
+	26, // 30: mycel.client.v1.AutomationService.CancelAutomationInvocation:input_type -> mycel.client.v1.CancelAutomationInvocationRequest
+	29, // 31: mycel.client.v1.AutomationService.ValidateGraphProcedure:input_type -> mycel.client.v1.ValidateGraphProcedureRequest
+	31, // 32: mycel.client.v1.AutomationService.CreateGraphProcedure:input_type -> mycel.client.v1.CreateGraphProcedureRequest
+	32, // 33: mycel.client.v1.AutomationService.UpdateGraphProcedure:input_type -> mycel.client.v1.UpdateGraphProcedureRequest
+	33, // 34: mycel.client.v1.AutomationService.DeleteGraphProcedure:input_type -> mycel.client.v1.DeleteGraphProcedureRequest
+	35, // 35: mycel.client.v1.AutomationService.GetGraphProcedure:input_type -> mycel.client.v1.GetGraphProcedureRequest
+	36, // 36: mycel.client.v1.AutomationService.ListGraphProcedures:input_type -> mycel.client.v1.ListGraphProceduresRequest
+	41, // 37: mycel.client.v1.AutomationService.EnableGraphProcedure:input_type -> mycel.client.v1.EnableGraphProcedureRequest
+	43, // 38: mycel.client.v1.AutomationService.DisableGraphProcedure:input_type -> mycel.client.v1.DisableGraphProcedureRequest
+	45, // 39: mycel.client.v1.AutomationService.GetProcedureInferenceAttempt:input_type -> mycel.client.v1.GetProcedureInferenceAttemptRequest
+	47, // 40: mycel.client.v1.AutomationService.ListProcedureInferenceAttempts:input_type -> mycel.client.v1.ListProcedureInferenceAttemptsRequest
+	49, // 41: mycel.client.v1.AutomationService.ListProcedureInferenceAttemptChanges:input_type -> mycel.client.v1.ListProcedureInferenceAttemptChangesRequest
+	51, // 42: mycel.client.v1.AutomationService.ValidateGraphAutomationBinding:input_type -> mycel.client.v1.ValidateGraphAutomationBindingRequest
+	53, // 43: mycel.client.v1.AutomationService.CreateGraphAutomationBinding:input_type -> mycel.client.v1.CreateGraphAutomationBindingRequest
+	54, // 44: mycel.client.v1.AutomationService.UpdateGraphAutomationBinding:input_type -> mycel.client.v1.UpdateGraphAutomationBindingRequest
+	55, // 45: mycel.client.v1.AutomationService.DeleteGraphAutomationBinding:input_type -> mycel.client.v1.DeleteGraphAutomationBindingRequest
+	57, // 46: mycel.client.v1.AutomationService.GetGraphAutomationBinding:input_type -> mycel.client.v1.GetGraphAutomationBindingRequest
+	58, // 47: mycel.client.v1.AutomationService.ListGraphAutomationBindings:input_type -> mycel.client.v1.ListGraphAutomationBindingsRequest
+	60, // 48: mycel.client.v1.AutomationService.EnableGraphAutomationBinding:input_type -> mycel.client.v1.EnableGraphAutomationBindingRequest
+	61, // 49: mycel.client.v1.AutomationService.DisableGraphAutomationBinding:input_type -> mycel.client.v1.DisableGraphAutomationBindingRequest
+	67, // 50: mycel.client.v1.AutomationService.StartGraphAutomationReconciliation:input_type -> mycel.client.v1.StartGraphAutomationReconciliationRequest
+	69, // 51: mycel.client.v1.AutomationService.GetGraphAutomationReconciliation:input_type -> mycel.client.v1.GetGraphAutomationReconciliationRequest
+	71, // 52: mycel.client.v1.AutomationService.CancelGraphAutomationReconciliation:input_type -> mycel.client.v1.CancelGraphAutomationReconciliationRequest
+	1,  // 53: mycel.client.v1.AutomationService.ValidateAutomation:output_type -> mycel.client.v1.ValidateAutomationResponse
+	11, // 54: mycel.client.v1.AutomationService.CreateAutomation:output_type -> mycel.client.v1.CreateAutomationResponse
+	12, // 55: mycel.client.v1.AutomationService.UpdateAutomation:output_type -> mycel.client.v1.UpdateAutomationResponse
+	5,  // 56: mycel.client.v1.AutomationService.DeleteAutomation:output_type -> mycel.client.v1.DeleteAutomationResponse
+	13, // 57: mycel.client.v1.AutomationService.GetAutomation:output_type -> mycel.client.v1.GetAutomationResponse
+	8,  // 58: mycel.client.v1.AutomationService.ListAutomations:output_type -> mycel.client.v1.ListAutomationsResponse
+	14, // 59: mycel.client.v1.AutomationService.EnableAutomation:output_type -> mycel.client.v1.EnableAutomationResponse
+	15, // 60: mycel.client.v1.AutomationService.DisableAutomation:output_type -> mycel.client.v1.DisableAutomationResponse
+	20, // 61: mycel.client.v1.AutomationService.ListAutomationInvocations:output_type -> mycel.client.v1.ListAutomationInvocationsResponse
+	23, // 62: mycel.client.v1.AutomationService.GetAutomationRun:output_type -> mycel.client.v1.GetAutomationRunResponse
+	25, // 63: mycel.client.v1.AutomationService.RetryAutomationInvocation:output_type -> mycel.client.v1.RetryAutomationInvocationResponse
+	27, // 64: mycel.client.v1.AutomationService.CancelAutomationInvocation:output_type -> mycel.client.v1.CancelAutomationInvocationResponse
+	30, // 65: mycel.client.v1.AutomationService.ValidateGraphProcedure:output_type -> mycel.client.v1.ValidateGraphProcedureResponse
+	38, // 66: mycel.client.v1.AutomationService.CreateGraphProcedure:output_type -> mycel.client.v1.CreateGraphProcedureResponse
+	39, // 67: mycel.client.v1.AutomationService.UpdateGraphProcedure:output_type -> mycel.client.v1.UpdateGraphProcedureResponse
+	34, // 68: mycel.client.v1.AutomationService.DeleteGraphProcedure:output_type -> mycel.client.v1.DeleteGraphProcedureResponse
+	40, // 69: mycel.client.v1.AutomationService.GetGraphProcedure:output_type -> mycel.client.v1.GetGraphProcedureResponse
+	37, // 70: mycel.client.v1.AutomationService.ListGraphProcedures:output_type -> mycel.client.v1.ListGraphProceduresResponse
+	42, // 71: mycel.client.v1.AutomationService.EnableGraphProcedure:output_type -> mycel.client.v1.EnableGraphProcedureResponse
+	44, // 72: mycel.client.v1.AutomationService.DisableGraphProcedure:output_type -> mycel.client.v1.DisableGraphProcedureResponse
+	46, // 73: mycel.client.v1.AutomationService.GetProcedureInferenceAttempt:output_type -> mycel.client.v1.GetProcedureInferenceAttemptResponse
+	48, // 74: mycel.client.v1.AutomationService.ListProcedureInferenceAttempts:output_type -> mycel.client.v1.ListProcedureInferenceAttemptsResponse
+	50, // 75: mycel.client.v1.AutomationService.ListProcedureInferenceAttemptChanges:output_type -> mycel.client.v1.ListProcedureInferenceAttemptChangesResponse
+	52, // 76: mycel.client.v1.AutomationService.ValidateGraphAutomationBinding:output_type -> mycel.client.v1.ValidateGraphAutomationBindingResponse
+	62, // 77: mycel.client.v1.AutomationService.CreateGraphAutomationBinding:output_type -> mycel.client.v1.CreateGraphAutomationBindingResponse
+	63, // 78: mycel.client.v1.AutomationService.UpdateGraphAutomationBinding:output_type -> mycel.client.v1.UpdateGraphAutomationBindingResponse
+	56, // 79: mycel.client.v1.AutomationService.DeleteGraphAutomationBinding:output_type -> mycel.client.v1.DeleteGraphAutomationBindingResponse
+	64, // 80: mycel.client.v1.AutomationService.GetGraphAutomationBinding:output_type -> mycel.client.v1.GetGraphAutomationBindingResponse
+	59, // 81: mycel.client.v1.AutomationService.ListGraphAutomationBindings:output_type -> mycel.client.v1.ListGraphAutomationBindingsResponse
+	65, // 82: mycel.client.v1.AutomationService.EnableGraphAutomationBinding:output_type -> mycel.client.v1.EnableGraphAutomationBindingResponse
+	66, // 83: mycel.client.v1.AutomationService.DisableGraphAutomationBinding:output_type -> mycel.client.v1.DisableGraphAutomationBindingResponse
+	68, // 84: mycel.client.v1.AutomationService.StartGraphAutomationReconciliation:output_type -> mycel.client.v1.StartGraphAutomationReconciliationResponse
+	70, // 85: mycel.client.v1.AutomationService.GetGraphAutomationReconciliation:output_type -> mycel.client.v1.GetGraphAutomationReconciliationResponse
+	72, // 86: mycel.client.v1.AutomationService.CancelGraphAutomationReconciliation:output_type -> mycel.client.v1.CancelGraphAutomationReconciliationResponse
+	53, // [53:87] is the sub-list for method output_type
+	19, // [19:53] is the sub-list for method input_type
+	19, // [19:19] is the sub-list for extension type_name
+	19, // [19:19] is the sub-list for extension extendee
+	0,  // [0:19] is the sub-list for field type_name
 }
 
 func init() { file_mycel_client_v1_automation_proto_init() }
@@ -4423,7 +4999,7 @@ func file_mycel_client_v1_automation_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_mycel_client_v1_automation_proto_rawDesc), len(file_mycel_client_v1_automation_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   67,
+			NumMessages:   74,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
