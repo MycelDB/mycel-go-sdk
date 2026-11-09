@@ -174,6 +174,10 @@ type CommitTransactionOptions struct {
 	IdempotencyKey string
 	SpaceID        string
 	DomainID       string
+
+	// RevisionWitnesses are opaque values returned in graph/query read
+	// metadata. The daemon validates them atomically at commit time.
+	RevisionWitnesses [][]byte
 }
 
 // IdempotentCommitRetryPolicy controls retries of ambiguous commit RPC
@@ -225,10 +229,11 @@ func (c *Client) CommitTransactionWithOptions(ctx context.Context, txID string, 
 	callCtx, cancel := c.AuthCallContext(ctx)
 	defer cancel()
 	return c.Transaction.CommitTransaction(callCtx, &clientv1.CommitTransactionRequest{
-		TransactionId:  txID,
-		IdempotencyKey: options.IdempotencyKey,
-		SpaceId:        options.SpaceID,
-		DomainId:       options.DomainID,
+		TransactionId:     txID,
+		IdempotencyKey:    options.IdempotencyKey,
+		SpaceId:           options.SpaceID,
+		DomainId:          options.DomainID,
+		RevisionWitnesses: cloneRevisionWitnesses(options.RevisionWitnesses),
 	})
 }
 
