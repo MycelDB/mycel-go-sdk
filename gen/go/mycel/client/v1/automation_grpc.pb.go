@@ -52,6 +52,9 @@ const (
 	AutomationService_ListGraphAutomationBindings_FullMethodName          = "/mycel.client.v1.AutomationService/ListGraphAutomationBindings"
 	AutomationService_EnableGraphAutomationBinding_FullMethodName         = "/mycel.client.v1.AutomationService/EnableGraphAutomationBinding"
 	AutomationService_DisableGraphAutomationBinding_FullMethodName        = "/mycel.client.v1.AutomationService/DisableGraphAutomationBinding"
+	AutomationService_StartGraphAutomationReconciliation_FullMethodName   = "/mycel.client.v1.AutomationService/StartGraphAutomationReconciliation"
+	AutomationService_GetGraphAutomationReconciliation_FullMethodName     = "/mycel.client.v1.AutomationService/GetGraphAutomationReconciliation"
+	AutomationService_CancelGraphAutomationReconciliation_FullMethodName  = "/mycel.client.v1.AutomationService/CancelGraphAutomationReconciliation"
 )
 
 // AutomationServiceClient is the client API for AutomationService service.
@@ -93,6 +96,13 @@ type AutomationServiceClient interface {
 	ListGraphAutomationBindings(ctx context.Context, in *ListGraphAutomationBindingsRequest, opts ...grpc.CallOption) (*ListGraphAutomationBindingsResponse, error)
 	EnableGraphAutomationBinding(ctx context.Context, in *EnableGraphAutomationBindingRequest, opts ...grpc.CallOption) (*EnableGraphAutomationBindingResponse, error)
 	DisableGraphAutomationBinding(ctx context.Context, in *DisableGraphAutomationBindingRequest, opts ...grpc.CallOption) (*DisableGraphAutomationBindingResponse, error)
+	// StartGraphAutomationReconciliation is idempotent by (space, domain, binding, idempotency_key).
+	// It returns after durable operation creation; target discovery and scheduling are asynchronous.
+	StartGraphAutomationReconciliation(ctx context.Context, in *StartGraphAutomationReconciliationRequest, opts ...grpc.CallOption) (*StartGraphAutomationReconciliationResponse, error)
+	GetGraphAutomationReconciliation(ctx context.Context, in *GetGraphAutomationReconciliationRequest, opts ...grpc.CallOption) (*GetGraphAutomationReconciliationResponse, error)
+	// CancelGraphAutomationReconciliation fences new discovery and scheduling. Already-running
+	// executions retain the normal automation control semantics.
+	CancelGraphAutomationReconciliation(ctx context.Context, in *CancelGraphAutomationReconciliationRequest, opts ...grpc.CallOption) (*CancelGraphAutomationReconciliationResponse, error)
 }
 
 type automationServiceClient struct {
@@ -413,6 +423,36 @@ func (c *automationServiceClient) DisableGraphAutomationBinding(ctx context.Cont
 	return out, nil
 }
 
+func (c *automationServiceClient) StartGraphAutomationReconciliation(ctx context.Context, in *StartGraphAutomationReconciliationRequest, opts ...grpc.CallOption) (*StartGraphAutomationReconciliationResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(StartGraphAutomationReconciliationResponse)
+	err := c.cc.Invoke(ctx, AutomationService_StartGraphAutomationReconciliation_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *automationServiceClient) GetGraphAutomationReconciliation(ctx context.Context, in *GetGraphAutomationReconciliationRequest, opts ...grpc.CallOption) (*GetGraphAutomationReconciliationResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetGraphAutomationReconciliationResponse)
+	err := c.cc.Invoke(ctx, AutomationService_GetGraphAutomationReconciliation_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *automationServiceClient) CancelGraphAutomationReconciliation(ctx context.Context, in *CancelGraphAutomationReconciliationRequest, opts ...grpc.CallOption) (*CancelGraphAutomationReconciliationResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CancelGraphAutomationReconciliationResponse)
+	err := c.cc.Invoke(ctx, AutomationService_CancelGraphAutomationReconciliation_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // AutomationServiceServer is the server API for AutomationService service.
 // All implementations must embed UnimplementedAutomationServiceServer
 // for forward compatibility.
@@ -452,6 +492,13 @@ type AutomationServiceServer interface {
 	ListGraphAutomationBindings(context.Context, *ListGraphAutomationBindingsRequest) (*ListGraphAutomationBindingsResponse, error)
 	EnableGraphAutomationBinding(context.Context, *EnableGraphAutomationBindingRequest) (*EnableGraphAutomationBindingResponse, error)
 	DisableGraphAutomationBinding(context.Context, *DisableGraphAutomationBindingRequest) (*DisableGraphAutomationBindingResponse, error)
+	// StartGraphAutomationReconciliation is idempotent by (space, domain, binding, idempotency_key).
+	// It returns after durable operation creation; target discovery and scheduling are asynchronous.
+	StartGraphAutomationReconciliation(context.Context, *StartGraphAutomationReconciliationRequest) (*StartGraphAutomationReconciliationResponse, error)
+	GetGraphAutomationReconciliation(context.Context, *GetGraphAutomationReconciliationRequest) (*GetGraphAutomationReconciliationResponse, error)
+	// CancelGraphAutomationReconciliation fences new discovery and scheduling. Already-running
+	// executions retain the normal automation control semantics.
+	CancelGraphAutomationReconciliation(context.Context, *CancelGraphAutomationReconciliationRequest) (*CancelGraphAutomationReconciliationResponse, error)
 	mustEmbedUnimplementedAutomationServiceServer()
 }
 
@@ -554,6 +601,15 @@ func (UnimplementedAutomationServiceServer) EnableGraphAutomationBinding(context
 }
 func (UnimplementedAutomationServiceServer) DisableGraphAutomationBinding(context.Context, *DisableGraphAutomationBindingRequest) (*DisableGraphAutomationBindingResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DisableGraphAutomationBinding not implemented")
+}
+func (UnimplementedAutomationServiceServer) StartGraphAutomationReconciliation(context.Context, *StartGraphAutomationReconciliationRequest) (*StartGraphAutomationReconciliationResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method StartGraphAutomationReconciliation not implemented")
+}
+func (UnimplementedAutomationServiceServer) GetGraphAutomationReconciliation(context.Context, *GetGraphAutomationReconciliationRequest) (*GetGraphAutomationReconciliationResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetGraphAutomationReconciliation not implemented")
+}
+func (UnimplementedAutomationServiceServer) CancelGraphAutomationReconciliation(context.Context, *CancelGraphAutomationReconciliationRequest) (*CancelGraphAutomationReconciliationResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CancelGraphAutomationReconciliation not implemented")
 }
 func (UnimplementedAutomationServiceServer) mustEmbedUnimplementedAutomationServiceServer() {}
 func (UnimplementedAutomationServiceServer) testEmbeddedByValue()                           {}
@@ -1134,6 +1190,60 @@ func _AutomationService_DisableGraphAutomationBinding_Handler(srv interface{}, c
 	return interceptor(ctx, in, info, handler)
 }
 
+func _AutomationService_StartGraphAutomationReconciliation_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StartGraphAutomationReconciliationRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AutomationServiceServer).StartGraphAutomationReconciliation(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AutomationService_StartGraphAutomationReconciliation_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AutomationServiceServer).StartGraphAutomationReconciliation(ctx, req.(*StartGraphAutomationReconciliationRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AutomationService_GetGraphAutomationReconciliation_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetGraphAutomationReconciliationRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AutomationServiceServer).GetGraphAutomationReconciliation(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AutomationService_GetGraphAutomationReconciliation_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AutomationServiceServer).GetGraphAutomationReconciliation(ctx, req.(*GetGraphAutomationReconciliationRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AutomationService_CancelGraphAutomationReconciliation_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CancelGraphAutomationReconciliationRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AutomationServiceServer).CancelGraphAutomationReconciliation(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AutomationService_CancelGraphAutomationReconciliation_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AutomationServiceServer).CancelGraphAutomationReconciliation(ctx, req.(*CancelGraphAutomationReconciliationRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // AutomationService_ServiceDesc is the grpc.ServiceDesc for AutomationService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -1264,6 +1374,18 @@ var AutomationService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DisableGraphAutomationBinding",
 			Handler:    _AutomationService_DisableGraphAutomationBinding_Handler,
+		},
+		{
+			MethodName: "StartGraphAutomationReconciliation",
+			Handler:    _AutomationService_StartGraphAutomationReconciliation_Handler,
+		},
+		{
+			MethodName: "GetGraphAutomationReconciliation",
+			Handler:    _AutomationService_GetGraphAutomationReconciliation_Handler,
+		},
+		{
+			MethodName: "CancelGraphAutomationReconciliation",
+			Handler:    _AutomationService_CancelGraphAutomationReconciliation_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
