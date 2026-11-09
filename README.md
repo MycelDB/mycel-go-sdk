@@ -39,8 +39,9 @@ The SDK major/minor line must match the Mycel API/daemon major/minor line for ge
 | --- | --- | --- | --- |
 | `v0.20.x` | `v0.20` | `v0.20.x` | Do not use for Mycel v0.21 semantic Admin RPCs. Its string-valued semantic trigger field is wire-incompatible with the v0.21 enum field. |
 | `v0.21.x` | `v0.21` | `v0.21.x` | Required for channel-owned Search queries and enum-only semantic trigger events. Older daemon lines are not certified. |
+| `v0.22.x` | `v0.22` | `v0.22.x` | Required for graph automation reconciliation and revision-fenced graph-write helpers. |
 
-The approved immutable v0.21 consumer target is [`v0.21.1`](https://github.com/MycelDB/mycel-go-sdk/releases/tag/v0.21.1). The breaking generated-contract migration began at the immutable [`v0.21.0` source tag](https://github.com/MycelDB/mycel-go-sdk/tree/v0.21.0); see the [`v0.21.0` changelog entry](CHANGELOG.md#v0210---2026-10-27).
+The approved immutable v0.22 consumer target is [`v0.22.0`](https://github.com/MycelDB/mycel-go-sdk/releases/tag/v0.22.0). The v0.21 generated-contract migration remains documented in the [`v0.21.0` changelog entry](CHANGELOG.md#v0210---2026-10-27).
 
 Machine-readable compatibility metadata is published at [`.release/mycel-compatibility.json`](.release/mycel-compatibility.json). Deployment tooling must fail closed for missing or unknown metadata/schema versions, unknown daemon lines, or contradictory compatibility declarations.
 
@@ -92,7 +93,7 @@ The space/domain must already exist in a disposable or approved test environment
 
 ## Generate protobuf stubs
 
-The committed stubs on release branches are generated from the matching `mycel-api` release tag. The current release line is aligned with `mycel-api` `v0.21.0`.
+The committed stubs on release branches are generated from the matching `mycel-api` release tag. The current release line is aligned with `mycel-api` `v0.22.0`.
 
 By default generation reads protobufs from a sibling checkout:
 
