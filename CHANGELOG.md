@@ -6,6 +6,16 @@ This project follows the spirit of [Keep a Changelog](https://keepachangelog.com
 
 ## [Unreleased]
 
+## [v0.23.0] - 2026-11-17
+
+### Added
+
+- Regenerated Go protobuf/gRPC bindings from `mycel-api v0.23.0`, including semantic projection consistency policies and per-channel search freshness diagnostics.
+
+### Compatibility
+
+- Requires the coordinated Mycel API and daemon v0.23.0 contract for semantic consistency behavior. v0.23 clients and daemons must be updated together; no legacy semantic-search compatibility bridge is provided.
+
 ## [v0.22.0] - 2026-11-09
 
 ### Added
