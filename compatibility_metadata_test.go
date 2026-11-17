@@ -43,27 +43,33 @@ func TestCompatibilityManifestV1(t *testing.T) {
 	if manifest.Component != "mycel-go-sdk" {
 		t.Fatalf("component = %q, want mycel-go-sdk", manifest.Component)
 	}
-	if manifest.ComponentRelease != "v0.22.0" {
-		t.Fatalf("component_release = %q, want v0.22.0", manifest.ComponentRelease)
+	if manifest.ComponentRelease != "v0.23.0" {
+		t.Fatalf("component_release = %q, want v0.23.0", manifest.ComponentRelease)
 	}
-	if manifest.SourceRevision != "95ce6e3e22591811f8404d92f3169a3843d3fc93" {
-		t.Fatalf("source_revision = %q, want immutable v0.22.0 source commit", manifest.SourceRevision)
+	if manifest.SourceRevision != "b8e70345e5242cf4a796156b809c7202aa50881b" {
+		t.Fatalf("source_revision = %q, want immutable v0.23.0 source commit", manifest.SourceRevision)
 	}
-	if manifest.MycelAPILine != "0.22" {
-		t.Fatalf("mycel_api_line = %q, want 0.22", manifest.MycelAPILine)
+	if manifest.MycelAPILine != "0.23" {
+		t.Fatalf("mycel_api_line = %q, want 0.23", manifest.MycelAPILine)
 	}
-	if !reflect.DeepEqual(manifest.SupportedDaemonAPILines, []string{"0.22"}) {
-		t.Fatalf("supported_daemon_api_lines = %v, want [0.22]", manifest.SupportedDaemonAPILines)
+	if !reflect.DeepEqual(manifest.SupportedDaemonAPILines, []string{"0.23"}) {
+		t.Fatalf("supported_daemon_api_lines = %v, want [0.23]", manifest.SupportedDaemonAPILines)
 	}
 
-	wantIncompatible := []incompatibleDaemonAPILine{{
-		Line:      "0.20",
-		Contracts: []string{"search-channel-owned-query-v1", "semantic-trigger-events-enum-v1"},
-	}}
+	wantIncompatible := []incompatibleDaemonAPILine{
+		{
+			Line:      "0.20",
+			Contracts: []string{"search-channel-owned-query-v1", "semantic-trigger-events-enum-v1"},
+		},
+		{
+			Line:      "0.22",
+			Contracts: []string{"semantic-projection-consistency-v1"},
+		},
+	}
 	if !reflect.DeepEqual(manifest.IncompatibleDaemonAPILines, wantIncompatible) {
 		t.Fatalf("incompatible_daemon_api_lines = %#v, want %#v", manifest.IncompatibleDaemonAPILines, wantIncompatible)
 	}
-	if manifest.PublishedAt != "2026-11-09T22:48:39Z" {
-		t.Fatalf("published_at = %q, want v0.22.0 publication time", manifest.PublishedAt)
+	if manifest.PublishedAt != "2026-11-17T17:34:00Z" {
+		t.Fatalf("published_at = %q, want v0.23.0 publication time", manifest.PublishedAt)
 	}
 }

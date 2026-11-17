@@ -1,11 +1,11 @@
 {
   "schema_version": 1,
   "component": "mycel-go-sdk",
-  "component_release": "v0.22.0",
-  "source_revision": "95ce6e3e22591811f8404d92f3169a3843d3fc93",
-  "mycel_api_line": "0.22",
+  "component_release": "v0.23.0",
+  "source_revision": "b8e70345e5242cf4a796156b809c7202aa50881b",
+  "mycel_api_line": "0.23",
   "supported_daemon_api_lines": [
-    "0.22"
+    "0.23"
   ],
   "incompatible_daemon_api_lines": [
     {
@@ -14,7 +14,13 @@
         "search-channel-owned-query-v1",
         "semantic-trigger-events-enum-v1"
       ]
+    },
+    {
+      "line": "0.22",
+      "contracts": [
+        "semantic-projection-consistency-v1"
+      ]
     }
   ],
-  "published_at": "2026-11-09T22:48:39Z"
+  "published_at": "2026-11-17T17:34:00Z"
 }
