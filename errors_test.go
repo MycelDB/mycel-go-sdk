@@ -8,6 +8,7 @@ import (
 	"syscall"
 	"testing"
 
+	"google.golang.org/genproto/googleapis/rpc/errdetails"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 )
@@ -60,6 +61,32 @@ func TestClassifyErrorHandlesWrappedGRPCStatus(t *testing.T) {
 	authErr := fmt.Errorf("auth: %w", status.Error(codes.Unauthenticated, "invalid credentials"))
 	if !IsAuthenticationError(authErr) {
 		t.Fatalf("wrapped unauthenticated status was not authentication")
+	}
+}
+
+func TestIsAuthSessionInvalidUsesStableErrorInfoReason(t *testing.T) {
+	st := status.New(codes.Unauthenticated, "auth session is revoked")
+	withDetails, err := st.WithDetails(&errdetails.ErrorInfo{Domain: AuthErrorInfoDomain, Reason: AuthReasonAuthSessionRevoked})
+	if err != nil {
+		t.Fatalf("WithDetails() error = %v", err)
+	}
+	wrapped := fmt.Errorf("cached delegated client failed: %w", withDetails.Err())
+	if !IsAuthSessionInvalid(wrapped) {
+		t.Fatalf("IsAuthSessionInvalid() = false for %v", wrapped)
+	}
+	if reason, ok := AuthSessionInvalidReason(wrapped); !ok || reason != AuthReasonAuthSessionRevoked {
+		t.Fatalf("AuthSessionInvalidReason() = %q, %v; want %q, true", reason, ok, AuthReasonAuthSessionRevoked)
+	}
+
+	accessExpired, err := status.New(codes.Unauthenticated, "authorization token is expired").WithDetails(&errdetails.ErrorInfo{Domain: AuthErrorInfoDomain, Reason: "authorization_token_expired"})
+	if err != nil {
+		t.Fatalf("WithDetails() error = %v", err)
+	}
+	if IsAuthSessionInvalid(accessExpired.Err()) {
+		t.Fatal("access-token expiry alone should not be classified as invalid auth session")
+	}
+	if IsAuthSessionInvalid(status.Error(codes.PermissionDenied, "principal management capability is required")) {
+		t.Fatal("permission denied should not be classified as invalid auth session")
 	}
 }
 
