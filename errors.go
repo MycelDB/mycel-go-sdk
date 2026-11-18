@@ -6,14 +6,31 @@ import (
 	"crypto/x509"
 	"errors"
 	"net"
+	"strings"
 	"syscall"
 
+	"google.golang.org/genproto/googleapis/rpc/errdetails"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 )
 
 // ErrorKind is a stable SDK error category for downstream applications.
 type ErrorKind string
+
+const (
+	// AuthErrorInfoDomain is the google.rpc.ErrorInfo domain used by Mycel daemon
+	// authentication and auth-session errors.
+	AuthErrorInfoDomain = "mycel.auth"
+
+	// AuthReasonAuthSessionInvalid means the access token refers to no usable durable auth session.
+	AuthReasonAuthSessionInvalid = "auth_session_invalid"
+	// AuthReasonAuthSessionRevoked means the durable auth session or token family was revoked.
+	AuthReasonAuthSessionRevoked = "auth_session_revoked"
+	// AuthReasonAuthSessionExpired means the durable auth session exceeded idle or absolute expiry.
+	AuthReasonAuthSessionExpired = "auth_session_expired"
+	// AuthReasonRefreshSessionInvalid means the presented refresh token/session is unusable.
+	AuthReasonRefreshSessionInvalid = "refresh_session_invalid"
+)
 
 const (
 	// ErrorKindValidation indicates invalid local input or invalid RPC arguments.
@@ -104,6 +121,45 @@ func IsAuthenticationError(err error) bool { return ErrorKindOf(err) == ErrorKin
 
 // IsAuthorizationError reports whether err is an authorization failure.
 func IsAuthorizationError(err error) bool { return ErrorKindOf(err) == ErrorKindAuthorization }
+
+// IsAuthSessionInvalid reports whether err is an Unauthenticated gRPC status
+// that identifies a stale, revoked, expired, or otherwise unusable durable auth
+// session. Long-running services that cache delegated clients should discard the
+// cached client/session when this returns true, then create a new delegated
+// session if application policy still permits acting for that principal.
+func IsAuthSessionInvalid(err error) bool {
+	_, ok := AuthSessionInvalidReason(err)
+	return ok
+}
+
+// AuthSessionInvalidReason returns the stable Mycel auth-session ErrorInfo
+// reason when err indicates a cached auth/delegated session should be discarded.
+func AuthSessionInvalidReason(err error) (string, bool) {
+	st, ok := status.FromError(err)
+	if !ok || st.Code() != codes.Unauthenticated {
+		return "", false
+	}
+	for _, detail := range st.Details() {
+		info, ok := detail.(*errdetails.ErrorInfo)
+		if !ok || info.GetDomain() != AuthErrorInfoDomain {
+			continue
+		}
+		reason := strings.ToLower(strings.TrimSpace(info.GetReason()))
+		if isAuthSessionInvalidReason(reason) {
+			return reason, true
+		}
+	}
+	return "", false
+}
+
+func isAuthSessionInvalidReason(reason string) bool {
+	switch reason {
+	case AuthReasonAuthSessionInvalid, AuthReasonAuthSessionRevoked, AuthReasonAuthSessionExpired, AuthReasonRefreshSessionInvalid:
+		return true
+	default:
+		return false
+	}
+}
 
 func classifyStatusError(err error, st *status.Status) ClassifiedError {
 	kind := ErrorKindUnknown
