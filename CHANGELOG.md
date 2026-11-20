@@ -11,6 +11,7 @@ This project follows the spirit of [Keep a Changelog](https://keepachangelog.com
 - Regenerated admin backup bindings for the repository-backed backup/restore contract foundation, including backup repository CRUD/validation, backup-set catalog, and restore planning/operation messages.
 - Regenerated backup-set validation, compatibility, capacity, and manifest summary fields for daemon Phase 4 restore-readiness validators.
 - Added AdminClient helper methods for backup repositories, repository-backed backup-set validation/deletion, backup operation listing, and restore planning/operation RPCs.
+- Added `IsClusterQuiesced`, `IsTransactionAbortedByQuiesce`, and `BackupQuiesceReason` helpers for stable `mycel.backup` quiesce ErrorInfo handling.
 
 ## [v0.23.1] - 2026-11-18
 

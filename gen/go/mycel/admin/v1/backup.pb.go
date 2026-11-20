@@ -1503,17 +1503,23 @@ func (x *QuiesceStatus) GetParticipants() []*QuiesceParticipantStatus {
 }
 
 type QuiesceParticipantStatus struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Name          string                 `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
-	Quiesced      bool                   `protobuf:"varint,2,opt,name=quiesced,proto3" json:"quiesced,omitempty"`
-	Active        int32                  `protobuf:"varint,3,opt,name=active,proto3" json:"active,omitempty"`
-	Reason        string                 `protobuf:"bytes,4,opt,name=reason,proto3" json:"reason,omitempty"`
-	Mode          string                 `protobuf:"bytes,5,opt,name=mode,proto3" json:"mode,omitempty"`
-	Source        string                 `protobuf:"bytes,6,opt,name=source,proto3" json:"source,omitempty"`
-	Since         string                 `protobuf:"bytes,7,opt,name=since,proto3" json:"since,omitempty"`
-	LastError     string                 `protobuf:"bytes,8,opt,name=last_error,json=lastError,proto3" json:"last_error,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state                protoimpl.MessageState `protogen:"open.v1"`
+	Name                 string                 `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	Quiesced             bool                   `protobuf:"varint,2,opt,name=quiesced,proto3" json:"quiesced,omitempty"`
+	Active               int32                  `protobuf:"varint,3,opt,name=active,proto3" json:"active,omitempty"`
+	Reason               string                 `protobuf:"bytes,4,opt,name=reason,proto3" json:"reason,omitempty"`
+	Mode                 string                 `protobuf:"bytes,5,opt,name=mode,proto3" json:"mode,omitempty"`
+	Source               string                 `protobuf:"bytes,6,opt,name=source,proto3" json:"source,omitempty"`
+	Since                string                 `protobuf:"bytes,7,opt,name=since,proto3" json:"since,omitempty"`
+	LastError            string                 `protobuf:"bytes,8,opt,name=last_error,json=lastError,proto3" json:"last_error,omitempty"`
+	ActiveReadOnly       int32                  `protobuf:"varint,9,opt,name=active_read_only,json=activeReadOnly,proto3" json:"active_read_only,omitempty"`
+	ActiveWrites         int32                  `protobuf:"varint,10,opt,name=active_writes,json=activeWrites,proto3" json:"active_writes,omitempty"`
+	ReadAllowlistProfile string                 `protobuf:"bytes,11,opt,name=read_allowlist_profile,json=readAllowlistProfile,proto3" json:"read_allowlist_profile,omitempty"`
+	Deadline             string                 `protobuf:"bytes,12,opt,name=deadline,proto3" json:"deadline,omitempty"`
+	AcceptingReadOnly    bool                   `protobuf:"varint,13,opt,name=accepting_read_only,json=acceptingReadOnly,proto3" json:"accepting_read_only,omitempty"`
+	AcceptingWrites      bool                   `protobuf:"varint,14,opt,name=accepting_writes,json=acceptingWrites,proto3" json:"accepting_writes,omitempty"`
+	unknownFields        protoimpl.UnknownFields
+	sizeCache            protoimpl.SizeCache
 }
 
 func (x *QuiesceParticipantStatus) Reset() {
@@ -1600,6 +1606,48 @@ func (x *QuiesceParticipantStatus) GetLastError() string {
 		return x.LastError
 	}
 	return ""
+}
+
+func (x *QuiesceParticipantStatus) GetActiveReadOnly() int32 {
+	if x != nil {
+		return x.ActiveReadOnly
+	}
+	return 0
+}
+
+func (x *QuiesceParticipantStatus) GetActiveWrites() int32 {
+	if x != nil {
+		return x.ActiveWrites
+	}
+	return 0
+}
+
+func (x *QuiesceParticipantStatus) GetReadAllowlistProfile() string {
+	if x != nil {
+		return x.ReadAllowlistProfile
+	}
+	return ""
+}
+
+func (x *QuiesceParticipantStatus) GetDeadline() string {
+	if x != nil {
+		return x.Deadline
+	}
+	return ""
+}
+
+func (x *QuiesceParticipantStatus) GetAcceptingReadOnly() bool {
+	if x != nil {
+		return x.AcceptingReadOnly
+	}
+	return false
+}
+
+func (x *QuiesceParticipantStatus) GetAcceptingWrites() bool {
+	if x != nil {
+		return x.AcceptingWrites
+	}
+	return false
 }
 
 type SecretReference struct {
@@ -6485,7 +6533,7 @@ const file_mycel_admin_v1_backup_proto_rawDesc = "" +
 	"\finclude_logs\x18\b \x01(\bR\vincludeLogs\x12J\n" +
 	"\x0earchive_format\x18\t \x01(\x0e2#.mycel.admin.v1.BackupArchiveFormatR\rarchiveFormat\"]\n" +
 	"\rQuiesceStatus\x12L\n" +
-	"\fparticipants\x18\x01 \x03(\v2(.mycel.admin.v1.QuiesceParticipantStatusR\fparticipants\"\xdb\x01\n" +
+	"\fparticipants\x18\x01 \x03(\v2(.mycel.admin.v1.QuiesceParticipantStatusR\fparticipants\"\xd7\x03\n" +
 	"\x18QuiesceParticipantStatus\x12\x12\n" +
 	"\x04name\x18\x01 \x01(\tR\x04name\x12\x1a\n" +
 	"\bquiesced\x18\x02 \x01(\bR\bquiesced\x12\x16\n" +
@@ -6495,7 +6543,14 @@ const file_mycel_admin_v1_backup_proto_rawDesc = "" +
 	"\x06source\x18\x06 \x01(\tR\x06source\x12\x14\n" +
 	"\x05since\x18\a \x01(\tR\x05since\x12\x1d\n" +
 	"\n" +
-	"last_error\x18\b \x01(\tR\tlastError\"\xb0\x02\n" +
+	"last_error\x18\b \x01(\tR\tlastError\x12(\n" +
+	"\x10active_read_only\x18\t \x01(\x05R\x0eactiveReadOnly\x12#\n" +
+	"\ractive_writes\x18\n" +
+	" \x01(\x05R\factiveWrites\x124\n" +
+	"\x16read_allowlist_profile\x18\v \x01(\tR\x14readAllowlistProfile\x12\x1a\n" +
+	"\bdeadline\x18\f \x01(\tR\bdeadline\x12.\n" +
+	"\x13accepting_read_only\x18\r \x01(\bR\x11acceptingReadOnly\x12)\n" +
+	"\x10accepting_writes\x18\x0e \x01(\bR\x0facceptingWrites\"\xb0\x02\n" +
 	"\x0fSecretReference\x12=\n" +
 	"\x06scheme\x18\x01 \x01(\x0e2%.mycel.admin.v1.SecretReferenceSchemeR\x06scheme\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x12\x1c\n" +

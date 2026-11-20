@@ -30,6 +30,17 @@ const (
 	AuthReasonAuthSessionExpired = "auth_session_expired"
 	// AuthReasonRefreshSessionInvalid means the presented refresh token/session is unusable.
 	AuthReasonRefreshSessionInvalid = "refresh_session_invalid"
+
+	// BackupErrorInfoDomain is the google.rpc.ErrorInfo domain used by Mycel daemon
+	// backup, restore, and quiesce errors.
+	BackupErrorInfoDomain = "mycel.backup"
+
+	// BackupReasonClusterQuiesced means the daemon is intentionally rejecting work
+	// while backup quiescence is active.
+	BackupReasonClusterQuiesced = "cluster_quiesced"
+	// BackupReasonTransactionAbortedByQuiesce means a transaction finalization was
+	// aborted because backup quiescence closed admission first.
+	BackupReasonTransactionAbortedByQuiesce = "transaction_aborted_by_quiesce"
 )
 
 const (
@@ -159,6 +170,42 @@ func isAuthSessionInvalidReason(reason string) bool {
 	default:
 		return false
 	}
+}
+
+// IsClusterQuiesced reports whether err is an Unavailable gRPC status carrying
+// the stable Mycel backup/quiesce cluster_quiesced reason. It intentionally does
+// not classify PermissionDenied, NotFound, or generic Unavailable errors.
+func IsClusterQuiesced(err error) bool {
+	reason, ok := BackupQuiesceReason(err)
+	return ok && reason == BackupReasonClusterQuiesced
+}
+
+// IsTransactionAbortedByQuiesce reports whether err indicates a write
+// transaction finalization was aborted by backup quiescence.
+func IsTransactionAbortedByQuiesce(err error) bool {
+	reason, ok := BackupQuiesceReason(err)
+	return ok && reason == BackupReasonTransactionAbortedByQuiesce
+}
+
+// BackupQuiesceReason returns a stable Mycel backup/quiesce ErrorInfo reason
+// from an Unavailable gRPC status when present.
+func BackupQuiesceReason(err error) (string, bool) {
+	st, ok := status.FromError(err)
+	if !ok || st.Code() != codes.Unavailable {
+		return "", false
+	}
+	for _, detail := range st.Details() {
+		info, ok := detail.(*errdetails.ErrorInfo)
+		if !ok || info.GetDomain() != BackupErrorInfoDomain {
+			continue
+		}
+		reason := strings.ToLower(strings.TrimSpace(info.GetReason()))
+		switch reason {
+		case BackupReasonClusterQuiesced, BackupReasonTransactionAbortedByQuiesce:
+			return reason, true
+		}
+	}
+	return "", false
 }
 
 func classifyStatusError(err error, st *status.Status) ClassifiedError {
