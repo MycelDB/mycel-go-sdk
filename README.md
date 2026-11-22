@@ -27,7 +27,7 @@ The SDK generates Go protobuf/gRPC stubs from the language-independent `mycel-ap
 - structured query builders and explain helpers for common indexed/text/semantic/path/aggregate shapes
 - graph-change watch helpers
 - Admin backup policy/status/list/trigger/delete helpers
-- Admin cluster backup trigger/status/list/validate helpers
+- Admin cluster backup trigger/status/list/validate/observability helpers
 
 Generated code is committed under `gen/go/` so tagged Go module releases are self-contained.
 
@@ -328,10 +328,15 @@ cluster, err := admin.StartClusterBackup(ctx, &adminv1.StartClusterBackupRequest
     OutputDir:     "/mnt/mycel-backups",
     ArchiveFormat: adminv1.BackupArchiveFormat_BACKUP_ARCHIVE_FORMAT_TAR_ZST,
 })
+observability, err := admin.GetBackupObservability(ctx, &adminv1.GetBackupObservabilityRequest{
+    RepositoryId:          "repo-prod",
+    IncludeRetentionProbe: true,
+})
 _ = policy
 _ = status
 _ = trigger
 _ = cluster
+_ = observability
 ```
 
 ## Environment config

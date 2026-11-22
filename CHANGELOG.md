@@ -8,6 +8,7 @@ This project follows the spirit of [Keep a Changelog](https://keepachangelog.com
 
 ### Added
 
+- Added an AdminClient helper and regenerated admin backup bindings for backup/restore observability snapshots, metric rows, and alert conditions.
 - Regenerated admin cluster bindings for restored-cluster derived subsystem readiness fields.
 - Added AdminClient helper methods and regenerated admin backup bindings for repository retention planning/apply RPCs and plan/action evidence messages.
 - Regenerated admin backup bindings for per-node restore progress evidence used by Kubernetes restore controller/helper status.

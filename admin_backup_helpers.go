@@ -183,6 +183,15 @@ func (c *AdminClient) ApplyRepositoryRetention(ctx context.Context, req *adminv1
 	return c.Backup.ApplyRepositoryRetention(callCtx, req)
 }
 
+func (c *AdminClient) GetBackupObservability(ctx context.Context, req *adminv1.GetBackupObservabilityRequest) (*adminv1.GetBackupObservabilityResponse, error) {
+	callCtx, cancel := c.AuthCallContext(ctx)
+	defer cancel()
+	if req == nil {
+		req = &adminv1.GetBackupObservabilityRequest{}
+	}
+	return c.Backup.GetBackupObservability(callCtx, req)
+}
+
 func (c *AdminClient) PlanClusterRestore(ctx context.Context, req *adminv1.PlanClusterRestoreRequest) (*adminv1.PlanClusterRestoreResponse, error) {
 	callCtx, cancel := c.AuthCallContext(ctx)
 	defer cancel()

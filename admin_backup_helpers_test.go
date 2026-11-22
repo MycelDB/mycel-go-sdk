@@ -43,6 +43,21 @@ func TestRepositoryRetentionContractTypesCompile(t *testing.T) {
 	}
 }
 
+func TestBackupObservabilityContractTypesCompile(t *testing.T) {
+	req := &adminv1.GetBackupObservabilityRequest{RepositoryId: "repo-prod", IncludeRetentionProbe: true, StaleOperationAfterSeconds: 3600, BackupFreshnessAfterSeconds: 86400, IncompleteBackupAfterSeconds: 7200}
+	snapshot := &adminv1.BackupObservabilitySnapshot{
+		ObservedAt:   "2026-11-22T12:00:00Z",
+		RepositoryId: req.GetRepositoryId(),
+		SummaryState: "warning",
+		Metrics:      []*adminv1.BackupMetric{{Name: "mycel_backup_cluster_latest_success_age_seconds", Unit: "seconds", Value: 42, Labels: map[string]string{"repository_id": req.GetRepositoryId()}}},
+		Alerts:       []*adminv1.BackupAlertCondition{{Name: "MycelBackupFreshnessStale", Severity: "warning", Firing: true, Reason: "latest_success_stale", Expression: "mycel_backup_cluster_latest_success_age_seconds > 86400"}},
+	}
+	res := &adminv1.GetBackupObservabilityResponse{Snapshot: snapshot}
+	if !req.GetIncludeRetentionProbe() || res.GetSnapshot().GetMetrics()[0].GetValue() != 42 || !res.GetSnapshot().GetAlerts()[0].GetFiring() {
+		t.Fatalf("unexpected observability contract values: %#v %#v", req, res)
+	}
+}
+
 func TestBackupSetValidationSummaryFieldsCompile(t *testing.T) {
 	summary := &adminv1.ClusterBackupSetSummary{
 		BackupSetId: "backup-set-1",

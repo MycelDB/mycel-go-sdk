@@ -44,6 +44,7 @@ const (
 	AdminBackupService_DeleteClusterBackupSet_FullMethodName      = "/mycel.admin.v1.AdminBackupService/DeleteClusterBackupSet"
 	AdminBackupService_PlanRepositoryRetention_FullMethodName     = "/mycel.admin.v1.AdminBackupService/PlanRepositoryRetention"
 	AdminBackupService_ApplyRepositoryRetention_FullMethodName    = "/mycel.admin.v1.AdminBackupService/ApplyRepositoryRetention"
+	AdminBackupService_GetBackupObservability_FullMethodName      = "/mycel.admin.v1.AdminBackupService/GetBackupObservability"
 	AdminBackupService_PlanClusterRestore_FullMethodName          = "/mycel.admin.v1.AdminBackupService/PlanClusterRestore"
 	AdminBackupService_StartClusterRestore_FullMethodName         = "/mycel.admin.v1.AdminBackupService/StartClusterRestore"
 	AdminBackupService_GetClusterRestoreStatus_FullMethodName     = "/mycel.admin.v1.AdminBackupService/GetClusterRestoreStatus"
@@ -85,6 +86,9 @@ type AdminBackupServiceClient interface {
 	DeleteClusterBackupSet(ctx context.Context, in *DeleteClusterBackupSetRequest, opts ...grpc.CallOption) (*DeleteClusterBackupSetResponse, error)
 	PlanRepositoryRetention(ctx context.Context, in *PlanRepositoryRetentionRequest, opts ...grpc.CallOption) (*PlanRepositoryRetentionResponse, error)
 	ApplyRepositoryRetention(ctx context.Context, in *ApplyRepositoryRetentionRequest, opts ...grpc.CallOption) (*ApplyRepositoryRetentionResponse, error)
+	// GetBackupObservability returns a non-secret operator snapshot of backup/restore
+	// metrics and alert conditions suitable for external monitoring systems.
+	GetBackupObservability(ctx context.Context, in *GetBackupObservabilityRequest, opts ...grpc.CallOption) (*GetBackupObservabilityResponse, error)
 	PlanClusterRestore(ctx context.Context, in *PlanClusterRestoreRequest, opts ...grpc.CallOption) (*PlanClusterRestoreResponse, error)
 	StartClusterRestore(ctx context.Context, in *StartClusterRestoreRequest, opts ...grpc.CallOption) (*StartClusterRestoreResponse, error)
 	GetClusterRestoreStatus(ctx context.Context, in *GetClusterRestoreStatusRequest, opts ...grpc.CallOption) (*GetClusterRestoreStatusResponse, error)
@@ -330,6 +334,16 @@ func (c *adminBackupServiceClient) ApplyRepositoryRetention(ctx context.Context,
 	return out, nil
 }
 
+func (c *adminBackupServiceClient) GetBackupObservability(ctx context.Context, in *GetBackupObservabilityRequest, opts ...grpc.CallOption) (*GetBackupObservabilityResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetBackupObservabilityResponse)
+	err := c.cc.Invoke(ctx, AdminBackupService_GetBackupObservability_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *adminBackupServiceClient) PlanClusterRestore(ctx context.Context, in *PlanClusterRestoreRequest, opts ...grpc.CallOption) (*PlanClusterRestoreResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(PlanClusterRestoreResponse)
@@ -414,6 +428,9 @@ type AdminBackupServiceServer interface {
 	DeleteClusterBackupSet(context.Context, *DeleteClusterBackupSetRequest) (*DeleteClusterBackupSetResponse, error)
 	PlanRepositoryRetention(context.Context, *PlanRepositoryRetentionRequest) (*PlanRepositoryRetentionResponse, error)
 	ApplyRepositoryRetention(context.Context, *ApplyRepositoryRetentionRequest) (*ApplyRepositoryRetentionResponse, error)
+	// GetBackupObservability returns a non-secret operator snapshot of backup/restore
+	// metrics and alert conditions suitable for external monitoring systems.
+	GetBackupObservability(context.Context, *GetBackupObservabilityRequest) (*GetBackupObservabilityResponse, error)
 	PlanClusterRestore(context.Context, *PlanClusterRestoreRequest) (*PlanClusterRestoreResponse, error)
 	StartClusterRestore(context.Context, *StartClusterRestoreRequest) (*StartClusterRestoreResponse, error)
 	GetClusterRestoreStatus(context.Context, *GetClusterRestoreStatusRequest) (*GetClusterRestoreStatusResponse, error)
@@ -497,6 +514,9 @@ func (UnimplementedAdminBackupServiceServer) PlanRepositoryRetention(context.Con
 }
 func (UnimplementedAdminBackupServiceServer) ApplyRepositoryRetention(context.Context, *ApplyRepositoryRetentionRequest) (*ApplyRepositoryRetentionResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ApplyRepositoryRetention not implemented")
+}
+func (UnimplementedAdminBackupServiceServer) GetBackupObservability(context.Context, *GetBackupObservabilityRequest) (*GetBackupObservabilityResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetBackupObservability not implemented")
 }
 func (UnimplementedAdminBackupServiceServer) PlanClusterRestore(context.Context, *PlanClusterRestoreRequest) (*PlanClusterRestoreResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method PlanClusterRestore not implemented")
@@ -948,6 +968,24 @@ func _AdminBackupService_ApplyRepositoryRetention_Handler(srv interface{}, ctx c
 	return interceptor(ctx, in, info, handler)
 }
 
+func _AdminBackupService_GetBackupObservability_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetBackupObservabilityRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminBackupServiceServer).GetBackupObservability(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AdminBackupService_GetBackupObservability_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminBackupServiceServer).GetBackupObservability(ctx, req.(*GetBackupObservabilityRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _AdminBackupService_PlanClusterRestore_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(PlanClusterRestoreRequest)
 	if err := dec(in); err != nil {
@@ -1136,6 +1174,10 @@ var AdminBackupService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ApplyRepositoryRetention",
 			Handler:    _AdminBackupService_ApplyRepositoryRetention_Handler,
+		},
+		{
+			MethodName: "GetBackupObservability",
+			Handler:    _AdminBackupService_GetBackupObservability_Handler,
 		},
 		{
 			MethodName: "PlanClusterRestore",
