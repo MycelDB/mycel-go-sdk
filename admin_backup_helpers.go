@@ -165,6 +165,24 @@ func (c *AdminClient) DeleteClusterBackupSet(ctx context.Context, repositoryID, 
 	return c.Backup.DeleteClusterBackupSet(callCtx, &adminv1.DeleteClusterBackupSetRequest{RepositoryId: repositoryID, BackupSetId: backupSetID, Reason: reason})
 }
 
+func (c *AdminClient) PlanRepositoryRetention(ctx context.Context, req *adminv1.PlanRepositoryRetentionRequest) (*adminv1.PlanRepositoryRetentionResponse, error) {
+	callCtx, cancel := c.AuthCallContext(ctx)
+	defer cancel()
+	if req == nil {
+		req = &adminv1.PlanRepositoryRetentionRequest{}
+	}
+	return c.Backup.PlanRepositoryRetention(callCtx, req)
+}
+
+func (c *AdminClient) ApplyRepositoryRetention(ctx context.Context, req *adminv1.ApplyRepositoryRetentionRequest) (*adminv1.ApplyRepositoryRetentionResponse, error) {
+	callCtx, cancel := c.AuthCallContext(ctx)
+	defer cancel()
+	if req == nil {
+		req = &adminv1.ApplyRepositoryRetentionRequest{}
+	}
+	return c.Backup.ApplyRepositoryRetention(callCtx, req)
+}
+
 func (c *AdminClient) PlanClusterRestore(ctx context.Context, req *adminv1.PlanClusterRestoreRequest) (*adminv1.PlanClusterRestoreResponse, error) {
 	callCtx, cancel := c.AuthCallContext(ctx)
 	defer cancel()
