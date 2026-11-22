@@ -34,6 +34,15 @@ func TestRestoreContractTypesCompile(t *testing.T) {
 	}
 }
 
+func TestRepositoryRetentionContractTypesCompile(t *testing.T) {
+	planReq := &adminv1.PlanRepositoryRetentionRequest{RepositoryId: "repo-prod", RetentionPolicy: &adminv1.RetentionPolicy{KeepLastSuccessful: 3, KeepForSeconds: 86_400, DeleteIncompleteAfterSeconds: 3_600}, Now: "2026-11-22T12:00:00Z"}
+	applyReq := &adminv1.ApplyRepositoryRetentionRequest{RepositoryId: "repo-prod", Reason: "test"}
+	plan := &adminv1.RepositoryRetentionPlan{RepositoryId: planReq.GetRepositoryId(), DryRun: true, Actions: []*adminv1.RepositoryRetentionAction{{BackupSetId: "backup-set-1", Action: "delete", Reason: "retention_expired"}}}
+	if plan.GetRepositoryId() != applyReq.GetRepositoryId() || plan.GetActions()[0].GetAction() != "delete" {
+		t.Fatalf("unexpected retention contract values: %#v %#v", planReq, plan)
+	}
+}
+
 func TestBackupSetValidationSummaryFieldsCompile(t *testing.T) {
 	summary := &adminv1.ClusterBackupSetSummary{
 		BackupSetId: "backup-set-1",
