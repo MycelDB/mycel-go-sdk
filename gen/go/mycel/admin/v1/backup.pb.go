@@ -3445,6 +3445,7 @@ type ClusterRestoreNodeProgress struct {
 	BytesCompleted   int64                  `protobuf:"varint,6,opt,name=bytes_completed,json=bytesCompleted,proto3" json:"bytes_completed,omitempty"`
 	ChecksumSha256   string                 `protobuf:"bytes,7,opt,name=checksum_sha256,json=checksumSha256,proto3" json:"checksum_sha256,omitempty"`
 	LastError        string                 `protobuf:"bytes,8,opt,name=last_error,json=lastError,proto3" json:"last_error,omitempty"`
+	Evidence         map[string]string      `protobuf:"bytes,9,rep,name=evidence,proto3" json:"evidence,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
 	unknownFields    protoimpl.UnknownFields
 	sizeCache        protoimpl.SizeCache
 }
@@ -3533,6 +3534,13 @@ func (x *ClusterRestoreNodeProgress) GetLastError() string {
 		return x.LastError
 	}
 	return ""
+}
+
+func (x *ClusterRestoreNodeProgress) GetEvidence() map[string]string {
+	if x != nil {
+		return x.Evidence
+	}
+	return nil
 }
 
 type ClusterRestoreProgress struct {
@@ -7574,7 +7582,7 @@ const file_mycel_admin_v1_backup_proto_rawDesc = "" +
 	"\"ClusterRestorePreconditionEvidence\x12Q\n" +
 	"\fclean_target\x18\x01 \x01(\v2..mycel.admin.v1.ClusterRestoreCleanTargetProofR\vcleanTarget\x12Z\n" +
 	"\x0esource_fencing\x18\x02 \x01(\v23.mycel.admin.v1.ClusterRestoreSourceFencingEvidenceR\rsourceFencing\x12=\n" +
-	"\bblockers\x18\x03 \x03(\v2!.mycel.admin.v1.ValidationBlockerR\bblockers\"\xad\x02\n" +
+	"\bblockers\x18\x03 \x03(\v2!.mycel.admin.v1.ValidationBlockerR\bblockers\"\xc0\x03\n" +
 	"\x1aClusterRestoreNodeProgress\x12\x18\n" +
 	"\aordinal\x18\x01 \x01(\x05R\aordinal\x12\x14\n" +
 	"\x05state\x18\x02 \x01(\tR\x05state\x12,\n" +
@@ -7586,7 +7594,11 @@ const file_mycel_admin_v1_backup_proto_rawDesc = "" +
 	"\x0fbytes_completed\x18\x06 \x01(\x03R\x0ebytesCompleted\x12'\n" +
 	"\x0fchecksum_sha256\x18\a \x01(\tR\x0echecksumSha256\x12\x1d\n" +
 	"\n" +
-	"last_error\x18\b \x01(\tR\tlastError\"\xfc\x02\n" +
+	"last_error\x18\b \x01(\tR\tlastError\x12T\n" +
+	"\bevidence\x18\t \x03(\v28.mycel.admin.v1.ClusterRestoreNodeProgress.EvidenceEntryR\bevidence\x1a;\n" +
+	"\rEvidenceEntry\x12\x10\n" +
+	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
+	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\"\xfc\x02\n" +
 	"\x16ClusterRestoreProgress\x12\x1f\n" +
 	"\vtotal_nodes\x18\x01 \x01(\x05R\n" +
 	"totalNodes\x12!\n" +
@@ -8089,7 +8101,7 @@ func file_mycel_admin_v1_backup_proto_rawDescGZIP() []byte {
 }
 
 var file_mycel_admin_v1_backup_proto_enumTypes = make([]protoimpl.EnumInfo, 16)
-var file_mycel_admin_v1_backup_proto_msgTypes = make([]protoimpl.MessageInfo, 92)
+var file_mycel_admin_v1_backup_proto_msgTypes = make([]protoimpl.MessageInfo, 93)
 var file_mycel_admin_v1_backup_proto_goTypes = []any{
 	(BackupArchiveFormat)(0),                    // 0: mycel.admin.v1.BackupArchiveFormat
 	(BackupRepositoryProvider)(0),               // 1: mycel.admin.v1.BackupRepositoryProvider
@@ -8197,8 +8209,9 @@ var file_mycel_admin_v1_backup_proto_goTypes = []any{
 	nil,                                         // 103: mycel.admin.v1.CompatibilitySummary.StorageFormatVersionsEntry
 	nil,                                         // 104: mycel.admin.v1.ClusterRestoreTarget.LabelsEntry
 	nil,                                         // 105: mycel.admin.v1.ClusterRestoreTarget.AnnotationsEntry
-	nil,                                         // 106: mycel.admin.v1.ClusterBackupStatus.RaftBarriersEntry
-	nil,                                         // 107: mycel.admin.v1.ClusterBackupNodeArtifact.AppliedIndexesEntry
+	nil,                                         // 106: mycel.admin.v1.ClusterRestoreNodeProgress.EvidenceEntry
+	nil,                                         // 107: mycel.admin.v1.ClusterBackupStatus.RaftBarriersEntry
+	nil,                                         // 108: mycel.admin.v1.ClusterBackupNodeArtifact.AppliedIndexesEntry
 }
 var file_mycel_admin_v1_backup_proto_depIdxs = []int32{
 	0,   // 0: mycel.admin.v1.BackupPolicy.archive_format:type_name -> mycel.admin.v1.BackupArchiveFormat
@@ -8242,148 +8255,149 @@ var file_mycel_admin_v1_backup_proto_depIdxs = []int32{
 	39,  // 38: mycel.admin.v1.ClusterRestorePreconditionEvidence.clean_target:type_name -> mycel.admin.v1.ClusterRestoreCleanTargetProof
 	40,  // 39: mycel.admin.v1.ClusterRestorePreconditionEvidence.source_fencing:type_name -> mycel.admin.v1.ClusterRestoreSourceFencingEvidence
 	27,  // 40: mycel.admin.v1.ClusterRestorePreconditionEvidence.blockers:type_name -> mycel.admin.v1.ValidationBlocker
-	42,  // 41: mycel.admin.v1.ClusterRestoreProgress.nodes:type_name -> mycel.admin.v1.ClusterRestoreNodeProgress
-	11,  // 42: mycel.admin.v1.RestorePlanSummary.target_mode:type_name -> mycel.admin.v1.ClusterRestoreTargetMode
-	12,  // 43: mycel.admin.v1.RestorePlanSummary.identity_mode:type_name -> mycel.admin.v1.ClusterRestoreIdentityMode
-	13,  // 44: mycel.admin.v1.RestorePlanSummary.auth_session_policy:type_name -> mycel.admin.v1.ClusterRestoreAuthSessionPolicy
-	29,  // 45: mycel.admin.v1.RestorePlanSummary.validation:type_name -> mycel.admin.v1.ValidationSummary
-	30,  // 46: mycel.admin.v1.RestorePlanSummary.compatibility:type_name -> mycel.admin.v1.CompatibilitySummary
-	31,  // 47: mycel.admin.v1.RestorePlanSummary.capacity:type_name -> mycel.admin.v1.CapacityEstimate
-	33,  // 48: mycel.admin.v1.RestorePlanSummary.derived_actions:type_name -> mycel.admin.v1.DerivedSubsystemPolicy
-	27,  // 49: mycel.admin.v1.RestorePlanSummary.blockers:type_name -> mycel.admin.v1.ValidationBlocker
-	36,  // 50: mycel.admin.v1.RestorePlanSummary.target:type_name -> mycel.admin.v1.ClusterRestoreTarget
-	38,  // 51: mycel.admin.v1.RestorePlanSummary.staging:type_name -> mycel.admin.v1.ClusterRestoreStagingLocation
-	41,  // 52: mycel.admin.v1.RestorePlanSummary.required_preconditions:type_name -> mycel.admin.v1.ClusterRestorePreconditionEvidence
-	14,  // 53: mycel.admin.v1.ClusterRestoreOperation.state:type_name -> mycel.admin.v1.ClusterRestoreState
-	11,  // 54: mycel.admin.v1.ClusterRestoreOperation.target_mode:type_name -> mycel.admin.v1.ClusterRestoreTargetMode
-	12,  // 55: mycel.admin.v1.ClusterRestoreOperation.identity_mode:type_name -> mycel.admin.v1.ClusterRestoreIdentityMode
-	27,  // 56: mycel.admin.v1.ClusterRestoreOperation.blockers:type_name -> mycel.admin.v1.ValidationBlocker
-	35,  // 57: mycel.admin.v1.ClusterRestoreOperation.cleanup_tasks:type_name -> mycel.admin.v1.CleanupTask
-	13,  // 58: mycel.admin.v1.ClusterRestoreOperation.auth_session_policy:type_name -> mycel.admin.v1.ClusterRestoreAuthSessionPolicy
-	36,  // 59: mycel.admin.v1.ClusterRestoreOperation.target:type_name -> mycel.admin.v1.ClusterRestoreTarget
-	38,  // 60: mycel.admin.v1.ClusterRestoreOperation.staging:type_name -> mycel.admin.v1.ClusterRestoreStagingLocation
-	41,  // 61: mycel.admin.v1.ClusterRestoreOperation.preconditions:type_name -> mycel.admin.v1.ClusterRestorePreconditionEvidence
-	43,  // 62: mycel.admin.v1.ClusterRestoreOperation.progress:type_name -> mycel.admin.v1.ClusterRestoreProgress
-	16,  // 63: mycel.admin.v1.GetBackupPolicyResponse.policy:type_name -> mycel.admin.v1.BackupPolicy
-	16,  // 64: mycel.admin.v1.UpdateBackupPolicyRequest.policy:type_name -> mycel.admin.v1.BackupPolicy
-	16,  // 65: mycel.admin.v1.UpdateBackupPolicyResponse.policy:type_name -> mycel.admin.v1.BackupPolicy
-	24,  // 66: mycel.admin.v1.ListBackupRepositoriesResponse.repositories:type_name -> mycel.admin.v1.BackupRepository
-	24,  // 67: mycel.admin.v1.GetBackupRepositoryResponse.repository:type_name -> mycel.admin.v1.BackupRepository
-	24,  // 68: mycel.admin.v1.CreateBackupRepositoryRequest.repository:type_name -> mycel.admin.v1.BackupRepository
-	24,  // 69: mycel.admin.v1.CreateBackupRepositoryResponse.repository:type_name -> mycel.admin.v1.BackupRepository
-	24,  // 70: mycel.admin.v1.UpdateBackupRepositoryRequest.repository:type_name -> mycel.admin.v1.BackupRepository
-	24,  // 71: mycel.admin.v1.UpdateBackupRepositoryResponse.repository:type_name -> mycel.admin.v1.BackupRepository
-	24,  // 72: mycel.admin.v1.ValidateBackupRepositoryResponse.repository:type_name -> mycel.admin.v1.BackupRepository
-	25,  // 73: mycel.admin.v1.ValidateBackupRepositoryResponse.validation:type_name -> mycel.admin.v1.BackupRepositoryValidationSummary
-	15,  // 74: mycel.admin.v1.DeleteBackupRepositoryResponse.state:type_name -> mycel.admin.v1.BackupDeletionState
-	17,  // 75: mycel.admin.v1.TriggerBackupResponse.status:type_name -> mycel.admin.v1.BackupStatus
-	18,  // 76: mycel.admin.v1.TriggerBackupResponse.backup:type_name -> mycel.admin.v1.BackupSummary
-	17,  // 77: mycel.admin.v1.GetBackupStatusResponse.status:type_name -> mycel.admin.v1.BackupStatus
-	19,  // 78: mycel.admin.v1.GetBackupStatusResponse.quiesce:type_name -> mycel.admin.v1.QuiesceStatus
-	18,  // 79: mycel.admin.v1.ListBackupsResponse.backups:type_name -> mycel.admin.v1.BackupSummary
-	0,   // 80: mycel.admin.v1.StartClusterBackupRequest.archive_format:type_name -> mycel.admin.v1.BackupArchiveFormat
-	6,   // 81: mycel.admin.v1.StartClusterBackupRequest.capture_provider:type_name -> mycel.admin.v1.BackupCaptureProvider
-	28,  // 82: mycel.admin.v1.StartClusterBackupRequest.validation_options:type_name -> mycel.admin.v1.ValidationOptions
-	9,   // 83: mycel.admin.v1.StartClusterBackupRequest.quiesce_read_profile:type_name -> mycel.admin.v1.BackupQuiesceReadProfile
-	88,  // 84: mycel.admin.v1.StartClusterBackupResponse.status:type_name -> mycel.admin.v1.ClusterBackupStatus
-	90,  // 85: mycel.admin.v1.StartClusterBackupResponse.backup_set:type_name -> mycel.admin.v1.ClusterBackupSetSummary
-	88,  // 86: mycel.admin.v1.GetClusterBackupStatusResponse.status:type_name -> mycel.admin.v1.ClusterBackupStatus
-	88,  // 87: mycel.admin.v1.CancelClusterBackupResponse.status:type_name -> mycel.admin.v1.ClusterBackupStatus
-	90,  // 88: mycel.admin.v1.ListClusterBackupsResponse.backup_sets:type_name -> mycel.admin.v1.ClusterBackupSetSummary
-	88,  // 89: mycel.admin.v1.ListClusterBackupOperationsResponse.operations:type_name -> mycel.admin.v1.ClusterBackupStatus
-	90,  // 90: mycel.admin.v1.ListClusterBackupSetsResponse.backup_sets:type_name -> mycel.admin.v1.ClusterBackupSetSummary
-	90,  // 91: mycel.admin.v1.GetClusterBackupSetResponse.backup_set:type_name -> mycel.admin.v1.ClusterBackupSetSummary
-	28,  // 92: mycel.admin.v1.ValidateClusterBackupSetRequest.validation_options:type_name -> mycel.admin.v1.ValidationOptions
-	90,  // 93: mycel.admin.v1.ValidateClusterBackupSetResponse.backup_set:type_name -> mycel.admin.v1.ClusterBackupSetSummary
-	29,  // 94: mycel.admin.v1.ValidateClusterBackupSetResponse.validation:type_name -> mycel.admin.v1.ValidationSummary
-	15,  // 95: mycel.admin.v1.DeleteClusterBackupSetResponse.state:type_name -> mycel.admin.v1.BackupDeletionState
-	91,  // 96: mycel.admin.v1.ClusterBackupStatus.nodes:type_name -> mycel.admin.v1.ClusterBackupNodeArtifact
-	106, // 97: mycel.admin.v1.ClusterBackupStatus.raft_barriers:type_name -> mycel.admin.v1.ClusterBackupStatus.RaftBarriersEntry
-	10,  // 98: mycel.admin.v1.ClusterBackupStatus.state_code:type_name -> mycel.admin.v1.ClusterBackupState
-	89,  // 99: mycel.admin.v1.ClusterBackupStatus.blockers:type_name -> mycel.admin.v1.ClusterBackupBlocker
-	35,  // 100: mycel.admin.v1.ClusterBackupStatus.cleanup_tasks:type_name -> mycel.admin.v1.CleanupTask
-	29,  // 101: mycel.admin.v1.ClusterBackupStatus.validation:type_name -> mycel.admin.v1.ValidationSummary
-	91,  // 102: mycel.admin.v1.ClusterBackupSetSummary.nodes:type_name -> mycel.admin.v1.ClusterBackupNodeArtifact
-	30,  // 103: mycel.admin.v1.ClusterBackupSetSummary.compatibility:type_name -> mycel.admin.v1.CompatibilitySummary
-	29,  // 104: mycel.admin.v1.ClusterBackupSetSummary.validation:type_name -> mycel.admin.v1.ValidationSummary
-	15,  // 105: mycel.admin.v1.ClusterBackupSetSummary.deletion_state:type_name -> mycel.admin.v1.BackupDeletionState
-	5,   // 106: mycel.admin.v1.ClusterBackupSetSummary.retention_class:type_name -> mycel.admin.v1.BackupRetentionClass
-	34,  // 107: mycel.admin.v1.ClusterBackupSetSummary.manifest:type_name -> mycel.admin.v1.BackupSetManifestSummary
-	107, // 108: mycel.admin.v1.ClusterBackupNodeArtifact.applied_indexes:type_name -> mycel.admin.v1.ClusterBackupNodeArtifact.AppliedIndexesEntry
-	11,  // 109: mycel.admin.v1.PlanClusterRestoreRequest.target_mode:type_name -> mycel.admin.v1.ClusterRestoreTargetMode
-	12,  // 110: mycel.admin.v1.PlanClusterRestoreRequest.identity_mode:type_name -> mycel.admin.v1.ClusterRestoreIdentityMode
-	13,  // 111: mycel.admin.v1.PlanClusterRestoreRequest.auth_session_policy:type_name -> mycel.admin.v1.ClusterRestoreAuthSessionPolicy
-	28,  // 112: mycel.admin.v1.PlanClusterRestoreRequest.validation_options:type_name -> mycel.admin.v1.ValidationOptions
-	36,  // 113: mycel.admin.v1.PlanClusterRestoreRequest.target:type_name -> mycel.admin.v1.ClusterRestoreTarget
-	38,  // 114: mycel.admin.v1.PlanClusterRestoreRequest.staging:type_name -> mycel.admin.v1.ClusterRestoreStagingLocation
-	44,  // 115: mycel.admin.v1.PlanClusterRestoreResponse.plan:type_name -> mycel.admin.v1.RestorePlanSummary
-	11,  // 116: mycel.admin.v1.StartClusterRestoreRequest.target_mode:type_name -> mycel.admin.v1.ClusterRestoreTargetMode
-	12,  // 117: mycel.admin.v1.StartClusterRestoreRequest.identity_mode:type_name -> mycel.admin.v1.ClusterRestoreIdentityMode
-	13,  // 118: mycel.admin.v1.StartClusterRestoreRequest.auth_session_policy:type_name -> mycel.admin.v1.ClusterRestoreAuthSessionPolicy
-	36,  // 119: mycel.admin.v1.StartClusterRestoreRequest.target:type_name -> mycel.admin.v1.ClusterRestoreTarget
-	38,  // 120: mycel.admin.v1.StartClusterRestoreRequest.staging:type_name -> mycel.admin.v1.ClusterRestoreStagingLocation
-	41,  // 121: mycel.admin.v1.StartClusterRestoreRequest.preconditions:type_name -> mycel.admin.v1.ClusterRestorePreconditionEvidence
-	45,  // 122: mycel.admin.v1.StartClusterRestoreResponse.operation:type_name -> mycel.admin.v1.ClusterRestoreOperation
-	45,  // 123: mycel.admin.v1.GetClusterRestoreStatusResponse.operation:type_name -> mycel.admin.v1.ClusterRestoreOperation
-	45,  // 124: mycel.admin.v1.ListClusterRestoresResponse.operations:type_name -> mycel.admin.v1.ClusterRestoreOperation
-	45,  // 125: mycel.admin.v1.CancelClusterRestoreResponse.operation:type_name -> mycel.admin.v1.ClusterRestoreOperation
-	46,  // 126: mycel.admin.v1.AdminBackupService.GetBackupPolicy:input_type -> mycel.admin.v1.GetBackupPolicyRequest
-	48,  // 127: mycel.admin.v1.AdminBackupService.UpdateBackupPolicy:input_type -> mycel.admin.v1.UpdateBackupPolicyRequest
-	50,  // 128: mycel.admin.v1.AdminBackupService.ListBackupRepositories:input_type -> mycel.admin.v1.ListBackupRepositoriesRequest
-	52,  // 129: mycel.admin.v1.AdminBackupService.GetBackupRepository:input_type -> mycel.admin.v1.GetBackupRepositoryRequest
-	54,  // 130: mycel.admin.v1.AdminBackupService.CreateBackupRepository:input_type -> mycel.admin.v1.CreateBackupRepositoryRequest
-	56,  // 131: mycel.admin.v1.AdminBackupService.UpdateBackupRepository:input_type -> mycel.admin.v1.UpdateBackupRepositoryRequest
-	58,  // 132: mycel.admin.v1.AdminBackupService.ValidateBackupRepository:input_type -> mycel.admin.v1.ValidateBackupRepositoryRequest
-	60,  // 133: mycel.admin.v1.AdminBackupService.DeleteBackupRepository:input_type -> mycel.admin.v1.DeleteBackupRepositoryRequest
-	62,  // 134: mycel.admin.v1.AdminBackupService.TriggerBackup:input_type -> mycel.admin.v1.TriggerBackupRequest
-	64,  // 135: mycel.admin.v1.AdminBackupService.GetBackupStatus:input_type -> mycel.admin.v1.GetBackupStatusRequest
-	66,  // 136: mycel.admin.v1.AdminBackupService.ListBackups:input_type -> mycel.admin.v1.ListBackupsRequest
-	68,  // 137: mycel.admin.v1.AdminBackupService.DeleteBackup:input_type -> mycel.admin.v1.DeleteBackupRequest
-	70,  // 138: mycel.admin.v1.AdminBackupService.StartClusterBackup:input_type -> mycel.admin.v1.StartClusterBackupRequest
-	72,  // 139: mycel.admin.v1.AdminBackupService.GetClusterBackupStatus:input_type -> mycel.admin.v1.GetClusterBackupStatusRequest
-	74,  // 140: mycel.admin.v1.AdminBackupService.CancelClusterBackup:input_type -> mycel.admin.v1.CancelClusterBackupRequest
-	76,  // 141: mycel.admin.v1.AdminBackupService.ListClusterBackups:input_type -> mycel.admin.v1.ListClusterBackupsRequest
-	78,  // 142: mycel.admin.v1.AdminBackupService.ListClusterBackupOperations:input_type -> mycel.admin.v1.ListClusterBackupOperationsRequest
-	80,  // 143: mycel.admin.v1.AdminBackupService.ListClusterBackupSets:input_type -> mycel.admin.v1.ListClusterBackupSetsRequest
-	82,  // 144: mycel.admin.v1.AdminBackupService.GetClusterBackupSet:input_type -> mycel.admin.v1.GetClusterBackupSetRequest
-	84,  // 145: mycel.admin.v1.AdminBackupService.ValidateClusterBackupSet:input_type -> mycel.admin.v1.ValidateClusterBackupSetRequest
-	86,  // 146: mycel.admin.v1.AdminBackupService.DeleteClusterBackupSet:input_type -> mycel.admin.v1.DeleteClusterBackupSetRequest
-	92,  // 147: mycel.admin.v1.AdminBackupService.PlanClusterRestore:input_type -> mycel.admin.v1.PlanClusterRestoreRequest
-	94,  // 148: mycel.admin.v1.AdminBackupService.StartClusterRestore:input_type -> mycel.admin.v1.StartClusterRestoreRequest
-	96,  // 149: mycel.admin.v1.AdminBackupService.GetClusterRestoreStatus:input_type -> mycel.admin.v1.GetClusterRestoreStatusRequest
-	98,  // 150: mycel.admin.v1.AdminBackupService.ListClusterRestores:input_type -> mycel.admin.v1.ListClusterRestoresRequest
-	100, // 151: mycel.admin.v1.AdminBackupService.CancelClusterRestore:input_type -> mycel.admin.v1.CancelClusterRestoreRequest
-	47,  // 152: mycel.admin.v1.AdminBackupService.GetBackupPolicy:output_type -> mycel.admin.v1.GetBackupPolicyResponse
-	49,  // 153: mycel.admin.v1.AdminBackupService.UpdateBackupPolicy:output_type -> mycel.admin.v1.UpdateBackupPolicyResponse
-	51,  // 154: mycel.admin.v1.AdminBackupService.ListBackupRepositories:output_type -> mycel.admin.v1.ListBackupRepositoriesResponse
-	53,  // 155: mycel.admin.v1.AdminBackupService.GetBackupRepository:output_type -> mycel.admin.v1.GetBackupRepositoryResponse
-	55,  // 156: mycel.admin.v1.AdminBackupService.CreateBackupRepository:output_type -> mycel.admin.v1.CreateBackupRepositoryResponse
-	57,  // 157: mycel.admin.v1.AdminBackupService.UpdateBackupRepository:output_type -> mycel.admin.v1.UpdateBackupRepositoryResponse
-	59,  // 158: mycel.admin.v1.AdminBackupService.ValidateBackupRepository:output_type -> mycel.admin.v1.ValidateBackupRepositoryResponse
-	61,  // 159: mycel.admin.v1.AdminBackupService.DeleteBackupRepository:output_type -> mycel.admin.v1.DeleteBackupRepositoryResponse
-	63,  // 160: mycel.admin.v1.AdminBackupService.TriggerBackup:output_type -> mycel.admin.v1.TriggerBackupResponse
-	65,  // 161: mycel.admin.v1.AdminBackupService.GetBackupStatus:output_type -> mycel.admin.v1.GetBackupStatusResponse
-	67,  // 162: mycel.admin.v1.AdminBackupService.ListBackups:output_type -> mycel.admin.v1.ListBackupsResponse
-	69,  // 163: mycel.admin.v1.AdminBackupService.DeleteBackup:output_type -> mycel.admin.v1.DeleteBackupResponse
-	71,  // 164: mycel.admin.v1.AdminBackupService.StartClusterBackup:output_type -> mycel.admin.v1.StartClusterBackupResponse
-	73,  // 165: mycel.admin.v1.AdminBackupService.GetClusterBackupStatus:output_type -> mycel.admin.v1.GetClusterBackupStatusResponse
-	75,  // 166: mycel.admin.v1.AdminBackupService.CancelClusterBackup:output_type -> mycel.admin.v1.CancelClusterBackupResponse
-	77,  // 167: mycel.admin.v1.AdminBackupService.ListClusterBackups:output_type -> mycel.admin.v1.ListClusterBackupsResponse
-	79,  // 168: mycel.admin.v1.AdminBackupService.ListClusterBackupOperations:output_type -> mycel.admin.v1.ListClusterBackupOperationsResponse
-	81,  // 169: mycel.admin.v1.AdminBackupService.ListClusterBackupSets:output_type -> mycel.admin.v1.ListClusterBackupSetsResponse
-	83,  // 170: mycel.admin.v1.AdminBackupService.GetClusterBackupSet:output_type -> mycel.admin.v1.GetClusterBackupSetResponse
-	85,  // 171: mycel.admin.v1.AdminBackupService.ValidateClusterBackupSet:output_type -> mycel.admin.v1.ValidateClusterBackupSetResponse
-	87,  // 172: mycel.admin.v1.AdminBackupService.DeleteClusterBackupSet:output_type -> mycel.admin.v1.DeleteClusterBackupSetResponse
-	93,  // 173: mycel.admin.v1.AdminBackupService.PlanClusterRestore:output_type -> mycel.admin.v1.PlanClusterRestoreResponse
-	95,  // 174: mycel.admin.v1.AdminBackupService.StartClusterRestore:output_type -> mycel.admin.v1.StartClusterRestoreResponse
-	97,  // 175: mycel.admin.v1.AdminBackupService.GetClusterRestoreStatus:output_type -> mycel.admin.v1.GetClusterRestoreStatusResponse
-	99,  // 176: mycel.admin.v1.AdminBackupService.ListClusterRestores:output_type -> mycel.admin.v1.ListClusterRestoresResponse
-	101, // 177: mycel.admin.v1.AdminBackupService.CancelClusterRestore:output_type -> mycel.admin.v1.CancelClusterRestoreResponse
-	152, // [152:178] is the sub-list for method output_type
-	126, // [126:152] is the sub-list for method input_type
-	126, // [126:126] is the sub-list for extension type_name
-	126, // [126:126] is the sub-list for extension extendee
-	0,   // [0:126] is the sub-list for field type_name
+	106, // 41: mycel.admin.v1.ClusterRestoreNodeProgress.evidence:type_name -> mycel.admin.v1.ClusterRestoreNodeProgress.EvidenceEntry
+	42,  // 42: mycel.admin.v1.ClusterRestoreProgress.nodes:type_name -> mycel.admin.v1.ClusterRestoreNodeProgress
+	11,  // 43: mycel.admin.v1.RestorePlanSummary.target_mode:type_name -> mycel.admin.v1.ClusterRestoreTargetMode
+	12,  // 44: mycel.admin.v1.RestorePlanSummary.identity_mode:type_name -> mycel.admin.v1.ClusterRestoreIdentityMode
+	13,  // 45: mycel.admin.v1.RestorePlanSummary.auth_session_policy:type_name -> mycel.admin.v1.ClusterRestoreAuthSessionPolicy
+	29,  // 46: mycel.admin.v1.RestorePlanSummary.validation:type_name -> mycel.admin.v1.ValidationSummary
+	30,  // 47: mycel.admin.v1.RestorePlanSummary.compatibility:type_name -> mycel.admin.v1.CompatibilitySummary
+	31,  // 48: mycel.admin.v1.RestorePlanSummary.capacity:type_name -> mycel.admin.v1.CapacityEstimate
+	33,  // 49: mycel.admin.v1.RestorePlanSummary.derived_actions:type_name -> mycel.admin.v1.DerivedSubsystemPolicy
+	27,  // 50: mycel.admin.v1.RestorePlanSummary.blockers:type_name -> mycel.admin.v1.ValidationBlocker
+	36,  // 51: mycel.admin.v1.RestorePlanSummary.target:type_name -> mycel.admin.v1.ClusterRestoreTarget
+	38,  // 52: mycel.admin.v1.RestorePlanSummary.staging:type_name -> mycel.admin.v1.ClusterRestoreStagingLocation
+	41,  // 53: mycel.admin.v1.RestorePlanSummary.required_preconditions:type_name -> mycel.admin.v1.ClusterRestorePreconditionEvidence
+	14,  // 54: mycel.admin.v1.ClusterRestoreOperation.state:type_name -> mycel.admin.v1.ClusterRestoreState
+	11,  // 55: mycel.admin.v1.ClusterRestoreOperation.target_mode:type_name -> mycel.admin.v1.ClusterRestoreTargetMode
+	12,  // 56: mycel.admin.v1.ClusterRestoreOperation.identity_mode:type_name -> mycel.admin.v1.ClusterRestoreIdentityMode
+	27,  // 57: mycel.admin.v1.ClusterRestoreOperation.blockers:type_name -> mycel.admin.v1.ValidationBlocker
+	35,  // 58: mycel.admin.v1.ClusterRestoreOperation.cleanup_tasks:type_name -> mycel.admin.v1.CleanupTask
+	13,  // 59: mycel.admin.v1.ClusterRestoreOperation.auth_session_policy:type_name -> mycel.admin.v1.ClusterRestoreAuthSessionPolicy
+	36,  // 60: mycel.admin.v1.ClusterRestoreOperation.target:type_name -> mycel.admin.v1.ClusterRestoreTarget
+	38,  // 61: mycel.admin.v1.ClusterRestoreOperation.staging:type_name -> mycel.admin.v1.ClusterRestoreStagingLocation
+	41,  // 62: mycel.admin.v1.ClusterRestoreOperation.preconditions:type_name -> mycel.admin.v1.ClusterRestorePreconditionEvidence
+	43,  // 63: mycel.admin.v1.ClusterRestoreOperation.progress:type_name -> mycel.admin.v1.ClusterRestoreProgress
+	16,  // 64: mycel.admin.v1.GetBackupPolicyResponse.policy:type_name -> mycel.admin.v1.BackupPolicy
+	16,  // 65: mycel.admin.v1.UpdateBackupPolicyRequest.policy:type_name -> mycel.admin.v1.BackupPolicy
+	16,  // 66: mycel.admin.v1.UpdateBackupPolicyResponse.policy:type_name -> mycel.admin.v1.BackupPolicy
+	24,  // 67: mycel.admin.v1.ListBackupRepositoriesResponse.repositories:type_name -> mycel.admin.v1.BackupRepository
+	24,  // 68: mycel.admin.v1.GetBackupRepositoryResponse.repository:type_name -> mycel.admin.v1.BackupRepository
+	24,  // 69: mycel.admin.v1.CreateBackupRepositoryRequest.repository:type_name -> mycel.admin.v1.BackupRepository
+	24,  // 70: mycel.admin.v1.CreateBackupRepositoryResponse.repository:type_name -> mycel.admin.v1.BackupRepository
+	24,  // 71: mycel.admin.v1.UpdateBackupRepositoryRequest.repository:type_name -> mycel.admin.v1.BackupRepository
+	24,  // 72: mycel.admin.v1.UpdateBackupRepositoryResponse.repository:type_name -> mycel.admin.v1.BackupRepository
+	24,  // 73: mycel.admin.v1.ValidateBackupRepositoryResponse.repository:type_name -> mycel.admin.v1.BackupRepository
+	25,  // 74: mycel.admin.v1.ValidateBackupRepositoryResponse.validation:type_name -> mycel.admin.v1.BackupRepositoryValidationSummary
+	15,  // 75: mycel.admin.v1.DeleteBackupRepositoryResponse.state:type_name -> mycel.admin.v1.BackupDeletionState
+	17,  // 76: mycel.admin.v1.TriggerBackupResponse.status:type_name -> mycel.admin.v1.BackupStatus
+	18,  // 77: mycel.admin.v1.TriggerBackupResponse.backup:type_name -> mycel.admin.v1.BackupSummary
+	17,  // 78: mycel.admin.v1.GetBackupStatusResponse.status:type_name -> mycel.admin.v1.BackupStatus
+	19,  // 79: mycel.admin.v1.GetBackupStatusResponse.quiesce:type_name -> mycel.admin.v1.QuiesceStatus
+	18,  // 80: mycel.admin.v1.ListBackupsResponse.backups:type_name -> mycel.admin.v1.BackupSummary
+	0,   // 81: mycel.admin.v1.StartClusterBackupRequest.archive_format:type_name -> mycel.admin.v1.BackupArchiveFormat
+	6,   // 82: mycel.admin.v1.StartClusterBackupRequest.capture_provider:type_name -> mycel.admin.v1.BackupCaptureProvider
+	28,  // 83: mycel.admin.v1.StartClusterBackupRequest.validation_options:type_name -> mycel.admin.v1.ValidationOptions
+	9,   // 84: mycel.admin.v1.StartClusterBackupRequest.quiesce_read_profile:type_name -> mycel.admin.v1.BackupQuiesceReadProfile
+	88,  // 85: mycel.admin.v1.StartClusterBackupResponse.status:type_name -> mycel.admin.v1.ClusterBackupStatus
+	90,  // 86: mycel.admin.v1.StartClusterBackupResponse.backup_set:type_name -> mycel.admin.v1.ClusterBackupSetSummary
+	88,  // 87: mycel.admin.v1.GetClusterBackupStatusResponse.status:type_name -> mycel.admin.v1.ClusterBackupStatus
+	88,  // 88: mycel.admin.v1.CancelClusterBackupResponse.status:type_name -> mycel.admin.v1.ClusterBackupStatus
+	90,  // 89: mycel.admin.v1.ListClusterBackupsResponse.backup_sets:type_name -> mycel.admin.v1.ClusterBackupSetSummary
+	88,  // 90: mycel.admin.v1.ListClusterBackupOperationsResponse.operations:type_name -> mycel.admin.v1.ClusterBackupStatus
+	90,  // 91: mycel.admin.v1.ListClusterBackupSetsResponse.backup_sets:type_name -> mycel.admin.v1.ClusterBackupSetSummary
+	90,  // 92: mycel.admin.v1.GetClusterBackupSetResponse.backup_set:type_name -> mycel.admin.v1.ClusterBackupSetSummary
+	28,  // 93: mycel.admin.v1.ValidateClusterBackupSetRequest.validation_options:type_name -> mycel.admin.v1.ValidationOptions
+	90,  // 94: mycel.admin.v1.ValidateClusterBackupSetResponse.backup_set:type_name -> mycel.admin.v1.ClusterBackupSetSummary
+	29,  // 95: mycel.admin.v1.ValidateClusterBackupSetResponse.validation:type_name -> mycel.admin.v1.ValidationSummary
+	15,  // 96: mycel.admin.v1.DeleteClusterBackupSetResponse.state:type_name -> mycel.admin.v1.BackupDeletionState
+	91,  // 97: mycel.admin.v1.ClusterBackupStatus.nodes:type_name -> mycel.admin.v1.ClusterBackupNodeArtifact
+	107, // 98: mycel.admin.v1.ClusterBackupStatus.raft_barriers:type_name -> mycel.admin.v1.ClusterBackupStatus.RaftBarriersEntry
+	10,  // 99: mycel.admin.v1.ClusterBackupStatus.state_code:type_name -> mycel.admin.v1.ClusterBackupState
+	89,  // 100: mycel.admin.v1.ClusterBackupStatus.blockers:type_name -> mycel.admin.v1.ClusterBackupBlocker
+	35,  // 101: mycel.admin.v1.ClusterBackupStatus.cleanup_tasks:type_name -> mycel.admin.v1.CleanupTask
+	29,  // 102: mycel.admin.v1.ClusterBackupStatus.validation:type_name -> mycel.admin.v1.ValidationSummary
+	91,  // 103: mycel.admin.v1.ClusterBackupSetSummary.nodes:type_name -> mycel.admin.v1.ClusterBackupNodeArtifact
+	30,  // 104: mycel.admin.v1.ClusterBackupSetSummary.compatibility:type_name -> mycel.admin.v1.CompatibilitySummary
+	29,  // 105: mycel.admin.v1.ClusterBackupSetSummary.validation:type_name -> mycel.admin.v1.ValidationSummary
+	15,  // 106: mycel.admin.v1.ClusterBackupSetSummary.deletion_state:type_name -> mycel.admin.v1.BackupDeletionState
+	5,   // 107: mycel.admin.v1.ClusterBackupSetSummary.retention_class:type_name -> mycel.admin.v1.BackupRetentionClass
+	34,  // 108: mycel.admin.v1.ClusterBackupSetSummary.manifest:type_name -> mycel.admin.v1.BackupSetManifestSummary
+	108, // 109: mycel.admin.v1.ClusterBackupNodeArtifact.applied_indexes:type_name -> mycel.admin.v1.ClusterBackupNodeArtifact.AppliedIndexesEntry
+	11,  // 110: mycel.admin.v1.PlanClusterRestoreRequest.target_mode:type_name -> mycel.admin.v1.ClusterRestoreTargetMode
+	12,  // 111: mycel.admin.v1.PlanClusterRestoreRequest.identity_mode:type_name -> mycel.admin.v1.ClusterRestoreIdentityMode
+	13,  // 112: mycel.admin.v1.PlanClusterRestoreRequest.auth_session_policy:type_name -> mycel.admin.v1.ClusterRestoreAuthSessionPolicy
+	28,  // 113: mycel.admin.v1.PlanClusterRestoreRequest.validation_options:type_name -> mycel.admin.v1.ValidationOptions
+	36,  // 114: mycel.admin.v1.PlanClusterRestoreRequest.target:type_name -> mycel.admin.v1.ClusterRestoreTarget
+	38,  // 115: mycel.admin.v1.PlanClusterRestoreRequest.staging:type_name -> mycel.admin.v1.ClusterRestoreStagingLocation
+	44,  // 116: mycel.admin.v1.PlanClusterRestoreResponse.plan:type_name -> mycel.admin.v1.RestorePlanSummary
+	11,  // 117: mycel.admin.v1.StartClusterRestoreRequest.target_mode:type_name -> mycel.admin.v1.ClusterRestoreTargetMode
+	12,  // 118: mycel.admin.v1.StartClusterRestoreRequest.identity_mode:type_name -> mycel.admin.v1.ClusterRestoreIdentityMode
+	13,  // 119: mycel.admin.v1.StartClusterRestoreRequest.auth_session_policy:type_name -> mycel.admin.v1.ClusterRestoreAuthSessionPolicy
+	36,  // 120: mycel.admin.v1.StartClusterRestoreRequest.target:type_name -> mycel.admin.v1.ClusterRestoreTarget
+	38,  // 121: mycel.admin.v1.StartClusterRestoreRequest.staging:type_name -> mycel.admin.v1.ClusterRestoreStagingLocation
+	41,  // 122: mycel.admin.v1.StartClusterRestoreRequest.preconditions:type_name -> mycel.admin.v1.ClusterRestorePreconditionEvidence
+	45,  // 123: mycel.admin.v1.StartClusterRestoreResponse.operation:type_name -> mycel.admin.v1.ClusterRestoreOperation
+	45,  // 124: mycel.admin.v1.GetClusterRestoreStatusResponse.operation:type_name -> mycel.admin.v1.ClusterRestoreOperation
+	45,  // 125: mycel.admin.v1.ListClusterRestoresResponse.operations:type_name -> mycel.admin.v1.ClusterRestoreOperation
+	45,  // 126: mycel.admin.v1.CancelClusterRestoreResponse.operation:type_name -> mycel.admin.v1.ClusterRestoreOperation
+	46,  // 127: mycel.admin.v1.AdminBackupService.GetBackupPolicy:input_type -> mycel.admin.v1.GetBackupPolicyRequest
+	48,  // 128: mycel.admin.v1.AdminBackupService.UpdateBackupPolicy:input_type -> mycel.admin.v1.UpdateBackupPolicyRequest
+	50,  // 129: mycel.admin.v1.AdminBackupService.ListBackupRepositories:input_type -> mycel.admin.v1.ListBackupRepositoriesRequest
+	52,  // 130: mycel.admin.v1.AdminBackupService.GetBackupRepository:input_type -> mycel.admin.v1.GetBackupRepositoryRequest
+	54,  // 131: mycel.admin.v1.AdminBackupService.CreateBackupRepository:input_type -> mycel.admin.v1.CreateBackupRepositoryRequest
+	56,  // 132: mycel.admin.v1.AdminBackupService.UpdateBackupRepository:input_type -> mycel.admin.v1.UpdateBackupRepositoryRequest
+	58,  // 133: mycel.admin.v1.AdminBackupService.ValidateBackupRepository:input_type -> mycel.admin.v1.ValidateBackupRepositoryRequest
+	60,  // 134: mycel.admin.v1.AdminBackupService.DeleteBackupRepository:input_type -> mycel.admin.v1.DeleteBackupRepositoryRequest
+	62,  // 135: mycel.admin.v1.AdminBackupService.TriggerBackup:input_type -> mycel.admin.v1.TriggerBackupRequest
+	64,  // 136: mycel.admin.v1.AdminBackupService.GetBackupStatus:input_type -> mycel.admin.v1.GetBackupStatusRequest
+	66,  // 137: mycel.admin.v1.AdminBackupService.ListBackups:input_type -> mycel.admin.v1.ListBackupsRequest
+	68,  // 138: mycel.admin.v1.AdminBackupService.DeleteBackup:input_type -> mycel.admin.v1.DeleteBackupRequest
+	70,  // 139: mycel.admin.v1.AdminBackupService.StartClusterBackup:input_type -> mycel.admin.v1.StartClusterBackupRequest
+	72,  // 140: mycel.admin.v1.AdminBackupService.GetClusterBackupStatus:input_type -> mycel.admin.v1.GetClusterBackupStatusRequest
+	74,  // 141: mycel.admin.v1.AdminBackupService.CancelClusterBackup:input_type -> mycel.admin.v1.CancelClusterBackupRequest
+	76,  // 142: mycel.admin.v1.AdminBackupService.ListClusterBackups:input_type -> mycel.admin.v1.ListClusterBackupsRequest
+	78,  // 143: mycel.admin.v1.AdminBackupService.ListClusterBackupOperations:input_type -> mycel.admin.v1.ListClusterBackupOperationsRequest
+	80,  // 144: mycel.admin.v1.AdminBackupService.ListClusterBackupSets:input_type -> mycel.admin.v1.ListClusterBackupSetsRequest
+	82,  // 145: mycel.admin.v1.AdminBackupService.GetClusterBackupSet:input_type -> mycel.admin.v1.GetClusterBackupSetRequest
+	84,  // 146: mycel.admin.v1.AdminBackupService.ValidateClusterBackupSet:input_type -> mycel.admin.v1.ValidateClusterBackupSetRequest
+	86,  // 147: mycel.admin.v1.AdminBackupService.DeleteClusterBackupSet:input_type -> mycel.admin.v1.DeleteClusterBackupSetRequest
+	92,  // 148: mycel.admin.v1.AdminBackupService.PlanClusterRestore:input_type -> mycel.admin.v1.PlanClusterRestoreRequest
+	94,  // 149: mycel.admin.v1.AdminBackupService.StartClusterRestore:input_type -> mycel.admin.v1.StartClusterRestoreRequest
+	96,  // 150: mycel.admin.v1.AdminBackupService.GetClusterRestoreStatus:input_type -> mycel.admin.v1.GetClusterRestoreStatusRequest
+	98,  // 151: mycel.admin.v1.AdminBackupService.ListClusterRestores:input_type -> mycel.admin.v1.ListClusterRestoresRequest
+	100, // 152: mycel.admin.v1.AdminBackupService.CancelClusterRestore:input_type -> mycel.admin.v1.CancelClusterRestoreRequest
+	47,  // 153: mycel.admin.v1.AdminBackupService.GetBackupPolicy:output_type -> mycel.admin.v1.GetBackupPolicyResponse
+	49,  // 154: mycel.admin.v1.AdminBackupService.UpdateBackupPolicy:output_type -> mycel.admin.v1.UpdateBackupPolicyResponse
+	51,  // 155: mycel.admin.v1.AdminBackupService.ListBackupRepositories:output_type -> mycel.admin.v1.ListBackupRepositoriesResponse
+	53,  // 156: mycel.admin.v1.AdminBackupService.GetBackupRepository:output_type -> mycel.admin.v1.GetBackupRepositoryResponse
+	55,  // 157: mycel.admin.v1.AdminBackupService.CreateBackupRepository:output_type -> mycel.admin.v1.CreateBackupRepositoryResponse
+	57,  // 158: mycel.admin.v1.AdminBackupService.UpdateBackupRepository:output_type -> mycel.admin.v1.UpdateBackupRepositoryResponse
+	59,  // 159: mycel.admin.v1.AdminBackupService.ValidateBackupRepository:output_type -> mycel.admin.v1.ValidateBackupRepositoryResponse
+	61,  // 160: mycel.admin.v1.AdminBackupService.DeleteBackupRepository:output_type -> mycel.admin.v1.DeleteBackupRepositoryResponse
+	63,  // 161: mycel.admin.v1.AdminBackupService.TriggerBackup:output_type -> mycel.admin.v1.TriggerBackupResponse
+	65,  // 162: mycel.admin.v1.AdminBackupService.GetBackupStatus:output_type -> mycel.admin.v1.GetBackupStatusResponse
+	67,  // 163: mycel.admin.v1.AdminBackupService.ListBackups:output_type -> mycel.admin.v1.ListBackupsResponse
+	69,  // 164: mycel.admin.v1.AdminBackupService.DeleteBackup:output_type -> mycel.admin.v1.DeleteBackupResponse
+	71,  // 165: mycel.admin.v1.AdminBackupService.StartClusterBackup:output_type -> mycel.admin.v1.StartClusterBackupResponse
+	73,  // 166: mycel.admin.v1.AdminBackupService.GetClusterBackupStatus:output_type -> mycel.admin.v1.GetClusterBackupStatusResponse
+	75,  // 167: mycel.admin.v1.AdminBackupService.CancelClusterBackup:output_type -> mycel.admin.v1.CancelClusterBackupResponse
+	77,  // 168: mycel.admin.v1.AdminBackupService.ListClusterBackups:output_type -> mycel.admin.v1.ListClusterBackupsResponse
+	79,  // 169: mycel.admin.v1.AdminBackupService.ListClusterBackupOperations:output_type -> mycel.admin.v1.ListClusterBackupOperationsResponse
+	81,  // 170: mycel.admin.v1.AdminBackupService.ListClusterBackupSets:output_type -> mycel.admin.v1.ListClusterBackupSetsResponse
+	83,  // 171: mycel.admin.v1.AdminBackupService.GetClusterBackupSet:output_type -> mycel.admin.v1.GetClusterBackupSetResponse
+	85,  // 172: mycel.admin.v1.AdminBackupService.ValidateClusterBackupSet:output_type -> mycel.admin.v1.ValidateClusterBackupSetResponse
+	87,  // 173: mycel.admin.v1.AdminBackupService.DeleteClusterBackupSet:output_type -> mycel.admin.v1.DeleteClusterBackupSetResponse
+	93,  // 174: mycel.admin.v1.AdminBackupService.PlanClusterRestore:output_type -> mycel.admin.v1.PlanClusterRestoreResponse
+	95,  // 175: mycel.admin.v1.AdminBackupService.StartClusterRestore:output_type -> mycel.admin.v1.StartClusterRestoreResponse
+	97,  // 176: mycel.admin.v1.AdminBackupService.GetClusterRestoreStatus:output_type -> mycel.admin.v1.GetClusterRestoreStatusResponse
+	99,  // 177: mycel.admin.v1.AdminBackupService.ListClusterRestores:output_type -> mycel.admin.v1.ListClusterRestoresResponse
+	101, // 178: mycel.admin.v1.AdminBackupService.CancelClusterRestore:output_type -> mycel.admin.v1.CancelClusterRestoreResponse
+	153, // [153:179] is the sub-list for method output_type
+	127, // [127:153] is the sub-list for method input_type
+	127, // [127:127] is the sub-list for extension type_name
+	127, // [127:127] is the sub-list for extension extendee
+	0,   // [0:127] is the sub-list for field type_name
 }
 
 func init() { file_mycel_admin_v1_backup_proto_init() }
@@ -8397,7 +8411,7 @@ func file_mycel_admin_v1_backup_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_mycel_admin_v1_backup_proto_rawDesc), len(file_mycel_admin_v1_backup_proto_rawDesc)),
 			NumEnums:      16,
-			NumMessages:   92,
+			NumMessages:   93,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
