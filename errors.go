@@ -41,6 +41,15 @@ const (
 	// BackupReasonTransactionAbortedByQuiesce means a transaction finalization was
 	// aborted because backup quiescence closed admission first.
 	BackupReasonTransactionAbortedByQuiesce = "transaction_aborted_by_quiesce"
+
+	// UsageErrorInfoDomain is the google.rpc.ErrorInfo domain used by Mycel usage
+	// hard-limit admission errors.
+	UsageErrorInfoDomain = "mycel.usage"
+	// UsageReasonLimitExceeded means a write would exceed a configured hard usage limit.
+	UsageReasonLimitExceeded = "usage_limit_exceeded"
+	// UsageReasonWriteGateBlocked means a configured usage write gate is fail-closed
+	// because quota-safe accounting is not currently ready.
+	UsageReasonWriteGateBlocked = "usage_write_gate_blocked"
 )
 
 const (
@@ -202,6 +211,41 @@ func BackupQuiesceReason(err error) (string, bool) {
 		reason := strings.ToLower(strings.TrimSpace(info.GetReason()))
 		switch reason {
 		case BackupReasonClusterQuiesced, BackupReasonTransactionAbortedByQuiesce:
+			return reason, true
+		}
+	}
+	return "", false
+}
+
+// IsUsageLimitExceeded reports whether err is a ResourceExhausted gRPC status
+// carrying the stable Mycel usage_limit_exceeded reason.
+func IsUsageLimitExceeded(err error) bool {
+	reason, ok := UsageAdmissionReason(err)
+	return ok && reason == UsageReasonLimitExceeded
+}
+
+// IsUsageWriteGateBlocked reports whether err is a ResourceExhausted gRPC
+// status carrying the stable Mycel usage_write_gate_blocked reason.
+func IsUsageWriteGateBlocked(err error) bool {
+	reason, ok := UsageAdmissionReason(err)
+	return ok && reason == UsageReasonWriteGateBlocked
+}
+
+// UsageAdmissionReason returns a stable Mycel usage admission ErrorInfo reason
+// from a ResourceExhausted gRPC status when present.
+func UsageAdmissionReason(err error) (string, bool) {
+	st, ok := status.FromError(err)
+	if !ok || st.Code() != codes.ResourceExhausted {
+		return "", false
+	}
+	for _, detail := range st.Details() {
+		info, ok := detail.(*errdetails.ErrorInfo)
+		if !ok || info.GetDomain() != UsageErrorInfoDomain {
+			continue
+		}
+		reason := strings.ToLower(strings.TrimSpace(info.GetReason()))
+		switch reason {
+		case UsageReasonLimitExceeded, UsageReasonWriteGateBlocked:
 			return reason, true
 		}
 	}

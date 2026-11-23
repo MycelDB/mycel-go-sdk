@@ -120,6 +120,33 @@ func TestBackupQuiesceReasonUsesStableErrorInfoReason(t *testing.T) {
 	}
 }
 
+func TestUsageAdmissionReasonUsesStableErrorInfoReason(t *testing.T) {
+	limitStatus, err := status.New(codes.ResourceExhausted, "usage admission rejected").WithDetails(&errdetails.ErrorInfo{Domain: UsageErrorInfoDomain, Reason: UsageReasonLimitExceeded})
+	if err != nil {
+		t.Fatalf("WithDetails() error = %v", err)
+	}
+	if !IsUsageLimitExceeded(limitStatus.Err()) {
+		t.Fatal("IsUsageLimitExceeded() = false for usage_limit_exceeded")
+	}
+	if IsUsageWriteGateBlocked(limitStatus.Err()) {
+		t.Fatal("usage_limit_exceeded should not be usage_write_gate_blocked")
+	}
+	if reason, ok := UsageAdmissionReason(limitStatus.Err()); !ok || reason != UsageReasonLimitExceeded {
+		t.Fatalf("UsageAdmissionReason() = %q, %v", reason, ok)
+	}
+
+	gateStatus, err := status.New(codes.ResourceExhausted, "usage write gate blocked").WithDetails(&errdetails.ErrorInfo{Domain: UsageErrorInfoDomain, Reason: UsageReasonWriteGateBlocked})
+	if err != nil {
+		t.Fatalf("WithDetails() error = %v", err)
+	}
+	if !IsUsageWriteGateBlocked(gateStatus.Err()) {
+		t.Fatal("IsUsageWriteGateBlocked() = false for usage_write_gate_blocked")
+	}
+	if IsUsageLimitExceeded(status.Error(codes.ResourceExhausted, "generic capacity")) || IsUsageLimitExceeded(status.Error(codes.PermissionDenied, "usage limit manage required")) {
+		t.Fatal("generic ResourceExhausted/PermissionDenied should not be usage admission signals")
+	}
+}
+
 func TestClassifyErrorHandlesTimeouts(t *testing.T) {
 	for _, err := range []error{context.DeadlineExceeded, fmt.Errorf("call failed: %w", context.DeadlineExceeded), timeoutError{}} {
 		classified := ClassifyError(err)
