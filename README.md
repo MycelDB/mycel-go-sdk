@@ -28,6 +28,7 @@ The SDK generates Go protobuf/gRPC stubs from the language-independent `mycel-ap
 - graph-change watch helpers
 - Admin backup policy/status/list/trigger/delete helpers
 - Admin cluster backup trigger/status/list/validate/observability helpers
+- Admin usage-accounting helpers for read-only space/domain usage snapshots, accounting health, hard usage limit CRUD, and stable usage-admission error reasons
 
 Generated code is committed under `gen/go/` so tagged Go module releases are self-contained.
 
