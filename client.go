@@ -52,6 +52,8 @@ type AdminClient struct {
 	InferencePolicies    adminv1.AdminIntelligenceAccessPolicyServiceClient
 	InferenceUsage       adminv1.AdminIntelligenceAccessUsageServiceClient
 	Backup               adminv1.AdminBackupServiceClient
+	Usage                adminv1.AdminUsageAccountingServiceClient
+	UsageAdmission       adminv1.AdminUsageAdmissionServiceClient
 	Schema               adminv1.AdminSchemaServiceClient
 	Automation           adminv1.AdminAutomationServiceClient
 
@@ -115,6 +117,8 @@ func DialAdmin(ctx context.Context, cfg Config, opts ...grpc.DialOption) (*Admin
 	c.InferencePolicies = adminv1.NewAdminIntelligenceAccessPolicyServiceClient(conn)
 	c.InferenceUsage = adminv1.NewAdminIntelligenceAccessUsageServiceClient(conn)
 	c.Backup = adminv1.NewAdminBackupServiceClient(conn)
+	c.Usage = adminv1.NewAdminUsageAccountingServiceClient(conn)
+	c.UsageAdmission = adminv1.NewAdminUsageAdmissionServiceClient(conn)
 	c.Schema = adminv1.NewAdminSchemaServiceClient(conn)
 	c.Automation = adminv1.NewAdminAutomationServiceClient(conn)
 	if cfg.Username != "" || cfg.Password != "" {

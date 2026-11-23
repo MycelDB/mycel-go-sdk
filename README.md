@@ -27,7 +27,8 @@ The SDK generates Go protobuf/gRPC stubs from the language-independent `mycel-ap
 - structured query builders and explain helpers for common indexed/text/semantic/path/aggregate shapes
 - graph-change watch helpers
 - Admin backup policy/status/list/trigger/delete helpers
-- Admin cluster backup trigger/status/list/validate helpers
+- Admin cluster backup trigger/status/list/validate/observability helpers
+- Admin usage-accounting helpers for read-only space/domain usage snapshots, accounting health, hard usage limit CRUD, and stable usage-admission error reasons
 
 Generated code is committed under `gen/go/` so tagged Go module releases are self-contained.
 
@@ -37,12 +38,13 @@ The SDK major/minor line must match the Mycel API/daemon major/minor line for ge
 
 | Go SDK line | Generated API line | Supported daemon line | Notes |
 | --- | --- | --- | --- |
+| `v0.24.x` | `v0.24` | `v0.24.x` | Required for production backup/restore operations, backup observability, restored-derived readiness, usage accounting, and usage admission helpers. |
 | `v0.20.x` | `v0.20` | `v0.20.x` | Do not use for Mycel v0.21 semantic Admin RPCs. Its string-valued semantic trigger field is wire-incompatible with the v0.21 enum field. |
 | `v0.21.x` | `v0.21` | `v0.21.x` | Required for channel-owned Search queries and enum-only semantic trigger events. Older daemon lines are not certified. |
 | `v0.22.x` | `v0.22` | `v0.22.x` | Required for graph automation reconciliation and revision-fenced graph-write helpers. |
 | `v0.23.x` | `v0.23` | `v0.23.x` | Required for semantic projection consistency policies and per-channel freshness diagnostics. |
 
-The approved immutable v0.23 consumer target is [`v0.23.1`](https://github.com/MycelDB/mycel-go-sdk/releases/tag/v0.23.1). The v0.22 line remains available for the v0.22 API/daemon contract; v0.23 clients and daemons must be updated together.
+The approved immutable v0.24 consumer target is [`v0.24.0`](https://github.com/MycelDB/mycel-go-sdk/releases/tag/v0.24.0). The v0.23 line remains available for the v0.23 API/daemon contract; v0.24 clients and daemons should be updated together.
 
 Machine-readable compatibility metadata is published at [`.release/mycel-compatibility.json`](.release/mycel-compatibility.json). Deployment tooling must fail closed for missing or unknown metadata/schema versions, unknown daemon lines, or contradictory compatibility declarations.
 
@@ -94,7 +96,7 @@ The space/domain must already exist in a disposable or approved test environment
 
 ## Generate protobuf stubs
 
-The committed stubs on release branches are generated from the matching `mycel-api` release tag. The current release line is aligned with `mycel-api` `v0.23.0`.
+The committed stubs on release branches are generated from the matching `mycel-api` release tag. The current release line is aligned with `mycel-api` `v0.24.0`.
 
 By default generation reads protobufs from a sibling checkout:
 
@@ -328,10 +330,15 @@ cluster, err := admin.StartClusterBackup(ctx, &adminv1.StartClusterBackupRequest
     OutputDir:     "/mnt/mycel-backups",
     ArchiveFormat: adminv1.BackupArchiveFormat_BACKUP_ARCHIVE_FORMAT_TAR_ZST,
 })
+observability, err := admin.GetBackupObservability(ctx, &adminv1.GetBackupObservabilityRequest{
+    RepositoryId:          "repo-prod",
+    IncludeRetentionProbe: true,
+})
 _ = policy
 _ = status
 _ = trigger
 _ = cluster
+_ = observability
 ```
 
 ## Environment config

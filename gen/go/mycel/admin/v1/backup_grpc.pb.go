@@ -21,27 +21,52 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	AdminBackupService_GetBackupPolicy_FullMethodName          = "/mycel.admin.v1.AdminBackupService/GetBackupPolicy"
-	AdminBackupService_UpdateBackupPolicy_FullMethodName       = "/mycel.admin.v1.AdminBackupService/UpdateBackupPolicy"
-	AdminBackupService_TriggerBackup_FullMethodName            = "/mycel.admin.v1.AdminBackupService/TriggerBackup"
-	AdminBackupService_GetBackupStatus_FullMethodName          = "/mycel.admin.v1.AdminBackupService/GetBackupStatus"
-	AdminBackupService_ListBackups_FullMethodName              = "/mycel.admin.v1.AdminBackupService/ListBackups"
-	AdminBackupService_DeleteBackup_FullMethodName             = "/mycel.admin.v1.AdminBackupService/DeleteBackup"
-	AdminBackupService_StartClusterBackup_FullMethodName       = "/mycel.admin.v1.AdminBackupService/StartClusterBackup"
-	AdminBackupService_GetClusterBackupStatus_FullMethodName   = "/mycel.admin.v1.AdminBackupService/GetClusterBackupStatus"
-	AdminBackupService_CancelClusterBackup_FullMethodName      = "/mycel.admin.v1.AdminBackupService/CancelClusterBackup"
-	AdminBackupService_ListClusterBackups_FullMethodName       = "/mycel.admin.v1.AdminBackupService/ListClusterBackups"
-	AdminBackupService_ValidateClusterBackupSet_FullMethodName = "/mycel.admin.v1.AdminBackupService/ValidateClusterBackupSet"
+	AdminBackupService_GetBackupPolicy_FullMethodName             = "/mycel.admin.v1.AdminBackupService/GetBackupPolicy"
+	AdminBackupService_UpdateBackupPolicy_FullMethodName          = "/mycel.admin.v1.AdminBackupService/UpdateBackupPolicy"
+	AdminBackupService_ListBackupRepositories_FullMethodName      = "/mycel.admin.v1.AdminBackupService/ListBackupRepositories"
+	AdminBackupService_GetBackupRepository_FullMethodName         = "/mycel.admin.v1.AdminBackupService/GetBackupRepository"
+	AdminBackupService_CreateBackupRepository_FullMethodName      = "/mycel.admin.v1.AdminBackupService/CreateBackupRepository"
+	AdminBackupService_UpdateBackupRepository_FullMethodName      = "/mycel.admin.v1.AdminBackupService/UpdateBackupRepository"
+	AdminBackupService_ValidateBackupRepository_FullMethodName    = "/mycel.admin.v1.AdminBackupService/ValidateBackupRepository"
+	AdminBackupService_DeleteBackupRepository_FullMethodName      = "/mycel.admin.v1.AdminBackupService/DeleteBackupRepository"
+	AdminBackupService_TriggerBackup_FullMethodName               = "/mycel.admin.v1.AdminBackupService/TriggerBackup"
+	AdminBackupService_GetBackupStatus_FullMethodName             = "/mycel.admin.v1.AdminBackupService/GetBackupStatus"
+	AdminBackupService_ListBackups_FullMethodName                 = "/mycel.admin.v1.AdminBackupService/ListBackups"
+	AdminBackupService_DeleteBackup_FullMethodName                = "/mycel.admin.v1.AdminBackupService/DeleteBackup"
+	AdminBackupService_StartClusterBackup_FullMethodName          = "/mycel.admin.v1.AdminBackupService/StartClusterBackup"
+	AdminBackupService_GetClusterBackupStatus_FullMethodName      = "/mycel.admin.v1.AdminBackupService/GetClusterBackupStatus"
+	AdminBackupService_CancelClusterBackup_FullMethodName         = "/mycel.admin.v1.AdminBackupService/CancelClusterBackup"
+	AdminBackupService_ListClusterBackups_FullMethodName          = "/mycel.admin.v1.AdminBackupService/ListClusterBackups"
+	AdminBackupService_ListClusterBackupOperations_FullMethodName = "/mycel.admin.v1.AdminBackupService/ListClusterBackupOperations"
+	AdminBackupService_ListClusterBackupSets_FullMethodName       = "/mycel.admin.v1.AdminBackupService/ListClusterBackupSets"
+	AdminBackupService_GetClusterBackupSet_FullMethodName         = "/mycel.admin.v1.AdminBackupService/GetClusterBackupSet"
+	AdminBackupService_ValidateClusterBackupSet_FullMethodName    = "/mycel.admin.v1.AdminBackupService/ValidateClusterBackupSet"
+	AdminBackupService_DeleteClusterBackupSet_FullMethodName      = "/mycel.admin.v1.AdminBackupService/DeleteClusterBackupSet"
+	AdminBackupService_PlanRepositoryRetention_FullMethodName     = "/mycel.admin.v1.AdminBackupService/PlanRepositoryRetention"
+	AdminBackupService_ApplyRepositoryRetention_FullMethodName    = "/mycel.admin.v1.AdminBackupService/ApplyRepositoryRetention"
+	AdminBackupService_GetBackupObservability_FullMethodName      = "/mycel.admin.v1.AdminBackupService/GetBackupObservability"
+	AdminBackupService_PlanClusterRestore_FullMethodName          = "/mycel.admin.v1.AdminBackupService/PlanClusterRestore"
+	AdminBackupService_StartClusterRestore_FullMethodName         = "/mycel.admin.v1.AdminBackupService/StartClusterRestore"
+	AdminBackupService_GetClusterRestoreStatus_FullMethodName     = "/mycel.admin.v1.AdminBackupService/GetClusterRestoreStatus"
+	AdminBackupService_ListClusterRestores_FullMethodName         = "/mycel.admin.v1.AdminBackupService/ListClusterRestores"
+	AdminBackupService_CancelClusterRestore_FullMethodName        = "/mycel.admin.v1.AdminBackupService/CancelClusterRestore"
 )
 
 // AdminBackupServiceClient is the client API for AdminBackupService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 //
-// AdminBackupService manages daemon backup policy and manual backup runs.
+// AdminBackupService manages daemon backup policy, backup repositories, backup
+// operations, backup-set validation, and restore planning/operations.
 type AdminBackupServiceClient interface {
 	GetBackupPolicy(ctx context.Context, in *GetBackupPolicyRequest, opts ...grpc.CallOption) (*GetBackupPolicyResponse, error)
 	UpdateBackupPolicy(ctx context.Context, in *UpdateBackupPolicyRequest, opts ...grpc.CallOption) (*UpdateBackupPolicyResponse, error)
+	ListBackupRepositories(ctx context.Context, in *ListBackupRepositoriesRequest, opts ...grpc.CallOption) (*ListBackupRepositoriesResponse, error)
+	GetBackupRepository(ctx context.Context, in *GetBackupRepositoryRequest, opts ...grpc.CallOption) (*GetBackupRepositoryResponse, error)
+	CreateBackupRepository(ctx context.Context, in *CreateBackupRepositoryRequest, opts ...grpc.CallOption) (*CreateBackupRepositoryResponse, error)
+	UpdateBackupRepository(ctx context.Context, in *UpdateBackupRepositoryRequest, opts ...grpc.CallOption) (*UpdateBackupRepositoryResponse, error)
+	ValidateBackupRepository(ctx context.Context, in *ValidateBackupRepositoryRequest, opts ...grpc.CallOption) (*ValidateBackupRepositoryResponse, error)
+	DeleteBackupRepository(ctx context.Context, in *DeleteBackupRepositoryRequest, opts ...grpc.CallOption) (*DeleteBackupRepositoryResponse, error)
 	TriggerBackup(ctx context.Context, in *TriggerBackupRequest, opts ...grpc.CallOption) (*TriggerBackupResponse, error)
 	GetBackupStatus(ctx context.Context, in *GetBackupStatusRequest, opts ...grpc.CallOption) (*GetBackupStatusResponse, error)
 	ListBackups(ctx context.Context, in *ListBackupsRequest, opts ...grpc.CallOption) (*ListBackupsResponse, error)
@@ -54,7 +79,21 @@ type AdminBackupServiceClient interface {
 	// Cancellation is idempotent for terminal operations.
 	CancelClusterBackup(ctx context.Context, in *CancelClusterBackupRequest, opts ...grpc.CallOption) (*CancelClusterBackupResponse, error)
 	ListClusterBackups(ctx context.Context, in *ListClusterBackupsRequest, opts ...grpc.CallOption) (*ListClusterBackupsResponse, error)
+	ListClusterBackupOperations(ctx context.Context, in *ListClusterBackupOperationsRequest, opts ...grpc.CallOption) (*ListClusterBackupOperationsResponse, error)
+	ListClusterBackupSets(ctx context.Context, in *ListClusterBackupSetsRequest, opts ...grpc.CallOption) (*ListClusterBackupSetsResponse, error)
+	GetClusterBackupSet(ctx context.Context, in *GetClusterBackupSetRequest, opts ...grpc.CallOption) (*GetClusterBackupSetResponse, error)
 	ValidateClusterBackupSet(ctx context.Context, in *ValidateClusterBackupSetRequest, opts ...grpc.CallOption) (*ValidateClusterBackupSetResponse, error)
+	DeleteClusterBackupSet(ctx context.Context, in *DeleteClusterBackupSetRequest, opts ...grpc.CallOption) (*DeleteClusterBackupSetResponse, error)
+	PlanRepositoryRetention(ctx context.Context, in *PlanRepositoryRetentionRequest, opts ...grpc.CallOption) (*PlanRepositoryRetentionResponse, error)
+	ApplyRepositoryRetention(ctx context.Context, in *ApplyRepositoryRetentionRequest, opts ...grpc.CallOption) (*ApplyRepositoryRetentionResponse, error)
+	// GetBackupObservability returns a non-secret operator snapshot of backup/restore
+	// metrics and alert conditions suitable for external monitoring systems.
+	GetBackupObservability(ctx context.Context, in *GetBackupObservabilityRequest, opts ...grpc.CallOption) (*GetBackupObservabilityResponse, error)
+	PlanClusterRestore(ctx context.Context, in *PlanClusterRestoreRequest, opts ...grpc.CallOption) (*PlanClusterRestoreResponse, error)
+	StartClusterRestore(ctx context.Context, in *StartClusterRestoreRequest, opts ...grpc.CallOption) (*StartClusterRestoreResponse, error)
+	GetClusterRestoreStatus(ctx context.Context, in *GetClusterRestoreStatusRequest, opts ...grpc.CallOption) (*GetClusterRestoreStatusResponse, error)
+	ListClusterRestores(ctx context.Context, in *ListClusterRestoresRequest, opts ...grpc.CallOption) (*ListClusterRestoresResponse, error)
+	CancelClusterRestore(ctx context.Context, in *CancelClusterRestoreRequest, opts ...grpc.CallOption) (*CancelClusterRestoreResponse, error)
 }
 
 type adminBackupServiceClient struct {
@@ -79,6 +118,66 @@ func (c *adminBackupServiceClient) UpdateBackupPolicy(ctx context.Context, in *U
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(UpdateBackupPolicyResponse)
 	err := c.cc.Invoke(ctx, AdminBackupService_UpdateBackupPolicy_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *adminBackupServiceClient) ListBackupRepositories(ctx context.Context, in *ListBackupRepositoriesRequest, opts ...grpc.CallOption) (*ListBackupRepositoriesResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListBackupRepositoriesResponse)
+	err := c.cc.Invoke(ctx, AdminBackupService_ListBackupRepositories_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *adminBackupServiceClient) GetBackupRepository(ctx context.Context, in *GetBackupRepositoryRequest, opts ...grpc.CallOption) (*GetBackupRepositoryResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetBackupRepositoryResponse)
+	err := c.cc.Invoke(ctx, AdminBackupService_GetBackupRepository_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *adminBackupServiceClient) CreateBackupRepository(ctx context.Context, in *CreateBackupRepositoryRequest, opts ...grpc.CallOption) (*CreateBackupRepositoryResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CreateBackupRepositoryResponse)
+	err := c.cc.Invoke(ctx, AdminBackupService_CreateBackupRepository_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *adminBackupServiceClient) UpdateBackupRepository(ctx context.Context, in *UpdateBackupRepositoryRequest, opts ...grpc.CallOption) (*UpdateBackupRepositoryResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(UpdateBackupRepositoryResponse)
+	err := c.cc.Invoke(ctx, AdminBackupService_UpdateBackupRepository_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *adminBackupServiceClient) ValidateBackupRepository(ctx context.Context, in *ValidateBackupRepositoryRequest, opts ...grpc.CallOption) (*ValidateBackupRepositoryResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ValidateBackupRepositoryResponse)
+	err := c.cc.Invoke(ctx, AdminBackupService_ValidateBackupRepository_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *adminBackupServiceClient) DeleteBackupRepository(ctx context.Context, in *DeleteBackupRepositoryRequest, opts ...grpc.CallOption) (*DeleteBackupRepositoryResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(DeleteBackupRepositoryResponse)
+	err := c.cc.Invoke(ctx, AdminBackupService_DeleteBackupRepository_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -165,6 +264,36 @@ func (c *adminBackupServiceClient) ListClusterBackups(ctx context.Context, in *L
 	return out, nil
 }
 
+func (c *adminBackupServiceClient) ListClusterBackupOperations(ctx context.Context, in *ListClusterBackupOperationsRequest, opts ...grpc.CallOption) (*ListClusterBackupOperationsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListClusterBackupOperationsResponse)
+	err := c.cc.Invoke(ctx, AdminBackupService_ListClusterBackupOperations_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *adminBackupServiceClient) ListClusterBackupSets(ctx context.Context, in *ListClusterBackupSetsRequest, opts ...grpc.CallOption) (*ListClusterBackupSetsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListClusterBackupSetsResponse)
+	err := c.cc.Invoke(ctx, AdminBackupService_ListClusterBackupSets_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *adminBackupServiceClient) GetClusterBackupSet(ctx context.Context, in *GetClusterBackupSetRequest, opts ...grpc.CallOption) (*GetClusterBackupSetResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetClusterBackupSetResponse)
+	err := c.cc.Invoke(ctx, AdminBackupService_GetClusterBackupSet_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *adminBackupServiceClient) ValidateClusterBackupSet(ctx context.Context, in *ValidateClusterBackupSetRequest, opts ...grpc.CallOption) (*ValidateClusterBackupSetResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(ValidateClusterBackupSetResponse)
@@ -175,14 +304,111 @@ func (c *adminBackupServiceClient) ValidateClusterBackupSet(ctx context.Context,
 	return out, nil
 }
 
+func (c *adminBackupServiceClient) DeleteClusterBackupSet(ctx context.Context, in *DeleteClusterBackupSetRequest, opts ...grpc.CallOption) (*DeleteClusterBackupSetResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(DeleteClusterBackupSetResponse)
+	err := c.cc.Invoke(ctx, AdminBackupService_DeleteClusterBackupSet_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *adminBackupServiceClient) PlanRepositoryRetention(ctx context.Context, in *PlanRepositoryRetentionRequest, opts ...grpc.CallOption) (*PlanRepositoryRetentionResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(PlanRepositoryRetentionResponse)
+	err := c.cc.Invoke(ctx, AdminBackupService_PlanRepositoryRetention_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *adminBackupServiceClient) ApplyRepositoryRetention(ctx context.Context, in *ApplyRepositoryRetentionRequest, opts ...grpc.CallOption) (*ApplyRepositoryRetentionResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ApplyRepositoryRetentionResponse)
+	err := c.cc.Invoke(ctx, AdminBackupService_ApplyRepositoryRetention_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *adminBackupServiceClient) GetBackupObservability(ctx context.Context, in *GetBackupObservabilityRequest, opts ...grpc.CallOption) (*GetBackupObservabilityResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetBackupObservabilityResponse)
+	err := c.cc.Invoke(ctx, AdminBackupService_GetBackupObservability_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *adminBackupServiceClient) PlanClusterRestore(ctx context.Context, in *PlanClusterRestoreRequest, opts ...grpc.CallOption) (*PlanClusterRestoreResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(PlanClusterRestoreResponse)
+	err := c.cc.Invoke(ctx, AdminBackupService_PlanClusterRestore_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *adminBackupServiceClient) StartClusterRestore(ctx context.Context, in *StartClusterRestoreRequest, opts ...grpc.CallOption) (*StartClusterRestoreResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(StartClusterRestoreResponse)
+	err := c.cc.Invoke(ctx, AdminBackupService_StartClusterRestore_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *adminBackupServiceClient) GetClusterRestoreStatus(ctx context.Context, in *GetClusterRestoreStatusRequest, opts ...grpc.CallOption) (*GetClusterRestoreStatusResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetClusterRestoreStatusResponse)
+	err := c.cc.Invoke(ctx, AdminBackupService_GetClusterRestoreStatus_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *adminBackupServiceClient) ListClusterRestores(ctx context.Context, in *ListClusterRestoresRequest, opts ...grpc.CallOption) (*ListClusterRestoresResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListClusterRestoresResponse)
+	err := c.cc.Invoke(ctx, AdminBackupService_ListClusterRestores_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *adminBackupServiceClient) CancelClusterRestore(ctx context.Context, in *CancelClusterRestoreRequest, opts ...grpc.CallOption) (*CancelClusterRestoreResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CancelClusterRestoreResponse)
+	err := c.cc.Invoke(ctx, AdminBackupService_CancelClusterRestore_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // AdminBackupServiceServer is the server API for AdminBackupService service.
 // All implementations must embed UnimplementedAdminBackupServiceServer
 // for forward compatibility.
 //
-// AdminBackupService manages daemon backup policy and manual backup runs.
+// AdminBackupService manages daemon backup policy, backup repositories, backup
+// operations, backup-set validation, and restore planning/operations.
 type AdminBackupServiceServer interface {
 	GetBackupPolicy(context.Context, *GetBackupPolicyRequest) (*GetBackupPolicyResponse, error)
 	UpdateBackupPolicy(context.Context, *UpdateBackupPolicyRequest) (*UpdateBackupPolicyResponse, error)
+	ListBackupRepositories(context.Context, *ListBackupRepositoriesRequest) (*ListBackupRepositoriesResponse, error)
+	GetBackupRepository(context.Context, *GetBackupRepositoryRequest) (*GetBackupRepositoryResponse, error)
+	CreateBackupRepository(context.Context, *CreateBackupRepositoryRequest) (*CreateBackupRepositoryResponse, error)
+	UpdateBackupRepository(context.Context, *UpdateBackupRepositoryRequest) (*UpdateBackupRepositoryResponse, error)
+	ValidateBackupRepository(context.Context, *ValidateBackupRepositoryRequest) (*ValidateBackupRepositoryResponse, error)
+	DeleteBackupRepository(context.Context, *DeleteBackupRepositoryRequest) (*DeleteBackupRepositoryResponse, error)
 	TriggerBackup(context.Context, *TriggerBackupRequest) (*TriggerBackupResponse, error)
 	GetBackupStatus(context.Context, *GetBackupStatusRequest) (*GetBackupStatusResponse, error)
 	ListBackups(context.Context, *ListBackupsRequest) (*ListBackupsResponse, error)
@@ -195,7 +421,21 @@ type AdminBackupServiceServer interface {
 	// Cancellation is idempotent for terminal operations.
 	CancelClusterBackup(context.Context, *CancelClusterBackupRequest) (*CancelClusterBackupResponse, error)
 	ListClusterBackups(context.Context, *ListClusterBackupsRequest) (*ListClusterBackupsResponse, error)
+	ListClusterBackupOperations(context.Context, *ListClusterBackupOperationsRequest) (*ListClusterBackupOperationsResponse, error)
+	ListClusterBackupSets(context.Context, *ListClusterBackupSetsRequest) (*ListClusterBackupSetsResponse, error)
+	GetClusterBackupSet(context.Context, *GetClusterBackupSetRequest) (*GetClusterBackupSetResponse, error)
 	ValidateClusterBackupSet(context.Context, *ValidateClusterBackupSetRequest) (*ValidateClusterBackupSetResponse, error)
+	DeleteClusterBackupSet(context.Context, *DeleteClusterBackupSetRequest) (*DeleteClusterBackupSetResponse, error)
+	PlanRepositoryRetention(context.Context, *PlanRepositoryRetentionRequest) (*PlanRepositoryRetentionResponse, error)
+	ApplyRepositoryRetention(context.Context, *ApplyRepositoryRetentionRequest) (*ApplyRepositoryRetentionResponse, error)
+	// GetBackupObservability returns a non-secret operator snapshot of backup/restore
+	// metrics and alert conditions suitable for external monitoring systems.
+	GetBackupObservability(context.Context, *GetBackupObservabilityRequest) (*GetBackupObservabilityResponse, error)
+	PlanClusterRestore(context.Context, *PlanClusterRestoreRequest) (*PlanClusterRestoreResponse, error)
+	StartClusterRestore(context.Context, *StartClusterRestoreRequest) (*StartClusterRestoreResponse, error)
+	GetClusterRestoreStatus(context.Context, *GetClusterRestoreStatusRequest) (*GetClusterRestoreStatusResponse, error)
+	ListClusterRestores(context.Context, *ListClusterRestoresRequest) (*ListClusterRestoresResponse, error)
+	CancelClusterRestore(context.Context, *CancelClusterRestoreRequest) (*CancelClusterRestoreResponse, error)
 	mustEmbedUnimplementedAdminBackupServiceServer()
 }
 
@@ -211,6 +451,24 @@ func (UnimplementedAdminBackupServiceServer) GetBackupPolicy(context.Context, *G
 }
 func (UnimplementedAdminBackupServiceServer) UpdateBackupPolicy(context.Context, *UpdateBackupPolicyRequest) (*UpdateBackupPolicyResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateBackupPolicy not implemented")
+}
+func (UnimplementedAdminBackupServiceServer) ListBackupRepositories(context.Context, *ListBackupRepositoriesRequest) (*ListBackupRepositoriesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListBackupRepositories not implemented")
+}
+func (UnimplementedAdminBackupServiceServer) GetBackupRepository(context.Context, *GetBackupRepositoryRequest) (*GetBackupRepositoryResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetBackupRepository not implemented")
+}
+func (UnimplementedAdminBackupServiceServer) CreateBackupRepository(context.Context, *CreateBackupRepositoryRequest) (*CreateBackupRepositoryResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateBackupRepository not implemented")
+}
+func (UnimplementedAdminBackupServiceServer) UpdateBackupRepository(context.Context, *UpdateBackupRepositoryRequest) (*UpdateBackupRepositoryResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateBackupRepository not implemented")
+}
+func (UnimplementedAdminBackupServiceServer) ValidateBackupRepository(context.Context, *ValidateBackupRepositoryRequest) (*ValidateBackupRepositoryResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ValidateBackupRepository not implemented")
+}
+func (UnimplementedAdminBackupServiceServer) DeleteBackupRepository(context.Context, *DeleteBackupRepositoryRequest) (*DeleteBackupRepositoryResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteBackupRepository not implemented")
 }
 func (UnimplementedAdminBackupServiceServer) TriggerBackup(context.Context, *TriggerBackupRequest) (*TriggerBackupResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method TriggerBackup not implemented")
@@ -236,8 +494,44 @@ func (UnimplementedAdminBackupServiceServer) CancelClusterBackup(context.Context
 func (UnimplementedAdminBackupServiceServer) ListClusterBackups(context.Context, *ListClusterBackupsRequest) (*ListClusterBackupsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListClusterBackups not implemented")
 }
+func (UnimplementedAdminBackupServiceServer) ListClusterBackupOperations(context.Context, *ListClusterBackupOperationsRequest) (*ListClusterBackupOperationsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListClusterBackupOperations not implemented")
+}
+func (UnimplementedAdminBackupServiceServer) ListClusterBackupSets(context.Context, *ListClusterBackupSetsRequest) (*ListClusterBackupSetsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListClusterBackupSets not implemented")
+}
+func (UnimplementedAdminBackupServiceServer) GetClusterBackupSet(context.Context, *GetClusterBackupSetRequest) (*GetClusterBackupSetResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetClusterBackupSet not implemented")
+}
 func (UnimplementedAdminBackupServiceServer) ValidateClusterBackupSet(context.Context, *ValidateClusterBackupSetRequest) (*ValidateClusterBackupSetResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ValidateClusterBackupSet not implemented")
+}
+func (UnimplementedAdminBackupServiceServer) DeleteClusterBackupSet(context.Context, *DeleteClusterBackupSetRequest) (*DeleteClusterBackupSetResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteClusterBackupSet not implemented")
+}
+func (UnimplementedAdminBackupServiceServer) PlanRepositoryRetention(context.Context, *PlanRepositoryRetentionRequest) (*PlanRepositoryRetentionResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method PlanRepositoryRetention not implemented")
+}
+func (UnimplementedAdminBackupServiceServer) ApplyRepositoryRetention(context.Context, *ApplyRepositoryRetentionRequest) (*ApplyRepositoryRetentionResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ApplyRepositoryRetention not implemented")
+}
+func (UnimplementedAdminBackupServiceServer) GetBackupObservability(context.Context, *GetBackupObservabilityRequest) (*GetBackupObservabilityResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetBackupObservability not implemented")
+}
+func (UnimplementedAdminBackupServiceServer) PlanClusterRestore(context.Context, *PlanClusterRestoreRequest) (*PlanClusterRestoreResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method PlanClusterRestore not implemented")
+}
+func (UnimplementedAdminBackupServiceServer) StartClusterRestore(context.Context, *StartClusterRestoreRequest) (*StartClusterRestoreResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method StartClusterRestore not implemented")
+}
+func (UnimplementedAdminBackupServiceServer) GetClusterRestoreStatus(context.Context, *GetClusterRestoreStatusRequest) (*GetClusterRestoreStatusResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetClusterRestoreStatus not implemented")
+}
+func (UnimplementedAdminBackupServiceServer) ListClusterRestores(context.Context, *ListClusterRestoresRequest) (*ListClusterRestoresResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListClusterRestores not implemented")
+}
+func (UnimplementedAdminBackupServiceServer) CancelClusterRestore(context.Context, *CancelClusterRestoreRequest) (*CancelClusterRestoreResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CancelClusterRestore not implemented")
 }
 func (UnimplementedAdminBackupServiceServer) mustEmbedUnimplementedAdminBackupServiceServer() {}
 func (UnimplementedAdminBackupServiceServer) testEmbeddedByValue()                            {}
@@ -292,6 +586,114 @@ func _AdminBackupService_UpdateBackupPolicy_Handler(srv interface{}, ctx context
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(AdminBackupServiceServer).UpdateBackupPolicy(ctx, req.(*UpdateBackupPolicyRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AdminBackupService_ListBackupRepositories_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListBackupRepositoriesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminBackupServiceServer).ListBackupRepositories(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AdminBackupService_ListBackupRepositories_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminBackupServiceServer).ListBackupRepositories(ctx, req.(*ListBackupRepositoriesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AdminBackupService_GetBackupRepository_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetBackupRepositoryRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminBackupServiceServer).GetBackupRepository(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AdminBackupService_GetBackupRepository_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminBackupServiceServer).GetBackupRepository(ctx, req.(*GetBackupRepositoryRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AdminBackupService_CreateBackupRepository_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateBackupRepositoryRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminBackupServiceServer).CreateBackupRepository(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AdminBackupService_CreateBackupRepository_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminBackupServiceServer).CreateBackupRepository(ctx, req.(*CreateBackupRepositoryRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AdminBackupService_UpdateBackupRepository_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateBackupRepositoryRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminBackupServiceServer).UpdateBackupRepository(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AdminBackupService_UpdateBackupRepository_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminBackupServiceServer).UpdateBackupRepository(ctx, req.(*UpdateBackupRepositoryRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AdminBackupService_ValidateBackupRepository_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ValidateBackupRepositoryRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminBackupServiceServer).ValidateBackupRepository(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AdminBackupService_ValidateBackupRepository_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminBackupServiceServer).ValidateBackupRepository(ctx, req.(*ValidateBackupRepositoryRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AdminBackupService_DeleteBackupRepository_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteBackupRepositoryRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminBackupServiceServer).DeleteBackupRepository(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AdminBackupService_DeleteBackupRepository_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminBackupServiceServer).DeleteBackupRepository(ctx, req.(*DeleteBackupRepositoryRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -440,6 +842,60 @@ func _AdminBackupService_ListClusterBackups_Handler(srv interface{}, ctx context
 	return interceptor(ctx, in, info, handler)
 }
 
+func _AdminBackupService_ListClusterBackupOperations_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListClusterBackupOperationsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminBackupServiceServer).ListClusterBackupOperations(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AdminBackupService_ListClusterBackupOperations_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminBackupServiceServer).ListClusterBackupOperations(ctx, req.(*ListClusterBackupOperationsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AdminBackupService_ListClusterBackupSets_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListClusterBackupSetsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminBackupServiceServer).ListClusterBackupSets(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AdminBackupService_ListClusterBackupSets_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminBackupServiceServer).ListClusterBackupSets(ctx, req.(*ListClusterBackupSetsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AdminBackupService_GetClusterBackupSet_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetClusterBackupSetRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminBackupServiceServer).GetClusterBackupSet(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AdminBackupService_GetClusterBackupSet_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminBackupServiceServer).GetClusterBackupSet(ctx, req.(*GetClusterBackupSetRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _AdminBackupService_ValidateClusterBackupSet_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ValidateClusterBackupSetRequest)
 	if err := dec(in); err != nil {
@@ -458,6 +914,168 @@ func _AdminBackupService_ValidateClusterBackupSet_Handler(srv interface{}, ctx c
 	return interceptor(ctx, in, info, handler)
 }
 
+func _AdminBackupService_DeleteClusterBackupSet_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteClusterBackupSetRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminBackupServiceServer).DeleteClusterBackupSet(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AdminBackupService_DeleteClusterBackupSet_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminBackupServiceServer).DeleteClusterBackupSet(ctx, req.(*DeleteClusterBackupSetRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AdminBackupService_PlanRepositoryRetention_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PlanRepositoryRetentionRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminBackupServiceServer).PlanRepositoryRetention(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AdminBackupService_PlanRepositoryRetention_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminBackupServiceServer).PlanRepositoryRetention(ctx, req.(*PlanRepositoryRetentionRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AdminBackupService_ApplyRepositoryRetention_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ApplyRepositoryRetentionRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminBackupServiceServer).ApplyRepositoryRetention(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AdminBackupService_ApplyRepositoryRetention_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminBackupServiceServer).ApplyRepositoryRetention(ctx, req.(*ApplyRepositoryRetentionRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AdminBackupService_GetBackupObservability_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetBackupObservabilityRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminBackupServiceServer).GetBackupObservability(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AdminBackupService_GetBackupObservability_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminBackupServiceServer).GetBackupObservability(ctx, req.(*GetBackupObservabilityRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AdminBackupService_PlanClusterRestore_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PlanClusterRestoreRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminBackupServiceServer).PlanClusterRestore(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AdminBackupService_PlanClusterRestore_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminBackupServiceServer).PlanClusterRestore(ctx, req.(*PlanClusterRestoreRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AdminBackupService_StartClusterRestore_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StartClusterRestoreRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminBackupServiceServer).StartClusterRestore(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AdminBackupService_StartClusterRestore_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminBackupServiceServer).StartClusterRestore(ctx, req.(*StartClusterRestoreRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AdminBackupService_GetClusterRestoreStatus_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetClusterRestoreStatusRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminBackupServiceServer).GetClusterRestoreStatus(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AdminBackupService_GetClusterRestoreStatus_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminBackupServiceServer).GetClusterRestoreStatus(ctx, req.(*GetClusterRestoreStatusRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AdminBackupService_ListClusterRestores_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListClusterRestoresRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminBackupServiceServer).ListClusterRestores(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AdminBackupService_ListClusterRestores_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminBackupServiceServer).ListClusterRestores(ctx, req.(*ListClusterRestoresRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AdminBackupService_CancelClusterRestore_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CancelClusterRestoreRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminBackupServiceServer).CancelClusterRestore(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AdminBackupService_CancelClusterRestore_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminBackupServiceServer).CancelClusterRestore(ctx, req.(*CancelClusterRestoreRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // AdminBackupService_ServiceDesc is the grpc.ServiceDesc for AdminBackupService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -472,6 +1090,30 @@ var AdminBackupService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UpdateBackupPolicy",
 			Handler:    _AdminBackupService_UpdateBackupPolicy_Handler,
+		},
+		{
+			MethodName: "ListBackupRepositories",
+			Handler:    _AdminBackupService_ListBackupRepositories_Handler,
+		},
+		{
+			MethodName: "GetBackupRepository",
+			Handler:    _AdminBackupService_GetBackupRepository_Handler,
+		},
+		{
+			MethodName: "CreateBackupRepository",
+			Handler:    _AdminBackupService_CreateBackupRepository_Handler,
+		},
+		{
+			MethodName: "UpdateBackupRepository",
+			Handler:    _AdminBackupService_UpdateBackupRepository_Handler,
+		},
+		{
+			MethodName: "ValidateBackupRepository",
+			Handler:    _AdminBackupService_ValidateBackupRepository_Handler,
+		},
+		{
+			MethodName: "DeleteBackupRepository",
+			Handler:    _AdminBackupService_DeleteBackupRepository_Handler,
 		},
 		{
 			MethodName: "TriggerBackup",
@@ -506,8 +1148,56 @@ var AdminBackupService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _AdminBackupService_ListClusterBackups_Handler,
 		},
 		{
+			MethodName: "ListClusterBackupOperations",
+			Handler:    _AdminBackupService_ListClusterBackupOperations_Handler,
+		},
+		{
+			MethodName: "ListClusterBackupSets",
+			Handler:    _AdminBackupService_ListClusterBackupSets_Handler,
+		},
+		{
+			MethodName: "GetClusterBackupSet",
+			Handler:    _AdminBackupService_GetClusterBackupSet_Handler,
+		},
+		{
 			MethodName: "ValidateClusterBackupSet",
 			Handler:    _AdminBackupService_ValidateClusterBackupSet_Handler,
+		},
+		{
+			MethodName: "DeleteClusterBackupSet",
+			Handler:    _AdminBackupService_DeleteClusterBackupSet_Handler,
+		},
+		{
+			MethodName: "PlanRepositoryRetention",
+			Handler:    _AdminBackupService_PlanRepositoryRetention_Handler,
+		},
+		{
+			MethodName: "ApplyRepositoryRetention",
+			Handler:    _AdminBackupService_ApplyRepositoryRetention_Handler,
+		},
+		{
+			MethodName: "GetBackupObservability",
+			Handler:    _AdminBackupService_GetBackupObservability_Handler,
+		},
+		{
+			MethodName: "PlanClusterRestore",
+			Handler:    _AdminBackupService_PlanClusterRestore_Handler,
+		},
+		{
+			MethodName: "StartClusterRestore",
+			Handler:    _AdminBackupService_StartClusterRestore_Handler,
+		},
+		{
+			MethodName: "GetClusterRestoreStatus",
+			Handler:    _AdminBackupService_GetClusterRestoreStatus_Handler,
+		},
+		{
+			MethodName: "ListClusterRestores",
+			Handler:    _AdminBackupService_ListClusterRestores_Handler,
+		},
+		{
+			MethodName: "CancelClusterRestore",
+			Handler:    _AdminBackupService_CancelClusterRestore_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

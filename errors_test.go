@@ -90,6 +90,63 @@ func TestIsAuthSessionInvalidUsesStableErrorInfoReason(t *testing.T) {
 	}
 }
 
+func TestBackupQuiesceReasonUsesStableErrorInfoReason(t *testing.T) {
+	clusterStatus, err := status.New(codes.Unavailable, "myceld is temporarily quiesced").WithDetails(&errdetails.ErrorInfo{Domain: BackupErrorInfoDomain, Reason: BackupReasonClusterQuiesced})
+	if err != nil {
+		t.Fatalf("WithDetails() error = %v", err)
+	}
+	if !IsClusterQuiesced(clusterStatus.Err()) {
+		t.Fatal("IsClusterQuiesced() = false for cluster_quiesced")
+	}
+	if IsTransactionAbortedByQuiesce(clusterStatus.Err()) {
+		t.Fatal("cluster_quiesced should not be transaction_aborted_by_quiesce")
+	}
+	if reason, ok := BackupQuiesceReason(clusterStatus.Err()); !ok || reason != BackupReasonClusterQuiesced {
+		t.Fatalf("BackupQuiesceReason() = %q, %v", reason, ok)
+	}
+
+	txStatus, err := status.New(codes.Unavailable, "transaction aborted by backup quiescence").WithDetails(&errdetails.ErrorInfo{Domain: BackupErrorInfoDomain, Reason: BackupReasonTransactionAbortedByQuiesce})
+	if err != nil {
+		t.Fatalf("WithDetails() error = %v", err)
+	}
+	if !IsTransactionAbortedByQuiesce(txStatus.Err()) {
+		t.Fatal("IsTransactionAbortedByQuiesce() = false for transaction_aborted_by_quiesce")
+	}
+	if IsClusterQuiesced(status.Error(codes.Unavailable, "temporarily unavailable")) {
+		t.Fatal("generic Unavailable should not be classified as cluster_quiesced")
+	}
+	if IsClusterQuiesced(status.Error(codes.PermissionDenied, "backup manage required")) || IsClusterQuiesced(status.Error(codes.NotFound, "backup set missing")) {
+		t.Fatal("PermissionDenied/NotFound should not be quiesce signals")
+	}
+}
+
+func TestUsageAdmissionReasonUsesStableErrorInfoReason(t *testing.T) {
+	limitStatus, err := status.New(codes.ResourceExhausted, "usage admission rejected").WithDetails(&errdetails.ErrorInfo{Domain: UsageErrorInfoDomain, Reason: UsageReasonLimitExceeded})
+	if err != nil {
+		t.Fatalf("WithDetails() error = %v", err)
+	}
+	if !IsUsageLimitExceeded(limitStatus.Err()) {
+		t.Fatal("IsUsageLimitExceeded() = false for usage_limit_exceeded")
+	}
+	if IsUsageWriteGateBlocked(limitStatus.Err()) {
+		t.Fatal("usage_limit_exceeded should not be usage_write_gate_blocked")
+	}
+	if reason, ok := UsageAdmissionReason(limitStatus.Err()); !ok || reason != UsageReasonLimitExceeded {
+		t.Fatalf("UsageAdmissionReason() = %q, %v", reason, ok)
+	}
+
+	gateStatus, err := status.New(codes.ResourceExhausted, "usage write gate blocked").WithDetails(&errdetails.ErrorInfo{Domain: UsageErrorInfoDomain, Reason: UsageReasonWriteGateBlocked})
+	if err != nil {
+		t.Fatalf("WithDetails() error = %v", err)
+	}
+	if !IsUsageWriteGateBlocked(gateStatus.Err()) {
+		t.Fatal("IsUsageWriteGateBlocked() = false for usage_write_gate_blocked")
+	}
+	if IsUsageLimitExceeded(status.Error(codes.ResourceExhausted, "generic capacity")) || IsUsageLimitExceeded(status.Error(codes.PermissionDenied, "usage limit manage required")) {
+		t.Fatal("generic ResourceExhausted/PermissionDenied should not be usage admission signals")
+	}
+}
+
 func TestClassifyErrorHandlesTimeouts(t *testing.T) {
 	for _, err := range []error{context.DeadlineExceeded, fmt.Errorf("call failed: %w", context.DeadlineExceeded), timeoutError{}} {
 		classified := ClassifyError(err)

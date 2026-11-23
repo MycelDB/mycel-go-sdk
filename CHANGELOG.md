@@ -6,6 +6,31 @@ This project follows the spirit of [Keep a Changelog](https://keepachangelog.com
 
 ## [Unreleased]
 
+## [v0.24.0] - 2026-11-23
+
+### Added
+
+- Added AdminClient usage-accounting helper methods and regenerated admin usage bindings for read-only space/domain usage snapshots, batch/list responses, accounting health, and hard usage limit CRUD through `AdminUsageAdmissionService`.
+- Added stable usage-admission error helpers for `mycel.usage` `google.rpc.ErrorInfo` reasons (`usage_limit_exceeded`, `usage_write_gate_blocked`).
+- Regenerated common access bindings for usage-accounting capability enum values.
+- Added an AdminClient helper and regenerated admin backup bindings for backup/restore observability snapshots, metric rows, and alert conditions.
+- Regenerated admin cluster bindings for restored-cluster derived subsystem readiness fields.
+- Added AdminClient helper methods and regenerated admin backup bindings for repository retention planning/apply RPCs and plan/action evidence messages.
+- Regenerated admin backup bindings for per-node restore progress evidence used by Kubernetes restore controller/helper status.
+- Regenerated admin backup bindings for the Phase 7 restore execution contract additions, including target node mappings, staging location, clean-target/source-fencing preconditions, and restore progress messages.
+- Regenerated admin backup bindings for the repository-backed backup/restore contract foundation, including backup repository CRUD/validation, backup-set catalog, and restore planning/operation messages.
+- Regenerated backup-set validation, compatibility, capacity, and manifest summary fields for daemon Phase 4 restore-readiness validators.
+- Added AdminClient helper methods for backup repositories, repository-backed backup-set validation/deletion, backup operation listing, and restore planning/operation RPCs.
+- Added `IsClusterQuiesced`, `IsTransactionAbortedByQuiesce`, and `BackupQuiesceReason` helpers for stable `mycel.backup` quiesce ErrorInfo handling.
+
+### Compatibility
+
+- Requires the coordinated Mycel API and daemon v0.24.0 contract for production backup/restore, backup observability, restored-derived readiness, usage accounting, and hard usage admission helpers. v0.24 clients and daemons should be updated together.
+
+### Validation
+
+- `go test ./...`, `git diff --check`, and pull-request CI passed for the merged v0.24 SDK contract.
+
 ## [v0.23.1] - 2026-11-18
 
 ### Added

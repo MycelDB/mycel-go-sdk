@@ -3886,9 +3886,19 @@ type ClusterReadiness struct {
 	ReadReady bool `protobuf:"varint,12,opt,name=read_ready,json=readReady,proto3" json:"read_ready,omitempty"`
 	// write_ready means schema and graph-partition writes can route to known Raft
 	// leaders. In clustered mode this is stronger than partition_groups_started.
-	WriteReady    bool `protobuf:"varint,13,opt,name=write_ready,json=writeReady,proto3" json:"write_ready,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	WriteReady bool `protobuf:"varint,13,opt,name=write_ready,json=writeReady,proto3" json:"write_ready,omitempty"`
+	// derived_ready reports whether restored derived subsystems such as lexical
+	// indexes, graph checkpoints/query indexes, and semantic vector-search views
+	// are ready or explicitly require rebuild. It is independent from read/write
+	// routing readiness so operators can distinguish durable-state availability
+	// from derived-artifact catch-up.
+	DerivedReady bool `protobuf:"varint,14,opt,name=derived_ready,json=derivedReady,proto3" json:"derived_ready,omitempty"`
+	// restored_cluster_ready is true when no post-restore derived subsystem
+	// requires rebuild or operator follow-up. Non-restored clusters report true.
+	RestoredClusterReady bool                                `protobuf:"varint,15,opt,name=restored_cluster_ready,json=restoredClusterReady,proto3" json:"restored_cluster_ready,omitempty"`
+	DerivedSubsystems    []*ClusterDerivedSubsystemReadiness `protobuf:"bytes,16,rep,name=derived_subsystems,json=derivedSubsystems,proto3" json:"derived_subsystems,omitempty"`
+	unknownFields        protoimpl.UnknownFields
+	sizeCache            protoimpl.SizeCache
 }
 
 func (x *ClusterReadiness) Reset() {
@@ -4012,6 +4022,167 @@ func (x *ClusterReadiness) GetWriteReady() bool {
 	return false
 }
 
+func (x *ClusterReadiness) GetDerivedReady() bool {
+	if x != nil {
+		return x.DerivedReady
+	}
+	return false
+}
+
+func (x *ClusterReadiness) GetRestoredClusterReady() bool {
+	if x != nil {
+		return x.RestoredClusterReady
+	}
+	return false
+}
+
+func (x *ClusterReadiness) GetDerivedSubsystems() []*ClusterDerivedSubsystemReadiness {
+	if x != nil {
+		return x.DerivedSubsystems
+	}
+	return nil
+}
+
+type ClusterDerivedSubsystemReadiness struct {
+	state               protoimpl.MessageState `protogen:"open.v1"`
+	Subsystem           string                 `protobuf:"bytes,1,opt,name=subsystem,proto3" json:"subsystem,omitempty"`
+	State               string                 `protobuf:"bytes,2,opt,name=state,proto3" json:"state,omitempty"`
+	Ready               bool                   `protobuf:"varint,3,opt,name=ready,proto3" json:"ready,omitempty"`
+	RebuildRequired     bool                   `protobuf:"varint,4,opt,name=rebuild_required,json=rebuildRequired,proto3" json:"rebuild_required,omitempty"`
+	Reason              string                 `protobuf:"bytes,5,opt,name=reason,proto3" json:"reason,omitempty"`
+	ArtifactId          string                 `protobuf:"bytes,6,opt,name=artifact_id,json=artifactId,proto3" json:"artifact_id,omitempty"`
+	PolicyMode          string                 `protobuf:"bytes,7,opt,name=policy_mode,json=policyMode,proto3" json:"policy_mode,omitempty"`
+	RestorePolicy       string                 `protobuf:"bytes,8,opt,name=restore_policy,json=restorePolicy,proto3" json:"restore_policy,omitempty"`
+	ValidationState     string                 `protobuf:"bytes,9,opt,name=validation_state,json=validationState,proto3" json:"validation_state,omitempty"`
+	SourceFrontierKind  string                 `protobuf:"bytes,10,opt,name=source_frontier_kind,json=sourceFrontierKind,proto3" json:"source_frontier_kind,omitempty"`
+	SourceFrontierValue string                 `protobuf:"bytes,11,opt,name=source_frontier_value,json=sourceFrontierValue,proto3" json:"source_frontier_value,omitempty"`
+	Evidence            map[string]string      `protobuf:"bytes,12,rep,name=evidence,proto3" json:"evidence,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
+	UpdatedAt           string                 `protobuf:"bytes,13,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
+	unknownFields       protoimpl.UnknownFields
+	sizeCache           protoimpl.SizeCache
+}
+
+func (x *ClusterDerivedSubsystemReadiness) Reset() {
+	*x = ClusterDerivedSubsystemReadiness{}
+	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[39]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ClusterDerivedSubsystemReadiness) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ClusterDerivedSubsystemReadiness) ProtoMessage() {}
+
+func (x *ClusterDerivedSubsystemReadiness) ProtoReflect() protoreflect.Message {
+	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[39]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ClusterDerivedSubsystemReadiness.ProtoReflect.Descriptor instead.
+func (*ClusterDerivedSubsystemReadiness) Descriptor() ([]byte, []int) {
+	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{39}
+}
+
+func (x *ClusterDerivedSubsystemReadiness) GetSubsystem() string {
+	if x != nil {
+		return x.Subsystem
+	}
+	return ""
+}
+
+func (x *ClusterDerivedSubsystemReadiness) GetState() string {
+	if x != nil {
+		return x.State
+	}
+	return ""
+}
+
+func (x *ClusterDerivedSubsystemReadiness) GetReady() bool {
+	if x != nil {
+		return x.Ready
+	}
+	return false
+}
+
+func (x *ClusterDerivedSubsystemReadiness) GetRebuildRequired() bool {
+	if x != nil {
+		return x.RebuildRequired
+	}
+	return false
+}
+
+func (x *ClusterDerivedSubsystemReadiness) GetReason() string {
+	if x != nil {
+		return x.Reason
+	}
+	return ""
+}
+
+func (x *ClusterDerivedSubsystemReadiness) GetArtifactId() string {
+	if x != nil {
+		return x.ArtifactId
+	}
+	return ""
+}
+
+func (x *ClusterDerivedSubsystemReadiness) GetPolicyMode() string {
+	if x != nil {
+		return x.PolicyMode
+	}
+	return ""
+}
+
+func (x *ClusterDerivedSubsystemReadiness) GetRestorePolicy() string {
+	if x != nil {
+		return x.RestorePolicy
+	}
+	return ""
+}
+
+func (x *ClusterDerivedSubsystemReadiness) GetValidationState() string {
+	if x != nil {
+		return x.ValidationState
+	}
+	return ""
+}
+
+func (x *ClusterDerivedSubsystemReadiness) GetSourceFrontierKind() string {
+	if x != nil {
+		return x.SourceFrontierKind
+	}
+	return ""
+}
+
+func (x *ClusterDerivedSubsystemReadiness) GetSourceFrontierValue() string {
+	if x != nil {
+		return x.SourceFrontierValue
+	}
+	return ""
+}
+
+func (x *ClusterDerivedSubsystemReadiness) GetEvidence() map[string]string {
+	if x != nil {
+		return x.Evidence
+	}
+	return nil
+}
+
+func (x *ClusterDerivedSubsystemReadiness) GetUpdatedAt() string {
+	if x != nil {
+		return x.UpdatedAt
+	}
+	return ""
+}
+
 type ListClusterMembersRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	unknownFields protoimpl.UnknownFields
@@ -4020,7 +4191,7 @@ type ListClusterMembersRequest struct {
 
 func (x *ListClusterMembersRequest) Reset() {
 	*x = ListClusterMembersRequest{}
-	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[39]
+	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[40]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4032,7 +4203,7 @@ func (x *ListClusterMembersRequest) String() string {
 func (*ListClusterMembersRequest) ProtoMessage() {}
 
 func (x *ListClusterMembersRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[39]
+	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[40]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4045,7 +4216,7 @@ func (x *ListClusterMembersRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListClusterMembersRequest.ProtoReflect.Descriptor instead.
 func (*ListClusterMembersRequest) Descriptor() ([]byte, []int) {
-	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{39}
+	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{40}
 }
 
 type ListClusterMembersResponse struct {
@@ -4059,7 +4230,7 @@ type ListClusterMembersResponse struct {
 
 func (x *ListClusterMembersResponse) Reset() {
 	*x = ListClusterMembersResponse{}
-	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[40]
+	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[41]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4071,7 +4242,7 @@ func (x *ListClusterMembersResponse) String() string {
 func (*ListClusterMembersResponse) ProtoMessage() {}
 
 func (x *ListClusterMembersResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[40]
+	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[41]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4084,7 +4255,7 @@ func (x *ListClusterMembersResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListClusterMembersResponse.ProtoReflect.Descriptor instead.
 func (*ListClusterMembersResponse) Descriptor() ([]byte, []int) {
-	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{40}
+	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{41}
 }
 
 func (x *ListClusterMembersResponse) GetClusterId() string {
@@ -4130,7 +4301,7 @@ type ClusterMember struct {
 
 func (x *ClusterMember) Reset() {
 	*x = ClusterMember{}
-	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[41]
+	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[42]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4142,7 +4313,7 @@ func (x *ClusterMember) String() string {
 func (*ClusterMember) ProtoMessage() {}
 
 func (x *ClusterMember) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[41]
+	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[42]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4155,7 +4326,7 @@ func (x *ClusterMember) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ClusterMember.ProtoReflect.Descriptor instead.
 func (*ClusterMember) Descriptor() ([]byte, []int) {
-	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{41}
+	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{42}
 }
 
 func (x *ClusterMember) GetNodeName() string {
@@ -4264,7 +4435,7 @@ type GetClusterHealthRequest struct {
 
 func (x *GetClusterHealthRequest) Reset() {
 	*x = GetClusterHealthRequest{}
-	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[42]
+	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[43]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4276,7 +4447,7 @@ func (x *GetClusterHealthRequest) String() string {
 func (*GetClusterHealthRequest) ProtoMessage() {}
 
 func (x *GetClusterHealthRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[42]
+	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[43]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4289,7 +4460,7 @@ func (x *GetClusterHealthRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetClusterHealthRequest.ProtoReflect.Descriptor instead.
 func (*GetClusterHealthRequest) Descriptor() ([]byte, []int) {
-	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{42}
+	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{43}
 }
 
 type GetClusterHealthResponse struct {
@@ -4306,7 +4477,7 @@ type GetClusterHealthResponse struct {
 
 func (x *GetClusterHealthResponse) Reset() {
 	*x = GetClusterHealthResponse{}
-	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[43]
+	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[44]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4318,7 +4489,7 @@ func (x *GetClusterHealthResponse) String() string {
 func (*GetClusterHealthResponse) ProtoMessage() {}
 
 func (x *GetClusterHealthResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[43]
+	mi := &file_mycel_admin_v1_cluster_proto_msgTypes[44]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4331,7 +4502,7 @@ func (x *GetClusterHealthResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetClusterHealthResponse.ProtoReflect.Descriptor instead.
 func (*GetClusterHealthResponse) Descriptor() ([]byte, []int) {
-	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{43}
+	return file_mycel_admin_v1_cluster_proto_rawDescGZIP(), []int{44}
 }
 
 func (x *GetClusterHealthResponse) GetStatus() string {
@@ -4689,7 +4860,7 @@ const file_mycel_admin_v1_cluster_proto_rawDesc = "" +
 	"\x05state\x18\x06 \x01(\x0e2 .mycel.admin.v1.ClusterPeerStateR\x05state\x129\n" +
 	"\x06source\x18\a \x01(\x0e2!.mycel.admin.v1.ClusterPeerSourceR\x06source\x12 \n" +
 	"\flast_seen_at\x18\b \x01(\tR\n" +
-	"lastSeenAt\"\xbb\x04\n" +
+	"lastSeenAt\"\xf7\x05\n" +
 	"\x10ClusterReadiness\x12!\n" +
 	"\fclient_ready\x18\x01 \x01(\bR\vclientReady\x12)\n" +
 	"\x10metadata_applied\x18\x02 \x01(\bR\x0fmetadataApplied\x12-\n" +
@@ -4707,7 +4878,31 @@ const file_mycel_admin_v1_cluster_proto_rawDesc = "" +
 	"\n" +
 	"read_ready\x18\f \x01(\bR\treadReady\x12\x1f\n" +
 	"\vwrite_ready\x18\r \x01(\bR\n" +
-	"writeReady\"\x1b\n" +
+	"writeReady\x12#\n" +
+	"\rderived_ready\x18\x0e \x01(\bR\fderivedReady\x124\n" +
+	"\x16restored_cluster_ready\x18\x0f \x01(\bR\x14restoredClusterReady\x12_\n" +
+	"\x12derived_subsystems\x18\x10 \x03(\v20.mycel.admin.v1.ClusterDerivedSubsystemReadinessR\x11derivedSubsystems\"\xe1\x04\n" +
+	" ClusterDerivedSubsystemReadiness\x12\x1c\n" +
+	"\tsubsystem\x18\x01 \x01(\tR\tsubsystem\x12\x14\n" +
+	"\x05state\x18\x02 \x01(\tR\x05state\x12\x14\n" +
+	"\x05ready\x18\x03 \x01(\bR\x05ready\x12)\n" +
+	"\x10rebuild_required\x18\x04 \x01(\bR\x0frebuildRequired\x12\x16\n" +
+	"\x06reason\x18\x05 \x01(\tR\x06reason\x12\x1f\n" +
+	"\vartifact_id\x18\x06 \x01(\tR\n" +
+	"artifactId\x12\x1f\n" +
+	"\vpolicy_mode\x18\a \x01(\tR\n" +
+	"policyMode\x12%\n" +
+	"\x0erestore_policy\x18\b \x01(\tR\rrestorePolicy\x12)\n" +
+	"\x10validation_state\x18\t \x01(\tR\x0fvalidationState\x120\n" +
+	"\x14source_frontier_kind\x18\n" +
+	" \x01(\tR\x12sourceFrontierKind\x122\n" +
+	"\x15source_frontier_value\x18\v \x01(\tR\x13sourceFrontierValue\x12Z\n" +
+	"\bevidence\x18\f \x03(\v2>.mycel.admin.v1.ClusterDerivedSubsystemReadiness.EvidenceEntryR\bevidence\x12\x1d\n" +
+	"\n" +
+	"updated_at\x18\r \x01(\tR\tupdatedAt\x1a;\n" +
+	"\rEvidenceEntry\x12\x10\n" +
+	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
+	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\"\x1b\n" +
 	"\x19ListClusterMembersRequest\"\x97\x01\n" +
 	"\x1aListClusterMembersResponse\x12\x1d\n" +
 	"\n" +
@@ -4835,7 +5030,7 @@ func file_mycel_admin_v1_cluster_proto_rawDescGZIP() []byte {
 }
 
 var file_mycel_admin_v1_cluster_proto_enumTypes = make([]protoimpl.EnumInfo, 11)
-var file_mycel_admin_v1_cluster_proto_msgTypes = make([]protoimpl.MessageInfo, 44)
+var file_mycel_admin_v1_cluster_proto_msgTypes = make([]protoimpl.MessageInfo, 46)
 var file_mycel_admin_v1_cluster_proto_goTypes = []any{
 	(ClusterEngine)(0),                          // 0: mycel.admin.v1.ClusterEngine
 	(RaftGroupKind)(0),                          // 1: mycel.admin.v1.RaftGroupKind
@@ -4887,11 +5082,13 @@ var file_mycel_admin_v1_cluster_proto_goTypes = []any{
 	(*ClusterInfo)(nil),                         // 47: mycel.admin.v1.ClusterInfo
 	(*ClusterPeer)(nil),                         // 48: mycel.admin.v1.ClusterPeer
 	(*ClusterReadiness)(nil),                    // 49: mycel.admin.v1.ClusterReadiness
-	(*ListClusterMembersRequest)(nil),           // 50: mycel.admin.v1.ListClusterMembersRequest
-	(*ListClusterMembersResponse)(nil),          // 51: mycel.admin.v1.ListClusterMembersResponse
-	(*ClusterMember)(nil),                       // 52: mycel.admin.v1.ClusterMember
-	(*GetClusterHealthRequest)(nil),             // 53: mycel.admin.v1.GetClusterHealthRequest
-	(*GetClusterHealthResponse)(nil),            // 54: mycel.admin.v1.GetClusterHealthResponse
+	(*ClusterDerivedSubsystemReadiness)(nil),    // 50: mycel.admin.v1.ClusterDerivedSubsystemReadiness
+	(*ListClusterMembersRequest)(nil),           // 51: mycel.admin.v1.ListClusterMembersRequest
+	(*ListClusterMembersResponse)(nil),          // 52: mycel.admin.v1.ListClusterMembersResponse
+	(*ClusterMember)(nil),                       // 53: mycel.admin.v1.ClusterMember
+	(*GetClusterHealthRequest)(nil),             // 54: mycel.admin.v1.GetClusterHealthRequest
+	(*GetClusterHealthResponse)(nil),            // 55: mycel.admin.v1.GetClusterHealthResponse
+	nil,                                         // 56: mycel.admin.v1.ClusterDerivedSubsystemReadiness.EvidenceEntry
 }
 var file_mycel_admin_v1_cluster_proto_depIdxs = []int32{
 	0,  // 0: mycel.admin.v1.GetClusterRuntimeStatusResponse.engine:type_name -> mycel.admin.v1.ClusterEngine
@@ -4930,38 +5127,40 @@ var file_mycel_admin_v1_cluster_proto_depIdxs = []int32{
 	3,  // 33: mycel.admin.v1.ClusterInfo.mode:type_name -> mycel.admin.v1.ClusterMode
 	5,  // 34: mycel.admin.v1.ClusterPeer.state:type_name -> mycel.admin.v1.ClusterPeerState
 	6,  // 35: mycel.admin.v1.ClusterPeer.source:type_name -> mycel.admin.v1.ClusterPeerSource
-	52, // 36: mycel.admin.v1.ListClusterMembersResponse.members:type_name -> mycel.admin.v1.ClusterMember
-	7,  // 37: mycel.admin.v1.ClusterMember.state:type_name -> mycel.admin.v1.ClusterMemberState
-	49, // 38: mycel.admin.v1.GetClusterHealthResponse.readiness:type_name -> mycel.admin.v1.ClusterReadiness
-	44, // 39: mycel.admin.v1.AdminClusterService.GetClusterStatus:input_type -> mycel.admin.v1.GetClusterStatusRequest
-	50, // 40: mycel.admin.v1.AdminClusterService.ListClusterMembers:input_type -> mycel.admin.v1.ListClusterMembersRequest
-	53, // 41: mycel.admin.v1.AdminClusterService.GetClusterHealth:input_type -> mycel.admin.v1.GetClusterHealthRequest
-	11, // 42: mycel.admin.v1.AdminClusterService.GetClusterRuntimeStatus:input_type -> mycel.admin.v1.GetClusterRuntimeStatusRequest
-	16, // 43: mycel.admin.v1.AdminClusterService.ListRaftGroups:input_type -> mycel.admin.v1.ListRaftGroupsRequest
-	18, // 44: mycel.admin.v1.AdminClusterService.CreateRaftSnapshot:input_type -> mycel.admin.v1.CreateRaftSnapshotRequest
-	23, // 45: mycel.admin.v1.AdminClusterService.LookupSpaceRoute:input_type -> mycel.admin.v1.LookupSpaceRouteRequest
-	25, // 46: mycel.admin.v1.AdminClusterService.GetLocalGraphConsistency:input_type -> mycel.admin.v1.GetLocalGraphConsistencyRequest
-	27, // 47: mycel.admin.v1.AdminClusterService.GetGraphConsistencyReport:input_type -> mycel.admin.v1.GetGraphConsistencyReportRequest
-	31, // 48: mycel.admin.v1.AdminClusterService.GetLocalGraphForensicExport:input_type -> mycel.admin.v1.GetLocalGraphForensicExportRequest
-	35, // 49: mycel.admin.v1.AdminClusterService.CreateGraphCheckpoint:input_type -> mycel.admin.v1.CreateGraphCheckpointRequest
-	37, // 50: mycel.admin.v1.AdminClusterService.GetGraphCheckpointStatus:input_type -> mycel.admin.v1.GetGraphCheckpointStatusRequest
-	45, // 51: mycel.admin.v1.AdminClusterService.GetClusterStatus:output_type -> mycel.admin.v1.GetClusterStatusResponse
-	51, // 52: mycel.admin.v1.AdminClusterService.ListClusterMembers:output_type -> mycel.admin.v1.ListClusterMembersResponse
-	54, // 53: mycel.admin.v1.AdminClusterService.GetClusterHealth:output_type -> mycel.admin.v1.GetClusterHealthResponse
-	12, // 54: mycel.admin.v1.AdminClusterService.GetClusterRuntimeStatus:output_type -> mycel.admin.v1.GetClusterRuntimeStatusResponse
-	17, // 55: mycel.admin.v1.AdminClusterService.ListRaftGroups:output_type -> mycel.admin.v1.ListRaftGroupsResponse
-	19, // 56: mycel.admin.v1.AdminClusterService.CreateRaftSnapshot:output_type -> mycel.admin.v1.CreateRaftSnapshotResponse
-	24, // 57: mycel.admin.v1.AdminClusterService.LookupSpaceRoute:output_type -> mycel.admin.v1.LookupSpaceRouteResponse
-	26, // 58: mycel.admin.v1.AdminClusterService.GetLocalGraphConsistency:output_type -> mycel.admin.v1.GetLocalGraphConsistencyResponse
-	28, // 59: mycel.admin.v1.AdminClusterService.GetGraphConsistencyReport:output_type -> mycel.admin.v1.GetGraphConsistencyReportResponse
-	32, // 60: mycel.admin.v1.AdminClusterService.GetLocalGraphForensicExport:output_type -> mycel.admin.v1.GetLocalGraphForensicExportResponse
-	36, // 61: mycel.admin.v1.AdminClusterService.CreateGraphCheckpoint:output_type -> mycel.admin.v1.CreateGraphCheckpointResponse
-	38, // 62: mycel.admin.v1.AdminClusterService.GetGraphCheckpointStatus:output_type -> mycel.admin.v1.GetGraphCheckpointStatusResponse
-	51, // [51:63] is the sub-list for method output_type
-	39, // [39:51] is the sub-list for method input_type
-	39, // [39:39] is the sub-list for extension type_name
-	39, // [39:39] is the sub-list for extension extendee
-	0,  // [0:39] is the sub-list for field type_name
+	50, // 36: mycel.admin.v1.ClusterReadiness.derived_subsystems:type_name -> mycel.admin.v1.ClusterDerivedSubsystemReadiness
+	56, // 37: mycel.admin.v1.ClusterDerivedSubsystemReadiness.evidence:type_name -> mycel.admin.v1.ClusterDerivedSubsystemReadiness.EvidenceEntry
+	53, // 38: mycel.admin.v1.ListClusterMembersResponse.members:type_name -> mycel.admin.v1.ClusterMember
+	7,  // 39: mycel.admin.v1.ClusterMember.state:type_name -> mycel.admin.v1.ClusterMemberState
+	49, // 40: mycel.admin.v1.GetClusterHealthResponse.readiness:type_name -> mycel.admin.v1.ClusterReadiness
+	44, // 41: mycel.admin.v1.AdminClusterService.GetClusterStatus:input_type -> mycel.admin.v1.GetClusterStatusRequest
+	51, // 42: mycel.admin.v1.AdminClusterService.ListClusterMembers:input_type -> mycel.admin.v1.ListClusterMembersRequest
+	54, // 43: mycel.admin.v1.AdminClusterService.GetClusterHealth:input_type -> mycel.admin.v1.GetClusterHealthRequest
+	11, // 44: mycel.admin.v1.AdminClusterService.GetClusterRuntimeStatus:input_type -> mycel.admin.v1.GetClusterRuntimeStatusRequest
+	16, // 45: mycel.admin.v1.AdminClusterService.ListRaftGroups:input_type -> mycel.admin.v1.ListRaftGroupsRequest
+	18, // 46: mycel.admin.v1.AdminClusterService.CreateRaftSnapshot:input_type -> mycel.admin.v1.CreateRaftSnapshotRequest
+	23, // 47: mycel.admin.v1.AdminClusterService.LookupSpaceRoute:input_type -> mycel.admin.v1.LookupSpaceRouteRequest
+	25, // 48: mycel.admin.v1.AdminClusterService.GetLocalGraphConsistency:input_type -> mycel.admin.v1.GetLocalGraphConsistencyRequest
+	27, // 49: mycel.admin.v1.AdminClusterService.GetGraphConsistencyReport:input_type -> mycel.admin.v1.GetGraphConsistencyReportRequest
+	31, // 50: mycel.admin.v1.AdminClusterService.GetLocalGraphForensicExport:input_type -> mycel.admin.v1.GetLocalGraphForensicExportRequest
+	35, // 51: mycel.admin.v1.AdminClusterService.CreateGraphCheckpoint:input_type -> mycel.admin.v1.CreateGraphCheckpointRequest
+	37, // 52: mycel.admin.v1.AdminClusterService.GetGraphCheckpointStatus:input_type -> mycel.admin.v1.GetGraphCheckpointStatusRequest
+	45, // 53: mycel.admin.v1.AdminClusterService.GetClusterStatus:output_type -> mycel.admin.v1.GetClusterStatusResponse
+	52, // 54: mycel.admin.v1.AdminClusterService.ListClusterMembers:output_type -> mycel.admin.v1.ListClusterMembersResponse
+	55, // 55: mycel.admin.v1.AdminClusterService.GetClusterHealth:output_type -> mycel.admin.v1.GetClusterHealthResponse
+	12, // 56: mycel.admin.v1.AdminClusterService.GetClusterRuntimeStatus:output_type -> mycel.admin.v1.GetClusterRuntimeStatusResponse
+	17, // 57: mycel.admin.v1.AdminClusterService.ListRaftGroups:output_type -> mycel.admin.v1.ListRaftGroupsResponse
+	19, // 58: mycel.admin.v1.AdminClusterService.CreateRaftSnapshot:output_type -> mycel.admin.v1.CreateRaftSnapshotResponse
+	24, // 59: mycel.admin.v1.AdminClusterService.LookupSpaceRoute:output_type -> mycel.admin.v1.LookupSpaceRouteResponse
+	26, // 60: mycel.admin.v1.AdminClusterService.GetLocalGraphConsistency:output_type -> mycel.admin.v1.GetLocalGraphConsistencyResponse
+	28, // 61: mycel.admin.v1.AdminClusterService.GetGraphConsistencyReport:output_type -> mycel.admin.v1.GetGraphConsistencyReportResponse
+	32, // 62: mycel.admin.v1.AdminClusterService.GetLocalGraphForensicExport:output_type -> mycel.admin.v1.GetLocalGraphForensicExportResponse
+	36, // 63: mycel.admin.v1.AdminClusterService.CreateGraphCheckpoint:output_type -> mycel.admin.v1.CreateGraphCheckpointResponse
+	38, // 64: mycel.admin.v1.AdminClusterService.GetGraphCheckpointStatus:output_type -> mycel.admin.v1.GetGraphCheckpointStatusResponse
+	53, // [53:65] is the sub-list for method output_type
+	41, // [41:53] is the sub-list for method input_type
+	41, // [41:41] is the sub-list for extension type_name
+	41, // [41:41] is the sub-list for extension extendee
+	0,  // [0:41] is the sub-list for field type_name
 }
 
 func init() { file_mycel_admin_v1_cluster_proto_init() }
@@ -4975,7 +5174,7 @@ func file_mycel_admin_v1_cluster_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_mycel_admin_v1_cluster_proto_rawDesc), len(file_mycel_admin_v1_cluster_proto_rawDesc)),
 			NumEnums:      11,
-			NumMessages:   44,
+			NumMessages:   46,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
