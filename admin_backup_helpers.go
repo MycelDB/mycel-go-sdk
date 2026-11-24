@@ -74,95 +74,59 @@ func (c *AdminClient) DeleteBackupRepository(ctx context.Context, repositoryID s
 	return c.Backup.DeleteBackupRepository(callCtx, &adminv1.DeleteBackupRepositoryRequest{RepositoryId: repositoryID})
 }
 
-func (c *AdminClient) TriggerBackup(ctx context.Context, reason string) (*adminv1.TriggerBackupResponse, error) {
-	callCtx, cancel := c.AuthCallContext(ctx)
-	defer cancel()
-	return c.Backup.TriggerBackup(callCtx, &adminv1.TriggerBackupRequest{Reason: reason})
-}
-
-func (c *AdminClient) GetBackupStatus(ctx context.Context) (*adminv1.GetBackupStatusResponse, error) {
-	callCtx, cancel := c.AuthCallContext(ctx)
-	defer cancel()
-	return c.Backup.GetBackupStatus(callCtx, &adminv1.GetBackupStatusRequest{})
-}
-
-func (c *AdminClient) ListBackups(ctx context.Context, pageSize int32, pageToken string) (*adminv1.ListBackupsResponse, error) {
-	callCtx, cancel := c.AuthCallContext(ctx)
-	defer cancel()
-	return c.Backup.ListBackups(callCtx, &adminv1.ListBackupsRequest{PageSize: pageSize, PageToken: pageToken})
-}
-
-func (c *AdminClient) DeleteBackup(ctx context.Context, backupID string) (*adminv1.DeleteBackupResponse, error) {
-	callCtx, cancel := c.AuthCallContext(ctx)
-	defer cancel()
-	return c.Backup.DeleteBackup(callCtx, &adminv1.DeleteBackupRequest{BackupId: backupID})
-}
-
-func (c *AdminClient) StartClusterBackup(ctx context.Context, req *adminv1.StartClusterBackupRequest) (*adminv1.StartClusterBackupResponse, error) {
+func (c *AdminClient) StartBackup(ctx context.Context, req *adminv1.StartBackupRequest) (*adminv1.StartBackupResponse, error) {
 	callCtx, cancel := c.AuthCallContext(ctx)
 	defer cancel()
 	if req == nil {
-		req = &adminv1.StartClusterBackupRequest{}
+		req = &adminv1.StartBackupRequest{}
 	}
-	return c.Backup.StartClusterBackup(callCtx, req)
+	return c.Backup.StartBackup(callCtx, req)
 }
 
-func (c *AdminClient) CancelClusterBackup(ctx context.Context, backupSetID, reason string) (*adminv1.CancelClusterBackupResponse, error) {
+func (c *AdminClient) CancelBackupOperation(ctx context.Context, backupSetID, reason string) (*adminv1.CancelBackupOperationResponse, error) {
 	callCtx, cancel := c.AuthCallContext(ctx)
 	defer cancel()
-	return c.Backup.CancelClusterBackup(callCtx, &adminv1.CancelClusterBackupRequest{BackupSetId: backupSetID, Reason: reason})
+	return c.Backup.CancelBackupOperation(callCtx, &adminv1.CancelBackupOperationRequest{BackupSetId: backupSetID, Reason: reason})
 }
 
-func (c *AdminClient) GetClusterBackupStatus(ctx context.Context, backupSetID string) (*adminv1.GetClusterBackupStatusResponse, error) {
+func (c *AdminClient) GetBackupOperation(ctx context.Context, backupSetID string) (*adminv1.GetBackupOperationResponse, error) {
 	callCtx, cancel := c.AuthCallContext(ctx)
 	defer cancel()
-	return c.Backup.GetClusterBackupStatus(callCtx, &adminv1.GetClusterBackupStatusRequest{BackupSetId: backupSetID})
+	return c.Backup.GetBackupOperation(callCtx, &adminv1.GetBackupOperationRequest{BackupSetId: backupSetID})
 }
 
-func (c *AdminClient) ListClusterBackups(ctx context.Context, pageSize int32, pageToken string) (*adminv1.ListClusterBackupsResponse, error) {
+func (c *AdminClient) ListBackupOperations(ctx context.Context, pageSize int32, pageToken string) (*adminv1.ListBackupOperationsResponse, error) {
 	callCtx, cancel := c.AuthCallContext(ctx)
 	defer cancel()
-	return c.Backup.ListClusterBackups(callCtx, &adminv1.ListClusterBackupsRequest{PageSize: pageSize, PageToken: pageToken})
+	return c.Backup.ListBackupOperations(callCtx, &adminv1.ListBackupOperationsRequest{PageSize: pageSize, PageToken: pageToken})
 }
 
-func (c *AdminClient) ListClusterBackupOperations(ctx context.Context, pageSize int32, pageToken string) (*adminv1.ListClusterBackupOperationsResponse, error) {
+func (c *AdminClient) ListBackupSets(ctx context.Context, repositoryID string, pageSize int32, pageToken string) (*adminv1.ListBackupSetsResponse, error) {
 	callCtx, cancel := c.AuthCallContext(ctx)
 	defer cancel()
-	return c.Backup.ListClusterBackupOperations(callCtx, &adminv1.ListClusterBackupOperationsRequest{PageSize: pageSize, PageToken: pageToken})
+	return c.Backup.ListBackupSets(callCtx, &adminv1.ListBackupSetsRequest{RepositoryId: repositoryID, PageSize: pageSize, PageToken: pageToken})
 }
 
-func (c *AdminClient) ListClusterBackupSets(ctx context.Context, repositoryID string, pageSize int32, pageToken string) (*adminv1.ListClusterBackupSetsResponse, error) {
+func (c *AdminClient) GetBackupSet(ctx context.Context, repositoryID, backupSetID string) (*adminv1.BackupSetSummary, error) {
 	callCtx, cancel := c.AuthCallContext(ctx)
 	defer cancel()
-	return c.Backup.ListClusterBackupSets(callCtx, &adminv1.ListClusterBackupSetsRequest{RepositoryId: repositoryID, PageSize: pageSize, PageToken: pageToken})
-}
-
-func (c *AdminClient) GetClusterBackupSet(ctx context.Context, repositoryID, backupSetID string) (*adminv1.ClusterBackupSetSummary, error) {
-	callCtx, cancel := c.AuthCallContext(ctx)
-	defer cancel()
-	res, err := c.Backup.GetClusterBackupSet(callCtx, &adminv1.GetClusterBackupSetRequest{RepositoryId: repositoryID, BackupSetId: backupSetID})
+	res, err := c.Backup.GetBackupSet(callCtx, &adminv1.GetBackupSetRequest{RepositoryId: repositoryID, BackupSetId: backupSetID})
 	if err != nil {
 		return nil, err
 	}
 	return res.GetBackupSet(), nil
 }
 
-func (c *AdminClient) ValidateClusterBackupSet(ctx context.Context, backupSetPath string) (*adminv1.ValidateClusterBackupSetResponse, error) {
+func (c *AdminClient) ValidateBackupSet(ctx context.Context, repositoryID, backupSetID string, options *adminv1.ValidationOptions) (*adminv1.ValidateBackupSetResponse, error) {
 	callCtx, cancel := c.AuthCallContext(ctx)
 	defer cancel()
-	return c.Backup.ValidateClusterBackupSet(callCtx, &adminv1.ValidateClusterBackupSetRequest{BackupSetPath: backupSetPath})
+	return c.Backup.ValidateBackupSet(callCtx, &adminv1.ValidateBackupSetRequest{RepositoryId: repositoryID, BackupSetId: backupSetID, ValidationOptions: options})
 }
 
-func (c *AdminClient) ValidateRepositoryClusterBackupSet(ctx context.Context, repositoryID, backupSetID string, options *adminv1.ValidationOptions) (*adminv1.ValidateClusterBackupSetResponse, error) {
+func (c *AdminClient) DeleteBackupSet(ctx context.Context, repositoryID, backupSetID, reason string) (*adminv1.DeleteBackupSetResponse, error) {
 	callCtx, cancel := c.AuthCallContext(ctx)
 	defer cancel()
-	return c.Backup.ValidateClusterBackupSet(callCtx, &adminv1.ValidateClusterBackupSetRequest{RepositoryId: repositoryID, BackupSetId: backupSetID, ValidationOptions: options})
-}
-
-func (c *AdminClient) DeleteClusterBackupSet(ctx context.Context, repositoryID, backupSetID, reason string) (*adminv1.DeleteClusterBackupSetResponse, error) {
-	callCtx, cancel := c.AuthCallContext(ctx)
-	defer cancel()
-	return c.Backup.DeleteClusterBackupSet(callCtx, &adminv1.DeleteClusterBackupSetRequest{RepositoryId: repositoryID, BackupSetId: backupSetID, Reason: reason})
+	return c.Backup.DeleteBackupSet(callCtx, &adminv1.DeleteBackupSetRequest{RepositoryId: repositoryID, BackupSetId: backupSetID, Reason: reason})
 }
 
 func (c *AdminClient) PlanRepositoryRetention(ctx context.Context, req *adminv1.PlanRepositoryRetentionRequest) (*adminv1.PlanRepositoryRetentionResponse, error) {
@@ -192,38 +156,38 @@ func (c *AdminClient) GetBackupObservability(ctx context.Context, req *adminv1.G
 	return c.Backup.GetBackupObservability(callCtx, req)
 }
 
-func (c *AdminClient) PlanClusterRestore(ctx context.Context, req *adminv1.PlanClusterRestoreRequest) (*adminv1.PlanClusterRestoreResponse, error) {
+func (c *AdminClient) PlanRestore(ctx context.Context, req *adminv1.PlanRestoreRequest) (*adminv1.PlanRestoreResponse, error) {
 	callCtx, cancel := c.AuthCallContext(ctx)
 	defer cancel()
 	if req == nil {
-		req = &adminv1.PlanClusterRestoreRequest{}
+		req = &adminv1.PlanRestoreRequest{}
 	}
-	return c.Backup.PlanClusterRestore(callCtx, req)
+	return c.Backup.PlanRestore(callCtx, req)
 }
 
-func (c *AdminClient) StartClusterRestore(ctx context.Context, req *adminv1.StartClusterRestoreRequest) (*adminv1.StartClusterRestoreResponse, error) {
+func (c *AdminClient) StartRestore(ctx context.Context, req *adminv1.StartRestoreRequest) (*adminv1.StartRestoreResponse, error) {
 	callCtx, cancel := c.AuthCallContext(ctx)
 	defer cancel()
 	if req == nil {
-		req = &adminv1.StartClusterRestoreRequest{}
+		req = &adminv1.StartRestoreRequest{}
 	}
-	return c.Backup.StartClusterRestore(callCtx, req)
+	return c.Backup.StartRestore(callCtx, req)
 }
 
-func (c *AdminClient) GetClusterRestoreStatus(ctx context.Context, restoreOperationID string) (*adminv1.GetClusterRestoreStatusResponse, error) {
+func (c *AdminClient) GetRestoreOperation(ctx context.Context, restoreOperationID string) (*adminv1.GetRestoreOperationResponse, error) {
 	callCtx, cancel := c.AuthCallContext(ctx)
 	defer cancel()
-	return c.Backup.GetClusterRestoreStatus(callCtx, &adminv1.GetClusterRestoreStatusRequest{RestoreOperationId: restoreOperationID})
+	return c.Backup.GetRestoreOperation(callCtx, &adminv1.GetRestoreOperationRequest{RestoreOperationId: restoreOperationID})
 }
 
-func (c *AdminClient) ListClusterRestores(ctx context.Context, pageSize int32, pageToken string) (*adminv1.ListClusterRestoresResponse, error) {
+func (c *AdminClient) ListRestoreOperations(ctx context.Context, pageSize int32, pageToken string) (*adminv1.ListRestoreOperationsResponse, error) {
 	callCtx, cancel := c.AuthCallContext(ctx)
 	defer cancel()
-	return c.Backup.ListClusterRestores(callCtx, &adminv1.ListClusterRestoresRequest{PageSize: pageSize, PageToken: pageToken})
+	return c.Backup.ListRestoreOperations(callCtx, &adminv1.ListRestoreOperationsRequest{PageSize: pageSize, PageToken: pageToken})
 }
 
-func (c *AdminClient) CancelClusterRestore(ctx context.Context, restoreOperationID, reason string) (*adminv1.CancelClusterRestoreResponse, error) {
+func (c *AdminClient) CancelRestoreOperation(ctx context.Context, restoreOperationID, reason string) (*adminv1.CancelRestoreOperationResponse, error) {
 	callCtx, cancel := c.AuthCallContext(ctx)
 	defer cancel()
-	return c.Backup.CancelClusterRestore(callCtx, &adminv1.CancelClusterRestoreRequest{RestoreOperationId: restoreOperationID, Reason: reason})
+	return c.Backup.CancelRestoreOperation(callCtx, &adminv1.CancelRestoreOperationRequest{RestoreOperationId: restoreOperationID, Reason: reason})
 }
