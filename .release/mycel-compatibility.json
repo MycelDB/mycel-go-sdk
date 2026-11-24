@@ -1,11 +1,11 @@
 {
   "schema_version": 1,
   "component": "mycel-go-sdk",
-  "component_release": "v0.23.1",
-  "source_revision": "8231964f8a4076254330981ab5d8830fc31016ea",
-  "mycel_api_line": "0.23",
+  "component_release": "v0.25.0",
+  "source_revision": "1156b7101dcbdafa1842671d4a4364a317d307a2",
+  "mycel_api_line": "0.25",
   "supported_daemon_api_lines": [
-    "0.23"
+    "0.25"
   ],
   "incompatible_daemon_api_lines": [
     {
@@ -20,7 +20,21 @@
       "contracts": [
         "semantic-projection-consistency-v1"
       ]
+    },
+    {
+      "line": "0.23",
+      "contracts": [
+        "repository-backed-backup-restore-v1",
+        "usage-accounting-admission-v1"
+      ]
+    },
+    {
+      "line": "0.24",
+      "contracts": [
+        "repository-only-backup-api-v1",
+        "deployment-wide-backup-api-v1"
+      ]
     }
   ],
-  "published_at": "2026-11-18T18:22:41Z"
+  "published_at": "2026-11-24T16:33:50Z"
 }
