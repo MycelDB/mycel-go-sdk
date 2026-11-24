@@ -20,16 +20,33 @@ func TestBackupRepositoryContractTypesCompile(t *testing.T) {
 	}
 }
 
+func TestDeploymentBackupContractTypesCompile(t *testing.T) {
+	req := &adminv1.StartBackupRequest{
+		RepositoryId:              "repo-prod",
+		Reason:                    "before upgrade",
+		ArchiveFormat:             adminv1.BackupArchiveFormat_BACKUP_ARCHIVE_FORMAT_TAR_ZST,
+		CaptureProvider:           adminv1.BackupCaptureProvider_BACKUP_CAPTURE_PROVIDER_FILESYSTEM_IMMUTABLE_COPY,
+		QuiesceReadProfile:        adminv1.BackupQuiesceReadProfile_BACKUP_QUIESCE_READ_PROFILE_CONTROL_ONLY,
+		ValidationOptions:         &adminv1.ValidationOptions{RequireCompleteMarker: true},
+		ConvergenceTimeoutSeconds: 300,
+	}
+	res := &adminv1.StartBackupResponse{Operation: &adminv1.BackupOperation{BackupSetId: "backup-set-1", DeploymentMode: adminv1.BackupDeploymentMode_BACKUP_DEPLOYMENT_MODE_STANDALONE, State: adminv1.BackupOperationState_BACKUP_OPERATION_STATE_SUCCEEDED}}
+	if req.GetRepositoryId() != "repo-prod" || res.GetOperation().GetDeploymentMode() != adminv1.BackupDeploymentMode_BACKUP_DEPLOYMENT_MODE_STANDALONE {
+		t.Fatalf("unexpected deployment backup contract values: %#v %#v", req, res)
+	}
+}
+
 func TestRestoreContractTypesCompile(t *testing.T) {
-	req := &adminv1.PlanClusterRestoreRequest{
+	req := &adminv1.PlanRestoreRequest{
 		RepositoryId:      "repo-prod",
 		BackupSetId:       "backup-set-1",
-		TargetMode:        adminv1.ClusterRestoreTargetMode_CLUSTER_RESTORE_TARGET_MODE_NEW_CLUSTER_BOOTSTRAP,
-		IdentityMode:      adminv1.ClusterRestoreIdentityMode_CLUSTER_RESTORE_IDENTITY_MODE_PRESERVE_BACKUP_ID,
-		AuthSessionPolicy: adminv1.ClusterRestoreAuthSessionPolicy_CLUSTER_RESTORE_AUTH_SESSION_POLICY_PRESERVE_RESTORED_SESSIONS,
+		TargetMode:        adminv1.RestoreTargetMode_RESTORE_TARGET_MODE_NEW_DEPLOYMENT_BOOTSTRAP,
+		IdentityMode:      adminv1.RestoreIdentityMode_RESTORE_IDENTITY_MODE_PRESERVE_BACKUP_ID,
+		AuthSessionPolicy: adminv1.RestoreAuthSessionPolicy_RESTORE_AUTH_SESSION_POLICY_PRESERVE_RESTORED_SESSIONS,
 		ValidationOptions: &adminv1.ValidationOptions{RequireCompleteMarker: true},
+		Target:            &adminv1.RestoreTarget{DeploymentMode: adminv1.BackupDeploymentMode_BACKUP_DEPLOYMENT_MODE_CLUSTERED, ExpectedNodeCount: 3},
 	}
-	if req.GetTargetMode() != adminv1.ClusterRestoreTargetMode_CLUSTER_RESTORE_TARGET_MODE_NEW_CLUSTER_BOOTSTRAP {
+	if req.GetTargetMode() != adminv1.RestoreTargetMode_RESTORE_TARGET_MODE_NEW_DEPLOYMENT_BOOTSTRAP || req.GetTarget().GetExpectedNodeCount() != 3 {
 		t.Fatalf("unexpected restore target mode: %#v", req)
 	}
 }
@@ -59,14 +76,15 @@ func TestBackupObservabilityContractTypesCompile(t *testing.T) {
 }
 
 func TestBackupSetValidationSummaryFieldsCompile(t *testing.T) {
-	summary := &adminv1.ClusterBackupSetSummary{
-		BackupSetId: "backup-set-1",
-		Validation:  &adminv1.ValidationSummary{ValidatorVersion: "v1", ExpectedNodeCount: 3, NodeArtifactCount: 3, RequiredArtifactCount: 3, ValidatedArtifactCount: 3, TotalArtifactBytes: 1024, ChecksumAlgorithm: "SHA256", Errors: []string{}},
+	summary := &adminv1.BackupSetSummary{
+		BackupSetId:    "backup-set-1",
+		DeploymentMode: adminv1.BackupDeploymentMode_BACKUP_DEPLOYMENT_MODE_CLUSTERED,
+		Validation:     &adminv1.ValidationSummary{ValidatorVersion: "v1", ExpectedNodeCount: 3, NodeArtifactCount: 3, RequiredArtifactCount: 3, ValidatedArtifactCount: 3, TotalArtifactBytes: 1024, ChecksumAlgorithm: "SHA256", Errors: []string{}},
 		Compatibility: &adminv1.CompatibilitySummary{
 			RequiredFeatures:                          []string{"checkpoint_barrier_set.v1"},
 			StorageFormatVersions:                     map[string]string{"system_raft": "1"},
-			MinRestoreMycelVersion:                    "v0.24.0",
-			SupportedRestoreTargetModes:               []string{"NEW_CLUSTER_BOOTSTRAP"},
+			MinRestoreMycelVersion:                    "v0.25.0",
+			SupportedRestoreTargetModes:               []string{"NEW_DEPLOYMENT_BOOTSTRAP"},
 			SupportedIdentityModes:                    []string{"PRESERVE_BACKUP_ID"},
 			RequiresSameTopology:                      true,
 			RequiresSourceFencingForPreservedIdentity: true,
