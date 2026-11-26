@@ -6,6 +6,34 @@ This project follows the spirit of [Keep a Changelog](https://keepachangelog.com
 
 ## [Unreleased]
 
+## [v0.26.0] - 2026-11-26
+
+### Changed
+
+- Regenerated bindings from `mycel-api v0.26.0`, including documentation for the `graph.logical_bytes` usage metric. Existing usage helpers handle it as a string metric name; no new SDK method is required.
+
+### Compatibility
+
+- Protobuf and helper APIs are unchanged from v0.25.0. The SDK retains v0.25 daemon compatibility and targets the v0.26 daemon line. `graph.logical_bytes` is only available from a daemon that supports it and is not hard-limit eligible.
+
+## [v0.25.0] - 2026-11-24
+
+### Added
+
+- Regenerated Go protobuf/gRPC bindings from `mycel-api v0.25.0`, including the repository-only deployment backup contract.
+- Added deployment-wide backup helper methods (`StartBackup`, `GetBackupOperation`, `ListBackupOperations`, `ListBackupSets`, `GetBackupSet`, `ValidateBackupSet`, `DeleteBackupSet`, `PlanRestore`, `StartRestore`, `GetRestoreOperation`, `ListRestoreOperations`, and `CancelRestoreOperation`).
+
+### Removed
+
+- Removed daemon-local backup helpers (`TriggerBackup`, `GetBackupStatus`, `ListBackups`, and `DeleteBackup`). Repository-backed backup sets are now the only public durable backup model.
+- Removed cluster-specific backup/restore helper names (`StartClusterBackup`, `GetClusterBackupStatus`, `ListClusterBackupOperations`, `ListClusterBackupSets`, `ValidateClusterBackupSet`, `PlanClusterRestore`, and related restore helpers) in favor of deployment-wide v0.25 names.
+
+### Compatibility
+
+- Requires the coordinated Mycel API and daemon v0.25.0 backup contract. v0.25 clients and daemons should be updated together; v0.24 local backup helpers and cluster-specific helper names are source-incompatible with this line.
+
+## [v0.24.0] - 2026-11-23
+
 ### Added
 
 - Added AdminClient usage-accounting helper methods and regenerated admin usage bindings for read-only space/domain usage snapshots, batch/list responses, accounting health, and hard usage limit CRUD through `AdminUsageAdmissionService`.
@@ -20,17 +48,14 @@ This project follows the spirit of [Keep a Changelog](https://keepachangelog.com
 - Regenerated backup-set validation, compatibility, capacity, and manifest summary fields for daemon Phase 4 restore-readiness validators.
 - Added AdminClient helper methods for backup repositories, repository-backed backup-set validation/deletion, backup operation listing, and restore planning/operation RPCs.
 - Added `IsClusterQuiesced`, `IsTransactionAbortedByQuiesce`, and `BackupQuiesceReason` helpers for stable `mycel.backup` quiesce ErrorInfo handling.
-- Regenerated Go protobuf/gRPC bindings from `mycel-api v0.25.0`, including the repository-only deployment backup contract.
-- Added deployment-wide backup helper methods (`StartBackup`, `GetBackupOperation`, `ListBackupOperations`, `ListBackupSets`, `GetBackupSet`, `ValidateBackupSet`, `DeleteBackupSet`, `PlanRestore`, `StartRestore`, `GetRestoreOperation`, `ListRestoreOperations`, and `CancelRestoreOperation`).
-
-### Removed
-
-- Removed daemon-local backup helpers (`TriggerBackup`, `GetBackupStatus`, `ListBackups`, and `DeleteBackup`). Repository-backed backup sets are now the only public durable backup model.
-- Removed cluster-specific backup/restore helper names (`StartClusterBackup`, `GetClusterBackupStatus`, `ListClusterBackupOperations`, `ListClusterBackupSets`, `ValidateClusterBackupSet`, `PlanClusterRestore`, and related restore helpers) in favor of deployment-wide v0.25 names.
 
 ### Compatibility
 
-- Requires the coordinated Mycel API and daemon v0.25.0 backup contract. v0.25 clients and daemons should be updated together; v0.24 local backup helpers and cluster-specific helper names are source-incompatible with this line.
+- Requires the coordinated Mycel API and daemon v0.24.0 contract for production backup/restore, backup observability, restored-derived readiness, usage accounting, and hard usage admission helpers. v0.24 clients and daemons should be updated together.
+
+### Validation
+
+- `go test ./...`, `git diff --check`, and pull-request CI passed for the merged v0.24 SDK contract.
 
 ## [v0.23.1] - 2026-11-18
 
