@@ -1310,16 +1310,18 @@ type UsageLimit struct {
 	LimitId         string                 `protobuf:"bytes,1,opt,name=limit_id,json=limitId,proto3" json:"limit_id,omitempty"`
 	Scope           *UsageScope            `protobuf:"bytes,2,opt,name=scope,proto3" json:"scope,omitempty"`
 	DomainInclusion DomainInclusionMode    `protobuf:"varint,3,opt,name=domain_inclusion,json=domainInclusion,proto3,enum=mycel.admin.v1.DomainInclusionMode" json:"domain_inclusion,omitempty"`
-	MetricName      string                 `protobuf:"bytes,4,opt,name=metric_name,json=metricName,proto3" json:"metric_name,omitempty"`
-	MetricVersion   uint32                 `protobuf:"varint,5,opt,name=metric_version,json=metricVersion,proto3" json:"metric_version,omitempty"`
-	HardLimit       uint64                 `protobuf:"varint,6,opt,name=hard_limit,json=hardLimit,proto3" json:"hard_limit,omitempty"`
-	Enabled         bool                   `protobuf:"varint,7,opt,name=enabled,proto3" json:"enabled,omitempty"`
-	PolicyRef       string                 `protobuf:"bytes,8,opt,name=policy_ref,json=policyRef,proto3" json:"policy_ref,omitempty"`
-	Description     string                 `protobuf:"bytes,9,opt,name=description,proto3" json:"description,omitempty"`
-	CreatedAt       *timestamppb.Timestamp `protobuf:"bytes,10,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
-	UpdatedAt       *timestamppb.Timestamp `protobuf:"bytes,11,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
-	unknownFields   protoimpl.UnknownFields
-	sizeCache       protoimpl.SizeCache
+	// Stable metric identifier. Implementations reject metrics that are not
+	// quota-safe hard-limit eligible.
+	MetricName    string                 `protobuf:"bytes,4,opt,name=metric_name,json=metricName,proto3" json:"metric_name,omitempty"`
+	MetricVersion uint32                 `protobuf:"varint,5,opt,name=metric_version,json=metricVersion,proto3" json:"metric_version,omitempty"`
+	HardLimit     uint64                 `protobuf:"varint,6,opt,name=hard_limit,json=hardLimit,proto3" json:"hard_limit,omitempty"`
+	Enabled       bool                   `protobuf:"varint,7,opt,name=enabled,proto3" json:"enabled,omitempty"`
+	PolicyRef     string                 `protobuf:"bytes,8,opt,name=policy_ref,json=policyRef,proto3" json:"policy_ref,omitempty"`
+	Description   string                 `protobuf:"bytes,9,opt,name=description,proto3" json:"description,omitempty"`
+	CreatedAt     *timestamppb.Timestamp `protobuf:"bytes,10,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
+	UpdatedAt     *timestamppb.Timestamp `protobuf:"bytes,11,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
 func (x *UsageLimit) Reset() {
@@ -2113,7 +2115,10 @@ func (x *UsageSnapshot) GetWarnings() []*UsageStatus {
 
 // UsageMetric is one named usage value with explicit authority metadata.
 type UsageMetric struct {
-	state             protoimpl.MessageState `protogen:"open.v1"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Stable metric identifier such as graph.node_count, graph.edge_count,
+	// graph.logical_bytes, or blob.active_logical_bytes. Metric formulas are
+	// documented by the API contract and may evolve by metric_version.
 	Name              string                 `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
 	MetricVersion     uint32                 `protobuf:"varint,2,opt,name=metric_version,json=metricVersion,proto3" json:"metric_version,omitempty"`
 	Value             uint64                 `protobuf:"varint,3,opt,name=value,proto3" json:"value,omitempty"`

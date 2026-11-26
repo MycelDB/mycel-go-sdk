@@ -1,11 +1,12 @@
 {
   "schema_version": 1,
   "component": "mycel-go-sdk",
-  "component_release": "v0.25.0",
-  "source_revision": "1156b7101dcbdafa1842671d4a4364a317d307a2",
-  "mycel_api_line": "0.25",
+  "component_release": "v0.26.0",
+  "source_revision": "8bfb6207f659de3eddd13c6a474e440d55580706",
+  "mycel_api_line": "0.26",
   "supported_daemon_api_lines": [
-    "0.25"
+    "0.25",
+    "0.26"
   ],
   "incompatible_daemon_api_lines": [
     {
@@ -36,5 +37,5 @@
       ]
     }
   ],
-  "published_at": "2026-11-24T16:33:50Z"
+  "published_at": "2026-11-26T15:00:00Z"
 }
