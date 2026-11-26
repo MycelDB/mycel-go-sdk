@@ -4,6 +4,7 @@ import (
 	"testing"
 
 	adminv1 "github.com/myceldb/mycel-go-sdk/gen/go/mycel/admin/v1"
+	"google.golang.org/protobuf/proto"
 )
 
 func TestUsageAccountingContractTypesCompile(t *testing.T) {
@@ -31,6 +32,28 @@ func TestUsageAccountingContractTypesCompile(t *testing.T) {
 	res := &adminv1.GetUsageResponse{Snapshot: snapshot}
 	if !req.GetRequireQuotaSafe() || res.GetSnapshot().GetMetrics()[0].GetValue() != 1024 || !res.GetSnapshot().GetQuotaSafeComplete() {
 		t.Fatalf("unexpected usage accounting contract values: %#v %#v", req, res)
+	}
+}
+
+func TestGraphLogicalBytesUsageMetricRoundTrip(t *testing.T) {
+	metric := &adminv1.UsageMetric{
+		Name:          "graph.logical_bytes",
+		MetricVersion: 1,
+		Value:         42,
+		Unit:          adminv1.UsageUnit_USAGE_UNIT_BYTES,
+		Authority:     adminv1.UsageAuthority_USAGE_AUTHORITY_RAFT_COMMITTED_EXACT,
+		QuotaSafe:     true,
+	}
+	encoded, err := proto.Marshal(metric)
+	if err != nil {
+		t.Fatal(err)
+	}
+	var decoded adminv1.UsageMetric
+	if err := proto.Unmarshal(encoded, &decoded); err != nil {
+		t.Fatal(err)
+	}
+	if !proto.Equal(metric, &decoded) {
+		t.Fatalf("decoded metric = %v, want %v", &decoded, metric)
 	}
 }
 

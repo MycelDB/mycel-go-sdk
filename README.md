@@ -33,7 +33,7 @@ Generated code is committed under `gen/go/` so tagged Go module releases are sel
 
 ## Compatibility
 
-The SDK major/minor line must match the Mycel API/daemon major/minor line for generated contracts. A successful gRPC connection or health check does not prove that an RPC's protobuf wire contract is compatible.
+Use a daemon line listed as supported for the SDK version below. A successful gRPC connection or health check does not prove that an RPC's protobuf wire contract is compatible.
 
 | Go SDK line | Generated API line | Supported daemon line | Notes |
 | --- | --- | --- | --- |
@@ -43,8 +43,9 @@ The SDK major/minor line must match the Mycel API/daemon major/minor line for ge
 | `v0.23.x` | `v0.23` | `v0.23.x` | Required for semantic projection consistency policies and per-channel freshness diagnostics. |
 | `v0.24.x` | `v0.24` | `v0.24.x` | Required for production backup/restore operations, backup observability, restored-derived readiness, usage accounting, and usage admission helpers. |
 | `v0.25.x` | `v0.25` | `v0.25.x` | Repository-backed backup sets are the only public backup model; local backup helpers and cluster-specific backup helper names were removed. |
+| `v0.26.x` | `v0.26` | `v0.25.x`, `v0.26.x` | The wire contract is unchanged. The existing usage helpers can read `graph.logical_bytes` from a daemon that supports the metric. |
 
-The current development line targets `mycel-api v0.25.0`. The approved immutable v0.24 consumer target is [`v0.24.0`](https://github.com/MycelDB/mycel-go-sdk/releases/tag/v0.24.0). The v0.23 line remains available for the v0.23 API/daemon contract; clients and daemons should be updated together within a matching minor line.
+Install the current SDK with `go get github.com/myceldb/mycel-go-sdk@v0.26.0`.
 
 Machine-readable compatibility metadata is published at [`.release/mycel-compatibility.json`](.release/mycel-compatibility.json). Deployment tooling must fail closed for missing or unknown metadata/schema versions, unknown daemon lines, or contradictory compatibility declarations.
 
@@ -96,7 +97,7 @@ The space/domain must already exist in a disposable or approved test environment
 
 ## Generate protobuf stubs
 
-The committed stubs on release branches are generated from the matching `mycel-api` release tag. The current development line is aligned with `mycel-api` `v0.25.0`.
+The committed stubs on release branches are generated from the matching `mycel-api` release tag. The current development line is aligned with `mycel-api` `v0.26.0`.
 
 By default generation reads protobufs from a sibling checkout:
 
